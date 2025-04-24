@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
@@ -8,7 +7,7 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2 mb-12 lg:mb-0 animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-legal-dark">
-              Transforming Legal Services Through <span className="gradient-text">Innovation</span>
+              Where <span className="gradient-text">Accountability</span> Meets <span className="gradient-text">Creativity</span>
             </h1>
             <p className="text-lg md:text-xl mb-8 text-gray-700 max-w-xl">
               We help legal professionals and organizations embrace change, 
