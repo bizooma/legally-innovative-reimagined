@@ -40,9 +40,11 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <a href="#home" className="flex items-center">
-          <span className="text-xl md:text-2xl font-bold text-legal-dark font-playfair">
-            Legally<span className="text-legal-primary">Innovative</span>
-          </span>
+          <img 
+            src="/logo.png" 
+            alt="Legally Innovative Logo" 
+            className="h-10 w-auto object-contain"
+          />
         </a>
 
         {/* Desktop Navigation */}
