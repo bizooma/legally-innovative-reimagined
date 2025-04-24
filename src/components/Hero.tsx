@@ -11,7 +11,7 @@ const Hero = () => {
               Where <span className="gradient-text">Accountability</span> Meets <span className="gradient-text">Creativity</span>
             </h1>
             <p className="text-lg md:text-xl mb-8 text-gray-700 max-w-xl">
-              At Legally Innovative, we are passionate about helping law firms thrive in the digital age. As a full-service marketing and accounting solutions provider, we understand the unique challenges that law firms face in attracting clients.
+              At Legally Innovative, we are passionate about helping law firms thrive in the digital age. As a full-service marketing and AI automations provider, we understand the unique challenges that law firms face in attracting clients.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg">
@@ -40,3 +40,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
