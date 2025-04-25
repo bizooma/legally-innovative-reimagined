@@ -23,14 +23,17 @@ const Hero = () => {
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center lg:justify-end animate-fade-in" style={{animationDelay: '0.3s'}}>
-            <div className="relative">
+            <div className="relative w-full max-w-2xl">
               <div className="absolute -top-6 -left-6 w-64 h-64 bg-legal-light rounded-full opacity-50 -z-10"></div>
               <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-legal-accent rounded-full opacity-20 -z-10"></div>
-              <div className="bg-white p-6 shadow-xl rounded-lg">
-                <div className="bg-gray-200 w-80 h-80 md:w-96 md:h-96 rounded-md flex items-center justify-center">
-                  <span className="text-gray-500 text-lg font-medium">Legal Innovation Image</span>
-                </div>
-              </div>
+              <iframe 
+                src="https://www.videoask.com/fc5vpzgv1" 
+                allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" 
+                width="100%" 
+                height="600px" 
+                style={{border: 'none', borderRadius: '24px'}}
+                className="w-full shadow-xl"
+              />
             </div>
           </div>
         </div>
