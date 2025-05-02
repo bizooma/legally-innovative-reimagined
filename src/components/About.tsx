@@ -9,10 +9,22 @@ const About = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
             About <span className="highlight-text">Legally Innovative</span>
           </h2>
+          <p className="text-lg text-gray-700 mb-4">
+            At Legally Innovative, we are passionate about helping law firms thrive in the digital age. 
+            As a full-service marketing and accounting solutions provider, we understand the unique challenges 
+            that law firms face in attracting clients and managing finances.
+          </p>
+          <p className="text-lg text-gray-700 mb-4">
+            That's why we've designed our services to meet the specific needs of the legal industry, 
+            giving you the tools to grow your practice, streamline your operations, and stay ahead of 
+            the competition. Legally Innovative is a legal entity of Bizooma, LLC.
+          </p>
           <p className="text-lg text-gray-700">
-            Founded on the belief that the legal industry must evolve to meet changing client expectations 
-            and technological advancements, we provide consulting, training, and change management 
-            services to legal teams worldwide.
+            Bizooma is proud to be a veteran-owned business dedicated to excellence and innovation. 
+            Our entire team is based in the United States, ensuring that every project is handled with 
+            the highest level of quality, integrity, and care. We take pride in supporting local talent 
+            while delivering creative solutions that help our clients succeed. At Bizooma, our values 
+            reflect the commitment and service instilled by our veteran leadership.
           </p>
         </div>
 
@@ -22,11 +34,10 @@ const About = () => {
               <div className="h-14 w-14 bg-legal-light rounded-full flex items-center justify-center mb-6">
                 <span className="text-legal-primary text-2xl font-bold">01</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-legal-dark">Our Mission</h3>
+              <h3 className="text-xl font-bold mb-3 text-legal-dark">Marketing Solutions</h3>
               <p className="text-gray-700">
-                To empower legal professionals with the mindset, skills, and tools needed to 
-                thrive in a rapidly changing legal landscape, driving meaningful innovation 
-                that benefits clients and practitioners alike.
+                Specialized digital marketing strategies designed specifically for law firms, 
+                helping you attract more clients and grow your practice.
               </p>
             </CardContent>
           </Card>
@@ -36,11 +47,10 @@ const About = () => {
               <div className="h-14 w-14 bg-legal-light rounded-full flex items-center justify-center mb-6">
                 <span className="text-legal-primary text-2xl font-bold">02</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-legal-dark">Our Vision</h3>
+              <h3 className="text-xl font-bold mb-3 text-legal-dark">Accounting Services</h3>
               <p className="text-gray-700">
-                A legal industry that embraces innovation and technology, breaking down 
-                traditional barriers to create more accessible, efficient, and client-centric 
-                legal services for all.
+                Comprehensive financial management solutions tailored to the unique needs 
+                of legal practices, ensuring compliance and profitability.
               </p>
             </CardContent>
           </Card>
@@ -50,12 +60,10 @@ const About = () => {
               <div className="h-14 w-14 bg-legal-light rounded-full flex items-center justify-center mb-6">
                 <span className="text-legal-primary text-2xl font-bold">03</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-legal-dark">Our Approach</h3>
+              <h3 className="text-xl font-bold mb-3 text-legal-dark">American Excellence</h3>
               <p className="text-gray-700">
-                We combine deep industry knowledge with practical innovation frameworks, 
-                helping legal teams understand not just what is changing, but how to lead 
-                that change. Our methodology focuses on sustainable transformation that fits 
-                each organization's unique needs.
+                As a proud veteran-owned business, we bring dedication, integrity, and exceptional 
+                quality to every project, with a 100% U.S.-based team committed to your success.
               </p>
             </CardContent>
           </Card>
