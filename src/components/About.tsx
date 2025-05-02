@@ -63,7 +63,7 @@ const About = () => {
               </div>
               <h3 className="text-xl font-bold mb-3 text-legal-dark">American Excellence</h3>
               <p className="text-gray-700">
-                As a proud veteran-owned business, we bring dedication, integrity, and exceptional 
+                As a veteran owned company, our values include dedication, integrity, accessibility, innovation, and exceptional 
                 quality to every project, with a 100% U.S.-based team committed to your success.
               </p>
             </CardContent>
