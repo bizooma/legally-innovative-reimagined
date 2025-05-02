@@ -47,10 +47,11 @@ const About = () => {
               <div className="h-14 w-14 bg-legal-light rounded-full flex items-center justify-center mb-6">
                 <span className="text-legal-primary text-2xl font-bold">02</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-legal-dark">Accounting Services</h3>
+              <h3 className="text-xl font-bold mb-3 text-legal-dark">Vision Statement</h3>
               <p className="text-gray-700">
-                Comprehensive financial management solutions tailored to the unique needs 
-                of legal practices, ensuring compliance and profitability.
+                Through our platform, resources, and community, we will shape a future where the legal profession 
+                leads technological adoption rather than follows it, ensuring that legal innovation serves the 
+                highest purposes of justice and human dignity.
               </p>
             </CardContent>
           </Card>
