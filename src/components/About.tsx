@@ -34,10 +34,10 @@ const About = () => {
               <div className="h-14 w-14 bg-legal-light rounded-full flex items-center justify-center mb-6">
                 <span className="text-legal-primary text-2xl font-bold">01</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-legal-dark">Marketing Solutions</h3>
+              <h3 className="text-xl font-bold mb-3 text-legal-dark">Mission Statement</h3>
               <p className="text-gray-700">
-                Specialized digital marketing strategies designed specifically for law firms, 
-                helping you attract more clients and grow your practice.
+                Our mission is to bridge the gap between traditional legal services and the digital future, 
+                empowering legal professionals to deliver more efficient, accessible, and client-centered solutions.
               </p>
             </CardContent>
           </Card>
