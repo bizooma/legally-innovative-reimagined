@@ -85,9 +85,8 @@ const Contact = () => {
                   <div>
                     <p className="font-medium text-gray-600">Visit Us</p>
                     <p className="text-legal-dark font-semibold">
-                      123 Innovation Street<br/>
-                      Suite 400<br/>
-                      San Francisco, CA 94105
+                      2465 US-1S, Suite 1045<br/>
+                      St. Augustine, FL 32086
                     </p>
                   </div>
                 </div>
