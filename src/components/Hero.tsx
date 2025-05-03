@@ -14,10 +14,17 @@ const Hero = () => {
               At Legally Innovative, we are passionate about helping law firms thrive in the digital age. As a full-service marketing and AI automations provider, we understand the unique challenges that law firms face in generating, nurturing, and converting leads.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg">
+              <Button 
+                className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg"
+                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 Discover Our Services
               </Button>
-              <Button variant="outline" className="border-legal-primary text-legal-primary hover:bg-legal-light px-8 py-6 text-lg">
+              <Button 
+                variant="outline" 
+                className="border-legal-primary text-legal-primary hover:bg-legal-light px-8 py-6 text-lg"
+                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 About Us
               </Button>
             </div>
