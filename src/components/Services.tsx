@@ -33,6 +33,16 @@ const Services = () => {
       description: "Search Engine Optimization and Answer Engine Optimization services that improve your website's ranking, visibility, and traffic through proven, sustainable techniques.",
       icon: "🔍",
     },
+    {
+      title: "Custom AI Chatbot",
+      description: "Develop intelligent, personalized AI chatbots that engage your customers, answer queries, and provide assistance 24/7, enhancing customer service while reducing operational costs.",
+      icon: "💬",
+    },
+    {
+      title: "Lead Generation Systems",
+      description: "Implement effective lead generation systems that capture high-quality leads, nurture prospects through automated workflows, and convert potential customers into loyal clients.",
+      icon: "🎯",
+    },
   ];
 
   return (
