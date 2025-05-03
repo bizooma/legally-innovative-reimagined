@@ -5,7 +5,7 @@ const Services = () => {
   const services = [
     {
       title: "AI Consulting",
-      description: "We help businesses leverage artificial intelligence to streamline operations, enhance customer experiences, and drive innovation through strategic planning and implementation.",
+      description: "We help law firms leverage artificial intelligence to streamline operations, enhance customer experiences, and drive innovation through strategic planning and implementation.",
       icon: "🤖",
     },
     {
@@ -15,7 +15,7 @@ const Services = () => {
     },
     {
       title: "Website Development",
-      description: "Custom website solutions designed to meet your specific business needs, from simple informational sites to complex web applications with seamless user experiences.",
+      description: "Custom website solutions designed to meet your specific law firm needs, from simple informational sites to complex web applications with seamless user experiences.",
       icon: "💻",
     },
     {
