@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ExternalLink } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -59,8 +59,11 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <Button className="bg-legal-primary hover:bg-legal-secondary text-white">
-            Get Started
+          <Button 
+            className="bg-legal-primary hover:bg-legal-secondary text-white"
+            onClick={() => window.open("https://login.bizooma.com", "_blank")}
+          >
+            Client Portal <ExternalLink className="ml-1 h-4 w-4" />
           </Button>
         </nav>
 
@@ -87,8 +90,11 @@ const Navbar = () => {
                 {link.name}
               </a>
             ))}
-            <Button className="bg-legal-primary hover:bg-legal-secondary text-white w-full">
-              Get Started
+            <Button 
+              className="bg-legal-primary hover:bg-legal-secondary text-white w-full flex items-center justify-center"
+              onClick={() => window.open("https://login.bizooma.com", "_blank")}
+            >
+              Client Portal <ExternalLink className="ml-1 h-4 w-4" />
             </Button>
           </div>
         </nav>
