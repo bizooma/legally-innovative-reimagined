@@ -4,34 +4,34 @@ import { Card, CardContent } from "@/components/ui/card";
 const Services = () => {
   const services = [
     {
-      title: "Innovation Consulting",
-      description: "We help legal teams identify opportunities for innovation, develop strategies, and implement changes that improve efficiency and client satisfaction.",
-      icon: "🚀",
+      title: "AI Consulting",
+      description: "We help businesses leverage artificial intelligence to streamline operations, enhance customer experiences, and drive innovation through strategic planning and implementation.",
+      icon: "🤖",
     },
     {
-      title: "Legal Design Thinking",
-      description: "Reimagine legal services and documents through human-centered design principles that enhance clarity, usability, and effectiveness.",
-      icon: "💡",
+      title: "Mobile App Development",
+      description: "Create powerful, user-friendly mobile applications for iOS and Android platforms that engage your customers and enhance your brand's digital presence.",
+      icon: "📱",
     },
     {
-      title: "Technology Implementation",
-      description: "Navigate the complex legal tech landscape. We help select, implement, and optimize the right tools for your specific needs.",
-      icon: "⚙️",
+      title: "Website Development",
+      description: "Custom website solutions designed to meet your specific business needs, from simple informational sites to complex web applications with seamless user experiences.",
+      icon: "💻",
     },
     {
-      title: "Training Programs",
-      description: "Equip your team with the skills needed for the future of legal practice through our specialized training programs and workshops.",
-      icon: "🎓",
-    },
-    {
-      title: "Change Management",
-      description: "Successfully navigate organizational change with our proven methodologies that ensure adoption and sustainable transformation.",
+      title: "Digital Marketing",
+      description: "Comprehensive digital marketing strategies that increase your online visibility, engage your target audience, and convert visitors into loyal customers.",
       icon: "📈",
     },
     {
-      title: "Innovation Culture",
-      description: "Build a culture that embraces innovation, continuous improvement, and client-centered thinking throughout your organization.",
-      icon: "🌱",
+      title: "Google Business Profile/Bing Places",
+      description: "Optimize your local online presence with professionally managed Google Business Profile and Bing Places listings to improve local search visibility and customer engagement.",
+      icon: "🗺️",
+    },
+    {
+      title: "SEO/AEO",
+      description: "Search Engine Optimization and Answer Engine Optimization services that improve your website's ranking, visibility, and traffic through proven, sustainable techniques.",
+      icon: "🔍",
     },
   ];
 
@@ -43,8 +43,8 @@ const Services = () => {
             Our <span className="highlight-text">Services</span>
           </h2>
           <p className="text-lg text-gray-700">
-            We provide a comprehensive suite of services designed to help legal professionals 
-            and organizations navigate the changing landscape of legal services.
+            We provide a comprehensive suite of services designed to help businesses 
+            establish a strong digital presence and leverage technology for growth.
           </p>
         </div>
 
