@@ -24,6 +24,8 @@ const Footer = () => {
               <li><a href="#about" className="text-gray-300 hover:text-legal-accent transition-colors">About Us</a></li>
               <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Services</a></li>
               <li><a href="#contact" className="text-gray-300 hover:text-legal-accent transition-colors">Contact</a></li>
+              <li><PrivacyPolicyModal /></li>
+              <li><TermsOfServiceModal /></li>
             </ul>
           </div>
           
@@ -57,10 +59,6 @@ const Footer = () => {
             <p className="text-gray-400 text-sm">
               © Legally Innovative 2025. A Bizooma, LLC property, All rights reserved.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <PrivacyPolicyModal />
-              <TermsOfServiceModal />
-            </div>
           </div>
         </div>
       </div>
