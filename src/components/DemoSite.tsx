@@ -86,7 +86,10 @@ const DemoSite = () => {
         </div>
 
         <div className="text-center">
-          <Button className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 rounded-md text-lg">
+          <Button 
+            className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 rounded-md text-lg"
+            onClick={() => window.open("https://calendly.com/joe-bizooma/30min", "_blank", "noopener,noreferrer")}
+          >
             Request a Personalized Demo <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>
