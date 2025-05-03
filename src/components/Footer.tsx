@@ -60,7 +60,6 @@ const Footer = () => {
             <div className="flex space-x-6 mt-4 md:mt-0">
               <PrivacyPolicyModal />
               <TermsOfServiceModal />
-              <a href="#" className="text-gray-400 hover:text-gray-300 text-sm">Cookie Policy</a>
             </div>
           </div>
         </div>
