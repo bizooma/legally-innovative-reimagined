@@ -8,7 +8,7 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2 mb-12 lg:mb-0 animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-legal-dark">
-              Where <span className="gradient-text">Accountability</span> Meets <span className="gradient-text">Creativity</span>
+              <span className="gradient-text">Accountability</span> Meets <span className="gradient-text">Creativity</span>
             </h1>
             <p className="text-lg md:text-xl mb-8 text-gray-700 max-w-xl">
               At Legally Innovative, we are passionate about helping law firms thrive in the digital age. As a full-service marketing and AI automations provider, we understand the unique challenges that law firms face in generating, nurturing, and converting leads.
