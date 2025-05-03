@@ -47,9 +47,6 @@ const Footer = () => {
                 <Facebook size={18} />
               </a>
             </div>
-            <p className="text-gray-300 text-sm">
-              Subscribe to our newsletter for the latest legal innovation insights.
-            </p>
           </div>
         </div>
         
