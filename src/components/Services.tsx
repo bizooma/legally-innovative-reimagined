@@ -53,7 +53,7 @@ const Services = () => {
             Our <span className="highlight-text">Services</span>
           </h2>
           <p className="text-lg text-gray-700">
-            We provide a comprehensive suite of services designed to help businesses 
+            We provide a comprehensive suite of services designed to help law firms 
             establish a strong digital presence and leverage technology for growth.
           </p>
         </div>
