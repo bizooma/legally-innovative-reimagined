@@ -1,6 +1,7 @@
 
 import { Linkedin, Facebook } from "lucide-react";
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
+import TermsOfServiceModal from "./TermsOfServiceModal";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -58,7 +59,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <PrivacyPolicyModal />
-              <a href="#" className="text-gray-400 hover:text-gray-300 text-sm">Terms of Service</a>
+              <TermsOfServiceModal />
               <a href="#" className="text-gray-400 hover:text-gray-300 text-sm">Cookie Policy</a>
             </div>
           </div>
