@@ -14,29 +14,56 @@ const Contact = () => {
     company: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
     
-    // In a real app, you would send this data to your backend
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll be in touch soon.",
-    });
-    
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      message: "",
-    });
+    try {
+      // Send email using formsubmit.co
+      const formAction = "https://formsubmit.co/joe@bizooma.com";
+      
+      const formElement = e.target as HTMLFormElement;
+      const formSubmitData = new FormData(formElement);
+      
+      await fetch(formAction, {
+        method: "POST",
+        body: formSubmitData,
+        headers: {
+          'Accept': 'application/json'
+        },
+      });
+      
+      console.log("Form submitted:", formData);
+      
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We'll be in touch soon.",
+      });
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Error",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -95,7 +122,12 @@ const Contact = () => {
           </div>
           
           <div className="lg:w-3/5">
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg p-8 shadow-lg">
+            <form onSubmit={handleSubmit} className="bg-white rounded-lg p-8 shadow-lg" action="https://formsubmit.co/joe@bizooma.com" method="POST">
+              <input type="hidden" name="_subject" value="New contact form submission from LegallyInnovative" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_next" value={window.location.href} />
+              
               <h3 className="text-2xl font-bold mb-6 text-legal-dark">Send us a Message</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -160,8 +192,12 @@ const Contact = () => {
                 />
               </div>
               
-              <Button type="submit" className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6">
-                Send Message
+              <Button 
+                type="submit" 
+                className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>
