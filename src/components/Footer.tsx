@@ -1,5 +1,6 @@
 
 import { Linkedin, Facebook } from "lucide-react";
+import PrivacyPolicyModal from "./PrivacyPolicyModal";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -56,7 +57,7 @@ const Footer = () => {
               © Legally Innovative 2025. A Bizooma, LLC property, All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-gray-300 text-sm">Privacy Policy</a>
+              <PrivacyPolicyModal />
               <a href="#" className="text-gray-400 hover:text-gray-300 text-sm">Terms of Service</a>
               <a href="#" className="text-gray-400 hover:text-gray-300 text-sm">Cookie Policy</a>
             </div>
