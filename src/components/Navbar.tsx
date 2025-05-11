@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,12 +24,13 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "FAQ", href: "#faq" },
-    { name: "Why Us", href: "#why-us" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "#home", isExternal: false, path: "/" },
+    { name: "About", href: "#about", isExternal: false },
+    { name: "Services", href: "#services", isExternal: false },
+    { name: "DIY", href: "/diy", isExternal: false, path: "/diy" },
+    { name: "FAQ", href: "#faq", isExternal: false },
+    { name: "Why Us", href: "#why-us", isExternal: false },
+    { name: "Contact", href: "#contact", isExternal: false },
   ];
 
   return (
@@ -40,24 +42,34 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <a href="#home" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img 
             src="/logo.png" 
             alt="Legally Innovative Logo" 
             className="h-10 w-auto object-contain"
           />
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-legal-dark hover:text-legal-primary transition-colors font-medium"
-            >
-              {link.name}
-            </a>
+            link.path ? (
+              <Link
+                key={link.name}
+                to={link.path}
+                className="text-legal-dark hover:text-legal-primary transition-colors font-medium"
+              >
+                {link.name}
+              </Link>
+            ) : (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-legal-dark hover:text-legal-primary transition-colors font-medium"
+              >
+                {link.name}
+              </a>
+            )
           ))}
           <Button 
             className="bg-legal-primary hover:bg-legal-secondary text-white"
@@ -81,14 +93,25 @@ const Navbar = () => {
         <nav className="md:hidden bg-white py-4 px-4 shadow-lg animate-fade-in">
           <div className="flex flex-col space-y-4">
             {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.name}
-              </a>
+              link.path ? (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </a>
+              )
             ))}
             <Button 
               className="bg-legal-primary hover:bg-legal-secondary text-white w-full flex items-center justify-center"
