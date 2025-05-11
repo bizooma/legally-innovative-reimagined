@@ -256,9 +256,9 @@ const DIY = () => {
                 </p>
                 <Button 
                   className="bg-legal-primary hover:bg-legal-secondary mt-4"
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => window.open("https://calendly.com/joe-bizooma/30min", "_blank")}
                 >
-                  Contact Us
+                  Free Consultation
                 </Button>
               </div>
             </div>
