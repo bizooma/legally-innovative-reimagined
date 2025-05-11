@@ -18,7 +18,7 @@ const DIY = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-8 text-legal-dark">
-              DIY Legal Resources
+              DIY Legal Marketing Resources
             </h1>
             
             <div className="prose prose-lg max-w-none mb-12">
