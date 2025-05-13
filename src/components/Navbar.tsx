@@ -73,9 +73,9 @@ const Navbar = () => {
           ))}
           <Button 
             className="bg-legal-primary hover:bg-legal-secondary text-white"
-            onClick={() => window.open("https://login.bizooma.com", "_blank")}
+            onClick={() => window.location.href = "/portal"}
           >
-            Client Portal <ExternalLink className="ml-1 h-4 w-4" />
+            Client Portal
           </Button>
         </nav>
 
@@ -115,9 +115,12 @@ const Navbar = () => {
             ))}
             <Button 
               className="bg-legal-primary hover:bg-legal-secondary text-white w-full flex items-center justify-center"
-              onClick={() => window.open("https://login.bizooma.com", "_blank")}
+              onClick={() => {
+                window.location.href = "/portal";
+                setMobileMenuOpen(false);
+              }}
             >
-              Client Portal <ExternalLink className="ml-1 h-4 w-4" />
+              Client Portal
             </Button>
           </div>
         </nav>
