@@ -168,7 +168,7 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
                 stackId="a" 
                 fill="#9b87f5" 
                 radius={4}
-                baseValue="start" 
+                // Removed the invalid 'baseValue' property
               />
             </BarChart>
           </ChartContainer>
