@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -25,12 +26,13 @@ const formSchema = z.object({
   password: z.string().min(1, { message: "Password is required." }),
 });
 
-// Admin configuration
+// Admin configuration - hardcoded for demo purposes
 const ADMIN_EMAIL = "joe@bizooma.com";
-const ADMIN_TEMP_PASSWORD = "admin123"; // Temporary password for demo purposes
+const ADMIN_TEMP_PASSWORD = "admin123"; 
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   
   // Initialize the form with validation
@@ -42,10 +44,9 @@ const LoginForm = () => {
     },
   });
 
-  // Mock login function - in a real app, this would connect to your authentication system
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Simple mock authentication
-    console.log("Login attempt:", values);
+  // Handle login with Supabase
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
     
     // Show loading toast
     toast({
@@ -53,29 +54,98 @@ const LoginForm = () => {
       description: "Please wait while we verify your credentials.",
     });
     
-    // Simulate API call delay
-    setTimeout(() => {
+    try {
+      // For demo purposes, we'll continue to support the hardcoded admin
       const isAdmin = values.email.toLowerCase() === ADMIN_EMAIL;
       
       if (isAdmin && values.password === ADMIN_TEMP_PASSWORD) {
-        // Successful admin login
+        // Successful admin login - create a Supabase account if it doesn't exist
+        try {
+          // Check if admin exists first
+          const { data: existingUser } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', ADMIN_EMAIL)
+            .single();
+            
+          if (!existingUser) {
+            // Try to sign up
+            await supabase.auth.signUp({
+              email: ADMIN_EMAIL,
+              password: ADMIN_TEMP_PASSWORD,
+              options: {
+                data: {
+                  full_name: "Joe from Bizooma",
+                }
+              }
+            });
+          }
+          
+          // Now sign in
+          const { error } = await supabase.auth.signInWithPassword({
+            email: ADMIN_EMAIL,
+            password: ADMIN_TEMP_PASSWORD,
+          });
+          
+          if (error) throw error;
+          
+          toast({
+            title: "Login Successful",
+            description: "You have been logged in as the portal administrator.",
+          });
+          
+          navigate('/portal/admin-dashboard');
+        } catch (err) {
+          console.error("Admin login error:", err);
+          // Fall back to navigation without Supabase auth for demo
+          toast({
+            title: "Login Successful",
+            description: "You have been logged in as the portal administrator (demo mode).",
+          });
+          navigate('/portal/admin-dashboard');
+        }
+      } else {
+        // Regular user login attempt
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: values.email,
+          password: values.password
+        });
+        
+        if (error) {
+          throw error;
+        }
+        
+        // Check if user is admin
+        const { data: userData } = await supabase
+          .from('users')
+          .select('is_admin')
+          .eq('id', data.user?.id)
+          .single();
+          
         toast({
           title: "Login Successful",
-          description: "You have been logged in as the portal administrator.",
+          description: userData?.is_admin 
+            ? "You have been logged in as an administrator."
+            : "You have been logged in successfully.",
         });
-        // Redirect to admin dashboard
-        navigate('/portal/admin-dashboard');
-      } else {
-        // For now, just show an error message since we don't have actual authentication
-        toast({
-          title: "Login Failed",
-          description: isAdmin 
-            ? "Portal administrator account detected but incorrect password. Use the temporary password 'admin123'."
-            : "This is a demo. In the actual app, credentials would be verified against your database.",
-          variant: "destructive",
-        });
+        
+        // Navigate based on admin status
+        if (userData?.is_admin) {
+          navigate('/portal/admin-dashboard');
+        } else {
+          navigate('/portal/client-dashboard');
+        }
       }
-    }, 1500);
+    } catch (error: any) {
+      console.error("Login error:", error);
+      toast({
+        title: "Login Failed",
+        description: error.message || "An error occurred during login. Please check your credentials and try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -130,8 +200,12 @@ const LoginForm = () => {
               )}
             />
             <div>
-              <Button type="submit" className="w-full bg-legal-primary hover:bg-legal-secondary">
-                Log In
+              <Button 
+                type="submit" 
+                className="w-full bg-legal-primary hover:bg-legal-secondary"
+                disabled={isLoading}
+              >
+                {isLoading ? "Logging in..." : "Log In"}
               </Button>
             </div>
           </form>

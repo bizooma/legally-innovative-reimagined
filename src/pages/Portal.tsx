@@ -1,12 +1,61 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PortalHero from '@/components/portal/PortalHero';
 import PortalFeatures from '@/components/portal/PortalFeatures';
 import LoginForm from '@/components/portal/LoginForm';
+import { supabase } from '@/integrations/supabase/client';
 
 const Portal = () => {
+  const navigate = useNavigate();
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session) {
+          // Check if user is admin
+          const { data: userData, error } = await supabase
+            .from('users')
+            .select('is_admin')
+            .eq('id', session.user.id)
+            .single();
+            
+          if (error) {
+            throw error;
+          }
+          
+          // Direct to appropriate dashboard
+          if (userData?.is_admin) {
+            navigate('/portal/admin-dashboard');
+          } else {
+            navigate('/portal/client-dashboard');
+          }
+        }
+      } catch (error) {
+        console.error("Session check error:", error);
+        // If there's an error, we'll just show the login page
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    };
+    
+    checkSession();
+  }, [navigate]);
+
+  if (isCheckingAuth) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <Navbar />

@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   Dialog,
   DialogContent,
@@ -43,11 +44,12 @@ const clientFormSchema = z.object({
 type ClientFormValues = z.infer<typeof clientFormSchema>;
 
 interface AddClientDialogProps {
-  onClientAdded?: (client: ClientFormValues) => void;
+  onClientAdded?: (client: any) => void;
 }
 
 export function AddClientDialog({ onClientAdded }: AddClientDialogProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<ClientFormValues>({
     resolver: zodResolver(clientFormSchema),
@@ -60,23 +62,57 @@ export function AddClientDialog({ onClientAdded }: AddClientDialogProps) {
     },
   });
 
-  function onSubmit(data: ClientFormValues) {
-    // Call the onClientAdded callback if provided
-    if (onClientAdded) {
-      onClientAdded(data);
-    } else {
-      // Fallback to previous behavior if no callback provided
-      console.log("New client data:", data);
+  async function onSubmit(data: ClientFormValues) {
+    setIsSubmitting(true);
+    try {
+      // Get the current user
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        throw new Error("You must be logged in to add a client");
+      }
+      
+      // Insert client into Supabase
+      const { data: client, error } = await supabase
+        .from('clients')
+        .insert({
+          company_name: data.companyName,
+          contact_name: data.contactName,
+          contact_email: data.contactEmail,
+          contact_phone: data.contactPhone || null,
+          notes: data.notes || null,
+          created_by: user.id
+        })
+        .select()
+        .single();
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Call the onClientAdded callback if provided
+      if (onClientAdded) {
+        onClientAdded(client);
+      }
       
       toast({
         title: "Client Added Successfully",
         description: `${data.companyName} has been added to your client list.`,
       });
+      
+      // Reset form and close dialog
+      form.reset();
+      setOpen(false);
+    } catch (error: any) {
+      console.error("Error adding client:", error);
+      toast({
+        title: "Error Adding Client",
+        description: error.message || "An error occurred while adding the client. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    // Reset form and close dialog
-    form.reset();
-    setOpen(false);
   }
 
   return (
@@ -176,10 +212,16 @@ export function AddClientDialog({ onClientAdded }: AddClientDialogProps) {
                 type="button" 
                 variant="outline" 
                 onClick={() => setOpen(false)}
+                disabled={isSubmitting}
               >
                 Cancel
               </Button>
-              <Button type="submit">Create Client Workspace</Button>
+              <Button 
+                type="submit" 
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Creating..." : "Create Client Workspace"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

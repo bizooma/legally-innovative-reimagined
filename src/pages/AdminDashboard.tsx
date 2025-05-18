@@ -7,75 +7,115 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 // Define the client type
 interface Client {
   id: string;
-  companyName: string;
-  contactName: string;
-  contactEmail: string;
-  contactPhone?: string;
+  company_name: string;
+  contact_name: string;
+  contact_email: string;
+  contact_phone?: string;
   notes?: string;
-  dateAdded: string;
+  date_added: string;
 }
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [clients, setClients] = useState<Client[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState({
     activeClients: 0,
     pendingApprovals: 0,
     newMessages: 0,
   });
+  const [user, setUser] = useState<any>(null);
 
-  // Load clients from localStorage on component mount
+  // Check auth status
   useEffect(() => {
-    const storedClients = localStorage.getItem('clients');
-    if (storedClients) {
-      try {
-        const parsedClients = JSON.parse(storedClients);
-        setClients(parsedClients);
-        setStats(prev => ({
-          ...prev,
-          activeClients: parsedClients.length
-        }));
-      } catch (error) {
-        console.error('Error parsing stored clients:', error);
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
         toast({
-          title: "Error",
-          description: "Could not load client data",
+          title: "Authentication Required",
+          description: "Please login to access the admin dashboard",
           variant: "destructive",
         });
+        navigate('/portal');
+      } else {
+        setUser(session.user);
       }
-    }
-  }, []);
-
-  // Handle adding a new client
-  const handleAddClient = (client: Omit<Client, 'id' | 'dateAdded'>) => {
-    const newClient: Client = {
-      ...client,
-      id: crypto.randomUUID(),
-      dateAdded: new Date().toISOString(),
     };
     
-    const updatedClients = [...clients, newClient];
-    setClients(updatedClients);
+    checkUser();
+  }, [navigate, toast]);
+
+  // Load clients from Supabase
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from('clients')
+          .select('*')
+          .order('date_added', { ascending: false });
+          
+        if (error) {
+          throw error;
+        }
+        
+        if (data) {
+          setClients(data as Client[]);
+          setStats(prev => ({
+            ...prev,
+            activeClients: data.length
+          }));
+        }
+      } catch (error: any) {
+        console.error('Error fetching clients:', error);
+        toast({
+          title: "Error",
+          description: "Could not load client data: " + (error.message || "Unknown error"),
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
     
-    // Update stats
+    if (user) {
+      fetchClients();
+    }
+  }, [user, toast]);
+
+  // Handle adding a new client
+  const handleAddClient = (client: Client) => {
+    setClients(prev => [client, ...prev]);
     setStats(prev => ({
       ...prev,
-      activeClients: updatedClients.length
+      activeClients: prev.activeClients + 1
     }));
-    
-    // Save to localStorage
-    localStorage.setItem('clients', JSON.stringify(updatedClients));
-    
-    toast({
-      title: "Success",
-      description: `${client.companyName} has been added to your client list.`,
-    });
   };
+
+  // Handle logout
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out",
+    });
+    navigate('/portal');
+  };
+
+  if (isLoading && !user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -98,6 +138,13 @@ const AdminDashboard = () => {
                 >
                   Back to Portal
                 </Button>
+                <Button 
+                  variant="outline"
+                  onClick={handleLogout}
+                  className="bg-white hover:bg-gray-100"
+                >
+                  Logout
+                </Button>
               </div>
             </div>
 
@@ -115,13 +162,15 @@ const AdminDashboard = () => {
                 <CardDescription>Latest client interactions and updates</CardDescription>
               </CardHeader>
               <CardContent>
-                {clients.length > 0 ? (
+                {isLoading ? (
+                  <p className="text-center py-4">Loading recent activity...</p>
+                ) : clients.length > 0 ? (
                   <div className="space-y-4">
-                    {clients.slice(-3).reverse().map(client => (
+                    {clients.slice(0, 3).map(client => (
                       <div key={client.id} className="flex justify-between items-center border-b pb-3 last:border-0">
                         <div>
-                          <p className="font-medium">{client.companyName}</p>
-                          <p className="text-sm text-gray-500">Client added on {new Date(client.dateAdded).toLocaleDateString()}</p>
+                          <p className="font-medium">{client.company_name}</p>
+                          <p className="text-sm text-gray-500">Client added on {new Date(client.date_added).toLocaleDateString()}</p>
                         </div>
                       </div>
                     ))}
@@ -144,14 +193,16 @@ const AdminDashboard = () => {
                 <AddClientDialog onClientAdded={handleAddClient} />
               </CardHeader>
               <CardContent>
-                {clients.length > 0 ? (
+                {isLoading ? (
+                  <p className="text-center py-4">Loading clients...</p>
+                ) : clients.length > 0 ? (
                   <div className="space-y-4">
                     {clients.map(client => (
                       <div key={client.id} className="flex justify-between items-center p-4 border rounded-md hover:bg-gray-50">
                         <div>
-                          <h3 className="font-medium">{client.companyName}</h3>
-                          <p className="text-sm text-gray-500">{client.contactName} • {client.contactEmail}</p>
-                          {client.contactPhone && <p className="text-sm text-gray-500">{client.contactPhone}</p>}
+                          <h3 className="font-medium">{client.company_name}</h3>
+                          <p className="text-sm text-gray-500">{client.contact_name} • {client.contact_email}</p>
+                          {client.contact_phone && <p className="text-sm text-gray-500">{client.contact_phone}</p>}
                         </div>
                         <Button size="sm" variant="outline" onClick={() => console.log('View client', client.id)}>
                           View Details
