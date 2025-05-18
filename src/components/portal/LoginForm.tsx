@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,6 +31,7 @@ const ADMIN_TEMP_PASSWORD = "admin123"; // Temporary password for demo purposes
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   
   // Initialize the form with validation
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,8 +61,10 @@ const LoginForm = () => {
         // Successful admin login
         toast({
           title: "Login Successful",
-          description: "You have been logged in as the portal administrator. This is a demo without actual authentication.",
+          description: "You have been logged in as the portal administrator.",
         });
+        // Redirect to admin dashboard
+        navigate('/portal/admin-dashboard');
       } else {
         // For now, just show an error message since we don't have actual authentication
         toast({
