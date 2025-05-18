@@ -3,6 +3,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Client } from '@/types/database';
 import { useClientDocumentCount } from '@/hooks/useClientDocumentCount';
+import { useClientProjectsWithDates } from '@/hooks/useClientProjectsWithDates';
+import ClientGanttChart from './ClientGanttChart';
 
 interface ClientOverviewProps {
   client: Client;
@@ -10,10 +12,17 @@ interface ClientOverviewProps {
 
 const ClientOverview: React.FC<ClientOverviewProps> = ({ client }) => {
   const { documentCount, isLoading: isLoadingDocuments } = useClientDocumentCount(client.id);
+  const { projects, isLoading: isLoadingProjects } = useClientProjectsWithDates(client.id);
 
   return (
     <div className="space-y-6">
-      {/* Account Summary Card - Moved to top */}
+      {/* Gantt Chart - Added at the top */}
+      <ClientGanttChart 
+        projects={projects} 
+        isLoading={isLoadingProjects} 
+      />
+
+      {/* Account Summary Card */}
       <Card>
         <CardHeader>
           <CardTitle>Account Summary</CardTitle>
@@ -23,8 +32,12 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-4 rounded-lg border shadow-sm">
                 <h3 className="font-medium text-gray-700 mb-1">Projects</h3>
-                <p className="text-2xl font-bold">0</p>
-                <p className="text-sm text-gray-500">No active projects</p>
+                <p className="text-2xl font-bold">{isLoadingProjects ? "..." : projects.length}</p>
+                <p className="text-sm text-gray-500">
+                  {projects.length === 0 ? "No active projects" :
+                   projects.length === 1 ? "1 active project" :
+                   `${projects.length} active projects`}
+                </p>
               </div>
               <div className="bg-white p-4 rounded-lg border shadow-sm">
                 <h3 className="font-medium text-gray-700 mb-1">Documents</h3>
