@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Document, fetchClientDocuments, deleteDocument, updateDocumentDescription } from '@/services/documentService';
@@ -5,6 +6,7 @@ import { toast } from 'sonner';
 import DocumentItem from './document-components/DocumentItem';
 import DocumentEditDialog from './document-components/DocumentEditDialog';
 import EmptyDocumentState from './document-components/EmptyDocumentState';
+import { DocumentUploadDialog } from './DocumentUploadDialog';
 
 interface ClientDocumentsProps {
   clientId: string;
