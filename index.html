@@ -25,23 +25,6 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- VideoAsk Chatbot Widget -->
-    <script>
-    window.VIDEOASK_EMBED_CONFIG = {
-      "kind": "widget",
-      "url": "https://www.videoask.com/fnp53kxs8",
-      "options": {
-        "widgetType": "VideoThumbnailWindowTall",
-        "text": "",
-        "backgroundColor": "#9D0D0F",
-        "position": "bottom-left",
-        "dismissible": false,
-        "videoPosition": "center center"
-      }
-    }
-    </script>
-    <script src="https://www.videoask.com/embed/embed.js"></script>
-    
     <!-- ElevenLabs Convai Chat Widget -->
     <elevenlabs-convai agent-id="cylHD3Ay9g1H7eGVdSdj"></elevenlabs-convai>
     <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
@@ -53,25 +36,16 @@
           // Check if the current URL contains the admin dashboard path
           const isAdminDashboard = window.location.pathname.includes('/portal/admin-dashboard');
           
-          // Get the VideoAsk widget and ElevenLabs Convai elements
-          const videoaskElements = document.querySelectorAll('.videoask-embed');
+          // Get the ElevenLabs Convai element
           const elevenlabsWidget = document.querySelector('elevenlabs-convai');
           
           if (isAdminDashboard) {
-            // Hide chatbots on admin dashboard
-            videoaskElements.forEach(el => {
-              if (el) el.style.display = 'none';
-            });
-            
+            // Hide chatbot on admin dashboard
             if (elevenlabsWidget) {
               elevenlabsWidget.style.display = 'none';
             }
           } else {
-            // Show chatbots on other pages
-            videoaskElements.forEach(el => {
-              if (el) el.style.display = '';
-            });
-            
+            // Show chatbot on other pages
             if (elevenlabsWidget) {
               elevenlabsWidget.style.display = '';
             }

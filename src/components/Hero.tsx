@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
@@ -32,14 +33,22 @@ const Hero = () => {
             <div className="relative w-full max-w-2xl">
               <div className="absolute -top-6 -left-6 w-64 h-64 bg-legal-light rounded-full opacity-50 -z-10"></div>
               <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-legal-accent rounded-full opacity-20 -z-10"></div>
-              <iframe 
-                src="https://www.videoask.com/fc5vpzgv1" 
-                allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" 
-                width="100%" 
-                height="600px" 
-                style={{border: 'none', borderRadius: '24px'}}
-                className="w-full shadow-xl"
-              />
+              <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                <h2 className="text-2xl font-bold text-legal-dark mb-4">
+                  Ready to Transform Your Legal Practice?
+                </h2>
+                <p className="text-gray-700 mb-6">
+                  Explore how our AI-powered marketing solutions can help your law firm attract more clients and streamline your operations. Chat with our AI assistant using the ElevenLabs widget in the bottom corner to learn more.
+                </p>
+                <div className="flex justify-center">
+                  <Button
+                    className="bg-legal-accent hover:bg-legal-accent/80 text-white px-6 py-4 text-lg"
+                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    Contact Our Team
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
