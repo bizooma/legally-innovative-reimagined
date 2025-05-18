@@ -84,3 +84,4 @@ gcp_jwt_path = "supabase/gcloud.json"
 [functions]
 [functions.social-media-webhook]
 verify_jwt = false
+

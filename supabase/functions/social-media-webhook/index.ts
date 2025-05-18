@@ -21,6 +21,12 @@ serve(async (req) => {
     // Initialize Supabase client
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     
+    // Extract client ID from URL or query parameter
+    const url = new URL(req.url);
+    const clientId = url.searchParams.get('client_id');
+    
+    console.log(`Processing webhook for client: ${clientId || 'unknown'}`);
+    
     // Parse the webhook payload
     const payload = await req.json();
     console.log("Received webhook payload:", payload);
@@ -33,6 +39,7 @@ serve(async (req) => {
           platform: payload.platform || "unknown",
           event_type: payload.event || "unknown",
           event_data: payload,
+          client_id: clientId || null, // Store client ID if provided
           processed: false
         }
       ]);
@@ -50,7 +57,7 @@ serve(async (req) => {
 
     // Return a success response
     return new Response(
-      JSON.stringify({ success: true, message: "Webhook received" }),
+      JSON.stringify({ success: true, message: "Webhook received", client_id: clientId }),
       {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

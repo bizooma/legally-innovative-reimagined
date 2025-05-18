@@ -32,3 +32,13 @@ export interface Project {
   updated_at: string;
   created_by: string;
 }
+
+export interface SocialMediaEvent {
+  id: string;
+  platform: string;
+  event_type: string;
+  event_data: any;
+  client_id: string | null;
+  processed: boolean;
+  created_at: string;
+}
