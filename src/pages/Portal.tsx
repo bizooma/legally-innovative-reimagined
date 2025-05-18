@@ -13,6 +13,8 @@ const Portal = () => {
   const navigate = useNavigate();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
+  console.log('Portal component rendering');
+
   // Check if user is already logged in
   useEffect(() => {
     const checkSession = async () => {
@@ -64,6 +66,13 @@ const Portal = () => {
     checkSession();
   }, [navigate]);
 
+  // Debug HTML element to help identify if the component is rendering
+  const debugElement = (
+    <div style={{display: 'none', position: 'fixed', bottom: '0', right: '0'}}>
+      Portal Component Active: {new Date().toISOString()}
+    </div>
+  );
+
   if (isCheckingAuth) {
     return (
       <>
@@ -74,6 +83,7 @@ const Portal = () => {
             <p className="text-sm text-gray-500 mt-2">Verifying authentication status...</p>
           </div>
         </div>
+        {debugElement}
         <Footer />
       </>
     );
@@ -100,6 +110,7 @@ const Portal = () => {
           </div>
         </div>
       </div>
+      {debugElement}
       <Footer />
     </>
   );
