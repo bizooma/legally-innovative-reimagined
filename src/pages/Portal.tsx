@@ -7,8 +7,6 @@ import PortalHero from '@/components/portal/PortalHero';
 import PortalFeatures from '@/components/portal/PortalFeatures';
 import LoginForm from '@/components/portal/LoginForm';
 import { supabase } from '@/integrations/supabase/client';
-import { UserProfile } from '@/types/database';
-import { DatabaseTables } from '@/types/supabase';
 
 const Portal = () => {
   const navigate = useNavigate();
@@ -23,7 +21,7 @@ const Portal = () => {
         if (session) {
           // Check if user is admin
           const { data: userData } = await supabase
-            .from<DatabaseTables['users']>('users')
+            .from('users')
             .select('is_admin')
             .eq('id', session.user.id)
             .maybeSingle();

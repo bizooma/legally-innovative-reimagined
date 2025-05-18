@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -9,7 +8,6 @@ import { AddClientDialog } from '@/components/portal/AddClientDialog';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Client } from '@/types/database';
-import { DatabaseTables } from '@/types/supabase';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -49,7 +47,7 @@ const AdminDashboard = () => {
       try {
         setIsLoading(true);
         const { data, error } = await supabase
-          .from<DatabaseTables['clients']>('clients')
+          .from('clients')
           .select('*')
           .order('date_added', { ascending: false });
           

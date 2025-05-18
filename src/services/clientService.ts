@@ -2,12 +2,11 @@
 import { supabase } from '@/integrations/supabase/client';
 import { Client } from '@/types/database';
 import { ClientFormValues } from '@/schemas/clientSchema';
-import { DatabaseTables } from '@/types/supabase';
 
 export async function addClient(data: ClientFormValues, userId: string): Promise<Client> {
-  // Use the proper type casting with our DatabaseTables interface
+  // No need for type casting with generics anymore
   const { data: client, error } = await supabase
-    .from<DatabaseTables['clients']>('clients')
+    .from('clients')
     .insert({
       company_name: data.companyName,
       contact_name: data.contactName,
@@ -21,6 +20,10 @@ export async function addClient(data: ClientFormValues, userId: string): Promise
   
   if (error) {
     throw error;
+  }
+  
+  if (!client) {
+    throw new Error('Failed to create client');
   }
   
   return client as Client;

@@ -52,3 +52,17 @@ export interface DatabaseTables {
     };
   };
 }
+
+// Define our Database interface that extends Supabase's Database type
+export interface AppDatabase {
+  public: {
+    Tables: {
+      clients: DatabaseTables['clients'];
+      users: DatabaseTables['users'];
+    };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
+  };
+}
