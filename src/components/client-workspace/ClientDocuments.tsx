@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Document, fetchClientDocuments, deleteDocument, updateDocumentDescription } from '@/services/documentService';
@@ -73,18 +72,23 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
   const handleSaveDescription = async () => {
     if (!editingDoc) return;
 
-    const success = await updateDocumentDescription(editingDoc.path, newDescription);
-    if (success) {
-      toast.success("Description updated successfully");
-      setEditDialogOpen(false);
-      
-      // Update the document in the local state
-      const updatedDocuments = documents.map(doc => 
-        doc.id === editingDoc.id 
-          ? { ...doc, description: newDescription } 
-          : doc
-      );
-      setDocuments(updatedDocuments);
+    try {
+      const success = await updateDocumentDescription(editingDoc.path, newDescription);
+      if (success) {
+        toast.success("Description updated successfully");
+        setEditDialogOpen(false);
+        
+        // Update the document in the local state
+        const updatedDocuments = documents.map(doc => 
+          doc.id === editingDoc.id 
+            ? { ...doc, description: newDescription } 
+            : doc
+        );
+        setDocuments(updatedDocuments);
+      }
+    } catch (error) {
+      console.error("Error saving description:", error);
+      toast.error("Failed to update description. Please try again.");
     }
   };
 

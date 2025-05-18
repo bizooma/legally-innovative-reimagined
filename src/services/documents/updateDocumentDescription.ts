@@ -5,34 +5,26 @@ import { BUCKET_NAME } from '@/config/documentConfig';
 
 /**
  * Updates the description of a document
+ * 
+ * This function uses the metadata API of Supabase Storage
+ * to update only the description metadata without re-uploading the file
  */
 export async function updateDocumentDescription(path: string, description: string): Promise<boolean> {
   try {
-    // First, download the file to get its content
-    const { data: fileData, error: downloadError } = await supabase.storage
+    // Update metadata for the file
+    const { data, error } = await supabase.storage
       .from(BUCKET_NAME)
-      .download(path);
-    
-    if (downloadError) {
-      throw downloadError;
-    }
-    
-    if (!fileData) {
-      throw new Error("File not found");
-    }
-    
-    // Re-upload the file with updated metadata
-    const { error: uploadError } = await supabase.storage
-      .from(BUCKET_NAME)
-      .upload(path, fileData, {
-        upsert: true, // Override the existing file
-        metadata: {
+      .updateMetadata(path, {
+        cacheControl: '3600',
+        contentType: 'application/octet-stream',
+        upsert: true,
+        customMetadata: {
           description: description
         }
       });
     
-    if (uploadError) {
-      throw uploadError;
+    if (error) {
+      throw error;
     }
     
     return true;
