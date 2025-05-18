@@ -68,7 +68,7 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
         <ClientProjects clientId={client.id} />
       </TabsContent>
       <TabsContent value="campaigns" className="py-6">
-        <ClientCampaigns />
+        <ClientCampaigns clientId={client.id} />
       </TabsContent>
       <TabsContent value="documents" className="py-6">
         <ClientDocuments clientId={client.id} />

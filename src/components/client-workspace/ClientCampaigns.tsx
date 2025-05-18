@@ -1,19 +1,36 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { PlusCircle, MessageSquare } from 'lucide-react';
+import { NewCampaignDialog } from '@/components/campaigns/NewCampaignDialog';
 
-const ClientCampaigns = () => {
+interface ClientCampaignsProps {
+  clientId: string;
+}
+
+const ClientCampaigns = ({ clientId }: ClientCampaignsProps) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold">Marketing Campaigns</h2>
-        <Button className="flex items-center gap-1">
+        <Button 
+          className="flex items-center gap-1" 
+          onClick={() => setIsDialogOpen(true)}
+        >
           <PlusCircle className="w-4 h-4" />
           <span>New Campaign</span>
         </Button>
       </div>
+
+      {/* New Campaign Dialog */}
+      <NewCampaignDialog 
+        clientId={clientId}
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+      />
 
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
