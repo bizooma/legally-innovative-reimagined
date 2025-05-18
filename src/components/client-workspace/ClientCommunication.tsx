@@ -13,33 +13,8 @@ interface ClientCommunicationProps {
 const ClientCommunication: React.FC<ClientCommunicationProps> = ({ clientId, clientName }) => {
   const [message, setMessage] = useState('');
   
-  // This would be a real API call in a production app
-  const messages = [
-    {
-      id: '1',
-      sender: 'Joe Smith',
-      role: 'Marketing Specialist',
-      content: 'Hello! I\'ve uploaded the revised campaign strategy based on our discussion. Please take a look when you have a chance.',
-      timestamp: '2025-05-16T10:30:00',
-      isClient: false
-    },
-    {
-      id: '2',
-      sender: clientName,
-      role: 'Client',
-      content: 'Thank you! I\'ll review it today and get back to you with feedback.',
-      timestamp: '2025-05-16T11:15:00',
-      isClient: true
-    },
-    {
-      id: '3',
-      sender: 'Joe Smith',
-      role: 'Marketing Specialist',
-      content: 'Great! Looking forward to your thoughts. Also, we should schedule our monthly review meeting for next week.',
-      timestamp: '2025-05-16T11:20:00',
-      isClient: false
-    },
-  ];
+  // Empty messages array - removing dummy data
+  const messages: any[] = [];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

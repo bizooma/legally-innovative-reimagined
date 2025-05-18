@@ -172,18 +172,18 @@ const ClientDetails = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="bg-white p-4 rounded-lg border shadow-sm">
                           <h3 className="font-medium text-gray-700 mb-1">Projects</h3>
-                          <p className="text-2xl font-bold">3</p>
-                          <p className="text-sm text-gray-500">2 Active, 1 Completed</p>
+                          <p className="text-2xl font-bold">0</p>
+                          <p className="text-sm text-gray-500">No active projects</p>
                         </div>
                         <div className="bg-white p-4 rounded-lg border shadow-sm">
                           <h3 className="font-medium text-gray-700 mb-1">Documents</h3>
-                          <p className="text-2xl font-bold">12</p>
-                          <p className="text-sm text-gray-500">Last updated 3 days ago</p>
+                          <p className="text-2xl font-bold">1</p>
+                          <p className="text-sm text-gray-500">Recently uploaded</p>
                         </div>
                         <div className="bg-white p-4 rounded-lg border shadow-sm">
                           <h3 className="font-medium text-gray-700 mb-1">Messages</h3>
-                          <p className="text-2xl font-bold">8</p>
-                          <p className="text-sm text-gray-500">2 unread</p>
+                          <p className="text-2xl font-bold">0</p>
+                          <p className="text-sm text-gray-500">No messages yet</p>
                         </div>
                       </div>
                     </div>

@@ -10,12 +10,8 @@ interface ClientProjectsProps {
 }
 
 const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId }) => {
-  // This would be a real API call in a production app
-  const projects = [
-    { id: '1', name: 'Website Redesign', status: 'In Progress', lastUpdated: '2025-05-10', progress: 65 },
-    { id: '2', name: 'SEO Campaign', status: 'In Progress', lastUpdated: '2025-05-15', progress: 30 },
-    { id: '3', name: 'Brand Identity', status: 'Completed', lastUpdated: '2025-05-01', progress: 100 },
-  ];
+  // Empty projects array - removing dummy data
+  const projects: any[] = [];
 
   return (
     <Card>
