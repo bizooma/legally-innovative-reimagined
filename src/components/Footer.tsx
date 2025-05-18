@@ -25,10 +25,10 @@ const Footer = () => {
               <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Services</a></li>
               <li><a href="#contact" className="text-gray-300 hover:text-legal-accent transition-colors">Contact</a></li>
               <li>
-                <PrivacyPolicyModal triggerClassName="text-gray-300 hover:text-legal-accent transition-colors" />
+                <PrivacyPolicyModal triggerClassName="text-gray-300 hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
               </li>
               <li>
-                <TermsOfServiceModal triggerClassName="text-gray-300 hover:text-legal-accent transition-colors" />
+                <TermsOfServiceModal triggerClassName="text-gray-300 hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
               </li>
             </ul>
           </div>
