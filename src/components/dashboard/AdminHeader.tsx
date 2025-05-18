@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
+import { ChangePasswordDialog } from '@/components/auth/ChangePasswordDialog';
 import { Client } from '@/types/database';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ onClientAdded, onLogou
       </div>
       <div className="flex gap-3">
         <AddClientDialog onClientAdded={onClientAdded} />
+        <ChangePasswordDialog />
         <Button 
           variant="outline" 
           onClick={() => navigate('/portal')}
