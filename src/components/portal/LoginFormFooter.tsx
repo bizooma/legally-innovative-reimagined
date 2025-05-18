@@ -9,9 +9,6 @@ const LoginFormFooter = () => {
       <p className="text-sm text-muted-foreground">
         Don't have credentials? Contact your account manager for access.
       </p>
-      <p className="text-sm text-muted-foreground mt-1">
-        <strong>Administrator:</strong> Use email joe@bizooma.com with password "admin123"
-      </p>
       <Button 
         variant="link" 
         className="p-0 h-auto text-legal-primary" 
