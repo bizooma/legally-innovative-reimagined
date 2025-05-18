@@ -42,7 +42,11 @@ const clientFormSchema = z.object({
 
 type ClientFormValues = z.infer<typeof clientFormSchema>;
 
-export function AddClientDialog() {
+interface AddClientDialogProps {
+  onClientAdded?: (client: ClientFormValues) => void;
+}
+
+export function AddClientDialog({ onClientAdded }: AddClientDialogProps) {
   const [open, setOpen] = React.useState(false);
 
   const form = useForm<ClientFormValues>({
@@ -57,14 +61,18 @@ export function AddClientDialog() {
   });
 
   function onSubmit(data: ClientFormValues) {
-    // In a real app, this would send data to a backend
-    console.log("New client data:", data);
-    
-    // Simulate creating client workspace
-    toast({
-      title: "Client Added Successfully",
-      description: `${data.companyName} has been added to your client list.`,
-    });
+    // Call the onClientAdded callback if provided
+    if (onClientAdded) {
+      onClientAdded(data);
+    } else {
+      // Fallback to previous behavior if no callback provided
+      console.log("New client data:", data);
+      
+      toast({
+        title: "Client Added Successfully",
+        description: `${data.companyName} has been added to your client list.`,
+      });
+    }
     
     // Reset form and close dialog
     form.reset();
