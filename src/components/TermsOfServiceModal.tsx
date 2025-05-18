@@ -1,14 +1,17 @@
-
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
-const TermsOfServiceModal = () => {
+interface TermsOfServiceModalProps {
+  triggerClassName?: string;
+}
+
+const TermsOfServiceModal = ({ triggerClassName }: TermsOfServiceModalProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="link" className="text-gray-400 hover:text-gray-300 text-sm">
+        <Button variant="link" className={triggerClassName || "text-gray-400 hover:text-gray-300 text-sm"}>
           Terms of Service
         </Button>
       </DialogTrigger>

@@ -4,11 +4,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
-const PrivacyPolicyModal = () => {
+interface PrivacyPolicyModalProps {
+  triggerClassName?: string;
+}
+
+const PrivacyPolicyModal = ({ triggerClassName }: PrivacyPolicyModalProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="link" className="text-gray-400 hover:text-gray-300 text-sm">
+        <Button variant="link" className={triggerClassName || "text-gray-400 hover:text-gray-300 text-sm"}>
           Privacy Policy
         </Button>
       </DialogTrigger>
