@@ -10,6 +10,34 @@ interface ClientOverviewProps {
 const ClientOverview: React.FC<ClientOverviewProps> = ({ client }) => {
   return (
     <div className="space-y-6">
+      {/* Account Summary Card - Moved to top */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Account Summary</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white p-4 rounded-lg border shadow-sm">
+                <h3 className="font-medium text-gray-700 mb-1">Projects</h3>
+                <p className="text-2xl font-bold">0</p>
+                <p className="text-sm text-gray-500">No active projects</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg border shadow-sm">
+                <h3 className="font-medium text-gray-700 mb-1">Documents</h3>
+                <p className="text-2xl font-bold">1</p>
+                <p className="text-sm text-gray-500">Recently uploaded</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg border shadow-sm">
+                <h3 className="font-medium text-gray-700 mb-1">Messages</h3>
+                <p className="text-2xl font-bold">0</p>
+                <p className="text-sm text-gray-500">No messages yet</p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -59,33 +87,6 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client }) => {
           </CardContent>
         </Card>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Account Summary</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white p-4 rounded-lg border shadow-sm">
-                <h3 className="font-medium text-gray-700 mb-1">Projects</h3>
-                <p className="text-2xl font-bold">0</p>
-                <p className="text-sm text-gray-500">No active projects</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg border shadow-sm">
-                <h3 className="font-medium text-gray-700 mb-1">Documents</h3>
-                <p className="text-2xl font-bold">1</p>
-                <p className="text-sm text-gray-500">Recently uploaded</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg border shadow-sm">
-                <h3 className="font-medium text-gray-700 mb-1">Messages</h3>
-                <p className="text-2xl font-bold">0</p>
-                <p className="text-sm text-gray-500">No messages yet</p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };
