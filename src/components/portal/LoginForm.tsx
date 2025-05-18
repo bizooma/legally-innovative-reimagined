@@ -26,6 +26,7 @@ const formSchema = z.object({
 
 // Admin configuration
 const ADMIN_EMAIL = "joe@bizooma.com";
+const ADMIN_TEMP_PASSWORD = "admin123"; // Temporary password for demo purposes
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,14 +55,22 @@ const LoginForm = () => {
     setTimeout(() => {
       const isAdmin = values.email.toLowerCase() === ADMIN_EMAIL;
       
-      // For now, just show an error message since we don't have actual authentication
-      toast({
-        title: "Login Failed",
-        description: isAdmin 
-          ? "Portal administrator account detected. In the actual app, you would be logged in with admin privileges."
-          : "This is a demo. In the actual app, credentials would be verified against your database.",
-        variant: "destructive",
-      });
+      if (isAdmin && values.password === ADMIN_TEMP_PASSWORD) {
+        // Successful admin login
+        toast({
+          title: "Login Successful",
+          description: "You have been logged in as the portal administrator. This is a demo without actual authentication.",
+        });
+      } else {
+        // For now, just show an error message since we don't have actual authentication
+        toast({
+          title: "Login Failed",
+          description: isAdmin 
+            ? "Portal administrator account detected but incorrect password. Use the temporary password 'admin123'."
+            : "This is a demo. In the actual app, credentials would be verified against your database.",
+          variant: "destructive",
+        });
+      }
     }, 1500);
   };
 
@@ -128,6 +137,9 @@ const LoginForm = () => {
         <p className="text-sm text-muted-foreground">
           Don't have credentials? Contact your account manager for access.
         </p>
+        <p className="text-sm text-muted-foreground mt-1">
+          <strong>Administrator:</strong> Use email joe@bizooma.com with password "admin123"
+        </p>
         <Button 
           variant="link" 
           className="p-0 h-auto text-legal-primary" 
@@ -141,4 +153,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
