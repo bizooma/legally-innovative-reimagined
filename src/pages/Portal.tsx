@@ -33,12 +33,17 @@ const Portal = () => {
             } else {
               navigate('/portal/client-dashboard');
             }
+          } else {
+            // If no user data found, still allow access to portal but stop loading state
+            setIsCheckingAuth(false);
           }
+        } else {
+          // No session, stop loading state
+          setIsCheckingAuth(false);
         }
       } catch (error) {
         console.error("Session check error:", error);
-        // If there's an error, we'll just show the login page
-      } finally {
+        // If there's an error, show the login page
         setIsCheckingAuth(false);
       }
     };
