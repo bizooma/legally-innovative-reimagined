@@ -121,30 +121,20 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
 
 export async function updateDocumentDescription(path: string, description: string): Promise<boolean> {
   try {
-    // Get the current metadata
-    const { data: fileData, error: fetchError } = await supabase.storage
-      .from(BUCKET_NAME)
-      .getMetadata(path);
+    // Call the database function we created to update the metadata
+    const { data, error } = await supabase.rpc(
+      'update_document_description',
+      {
+        p_path: path,
+        p_description: description
+      }
+    );
     
-    if (fetchError) {
-      throw fetchError;
+    if (error) {
+      throw error;
     }
     
-    // Update the metadata with the new description
-    const updatedMetadata = {
-      ...fileData,
-      description: description
-    };
-    
-    const { error: updateError } = await supabase.storage
-      .from(BUCKET_NAME)
-      .updateMetadata(path, updatedMetadata);
-    
-    if (updateError) {
-      throw updateError;
-    }
-    
-    return true;
+    return data || false;
   } catch (error: any) {
     toast.error(`Failed to update description: ${error.message}`);
     console.error('Error updating document description:', error);
