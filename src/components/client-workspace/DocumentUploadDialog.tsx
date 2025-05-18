@@ -19,6 +19,7 @@ interface DocumentUploadDialogProps {
   variant?: "default" | "outline" | "secondary" | "ghost" | "link" | "destructive" | null;
   size?: "default" | "sm" | "lg" | "icon" | null;
   children?: React.ReactNode;
+  className?: string; // Add className prop
 }
 
 export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({ 
@@ -26,7 +27,8 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
   onDocumentUploaded,
   variant = "default",
   size = "default",
-  children 
+  children,
+  className
 }) => {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -79,7 +81,7 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
   };
 
   const triggerButton = children || (
-    <Button variant={variant} size={size}>
+    <Button variant={variant} size={size} className={className}>
       <Plus className="mr-2 h-4 w-4" />
       Upload Document
     </Button>
