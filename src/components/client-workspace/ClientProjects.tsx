@@ -19,11 +19,9 @@ const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId }) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const handleAddProject = async (projectData: any) => {
+    // We include the client_id here instead of in the AddProjectDialog
     await addProject({
-      name: projectData.name,
-      status: projectData.status,
-      progress: projectData.progress,
-      description: projectData.description || null,
+      ...projectData,
       client_id: clientId,
     });
   };

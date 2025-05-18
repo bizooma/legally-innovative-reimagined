@@ -69,6 +69,8 @@ const AddProjectDialog: React.FC<AddProjectDialogProps> = ({
   const handleSubmit = async (values: ProjectFormValues) => {
     setIsSubmitting(true);
     try {
+      // Just pass the form values to onAddProject
+      // The parent component will add client_id
       await onAddProject(values);
       form.reset();
       setOpen(false);
