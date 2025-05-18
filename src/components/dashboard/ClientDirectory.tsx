@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
 import { Client } from '@/types/database';
+import { useNavigate } from 'react-router-dom';
 
 interface ClientDirectoryProps {
   clients: Client[];
@@ -12,6 +13,12 @@ interface ClientDirectoryProps {
 }
 
 export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoading, onClientAdded }) => {
+  const navigate = useNavigate();
+  
+  const handleViewDetails = (clientId: string) => {
+    navigate(`/portal/client/${clientId}`);
+  };
+  
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -33,7 +40,11 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoa
                   <p className="text-sm text-gray-500">{client.contact_name} • {client.contact_email}</p>
                   {client.contact_phone && <p className="text-sm text-gray-500">{client.contact_phone}</p>}
                 </div>
-                <Button size="sm" variant="outline" onClick={() => console.log('View client', client.id)}>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={() => handleViewDetails(client.id)}
+                >
                   View Details
                 </Button>
               </div>
