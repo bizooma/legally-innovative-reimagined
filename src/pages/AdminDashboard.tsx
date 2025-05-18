@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { AddClientDialog } from '@/components/portal/AddClientDialog';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -21,13 +22,16 @@ const AdminDashboard = () => {
                 <h1 className="text-4xl font-playfair font-bold">Admin Dashboard</h1>
                 <p className="text-gray-600">Welcome, Joe from Bizooma</p>
               </div>
-              <Button 
-                variant="outline" 
-                onClick={() => navigate('/portal')}
-                className="bg-white hover:bg-gray-100"
-              >
-                Back to Portal
-              </Button>
+              <div className="flex gap-3">
+                <AddClientDialog />
+                <Button 
+                  variant="outline" 
+                  onClick={() => navigate('/portal')}
+                  className="bg-white hover:bg-gray-100"
+                >
+                  Back to Portal
+                </Button>
+              </div>
             </div>
 
             {/* Dashboard Stats */}
@@ -61,9 +65,12 @@ const AdminDashboard = () => {
 
             {/* Client List */}
             <Card>
-              <CardHeader>
-                <CardTitle>Client Directory</CardTitle>
-                <CardDescription>All registered portal clients</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Client Directory</CardTitle>
+                  <CardDescription>All registered portal clients</CardDescription>
+                </div>
+                <AddClientDialog />
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
