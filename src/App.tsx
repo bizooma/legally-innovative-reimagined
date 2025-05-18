@@ -28,10 +28,10 @@ const RouteDebug = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+    <BrowserRouter>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
         <RouteDebug>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -43,8 +43,8 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </RouteDebug>
-      </BrowserRouter>
-    </TooltipProvider>
+      </TooltipProvider>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 
