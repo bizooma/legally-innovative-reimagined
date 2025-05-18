@@ -19,7 +19,7 @@ const ClientCommunication: React.FC<ClientCommunicationProps> = ({ clientId, cli
       id: '1',
       sender: 'Joe Smith',
       role: 'Marketing Specialist',
-      content: 'Hello! I've uploaded the revised campaign strategy based on our discussion. Please take a look when you have a chance.',
+      content: 'Hello! I\'ve uploaded the revised campaign strategy based on our discussion. Please take a look when you have a chance.',
       timestamp: '2025-05-16T10:30:00',
       isClient: false
     },
@@ -27,7 +27,7 @@ const ClientCommunication: React.FC<ClientCommunicationProps> = ({ clientId, cli
       id: '2',
       sender: clientName,
       role: 'Client',
-      content: 'Thank you! I'll review it today and get back to you with feedback.',
+      content: 'Thank you! I\'ll review it today and get back to you with feedback.',
       timestamp: '2025-05-16T11:15:00',
       isClient: true
     },
