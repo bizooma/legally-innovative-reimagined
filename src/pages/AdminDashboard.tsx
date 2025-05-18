@@ -36,9 +36,9 @@ const AdminDashboard = () => {
 
             {/* Dashboard Stats */}
             <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <StatCard title="Active Clients" value="24" description="Currently active marketing clients" />
-              <StatCard title="Pending Approvals" value="7" description="Materials awaiting client approval" />
-              <StatCard title="New Messages" value="13" description="Unread client messages" />
+              <StatCard title="Active Clients" value="0" description="Currently active marketing clients" />
+              <StatCard title="Pending Approvals" value="0" description="Materials awaiting client approval" />
+              <StatCard title="New Messages" value="0" description="Unread client messages" />
             </div>
 
             {/* Recent Activity */}
@@ -48,17 +48,8 @@ const AdminDashboard = () => {
                 <CardDescription>Latest client interactions and updates</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {recentActivities.map((activity, index) => (
-                    <div key={index} className="flex items-start pb-4 border-b last:border-0">
-                      <div className={`w-3 h-3 rounded-full mt-1.5 mr-3 ${activity.color}`}></div>
-                      <div>
-                        <p className="font-medium">{activity.title}</p>
-                        <p className="text-sm text-gray-500">{activity.description}</p>
-                        <p className="text-xs text-gray-400 mt-1">{activity.time}</p>
-                      </div>
-                    </div>
-                  ))}
+                <div className="flex items-center justify-center py-8 text-center text-gray-500">
+                  <p>No recent activity to display</p>
                 </div>
               </CardContent>
             </Card>
@@ -73,19 +64,8 @@ const AdminDashboard = () => {
                 <AddClientDialog />
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {clients.map((client, index) => (
-                    <div key={index} className="flex justify-between items-center pb-4 border-b last:border-0">
-                      <div>
-                        <p className="font-medium">{client.name}</p>
-                        <p className="text-sm text-gray-500">{client.company}</p>
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button variant="outline" size="sm">Message</Button>
-                        <Button variant="outline" size="sm">View</Button>
-                      </div>
-                    </div>
-                  ))}
+                <div className="flex items-center justify-center py-8 text-center text-gray-500">
+                  <p>No clients yet. Click "Add New Client" to get started</p>
                 </div>
               </CardContent>
             </Card>
@@ -113,41 +93,5 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, description }) => (
     </CardContent>
   </Card>
 );
-
-// Sample data for the dashboard
-const recentActivities = [
-  {
-    title: "New document uploaded",
-    description: "Smith & Associates uploaded 'Marketing Plan Q3'",
-    time: "Today, 10:32 AM",
-    color: "bg-blue-500"
-  },
-  {
-    title: "Campaign approval",
-    description: "Johnson Law approved the 'Summer PPC Campaign'",
-    time: "Yesterday, 4:15 PM",
-    color: "bg-green-500"
-  },
-  {
-    title: "Revision requested",
-    description: "Roberts Legal requested changes to 'Website Redesign Draft'",
-    time: "Yesterday, 2:41 PM",
-    color: "bg-amber-500"
-  },
-  {
-    title: "New client registration",
-    description: "Marshall & Partners registered for portal access",
-    time: "May 16, 2025, 11:23 AM",
-    color: "bg-purple-500"
-  }
-];
-
-const clients = [
-  { name: "Sarah Johnson", company: "Johnson Law Firm" },
-  { name: "Michael Roberts", company: "Roberts Legal Services" },
-  { name: "Emily Smith", company: "Smith & Associates" },
-  { name: "David Wilson", company: "Wilson Legal Group" },
-  { name: "Lisa Marshall", company: "Marshall & Partners" }
-];
 
 export default AdminDashboard;
