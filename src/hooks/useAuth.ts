@@ -22,18 +22,17 @@ export function useAuth() {
       const isAdmin = values.email.toLowerCase() === ADMIN_EMAIL;
       
       if (isAdmin && values.password === ADMIN_TEMP_PASSWORD) {
-        // Successful admin login - create a Supabase account if it doesn't exist
+        // Successful admin login - create or sign in to Supabase
         try {
-          // Check if admin exists first
-          const { data: existingUser } = await supabase
-            .from('users')
-            .select()
-            .eq('email', ADMIN_EMAIL)
-            .maybeSingle();
-            
-          if (!existingUser) {
-            // Try to sign up
-            await supabase.auth.signUp({
+          // Try to sign in
+          const { error } = await supabase.auth.signInWithPassword({
+            email: ADMIN_EMAIL,
+            password: ADMIN_TEMP_PASSWORD,
+          });
+          
+          if (error) {
+            // If sign in fails, try to sign up
+            const { error: signUpError } = await supabase.auth.signUp({
               email: ADMIN_EMAIL,
               password: ADMIN_TEMP_PASSWORD,
               options: {
@@ -42,15 +41,15 @@ export function useAuth() {
                 }
               }
             });
+            
+            if (signUpError) throw signUpError;
+            
+            // Try signing in again after signup
+            await supabase.auth.signInWithPassword({
+              email: ADMIN_EMAIL,
+              password: ADMIN_TEMP_PASSWORD,
+            });
           }
-          
-          // Now sign in
-          const { error } = await supabase.auth.signInWithPassword({
-            email: ADMIN_EMAIL,
-            password: ADMIN_TEMP_PASSWORD,
-          });
-          
-          if (error) throw error;
           
           toast({
             title: "Login Successful",
