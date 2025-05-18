@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "@/hooks/use-toast";
 import { supabase } from '@/integrations/supabase/client';
-import { LoginFormValues, ADMIN_EMAIL, ADMIN_TEMP_PASSWORD } from '@/schemas/authSchema';
+import { LoginFormValues, ADMIN_EMAILS, ADMIN_TEMP_PASSWORD } from '@/schemas/authSchema';
 
 export function useAuth() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,26 +18,26 @@ export function useAuth() {
     });
     
     try {
-      // For demo purposes, we'll continue to support the hardcoded admin
-      const isAdmin = values.email.toLowerCase() === ADMIN_EMAIL;
+      // For demo purposes, we'll continue to support the hardcoded admins
+      const isAdmin = ADMIN_EMAILS.includes(values.email.toLowerCase());
       
       if (isAdmin && values.password === ADMIN_TEMP_PASSWORD) {
         // Successful admin login - create or sign in to Supabase
         try {
           // Try to sign in
           const { error } = await supabase.auth.signInWithPassword({
-            email: ADMIN_EMAIL,
+            email: values.email,
             password: ADMIN_TEMP_PASSWORD,
           });
           
           if (error) {
             // If sign in fails, try to sign up
             const { error: signUpError } = await supabase.auth.signUp({
-              email: ADMIN_EMAIL,
+              email: values.email,
               password: ADMIN_TEMP_PASSWORD,
               options: {
                 data: {
-                  full_name: "Joe from Bizooma",
+                  full_name: values.email === "joe@bizooma.com" ? "Joe from Bizooma" : "Angela Afford",
                 }
               }
             });
@@ -46,7 +46,7 @@ export function useAuth() {
             
             // Try signing in again after signup
             await supabase.auth.signInWithPassword({
-              email: ADMIN_EMAIL,
+              email: values.email,
               password: ADMIN_TEMP_PASSWORD,
             });
           }
