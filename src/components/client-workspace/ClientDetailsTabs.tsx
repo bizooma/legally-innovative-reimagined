@@ -9,11 +9,24 @@ import { Client } from "@/types/database";
 
 interface ClientDetailsTabsProps {
   client: Client;
+  activeTab?: string;
+  onTabChange?: (value: string) => void;
 }
 
-const ClientDetailsTabs = ({ client }: ClientDetailsTabsProps) => {
+const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: ClientDetailsTabsProps) => {
+  const handleValueChange = (value: string) => {
+    if (onTabChange) {
+      onTabChange(value);
+    }
+  };
+
   return (
-    <Tabs defaultValue="overview" className="w-full">
+    <Tabs 
+      defaultValue="overview" 
+      value={activeTab}
+      onValueChange={handleValueChange}
+      className="w-full"
+    >
       <div className="border-b">
         <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
           <TabsTrigger
@@ -52,16 +65,16 @@ const ClientDetailsTabs = ({ client }: ClientDetailsTabsProps) => {
         <ClientOverview client={client} />
       </TabsContent>
       <TabsContent value="projects" className="py-6">
-        <ClientProjects client={client} />
+        <ClientProjects clientId={client.id} />
       </TabsContent>
       <TabsContent value="campaigns" className="py-6">
         <ClientCampaigns />
       </TabsContent>
       <TabsContent value="documents" className="py-6">
-        <ClientDocuments client={client} />
+        <ClientDocuments clientId={client.id} />
       </TabsContent>
       <TabsContent value="communication" className="py-6">
-        <ClientCommunication client={client} />
+        <ClientCommunication clientId={client.id} clientName={client.company_name} />
       </TabsContent>
     </Tabs>
   );

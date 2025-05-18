@@ -37,8 +37,8 @@ const ClientDetails = () => {
               
               <ClientDetailsTabs 
                 client={client} 
-                activeTab={activeTab} 
-                onTabChange={setActiveTab} 
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
               />
             </div>
           )}
