@@ -7,6 +7,7 @@ import PortalHero from '@/components/portal/PortalHero';
 import PortalFeatures from '@/components/portal/PortalFeatures';
 import LoginForm from '@/components/portal/LoginForm';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 const Portal = () => {
   const navigate = useNavigate();
@@ -16,17 +17,21 @@ const Portal = () => {
   useEffect(() => {
     const checkSession = async () => {
       try {
+        console.log('Checking session...');
         const { data: { session } } = await supabase.auth.getSession();
+        console.log('Session check result:', session ? 'Session found' : 'No session');
         
         if (session) {
           // Check if user is admin
-          const { data: userData } = await supabase
+          console.log('Checking user role...');
+          const { data: userData, error } = await supabase
             .from('users')
             .select('is_admin')
             .eq('id', session.user.id)
             .maybeSingle();
             
           if (userData) {
+            console.log('User role found:', userData.is_admin ? 'Admin' : 'Client');
             // Direct to appropriate dashboard
             if (userData.is_admin) {
               navigate('/portal/admin-dashboard');
@@ -35,27 +40,42 @@ const Portal = () => {
             }
           } else {
             // If no user data found, still allow access to portal but stop loading state
+            console.log('No user data found in database');
             setIsCheckingAuth(false);
           }
         } else {
           // No session, stop loading state
+          console.log('No session found, showing login page');
           setIsCheckingAuth(false);
         }
       } catch (error) {
         console.error("Session check error:", error);
+        toast({
+          title: "Authentication Error",
+          description: "There was a problem verifying your login status.",
+          variant: "destructive",
+        });
         // If there's an error, show the login page
         setIsCheckingAuth(false);
       }
     };
     
+    // Run the session check
     checkSession();
   }, [navigate]);
 
   if (isCheckingAuth) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
-      </div>
+      <>
+        <Navbar />
+        <div className="flex items-center justify-center min-h-screen bg-gray-50">
+          <div className="text-center">
+            <p className="text-xl">Loading...</p>
+            <p className="text-sm text-gray-500 mt-2">Verifying authentication status...</p>
+          </div>
+        </div>
+        <Footer />
+      </>
     );
   }
 
