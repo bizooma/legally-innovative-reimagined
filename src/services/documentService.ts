@@ -12,23 +12,31 @@ export interface Document {
   lastUpdated: string;
   path: string;
   url: string;
+  description: string;
 }
 
 export async function uploadDocument(
   clientId: string,
-  file: File
+  file: File,
+  description: string = ''
 ): Promise<Document | null> {
   try {
     const fileExt = file.name.split('.').pop();
     const fileName = `${clientId}/${Math.random().toString(36).substring(2)}.${fileExt}`;
     const filePath = `${fileName}`;
     
+    // Store description in metadata
+    const options = {
+      cacheControl: '3600',
+      upsert: false,
+      metadata: {
+        description: description
+      }
+    };
+    
     const { error: uploadError } = await supabase.storage
       .from(BUCKET_NAME)
-      .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: false,
-      });
+      .upload(filePath, file, options);
     
     if (uploadError) {
       throw uploadError;
@@ -51,7 +59,8 @@ export async function uploadDocument(
       size: fileSize,
       lastUpdated: new Date().toISOString().split('T')[0], // YYYY-MM-DD
       path: filePath,
-      url: urlData.publicUrl
+      url: urlData.publicUrl,
+      description: description
     };
     
     return document;
@@ -86,6 +95,9 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
             .from(BUCKET_NAME)
             .getPublicUrl(`${clientId}/${item.name}`);
           
+          // Extract description from metadata if available
+          const description = item.metadata?.description || '';
+          
           return {
             id: item.id,
             name: item.name.split('/').pop() || item.name,
@@ -93,7 +105,8 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
             size: formatFileSize(item.metadata?.size || 0),
             lastUpdated: new Date(item.updated_at || Date.now()).toISOString().split('T')[0],
             path: `${clientId}/${item.name}`,
-            url: urlData.publicUrl
+            url: urlData.publicUrl,
+            description: description
           };
         })
     );
@@ -103,6 +116,39 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
     toast.error(`Failed to fetch documents: ${error.message}`);
     console.error('Error fetching documents:', error);
     return [];
+  }
+}
+
+export async function updateDocumentDescription(path: string, description: string): Promise<boolean> {
+  try {
+    // Get the current metadata
+    const { data: fileData, error: fetchError } = await supabase.storage
+      .from(BUCKET_NAME)
+      .getMetadata(path);
+    
+    if (fetchError) {
+      throw fetchError;
+    }
+    
+    // Update the metadata with the new description
+    const updatedMetadata = {
+      ...fileData,
+      description: description
+    };
+    
+    const { error: updateError } = await supabase.storage
+      .from(BUCKET_NAME)
+      .updateMetadata(path, updatedMetadata);
+    
+    if (updateError) {
+      throw updateError;
+    }
+    
+    return true;
+  } catch (error: any) {
+    toast.error(`Failed to update description: ${error.message}`);
+    console.error('Error updating document description:', error);
+    return false;
   }
 }
 

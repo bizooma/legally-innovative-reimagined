@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
 import { Plus, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -19,7 +20,7 @@ interface DocumentUploadDialogProps {
   variant?: "default" | "outline" | "secondary" | "ghost" | "link" | "destructive" | null;
   size?: "default" | "sm" | "lg" | "icon" | null;
   children?: React.ReactNode;
-  className?: string; // Add className prop
+  className?: string;
 }
 
 export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({ 
@@ -32,6 +33,7 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const [description, setDescription] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -62,12 +64,13 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
     
     try {
       const { uploadDocument } = await import('@/services/documentService');
-      const result = await uploadDocument(clientId, file);
+      const result = await uploadDocument(clientId, file, description);
       
       if (result) {
         toast.success("Document uploaded successfully");
         setOpen(false);
         setFile(null);
+        setDescription('');
         onDocumentUploaded(true);
       } else {
         toast.error("Failed to upload document");
@@ -78,6 +81,12 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
     } finally {
       setIsUploading(false);
     }
+  };
+
+  const handleClose = () => {
+    setFile(null);
+    setDescription('');
+    setOpen(false);
   };
 
   const triggerButton = children || (
@@ -124,9 +133,22 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
               onChange={handleFileChange}
             />
           </div>
+          
+          <div className="space-y-2">
+            <label htmlFor="description" className="text-sm font-medium">
+              Description (optional)
+            </label>
+            <Textarea
+              id="description"
+              placeholder="Enter a brief description of this document"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={3}
+            />
+          </div>
         </div>
         <DialogFooter className="flex space-x-2 sm:justify-end">
-          <Button variant="outline" onClick={() => setOpen(false)}>
+          <Button variant="outline" onClick={handleClose}>
             Cancel
           </Button>
           <Button 
