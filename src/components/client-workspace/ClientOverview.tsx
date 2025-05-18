@@ -2,12 +2,15 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Client } from '@/types/database';
+import { useClientDocumentCount } from '@/hooks/useClientDocumentCount';
 
 interface ClientOverviewProps {
   client: Client;
 }
 
 const ClientOverview: React.FC<ClientOverviewProps> = ({ client }) => {
+  const { documentCount, isLoading: isLoadingDocuments } = useClientDocumentCount(client.id);
+
   return (
     <div className="space-y-6">
       {/* Account Summary Card - Moved to top */}
@@ -25,8 +28,14 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client }) => {
               </div>
               <div className="bg-white p-4 rounded-lg border shadow-sm">
                 <h3 className="font-medium text-gray-700 mb-1">Documents</h3>
-                <p className="text-2xl font-bold">1</p>
-                <p className="text-sm text-gray-500">Recently uploaded</p>
+                <p className="text-2xl font-bold">
+                  {isLoadingDocuments ? "..." : documentCount}
+                </p>
+                <p className="text-sm text-gray-500">
+                  {documentCount === 0 ? "No documents" : 
+                   documentCount === 1 ? "1 document uploaded" : 
+                   `${documentCount} documents uploaded`}
+                </p>
               </div>
               <div className="bg-white p-4 rounded-lg border shadow-sm">
                 <h3 className="font-medium text-gray-700 mb-1">Messages</h3>
