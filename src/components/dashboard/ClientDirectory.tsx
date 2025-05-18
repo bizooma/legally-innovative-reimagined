@@ -45,7 +45,7 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoa
                   variant="outline" 
                   onClick={() => handleViewDetails(client.id)}
                 >
-                  View Details
+                  View Workspace
                 </Button>
               </div>
             ))}
