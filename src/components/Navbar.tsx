@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
@@ -32,7 +31,6 @@ const Navbar = () => {
     { name: "FAQ", href: "#faq", isExternal: false },
     { name: "Why Us", href: "#why-us", isExternal: false },
     { name: "Contact", href: "#contact", isExternal: false },
-    { name: "Campaigns", href: "/campaigns", isExternal: false, path: "/campaigns" },
   ];
 
   const handlePortalClick = () => {
