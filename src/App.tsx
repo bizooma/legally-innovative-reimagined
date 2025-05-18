@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import DIY from "./pages/DIY";
 import Portal from "./pages/Portal";
+import Campaigns from "./pages/Campaigns";
 import AdminDashboard from "./pages/AdminDashboard";
 import ClientDashboard from "./pages/ClientDashboard";
 import ClientDetails from "./pages/ClientDetails";
@@ -36,6 +37,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/diy" element={<DIY />} />
+            <Route path="/campaigns" element={<Campaigns />} />
             <Route path="/portal" element={<Portal />} />
             <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
