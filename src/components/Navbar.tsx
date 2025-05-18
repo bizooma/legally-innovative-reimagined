@@ -1,12 +1,13 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +33,10 @@ const Navbar = () => {
     { name: "Why Us", href: "#why-us", isExternal: false },
     { name: "Contact", href: "#contact", isExternal: false },
   ];
+
+  const handlePortalClick = () => {
+    navigate('/portal');
+  };
 
   return (
     <header
@@ -73,7 +78,7 @@ const Navbar = () => {
           ))}
           <Button 
             className="bg-legal-primary hover:bg-legal-secondary text-white"
-            onClick={() => window.location.href = "/portal"}
+            onClick={handlePortalClick}
           >
             Client Portal
           </Button>
@@ -116,7 +121,7 @@ const Navbar = () => {
             <Button 
               className="bg-legal-primary hover:bg-legal-secondary text-white w-full flex items-center justify-center"
               onClick={() => {
-                window.location.href = "/portal";
+                navigate('/portal');
                 setMobileMenuOpen(false);
               }}
             >
