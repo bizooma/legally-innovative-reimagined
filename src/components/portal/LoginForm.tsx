@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -7,6 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { UserProfile } from '@/types/database';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -66,7 +66,7 @@ const LoginForm = () => {
             .from('users')
             .select('*')
             .eq('email', ADMIN_EMAIL)
-            .single();
+            .maybeSingle();
             
           if (!existingUser) {
             // Try to sign up
@@ -120,7 +120,7 @@ const LoginForm = () => {
           .from('users')
           .select('is_admin')
           .eq('id', data.user?.id)
-          .single();
+          .maybeSingle();
           
         toast({
           title: "Login Successful",

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -8,18 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { Client } from '@/types/database';
 
 // Define the client type
-interface Client {
-  id: string;
-  company_name: string;
-  contact_name: string;
-  contact_email: string;
-  contact_phone?: string;
-  notes?: string;
-  date_added: string;
-}
-
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -67,7 +57,7 @@ const AdminDashboard = () => {
         }
         
         if (data) {
-          setClients(data as Client[]);
+          setClients(data as unknown as Client[]);
           setStats(prev => ({
             ...prev,
             activeClients: data.length

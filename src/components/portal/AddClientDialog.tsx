@@ -26,6 +26,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 import { UserPlus } from 'lucide-react';
+import { Client } from '@/types/database';
 
 const clientFormSchema = z.object({
   companyName: z.string().min(2, {
@@ -44,7 +45,7 @@ const clientFormSchema = z.object({
 type ClientFormValues = z.infer<typeof clientFormSchema>;
 
 interface AddClientDialogProps {
-  onClientAdded?: (client: any) => void;
+  onClientAdded?: (client: Client) => void;
 }
 
 export function AddClientDialog({ onClientAdded }: AddClientDialogProps) {
@@ -83,7 +84,7 @@ export function AddClientDialog({ onClientAdded }: AddClientDialogProps) {
           notes: data.notes || null,
           created_by: user.id
         })
-        .select()
+        .select('*')
         .single();
       
       if (error) {
@@ -91,8 +92,8 @@ export function AddClientDialog({ onClientAdded }: AddClientDialogProps) {
       }
       
       // Call the onClientAdded callback if provided
-      if (onClientAdded) {
-        onClientAdded(client);
+      if (onClientAdded && client) {
+        onClientAdded(client as unknown as Client);
       }
       
       toast({

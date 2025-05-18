@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -7,6 +6,7 @@ import PortalHero from '@/components/portal/PortalHero';
 import PortalFeatures from '@/components/portal/PortalFeatures';
 import LoginForm from '@/components/portal/LoginForm';
 import { supabase } from '@/integrations/supabase/client';
+import { UserProfile } from '@/types/database';
 
 const Portal = () => {
   const navigate = useNavigate();
@@ -20,21 +20,19 @@ const Portal = () => {
         
         if (session) {
           // Check if user is admin
-          const { data: userData, error } = await supabase
+          const { data: userData } = await supabase
             .from('users')
             .select('is_admin')
             .eq('id', session.user.id)
-            .single();
+            .maybeSingle();
             
-          if (error) {
-            throw error;
-          }
-          
-          // Direct to appropriate dashboard
-          if (userData?.is_admin) {
-            navigate('/portal/admin-dashboard');
-          } else {
-            navigate('/portal/client-dashboard');
+          if (userData) {
+            // Direct to appropriate dashboard
+            if (userData.is_admin) {
+              navigate('/portal/admin-dashboard');
+            } else {
+              navigate('/portal/client-dashboard');
+            }
           }
         }
       } catch (error) {
