@@ -56,6 +56,12 @@ const PortalFeatures = () => {
           }
         />
       </div>
+      
+      <div className="mt-6 pt-4 border-t border-gray-100">
+        <p className="text-sm text-gray-500">
+          Portal administered by Joe at joe@bizooma.com. Contact for any support needs.
+        </p>
+      </div>
     </div>
   );
 };
@@ -81,3 +87,4 @@ const FeatureItem: React.FC<FeatureItemProps> = ({ title, description, icon }) =
 };
 
 export default PortalFeatures;
+

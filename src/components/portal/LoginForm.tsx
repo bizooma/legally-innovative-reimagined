@@ -24,6 +24,9 @@ const formSchema = z.object({
   password: z.string().min(1, { message: "Password is required." }),
 });
 
+// Admin configuration
+const ADMIN_EMAIL = "joe@bizooma.com";
+
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   
@@ -49,10 +52,14 @@ const LoginForm = () => {
     
     // Simulate API call delay
     setTimeout(() => {
+      const isAdmin = values.email.toLowerCase() === ADMIN_EMAIL;
+      
       // For now, just show an error message since we don't have actual authentication
       toast({
         title: "Login Failed",
-        description: "This is a demo. In the actual app, credentials would be verified against your database.",
+        description: isAdmin 
+          ? "Portal administrator account detected. In the actual app, you would be logged in with admin privileges."
+          : "This is a demo. In the actual app, credentials would be verified against your database.",
         variant: "destructive",
       });
     }, 1500);
@@ -134,3 +141,4 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
