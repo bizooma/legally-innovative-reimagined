@@ -20,3 +20,15 @@ export interface UserProfile {
   is_admin: boolean;
   created_at: string;
 }
+
+export interface Project {
+  id: string;
+  name: string;
+  client_id: string;
+  status: 'Not Started' | 'In Progress' | 'On Hold' | 'Completed';
+  progress: number;
+  description?: string | null;
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+}
