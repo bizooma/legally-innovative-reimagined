@@ -2,11 +2,12 @@
 import { supabase } from '@/integrations/supabase/client';
 import { Client } from '@/types/database';
 import { ClientFormValues } from '@/schemas/clientSchema';
+import { DatabaseTables } from '@/types/supabase';
 
 export async function addClient(data: ClientFormValues, userId: string): Promise<Client> {
-  // Cast to any to work around type issues with Supabase client
-  const { data: client, error } = await (supabase
-    .from('clients') as any)
+  // Use the proper type casting with our DatabaseTables interface
+  const { data: client, error } = await supabase
+    .from<DatabaseTables['clients']>('clients')
     .insert({
       company_name: data.companyName,
       contact_name: data.contactName,

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -7,6 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { UserProfile } from '@/types/database';
+import { DatabaseTables } from '@/types/supabase';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -63,7 +65,7 @@ const LoginForm = () => {
         try {
           // Check if admin exists first
           const { data: existingUser } = await supabase
-            .from('users')
+            .from<DatabaseTables['users']>('users')
             .select('*')
             .eq('email', ADMIN_EMAIL)
             .maybeSingle();
@@ -117,7 +119,7 @@ const LoginForm = () => {
         
         // Check if user is admin
         const { data: userData } = await supabase
-          .from('users')
+          .from<DatabaseTables['users']>('users')
           .select('is_admin')
           .eq('id', data.user?.id)
           .maybeSingle();
