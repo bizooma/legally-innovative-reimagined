@@ -11,92 +11,158 @@ const GoogleAuthCallback: React.FC = () => {
   const [status, setStatus] = useState<'processing' | 'success' | 'error'>('processing');
 
   useEffect(() => {
-    const processAuthCallback = async () => {
-      // Enhanced debugging for callback route issues
-      console.log("Processing callback at path:", location.pathname);
-      console.log("Full URL:", window.location.href);
-      console.log("Search params:", Array.from(searchParams.entries()));
-      
-      // Extract code and state from search params or from URL if needed
-      let code = searchParams.get('code');
-      let state = searchParams.get('state');
-      const error = searchParams.get('error');
-
-      // If params weren't found in the normal searchParams, try to parse them from the URL
-      // This helps with redirects where the domain is included in the path
-      if (!code || !state) {
-        const url = new URL(window.location.href);
-        code = url.searchParams.get('code') || null;
-        state = url.searchParams.get('state') || null;
-        console.log("Extracted from URL:", { code: code?.substring(0, 5) + "...", state: state?.substring(0, 5) + "..." });
+    // Listen for manual event triggering
+    const handleManualCallback = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      if (customEvent.detail) {
+        const { code, state } = customEvent.detail;
+        console.log("Received manual callback event with code and state");
+        processCallback(code, state);
       }
+    };
 
-      if (error) {
-        console.error("Google auth error:", error);
+    document.addEventListener('google-auth-callback', handleManualCallback);
+
+    // Standard callback processing
+    processAuthCallback();
+
+    return () => {
+      document.removeEventListener('google-auth-callback', handleManualCallback);
+    };
+  }, []);
+
+  const processCallback = async (code: string, state: string) => {
+    try {
+      console.log("Processing callback with code and state from event");
+      const success = await handleGoogleAuthCallback(code, state);
+      
+      if (success) {
+        setStatus('success');
+        
+        // Get the client ID from session storage
+        const clientId = sessionStorage.getItem('connecting_client_id');
+        if (clientId) {
+          // Redirect back to the client page after a short delay
+          setTimeout(() => {
+            navigate(`/portal/client/${clientId}`);
+          }, 1500);
+        } else {
+          // If client ID not found, redirect to dashboard
+          setTimeout(() => {
+            navigate('/portal/admin-dashboard');
+          }, 1500);
+        }
+      } else {
         setStatus('error');
-        toast({
-          title: "Authentication Error",
-          description: `Google authentication failed: ${error}`,
-          variant: "destructive",
-        });
-        // Redirect back after a short delay
         setTimeout(() => {
           navigate('/portal/admin-dashboard');
         }, 3000);
-        return;
       }
+    } catch (error: any) {
+      console.error("Error processing manual Google auth callback:", error);
+      setStatus('error');
+      toast({
+        title: "Authentication Error",
+        description: `Failed to connect Google Drive: ${error.message || "Unknown error"}`,
+        variant: "destructive",
+      });
+      // Redirect back after a short delay
+      setTimeout(() => {
+        navigate('/portal/admin-dashboard');
+      }, 3000);
+    }
+  };
 
-      if (code && state) {
-        try {
-          console.log("Processing Google auth callback with code");
-          const success = await handleGoogleAuthCallback(code, state);
-          if (success) {
-            setStatus('success');
-            
-            // Get the client ID from session storage
-            const clientId = sessionStorage.getItem('connecting_client_id');
-            if (clientId) {
-              // Redirect back to the client page after a short delay
-              setTimeout(() => {
-                navigate(`/portal/client/${clientId}`);
-              }, 1500);
-            } else {
-              // If client ID not found, redirect to dashboard
-              setTimeout(() => {
-                navigate('/portal/admin-dashboard');
-              }, 1500);
-            }
+  const processAuthCallback = async () => {
+    // Enhanced debugging for callback route issues
+    console.log("Processing callback at path:", location.pathname);
+    console.log("Full URL:", window.location.href);
+    console.log("Search params:", Array.from(searchParams.entries()));
+    
+    // Extract code and state from various sources
+    let code = searchParams.get('code');
+    let state = searchParams.get('state');
+    const error = searchParams.get('error');
+
+    // If params weren't found in the normal searchParams, try to parse them from the URL
+    // This helps with redirects where the domain is included in the path
+    if (!code || !state) {
+      try {
+        const url = new URL(window.location.href);
+        code = url.searchParams.get('code') || null;
+        state = url.searchParams.get('state') || null;
+        console.log("Extracted from URL:", { 
+          code: code ? `${code.substring(0, 5)}...` : null, 
+          state: state ? `${state.substring(0, 5)}...` : null 
+        });
+      } catch (e) {
+        console.error("Error parsing URL:", e);
+      }
+    }
+
+    if (error) {
+      console.error("Google auth error:", error);
+      setStatus('error');
+      toast({
+        title: "Authentication Error",
+        description: `Google authentication failed: ${error}`,
+        variant: "destructive",
+      });
+      // Redirect back after a short delay
+      setTimeout(() => {
+        navigate('/portal/admin-dashboard');
+      }, 3000);
+      return;
+    }
+
+    if (code && state) {
+      try {
+        console.log("Processing Google auth callback with code and state");
+        const success = await handleGoogleAuthCallback(code, state);
+        if (success) {
+          setStatus('success');
+          
+          // Get the client ID from session storage
+          const clientId = sessionStorage.getItem('connecting_client_id');
+          if (clientId) {
+            // Redirect back to the client page after a short delay
+            setTimeout(() => {
+              navigate(`/portal/client/${clientId}`);
+            }, 1500);
           } else {
-            setStatus('error');
+            // If client ID not found, redirect to dashboard
             setTimeout(() => {
               navigate('/portal/admin-dashboard');
-            }, 3000);
+            }, 1500);
           }
-        } catch (error) {
-          console.error("Error processing Google auth callback:", error);
+        } else {
           setStatus('error');
-          // Redirect back after a short delay
           setTimeout(() => {
             navigate('/portal/admin-dashboard');
           }, 3000);
         }
-      } else {
-        console.error("Missing required parameters for Google authentication");
+      } catch (error: any) {
+        console.error("Error processing Google auth callback:", error);
         setStatus('error');
-        toast({
-          title: "Invalid Auth Request",
-          description: "Missing required parameters for Google authentication.",
-          variant: "destructive",
-        });
         // Redirect back after a short delay
         setTimeout(() => {
           navigate('/portal/admin-dashboard');
         }, 3000);
       }
-    };
-
-    processAuthCallback();
-  }, [searchParams, navigate, location.pathname]);
+    } else {
+      console.error("Missing required parameters for Google authentication");
+      setStatus('error');
+      toast({
+        title: "Invalid Auth Request",
+        description: "Missing required parameters for Google authentication.",
+        variant: "destructive",
+      });
+      // Redirect back after a short delay
+      setTimeout(() => {
+        navigate('/portal/admin-dashboard');
+      }, 3000);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -124,6 +190,10 @@ const GoogleAuthCallback: React.FC = () => {
             There was a problem connecting your Google Drive account. Please try again.
           </p>
         )}
+        
+        <p className="mt-4 text-sm text-gray-500">
+          URL: {window.location.href.substring(0, 50)}...
+        </p>
       </div>
     </div>
   );
