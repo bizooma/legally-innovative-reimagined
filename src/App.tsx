@@ -11,6 +11,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ClientDashboard from "./pages/ClientDashboard";
 import ClientDetails from "./pages/ClientDetails";
 import NotFound from "./pages/NotFound";
+import GoogleAuthCallback from "./pages/GoogleAuthCallback";
 import { useEffect } from "react";
 
 // Create a new query client
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
             <Route path="/portal/client/:id" element={<ClientDetails />} />
+            <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </RouteDebug>

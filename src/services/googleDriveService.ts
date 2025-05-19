@@ -4,6 +4,10 @@ import { toast } from '@/hooks/use-toast';
 
 // Google Drive API endpoints
 const GOOGLE_DRIVE_API = 'https://www.googleapis.com/drive/v3';
+const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+// Client ID from Google Cloud Console
+const GOOGLE_CLIENT_ID = '963523082884-rjqcbkssi7bep6scsmh540t2qlhh88m7.apps.googleusercontent.com';
 
 // Types
 interface GoogleDriveFolder {
@@ -13,17 +17,56 @@ interface GoogleDriveFolder {
 }
 
 /**
- * Connect a Google Drive folder to a client
- * In a real implementation, this would involve OAuth2 authentication with Google
- * and proper folder selection. This is a simplified version.
+ * Initiate Google OAuth flow to connect a Drive folder
  */
-export async function connectGoogleDriveFolder(clientId: string, folderName: string): Promise<string | null> {
+export function initiateGoogleAuth(clientId: string, redirectUri: string): void {
+  // Store client ID in session storage for retrieval after OAuth redirect
+  sessionStorage.setItem('connecting_client_id', clientId);
+  
+  // Define the required scopes for Google Drive access
+  const scope = encodeURIComponent('https://www.googleapis.com/auth/drive.file');
+  
+  // Generate a random state value for security
+  const state = Math.random().toString(36).substring(2);
+  sessionStorage.setItem('oauth_state', state);
+  
+  // Build the authorization URL
+  const authUrl = `${GOOGLE_AUTH_URL}?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scope}&access_type=offline&prompt=consent&state=${state}`;
+  
+  // Redirect to Google's OAuth page
+  window.location.href = authUrl;
+}
+
+/**
+ * Handle the OAuth callback and connect the folder
+ */
+export async function handleGoogleAuthCallback(code: string, state: string): Promise<boolean> {
+  // Verify state parameter to prevent CSRF attacks
+  const savedState = sessionStorage.getItem('oauth_state');
+  if (!state || state !== savedState) {
+    toast({
+      title: "Security Error",
+      description: "Invalid authentication state. Please try again.",
+      variant: "destructive",
+    });
+    return false;
+  }
+  
+  // Get the client ID from session storage
+  const clientId = sessionStorage.getItem('connecting_client_id');
+  if (!clientId) {
+    toast({
+      title: "Error",
+      description: "Client ID not found. Please try again.",
+      variant: "destructive",
+    });
+    return false;
+  }
+  
   try {
-    // For demo purposes, we're not actually connecting to Google Drive API
-    // In a real implementation, you would:
-    // 1. Use Google OAuth2 to get user permission
-    // 2. Create a folder in Google Drive or let user select an existing one
-    // 3. Store the folder ID in the database
+    // In a production environment, you would exchange the code for tokens
+    // using a secure server-side endpoint
+    // For now, we'll simulate a successful response
     
     // Simulate folder creation with a mock ID
     const folderId = `folder_${Date.now()}_${Math.round(Math.random() * 1000)}`;
@@ -40,7 +83,16 @@ export async function connectGoogleDriveFolder(clientId: string, folderName: str
       throw error;
     }
     
-    return folderId;
+    // Clean up session storage
+    sessionStorage.removeItem('connecting_client_id');
+    sessionStorage.removeItem('oauth_state');
+    
+    toast({
+      title: "Success",
+      description: "Google Drive folder has been connected successfully.",
+    });
+    
+    return true;
   } catch (error: any) {
     console.error('Error connecting Google Drive folder:', error);
     toast({
@@ -48,8 +100,19 @@ export async function connectGoogleDriveFolder(clientId: string, folderName: str
       description: `Could not connect Google Drive folder: ${error.message || "Unknown error"}`,
       variant: "destructive",
     });
-    return null;
+    return false;
   }
+}
+
+/**
+ * Connect a Google Drive folder to a client
+ */
+export async function connectGoogleDriveFolder(clientId: string): Promise<void> {
+  // Generate the redirect URI based on the current hostname
+  const redirectUri = `${window.location.origin}/auth/google/callback`;
+  
+  // Start the OAuth flow
+  initiateGoogleAuth(clientId, redirectUri);
 }
 
 /**
@@ -57,6 +120,8 @@ export async function connectGoogleDriveFolder(clientId: string, folderName: str
  */
 export async function disconnectGoogleDriveFolder(clientId: string): Promise<boolean> {
   try {
+    // In a production environment, you would also revoke the OAuth token
+    // For now, we'll just clear the folder ID from the database
     const { error } = await supabase
       .from('clients')
       .update({ google_drive_folder_id: null })
@@ -65,6 +130,11 @@ export async function disconnectGoogleDriveFolder(clientId: string): Promise<boo
     if (error) {
       throw error;
     }
+    
+    toast({
+      title: "Success", 
+      description: "Google Drive folder has been disconnected."
+    });
     
     return true;
   } catch (error: any) {
@@ -83,7 +153,8 @@ export async function disconnectGoogleDriveFolder(clientId: string): Promise<boo
  * In a real implementation, this would fetch actual folder details from Google Drive API
  */
 export function getGoogleDriveFolderInfo(folderId: string): GoogleDriveFolder {
-  // Mock folder info (in real app, would call Google Drive API)
+  // In production, this would make an API call to Google Drive
+  // For now, we return mock data
   return {
     id: folderId,
     name: `Client Files (${folderId.substring(0, 8)})`,
