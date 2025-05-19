@@ -9,8 +9,8 @@ const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
 // Client ID from Google Cloud Console
 const GOOGLE_CLIENT_ID = '963523082884-rjqcbkssi7bep6scsmh540t2qlhh88m7.apps.googleusercontent.com';
-// IMPORTANT: The client secret should be stored securely in a server environment
-// For the demo, we're using it directly, but in production this should be moved to a Supabase Edge Function
+// IMPORTANT: The client secret should never be included in client-side code
+// This must be handled by a secure backend service (Supabase Edge Function)
 
 // Types
 interface GoogleDriveFolder {
@@ -67,14 +67,22 @@ export async function handleGoogleAuthCallback(code: string, state: string): Pro
   }
   
   try {
-    // In a production environment, this token exchange should happen server-side
-    // SECURITY NOTE: This is for demonstration only - in real production code
-    // this should be done in a Supabase Edge Function to protect the client secret
-    console.log("Authorization code received, would exchange for tokens in production");
+    // This should be handled by a Supabase Edge Function in production
+    // Call the token exchange Edge Function
+    const { data: tokenData, error: tokenError } = await supabase.functions.invoke('exchange-google-token', {
+      body: { code, redirectUri: window.location.origin + '/auth/google/callback' }
+    });
     
-    // TODO: Implement token exchange in a Supabase Edge Function
-    // For now simulate a successful folder connection
-    const folderId = `folder_${Date.now()}_${Math.round(Math.random() * 1000)}`;
+    if (tokenError) {
+      throw new Error(`Token exchange failed: ${tokenError.message}`);
+    }
+    
+    // Store the folder ID from the response
+    const folderId = tokenData?.folderId;
+    
+    if (!folderId) {
+      throw new Error('No folder ID returned from token exchange');
+    }
     
     // Update the client record with the folder ID
     const { data, error } = await supabase
@@ -114,6 +122,7 @@ export async function handleGoogleAuthCallback(code: string, state: string): Pro
  */
 export async function connectGoogleDriveFolder(clientId: string): Promise<void> {
   // Generate the redirect URI based on the current hostname
+  // This allows the code to work in both development and production
   const redirectUri = `${window.location.origin}/auth/google/callback`;
   
   // Start the OAuth flow
@@ -125,8 +134,17 @@ export async function connectGoogleDriveFolder(clientId: string): Promise<void> 
  */
 export async function disconnectGoogleDriveFolder(clientId: string): Promise<boolean> {
   try {
-    // In a production environment, you would also revoke the OAuth token
-    // For now, we'll just clear the folder ID from the database
+    // In production, you would also call an Edge Function to revoke the OAuth token
+    const { data: revokeData, error: revokeError } = await supabase.functions.invoke('revoke-google-token', {
+      body: { clientId }
+    });
+    
+    if (revokeError) {
+      console.warn('Error revoking Google token:', revokeError);
+      // Continue with disconnecting the folder even if token revocation fails
+    }
+    
+    // Clear the folder ID from the database
     const { error } = await supabase
       .from('clients')
       .update({ google_drive_folder_id: null })
@@ -155,14 +173,27 @@ export async function disconnectGoogleDriveFolder(clientId: string): Promise<boo
 
 /**
  * Get Google Drive folder details
- * In a real implementation, this would fetch actual folder details from Google Drive API
+ * In production, this would fetch actual folder details from Google Drive API
  */
-export function getGoogleDriveFolderInfo(folderId: string): GoogleDriveFolder {
-  // In production, this would make an API call to Google Drive
-  // For now, we return mock data
-  return {
-    id: folderId,
-    name: `Client Files (${folderId.substring(0, 8)})`,
-    webViewLink: `https://drive.google.com/drive/folders/${folderId}`
-  };
+export async function getGoogleDriveFolderInfo(folderId: string): Promise<GoogleDriveFolder> {
+  try {
+    // In production, call an Edge Function to get folder details securely
+    const { data, error } = await supabase.functions.invoke('get-google-drive-folder', {
+      body: { folderId }
+    });
+    
+    if (error) {
+      throw error;
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error fetching Google Drive folder info:', error);
+    // Fallback to a mock response if the API call fails
+    return {
+      id: folderId,
+      name: `Client Files (${folderId.substring(0, 8)})`,
+      webViewLink: `https://drive.google.com/drive/folders/${folderId}`
+    };
+  }
 }

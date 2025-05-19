@@ -82,6 +82,14 @@ gcp_project_number = ""
 gcp_jwt_path = "supabase/gcloud.json"
 
 [functions]
-[functions.social-media-webhook]
+[functions.exchange-google-token]
 verify_jwt = false
 
+[functions.revoke-google-token]
+verify_jwt = false
+
+[functions.get-google-drive-folder]
+verify_jwt = false
+
+[functions.social-media-webhook]
+verify_jwt = false
