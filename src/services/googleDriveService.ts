@@ -5,9 +5,12 @@ import { toast } from '@/hooks/use-toast';
 // Google Drive API endpoints
 const GOOGLE_DRIVE_API = 'https://www.googleapis.com/drive/v3';
 const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
+const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
 // Client ID from Google Cloud Console
 const GOOGLE_CLIENT_ID = '963523082884-rjqcbkssi7bep6scsmh540t2qlhh88m7.apps.googleusercontent.com';
+// IMPORTANT: The client secret should be stored securely in a server environment
+// For the demo, we're using it directly, but in production this should be moved to a Supabase Edge Function
 
 // Types
 interface GoogleDriveFolder {
@@ -64,11 +67,13 @@ export async function handleGoogleAuthCallback(code: string, state: string): Pro
   }
   
   try {
-    // In a production environment, you would exchange the code for tokens
-    // using a secure server-side endpoint
-    // For now, we'll simulate a successful response
+    // In a production environment, this token exchange should happen server-side
+    // SECURITY NOTE: This is for demonstration only - in real production code
+    // this should be done in a Supabase Edge Function to protect the client secret
+    console.log("Authorization code received, would exchange for tokens in production");
     
-    // Simulate folder creation with a mock ID
+    // TODO: Implement token exchange in a Supabase Edge Function
+    // For now simulate a successful folder connection
     const folderId = `folder_${Date.now()}_${Math.round(Math.random() * 1000)}`;
     
     // Update the client record with the folder ID
