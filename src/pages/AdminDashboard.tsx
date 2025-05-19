@@ -39,15 +39,15 @@ const AdminDashboard = () => {
               <StatCard title="New Messages" value={stats.newMessages.toString()} description="Unread client messages" />
             </div>
 
-            {/* Recent Activity */}
-            <RecentActivity clients={clients} isLoading={isLoading} />
-
             {/* Client List */}
             <ClientDirectory 
               clients={clients} 
               isLoading={isLoading}
               onClientAdded={handleAddClient}
             />
+            
+            {/* Recent Activity - Moved below Client Directory */}
+            <RecentActivity clients={clients} isLoading={isLoading} />
           </div>
         </div>
       </div>
