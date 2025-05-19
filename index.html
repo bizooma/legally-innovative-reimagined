@@ -25,31 +25,15 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- ElevenLabs Convai Chat Widget -->
-    <elevenlabs-convai agent-id="cylHD3Ay9g1H7eGVdSdj"></elevenlabs-convai>
-    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+    <!-- ElevenLabs Convai Chat Widget (temporarily disabled) -->
+    <!-- <elevenlabs-convai agent-id="cylHD3Ay9g1H7eGVdSdj"></elevenlabs-convai> -->
+    <!-- <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script> -->
 
     <script>
-      // Script to hide chatbots on the admin dashboard page
+      // Script to hide chatbots on the admin dashboard page (temporarily modified)
       (function() {
         function hideChatbotsIfAdminDashboard() {
-          // Check if the current URL contains the admin dashboard path
-          const isAdminDashboard = window.location.pathname.includes('/portal/admin-dashboard');
-          
-          // Get the ElevenLabs Convai element
-          const elevenlabsWidget = document.querySelector('elevenlabs-convai');
-          
-          if (isAdminDashboard) {
-            // Hide chatbot on admin dashboard
-            if (elevenlabsWidget) {
-              elevenlabsWidget.style.display = 'none';
-            }
-          } else {
-            // Show chatbot on other pages
-            if (elevenlabsWidget) {
-              elevenlabsWidget.style.display = '';
-            }
-          }
+          // Function kept but chatbot elements are currently commented out
         }
 
         // Run the function when the page loads
