@@ -11,6 +11,7 @@ export interface Client {
   notes?: string | null;
   date_added: string;
   created_by: string;
+  logo_url?: string | null;
 }
 
 export interface UserProfile {

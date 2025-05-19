@@ -31,7 +31,9 @@ const ClientDetails = () => {
           ) : (
             <div className="max-w-6xl mx-auto">
               <ClientDetailsHeader 
-                clientName={client.company_name} 
+                clientName={client.company_name}
+                clientId={client.id}
+                logoUrl={client.logo_url} 
                 onBack={handleBack} 
               />
               

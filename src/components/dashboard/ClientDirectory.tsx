@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
 import { Client } from '@/types/database';
 import { useNavigate } from 'react-router-dom';
+import ClientLogoUploader from '@/components/client-workspace/ClientLogoUploader';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ClientDirectoryProps {
   clients: Client[];
@@ -17,6 +19,16 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoa
   
   const handleViewDetails = (clientId: string) => {
     navigate(`/portal/client/${clientId}`);
+  };
+  
+  const handleLogoUpdated = async (clientId: string, logoUrl: string) => {
+    // Find and update the client in the local state
+    const updatedClients = clients.map(client => 
+      client.id === clientId ? { ...client, logo_url: logoUrl } : client
+    );
+    
+    // This will trigger a re-render with the updated logo
+    onClientAdded({ ...clients.find(c => c.id === clientId)!, logo_url: logoUrl });
   };
   
   return (
@@ -35,10 +47,18 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoa
           <div className="space-y-4">
             {clients.map(client => (
               <div key={client.id} className="flex justify-between items-center p-4 border rounded-md hover:bg-gray-50">
-                <div>
-                  <h3 className="font-medium">{client.company_name}</h3>
-                  <p className="text-sm text-gray-500">{client.contact_name} • {client.contact_email}</p>
-                  {client.contact_phone && <p className="text-sm text-gray-500">{client.contact_phone}</p>}
+                <div className="flex items-center gap-4">
+                  <ClientLogoUploader 
+                    clientId={client.id}
+                    existingLogoUrl={client.logo_url}
+                    onLogoUpdated={(logoUrl) => handleLogoUpdated(client.id, logoUrl)}
+                    size="sm"
+                  />
+                  <div>
+                    <h3 className="font-medium">{client.company_name}</h3>
+                    <p className="text-sm text-gray-500">{client.contact_name} • {client.contact_email}</p>
+                    {client.contact_phone && <p className="text-sm text-gray-500">{client.contact_phone}</p>}
+                  </div>
                 </div>
                 <Button 
                   size="sm" 
