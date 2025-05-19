@@ -1,8 +1,7 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, FileText, Mail } from 'lucide-react';
-import ClientLogoUploader from './ClientLogoUploader';
 
 interface ClientDetailsHeaderProps {
   clientName: string;
@@ -17,8 +16,6 @@ const ClientDetailsHeader: React.FC<ClientDetailsHeaderProps> = ({
   logoUrl,
   onBack,
 }) => {
-  const [currentLogoUrl, setCurrentLogoUrl] = useState(logoUrl);
-  
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
       <div className="flex items-center">
@@ -27,12 +24,15 @@ const ClientDetailsHeader: React.FC<ClientDetailsHeaderProps> = ({
           Back
         </Button>
         <div className="flex items-center gap-4">
-          <ClientLogoUploader
-            clientId={clientId}
-            existingLogoUrl={currentLogoUrl || undefined}
-            onLogoUpdated={setCurrentLogoUrl}
-            size="md"
-          />
+          {logoUrl && (
+            <div className="h-12 w-12 rounded-full overflow-hidden">
+              <img 
+                src={logoUrl} 
+                alt={`${clientName} logo`} 
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
           <h1 className="text-3xl font-bold font-playfair">{clientName}</h1>
         </div>
       </div>
