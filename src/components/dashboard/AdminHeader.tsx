@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
+import { AddClientContactDialog } from '@/components/portal/AddClientContactDialog';
 import { ChangePasswordDialog } from '@/components/auth/ChangePasswordDialog';
 import { Client } from '@/types/database';
 import { useNavigate } from 'react-router-dom';
@@ -9,9 +10,10 @@ import { useNavigate } from 'react-router-dom';
 interface AdminHeaderProps {
   onClientAdded: (client: Client) => void;
   onLogout: () => Promise<void>;
+  clients: Client[];
 }
 
-export const AdminHeader: React.FC<AdminHeaderProps> = ({ onClientAdded, onLogout }) => {
+export const AdminHeader: React.FC<AdminHeaderProps> = ({ onClientAdded, onLogout, clients }) => {
   const navigate = useNavigate();
   
   return (
@@ -22,6 +24,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ onClientAdded, onLogou
       </div>
       <div className="flex gap-3">
         <AddClientDialog onClientAdded={onClientAdded} />
+        <AddClientContactDialog clients={clients} />
         <ChangePasswordDialog />
         <Button 
           variant="outline" 

@@ -37,6 +37,7 @@ export interface DatabaseTables {
       email: string;
       full_name: string | null;
       is_admin: boolean;
+      client_id: string | null;
       created_at: string;
     };
     Insert: {
@@ -44,11 +45,13 @@ export interface DatabaseTables {
       email: string;
       full_name?: string | null;
       is_admin?: boolean;
+      client_id?: string | null;
     };
     Update: {
       email?: string;
       full_name?: string | null;
       is_admin?: boolean;
+      client_id?: string | null;
     };
   };
 }

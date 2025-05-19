@@ -77,24 +77,31 @@ export function useAuth() {
           throw error;
         }
         
-        // Check if user is admin
+        // Check if user is admin or client
         const { data: userData } = await supabase
           .from('users')
-          .select()
+          .select('*, clients(*)')
           .eq('id', data.user?.id)
           .maybeSingle();
           
-        toast({
-          title: "Login Successful",
-          description: userData?.is_admin 
-            ? "You have been logged in as an administrator."
-            : "You have been logged in successfully.",
-        });
-        
-        // Navigate based on admin status
         if (userData?.is_admin) {
+          toast({
+            title: "Login Successful",
+            description: "You have been logged in as an administrator.",
+          });
           navigate('/portal/admin-dashboard');
+        } else if (userData?.client_id) {
+          toast({
+            title: "Login Successful",
+            description: "Welcome to your client workspace.",
+          });
+          // Redirect to the specific client workspace
+          navigate(`/portal/client/${userData.client_id}`);
         } else {
+          toast({
+            title: "Login Successful",
+            description: "You have been logged in successfully.",
+          });
           navigate('/portal/client-dashboard');
         }
       }

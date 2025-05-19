@@ -18,6 +18,7 @@ export interface UserProfile {
   email: string;
   full_name?: string | null;
   is_admin: boolean;
+  client_id?: string | null;
   created_at: string;
 }
 

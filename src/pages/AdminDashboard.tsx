@@ -29,6 +29,7 @@ const AdminDashboard = () => {
             <AdminHeader 
               onClientAdded={handleAddClient}
               onLogout={handleLogout}
+              clients={clients}
             />
 
             {/* Dashboard Stats */}
