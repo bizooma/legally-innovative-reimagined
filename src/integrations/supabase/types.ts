@@ -88,6 +88,7 @@ export type Database = {
       }
       users: {
         Row: {
+          client_id: string | null
           created_at: string
           email: string
           full_name: string | null
@@ -95,6 +96,7 @@ export type Database = {
           is_admin: boolean
         }
         Insert: {
+          client_id?: string | null
           created_at?: string
           email: string
           full_name?: string | null
@@ -102,13 +104,22 @@ export type Database = {
           is_admin?: boolean
         }
         Update: {
+          client_id?: string | null
           created_at?: string
           email?: string
           full_name?: string | null
           id?: string
           is_admin?: boolean
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "users_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
