@@ -1,16 +1,22 @@
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { handleGoogleAuthCallback } from '@/services/googleDriveService';
 import { toast } from '@/hooks/use-toast';
 
 const GoogleAuthCallback: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [status, setStatus] = useState<'processing' | 'success' | 'error'>('processing');
 
   useEffect(() => {
     const processAuthCallback = async () => {
+      // Log the current path to help with debugging
+      console.log("Processing callback at path:", location.pathname);
+      console.log("Full URL:", window.location.href);
+      
+      // Extract code and state from search params
       const code = searchParams.get('code');
       const state = searchParams.get('state');
       const error = searchParams.get('error');
@@ -80,7 +86,7 @@ const GoogleAuthCallback: React.FC = () => {
     };
 
     processAuthCallback();
-  }, [searchParams, navigate]);
+  }, [searchParams, navigate, location.pathname]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">

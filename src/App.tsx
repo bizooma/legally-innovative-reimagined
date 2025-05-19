@@ -41,7 +41,10 @@ const App = () => (
             <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
             <Route path="/portal/client/:id" element={<ClientDetails />} />
+            {/* Update route to match the callback URL used in Google Auth */}
             <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
+            {/* Also add the full domain path as an alternative route */}
+            <Route path="legallyinnovative.com/auth/google/callback" element={<GoogleAuthCallback />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </RouteDebug>

@@ -9,8 +9,11 @@ const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
 // Client ID from Google Cloud Console
 const GOOGLE_CLIENT_ID = '963523082884-rjqcbkssi7bep6scsmh540t2qlhh88m7.apps.googleusercontent.com';
 
-// Define the production redirect URI
-const PROD_REDIRECT_URI = 'https://legallyinnovative.com/auth/google/callback';
+// Define the correct redirect URI
+// This must match exactly what's configured in Google Cloud Console
+const REDIRECT_URI = window.location.hostname.includes('localhost') 
+  ? 'http://localhost:3000/auth/google/callback'
+  : 'https://legallyinnovative.com/auth/google/callback';
 
 // Types
 interface GoogleDriveFolder {
@@ -33,8 +36,10 @@ export function initiateGoogleAuth(clientId: string): void {
   const state = Math.random().toString(36).substring(2);
   sessionStorage.setItem('oauth_state', state);
   
+  console.log("Starting Google Auth with redirect URI:", REDIRECT_URI);
+  
   // Build the authorization URL
-  const authUrl = `${GOOGLE_AUTH_URL}?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(PROD_REDIRECT_URI)}&response_type=code&scope=${scope}&access_type=offline&prompt=consent&state=${state}`;
+  const authUrl = `${GOOGLE_AUTH_URL}?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=${scope}&access_type=offline&prompt=consent&state=${state}`;
   
   // Redirect to Google's OAuth page
   window.location.href = authUrl;
@@ -44,6 +49,8 @@ export function initiateGoogleAuth(clientId: string): void {
  * Handle the OAuth callback and connect the folder
  */
 export async function handleGoogleAuthCallback(code: string, state: string): Promise<boolean> {
+  console.log("Handling Google Auth callback");
+  
   // Verify state parameter to prevent CSRF attacks
   const savedState = sessionStorage.getItem('oauth_state');
   if (!state || state !== savedState) {
@@ -67,11 +74,13 @@ export async function handleGoogleAuthCallback(code: string, state: string): Pro
   }
   
   try {
+    console.log("Exchanging code for token using redirect URI:", REDIRECT_URI);
+    
     // Call the token exchange Edge Function
     const { data: tokenData, error: tokenError } = await supabase.functions.invoke('exchange-google-token', {
       body: { 
         code, 
-        redirectUri: PROD_REDIRECT_URI,
+        redirectUri: REDIRECT_URI,
         clientId
       }
     });
