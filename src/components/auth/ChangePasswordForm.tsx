@@ -57,9 +57,25 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
 
   const onSubmit = async (values: PasswordChangeFormValues) => {
     try {
-      // If not a primary contact, verify the current password
-      if (!isPrimaryContact) {
-        // First, verify the current password by attempting a login
+      if (isPrimaryContact) {
+        // For primary contacts, create a new account with the provided email and password
+        const { error } = await supabase.auth.signInWithOtp({
+          email: email || '',
+          options: {
+            shouldCreateUser: false,
+          }
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        toast({
+          title: "Success",
+          description: "A password reset link has been sent to the email address.",
+        });
+      } else {
+        // If not a primary contact, verify the current password by attempting a login
         const { error: loginError } = await supabase.auth.signInWithPassword({
           email: email || (await supabase.auth.getUser()).data.user?.email || '',
           password: values.currentPassword!,
@@ -73,21 +89,21 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
           });
           return;
         }
+
+        // Set or update the password
+        const { error } = await supabase.auth.updateUser({
+          password: values.newPassword
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        toast({
+          title: "Success",
+          description: "The password has been changed successfully.",
+        });
       }
-
-      // Set or update the password
-      const { error } = await supabase.auth.updateUser({
-        password: values.newPassword
-      });
-
-      if (error) {
-        throw error;
-      }
-
-      toast({
-        title: "Success",
-        description: "The password has been changed successfully.",
-      });
 
       // Reset the form
       form.reset();
@@ -154,7 +170,7 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
           )}
         />
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? "Changing Password..." : "Change Password"}
+          {isLoading ? "Processing..." : (isPrimaryContact ? "Send Password Reset Link" : "Change Password")}
         </Button>
       </form>
     </Form>

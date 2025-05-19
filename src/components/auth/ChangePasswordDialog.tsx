@@ -23,12 +23,12 @@ export function ChangePasswordDialog({ isPrimaryContact = false, email }: Change
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="bg-white hover:bg-gray-100">
-          Change Password
+          {isPrimaryContact ? "Set Password" : "Change Password"}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Change Password</DialogTitle>
+          <DialogTitle>{isPrimaryContact ? "Set Password" : "Change Password"}</DialogTitle>
           <DialogDescription>
             {isPrimaryContact 
               ? "Set a password for this primary contact to enable portal access."
