@@ -43,9 +43,7 @@ const ClientContactsModal: React.FC<ClientContactsModalProps> = ({
                       <span className="font-medium">{contact.full_name || contact.email}</span>
                     </div>
                     
-                    {contact.id !== 'primary' && (
-                      <ChangePasswordDialog />
-                    )}
+                    <ChangePasswordDialog />
                   </div>
                   
                   <div className="space-y-2 ml-6">
