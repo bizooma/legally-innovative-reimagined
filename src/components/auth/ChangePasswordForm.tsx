@@ -58,12 +58,10 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
   const onSubmit = async (values: PasswordChangeFormValues) => {
     try {
       if (isPrimaryContact) {
-        // For primary contacts, create a new account with the provided email and password
-        const { error } = await supabase.auth.signInWithOtp({
-          email: email || '',
-          options: {
-            shouldCreateUser: false,
-          }
+        // For primary contacts, we need to use the auth.resetPasswordForEmail function
+        // instead of OTP since signups are not allowed for OTP
+        const { error } = await supabase.auth.resetPasswordForEmail(email || '', {
+          redirectTo: `${window.location.origin}/portal`
         });
 
         if (error) {
