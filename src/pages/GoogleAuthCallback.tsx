@@ -12,14 +12,24 @@ const GoogleAuthCallback: React.FC = () => {
 
   useEffect(() => {
     const processAuthCallback = async () => {
-      // Log the current path to help with debugging
+      // Enhanced debugging for callback route issues
       console.log("Processing callback at path:", location.pathname);
       console.log("Full URL:", window.location.href);
+      console.log("Search params:", Array.from(searchParams.entries()));
       
-      // Extract code and state from search params
-      const code = searchParams.get('code');
-      const state = searchParams.get('state');
+      // Extract code and state from search params or from URL if needed
+      let code = searchParams.get('code');
+      let state = searchParams.get('state');
       const error = searchParams.get('error');
+
+      // If params weren't found in the normal searchParams, try to parse them from the URL
+      // This helps with redirects where the domain is included in the path
+      if (!code || !state) {
+        const url = new URL(window.location.href);
+        code = url.searchParams.get('code') || null;
+        state = url.searchParams.get('state') || null;
+        console.log("Extracted from URL:", { code: code?.substring(0, 5) + "...", state: state?.substring(0, 5) + "..." });
+      }
 
       if (error) {
         console.error("Google auth error:", error);
