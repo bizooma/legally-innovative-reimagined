@@ -25,7 +25,7 @@ const ClientDetailsHeader: React.FC<ClientDetailsHeaderProps> = ({
         </Button>
         <div className="flex items-center gap-4">
           {logoUrl && (
-            <div className="h-12 w-12 rounded-full overflow-hidden">
+            <div className="h-24 w-24 border border-gray-200 overflow-hidden">
               <img 
                 src={logoUrl} 
                 alt={`${clientName} logo`} 
