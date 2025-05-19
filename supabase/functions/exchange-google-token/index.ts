@@ -22,13 +22,18 @@ serve(async (req) => {
   try {
     const { code, redirectUri } = await req.json();
 
-    if (!code || !redirectUri) {
+    if (!code) {
       return new Response(
-        JSON.stringify({ error: "Missing required parameters" }),
+        JSON.stringify({ error: "Missing authorization code" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+    
+    // Use the provided redirect URI or default to production URL
+    const finalRedirectUri = redirectUri || "https://legallyinnovative.com/auth/google/callback";
 
+    console.log(`Exchanging code for token with redirect URI: ${finalRedirectUri}`);
+    
     // Exchange authorization code for tokens
     const tokenResponse = await fetch(GOOGLE_TOKEN_URL, {
       method: "POST",
@@ -39,7 +44,7 @@ serve(async (req) => {
         code,
         client_id: CLIENT_ID,
         client_secret: CLIENT_SECRET || "",
-        redirect_uri: redirectUri,
+        redirect_uri: finalRedirectUri,
         grant_type: "authorization_code",
       }),
     });

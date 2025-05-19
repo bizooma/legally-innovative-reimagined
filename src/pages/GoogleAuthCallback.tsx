@@ -16,6 +16,7 @@ const GoogleAuthCallback: React.FC = () => {
       const error = searchParams.get('error');
 
       if (error) {
+        console.error("Google auth error:", error);
         setStatus('error');
         toast({
           title: "Authentication Error",
@@ -31,6 +32,7 @@ const GoogleAuthCallback: React.FC = () => {
 
       if (code && state) {
         try {
+          console.log("Processing Google auth callback with code");
           const success = await handleGoogleAuthCallback(code, state);
           if (success) {
             setStatus('success');
@@ -63,6 +65,7 @@ const GoogleAuthCallback: React.FC = () => {
           }, 3000);
         }
       } else {
+        console.error("Missing required parameters for Google authentication");
         setStatus('error');
         toast({
           title: "Invalid Auth Request",
