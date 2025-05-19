@@ -1,18 +1,31 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Client } from '@/types/database';
 import { useClientDocumentCount } from '@/hooks/useClientDocumentCount';
 import { useClientProjectsWithDates } from '@/hooks/useClientProjectsWithDates';
 import ClientGanttChart from './ClientGanttChart';
+import GoogleDriveConnector from './GoogleDriveConnector';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 interface ClientOverviewProps {
   client: Client;
 }
 
-const ClientOverview: React.FC<ClientOverviewProps> = ({ client }) => {
+const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }) => {
+  const [client, setClient] = useState(initialClient);
   const { documentCount, isLoading: isLoadingDocuments } = useClientDocumentCount(client.id);
   const { projects, isLoading: isLoadingProjects } = useClientProjectsWithDates(client.id);
+
+  // Handler for when a Google Drive folder is connected or disconnected
+  const handleFolderConnected = (folderId: string) => {
+    setClient({ ...client, google_drive_folder_id: folderId });
+  };
+
+  const handleFolderDisconnected = () => {
+    setClient({ ...client, google_drive_folder_id: null });
+  };
 
   return (
     <div className="space-y-6">
@@ -20,6 +33,15 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client }) => {
       <ClientGanttChart 
         projects={projects} 
         isLoading={isLoadingProjects} 
+      />
+
+      {/* Google Drive Connector */}
+      <GoogleDriveConnector 
+        clientId={client.id}
+        clientName={client.company_name}
+        folderId={client.google_drive_folder_id}
+        onFolderConnected={handleFolderConnected}
+        onFolderDisconnected={handleFolderDisconnected}
       />
 
       {/* Account Summary Card */}

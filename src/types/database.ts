@@ -12,6 +12,7 @@ export interface Client {
   date_added: string;
   created_by: string;
   logo_url?: string | null;
+  google_drive_folder_id?: string | null;
 }
 
 export interface UserProfile {

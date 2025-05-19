@@ -17,6 +17,7 @@ export type Database = {
           contact_phone: string | null
           created_by: string
           date_added: string
+          google_drive_folder_id: string | null
           id: string
           logo_url: string | null
           notes: string | null
@@ -28,6 +29,7 @@ export type Database = {
           contact_phone?: string | null
           created_by: string
           date_added?: string
+          google_drive_folder_id?: string | null
           id?: string
           logo_url?: string | null
           notes?: string | null
@@ -39,6 +41,7 @@ export type Database = {
           contact_phone?: string | null
           created_by?: string
           date_added?: string
+          google_drive_folder_id?: string | null
           id?: string
           logo_url?: string | null
           notes?: string | null
