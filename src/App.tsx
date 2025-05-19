@@ -42,69 +42,23 @@ const App = () => (
             <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
             <Route path="/portal/client/:id" element={<ClientDetails />} />
             
-            {/* Google Auth callback routes - handle all variations */}
+            {/* Google Auth callback routes */}
             <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
             <Route path="auth/google/callback" element={<GoogleAuthCallback />} />
+            
+            {/* Handle all auth callback variations and paths */}
             <Route path="*/auth/google/callback" element={<GoogleAuthCallback />} />
             
-            {/* Fallback route for handling domain prefixed URLs */}
-            <Route path="*" element={<GoogleAuthCallbackFallback />} />
+            {/* Create a catch-all route for all client routes to handle page refreshes */}
+            <Route path="/portal/*" element={<Portal />} />
+            
+            {/* 404 page for truly non-existent routes */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </RouteDebug>
       </TooltipProvider>
     </BrowserRouter>
   </QueryClientProvider>
 );
-
-// Fallback component to handle URLs with domain prefix
-const GoogleAuthCallbackFallback = () => {
-  const currentPath = window.location.pathname;
-  
-  useEffect(() => {
-    console.log("Checking fallback path:", currentPath);
-    
-    // If the URL contains auth/google/callback, render the GoogleAuthCallback component
-    if (currentPath.includes('auth/google/callback')) {
-      console.log("Detected Google auth callback in fallback route");
-      // Continue with auth flow
-      const searchParams = new URLSearchParams(window.location.search);
-      const code = searchParams.get('code');
-      const state = searchParams.get('state');
-      
-      if (code && state) {
-        // Manually trigger GoogleAuthCallback processing
-        const callbackComponent = document.createElement('div');
-        callbackComponent.id = 'google-auth-callback';
-        document.body.appendChild(callbackComponent);
-        
-        // Render GoogleAuthCallback programmatically
-        const event = new CustomEvent('google-auth-callback', { 
-          detail: { code, state }
-        });
-        document.dispatchEvent(event);
-      }
-    }
-  }, [currentPath]);
-
-  // If it's a Google auth callback URL, show a processing message
-  if (currentPath.includes('auth/google/callback')) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-md text-center">
-          <h1 className="text-2xl font-bold mb-4">Processing Authentication...</h1>
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-          </div>
-          <p className="mt-4 text-gray-600">
-            Please wait while we complete the authentication process.
-          </p>
-        </div>
-      </div>
-    );
-  }
-  
-  // For all other cases, render the NotFound component
-  return <NotFound />;
-};
 
 export default App;
