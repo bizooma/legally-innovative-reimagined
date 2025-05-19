@@ -17,7 +17,10 @@ export type Database = {
           contact_phone: string | null
           created_by: string
           date_added: string
+          google_access_token: string | null
           google_drive_folder_id: string | null
+          google_refresh_token: string | null
+          google_token_expires_at: string | null
           id: string
           logo_url: string | null
           notes: string | null
@@ -29,7 +32,10 @@ export type Database = {
           contact_phone?: string | null
           created_by: string
           date_added?: string
+          google_access_token?: string | null
           google_drive_folder_id?: string | null
+          google_refresh_token?: string | null
+          google_token_expires_at?: string | null
           id?: string
           logo_url?: string | null
           notes?: string | null
@@ -41,7 +47,10 @@ export type Database = {
           contact_phone?: string | null
           created_by?: string
           date_added?: string
+          google_access_token?: string | null
           google_drive_folder_id?: string | null
+          google_refresh_token?: string | null
+          google_token_expires_at?: string | null
           id?: string
           logo_url?: string | null
           notes?: string | null
