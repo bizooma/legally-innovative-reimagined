@@ -11,7 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import { ChangePasswordForm } from './ChangePasswordForm';
 
-export function ChangePasswordDialog() {
+interface ChangePasswordDialogProps {
+  isPrimaryContact?: boolean;
+  email?: string;
+}
+
+export function ChangePasswordDialog({ isPrimaryContact = false, email }: ChangePasswordDialogProps) {
   const [open, setOpen] = React.useState(false);
   
   return (
@@ -25,10 +30,12 @@ export function ChangePasswordDialog() {
         <DialogHeader>
           <DialogTitle>Change Password</DialogTitle>
           <DialogDescription>
-            Update your password. After saving, you'll use the new password to log in.
+            {isPrimaryContact 
+              ? "Set a password for this primary contact to enable portal access."
+              : "Update your password. After saving, you'll use the new password to log in."}
           </DialogDescription>
         </DialogHeader>
-        <ChangePasswordForm />
+        <ChangePasswordForm isPrimaryContact={isPrimaryContact} email={email} />
       </DialogContent>
     </Dialog>
   );

@@ -16,30 +16,38 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from '@/components/ui/password-input';
 
-const passwordChangeSchema = z.object({
-  currentPassword: z.string().min(6, {
-    message: "Current password is required",
-  }),
-  newPassword: z.string().min(6, {
-    message: "Password must be at least 6 characters",
-  }),
-  confirmPassword: z.string().min(6, {
-    message: "Password confirmation is required",
-  }),
-}).refine((data) => data.newPassword === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+interface ChangePasswordFormProps {
+  isPrimaryContact?: boolean;
+  email?: string;
+}
 
-type PasswordChangeFormValues = z.infer<typeof passwordChangeSchema>;
-
-export function ChangePasswordForm() {
+export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePasswordFormProps) {
   const { toast } = useToast();
   
+  // Create a dynamic schema based on whether this is a primary contact
+  const passwordChangeSchema = z.object({
+    ...(isPrimaryContact ? {} : {
+      currentPassword: z.string().min(6, {
+        message: "Current password is required",
+      })
+    }),
+    newPassword: z.string().min(6, {
+      message: "Password must be at least 6 characters",
+    }),
+    confirmPassword: z.string().min(6, {
+      message: "Password confirmation is required",
+    }),
+  }).refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+  type PasswordChangeFormValues = z.infer<typeof passwordChangeSchema>;
+
   const form = useForm<PasswordChangeFormValues>({
     resolver: zodResolver(passwordChangeSchema),
     defaultValues: {
-      currentPassword: "",
+      ...(isPrimaryContact ? {} : { currentPassword: "" }),
       newPassword: "",
       confirmPassword: "",
     },
@@ -49,22 +57,25 @@ export function ChangePasswordForm() {
 
   const onSubmit = async (values: PasswordChangeFormValues) => {
     try {
-      // First, verify the current password by attempting a login
-      const { error: loginError } = await supabase.auth.signInWithPassword({
-        email: (await supabase.auth.getUser()).data.user?.email || '',
-        password: values.currentPassword,
-      });
-
-      if (loginError) {
-        toast({
-          title: "Error",
-          description: "Current password is incorrect",
-          variant: "destructive",
+      // If not a primary contact, verify the current password
+      if (!isPrimaryContact) {
+        // First, verify the current password by attempting a login
+        const { error: loginError } = await supabase.auth.signInWithPassword({
+          email: email || (await supabase.auth.getUser()).data.user?.email || '',
+          password: values.currentPassword!,
         });
-        return;
+
+        if (loginError) {
+          toast({
+            title: "Error",
+            description: "Current password is incorrect",
+            variant: "destructive",
+          });
+          return;
+        }
       }
 
-      // If current password is correct, update to new password
+      // Set or update the password
       const { error } = await supabase.auth.updateUser({
         password: values.newPassword
       });
@@ -75,7 +86,7 @@ export function ChangePasswordForm() {
 
       toast({
         title: "Success",
-        description: "Your password has been changed successfully.",
+        description: "The password has been changed successfully.",
       });
 
       // Reset the form
@@ -83,7 +94,7 @@ export function ChangePasswordForm() {
     } catch (error: any) {
       toast({
         title: "Password Change Failed",
-        description: error.message || "An error occurred while changing your password.",
+        description: error.message || "An error occurred while changing the password.",
         variant: "destructive",
       });
     }
@@ -92,22 +103,24 @@ export function ChangePasswordForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="currentPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Current Password</FormLabel>
-              <FormControl>
-                <PasswordInput 
-                  placeholder="Enter your current password" 
-                  {...field} 
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {!isPrimaryContact && (
+          <FormField
+            control={form.control}
+            name="currentPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Current Password</FormLabel>
+                <FormControl>
+                  <PasswordInput 
+                    placeholder="Enter your current password" 
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         <FormField
           control={form.control}
           name="newPassword"
