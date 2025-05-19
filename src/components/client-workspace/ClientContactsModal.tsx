@@ -1,8 +1,10 @@
 
 import React from 'react';
-import { Mail, Phone, User } from 'lucide-react';
+import { Mail, Phone, User, Key } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useClientContacts } from '@/hooks/useClientContacts';
+import { ChangePasswordDialog } from '@/components/auth/ChangePasswordDialog';
+import { Button } from '@/components/ui/button';
 
 interface ClientContactsModalProps {
   open: boolean;
@@ -35,9 +37,15 @@ const ClientContactsModal: React.FC<ClientContactsModalProps> = ({
             <div className="space-y-4">
               {contacts.map((contact) => (
                 <div key={contact.id} className="border rounded-lg p-4 shadow-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <User className="h-4 w-4 text-muted-foreground" />
-                    <span className="font-medium">{contact.full_name || contact.email}</span>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <User className="h-4 w-4 text-muted-foreground" />
+                      <span className="font-medium">{contact.full_name || contact.email}</span>
+                    </div>
+                    
+                    {contact.id !== 'primary' && (
+                      <ChangePasswordDialog />
+                    )}
                   </div>
                   
                   <div className="space-y-2 ml-6">
@@ -48,7 +56,11 @@ const ClientContactsModal: React.FC<ClientContactsModalProps> = ({
                       </a>
                     </div>
                     
-                    {contact.client_id && (
+                    {contact.id === 'primary' ? (
+                      <div className="text-xs text-muted-foreground">
+                        Primary Contact (No portal access)
+                      </div>
+                    ) : (
                       <div className="text-xs text-muted-foreground">
                         Client Portal User
                       </div>
