@@ -24,18 +24,18 @@ interface ChangePasswordFormProps {
 export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePasswordFormProps) {
   const { toast } = useToast();
   
-  // Create a dynamic schema based on whether this is a primary contact
+  // Create a schema that only requires new password fields (no current password)
   const passwordChangeSchema = z.object({
-    ...(isPrimaryContact ? {} : {
-      currentPassword: z.string().min(6, {
-        message: "Current password is required",
-      })
-    }),
     newPassword: z.string().min(6, {
       message: "Password must be at least 6 characters",
     }),
     confirmPassword: z.string().min(6, {
       message: "Password confirmation is required",
+    }),
+    ...(isPrimaryContact ? {} : {
+      currentPassword: z.string().min(6, {
+        message: "Current password is required",
+      })
     }),
   }).refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords do not match",
@@ -47,9 +47,9 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
   const form = useForm<PasswordChangeFormValues>({
     resolver: zodResolver(passwordChangeSchema),
     defaultValues: {
-      ...(isPrimaryContact ? {} : { currentPassword: "" }),
       newPassword: "",
       confirmPassword: "",
+      ...(isPrimaryContact ? {} : { currentPassword: "" }),
     },
   });
 
@@ -58,22 +58,34 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
   const onSubmit = async (values: PasswordChangeFormValues) => {
     try {
       if (isPrimaryContact) {
-        // For primary contacts, we need to use the auth.resetPasswordForEmail function
-        // instead of OTP since signups are not allowed for OTP
-        const { error } = await supabase.auth.resetPasswordForEmail(email || '', {
-          redirectTo: `${window.location.origin}/portal`
-        });
-
-        if (error) {
-          throw error;
+        // For primary contacts, create a user account with the email and password
+        const { data: userExists } = await supabase.auth.admin.getUserByEmail(email || '');
+        
+        if (userExists) {
+          // If user exists, update their password
+          const { error } = await supabase.auth.admin.updateUserById(
+            userExists.user.id,
+            { password: values.newPassword }
+          );
+          
+          if (error) throw error;
+        } else {
+          // If user doesn't exist, create them
+          const { error } = await supabase.auth.admin.createUser({
+            email: email || '',
+            password: values.newPassword,
+            email_confirm: true
+          });
+          
+          if (error) throw error;
         }
-
+        
         toast({
           title: "Success",
-          description: "A password reset link has been sent to the email address.",
+          description: "Password has been set successfully.",
         });
       } else {
-        // If not a primary contact, verify the current password by attempting a login
+        // Non-primary contacts - verify current password first
         const { error: loginError } = await supabase.auth.signInWithPassword({
           email: email || (await supabase.auth.getUser()).data.user?.email || '',
           password: values.currentPassword!,
@@ -88,7 +100,7 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
           return;
         }
 
-        // Set or update the password
+        // Update the password
         const { error } = await supabase.auth.updateUser({
           password: values.newPassword
         });
@@ -143,7 +155,7 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
               <FormLabel>New Password</FormLabel>
               <FormControl>
                 <PasswordInput 
-                  placeholder="Enter your new password" 
+                  placeholder="Enter new password" 
                   {...field} 
                 />
               </FormControl>
@@ -159,7 +171,7 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
               <FormLabel>Confirm New Password</FormLabel>
               <FormControl>
                 <PasswordInput 
-                  placeholder="Confirm your new password" 
+                  placeholder="Confirm new password" 
                   {...field} 
                 />
               </FormControl>
@@ -168,7 +180,7 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
           )}
         />
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? "Processing..." : (isPrimaryContact ? "Send Password Reset Link" : "Change Password")}
+          {isLoading ? "Processing..." : (isPrimaryContact ? "Set Password" : "Change Password")}
         </Button>
       </form>
     </Form>

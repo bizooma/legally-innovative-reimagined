@@ -31,7 +31,7 @@ export function ChangePasswordDialog({ isPrimaryContact = false, email }: Change
           <DialogTitle>{isPrimaryContact ? "Set Password" : "Change Password"}</DialogTitle>
           <DialogDescription>
             {isPrimaryContact 
-              ? "Set a password for this primary contact to enable portal access."
+              ? "Set a password for this primary contact. This will create or update their account."
               : "Update your password. After saving, you'll use the new password to log in."}
           </DialogDescription>
         </DialogHeader>
