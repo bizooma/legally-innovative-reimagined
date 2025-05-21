@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+import { adminSetPassword } from '@/services/contactService';
 import { supabase } from '@/integrations/supabase/client';
 import {
   Form,
@@ -57,28 +58,9 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
 
   const onSubmit = async (values: PasswordChangeFormValues) => {
     try {
-      if (isPrimaryContact) {
-        // For primary contacts, create a user account with the email and password
-        const { data: userExists } = await supabase.auth.admin.getUserByEmail(email || '');
-        
-        if (userExists) {
-          // If user exists, update their password
-          const { error } = await supabase.auth.admin.updateUserById(
-            userExists.user.id,
-            { password: values.newPassword }
-          );
-          
-          if (error) throw error;
-        } else {
-          // If user doesn't exist, create them
-          const { error } = await supabase.auth.admin.createUser({
-            email: email || '',
-            password: values.newPassword,
-            email_confirm: true
-          });
-          
-          if (error) throw error;
-        }
+      if (isPrimaryContact && email) {
+        // For primary contacts, use our adminSetPassword service function
+        await adminSetPassword(email, values.newPassword);
         
         toast({
           title: "Success",

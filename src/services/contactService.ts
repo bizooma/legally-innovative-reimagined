@@ -32,17 +32,12 @@ export async function createClientContact(data: ContactFormValues): Promise<void
 }
 
 export async function adminSetPassword(email: string, password: string): Promise<void> {
-  // First check if the user exists
-  const { data: userData } = await supabase.auth.admin.getUserByEmail(email);
-  
-  const action = userData ? 'update' : 'create';
-  
-  // Call the admin-password-management edge function
+  // Call the admin-password-management edge function to set the password
   const { error } = await supabase.functions.invoke('admin-password-management', {
     body: {
       email,
       password,
-      action
+      action: 'create_or_update' // Simplified to a single action
     }
   });
   

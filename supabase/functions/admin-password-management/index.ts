@@ -8,7 +8,7 @@ const supabaseServiceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 interface PasswordChangeRequest {
   email: string;
   password: string;
-  action: 'create' | 'update';
+  action: 'create_or_update';
 }
 
 serve(async (req) => {
@@ -26,38 +26,34 @@ serve(async (req) => {
     
     // Get the request body
     const requestData: PasswordChangeRequest = await req.json();
-    const { email, password, action } = requestData;
+    const { email, password } = requestData;
     
     if (!email || !password) {
       throw new Error('Email and password are required');
     }
 
+    // First check if user exists by listing all users and filtering
+    const { data: userData, error: userError } = await supabase.auth.admin.listUsers();
+    
+    if (userError) throw userError;
+    
+    const existingUser = userData.users.find(u => u.email === email);
+    
     let result;
     
-    if (action === 'create') {
-      // Create a new user
+    if (existingUser) {
+      // If user exists, update their password
+      result = await supabase.auth.admin.updateUserById(
+        existingUser.id,
+        { password }
+      );
+    } else {
+      // If user doesn't exist, create them
       result = await supabase.auth.admin.createUser({
         email,
         password,
         email_confirm: true
       });
-    } else {
-      // First fetch the user by email
-      const { data: userData, error: userError } = await supabase.auth.admin.listUsers();
-      
-      if (userError) throw userError;
-      
-      const user = userData.users.find(u => u.email === email);
-      
-      if (!user) {
-        throw new Error('User not found');
-      }
-      
-      // Update the user's password
-      result = await supabase.auth.admin.updateUserById(
-        user.id,
-        { password }
-      );
     }
     
     if (result.error) {
@@ -66,7 +62,7 @@ serve(async (req) => {
     
     return new Response(JSON.stringify({ 
       success: true,
-      message: action === 'create' ? 'User created successfully' : 'Password updated successfully'
+      message: existingUser ? 'Password updated successfully' : 'User created successfully'
     }), {
       headers: { 'Content-Type': 'application/json' }
     });
