@@ -18,6 +18,7 @@ export interface StaffMember {
 export const useStaffMembers = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
   const [currentStaffMember, setCurrentStaffMember] = useState<StaffMember | null>(null);
   
   // Fetch staff members from Supabase
@@ -57,6 +58,49 @@ export const useStaffMembers = () => {
   const closeEditStaffDialog = () => {
     setIsEditDialogOpen(false);
     setCurrentStaffMember(null);
+  };
+  
+  // Open the dialog for assigning password to a staff member
+  const openPasswordDialog = (staffMember: StaffMember) => {
+    setCurrentStaffMember(staffMember);
+    setIsPasswordDialogOpen(true);
+  };
+  
+  // Close the dialog for assigning password
+  const closePasswordDialog = () => {
+    setIsPasswordDialogOpen(false);
+    setCurrentStaffMember(null);
+  };
+  
+  // Assign password to a staff member
+  const assignPassword = async (email: string, password: string) => {
+    try {
+      const { error } = await supabase.functions.invoke('admin-password-management', {
+        body: {
+          email,
+          password,
+          action: 'create_or_update'
+        }
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+      toast({
+        title: 'Success',
+        description: 'Password has been assigned successfully.',
+      });
+      
+      closePasswordDialog();
+    } catch (error) {
+      console.error('Error assigning password:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to assign password. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
   
   // Delete a staff member
@@ -146,6 +190,10 @@ export const useStaffMembers = () => {
     closeEditStaffDialog,
     currentStaffMember,
     deleteStaffMember,
-    updateStaffMember
+    updateStaffMember,
+    isPasswordDialogOpen,
+    openPasswordDialog,
+    closePasswordDialog,
+    assignPassword
   };
 };
