@@ -29,13 +29,19 @@ export const useStaffDocuments = (staffId?: string) => {
   } = useQuery({
     queryKey: ['staffDocuments', staffId],
     queryFn: async () => {
-      console.log('Fetching staff documents with staffId:', staffId);
+      console.log('useStaffDocuments hook fetching with staffId:', staffId);
       if (staffId) {
-        return await getStaffDocuments(staffId);
+        const docs = await getStaffDocuments(staffId);
+        console.log(`Retrieved ${docs.length} documents for staff ID ${staffId}`);
+        return docs;
       } else {
-        return await fetchAllDocuments();
+        const allDocs = await fetchAllDocuments();
+        console.log(`Retrieved ${allDocs.length} documents (all documents)`);
+        return allDocs;
       }
-    }
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    retry: 2,
   });
   
   // Fetch document assignments
@@ -43,15 +49,17 @@ export const useStaffDocuments = (staffId?: string) => {
     data: documentAssignments = {},
     refetch: refetchAssignments
   } = useQuery({
-    queryKey: ['documentAssignments'],
+    queryKey: ['documentAssignments', documents],
     queryFn: async () => {
       if (!documents.length) return {};
       
+      console.log('Fetching assignments for documents:', documents.map(d => d.id));
       const assignments: Record<string, StaffMember[]> = {};
       for (const doc of documents) {
         assignments[doc.id] = await getDocumentAssignments(doc.id);
       }
       
+      console.log('Document assignments retrieved:', assignments);
       return assignments;
     },
     enabled: documents.length > 0 && !staffId,
@@ -71,6 +79,7 @@ export const useStaffDocuments = (staffId?: string) => {
       }
       throw new Error("Upload failed");
     } catch (error) {
+      console.error('Error uploading document:', error);
       toast({
         title: "Error",
         description: "Failed to upload document",
@@ -94,6 +103,7 @@ export const useStaffDocuments = (staffId?: string) => {
       }
       throw new Error("Delete failed");
     } catch (error) {
+      console.error('Error deleting document:', error);
       toast({
         title: "Error",
         description: "Failed to delete document",
@@ -125,6 +135,14 @@ export const useStaffDocuments = (staffId?: string) => {
       const toAdd = staffIds.filter(id => !currentIds.includes(id));
       const toRemove = currentIds.filter(id => !staffIds.includes(id));
       
+      console.log('Document assignment changes:', {
+        documentId,
+        toAdd,
+        toRemove,
+        currentIds,
+        newIds: staffIds
+      });
+      
       // Add new assignments
       if (toAdd.length > 0) {
         await assignDocumentToStaff(documentId, toAdd);
@@ -144,6 +162,7 @@ export const useStaffDocuments = (staffId?: string) => {
       refetchAssignments();
       return true;
     } catch (error) {
+      console.error('Error updating document assignments:', error);
       toast({
         title: "Error",
         description: "Failed to update assignments",

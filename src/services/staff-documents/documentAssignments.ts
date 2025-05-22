@@ -85,48 +85,64 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
   try {
     console.log('Fetching documents for staff member:', staffId);
     
-    // Query to get document assignments for this staff member
-    const { data: assignments, error: assignmentError } = await supabase
+    // First, directly query staff_documents table joined with staff_document_assignments
+    // This is a more direct way to get the documents assigned to a staff member
+    const { data, error } = await supabase
       .from('staff_document_assignments')
       .select(`
         document_id,
-        staff_documents:document_id (*)
+        staff_documents:staff_documents!document_id(*)
       `)
       .eq('staff_id', staffId);
-
-    if (assignmentError) {
-      console.error('Supabase assignment query error:', assignmentError);
-      throw assignmentError;
+    
+    if (error) {
+      console.error('Error fetching staff documents:', error);
+      throw error;
     }
     
-    console.log('Raw assignment data:', assignments);
-
-    if (!assignments || assignments.length === 0) {
-      console.log('No document assignments found for this staff member');
+    console.log('Document assignments fetched:', data);
+    
+    if (!data || data.length === 0) {
+      console.log('No documents assigned to staff member:', staffId);
       return [];
     }
-
-    // Extract documents from the assignments and ensure we handle the array of objects properly
-    const documents: StaffDocument[] = assignments
-      .filter(item => item.staff_documents !== null)
+    
+    // Extract and transform documents correctly
+    const documents: StaffDocument[] = data
+      .filter(item => item.staff_documents)
       .map(item => item.staff_documents as unknown as StaffDocument);
     
-    console.log('Extracted documents:', documents);
-
+    console.log('Processed documents before URL addition:', documents);
+    
+    if (documents.length === 0) {
+      return [];
+    }
+    
     // Get signed URLs for each document
     const documentsWithUrls = await Promise.all(
       documents.map(async (doc) => {
-        const url = await createSignedUrl(doc.file_path);
-        return {
-          ...doc,
-          url
-        };
+        if (!doc || !doc.file_path) {
+          console.error('Invalid document object:', doc);
+          return null;
+        }
+        try {
+          const url = await createSignedUrl(doc.file_path);
+          return {
+            ...doc,
+            url
+          };
+        } catch (urlError) {
+          console.error('Error creating signed URL:', urlError);
+          return null;
+        }
       })
     );
     
-    console.log('Documents with URLs:', documentsWithUrls);
-
-    return documentsWithUrls;
+    // Filter out any null values from failed URL generation
+    const validDocuments = documentsWithUrls.filter(doc => doc !== null) as StaffDocumentWithUrl[];
+    
+    console.log('Final documents with URLs:', validDocuments);
+    return validDocuments;
   } catch (error) {
     console.error('Get staff documents error:', error);
     return [];
