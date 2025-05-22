@@ -176,7 +176,11 @@ export const getDocumentAssignments = async (documentId: string): Promise<StaffM
     if (error) throw error;
 
     // Extract the staff members from the data and ensure proper typing
-    return data?.map(item => item.staff_members as StaffMember) || [];
+    return data?.map(item => {
+      // The item.staff_members is actually an object, not an array
+      // Convert it explicitly to the StaffMember type
+      return item.staff_members as unknown as StaffMember;
+    }) || [];
   } catch (error) {
     console.error('Get document assignments error:', error);
     return [];
@@ -216,7 +220,11 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
     if (error) throw error;
 
     // Extract the documents and ensure proper typing
-    const documents = data?.map(item => item.staff_documents as StaffDocument) || [];
+    const documents = data?.map(item => {
+      // The item.staff_documents is an object, not an array
+      // Convert it explicitly to the StaffDocument type
+      return item.staff_documents as unknown as StaffDocument;
+    }) || [];
 
     // Get signed URLs for each document
     const documentsWithUrls = await Promise.all(
