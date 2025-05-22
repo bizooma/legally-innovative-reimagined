@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Upload } from 'lucide-react';
 import { useStaffDocuments } from '@/hooks/staff-documents';
 import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { StaffMember } from '@/hooks/staff/types';
 
 // Import our components
@@ -16,14 +17,17 @@ import EmptyDocumentState from './EmptyDocumentState';
 
 const DocumentManagementContainer: React.FC = () => {
   // Get staff members for assignment
-  const { data: staffMembers = [] } = useQuery({
+  const { data: staffMembers = [], isLoading: isStaffLoading } = useQuery({
     queryKey: ['staffMembers'],
     queryFn: async () => {
       try {
-        const { data, error } = await fetch('/api/staff-members')
-          .then(res => res.json());
+        const { data, error } = await supabase
+          .from('staff_members')
+          .select('*')
+          .order('full_name', { ascending: true });
         
         if (error) throw error;
+        console.log("Fetched staff members:", data);
         return data || [];
       } catch (error) {
         console.error('Error loading staff members:', error);

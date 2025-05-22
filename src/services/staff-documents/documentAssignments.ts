@@ -10,7 +10,7 @@ export async function getStaffDocumentAssignments(staffMemberId: string): Promis
     const { data, error } = await supabase
       .from('staff_document_assignments')
       .select('*')
-      .eq('staff_member_id', staffMemberId);
+      .eq('staff_id', staffMemberId); // Fixed column name from staff_member_id to staff_id
 
     if (error) {
       console.error("Error fetching staff document assignments:", error);
@@ -29,7 +29,7 @@ export async function getDocumentAssignments(documentId: string): Promise<StaffM
   try {
     const { data, error } = await supabase
       .from('staff_document_assignments')
-      .select('staff_member_id')
+      .select('staff_id') // Fixed column name from staff_member_id to staff_id
       .eq('document_id', documentId);
 
     if (error) {
@@ -41,7 +41,7 @@ export async function getDocumentAssignments(documentId: string): Promise<StaffM
     if (!data || data.length === 0) return [];
 
     // Get staff details for each assignment
-    const staffIds = data.map(assignment => assignment.staff_member_id);
+    const staffIds = data.map(assignment => assignment.staff_id); // Fixed column name
     const { data: staffData, error: staffError } = await supabase
       .from('staff_members')
       .select('*')
@@ -64,7 +64,7 @@ export async function assignDocumentToStaff(documentId: string, staffIds: string
   try {
     const assignments = staffIds.map(staffId => ({
       document_id: documentId,
-      staff_member_id: staffId
+      staff_id: staffId // Fixed column name from staff_member_id to staff_id
     }));
 
     const { error } = await supabase
@@ -90,7 +90,7 @@ export async function removeDocumentAssignment(documentId: string, staffId: stri
       .from('staff_document_assignments')
       .delete()
       .eq('document_id', documentId)
-      .eq('staff_member_id', staffId);
+      .eq('staff_id', staffId); // Fixed column name from staff_member_id to staff_id
 
     if (error) {
       console.error("Error removing document assignment:", error);
