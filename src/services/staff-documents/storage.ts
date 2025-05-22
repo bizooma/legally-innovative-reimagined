@@ -17,6 +17,11 @@ export async function ensureStorageBucket(): Promise<boolean> {
     
     if (bucketError) {
       console.error('Error checking storage buckets:', bucketError);
+      toast({
+        title: "Storage access error",
+        description: `Unable to access document storage: ${bucketError.message}`,
+        variant: "destructive",
+      });
       return false;
     }
     
@@ -24,14 +29,28 @@ export async function ensureStorageBucket(): Promise<boolean> {
     
     if (bucketExists) {
       console.log(`Storage bucket '${STORAGE_BUCKET}' exists`);
+      
+      // Additional check: Try to list files to verify we have access
+      const { error: listError } = await supabase
+        .storage
+        .from(STORAGE_BUCKET)
+        .list();
+        
+      if (listError) {
+        console.error(`Bucket exists but cannot list files: ${listError.message}`);
+        toast({
+          title: "Storage permission issue",
+          description: "You don't have permission to access document storage",
+          variant: "destructive",
+        });
+        return false;
+      }
+      
       return true;
     }
     
     // If we're here, the bucket doesn't exist
     console.log(`Storage bucket '${STORAGE_BUCKET}' not found.`);
-    
-    // Instead of trying to create the bucket automatically (which might fail due to RLS),
-    // we'll assume it needs to be created by an admin and just return false
     
     // Display a toast notification about the missing bucket for better user feedback
     toast({
@@ -40,10 +59,14 @@ export async function ensureStorageBucket(): Promise<boolean> {
       variant: "destructive",
     });
     
-    // Return false to indicate that the bucket doesn't exist or we can't access it
     return false;
   } catch (error) {
     console.error('Error in ensureStorageBucket:', error);
+    toast({
+      title: "Storage error",
+      description: "There was a problem connecting to document storage.",
+      variant: "destructive",
+    });
     return false;
   }
 }
@@ -53,12 +76,28 @@ export async function ensureStorageBucket(): Promise<boolean> {
  * (Useful for determining if UI elements should be shown)
  */
 export async function userCanManageDocumentStorage(): Promise<boolean> {
-  // This is a simplified check - in a real app, you would check permissions more thoroughly
   try {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) return false;
     
-    return true;
+    // First check if user is admin
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('is_admin')
+      .eq('id', session.user.id)
+      .single();
+      
+    if (!userError && userData?.is_admin) {
+      return true; // Admin users have full access
+    }
+    
+    // Then try to list files as a test of permission
+    const { error: listError } = await supabase
+      .storage
+      .from(STORAGE_BUCKET)
+      .list();
+    
+    return !listError; // No error means we have access
   } catch (error) {
     console.error('Error checking storage permissions:', error);
     return false;

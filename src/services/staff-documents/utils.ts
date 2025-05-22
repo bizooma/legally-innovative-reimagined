@@ -1,6 +1,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { StaffDocumentWithUrl } from './types';
+import { toast } from '@/hooks/use-toast';
 
 // Storage bucket for staff documents
 export const STORAGE_BUCKET = 'staff_documents';
@@ -23,13 +24,27 @@ export const formatFileSize = (bytes: number): string => {
 export const createSignedUrl = async (filePath: string): Promise<string> => {
   try {
     console.log(`Creating signed URL for file: ${filePath}`);
+    
+    if (!filePath) {
+      console.error('Cannot create signed URL - empty file path');
+      return '';
+    }
+    
     const { data, error } = await supabase.storage
       .from(STORAGE_BUCKET)
-      .createSignedUrl(filePath, 60 * 60); // 1 hour expiry
+      .createSignedUrl(filePath, 60 * 5); // 5 minutes expiry (shorter for security)
 
     if (error) {
       console.error('Error creating signed URL:', error);
-      // Don't throw the error, just return empty string
+      
+      if (error.message.includes('permission') || error.message.includes('access')) {
+        toast({
+          title: "Permission denied",
+          description: "You don't have permission to access this document.",
+          variant: "destructive",
+        });
+      }
+      
       return '';
     }
     
@@ -126,24 +141,35 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       return [];
     }
     
-    // Log each document for debugging
-    documents.forEach(doc => {
-      console.log(`[DOCUMENT-DEBUG] Document found - ID: ${doc.id}, Name: ${doc.name}, Path: ${doc.file_path}`);
-    });
+    // Check if we have access to the storage bucket before trying to get URLs
+    const { data: bucketCheck, error: bucketError } = await supabase
+      .storage
+      .from(STORAGE_BUCKET)
+      .list();
+      
+    const canAccessBucket = !bucketError && !!bucketCheck;
     
-    // Get signed URLs for each document
+    if (!canAccessBucket) {
+      console.error('Cannot access storage bucket:', bucketError);
+      // Still return documents, but URLs will be empty
+    }
+    
+    // Get signed URLs for each document if we have bucket access
     const documentsWithUrls = await Promise.all(
       documents.map(async (doc) => {
         let url = '';
-        try {
-          url = await createSignedUrl(doc.file_path);
-          if (!url) {
-            console.warn(`[DOCUMENT-DEBUG] Failed to create signed URL for document: ${doc.id} - ${doc.name}`);
-          } else {
-            console.log(`[DOCUMENT-DEBUG] Successfully created URL for document: ${doc.id}`);
+        
+        if (canAccessBucket) {
+          try {
+            url = await createSignedUrl(doc.file_path);
+            if (!url) {
+              console.warn(`[DOCUMENT-DEBUG] Failed to create signed URL for document: ${doc.id} - ${doc.name}`);
+            } else {
+              console.log(`[DOCUMENT-DEBUG] Successfully created URL for document: ${doc.id}`);
+            }
+          } catch (urlError) {
+            console.error(`[DOCUMENT-DEBUG] Error creating URL for document ${doc.id}:`, urlError);
           }
-        } catch (urlError) {
-          console.error(`[DOCUMENT-DEBUG] Error creating URL for document ${doc.id}:`, urlError);
         }
         
         return {

@@ -11,28 +11,39 @@ import { useEffect, useState } from 'react';
 import { toast } from '@/hooks/use-toast';
 
 export function useDocumentQueries(staffId?: string) {
-  // State to track if bucket exists
+  // State to track if bucket exists and if we've tried checking
   const [bucketExists, setBucketExists] = useState<boolean | null>(null);
+  const [bucketChecked, setBucketChecked] = useState(false);
 
   // Check storage bucket exists on first load
   useEffect(() => {
     const checkBucket = async () => {
       try {
+        if (bucketChecked) return; // Avoid redundant checks
+        
         console.log("useDocumentQueries: Checking bucket existence");
         const exists = await ensureStorageBucket();
         console.log(`useDocumentQueries: Bucket exists: ${exists}`);
         setBucketExists(exists);
+        setBucketChecked(true);
+        
         if (!exists) {
           console.error('Storage bucket does not exist or could not be created');
+          toast({
+            title: "Document storage not available",
+            description: "Unable to access document storage. Please contact an administrator.",
+            variant: "destructive",
+          });
         }
       } catch (error) {
         console.error("Error checking bucket:", error);
         setBucketExists(false);
+        setBucketChecked(true);
       }
     };
     
     checkBucket();
-  }, []);
+  }, [bucketChecked]);
 
   // Fetch all documents or just those assigned to a specific staff member
   const { 
@@ -47,17 +58,16 @@ export function useDocumentQueries(staffId?: string) {
       if (staffId) {
         console.log(`useDocumentQueries: Fetching for staff member: ${staffId}`);
         try {
-          // If bucket doesn't exist and we've checked, show warning
-          if (bucketExists === false) {
-            toast({
-              title: "Storage not configured",
-              description: "Document storage is not properly configured. Please contact an administrator.",
-              variant: "destructive", 
-            });
-          }
-          
+          // Even if bucket doesn't exist, try to fetch documents
+          // This will allow us to show document names even if URLs aren't available
           const docs = await getStaffDocuments(staffId);
           console.log(`useDocumentQueries: Retrieved ${docs.length} docs for staff ${staffId}`);
+          
+          // If no documents and bucket exists, show appropriate message
+          if (docs.length === 0 && bucketExists) {
+            console.log('No documents assigned to this staff member');
+          }
+          
           return docs;
         } catch (error) {
           console.error("Error fetching staff documents:", error);
@@ -75,11 +85,11 @@ export function useDocumentQueries(staffId?: string) {
         }
       }
     },
-    staleTime: 1000 * 10, // 10 seconds instead of 30 for more frequent updates
+    staleTime: 1000 * 5, // 5 seconds for more frequent updates
     retry: 3,
     refetchOnWindowFocus: true,
-    // Only run the query if we've checked the bucket status or if we're in admin mode (no staffId)
-    enabled: bucketExists !== null || !staffId,
+    // Run the query regardless of bucket status to get at least document names
+    enabled: true,
   });
   
   // Fetch document assignments
@@ -116,13 +126,20 @@ export function useDocumentQueries(staffId?: string) {
       return assignments;
     },
     enabled: documents.length > 0,
-    staleTime: 1000 * 10, // 10 seconds
+    staleTime: 1000 * 5, // 5 seconds
     refetchOnWindowFocus: true,
   });
 
-  // Function to force refresh all data
+  // Function to force check bucket and refresh all data
   const refreshAllData = async () => {
     try {
+      // Re-check bucket first
+      setBucketChecked(false); // Reset so useEffect will check again
+      const exists = await ensureStorageBucket(); // Manually check immediately
+      setBucketExists(exists);
+      setBucketChecked(true);
+      
+      // Then refetch documents and assignments
       await refetch();
       if (documents.length > 0) {
         await refetchAssignments();
@@ -144,6 +161,7 @@ export function useDocumentQueries(staffId?: string) {
     refetch,
     refetchAssignments,
     refreshAllData,
-    bucketExists
+    bucketExists,
+    bucketChecked
   };
 }
