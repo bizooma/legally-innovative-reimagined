@@ -19,19 +19,12 @@ const Hero = () => {
                 <Phone size={20} className="mr-2" />
                 <a href="tel:8453779730" className="text-lg hover:underline">845-377-9730</a>
               </div>
-              <div className="flex flex-col md:flex-row md:gap-4">
+              <div>
                 <Button 
                   className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg"
                   onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   Discover Our Services
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="border-legal-primary text-legal-primary hover:bg-legal-light px-8 py-6 text-lg mt-4 md:mt-0"
-                  onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  About Us
                 </Button>
               </div>
             </div>
