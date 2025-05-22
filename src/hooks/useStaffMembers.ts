@@ -17,6 +17,8 @@ export interface StaffMember {
 
 export const useStaffMembers = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [currentStaffMember, setCurrentStaffMember] = useState<StaffMember | null>(null);
   
   // Fetch staff members from Supabase
   const { data: staffMembers, isLoading, error, refetch } = useQuery({
@@ -35,14 +37,90 @@ export const useStaffMembers = () => {
     }
   });
 
-  // Open the dialog
+  // Open the dialog for adding a new staff member
   const openAddStaffDialog = () => {
     setIsDialogOpen(true);
   };
 
-  // Close the dialog
+  // Close the dialog for adding a new staff member
   const closeAddStaffDialog = () => {
     setIsDialogOpen(false);
+  };
+  
+  // Open the dialog for editing a staff member
+  const openEditStaffDialog = (staffMember: StaffMember) => {
+    setCurrentStaffMember(staffMember);
+    setIsEditDialogOpen(true);
+  };
+
+  // Close the dialog for editing a staff member
+  const closeEditStaffDialog = () => {
+    setIsEditDialogOpen(false);
+    setCurrentStaffMember(null);
+  };
+  
+  // Delete a staff member
+  const deleteStaffMember = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('staff_members')
+        .delete()
+        .eq('id', id);
+        
+      if (error) {
+        throw error;
+      }
+      
+      toast({
+        title: 'Success',
+        description: 'Staff member has been removed.',
+      });
+      
+      refetch();
+    } catch (error) {
+      console.error('Error deleting staff member:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete staff member. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+  
+  // Update a staff member
+  const updateStaffMember = async (staffMember: StaffMember) => {
+    try {
+      const { error } = await supabase
+        .from('staff_members')
+        .update({
+          full_name: staffMember.full_name,
+          position: staffMember.position,
+          email: staffMember.email,
+          phone: staffMember.phone,
+          department: staffMember.department,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', staffMember.id);
+        
+      if (error) {
+        throw error;
+      }
+      
+      toast({
+        title: 'Success',
+        description: 'Staff member has been updated.',
+      });
+      
+      closeEditStaffDialog();
+      refetch();
+    } catch (error) {
+      console.error('Error updating staff member:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update staff member. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   // Handle errors
@@ -62,6 +140,12 @@ export const useStaffMembers = () => {
     refetch,
     isDialogOpen,
     openAddStaffDialog,
-    closeAddStaffDialog
+    closeAddStaffDialog,
+    isEditDialogOpen,
+    openEditStaffDialog,
+    closeEditStaffDialog,
+    currentStaffMember,
+    deleteStaffMember,
+    updateStaffMember
   };
 };
