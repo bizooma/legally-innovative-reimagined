@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 import { Upload, FileText, X, Check, Users } from 'lucide-react';
-import { useStaffMembers } from '@/hooks/useStaffMembers';
+import { StaffMember } from '@/hooks/staff/types';
 import { StaffDocumentWithUrl } from '@/types/staffDocument';
 import {
   uploadStaffDocument,
@@ -16,7 +17,7 @@ import {
   assignDocumentToStaff,
   getDocumentAssignments,
   removeDocumentAssignment
-} from '@/services/staffDocumentService';
+} from '@/services/staff-documents';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -35,8 +36,24 @@ const DocumentManagement: React.FC = () => {
   const [currentDocumentId, setCurrentDocumentId] = useState<string | null>(null);
   const [selectedStaffIds, setSelectedStaffIds] = useState<string[]>([]);
   const [assignedStaff, setAssignedStaff] = useState<Record<string, any[]>>({});
+  const [staffMembers, setStaffMembers] = useState<StaffMember[]>([]);
 
-  const { staffMembers } = useStaffMembers();
+  // Load staff members
+  useEffect(() => {
+    const fetchStaffMembers = async () => {
+      try {
+        const { data, error } = await fetch('/api/staff-members')
+          .then(res => res.json());
+        
+        if (error) throw error;
+        setStaffMembers(data || []);
+      } catch (error) {
+        console.error('Error loading staff members:', error);
+      }
+    };
+    
+    fetchStaffMembers();
+  }, []);
 
   // Load all documents
   const loadDocuments = async () => {

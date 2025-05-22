@@ -1,8 +1,10 @@
+
 import { supabase } from '@/integrations/supabase/client';
 import { StaffDocumentAssignment } from './types';
 import type { StaffDocument } from '@/types/staffDocument';
 import { StaffMember } from '@/hooks/staff/types';
 
+// Get document assignments for a staff member
 export async function getStaffDocumentAssignments(staffMemberId: string): Promise<StaffDocumentAssignment[]> {
   try {
     const { data, error } = await supabase
@@ -22,42 +24,85 @@ export async function getStaffDocumentAssignments(staffMemberId: string): Promis
   }
 }
 
-export async function assignDocumentToStaff(staffMemberId: string, documentId: string): Promise<StaffDocumentAssignment | null> {
+// Get all staff members assigned to a document
+export async function getDocumentAssignments(documentId: string): Promise<StaffMember[]> {
   try {
     const { data, error } = await supabase
       .from('staff_document_assignments')
-      .insert([{ staff_member_id: staffMemberId, document_id: documentId }])
-      .select()
-      .single();
+      .select('staff_member_id')
+      .eq('document_id', documentId);
+
+    if (error) {
+      console.error("Error fetching document assignments:", error);
+      throw error;
+    }
+
+    // If no assignments, return empty array
+    if (!data || data.length === 0) return [];
+
+    // Get staff details for each assignment
+    const staffIds = data.map(assignment => assignment.staff_member_id);
+    const { data: staffData, error: staffError } = await supabase
+      .from('staff_members')
+      .select('*')
+      .in('id', staffIds);
+
+    if (staffError) {
+      console.error("Error fetching staff details:", staffError);
+      throw staffError;
+    }
+
+    return staffData as StaffMember[];
+  } catch (error) {
+    console.error("Failed to fetch document assignments:", error);
+    return [];
+  }
+}
+
+// Assign document to multiple staff members
+export async function assignDocumentToStaff(documentId: string, staffIds: string[]): Promise<boolean> {
+  try {
+    const assignments = staffIds.map(staffId => ({
+      document_id: documentId,
+      staff_member_id: staffId
+    }));
+
+    const { error } = await supabase
+      .from('staff_document_assignments')
+      .insert(assignments);
 
     if (error) {
       console.error("Error assigning document to staff:", error);
       throw error;
     }
 
-    return data as StaffDocumentAssignment;
+    return true;
   } catch (error) {
     console.error("Failed to assign document to staff:", error);
-    return null;
+    return false;
   }
 }
 
-export async function unassignDocumentFromStaff(staffMemberId: string, documentId: string): Promise<boolean> {
+// Remove document assignment for a staff member
+export async function removeDocumentAssignment(documentId: string, staffId: string): Promise<boolean> {
   try {
     const { error } = await supabase
       .from('staff_document_assignments')
       .delete()
-      .eq('staff_member_id', staffMemberId)
-      .eq('document_id', documentId);
+      .eq('document_id', documentId)
+      .eq('staff_member_id', staffId);
 
     if (error) {
-      console.error("Error unassigning document from staff:", error);
+      console.error("Error removing document assignment:", error);
       throw error;
     }
 
     return true;
   } catch (error) {
-    console.error("Failed to unassign document from staff:", error);
+    console.error("Failed to remove document assignment:", error);
     return false;
   }
 }
+
+// For backwards compatibility
+export const unassignDocumentFromStaff = removeDocumentAssignment;

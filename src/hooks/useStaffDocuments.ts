@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -12,7 +13,7 @@ import {
   getStaffDocuments
 } from '@/services/staff-documents';
 import { StaffDocumentWithUrl } from '@/services/staff-documents/types';
-import { StaffMember } from '@/hooks/useStaffMembers';
+import { StaffMember } from '@/hooks/staff/types';
 
 export const useStaffDocuments = (staffId?: string) => {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
