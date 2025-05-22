@@ -31,7 +31,7 @@ export async function ensureStorageBucket(): Promise<boolean> {
       console.log(`Storage bucket '${STORAGE_BUCKET}' exists`);
       
       // Additional check: Try to list files to verify we have access
-      const { error: listError } = await supabase
+      const { data, error: listError } = await supabase
         .storage
         .from(STORAGE_BUCKET)
         .list();
@@ -39,26 +39,39 @@ export async function ensureStorageBucket(): Promise<boolean> {
       if (listError) {
         console.error(`Bucket exists but cannot list files: ${listError.message}`);
         
-        // Instead of showing an error, we'll show a warning
-        console.warn('User may not have permissions to list files, but bucket exists');
+        if (listError.message.includes('Not found') || listError.message.includes('does not exist')) {
+          // This suggests the bucket exists in the database but not in storage
+          toast({
+            title: "Storage inconsistency",
+            description: "Document storage exists but may need repair. Please contact an administrator.",
+            variant: "warning",
+          });
+        } else {
+          // Permission issue likely
+          console.warn('User may not have permissions to list files, but bucket exists');
+        }
         
         // Return true since the bucket exists, even if we can't list files
         // This allows document names to be displayed even without URLs
         return true;
       }
       
+      console.log(`Successfully accessed bucket. Found ${data?.length || 0} files.`);
+      toast({
+        title: "Storage connected",
+        description: "Document storage is properly configured.",
+      });
+      
       return true;
     }
     
-    // If we're here, the bucket doesn't exist - try to create it
     console.log(`Storage bucket '${STORAGE_BUCKET}' not found.`);
     
-    // Important change: Instead of trying to create the bucket, show a message 
-    // that an admin needs to do this manually via SQL
+    // Show a message that storage is not available
     toast({
       title: "Storage setup required",
       description: "Document storage needs to be set up by an administrator.",
-      variant: "destructive",
+      variant: "warning",
     });
     
     // Return false indicating bucket is not available yet

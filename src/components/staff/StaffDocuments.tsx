@@ -18,12 +18,24 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
     documents = [], 
     isLoading, 
     error, 
-    refetch,
+    refreshAllData,
     bucketExists,
     bucketChecked,
-    refreshAllData,
     isRefetching 
   } = useDocumentQueries(staffMemberId);
+
+  // Automatically try refreshing if bucket check failed initially
+  useEffect(() => {
+    if (bucketChecked && !bucketExists) {
+      // Wait a moment before retrying to avoid too many requests
+      const timer = setTimeout(() => {
+        console.log("StaffDocuments: Auto-retrying bucket check");
+        refreshAllData();
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [bucketChecked, bucketExists, refreshAllData]);
 
   const handleRefresh = () => {
     console.log("StaffDocuments: Manual refresh triggered");
