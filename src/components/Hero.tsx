@@ -14,24 +14,26 @@ const Hero = () => {
             <p className="text-lg md:text-xl mb-8 text-gray-700 max-w-xl">
               At Legally Innovative, we are passionate about helping law firms thrive in the digital age. As a full-service marketing and AI automations provider, we understand the unique challenges that law firms face in generating, nurturing, and converting leads.
             </p>
-            <div className="flex items-center mb-6 text-legal-primary">
-              <Phone size={20} className="mr-2" />
-              <a href="tel:8453779730" className="text-lg hover:underline">845-377-9730</a>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg"
-                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Discover Our Services
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-legal-primary text-legal-primary hover:bg-legal-light px-8 py-6 text-lg"
-                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                About Us
-              </Button>
+            <div className="flex flex-col md:flex-row md:items-center gap-6 text-legal-primary mb-6">
+              <div className="flex items-center">
+                <Phone size={20} className="mr-2" />
+                <a href="tel:8453779730" className="text-lg hover:underline">845-377-9730</a>
+              </div>
+              <div className="flex flex-col md:flex-row md:gap-4">
+                <Button 
+                  className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg"
+                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  Discover Our Services
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-legal-primary text-legal-primary hover:bg-legal-light px-8 py-6 text-lg mt-4 md:mt-0"
+                  onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  About Us
+                </Button>
+              </div>
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center lg:justify-end animate-fade-in" style={{animationDelay: '0.3s'}}>
