@@ -18,11 +18,16 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
 
   useEffect(() => {
     const loadDocuments = async () => {
-      if (!staffMemberId) return;
+      if (!staffMemberId) {
+        console.error('No staff member ID provided');
+        return;
+      }
       
+      console.log('Loading documents for staff member ID:', staffMemberId);
       setIsLoading(true);
       try {
         const docs = await getStaffDocuments(staffMemberId);
+        console.log('Retrieved documents:', docs);
         setDocuments(docs);
       } catch (error) {
         console.error('Error loading staff documents:', error);

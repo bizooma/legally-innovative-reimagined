@@ -47,7 +47,10 @@ export const getDocumentAssignments = async (documentId: string): Promise<StaffM
     if (error) throw error;
 
     // Extract the staff members from the data and ensure proper type casting
-    return data?.map(item => item.staff_members as unknown as StaffMember) || [];
+    return data?.map(item => {
+      // Type assertion to handle the Supabase response structure
+      return item.staff_members as unknown as StaffMember;
+    }) || [];
   } catch (error) {
     console.error('Get document assignments error:', error);
     return [];
@@ -95,12 +98,22 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
       throw error;
     }
     
-    console.log('Raw assignment data:', data);
+    console.log('Raw assignment data:', JSON.stringify(data, null, 2));
+
+    if (!data || data.length === 0) {
+      console.log('No document assignments found for this staff member');
+      return [];
+    }
 
     // Extract the documents and properly cast the type
-    const documents = data?.map(item => {
-      return item.staff_documents as unknown as StaffDocument;
-    }) || [];
+    const documents: StaffDocument[] = [];
+    
+    for (const item of data) {
+      if (item.staff_documents) {
+        // Type assertion to handle the Supabase response structure
+        documents.push(item.staff_documents as unknown as StaffDocument);
+      }
+    }
     
     console.log('Extracted documents:', documents);
 

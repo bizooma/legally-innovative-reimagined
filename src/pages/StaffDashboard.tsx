@@ -59,6 +59,11 @@ const StaffDashboard = () => {
           setCurrentStaffMember(staffData);
         } else {
           console.error('Error fetching staff data:', staffError);
+          toast({
+            title: "Staff Profile Error",
+            description: "Could not find your staff profile",
+            variant: "destructive",
+          });
         }
       }
       
@@ -161,11 +166,9 @@ const StaffDashboard = () => {
           {!isAdmin && currentStaffMember && (
             <div className="mb-8">
               <StaffDocuments staffMemberId={currentStaffMember.id} />
-              {/* Fix for void expression TypeScript error */}
               <div className="hidden">
-                {/* Using a self-executing function to handle the console.log properly */}
                 {(() => {
-                  console.log('Rendering StaffDocuments with ID:', currentStaffMember.id);
+                  console.log('Staff Member ID for StaffDocuments:', currentStaffMember.id);
                   return null;
                 })()}
               </div>
