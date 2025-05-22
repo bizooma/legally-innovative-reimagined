@@ -4,7 +4,8 @@ import {
   uploadStaffDocument,
   deleteDocument as deleteStaffDocument,
   assignDocumentToStaff,
-  removeDocumentAssignment
+  removeDocumentAssignment,
+  removeAllDocumentAssignments
 } from '@/services/staff-documents';
 
 export function useDocumentOperations(refetch: () => void, refetchAssignments?: () => void) {
@@ -59,32 +60,20 @@ export function useDocumentOperations(refetch: () => void, refetchAssignments?: 
   // Handle document assignment
   const handleAssignment = async (documentId: string, staffIds: string[], currentAssignments: Record<string, any[]> = {}) => {
     try {
-      // Get current assignments
-      const currentlyAssigned = currentAssignments[documentId] || [];
-      const currentIds = currentlyAssigned.map((staff: any) => staff.id);
-      
       console.log('Document assignment operation starting:', {
         documentId,
         staffIds,
-        currentIds,
+        currentAssignments: currentAssignments[documentId] ? currentAssignments[documentId].length : 0,
       });
       
-      // First remove all existing assignments to avoid conflicts
-      console.log('Removing existing assignments...');
-      for (const staffId of currentIds) {
-        console.log(`Removing assignment for staff ID: ${staffId}`);
-        try {
-          await removeDocumentAssignment(documentId, staffId);
-        } catch (err) {
-          console.error(`Error removing assignment for staff ${staffId}:`, err);
-          // Continue with other removals even if one fails
-        }
-      }
+      // First, completely remove all existing assignments
+      console.log('Removing all existing assignments for document:', documentId);
+      await removeAllDocumentAssignments(documentId);
       
-      // Wait a moment to ensure removals are processed
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Wait to ensure removals are processed
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Now add all new assignments
+      // Now add all new assignments if any are selected
       if (staffIds.length > 0) {
         console.log(`Adding ${staffIds.length} new assignments...`);
         try {
@@ -108,8 +97,12 @@ export function useDocumentOperations(refetch: () => void, refetchAssignments?: 
       
       // Refresh assignments
       if (refetchAssignments) {
-        console.log('Refreshing assignment data...');
-        refetchAssignments();
+        console.log('Requesting assignment data refresh...');
+        // Delay the refetch to ensure database has time to update
+        setTimeout(() => {
+          console.log('Refreshing assignment data now');
+          refetchAssignments();
+        }, 1500);
       }
       return true;
     } catch (error) {

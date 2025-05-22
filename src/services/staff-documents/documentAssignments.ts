@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { StaffDocumentAssignment } from './types';
 import type { StaffDocument } from '@/types/staffDocument';
 import { StaffMember } from '@/hooks/staff/types';
+import { checkAssignmentExists } from './utils';
 
 // Get document assignments for a staff member
 export async function getStaffDocumentAssignments(staffMemberId: string): Promise<StaffDocumentAssignment[]> {
@@ -62,14 +63,24 @@ export async function getDocumentAssignments(documentId: string): Promise<StaffM
 // Assign document to multiple staff members
 export async function assignDocumentToStaff(documentId: string, staffIds: string[]): Promise<boolean> {
   try {
+    console.log(`Starting assignment of document ${documentId} to ${staffIds.length} staff members`);
+    
     // Process assignments one by one to better handle errors
     for (const staffId of staffIds) {
+      // Check if assignment already exists to avoid duplicate key violation
+      const exists = await checkAssignmentExists(documentId, staffId);
+      
+      if (exists) {
+        console.log(`Assignment for document ${documentId} to staff ${staffId} already exists, skipping`);
+        continue;
+      }
+      
+      console.log(`Creating assignment for document ${documentId} to staff ${staffId}`);
+      
       const assignment = {
         document_id: documentId,
         staff_id: staffId
       };
-      
-      console.log(`Creating assignment for document ${documentId} to staff ${staffId}`);
       
       const { error } = await supabase
         .from('staff_document_assignments')
@@ -77,11 +88,14 @@ export async function assignDocumentToStaff(documentId: string, staffIds: string
 
       if (error) {
         console.error(`Error assigning document ${documentId} to staff ${staffId}:`, error);
-        throw error;
+        // Log but continue with other assignments rather than failing completely
+        console.error('Continuing with other assignments...');
+      } else {
+        console.log(`Successfully assigned document ${documentId} to staff ${staffId}`);
       }
       
       // Small delay between inserts to avoid race conditions
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 300));
     }
 
     return true;
@@ -107,9 +121,33 @@ export async function removeDocumentAssignment(documentId: string, staffId: stri
       throw error;
     }
 
+    console.log(`Successfully removed assignment for document ${documentId} from staff ${staffId}`);
     return true;
   } catch (error) {
     console.error("Failed to remove document assignment:", error);
+    return false;
+  }
+}
+
+// Remove all assignments for a document
+export async function removeAllDocumentAssignments(documentId: string): Promise<boolean> {
+  try {
+    console.log(`Removing all assignments for document ${documentId}`);
+    
+    const { error } = await supabase
+      .from('staff_document_assignments')
+      .delete()
+      .eq('document_id', documentId);
+
+    if (error) {
+      console.error("Error removing document assignments:", error);
+      throw error;
+    }
+
+    console.log(`Successfully removed all assignments for document ${documentId}`);
+    return true;
+  } catch (error) {
+    console.error("Failed to remove all document assignments:", error);
     return false;
   }
 }

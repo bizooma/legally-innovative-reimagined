@@ -86,7 +86,7 @@ const DocumentManagementContainer: React.FC = () => {
       console.log('Opening assignment dialog with:', {
         documentId,
         document,
-        assignedStaff,
+        assignedStaff: assignedStaff.length,
         currentAssignedIds
       });
       
@@ -101,24 +101,27 @@ const DocumentManagementContainer: React.FC = () => {
     console.log('Saving assignments:', {
       documentId: currentDocument.id,
       selectedStaffIds,
-      currentAssignments: documentAssignments
+      currentAssignments: documentAssignments ? Object.keys(documentAssignments).length : 0
     });
     
     const success = await handleAssignment(currentDocument.id, selectedStaffIds, documentAssignments);
     
     if (success) {
-      // Force refetch assignments after save
-      setTimeout(() => {
-        console.log("Refreshing assignments after save");
-        refetchAssignments();
-      }, 1000);
-      
+      // Close the dialog
       setIsAssignDialogOpen(false);
+      
+      // Force refetch assignments after save with a delay to ensure DB is updated
+      setTimeout(() => {
+        console.log("Refreshing all data after save");
+        refetch();
+        refetchAssignments();
+      }, 2000);
     }
   };
 
   // Toggle staff selection for document assignment
   const toggleStaffSelection = (staffId: string) => {
+    console.log(`Toggling selection for staff ID: ${staffId}`);
     setSelectedStaffIds(prev => 
       prev.includes(staffId) 
         ? prev.filter(id => id !== staffId) 
