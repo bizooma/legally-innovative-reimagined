@@ -9,117 +9,55 @@ export const useFileDownload = () => {
 
   const downloadFile = async (bucketName: string, fileName: string, displayName?: string): Promise<boolean> => {
     setIsDownloading(true);
+    console.log(`Starting download for ${fileName} from bucket ${bucketName}`);
     
     try {
-      console.log(`Attempting to download ${fileName} from bucket ${bucketName}`);
+      // Try to download the file directly - this is more reliable than checking first
+      const { data, error } = await supabase.storage.from(bucketName).download(fileName);
       
-      // First check if the bucket exists
-      const bucketsResult = await handleStorageOperation(
-        async () => {
-          const { data, error } = await supabase.storage.listBuckets();
-          if (error) throw error;
-          return data || [];
-        },
-        false
-      );
-      
-      if (!bucketsResult.success) {
-        console.error("Error checking buckets:", bucketsResult.errorMessage);
+      // If there's an error downloading, handle it
+      if (error) {
+        console.error(`Error downloading file: ${error.message}`, error);
+        
+        // Check if the bucket exists and what files are available
+        const { data: buckets } = await supabase.storage.listBuckets();
+        const bucketExists = buckets?.some(b => b.name === bucketName);
+        
+        if (!bucketExists) {
+          toast({
+            title: "Download failed",
+            description: `Storage bucket "${bucketName}" not found.`,
+            variant: "destructive",
+          });
+          return false;
+        }
+        
+        // List files in the bucket to show what's available
+        const { data: files } = await supabase.storage.from(bucketName).list();
+        console.log(`Files in bucket "${bucketName}":`, files?.map(f => f.name) || []);
+        
         toast({
           title: "Download failed",
-          description: bucketsResult.errorMessage,
+          description: `Could not download "${fileName}". ${error.message}`,
           variant: "destructive",
         });
         return false;
       }
       
-      if (!Array.isArray(bucketsResult.data)) {
-        console.error("Invalid response format when listing buckets");
+      if (!data) {
+        console.error("No data received from download");
         toast({
           title: "Download failed",
-          description: "Error processing bucket data",
+          description: "No file data received from storage",
           variant: "destructive",
         });
         return false;
       }
       
-      const bucket = bucketsResult.data.find(b => b.name === bucketName);
-      if (!bucket) {
-        console.error(`Bucket "${bucketName}" does not exist`);
-        toast({
-          title: "Download failed",
-          description: `Storage location "${bucketName}" not found.`,
-          variant: "destructive",
-        });
-        return false;
-      }
-      
-      console.log(`Bucket "${bucketName}" found, public: ${bucket.public}`);
-      
-      // List files in the bucket to check if the file exists
-      const filesResult = await handleStorageOperation(
-        async () => {
-          const { data, error } = await supabase.storage.from(bucketName).list();
-          if (error) throw error;
-          return data || [];
-        },
-        false
-      );
-      
-      if (!filesResult.success) {
-        console.error("Error listing files:", filesResult.errorMessage);
-        toast({
-          title: "Download failed",
-          description: "Could not verify if the file exists. Please try again later.",
-          variant: "destructive",
-        });
-        return false;
-      }
-      
-      if (!Array.isArray(filesResult.data)) {
-        console.error("Invalid response format when listing files");
-        toast({
-          title: "Download failed",
-          description: "Error processing file data",
-          variant: "destructive",
-        });
-        return false;
-      }
-      
-      console.log("Files in bucket:", filesResult.data.map(f => f.name));
-      
-      const fileExists = filesResult.data.some(f => f.name === fileName);
-      if (!fileExists) {
-        console.error(`File "${fileName}" not found in bucket "${bucketName}"`);
-        toast({
-          title: "Download failed",
-          description: `The file "${fileName}" could not be found.`,
-          variant: "destructive",
-        });
-        return false;
-      }
-      
-      // If bucket and file exist, try to download
-      const downloadResult = await handleStorageOperation(
-        async () => {
-          const { data, error } = await supabase.storage.from(bucketName).download(fileName);
-          if (error) throw error;
-          return data;
-        },
-        false
-      );
-      
-      if (!downloadResult.success || !downloadResult.data) {
-        toast({
-          title: "Download failed",
-          description: downloadResult.errorMessage || "Unable to download file",
-          variant: "destructive",
-        });
-        return false;
-      }
+      console.log(`Successfully downloaded file: ${fileName}`);
       
       // Create a URL for the file and trigger download
-      const url = URL.createObjectURL(downloadResult.data);
+      const url = URL.createObjectURL(data);
       const a = document.createElement('a');
       a.href = url;
       a.download = displayName || fileName;
@@ -129,7 +67,7 @@ export const useFileDownload = () => {
       document.body.removeChild(a);
       
       toast({
-        title: "Download started",
+        title: "Download successful",
         description: `${displayName || fileName} is downloading.`,
       });
       return true;
@@ -137,7 +75,7 @@ export const useFileDownload = () => {
       console.error("Unexpected error downloading file:", error);
       toast({
         title: "Download failed",
-        description: "An unexpected error occurred",
+        description: "An unexpected error occurred during download",
         variant: "destructive",
       });
       return false;

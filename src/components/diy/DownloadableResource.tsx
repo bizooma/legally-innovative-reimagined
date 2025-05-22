@@ -74,23 +74,35 @@ export const DownloadableResource = ({
     } finally {
       setCheckingFile(false);
       
-      // Notify about retry attempt
       toast({
-        title: bucketError ? "Checking connection" : "Checking file",
-        description: bucketError 
-          ? "Verifying storage connection. Please wait..." 
-          : `Checking if "${fileName}" exists. Please wait...`,
+        title: "Resource check",
+        description: fileNotFound 
+          ? `Looking for ${fileName} in the storage. Please verify the file has been uploaded.` 
+          : "Checking storage connection."
       });
     }
   };
 
   const handleDownload = async () => {
-    const success = await downloadFile(bucketName, fileName, displayName);
-    
-    if (success) {
-      // Update error state in case it was previously in error
-      retryBucketCheck();
-      setFileNotFound(false);
+    try {
+      const success = await downloadFile(bucketName, fileName, displayName);
+      
+      if (success) {
+        // Update error state in case it was previously in error
+        retryBucketCheck();
+        setFileNotFound(false);
+      } else {
+        // Check if the file exists
+        const exists = await checkFileExists(fileName);
+        setFileNotFound(!exists);
+      }
+    } catch (error) {
+      console.error("Download error:", error);
+      toast({
+        title: "Download failed",
+        description: "An error occurred during download. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -118,7 +130,7 @@ export const DownloadableResource = ({
           errorMessage={
             bucketError 
               ? errorMessage || "Storage connection issue detected" 
-              : `File "${displayName || fileName}" not available in the storage bucket`
+              : `File "${displayName || fileName}" not found in storage. Please verify it has been uploaded with the exact filename.`
           }
           errorType={bucketError ? "connection" : "not-found"}
           fileName={fileName}
