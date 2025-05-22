@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
-import { handleStorageOperation, StorageOperationResult } from "@/utils/storageErrorUtils";
+import { handleStorageOperation } from "@/utils/storageErrorUtils";
 
 export const useFileDownload = () => {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -15,7 +15,11 @@ export const useFileDownload = () => {
       
       // First check if the bucket exists
       const bucketsResult = await handleStorageOperation(
-        () => supabase.storage.listBuckets(),
+        async () => {
+          const { data, error } = await supabase.storage.listBuckets();
+          if (error) throw error;
+          return data || [];
+        },
         false
       );
       
@@ -29,7 +33,17 @@ export const useFileDownload = () => {
         return false;
       }
       
-      const bucket = bucketsResult.data?.find(b => b.name === bucketName);
+      if (!Array.isArray(bucketsResult.data)) {
+        console.error("Invalid response format when listing buckets");
+        toast({
+          title: "Download failed",
+          description: "Error processing bucket data",
+          variant: "destructive",
+        });
+        return false;
+      }
+      
+      const bucket = bucketsResult.data.find(b => b.name === bucketName);
       if (!bucket) {
         console.error(`Bucket "${bucketName}" does not exist`);
         toast({
@@ -44,7 +58,11 @@ export const useFileDownload = () => {
       
       // List files in the bucket to check if the file exists
       const filesResult = await handleStorageOperation(
-        () => supabase.storage.from(bucketName).list(),
+        async () => {
+          const { data, error } = await supabase.storage.from(bucketName).list();
+          if (error) throw error;
+          return data || [];
+        },
         false
       );
       
@@ -58,9 +76,19 @@ export const useFileDownload = () => {
         return false;
       }
       
-      console.log("Files in bucket:", filesResult.data?.map(f => f.name));
+      if (!Array.isArray(filesResult.data)) {
+        console.error("Invalid response format when listing files");
+        toast({
+          title: "Download failed",
+          description: "Error processing file data",
+          variant: "destructive",
+        });
+        return false;
+      }
       
-      const fileExists = filesResult.data?.some(f => f.name === fileName);
+      console.log("Files in bucket:", filesResult.data.map(f => f.name));
+      
+      const fileExists = filesResult.data.some(f => f.name === fileName);
       if (!fileExists) {
         console.error(`File "${fileName}" not found in bucket "${bucketName}"`);
         toast({
@@ -73,38 +101,38 @@ export const useFileDownload = () => {
       
       // If bucket and file exist, try to download
       const downloadResult = await handleStorageOperation(
-        () => supabase.storage.from(bucketName).download(fileName),
+        async () => {
+          const { data, error } = await supabase.storage.from(bucketName).download(fileName);
+          if (error) throw error;
+          return data;
+        },
         false
       );
       
-      if (!downloadResult.success) {
+      if (!downloadResult.success || !downloadResult.data) {
         toast({
           title: "Download failed",
-          description: downloadResult.errorMessage,
+          description: downloadResult.errorMessage || "Unable to download file",
           variant: "destructive",
         });
         return false;
       }
       
-      if (downloadResult.data) {
-        // Create a URL for the file and trigger download
-        const url = URL.createObjectURL(downloadResult.data);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = displayName || fileName;
-        document.body.appendChild(a);
-        a.click();
-        URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-        
-        toast({
-          title: "Download started",
-          description: `${displayName || fileName} is downloading.`,
-        });
-        return true;
-      }
+      // Create a URL for the file and trigger download
+      const url = URL.createObjectURL(downloadResult.data);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = displayName || fileName;
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
       
-      return false;
+      toast({
+        title: "Download started",
+        description: `${displayName || fileName} is downloading.`,
+      });
+      return true;
     } catch (error) {
       console.error("Unexpected error downloading file:", error);
       toast({

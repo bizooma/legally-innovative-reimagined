@@ -14,6 +14,10 @@ export async function checkBucketExists(bucketName: string): Promise<StorageOper
       const { data: buckets, error } = await supabase.storage.listBuckets();
       if (error) throw error;
       
+      if (!buckets || !Array.isArray(buckets)) {
+        throw new Error("Invalid response when listing buckets");
+      }
+      
       const bucket = buckets.find(b => b.name === bucketName);
       if (!bucket) {
         throw new Error(`Bucket "${bucketName}" not found`);
@@ -49,6 +53,10 @@ export async function checkFileExists(bucketName: string, filePath: string): Pro
         .list(filePath.includes('/') ? filePath.split('/').slice(0, -1).join('/') : '');
       
       if (error) throw error;
+      
+      if (!data || !Array.isArray(data)) {
+        throw new Error("Invalid response when listing files");
+      }
       
       const fileName = filePath.includes('/') ? filePath.split('/').pop() : filePath;
       const fileExists = data.some(item => item.name === fileName);

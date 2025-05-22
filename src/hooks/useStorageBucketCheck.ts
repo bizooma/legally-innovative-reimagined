@@ -21,7 +21,11 @@ export const useStorageBucketCheck = (bucketName: string) => {
       console.log(`Checking if bucket "${bucketName}" exists...`);
       
       const result = await handleStorageOperation(
-        () => supabase.storage.listBuckets(),
+        async () => {
+          const { data, error } = await supabase.storage.listBuckets();
+          if (error) throw error;
+          return data || [];
+        },
         false
       );
       
@@ -33,7 +37,7 @@ export const useStorageBucketCheck = (bucketName: string) => {
       
       const buckets = result.data;
       
-      if (!buckets || buckets.length === 0) {
+      if (!buckets || !Array.isArray(buckets) || buckets.length === 0) {
         console.warn("No storage buckets found in Supabase");
         setStatus(prev => ({ ...prev, hasError: true, isChecking: false }));
         return false;
@@ -60,7 +64,11 @@ export const useStorageBucketCheck = (bucketName: string) => {
   const checkFileExists = async (fileName: string) => {
     try {
       const result = await handleStorageOperation(
-        () => supabase.storage.from(bucketName).list(),
+        async () => {
+          const { data, error } = await supabase.storage.from(bucketName).list();
+          if (error) throw error;
+          return data || [];
+        },
         false
       );
       
@@ -69,9 +77,14 @@ export const useStorageBucketCheck = (bucketName: string) => {
         return false;
       }
       
-      console.log(`Files in bucket "${bucketName}":`, result.data?.map(f => f.name));
+      if (!Array.isArray(result.data)) {
+        console.error("Invalid response format when listing files");
+        return false;
+      }
       
-      const fileExists = result.data?.some(f => f.name === fileName);
+      console.log(`Files in bucket "${bucketName}":`, result.data.map(f => f.name));
+      
+      const fileExists = result.data.some(f => f.name === fileName);
       if (!fileExists) {
         console.warn(`File "${fileName}" not found in bucket "${bucketName}"`);
         return false;
