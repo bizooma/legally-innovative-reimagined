@@ -5,12 +5,14 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import StaffDirectory from '@/components/staff/StaffDirectory';
-import DocumentManagement from '@/components/staff/DocumentManagement';
-import StaffDashboardHeader from '@/components/staff/StaffDashboardHeader';
-import DashboardCards from '@/components/staff/DashboardCards';
-import StaffDocumentsSection from '@/components/staff/StaffDocumentsSection';
-import StaffDashboardLoading from '@/components/staff/StaffDashboardLoading';
+import { 
+  StaffDirectory, 
+  DocumentManagement,
+  StaffDocumentsSection,
+  StaffDashboardHeader,
+  DashboardCards,
+  StaffDashboardLoading
+} from '@/components/staff';
 
 const StaffDashboard = () => {
   const [user, setUser] = useState<any>(null);
