@@ -1,140 +1,60 @@
 
 import React from 'react';
-import { PlusCircle, Pencil, Trash2, Key, FileText } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useStaffMembers } from '@/hooks/staff/useStaffMembers';
 import AddStaffMemberDialog from './AddStaffMemberDialog';
 import EditStaffMemberDialog from './EditStaffMemberDialog';
 import AssignPasswordDialog from './AssignPasswordDialog';
-import { 
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import DeleteStaffDialog from './DeleteStaffDialog';
+import StaffDirectoryHeader from './StaffDirectoryHeader';
+import StaffDirectoryContent from './StaffDirectoryContent';
 
 const StaffDirectory: React.FC = () => {
   const { 
     staffMembers, 
     isLoading,
-    isDialogOpen,
+    isAddDialogOpen,
     openAddStaffDialog,
     closeAddStaffDialog,
     isEditDialogOpen,
     openEditStaffDialog,
     closeEditStaffDialog,
     currentStaffMember,
-    deleteStaffMember,
     updateStaffMember,
     isPasswordDialogOpen,
     openPasswordDialog,
     closePasswordDialog,
     assignPassword,
-    isAdmin
+    isAdmin,
+    isDeleteDialogOpen,
+    setIsDeleteDialogOpen,
+    handleDeleteClick,
+    confirmDelete
   } = useStaffMembers();
-  
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false);
-  const [staffToDelete, setStaffToDelete] = React.useState<string | null>(null);
-
-  // Handle delete confirmation
-  const handleDeleteClick = (id: string) => {
-    setStaffToDelete(id);
-    setIsDeleteDialogOpen(true);
-  };
-  
-  // Confirm delete
-  const confirmDelete = () => {
-    if (staffToDelete) {
-      deleteStaffMember(staffToDelete);
-      setIsDeleteDialogOpen(false);
-      setStaffToDelete(null);
-    }
-  };
 
   return (
     <>
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle>Team Directory</CardTitle>
-            <CardDescription>Manage staff members and contact information</CardDescription>
-          </div>
-          {isAdmin && (
-            <Button onClick={openAddStaffDialog} className="flex items-center">
-              <PlusCircle className="mr-2 h-4 w-4" />
-              Add Staff Member
-            </Button>
-          )}
+        <CardHeader>
+          <StaffDirectoryHeader 
+            isAdmin={isAdmin} 
+            onAddClick={openAddStaffDialog} 
+          />
         </CardHeader>
         <CardContent>
-          {isLoading ? (
-            <div className="py-6 text-center">Loading staff directory...</div>
-          ) : staffMembers.length === 0 ? (
-            <div className="py-6 text-center">No staff members found. Add some!</div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Position</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Department</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {staffMembers.map((staff) => (
-                  <TableRow key={staff.id}>
-                    <TableCell className="font-medium">{staff.full_name}</TableCell>
-                    <TableCell>{staff.position}</TableCell>
-                    <TableCell>{staff.email}</TableCell>
-                    <TableCell>{staff.department || '-'}</TableCell>
-                    <TableCell className="text-right flex justify-end gap-2">
-                      {isAdmin && (
-                        <>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => openPasswordDialog(staff)}
-                            title="Assign Password"
-                          >
-                            <Key className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => openEditStaffDialog(staff)}
-                            title="Edit Staff Member"
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleDeleteClick(staff.id)}
-                            title="Delete Staff Member"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
+          <StaffDirectoryContent 
+            isLoading={isLoading}
+            staffMembers={staffMembers}
+            isAdmin={isAdmin}
+            onEdit={openEditStaffDialog}
+            onDelete={handleDeleteClick}
+            onPassword={openPasswordDialog}
+          />
         </CardContent>
       </Card>
 
       {/* Add Staff Member Dialog */}
-      <AddStaffMemberDialog isOpen={isDialogOpen} onClose={closeAddStaffDialog} />
+      <AddStaffMemberDialog isOpen={isAddDialogOpen} onClose={closeAddStaffDialog} />
       
       {/* Edit Staff Member Dialog */}
       {currentStaffMember && isEditDialogOpen && (
@@ -147,7 +67,7 @@ const StaffDirectory: React.FC = () => {
       )}
       
       {/* Assign Password Dialog */}
-      {isPasswordDialogOpen && (
+      {currentStaffMember && isPasswordDialogOpen && (
         <AssignPasswordDialog
           isOpen={isPasswordDialogOpen}
           onClose={closePasswordDialog}
@@ -157,20 +77,11 @@ const StaffDirectory: React.FC = () => {
       )}
       
       {/* Delete Confirmation Dialog */}
-      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the staff member.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <DeleteStaffDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={setIsDeleteDialogOpen}
+        onConfirm={confirmDelete}
+      />
     </>
   );
 };

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { StaffMember } from '@/hooks/useStaffMembers';
+import { StaffMember } from '@/hooks/staff/types';
 
 // Define form schema
 const staffMemberSchema = z.object({

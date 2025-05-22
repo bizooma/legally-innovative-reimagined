@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
-import { StaffMember } from '@/hooks/useStaffMembers';
+import { StaffMember } from '@/hooks/staff/types';
 
 // Define form schema
 const passwordSchema = z.object({
@@ -23,7 +23,7 @@ interface AssignPasswordDialogProps {
   isOpen: boolean;
   onClose: () => void;
   staffMember: StaffMember | null;
-  onAssignPassword: (email: string, password: string) => Promise<void>;
+  onAssignPassword: (email: string, password: string) => Promise<boolean>;
 }
 
 const AssignPasswordDialog: React.FC<AssignPasswordDialogProps> = ({

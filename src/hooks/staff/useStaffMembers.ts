@@ -2,12 +2,13 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
-import { fetchStaffMembers, StaffMember } from './types';
+import { fetchStaffMembers } from './types';
 import { useStaffDialog } from './useStaffDialog';
 import { useStaffActions } from './useStaffActions';
 import { useAdminStatus } from './useAdminStatus';
 
-export { StaffMember } from './types';
+// Export types from the types file
+export type { StaffMember } from './types';
 
 export function useStaffMembers() {
   // Get admin status
