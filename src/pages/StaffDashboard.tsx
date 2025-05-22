@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import StaffDirectory from '@/components/staff/StaffDirectory';
 
 const StaffDashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -85,7 +86,7 @@ const StaffDashboard = () => {
             </Button>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
             <Card>
               <CardHeader>
                 <CardTitle>Documents</CardTitle>
@@ -99,17 +100,6 @@ const StaffDashboard = () => {
             
             <Card>
               <CardHeader>
-                <CardTitle>Team Directory</CardTitle>
-                <CardDescription>Find contact information for colleagues</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">Search and view contact details for all staff members.</p>
-                <Button variant="outline" className="w-full" disabled>Open Directory</Button>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
                 <CardTitle>Announcements</CardTitle>
                 <CardDescription>Latest company news and updates</CardDescription>
               </CardHeader>
@@ -118,9 +108,7 @@ const StaffDashboard = () => {
                 <Button variant="outline" className="w-full" disabled>Read Updates</Button>
               </CardContent>
             </Card>
-          </div>
-          
-          <div className="mt-8">
+            
             <Card>
               <CardHeader>
                 <CardTitle>Welcome, {user?.email}</CardTitle>
@@ -130,10 +118,13 @@ const StaffDashboard = () => {
                 <p>
                   This is your personalized staff dashboard. Here you can access important
                   company resources, view announcements, and connect with team members.
-                  Additional features will be added soon.
                 </p>
               </CardContent>
             </Card>
+          </div>
+          
+          <div className="mb-8">
+            <StaffDirectory />
           </div>
         </div>
       </main>

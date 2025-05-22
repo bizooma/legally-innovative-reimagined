@@ -101,6 +101,42 @@ export type Database = {
           },
         ]
       }
+      staff_members: {
+        Row: {
+          created_at: string
+          department: string | null
+          email: string
+          full_name: string
+          id: string
+          phone: string | null
+          position: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          department?: string | null
+          email: string
+          full_name: string
+          id?: string
+          phone?: string | null
+          position: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          department?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          position?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           client_id: string | null
