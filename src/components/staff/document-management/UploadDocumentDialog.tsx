@@ -11,7 +11,7 @@ import { toast } from '@/hooks/use-toast';
 interface UploadDocumentDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  onUpload: (file: File, description: string) => Promise<void>;
+  onUpload: (file: File, description: string) => Promise<boolean | void>; // Updated return type
 }
 
 const UploadDocumentDialog: React.FC<UploadDocumentDialogProps> = ({
