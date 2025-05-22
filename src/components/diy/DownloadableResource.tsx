@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { useStorageBucketCheck } from "@/hooks/useStorageBucketCheck";
@@ -49,6 +50,9 @@ export const DownloadableResource = ({
           setFileNotFound(true);
           setCheckingFile(false);
         });
+    } else {
+      // Reset checking state if there's a bucket error
+      setCheckingFile(false);
     }
   }, [bucketError, fileName, checkFileExists]);
 
@@ -56,23 +60,27 @@ export const DownloadableResource = ({
     setFileNotFound(false);
     setCheckingFile(true);
     
-    await retryBucketCheck();
-    
-    // If bucket check passes, check file existence again
-    if (!bucketError) {
-      const exists = await checkFileExists(fileName);
-      setFileNotFound(!exists);
+    try {
+      await retryBucketCheck();
+      
+      // If bucket check passes, check file existence again
+      if (!bucketError) {
+        const exists = await checkFileExists(fileName);
+        setFileNotFound(!exists);
+      }
+    } catch (error) {
+      console.error("Error during retry:", error);
+    } finally {
+      setCheckingFile(false);
+      
+      // Notify about retry attempt
+      toast({
+        title: bucketError ? "Checking connection" : "Checking file",
+        description: bucketError 
+          ? "Verifying storage connection. Please wait..." 
+          : `Checking if "${fileName}" exists. Please wait...`,
+      });
     }
-    
-    setCheckingFile(false);
-    
-    // Notify about retry attempt
-    toast({
-      title: bucketError ? "Checking connection" : "Checking file",
-      description: bucketError 
-        ? "Verifying storage connection. Please wait..." 
-        : `Checking if "${fileName}" exists. Please wait...`,
-    });
   };
 
   const handleDownload = async () => {

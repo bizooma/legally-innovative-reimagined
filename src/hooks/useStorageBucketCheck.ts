@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { handleStorageOperation, isConnectionError } from "@/utils/storageErrorUtils";
-import { checkBucketExists } from "@/services/documentService";
+import { checkBucketExists, checkFileExists as checkFileExistsUtil } from "@/services/documents/storageUtils";
 
 interface StorageBucketStatus {
   isChecking: boolean;
@@ -21,7 +21,7 @@ export const useStorageBucketCheck = (bucketName: string) => {
     try {
       console.log(`Checking if bucket "${bucketName}" exists...`);
       
-      // Use the checkBucketExists utility from documentService
+      // Use the checkBucketExists utility from storageUtils
       const result = await checkBucketExists(bucketName);
       
       if (!result.success) {
@@ -43,57 +43,25 @@ export const useStorageBucketCheck = (bucketName: string) => {
 
   const checkFileExists = useCallback(async (fileName: string): Promise<boolean> => {
     try {
-      const result = await handleStorageOperation(
-        async () => {
-          const { data, error } = await supabase.storage.from(bucketName).list();
-          if (error) throw error;
-          
-          if (!data || !Array.isArray(data)) {
-            console.error("Invalid response format when listing files");
-            return [];
-          }
-          
-          return data;
-        },
-        false
-      );
+      const result = await checkFileExistsUtil(bucketName, fileName);
       
       if (!result.success) {
-        console.error("Error listing files:", result.errorMessage);
+        console.error("Error checking file existence:", result.errorMessage);
         return false;
       }
       
-      const files = result.data || [];
-      if (!Array.isArray(files)) {
-        console.error("Invalid response format when listing files");
-        return false;
-      }
-      
-      console.log(`Files in bucket "${bucketName}":`, files.map(f => f.name));
-      
-      const fileExists = files.some(f => f.name === fileName);
-      if (!fileExists) {
-        console.warn(`File "${fileName}" not found in bucket "${bucketName}"`);
-        return false;
-      } else {
-        console.log(`File "${fileName}" found in bucket "${bucketName}"`);
-        return true;
-      }
+      return true;
     } catch (err) {
       console.error("Error checking file existence:", err);
       return false;
     }
   }, [bucketName]);
 
-  const retryBucketCheck = async (fileName?: string) => {
+  const retryBucketCheck = async () => {
     setStatus(prev => ({ ...prev, isRetrying: true, isChecking: true }));
     
     try {
-      const bucketExists = await checkBucketExistsInternal();
-      
-      if (bucketExists && fileName) {
-        await checkFileExists(fileName);
-      }
+      await checkBucketExistsInternal();
     } finally {
       setStatus(prev => ({ ...prev, isRetrying: false }));
     }
