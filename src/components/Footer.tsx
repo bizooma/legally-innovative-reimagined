@@ -1,7 +1,8 @@
-
 import { Linkedin, Facebook } from "lucide-react";
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
 import TermsOfServiceModal from "./TermsOfServiceModal";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -15,6 +16,14 @@ const Footer = () => {
             <p className="text-gray-300 mb-4">
               Transforming legal services through innovation, training, and change management.
             </p>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="bg-white text-black hover:bg-gray-200"
+              asChild
+            >
+              <Link to="/staff">Staff</Link>
+            </Button>
           </div>
           
           <div>
