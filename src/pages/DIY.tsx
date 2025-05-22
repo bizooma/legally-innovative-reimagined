@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,6 +8,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
+import { BUCKET_NAME } from "@/config/documentConfig";
 
 const DIY = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,7 +96,7 @@ const DIY = () => {
                   <p className="text-gray-600 mb-4">Essential marketing considerations when promoting your law practice online.</p>
                   <Button 
                     className="bg-legal-primary hover:bg-legal-secondary"
-                    onClick={() => downloadFile("downloads", "digital-marketing-checklist.pdf", "Law Firm Digital Marketing Checklist.pdf")}
+                    onClick={() => downloadFile("downloads", "law-firm-digital-marketing-checklist.pdf", "Law Firm Digital Marketing Checklist.pdf")}
                   >
                     Download Checklist
                   </Button>
