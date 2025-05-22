@@ -44,10 +44,11 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
     }
 
     // First get document IDs assigned to the staff member
+    // Fix: Changed column name from staff_member_id to staff_id
     const { data: assignments, error: assignmentError } = await supabase
       .from('staff_document_assignments')
       .select('document_id')
-      .eq('staff_member_id', staffMemberId);
+      .eq('staff_id', staffMemberId);
 
     if (assignmentError) throw assignmentError;
 
