@@ -52,6 +52,12 @@ const Services = () => {
       icon: "🎯",
       bgImage: "https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=1932&auto=format&fit=crop"
     },
+    {
+      title: "Voice Experience",
+      description: "Create custom voice applications for Amazon Alexa and Google Assistant that allow your law firm to engage with clients through natural language interactions and provide valuable information on demand.",
+      icon: "🔊",
+      bgImage: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1932&auto=format&fit=crop"
+    },
   ];
 
   return (
