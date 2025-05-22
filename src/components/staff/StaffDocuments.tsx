@@ -80,7 +80,7 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
       </CardHeader>
       <CardContent>
         {bucketChecked && !bucketExists && (
-          <Alert className="mb-4">
+          <Alert variant="warning" className="mb-4">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Storage Setup Required</AlertTitle>
             <AlertDescription>
