@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -15,6 +14,8 @@ const DIY = () => {
 
   const downloadFile = async (bucketName: string, fileName: string, displayName: string) => {
     try {
+      console.log(`Attempting to download ${fileName} from bucket ${bucketName}`);
+      
       const { data, error } = await supabase.storage
         .from(bucketName)
         .download(fileName);
