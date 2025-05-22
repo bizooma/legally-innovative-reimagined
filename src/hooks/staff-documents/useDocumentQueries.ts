@@ -32,11 +32,6 @@ export function useDocumentQueries(staffId?: string) {
         
         if (!exists) {
           console.error('Storage bucket does not exist or could not be created');
-          toast({
-            title: "Document storage not available",
-            description: "Unable to access document storage. An admin needs to create the storage bucket.",
-            variant: "destructive",
-          });
         }
       } catch (error) {
         console.error("Error checking bucket:", error);
@@ -67,8 +62,8 @@ export function useDocumentQueries(staffId?: string) {
           const docs = await getStaffDocuments(staffId);
           console.log(`useDocumentQueries: Retrieved ${docs.length} docs for staff ${staffId}`);
           
-          // If no documents and bucket exists, show appropriate message
-          if (docs.length === 0 && bucketExists) {
+          // If no documents, show appropriate message
+          if (docs.length === 0) {
             console.log('No documents assigned to this staff member');
           }
           

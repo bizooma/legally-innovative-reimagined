@@ -5,10 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { FileText, Download, ExternalLink, AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { useQuery } from '@tanstack/react-query';
-import { getStaffDocuments } from '@/services/staff-documents/utils';
-import { ensureStorageBucket } from '@/services/staff-documents/storage';
-import { StaffDocumentWithUrl } from '@/types/staffDocument';
+import { useDocumentQueries } from '@/hooks/staff-documents';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface StaffDocumentsProps {
@@ -16,62 +13,21 @@ interface StaffDocumentsProps {
 }
 
 const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
-  // Check if storage bucket exists on component mount
-  useEffect(() => {
-    const checkBucket = async () => {
-      console.log("StaffDocuments: Checking storage bucket existence");
-      try {
-        const exists = await ensureStorageBucket();
-        console.log(`StaffDocuments: Storage bucket check result: ${exists}`);
-      } catch (err) {
-        console.error('StaffDocuments: Error ensuring storage bucket exists:', err);
-      }
-    };
-    
-    checkBucket();
-  }, []);
-
-  // Fetch staff documents with enhanced error handling
+  // Use our hook to get documents, status, and refreshing capability
   const { 
-    data: documents = [], 
+    documents = [], 
     isLoading, 
     error, 
     refetch,
-    isRefetching
-  } = useQuery({
-    queryKey: ['staffDocuments', staffMemberId],
-    queryFn: async () => {
-      console.log('StaffDocuments: Fetching documents for:', staffMemberId);
-      if (!staffMemberId) {
-        console.error('StaffDocuments: No staff member ID provided');
-        throw new Error('No staff ID provided');
-      }
-      
-      try {
-        console.log(`StaffDocuments: Starting document fetch for ${staffMemberId}`);
-        const docs = await getStaffDocuments(staffMemberId);
-        console.log(`StaffDocuments: Successfully fetched ${docs.length} documents:`, 
-          docs.map(d => ({ id: d.id, name: d.name, hasUrl: !!d.url })));
-        return docs;
-      } catch (err) {
-        console.error('StaffDocuments: Error fetching documents:', err);
-        toast({
-          title: 'Error',
-          description: 'Failed to load your documents. Please try refreshing.',
-          variant: 'destructive',
-        });
-        throw err;
-      }
-    },
-    enabled: !!staffMemberId,
-    retry: 2,
-    staleTime: 5000, // 5 seconds for frequent updates
-    refetchOnWindowFocus: true,
-  });
+    bucketExists,
+    bucketChecked,
+    refreshAllData,
+    isRefetching = false 
+  } = useDocumentQueries(staffMemberId);
 
   const handleRefresh = () => {
     console.log("StaffDocuments: Manual refresh triggered");
-    refetch();
+    refreshAllData();
     toast({
       title: "Refreshing Documents",
       description: "Checking for new document assignments...",
@@ -123,6 +79,16 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
         </Button>
       </CardHeader>
       <CardContent>
+        {bucketChecked && !bucketExists && (
+          <Alert variant="warning" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Storage Setup Required</AlertTitle>
+            <AlertDescription>
+              Document storage needs to be configured. You may only see document names until this is resolved.
+            </AlertDescription>
+          </Alert>
+        )}
+        
         {error && (
           <Alert variant="destructive" className="mb-4">
             <AlertCircle className="h-4 w-4" />
@@ -181,8 +147,8 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
                               window.open(doc.url, '_blank');
                             } else {
                               toast({
-                                title: 'Error',
-                                description: 'Document URL not available. Please try refreshing.',
+                                title: 'Document Preview',
+                                description: 'URL not available. Storage access may be needed.',
                                 variant: 'destructive',
                               });
                             }
