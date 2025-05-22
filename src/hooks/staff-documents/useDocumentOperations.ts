@@ -57,31 +57,48 @@ export function useDocumentOperations(refetch: () => void, refetchAssignments?: 
   };
   
   // Handle document assignment
-  const handleAssignment = async (documentId: string, staffIds: string[], currentAssignments: Record<string, any[]>) => {
+  const handleAssignment = async (documentId: string, staffIds: string[], currentAssignments: Record<string, any[]> = {}) => {
     try {
       // Get current assignments
       const currentlyAssigned = currentAssignments[documentId] || [];
       const currentIds = currentlyAssigned.map((staff: any) => staff.id);
       
-      console.log('Document assignment changes:', {
+      console.log('Document assignment operation starting:', {
         documentId,
         staffIds,
         currentIds,
-        currentlyAssigned
       });
       
-      // Clear all existing assignments first to avoid duplicate key errors
-      // This is a simple approach to ensure we don't have issues with duplicate assignments
+      // First remove all existing assignments to avoid conflicts
+      console.log('Removing existing assignments...');
       for (const staffId of currentIds) {
-        await removeDocumentAssignment(documentId, staffId);
+        console.log(`Removing assignment for staff ID: ${staffId}`);
+        try {
+          await removeDocumentAssignment(documentId, staffId);
+        } catch (err) {
+          console.error(`Error removing assignment for staff ${staffId}:`, err);
+          // Continue with other removals even if one fails
+        }
       }
       
-      // Add new assignments
+      // Wait a moment to ensure removals are processed
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Now add all new assignments
       if (staffIds.length > 0) {
-        const success = await assignDocumentToStaff(documentId, staffIds);
-        if (!success) {
-          throw new Error("Failed to assign document to staff members");
+        console.log(`Adding ${staffIds.length} new assignments...`);
+        try {
+          const success = await assignDocumentToStaff(documentId, staffIds);
+          if (!success) {
+            throw new Error("Failed to assign document to staff members");
+          }
+          console.log('Successfully added new assignments');
+        } catch (err) {
+          console.error('Error adding new assignments:', err);
+          throw err;
         }
+      } else {
+        console.log('No new assignments to add');
       }
       
       toast({
@@ -90,7 +107,10 @@ export function useDocumentOperations(refetch: () => void, refetchAssignments?: 
       });
       
       // Refresh assignments
-      if (refetchAssignments) refetchAssignments();
+      if (refetchAssignments) {
+        console.log('Refreshing assignment data...');
+        refetchAssignments();
+      }
       return true;
     } catch (error) {
       console.error('Error updating document assignments:', error);

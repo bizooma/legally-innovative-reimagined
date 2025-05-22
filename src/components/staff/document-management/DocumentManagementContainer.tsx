@@ -100,14 +100,21 @@ const DocumentManagementContainer: React.FC = () => {
     
     console.log('Saving assignments:', {
       documentId: currentDocument.id,
-      selectedStaffIds
+      selectedStaffIds,
+      currentAssignments: documentAssignments
     });
     
-    await handleAssignment(currentDocument.id, selectedStaffIds, documentAssignments);
+    const success = await handleAssignment(currentDocument.id, selectedStaffIds, documentAssignments);
     
-    // Force refetch assignments after save
-    refetchAssignments();
-    setIsAssignDialogOpen(false);
+    if (success) {
+      // Force refetch assignments after save
+      setTimeout(() => {
+        console.log("Refreshing assignments after save");
+        refetchAssignments();
+      }, 1000);
+      
+      setIsAssignDialogOpen(false);
+    }
   };
 
   // Toggle staff selection for document assignment

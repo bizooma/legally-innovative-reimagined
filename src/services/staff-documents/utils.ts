@@ -43,18 +43,27 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       throw new Error('No staff member ID provided');
     }
 
+    console.log(`Fetching documents for staff ID: ${staffMemberId}`);
+
     // First get document IDs assigned to the staff member
-    // Fix: Changed column name from staff_member_id to staff_id
     const { data: assignments, error: assignmentError } = await supabase
       .from('staff_document_assignments')
       .select('document_id')
       .eq('staff_id', staffMemberId);
 
-    if (assignmentError) throw assignmentError;
+    if (assignmentError) {
+      console.error('Error fetching staff document assignments:', assignmentError);
+      throw assignmentError;
+    }
 
     // If no assignments, return empty array
-    if (!assignments || assignments.length === 0) return [];
+    if (!assignments || assignments.length === 0) {
+      console.log(`No documents assigned to staff ID: ${staffMemberId}`);
+      return [];
+    }
 
+    console.log(`Found ${assignments.length} document assignments for staff ID: ${staffMemberId}`);
+    
     // Get document details for each assignment
     const documentIds = assignments.map(assignment => assignment.document_id);
     const { data: documents, error: documentError } = await supabase
@@ -62,8 +71,13 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       .select('*')
       .in('id', documentIds);
 
-    if (documentError) throw documentError;
+    if (documentError) {
+      console.error('Error fetching staff documents:', documentError);
+      throw documentError;
+    }
 
+    console.log(`Retrieved ${documents?.length || 0} documents for staff ID: ${staffMemberId}`);
+    
     // Get signed URLs for each document
     const documentsWithUrls = await Promise.all(
       (documents || []).map(async (doc) => {

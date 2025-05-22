@@ -10,7 +10,7 @@ export async function getStaffDocumentAssignments(staffMemberId: string): Promis
     const { data, error } = await supabase
       .from('staff_document_assignments')
       .select('*')
-      .eq('staff_id', staffMemberId); // Fixed column name from staff_member_id to staff_id
+      .eq('staff_id', staffMemberId);
 
     if (error) {
       console.error("Error fetching staff document assignments:", error);
@@ -29,7 +29,7 @@ export async function getDocumentAssignments(documentId: string): Promise<StaffM
   try {
     const { data, error } = await supabase
       .from('staff_document_assignments')
-      .select('staff_id') // Fixed column name from staff_member_id to staff_id
+      .select('staff_id')
       .eq('document_id', documentId);
 
     if (error) {
@@ -41,7 +41,7 @@ export async function getDocumentAssignments(documentId: string): Promise<StaffM
     if (!data || data.length === 0) return [];
 
     // Get staff details for each assignment
-    const staffIds = data.map(assignment => assignment.staff_id); // Fixed column name
+    const staffIds = data.map(assignment => assignment.staff_id);
     const { data: staffData, error: staffError } = await supabase
       .from('staff_members')
       .select('*')
@@ -62,18 +62,26 @@ export async function getDocumentAssignments(documentId: string): Promise<StaffM
 // Assign document to multiple staff members
 export async function assignDocumentToStaff(documentId: string, staffIds: string[]): Promise<boolean> {
   try {
-    const assignments = staffIds.map(staffId => ({
-      document_id: documentId,
-      staff_id: staffId // Fixed column name from staff_member_id to staff_id
-    }));
+    // Process assignments one by one to better handle errors
+    for (const staffId of staffIds) {
+      const assignment = {
+        document_id: documentId,
+        staff_id: staffId
+      };
+      
+      console.log(`Creating assignment for document ${documentId} to staff ${staffId}`);
+      
+      const { error } = await supabase
+        .from('staff_document_assignments')
+        .insert([assignment]);
 
-    const { error } = await supabase
-      .from('staff_document_assignments')
-      .insert(assignments);
-
-    if (error) {
-      console.error("Error assigning document to staff:", error);
-      throw error;
+      if (error) {
+        console.error(`Error assigning document ${documentId} to staff ${staffId}:`, error);
+        throw error;
+      }
+      
+      // Small delay between inserts to avoid race conditions
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
 
     return true;
@@ -86,11 +94,13 @@ export async function assignDocumentToStaff(documentId: string, staffIds: string
 // Remove document assignment for a staff member
 export async function removeDocumentAssignment(documentId: string, staffId: string): Promise<boolean> {
   try {
+    console.log(`Removing assignment for document ${documentId} from staff ${staffId}`);
+    
     const { error } = await supabase
       .from('staff_document_assignments')
       .delete()
       .eq('document_id', documentId)
-      .eq('staff_id', staffId); // Fixed column name from staff_member_id to staff_id
+      .eq('staff_id', staffId);
 
     if (error) {
       console.error("Error removing document assignment:", error);
