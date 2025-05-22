@@ -48,9 +48,14 @@ export async function checkFileExists(bucketName: string, filePath: string): Pro
   // Now check if file exists in the bucket
   return await handleStorageOperation(
     async () => {
+      // Get the directory path and filename
+      const dirPath = filePath.includes('/') ? filePath.split('/').slice(0, -1).join('/') : '';
+      const fileName = filePath.includes('/') ? filePath.split('/').pop() : filePath;
+      
+      // List files in the directory
       const { data, error } = await supabase.storage
         .from(bucketName)
-        .list(filePath.includes('/') ? filePath.split('/').slice(0, -1).join('/') : '');
+        .list(dirPath);
       
       if (error) throw error;
       
@@ -58,7 +63,7 @@ export async function checkFileExists(bucketName: string, filePath: string): Pro
         throw new Error("Invalid response when listing files");
       }
       
-      const fileName = filePath.includes('/') ? filePath.split('/').pop() : filePath;
+      // Check if the file exists in the directory
       const fileExists = data.some(item => item.name === fileName);
       
       if (!fileExists) {
@@ -85,7 +90,7 @@ export async function getPublicFileUrl(bucketName: string, filePath: string): Pr
     return fileResult;
   }
   
-  // Get the public URL - fixed to return a Promise
+  // Get the public URL
   return await handleStorageOperation(
     async () => {
       // Use the correct method to get the URL

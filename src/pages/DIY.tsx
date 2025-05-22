@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { DIYHeader } from "@/components/diy/DIYHeader";
@@ -12,11 +11,14 @@ import { toast } from "@/components/ui/use-toast";
 
 const DIY = () => {
   const [bucketsAvailable, setBucketsAvailable] = useState<string[]>([]);
+  const [isCheckingBuckets, setIsCheckingBuckets] = useState(true);
 
   // Check if the required buckets exist when the component mounts
   useEffect(() => {
     const checkBuckets = async () => {
+      setIsCheckingBuckets(true);
       try {
+        console.log("Checking available buckets...");
         const { data: buckets, error } = await supabase.storage.listBuckets();
         
         if (error) {
@@ -58,6 +60,13 @@ const DIY = () => {
         }
       } catch (err) {
         console.error("Failed to check buckets:", err);
+        toast({
+          title: "Storage Connection Error",
+          description: "Failed to check storage availability. Some features may not work properly.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsCheckingBuckets(false);
       }
     };
     
@@ -148,7 +157,14 @@ const DIY = () => {
                 Free Marketing Templates & Resources
               </h2>
               
-              <ResourceGrid resources={resources} />
+              {isCheckingBuckets ? (
+                <div className="flex justify-center items-center p-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-legal-primary"></div>
+                  <span className="ml-3 text-legal-primary">Loading resources...</span>
+                </div>
+              ) : (
+                <ResourceGrid resources={resources} />
+              )}
               
               <ProductPromotion
                 title="Supercharge Your Law Firm's SEO with AEO Analyzer"

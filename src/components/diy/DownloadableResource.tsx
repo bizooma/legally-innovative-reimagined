@@ -25,8 +25,10 @@ export const DownloadableResource = ({
   buttonText = "Download"
 }: DownloadableResourceProps) => {
   const [fileNotFound, setFileNotFound] = useState(false);
+  const [checkingFile, setCheckingFile] = useState(true);
+  
   const { 
-    hasError, 
+    hasError: bucketError, 
     isRetrying, 
     retryBucketCheck, 
     checkFileExists 
@@ -36,21 +38,40 @@ export const DownloadableResource = ({
 
   // Check file existence after bucket check completes
   useEffect(() => {
-    if (!hasError) {
-      checkFileExists(fileName).then(exists => {
-        setFileNotFound(!exists);
-      });
+    if (!bucketError) {
+      setCheckingFile(true);
+      checkFileExists(fileName)
+        .then(exists => {
+          setFileNotFound(!exists);
+          setCheckingFile(false);
+        })
+        .catch(() => {
+          setFileNotFound(true);
+          setCheckingFile(false);
+        });
     }
-  }, [hasError, fileName]);
+  }, [bucketError, fileName, checkFileExists]);
 
   const handleRetry = async () => {
     setFileNotFound(false);
-    retryBucketCheck(fileName);
+    setCheckingFile(true);
+    
+    await retryBucketCheck();
+    
+    // If bucket check passes, check file existence again
+    if (!bucketError) {
+      const exists = await checkFileExists(fileName);
+      setFileNotFound(!exists);
+    }
+    
+    setCheckingFile(false);
     
     // Notify about retry attempt
     toast({
-      title: "Checking connection",
-      description: "Verifying storage connection. Please wait...",
+      title: bucketError ? "Checking connection" : "Checking file",
+      description: bucketError 
+        ? "Verifying storage connection. Please wait..." 
+        : `Checking if "${fileName}" exists. Please wait...`,
     });
   };
 
@@ -60,19 +81,37 @@ export const DownloadableResource = ({
     if (success) {
       // Update error state in case it was previously in error
       retryBucketCheck();
+      setFileNotFound(false);
     }
   };
 
+  // Handle loading state
+  if (checkingFile && !bucketError) {
+    return (
+      <ResourceCard title={title} description={description}>
+        <div className="flex items-center justify-center py-2">
+          <Loader2 className="h-5 w-5 animate-spin text-gray-400" />
+          <span className="ml-2 text-sm text-gray-500">Checking file...</span>
+        </div>
+      </ResourceCard>
+    );
+  }
+
   // Only show error state if there's a connection issue or the file wasn't found
-  const showErrorState = hasError || fileNotFound;
+  const showErrorState = bucketError || fileNotFound;
 
   return (
     <ResourceCard title={title} description={description}>
       {showErrorState ? (
         <ResourceErrorState 
-          isRetrying={isRetrying} 
+          isRetrying={isRetrying || checkingFile} 
           onRetry={handleRetry}
-          errorMessage={fileNotFound ? `File not available` : "Storage connection issue detected"}
+          errorMessage={
+            bucketError 
+              ? "Storage connection issue detected" 
+              : `File not available`
+          }
+          errorType={bucketError ? "connection" : "not-found"}
         />
       ) : (
         <ResourceDownloadButton 

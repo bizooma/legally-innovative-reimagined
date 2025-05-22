@@ -1,7 +1,7 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { handleStorageOperation, isConnectionError, isNotFoundError } from "@/utils/storageErrorUtils";
+import { handleStorageOperation, isConnectionError } from "@/utils/storageErrorUtils";
 import { checkBucketExists } from "@/services/documentService";
 
 interface StorageBucketStatus {
@@ -41,7 +41,7 @@ export const useStorageBucketCheck = (bucketName: string) => {
     }
   };
 
-  const checkFileExists = async (fileName: string) => {
+  const checkFileExists = useCallback(async (fileName: string): Promise<boolean> => {
     try {
       const result = await handleStorageOperation(
         async () => {
@@ -49,7 +49,8 @@ export const useStorageBucketCheck = (bucketName: string) => {
           if (error) throw error;
           
           if (!data || !Array.isArray(data)) {
-            throw new Error("Invalid response format when listing files");
+            console.error("Invalid response format when listing files");
+            return [];
           }
           
           return data;
@@ -62,7 +63,12 @@ export const useStorageBucketCheck = (bucketName: string) => {
         return false;
       }
       
-      const files = result.data;
+      const files = result.data || [];
+      if (!Array.isArray(files)) {
+        console.error("Invalid response format when listing files");
+        return false;
+      }
+      
       console.log(`Files in bucket "${bucketName}":`, files.map(f => f.name));
       
       const fileExists = files.some(f => f.name === fileName);
@@ -77,10 +83,10 @@ export const useStorageBucketCheck = (bucketName: string) => {
       console.error("Error checking file existence:", err);
       return false;
     }
-  };
+  }, [bucketName]);
 
   const retryBucketCheck = async (fileName?: string) => {
-    setStatus(prev => ({ ...prev, isRetrying: true, hasError: false }));
+    setStatus(prev => ({ ...prev, isRetrying: true, isChecking: true }));
     
     try {
       const bucketExists = await checkBucketExistsInternal();
