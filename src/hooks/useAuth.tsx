@@ -27,14 +27,14 @@ export function useAuth() {
           // Try to sign in
           const { error } = await supabase.auth.signInWithPassword({
             email: values.email,
-            password: ADMIN_TEMP_PASSWORD,
+            password: values.password,
           });
           
           if (error) {
             // If sign in fails, try to sign up
             const { error: signUpError } = await supabase.auth.signUp({
               email: values.email,
-              password: ADMIN_TEMP_PASSWORD,
+              password: values.password,
               options: {
                 data: {
                   full_name: values.email === "joe@bizooma.com" ? "Joe from Bizooma" : "Angela Afford",
@@ -47,7 +47,7 @@ export function useAuth() {
             // Try signing in again after signup
             await supabase.auth.signInWithPassword({
               email: values.email,
-              password: ADMIN_TEMP_PASSWORD,
+              password: values.password,
             });
           }
           
@@ -78,11 +78,20 @@ export function useAuth() {
         }
         
         // Check if user is admin or client
-        const { data: userData } = await supabase
+        const { data: userData, error: userError } = await supabase
           .from('users')
           .select('*, clients(*)')
           .eq('id', data.user?.id)
           .maybeSingle();
+          
+        if (userError) {
+          console.error('Error fetching user data:', userError);
+          // Continue with basic login - don't throw here to allow login to proceed
+          toast({
+            title: "Login Successful",
+            description: "User data could not be fully loaded",
+          });
+        }
           
         if (userData?.is_admin) {
           toast({

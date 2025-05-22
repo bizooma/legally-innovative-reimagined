@@ -49,17 +49,43 @@ export async function ensureStorageBucket(): Promise<boolean> {
       return true;
     }
     
-    // If we're here, the bucket doesn't exist
-    console.log(`Storage bucket '${STORAGE_BUCKET}' not found.`);
+    // If we're here, the bucket doesn't exist - try to create it
+    console.log(`Storage bucket '${STORAGE_BUCKET}' not found. Attempting to create...`);
     
-    // Display a toast notification about the missing bucket for better user feedback
-    toast({
-      title: "Storage configuration issue",
-      description: "Please contact an administrator to set up document storage.",
-      variant: "destructive",
-    });
-    
-    return false;
+    try {
+      const { data, error } = await supabase
+        .storage
+        .createBucket(STORAGE_BUCKET, {
+          public: false,
+          fileSizeLimit: 52428800, // 50MB limit
+        });
+      
+      if (error) {
+        console.error('Error creating storage bucket:', error);
+        toast({
+          title: "Storage setup failed",
+          description: `Could not create document storage: ${error.message}`,
+          variant: "destructive",
+        });
+        return false;
+      }
+      
+      console.log(`Successfully created storage bucket '${STORAGE_BUCKET}'`);
+      toast({
+        title: "Storage setup complete",
+        description: "Document storage has been set up successfully",
+      });
+      
+      return true;
+    } catch (createError) {
+      console.error('Error creating bucket:', createError);
+      toast({
+        title: "Storage configuration issue",
+        description: "Please contact an administrator to set up document storage.",
+        variant: "destructive",
+      });
+      return false;
+    }
   } catch (error) {
     console.error('Error in ensureStorageBucket:', error);
     toast({
@@ -90,6 +116,10 @@ export async function userCanManageDocumentStorage(): Promise<boolean> {
     if (!userError && userData?.is_admin) {
       return true; // Admin users have full access
     }
+    
+    // Ensure bucket exists before checking permissions
+    const bucketExists = await ensureStorageBucket();
+    if (!bucketExists) return false;
     
     // Then try to list files as a test of permission
     const { error: listError } = await supabase

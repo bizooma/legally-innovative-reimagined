@@ -14,24 +14,27 @@ export function useDocumentQueries(staffId?: string) {
   // State to track if bucket exists and if we've tried checking
   const [bucketExists, setBucketExists] = useState<boolean | null>(null);
   const [bucketChecked, setBucketChecked] = useState(false);
+  const [bucketCheckInProgress, setBucketCheckInProgress] = useState(false);
 
   // Check storage bucket exists on first load
   useEffect(() => {
     const checkBucket = async () => {
       try {
-        if (bucketChecked) return; // Avoid redundant checks
+        if (bucketChecked || bucketCheckInProgress) return; // Avoid redundant checks
         
+        setBucketCheckInProgress(true);
         console.log("useDocumentQueries: Checking bucket existence");
         const exists = await ensureStorageBucket();
         console.log(`useDocumentQueries: Bucket exists: ${exists}`);
         setBucketExists(exists);
         setBucketChecked(true);
+        setBucketCheckInProgress(false);
         
         if (!exists) {
           console.error('Storage bucket does not exist or could not be created');
           toast({
             title: "Document storage not available",
-            description: "Unable to access document storage. Please contact an administrator.",
+            description: "Unable to access document storage. An admin needs to create the storage bucket.",
             variant: "destructive",
           });
         }
@@ -39,11 +42,12 @@ export function useDocumentQueries(staffId?: string) {
         console.error("Error checking bucket:", error);
         setBucketExists(false);
         setBucketChecked(true);
+        setBucketCheckInProgress(false);
       }
     };
     
     checkBucket();
-  }, [bucketChecked]);
+  }, [bucketChecked, bucketCheckInProgress]);
 
   // Fetch all documents or just those assigned to a specific staff member
   const { 
@@ -135,6 +139,7 @@ export function useDocumentQueries(staffId?: string) {
     try {
       // Re-check bucket first
       setBucketChecked(false); // Reset so useEffect will check again
+      setBucketCheckInProgress(false);
       const exists = await ensureStorageBucket(); // Manually check immediately
       setBucketExists(exists);
       setBucketChecked(true);
@@ -144,9 +149,20 @@ export function useDocumentQueries(staffId?: string) {
       if (documents.length > 0) {
         await refetchAssignments();
       }
+      
+      toast({
+        title: "Refresh complete",
+        description: exists ? "Document data refreshed successfully" : "Storage bucket issue detected",
+      });
+      
       return true;
     } catch (error) {
       console.error("Error refreshing document data:", error);
+      toast({
+        title: "Refresh failed",
+        description: "Could not refresh document data. Please try again.",
+        variant: "destructive",
+      });
       return false;
     }
   };
