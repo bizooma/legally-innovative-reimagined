@@ -37,6 +37,9 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
+  // Define accepted file types
+  const acceptedFileTypes = ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.jpg,.jpeg,.png";
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
@@ -126,11 +129,15 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
                 {(file.size / (1024 * 1024)).toFixed(2)} MB
               </p>
             )}
+            <p className="text-xs text-gray-400 mt-3">
+              Accepted formats: PDF, Word, Excel, PowerPoint, Text, CSV, Images
+            </p>
             <input
               ref={fileInputRef}
               type="file"
               className="hidden"
               onChange={handleFileChange}
+              accept={acceptedFileTypes}
             />
           </div>
           
