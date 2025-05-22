@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Document, fetchClientDocuments, deleteDocument, updateDocumentDescription } from '@/services/documentService';
+import { Document, fetchClientDocuments, deleteClientDocument, updateDocumentDescription } from '@/services/documentService';
 import { toast } from 'sonner';
 import DocumentItem from './document-components/DocumentItem';
 import DocumentEditDialog from './document-components/DocumentEditDialog';
@@ -42,7 +43,7 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
 
   const handleDelete = async (docPath: string, docName: string) => {
     if (window.confirm(`Are you sure you want to delete "${docName}"?`)) {
-      const success = await deleteDocument(docPath);
+      const success = await deleteClientDocument(docPath);
       if (success) {
         toast.success(`"${docName}" deleted successfully`);
         await loadDocuments();

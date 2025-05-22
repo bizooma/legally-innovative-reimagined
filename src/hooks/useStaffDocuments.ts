@@ -8,7 +8,7 @@ import {
   fetchAllDocuments, 
   getDocumentAssignments,
   uploadStaffDocument,
-  deleteDocument,
+  deleteDocument as deleteStaffDocument,
   assignDocumentToStaff,
   removeDocumentAssignment,
   getStaffDocuments
@@ -82,7 +82,7 @@ export const useStaffDocuments = (staffId?: string) => {
   // Handle delete
   const handleDelete = async (documentId: string) => {
     try {
-      const success = await deleteDocument(documentId);
+      const success = await deleteStaffDocument(documentId);
       if (success) {
         toast({
           title: "Success",

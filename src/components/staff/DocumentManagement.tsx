@@ -13,7 +13,7 @@ import { StaffDocumentWithUrl } from '@/types/staffDocument';
 import {
   uploadStaffDocument,
   fetchAllDocuments,
-  deleteDocument,
+  deleteDocument as deleteStaffDocument,
   assignDocumentToStaff,
   getDocumentAssignments,
   removeDocumentAssignment
@@ -108,7 +108,7 @@ const DocumentManagement: React.FC = () => {
     if (!documentToDelete) return;
 
     try {
-      const success = await deleteDocument(documentToDelete);
+      const success = await deleteStaffDocument(documentToDelete);
       if (success) {
         toast({
           title: 'Document deleted',

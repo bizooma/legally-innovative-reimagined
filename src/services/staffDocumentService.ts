@@ -175,8 +175,8 @@ export const getDocumentAssignments = async (documentId: string): Promise<StaffM
 
     if (error) throw error;
 
-    // Extract the staff members from the data
-    return data?.map(item => item.staff_members) || [];
+    // Extract the staff members from the data and ensure proper typing
+    return data?.map(item => item.staff_members as StaffMember) || [];
   } catch (error) {
     console.error('Get document assignments error:', error);
     return [];
@@ -215,8 +215,8 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
 
     if (error) throw error;
 
-    // Extract the documents
-    const documents = data?.map(item => item.staff_documents) || [];
+    // Extract the documents and ensure proper typing
+    const documents = data?.map(item => item.staff_documents as StaffDocument) || [];
 
     // Get signed URLs for each document
     const documentsWithUrls = await Promise.all(

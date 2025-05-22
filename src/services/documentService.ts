@@ -6,7 +6,9 @@
 export * from './documents/uploadDocument';
 export * from './documents/fetchClientDocuments';
 export * from './documents/updateDocumentDescription';
-export * from './documents/deleteDocument';
+// Import deleteDocument from documents but rename it to avoid conflict with staffDocumentService
+export { deleteDocument as deleteClientDocument } from './documents/deleteDocument';
 export * from './documents/types';
 export * from './documents/storageUtils';
 export * from './staffDocumentService';
+
