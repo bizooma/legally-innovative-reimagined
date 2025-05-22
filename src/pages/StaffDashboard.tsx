@@ -34,6 +34,7 @@ const StaffDashboard = () => {
       }
       
       setUser(session.user);
+      console.log('Current authenticated user:', session.user);
       
       // Get user profile to determine if admin
       const { data: userData, error: userError } = await supabase
@@ -42,28 +43,36 @@ const StaffDashboard = () => {
         .eq('id', session.user.id)
         .single();
         
-      if (!userError && userData) {
+      if (userError) {
+        console.error('Error fetching user data:', userError);
+      }
+        
+      if (userData) {
+        console.log('User data:', userData);
         setIsAdmin(userData.is_admin);
       }
       
-      // Get staff member data for the current user
+      // If not admin, get staff member details
       if (!userData?.is_admin) {
+        console.log('User is not admin, finding staff profile');
         const { data: staffData, error: staffError } = await supabase
           .from('staff_members')
           .select('*')
           .eq('user_id', session.user.id)
           .single();
           
-        if (!staffError && staffData) {
-          console.log('Found staff member data:', staffData);
-          setCurrentStaffMember(staffData);
-        } else {
+        if (staffError) {
           console.error('Error fetching staff data:', staffError);
           toast({
             title: "Staff Profile Error",
             description: "Could not find your staff profile",
             variant: "destructive",
           });
+        } else if (staffData) {
+          console.log('Found staff member data:', staffData);
+          setCurrentStaffMember(staffData);
+        } else {
+          console.log('No staff profile found for user');
         }
       }
       
@@ -165,7 +174,11 @@ const StaffDashboard = () => {
           {/* Staff Documents Section */}
           {!isAdmin && currentStaffMember && (
             <div className="mb-8">
+              <h2 className="text-xl font-bold mb-4">My Documents</h2>
               <StaffDocuments staffMemberId={currentStaffMember.id} />
+              <div className="mt-2 text-xs text-gray-500">
+                Staff ID: {currentStaffMember.id}
+              </div>
             </div>
           )}
           

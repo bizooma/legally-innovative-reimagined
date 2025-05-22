@@ -1,30 +1,35 @@
 
 import { supabase } from '@/integrations/supabase/client';
 
-// Constants
-export const STORAGE_BUCKET = 'staff_documents';
+// Storage bucket for staff documents
+export const STORAGE_BUCKET = 'staff-documents';
 
-/**
- * Format file size in a human-readable format
- */
+// Format file size for display (e.g. 1.2 MB)
 export const formatFileSize = (bytes: number): string => {
   if (bytes === 0) return '0 Bytes';
   
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 };
 
-/**
- * Creates a signed URL for a document
- */
-export const createSignedUrl = async (filePath: string, expirySeconds: number = 3600): Promise<string> => {
-  const { data } = await supabase.storage
-    .from(STORAGE_BUCKET)
-    .createSignedUrl(filePath, expirySeconds);
-  
-  return data?.signedUrl || '';
+// Create a signed URL for a file in storage
+export const createSignedUrl = async (filePath: string): Promise<string> => {
+  try {
+    const { data, error } = await supabase.storage
+      .from(STORAGE_BUCKET)
+      .createSignedUrl(filePath, 60 * 60); // 1 hour expiry
+    
+    if (error) {
+      console.error('Error creating signed URL:', error);
+      throw error;
+    }
+    
+    return data.signedUrl;
+  } catch (error) {
+    console.error('Create signed URL error:', error);
+    return '';
+  }
 };
-

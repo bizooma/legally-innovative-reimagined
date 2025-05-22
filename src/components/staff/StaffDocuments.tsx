@@ -15,16 +15,21 @@ interface StaffDocumentsProps {
 const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
   const [documents, setDocuments] = useState<StaffDocumentWithUrl[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadDocuments = async () => {
       if (!staffMemberId) {
         console.error('No staff member ID provided');
+        setError('No staff member ID provided');
+        setIsLoading(false);
         return;
       }
       
       console.log('Loading documents for staff member ID:', staffMemberId);
       setIsLoading(true);
+      setError(null);
+      
       try {
         // Clear existing documents before loading new ones
         setDocuments([]);
@@ -37,8 +42,9 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
         } else {
           console.log('No documents found for this staff member');
         }
-      } catch (error) {
-        console.error('Error loading staff documents:', error);
+      } catch (err: any) {
+        console.error('Error loading staff documents:', err);
+        setError(err.message || 'Failed to load documents');
         toast({
           title: 'Error',
           description: 'Failed to load your documents',
@@ -68,6 +74,12 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
         <CardDescription>Documents assigned to you</CardDescription>
       </CardHeader>
       <CardContent>
+        {error && (
+          <div className="text-center py-4 text-red-500">
+            <p>Error: {error}</p>
+          </div>
+        )}
+        
         {isLoading ? (
           <div className="text-center py-10">Loading documents...</div>
         ) : documents.length === 0 ? (

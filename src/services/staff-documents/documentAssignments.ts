@@ -85,8 +85,8 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
   try {
     console.log('Fetching documents for staff member:', staffId);
     
-    // Modified query to ensure we get document data correctly
-    const { data, error } = await supabase
+    // Query to get document assignments for this staff member
+    const { data: assignments, error: assignmentError } = await supabase
       .from('staff_document_assignments')
       .select(`
         document_id,
@@ -94,26 +94,27 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
       `)
       .eq('staff_id', staffId);
 
-    if (error) {
-      console.error('Supabase query error:', error);
-      throw error;
+    if (assignmentError) {
+      console.error('Supabase assignment query error:', assignmentError);
+      throw assignmentError;
     }
     
-    console.log('Raw assignment data:', JSON.stringify(data, null, 2));
+    console.log('Raw assignment data:', JSON.stringify(assignments, null, 2));
 
-    if (!data || data.length === 0) {
+    if (!assignments || assignments.length === 0) {
       console.log('No document assignments found for this staff member');
       return [];
     }
 
-    // Modified logic to properly extract documents
+    // Extract documents from the assignments
     const documents: StaffDocument[] = [];
     
-    data.forEach(item => {
+    for (const item of assignments) {
       if (item.staff_documents) {
+        // Ensure proper type extraction
         documents.push(item.staff_documents as unknown as StaffDocument);
       }
-    });
+    }
     
     console.log('Extracted documents:', documents);
 
