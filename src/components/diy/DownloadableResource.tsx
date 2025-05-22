@@ -2,8 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Loader2, RefreshCw } from "lucide-react";
 import { BUCKET_NAME } from "@/config/documentConfig";
 
 interface DownloadableResourceProps {
@@ -24,6 +24,74 @@ export const DownloadableResource = ({
   buttonText = "Download"
 }: DownloadableResourceProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  // Check bucket existence on component mount
+  useEffect(() => {
+    const checkBucketExists = async () => {
+      try {
+        const { data: buckets, error } = await supabase.storage.listBuckets();
+        if (error) {
+          console.error("Error checking buckets:", error);
+          setHasError(true);
+          return;
+        }
+
+        const bucketExists = buckets.some(b => b.name === bucketName);
+        if (!bucketExists) {
+          console.warn(`Bucket "${bucketName}" not found in list:`, buckets.map(b => b.name));
+          setHasError(true);
+        } else {
+          setHasError(false);
+        }
+      } catch (err) {
+        console.error("Failed to check bucket existence:", err);
+        setHasError(true);
+      }
+    };
+
+    checkBucketExists();
+  }, [bucketName]);
+
+  const retryBucketCheck = async () => {
+    setHasError(false);
+    
+    try {
+      // Force a refresh of the buckets list
+      const { data: buckets, error } = await supabase.storage.listBuckets();
+      
+      if (error) {
+        console.error("Error checking buckets on retry:", error);
+        setHasError(true);
+        toast({
+          title: "Connection error",
+          description: "Could not verify storage availability. Please try again later.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      const bucketExists = buckets.some(b => b.name === bucketName);
+      
+      if (!bucketExists) {
+        console.warn(`Bucket "${bucketName}" still not found after retry.`);
+        setHasError(true);
+        toast({
+          title: "Storage issue",
+          description: "The requested resource storage is not available. Please contact support.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Connection restored",
+          description: "Storage connection has been restored. You can now download the resource.",
+        });
+      }
+    } catch (err) {
+      console.error("Failed during retry:", err);
+      setHasError(true);
+    }
+  };
 
   const downloadFile = async () => {
     setIsDownloading(true);
@@ -55,6 +123,7 @@ export const DownloadableResource = ({
           variant: "destructive",
         });
         setIsDownloading(false);
+        setHasError(true);
         return;
       }
       
@@ -76,9 +145,9 @@ export const DownloadableResource = ({
         return;
       }
       
-      console.log("Files in bucket:", files.map(f => f.name));
+      console.log("Files in bucket:", files?.map(f => f.name));
       
-      const fileExists = files.some(f => f.name === fileName);
+      const fileExists = files?.some(f => f.name === fileName);
       if (!fileExists) {
         console.error(`File "${fileName}" not found in bucket "${bucketName}"`);
         toast({
@@ -121,6 +190,7 @@ export const DownloadableResource = ({
           title: "Download started",
           description: `${displayName || fileName} is downloading.`,
         });
+        setHasError(false);
       }
     } catch (error) {
       console.error("Unexpected error downloading file:", error);
@@ -138,20 +208,35 @@ export const DownloadableResource = ({
     <div className="bg-white rounded-lg shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
       <h3 className="text-xl font-semibold mb-3">{title}</h3>
       <p className="text-gray-600 mb-4">{description}</p>
-      <Button 
-        className="bg-legal-primary hover:bg-legal-secondary"
-        onClick={downloadFile}
-        disabled={isDownloading}
-      >
-        {isDownloading ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Downloading...
-          </>
-        ) : (
-          buttonText
-        )}
-      </Button>
+      
+      {hasError ? (
+        <div className="flex flex-col gap-3">
+          <p className="text-red-600 text-sm">Storage connection issue detected</p>
+          <Button
+            variant="outline"
+            className="flex items-center"
+            onClick={retryBucketCheck}
+          >
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Retry connection
+          </Button>
+        </div>
+      ) : (
+        <Button 
+          className="bg-legal-primary hover:bg-legal-secondary"
+          onClick={downloadFile}
+          disabled={isDownloading}
+        >
+          {isDownloading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Downloading...
+            </>
+          ) : (
+            buttonText
+          )}
+        </Button>
+      )}
     </div>
   );
 };
