@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { useState, useEffect } from "react";
-import { Loader2, RefreshCw } from "lucide-react";
+import { Loader2, RefreshCw, AlertCircle } from "lucide-react";
 import { BUCKET_NAME } from "@/config/documentConfig";
 
 interface DownloadableResourceProps {
@@ -25,35 +25,76 @@ export const DownloadableResource = ({
 }: DownloadableResourceProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isRetrying, setIsRetrying] = useState(false);
 
   // Check bucket existence on component mount
   useEffect(() => {
-    const checkBucketExists = async () => {
-      try {
-        const { data: buckets, error } = await supabase.storage.listBuckets();
-        if (error) {
-          console.error("Error checking buckets:", error);
-          setHasError(true);
-          return;
-        }
-
-        const bucketExists = buckets.some(b => b.name === bucketName);
-        if (!bucketExists) {
-          console.warn(`Bucket "${bucketName}" not found in list:`, buckets.map(b => b.name));
-          setHasError(true);
-        } else {
-          setHasError(false);
-        }
-      } catch (err) {
-        console.error("Failed to check bucket existence:", err);
-        setHasError(true);
-      }
-    };
-
     checkBucketExists();
   }, [bucketName]);
 
+  const checkBucketExists = async () => {
+    try {
+      console.log(`Checking if bucket "${bucketName}" exists...`);
+      
+      // Force a refresh of the buckets list to ensure we have the latest data
+      const { data: buckets, error } = await supabase.storage.listBuckets();
+      
+      if (error) {
+        console.error("Error checking buckets:", error);
+        setHasError(true);
+        return;
+      }
+      
+      if (!buckets || buckets.length === 0) {
+        console.warn("No storage buckets found in Supabase");
+        setHasError(true);
+        return;
+      }
+      
+      console.log("Available buckets:", buckets.map(b => b.name));
+      
+      const bucketExists = buckets.some(b => b.name === bucketName);
+      if (!bucketExists) {
+        console.warn(`Bucket "${bucketName}" not found in list:`, buckets.map(b => b.name));
+        setHasError(true);
+      } else {
+        setHasError(false);
+        
+        // If bucket exists, check if file exists too
+        await checkFileExists();
+      }
+    } catch (err) {
+      console.error("Failed to check bucket existence:", err);
+      setHasError(true);
+    }
+  };
+
+  const checkFileExists = async () => {
+    try {
+      const { data, error } = await supabase.storage
+        .from(bucketName)
+        .list();
+      
+      if (error) {
+        console.error("Error listing files:", error);
+        return;
+      }
+      
+      console.log(`Files in bucket "${bucketName}":`, data?.map(f => f.name));
+      
+      const fileExists = data?.some(f => f.name === fileName);
+      if (!fileExists) {
+        console.warn(`File "${fileName}" not found in bucket "${bucketName}"`);
+      } else {
+        console.log(`File "${fileName}" found in bucket "${bucketName}"`);
+      }
+    } catch (err) {
+      console.error("Error checking file existence:", err);
+    }
+  };
+
   const retryBucketCheck = async () => {
+    setIsRetrying(true);
     setHasError(false);
     
     try {
@@ -71,6 +112,19 @@ export const DownloadableResource = ({
         return;
       }
       
+      if (!buckets || buckets.length === 0) {
+        console.warn("No storage buckets found after retry");
+        setHasError(true);
+        toast({
+          title: "Storage issue",
+          description: "No storage buckets available. Please contact support.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      console.log("Available buckets after retry:", buckets.map(b => b.name));
+      
       const bucketExists = buckets.some(b => b.name === bucketName);
       
       if (!bucketExists) {
@@ -78,10 +132,39 @@ export const DownloadableResource = ({
         setHasError(true);
         toast({
           title: "Storage issue",
-          description: "The requested resource storage is not available. Please contact support.",
+          description: `The requested resource storage bucket "${bucketName}" is not available. Please contact support.`,
           variant: "destructive",
         });
       } else {
+        // Check if file exists
+        const { data: files, error: fileError } = await supabase.storage
+          .from(bucketName)
+          .list();
+        
+        if (fileError) {
+          console.error("Error listing files on retry:", fileError);
+          setHasError(true);
+          toast({
+            title: "Storage issue",
+            description: "Could not verify file availability. Please try again later.",
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        const fileExists = files?.some(f => f.name === fileName);
+        if (!fileExists) {
+          console.warn(`File "${fileName}" not found in bucket "${bucketName}" after retry`);
+          setHasError(true);
+          toast({
+            title: "Resource unavailable",
+            description: `The file "${displayName || fileName}" could not be found. Please contact support.`,
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        setHasError(false);
         toast({
           title: "Connection restored",
           description: "Storage connection has been restored. You can now download the resource.",
@@ -90,6 +173,13 @@ export const DownloadableResource = ({
     } catch (err) {
       console.error("Failed during retry:", err);
       setHasError(true);
+      toast({
+        title: "Connection failed",
+        description: "Failed to reconnect to storage. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsRetrying(false);
     }
   };
 
@@ -211,14 +301,27 @@ export const DownloadableResource = ({
       
       {hasError ? (
         <div className="flex flex-col gap-3">
-          <p className="text-red-600 text-sm">Storage connection issue detected</p>
+          <div className="text-red-600 text-sm flex items-center gap-1.5">
+            <AlertCircle className="h-4 w-4" />
+            <span>Storage connection issue detected</span>
+          </div>
           <Button
             variant="outline"
-            className="flex items-center"
+            className="flex items-center justify-center w-full sm:w-auto"
             onClick={retryBucketCheck}
+            disabled={isRetrying}
           >
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Retry connection
+            {isRetrying ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Connecting...
+              </>
+            ) : (
+              <>
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Retry connection
+              </>
+            )}
           </Button>
         </div>
       ) : (
