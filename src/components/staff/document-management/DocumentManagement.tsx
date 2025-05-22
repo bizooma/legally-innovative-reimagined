@@ -15,7 +15,7 @@ import {
   removeDocumentAssignment
 } from '@/services/staff-documents';
 
-// Import our new components
+// Import our components
 import UploadDocumentDialog from './UploadDocumentDialog';
 import DocumentDeleteDialog from './DocumentDeleteDialog';
 import AssignDocumentDialog from './AssignDocumentDialog';

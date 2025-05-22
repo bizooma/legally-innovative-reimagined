@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { useQuery } from '@tanstack/react-query';
 import { getStaffDocuments } from '@/services/staff-documents/utils';
-import { StaffDocumentWithUrl } from '@/services/staff-documents/types';
+import { StaffDocumentWithUrl } from '@/types/staffDocument';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface StaffDocumentsProps {
