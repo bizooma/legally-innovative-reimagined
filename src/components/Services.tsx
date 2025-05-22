@@ -44,7 +44,7 @@ const Services = () => {
       title: "Custom AI Chatbot",
       description: "Develop intelligent, personalized AI chatbots that engage your customers, answer queries, and provide assistance 24/7, enhancing customer service while reducing operational costs.",
       icon: "💬",
-      bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "/lovable-uploads/a88cbdbd-0e22-4907-afe1-0622b2c876ab.png"
     },
     {
       title: "Lead Generation Systems",
