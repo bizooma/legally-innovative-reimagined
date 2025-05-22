@@ -1,6 +1,6 @@
 
 import { toast } from "@/components/ui/use-toast";
-import { PostgrestError, StorageError } from "@supabase/supabase-js";
+import { PostgrestError } from "@supabase/supabase-js";
 
 /**
  * Error types that can occur with Supabase Storage operations
@@ -26,7 +26,7 @@ export interface StorageOperationResult {
 /**
  * Parse a Supabase storage error and determine its type
  */
-export function parseStorageError(error: StorageError | PostgrestError | Error | unknown): StorageErrorType {
+export function parseStorageError(error: PostgrestError | Error | unknown): StorageErrorType {
   const errorMessage = error instanceof Error ? error.message.toLowerCase() : '';
   
   // Handle specific Supabase storage error patterns

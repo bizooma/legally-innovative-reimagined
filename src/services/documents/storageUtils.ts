@@ -77,9 +77,10 @@ export async function getPublicFileUrl(bucketName: string, filePath: string): Pr
     return fileResult;
   }
   
-  // Get the public URL
+  // Get the public URL - fixed to return a Promise
   return await handleStorageOperation(
-    () => {
+    async () => {
+      // Wrap the synchronous operation in an async function
       const { data } = supabase.storage
         .from(bucketName)
         .getPublicUrl(filePath);
