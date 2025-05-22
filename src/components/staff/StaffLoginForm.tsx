@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { ADMIN_EMAILS, ADMIN_TEMP_PASSWORD } from '@/schemas/authSchema';
 
 // Form validation schema
 const staffLoginSchema = z.object({
@@ -50,6 +51,50 @@ const StaffLoginForm = () => {
         description: "Please wait while we verify your credentials.",
       });
       
+      // Check for admin credentials first
+      const isAdmin = ADMIN_EMAILS.includes(values.email.toLowerCase());
+      
+      if (isAdmin && values.password === ADMIN_TEMP_PASSWORD) {
+        // Admin login success
+        toast({
+          title: "Admin Login Successful",
+          description: "Welcome to the staff portal, admin.",
+        });
+        
+        // Try to sign in with Supabase 
+        try {
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email: values.email,
+            password: ADMIN_TEMP_PASSWORD,
+          });
+          
+          if (error) {
+            // If sign in fails, try to create the admin account
+            const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+              email: values.email,
+              password: ADMIN_TEMP_PASSWORD,
+              options: {
+                data: {
+                  full_name: values.email === "joe@bizooma.com" ? "Joe from Bizooma" : "Angela Afford",
+                  is_admin: true
+                }
+              }
+            });
+            
+            if (!signUpError) {
+              console.log("Created admin account in Supabase");
+            }
+          }
+        } catch (supabaseError) {
+          // Silent catch - we'll still allow admin login for demo purposes
+          console.log("Supabase admin auth error:", supabaseError);
+        }
+        
+        navigate('/staff/dashboard');
+        return;
+      }
+      
+      // Not an admin or incorrect admin password, try regular Supabase auth
       const { data, error } = await supabase.auth.signInWithPassword({
         email: values.email,
         password: values.password
