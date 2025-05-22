@@ -5,8 +5,39 @@ import { DIYHeader } from "@/components/diy/DIYHeader";
 import { ResourceGrid } from "@/components/diy/ResourceGrid";
 import { ProductPromotion } from "@/components/diy/ProductPromotion";
 import { ConsultationCTA } from "@/components/diy/ConsultationCTA";
+import { useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { VALID_DOWNLOAD_BUCKETS } from "@/config/documentConfig";
 
 const DIY = () => {
+  // Check if the required buckets exist when the component mounts
+  useEffect(() => {
+    const checkBuckets = async () => {
+      try {
+        const { data: buckets, error } = await supabase.storage.listBuckets();
+        
+        if (error) {
+          console.error("Error checking buckets:", error);
+          return;
+        }
+        
+        const bucketNames = buckets.map(b => b.name);
+        console.log("Available buckets:", bucketNames);
+        
+        // Check if our required buckets exist
+        VALID_DOWNLOAD_BUCKETS.forEach(bucketName => {
+          if (!bucketNames.includes(bucketName)) {
+            console.warn(`Warning: Bucket "${bucketName}" does not exist. Downloads may fail.`);
+          }
+        });
+      } catch (err) {
+        console.error("Failed to check buckets:", err);
+      }
+    };
+    
+    checkBuckets();
+  }, []);
+
   const resources = [
     {
       title: "Law Firm Marketing NDA Template",

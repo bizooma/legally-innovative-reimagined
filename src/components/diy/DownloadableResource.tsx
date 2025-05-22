@@ -2,6 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { BUCKET_NAME } from "@/config/documentConfig";
 
 interface DownloadableResourceProps {
   title: string;
@@ -20,10 +23,71 @@ export const DownloadableResource = ({
   displayName,
   buttonText = "Download"
 }: DownloadableResourceProps) => {
+  const [isDownloading, setIsDownloading] = useState(false);
+
   const downloadFile = async () => {
+    setIsDownloading(true);
+    
     try {
       console.log(`Attempting to download ${fileName} from bucket ${bucketName}`);
       
+      // First check if the bucket exists
+      const { data: buckets, error: bucketError } = await supabase.storage
+        .listBuckets();
+      
+      if (bucketError) {
+        console.error("Error checking buckets:", bucketError);
+        toast({
+          title: "Download failed",
+          description: "Could not access storage buckets. Please try again later.",
+          variant: "destructive",
+        });
+        setIsDownloading(false);
+        return;
+      }
+      
+      const bucketExists = buckets.some(b => b.name === bucketName);
+      if (!bucketExists) {
+        console.error(`Bucket "${bucketName}" does not exist`);
+        toast({
+          title: "Download failed",
+          description: `Storage location "${bucketName}" not found.`,
+          variant: "destructive",
+        });
+        setIsDownloading(false);
+        return;
+      }
+      
+      // List files in the bucket to check if the file exists
+      const { data: files, error: listError } = await supabase.storage
+        .from(bucketName)
+        .list();
+      
+      if (listError) {
+        console.error("Error listing files:", listError);
+        toast({
+          title: "Download failed",
+          description: "Could not verify if the file exists. Please try again later.",
+          variant: "destructive",
+        });
+        setIsDownloading(false);
+        return;
+      }
+      
+      console.log("Files in bucket:", files);
+      const fileExists = files.some(f => f.name === fileName);
+      if (!fileExists) {
+        console.error(`File "${fileName}" not found in bucket "${bucketName}"`);
+        toast({
+          title: "Download failed",
+          description: `The file "${fileName}" could not be found.`,
+          variant: "destructive",
+        });
+        setIsDownloading(false);
+        return;
+      }
+      
+      // If bucket and file exist, try to download
       const { data, error } = await supabase.storage
         .from(bucketName)
         .download(fileName);
@@ -35,6 +99,7 @@ export const DownloadableResource = ({
           variant: "destructive",
         });
         console.error("Error downloading file:", error);
+        setIsDownloading(false);
         return;
       }
       
@@ -61,6 +126,8 @@ export const DownloadableResource = ({
         description: "An unexpected error occurred",
         variant: "destructive",
       });
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -71,8 +138,16 @@ export const DownloadableResource = ({
       <Button 
         className="bg-legal-primary hover:bg-legal-secondary"
         onClick={downloadFile}
+        disabled={isDownloading}
       >
-        {buttonText}
+        {isDownloading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Downloading...
+          </>
+        ) : (
+          buttonText
+        )}
       </Button>
     </div>
   );
