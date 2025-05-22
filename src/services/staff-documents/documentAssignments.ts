@@ -46,8 +46,8 @@ export const getDocumentAssignments = async (documentId: string): Promise<StaffM
 
     if (error) throw error;
 
-    // Extract the staff members from the data
-    return data?.map(item => item.staff_members as StaffMember) || [];
+    // Extract the staff members from the data and ensure proper type casting
+    return data?.map(item => item.staff_members as unknown as StaffMember) || [];
   } catch (error) {
     console.error('Get document assignments error:', error);
     return [];
@@ -97,9 +97,9 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
     
     console.log('Raw assignment data:', data);
 
-    // Extract the documents
+    // Extract the documents and properly cast the type
     const documents = data?.map(item => {
-      return item.staff_documents as StaffDocument;
+      return item.staff_documents as unknown as StaffDocument;
     }) || [];
     
     console.log('Extracted documents:', documents);
