@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { handleStorageOperation, isConnectionError, isNotFoundError } from "@/utils/storageErrorUtils";
 
 interface StorageBucketStatus {
   isChecking: boolean;
@@ -19,14 +20,18 @@ export const useStorageBucketCheck = (bucketName: string) => {
     try {
       console.log(`Checking if bucket "${bucketName}" exists...`);
       
-      // Force a refresh of the buckets list to ensure we have the latest data
-      const { data: buckets, error } = await supabase.storage.listBuckets();
+      const result = await handleStorageOperation(
+        () => supabase.storage.listBuckets(),
+        false
+      );
       
-      if (error) {
-        console.error("Error checking buckets:", error);
+      if (!result.success) {
+        console.error("Error checking buckets:", result.errorMessage);
         setStatus(prev => ({ ...prev, hasError: true, isChecking: false }));
         return false;
       }
+      
+      const buckets = result.data;
       
       if (!buckets || buckets.length === 0) {
         console.warn("No storage buckets found in Supabase");
@@ -54,18 +59,19 @@ export const useStorageBucketCheck = (bucketName: string) => {
 
   const checkFileExists = async (fileName: string) => {
     try {
-      const { data, error } = await supabase.storage
-        .from(bucketName)
-        .list();
+      const result = await handleStorageOperation(
+        () => supabase.storage.from(bucketName).list(),
+        false
+      );
       
-      if (error) {
-        console.error("Error listing files:", error);
+      if (!result.success) {
+        console.error("Error listing files:", result.errorMessage);
         return false;
       }
       
-      console.log(`Files in bucket "${bucketName}":`, data?.map(f => f.name));
+      console.log(`Files in bucket "${bucketName}":`, result.data?.map(f => f.name));
       
-      const fileExists = data?.some(f => f.name === fileName);
+      const fileExists = result.data?.some(f => f.name === fileName);
       if (!fileExists) {
         console.warn(`File "${fileName}" not found in bucket "${bucketName}"`);
         return false;

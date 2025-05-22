@@ -2,31 +2,34 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
+import { handleStorageOperation, StorageOperationResult } from "@/utils/storageErrorUtils";
 
 export const useFileDownload = () => {
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const downloadFile = async (bucketName: string, fileName: string, displayName?: string) => {
+  const downloadFile = async (bucketName: string, fileName: string, displayName?: string): Promise<boolean> => {
     setIsDownloading(true);
     
     try {
       console.log(`Attempting to download ${fileName} from bucket ${bucketName}`);
       
-      // First check if the bucket exists and is public
-      const { data: buckets, error: bucketError } = await supabase.storage
-        .listBuckets();
+      // First check if the bucket exists
+      const bucketsResult = await handleStorageOperation(
+        () => supabase.storage.listBuckets(),
+        false
+      );
       
-      if (bucketError) {
-        console.error("Error checking buckets:", bucketError);
+      if (!bucketsResult.success) {
+        console.error("Error checking buckets:", bucketsResult.errorMessage);
         toast({
           title: "Download failed",
-          description: "Could not access storage buckets. Please try again later.",
+          description: bucketsResult.errorMessage,
           variant: "destructive",
         });
         return false;
       }
       
-      const bucket = buckets.find(b => b.name === bucketName);
+      const bucket = bucketsResult.data?.find(b => b.name === bucketName);
       if (!bucket) {
         console.error(`Bucket "${bucketName}" does not exist`);
         toast({
@@ -40,12 +43,13 @@ export const useFileDownload = () => {
       console.log(`Bucket "${bucketName}" found, public: ${bucket.public}`);
       
       // List files in the bucket to check if the file exists
-      const { data: files, error: listError } = await supabase.storage
-        .from(bucketName)
-        .list();
+      const filesResult = await handleStorageOperation(
+        () => supabase.storage.from(bucketName).list(),
+        false
+      );
       
-      if (listError) {
-        console.error("Error listing files:", listError);
+      if (!filesResult.success) {
+        console.error("Error listing files:", filesResult.errorMessage);
         toast({
           title: "Download failed",
           description: "Could not verify if the file exists. Please try again later.",
@@ -54,9 +58,9 @@ export const useFileDownload = () => {
         return false;
       }
       
-      console.log("Files in bucket:", files?.map(f => f.name));
+      console.log("Files in bucket:", filesResult.data?.map(f => f.name));
       
-      const fileExists = files?.some(f => f.name === fileName);
+      const fileExists = filesResult.data?.some(f => f.name === fileName);
       if (!fileExists) {
         console.error(`File "${fileName}" not found in bucket "${bucketName}"`);
         toast({
@@ -68,23 +72,23 @@ export const useFileDownload = () => {
       }
       
       // If bucket and file exist, try to download
-      const { data, error } = await supabase.storage
-        .from(bucketName)
-        .download(fileName);
+      const downloadResult = await handleStorageOperation(
+        () => supabase.storage.from(bucketName).download(fileName),
+        false
+      );
       
-      if (error) {
+      if (!downloadResult.success) {
         toast({
           title: "Download failed",
-          description: error.message,
+          description: downloadResult.errorMessage,
           variant: "destructive",
         });
-        console.error("Error downloading file:", error);
         return false;
       }
       
-      if (data) {
+      if (downloadResult.data) {
         // Create a URL for the file and trigger download
-        const url = URL.createObjectURL(data);
+        const url = URL.createObjectURL(downloadResult.data);
         const a = document.createElement('a');
         a.href = url;
         a.download = displayName || fileName;

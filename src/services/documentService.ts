@@ -8,3 +8,4 @@ export * from './documents/fetchClientDocuments';
 export * from './documents/updateDocumentDescription';
 export * from './documents/deleteDocument';
 export * from './documents/types';
+export * from './documents/storageUtils';
