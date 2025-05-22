@@ -94,7 +94,7 @@ export async function assignDocumentToStaff(documentId: string, staffIds: string
 
       if (error) {
         console.error(`Error assigning document ${documentId} to staff ${staffId}:`, error);
-        // Log but continue with other assignments rather than failing completely
+        // Log but continue with other assignments
         console.error('Continuing with other assignments...');
       } else {
         console.log(`[DEBUG] Successfully assigned document ${documentId} to staff ${staffId}`);
@@ -104,6 +104,7 @@ export async function assignDocumentToStaff(documentId: string, staffIds: string
       await new Promise(resolve => setTimeout(resolve, 300));
     }
 
+    console.log(`[DEBUG] All assignment operations completed for document ${documentId}`);
     return true;
   } catch (error) {
     console.error("Failed to assign document to staff:", error);

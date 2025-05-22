@@ -126,12 +126,18 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
     const documentsWithUrls = await Promise.all(
       documents.map(async (doc) => {
         console.log(`[DEBUG] Processing document: ${doc.id} - ${doc.name}`);
-        const url = await createSignedUrl(doc.file_path);
-        if (!url) {
-          console.warn(`[DEBUG] Failed to create signed URL for document: ${doc.id} - ${doc.name}`);
-        } else {
-          console.log(`[DEBUG] Successfully created URL for document: ${doc.id}`);
+        let url = '';
+        try {
+          url = await createSignedUrl(doc.file_path);
+          if (!url) {
+            console.warn(`[DEBUG] Failed to create signed URL for document: ${doc.id} - ${doc.name}`);
+          } else {
+            console.log(`[DEBUG] Successfully created URL for document: ${doc.id}`);
+          }
+        } catch (urlError) {
+          console.error(`[DEBUG] Error creating URL for document ${doc.id}:`, urlError);
         }
+        
         return {
           ...doc,
           url

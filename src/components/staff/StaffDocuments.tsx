@@ -16,14 +16,22 @@ interface StaffDocumentsProps {
 }
 
 const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
-  // Check if storage bucket exists
+  // Check if storage bucket exists on component mount
   useEffect(() => {
-    ensureStorageBucket().catch(err => {
-      console.error('Error ensuring storage bucket exists:', err);
-      // Continue anyway as the bucket might already exist
-    });
+    const checkBucket = async () => {
+      console.log("StaffDocuments: Checking storage bucket existence");
+      try {
+        const exists = await ensureStorageBucket();
+        console.log(`StaffDocuments: Storage bucket check result: ${exists}`);
+      } catch (err) {
+        console.error('StaffDocuments: Error ensuring storage bucket exists:', err);
+      }
+    };
+    
+    checkBucket();
   }, []);
 
+  // Fetch staff documents with enhanced error handling
   const { 
     data: documents = [], 
     isLoading, 
@@ -33,36 +41,53 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
   } = useQuery({
     queryKey: ['staffDocuments', staffMemberId],
     queryFn: async () => {
-      console.log('StaffDocuments component fetching documents for:', staffMemberId);
+      console.log('StaffDocuments: Fetching documents for:', staffMemberId);
       if (!staffMemberId) {
-        console.error('No staff member ID provided');
-        throw new Error('No staff member ID provided');
+        console.error('StaffDocuments: No staff member ID provided');
+        throw new Error('No staff ID provided');
       }
       
       try {
+        console.log(`StaffDocuments: Starting document fetch for ${staffMemberId}`);
         const docs = await getStaffDocuments(staffMemberId);
-        console.log('Documents fetched in StaffDocuments component:', docs);
+        console.log(`StaffDocuments: Successfully fetched ${docs.length} documents:`, 
+          docs.map(d => ({ id: d.id, name: d.name, hasUrl: !!d.url })));
         return docs;
       } catch (err) {
-        console.error('Error fetching staff documents in component:', err);
+        console.error('StaffDocuments: Error fetching documents:', err);
+        toast({
+          title: 'Error',
+          description: 'Failed to load your documents. Please try refreshing.',
+          variant: 'destructive',
+        });
         throw err;
       }
     },
     enabled: !!staffMemberId,
     retry: 2,
-    staleTime: 1000 * 10, // 10 seconds for more frequent updates
+    staleTime: 5000, // 5 seconds for frequent updates
     refetchOnWindowFocus: true,
   });
 
   const handleRefresh = () => {
+    console.log("StaffDocuments: Manual refresh triggered");
     refetch();
     toast({
-      title: "Refreshing",
-      description: "Looking for new document assignments...",
+      title: "Refreshing Documents",
+      description: "Checking for new document assignments...",
     });
   };
 
   const handleDownload = (url: string, filename: string) => {
+    if (!url) {
+      toast({
+        title: 'Error',
+        description: 'Document URL not available. Please try refreshing.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    
     try {
       const a = document.createElement('a');
       a.href = url;
@@ -114,7 +139,15 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
           <div className="text-center py-10">
             <FileText className="h-16 w-16 mx-auto text-gray-300 mb-4" />
             <p className="text-gray-500">No documents have been assigned to you</p>
-            <p className="text-sm text-gray-400 mt-2">Your staff ID: {staffMemberId}</p>
+            <p className="text-sm text-gray-400 mt-2">Staff ID: {staffMemberId}</p>
+            <Button 
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              className="mt-4"
+            >
+              Check for New Documents
+            </Button>
           </div>
         ) : (
           <>
@@ -149,7 +182,7 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
                             } else {
                               toast({
                                 title: 'Error',
-                                description: 'Document URL not available',
+                                description: 'Document URL not available. Please try refreshing.',
                                 variant: 'destructive',
                               });
                             }

@@ -46,10 +46,10 @@ export async function ensureStorageBucket(): Promise<boolean> {
       return true;
     } catch (createError) {
       console.error('Error creating storage bucket:', createError);
-      // If bucket creation fails due to permissions, assume it exists and return true
-      // This allows the application to continue working if the bucket already exists
-      // but the current user doesn't have permission to create buckets
-      return false;
+      // If bucket creation fails due to permissions, assume it exists
+      // This is common for staff members without admin privileges
+      console.log('Assuming bucket already exists but user lacks creation permissions');
+      return true; // Return true to allow the application to continue
     }
   } catch (error) {
     console.error('Error in ensureStorageBucket:', error);
