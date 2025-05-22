@@ -7,7 +7,7 @@ import { ProductPromotion } from "@/components/diy/ProductPromotion";
 import { ConsultationCTA } from "@/components/diy/ConsultationCTA";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { VALID_DOWNLOAD_BUCKETS } from "@/config/documentConfig";
+import { VALID_DOWNLOAD_BUCKETS, RESOURCE_FILES } from "@/config/documentConfig";
 
 const DIY = () => {
   // Check if the required buckets exist when the component mounts
@@ -43,21 +43,21 @@ const DIY = () => {
       title: "Law Firm Marketing NDA Template",
       description: "A specialized non-disclosure agreement template for marketing agencies and law firms.",
       bucketName: "downloads",
-      fileName: "law-firm-marketing-nda.pdf",
+      fileName: RESOURCE_FILES.MARKETING_NDA,
       buttonText: "Download Template"
     },
     {
       title: "Legal Marketing Service Agreement",
       description: "Protect your marketing agency with our professional service agreement template for legal clients.",
       bucketName: "downloads",
-      fileName: "legal-marketing-service-agreement.pdf",
+      fileName: RESOURCE_FILES.SERVICE_AGREEMENT,
       buttonText: "Download Template"
     },
     {
       title: "Law Firm Digital Marketing Checklist",
       description: "Essential marketing considerations when promoting your law practice online.",
       bucketName: "downloads",
-      fileName: "law-firm-digital-marketing-checklist.pdf",
+      fileName: RESOURCE_FILES.LAW_FIRM_MARKETING_CHECKLIST,
       displayName: "Law Firm Digital Marketing Checklist.pdf",
       buttonText: "Download Checklist"
     },
@@ -65,7 +65,7 @@ const DIY = () => {
       title: "Legal Marketing GDPR Compliance Guide",
       description: "A practical guide to understanding and implementing GDPR requirements in legal marketing.",
       bucketName: "downloads",
-      fileName: "legal-gdpr-guide.pdf",
+      fileName: RESOURCE_FILES.GDPR_GUIDE,
       buttonText: "Download Guide"
     }
   ];

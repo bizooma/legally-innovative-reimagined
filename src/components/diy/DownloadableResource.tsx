@@ -74,7 +74,8 @@ export const DownloadableResource = ({
         return;
       }
       
-      console.log("Files in bucket:", files);
+      console.log("Files in bucket:", files.map(f => f.name));
+      
       const fileExists = files.some(f => f.name === fileName);
       if (!fileExists) {
         console.error(`File "${fileName}" not found in bucket "${bucketName}"`);
