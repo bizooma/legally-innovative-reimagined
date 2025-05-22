@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
@@ -20,6 +20,30 @@ export const useStaffMembers = () => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
   const [currentStaffMember, setCurrentStaffMember] = useState<StaffMember | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  
+  // Check if current user is an admin
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      
+      const { data, error } = await supabase
+        .from('users')
+        .select('is_admin')
+        .eq('id', session.user.id)
+        .single();
+      
+      if (error) {
+        console.error('Error checking admin status:', error);
+        return;
+      }
+      
+      setIsAdmin(data?.is_admin || false);
+    };
+    
+    checkAdminStatus();
+  }, []);
   
   // Fetch staff members from Supabase
   const { data: staffMembers, isLoading, error, refetch } = useQuery({
@@ -204,6 +228,7 @@ export const useStaffMembers = () => {
     isPasswordDialogOpen,
     openPasswordDialog,
     closePasswordDialog,
-    assignPassword
+    assignPassword,
+    isAdmin
   };
 };

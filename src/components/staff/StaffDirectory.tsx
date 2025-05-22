@@ -35,7 +35,8 @@ const StaffDirectory: React.FC = () => {
     isPasswordDialogOpen,
     openPasswordDialog,
     closePasswordDialog,
-    assignPassword
+    assignPassword,
+    isAdmin
   } = useStaffMembers();
   
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false);
@@ -64,10 +65,12 @@ const StaffDirectory: React.FC = () => {
             <CardTitle>Team Directory</CardTitle>
             <CardDescription>Manage staff members and contact information</CardDescription>
           </div>
-          <Button onClick={openAddStaffDialog} className="flex items-center">
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Add Staff Member
-          </Button>
+          {isAdmin && (
+            <Button onClick={openAddStaffDialog} className="flex items-center">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Add Staff Member
+            </Button>
+          )}
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -93,30 +96,34 @@ const StaffDirectory: React.FC = () => {
                     <TableCell>{staff.email}</TableCell>
                     <TableCell>{staff.department || '-'}</TableCell>
                     <TableCell className="text-right flex justify-end gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => openPasswordDialog(staff)}
-                        title="Assign Password"
-                      >
-                        <Key className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => openEditStaffDialog(staff)}
-                        title="Edit Staff Member"
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDeleteClick(staff.id)}
-                        title="Delete Staff Member"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      {isAdmin && (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => openPasswordDialog(staff)}
+                            title="Assign Password"
+                          >
+                            <Key className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => openEditStaffDialog(staff)}
+                            title="Edit Staff Member"
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleDeleteClick(staff.id)}
+                            title="Delete Staff Member"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
