@@ -75,7 +75,7 @@ export const useStaffMembers = () => {
   // Assign password to a staff member
   const assignPassword = async (email: string, password: string) => {
     try {
-      const { error } = await supabase.functions.invoke('admin-password-management', {
+      const { error, data } = await supabase.functions.invoke('admin-password-management', {
         body: {
           email,
           password,
@@ -84,7 +84,13 @@ export const useStaffMembers = () => {
       });
       
       if (error) {
-        throw error;
+        console.error('Supabase function error:', error);
+        throw new Error(`Error: ${error.message}`);
+      }
+      
+      if (data?.error) {
+        console.error('Password management error:', data.error);
+        throw new Error(data.error);
       }
       
       toast({
@@ -95,11 +101,15 @@ export const useStaffMembers = () => {
       closePasswordDialog();
     } catch (error) {
       console.error('Error assigning password:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to assign password';
       toast({
         title: 'Error',
-        description: 'Failed to assign password. Please try again.',
+        description: errorMessage,
         variant: 'destructive',
       });
+      
+      // Re-throw the error so the dialog component can handle it
+      throw error;
     }
   };
   
