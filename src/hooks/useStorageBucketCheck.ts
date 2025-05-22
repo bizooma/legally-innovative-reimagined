@@ -23,21 +23,40 @@ export const useStorageBucketCheck = (bucketName: string) => {
     try {
       console.log(`Checking if bucket "${bucketName}" exists...`);
       
-      // Use the checkBucketExists utility from storageUtils
-      const result = await checkBucketExists(bucketName);
-      
-      if (!result.success) {
-        console.error("Error checking bucket:", result.errorMessage);
-        setStatus(prev => ({ 
-          ...prev, 
-          hasError: true, 
-          isChecking: false,
-          errorMessage: `Storage bucket "${bucketName}" not found. Please create it in your Supabase project.`
-        }));
-        return false;
+      // First try to list files in the bucket - this is a more reliable way to check if
+      // the bucket is accessible rather than just checking if it exists
+      const { data: files, error: filesError } = await supabase.storage
+        .from(bucketName)
+        .list();
+        
+      if (filesError) {
+        console.error("Error listing files in bucket:", filesError);
+        // Check if the bucket actually exists using the utility
+        const result = await checkBucketExists(bucketName);
+        
+        if (!result.success) {
+          console.error("Error checking bucket:", result.errorMessage);
+          setStatus(prev => ({ 
+            ...prev, 
+            hasError: true, 
+            isChecking: false,
+            errorMessage: `Storage bucket "${bucketName}" not found or inaccessible. ${result.errorMessage}`
+          }));
+          return false;
+        } else {
+          // Bucket exists but we can't list files - likely a permissions issue
+          setStatus(prev => ({ 
+            ...prev, 
+            hasError: true, 
+            isChecking: false,
+            errorMessage: `Storage bucket "${bucketName}" exists but there may be permission issues. ${filesError.message}`
+          }));
+          return false;
+        }
       }
       
-      // If we get here, the bucket exists
+      // If we get here, we were able to list files in the bucket
+      console.log(`Successfully connected to bucket "${bucketName}". Files found:`, files?.length || 0);
       setStatus(prev => ({ ...prev, hasError: false, isChecking: false, errorMessage: undefined }));
       return true;
       
