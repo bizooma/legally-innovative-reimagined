@@ -6,9 +6,10 @@
 export * from './documents/uploadDocument';
 export * from './documents/fetchClientDocuments';
 export * from './documents/updateDocumentDescription';
-// Import deleteDocument from documents but rename it to avoid conflict with staffDocumentService
+// Import deleteDocument from documents but rename it to avoid conflict
 export { deleteDocument as deleteClientDocument } from './documents/deleteDocument';
 export * from './documents/types';
 export * from './documents/storageUtils';
-export * from './staffDocumentService';
 
+// Re-export all staff document functionality from the new module
+export * from './staff-documents';
