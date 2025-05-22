@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { useStorageBucketCheck } from "@/hooks/useStorageBucketCheck";
@@ -6,6 +5,7 @@ import { useFileDownload } from "@/hooks/useFileDownload";
 import { ResourceCard } from "./ResourceCard";
 import { ResourceErrorState } from "./ResourceErrorState";
 import { ResourceDownloadButton } from "./ResourceDownloadButton";
+import { Loader2 } from "lucide-react";
 
 interface DownloadableResourceProps {
   title: string;
