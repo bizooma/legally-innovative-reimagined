@@ -49,7 +49,8 @@ export function useDocumentQueries(staffId?: string) {
     data: documents = [], 
     isLoading, 
     error, 
-    refetch 
+    refetch,
+    isPending: isRefetching 
   } = useQuery({
     queryKey: ['staffDocuments', staffId],
     queryFn: async () => {
@@ -173,6 +174,7 @@ export function useDocumentQueries(staffId?: string) {
     refetchAssignments,
     refreshAllData,
     bucketExists,
-    bucketChecked
+    bucketChecked,
+    isRefetching
   };
 }
