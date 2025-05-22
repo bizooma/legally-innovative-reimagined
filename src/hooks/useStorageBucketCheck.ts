@@ -23,24 +23,24 @@ export const useStorageBucketCheck = (bucketName: string) => {
     try {
       console.log(`Checking if bucket "${bucketName}" exists...`);
       
-      // First try to list files in the bucket - this is a more reliable way to check if
-      // the bucket is accessible rather than just checking if it exists
+      // First try to list files in the bucket - this is a more reliable way to check
       const { data: files, error: filesError } = await supabase.storage
         .from(bucketName)
         .list();
         
       if (filesError) {
         console.error("Error listing files in bucket:", filesError);
-        // Check if the bucket actually exists using the utility
-        const result = await checkBucketExists(bucketName);
         
-        if (!result.success) {
-          console.error("Error checking bucket:", result.errorMessage);
+        // If we can't list files, try a direct bucket existence check
+        const { data: buckets } = await supabase.storage.listBuckets();
+        const bucketExists = buckets?.some(b => b.name === bucketName);
+        
+        if (!bucketExists) {
           setStatus(prev => ({ 
             ...prev, 
             hasError: true, 
             isChecking: false,
-            errorMessage: `The storage bucket "${bucketName}" exists but no files have been uploaded yet.`
+            errorMessage: `Storage bucket "${bucketName}" not found. Please check your configuration.`
           }));
           return false;
         } else {
@@ -57,6 +57,10 @@ export const useStorageBucketCheck = (bucketName: string) => {
       
       // If we get here, we were able to list files in the bucket
       console.log(`Successfully connected to bucket "${bucketName}". Files found:`, files?.length || 0);
+      if (files) {
+        console.log("Files in bucket:", files.map(f => f.name).join(", "));
+      }
+      
       setStatus(prev => ({ ...prev, hasError: false, isChecking: false, errorMessage: undefined }));
       return true;
       
@@ -74,14 +78,25 @@ export const useStorageBucketCheck = (bucketName: string) => {
 
   const checkFileExists = useCallback(async (fileName: string): Promise<boolean> => {
     try {
-      const result = await checkFileExistsUtil(bucketName, fileName);
+      console.log(`Checking if file "${fileName}" exists in bucket "${bucketName}"...`);
       
-      if (!result.success) {
-        console.error("Error checking file existence:", result.errorMessage);
+      const { data: files, error } = await supabase.storage
+        .from(bucketName)
+        .list();
+      
+      if (error) {
+        console.error("Error checking file existence:", error);
         return false;
       }
       
-      return true;
+      const fileExists = files?.some(f => f.name === fileName);
+      console.log(`File "${fileName}" ${fileExists ? "exists" : "does not exist"} in bucket "${bucketName}"`);
+      
+      if (files && files.length > 0) {
+        console.log("Available files:", files.map(f => f.name).join(", "));
+      }
+      
+      return !!fileExists;
     } catch (err) {
       console.error("Error checking file existence:", err);
       return false;

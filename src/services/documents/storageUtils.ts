@@ -39,13 +39,6 @@ export async function checkBucketExists(bucketName: string): Promise<StorageOper
  * @returns A promise resolving to a StorageOperationResult with success status
  */
 export async function checkFileExists(bucketName: string, filePath: string): Promise<StorageOperationResult> {
-  // First ensure the bucket exists
-  const bucketResult = await checkBucketExists(bucketName);
-  if (!bucketResult.success) {
-    return bucketResult;
-  }
-  
-  // Now check if file exists in the bucket
   return await handleStorageOperation(
     async () => {
       // Get the directory path and filename
@@ -62,6 +55,9 @@ export async function checkFileExists(bucketName: string, filePath: string): Pro
       if (!data || !Array.isArray(data)) {
         throw new Error("Invalid response when listing files");
       }
+      
+      console.log(`Checking for file "${fileName}" in bucket "${bucketName}", found files:`, 
+        data.map(f => f.name).join(", "));
       
       // Check if the file exists in the directory
       const fileExists = data.some(item => item.name === fileName);
@@ -84,13 +80,6 @@ export async function checkFileExists(bucketName: string, filePath: string): Pro
  * @returns A promise resolving to a StorageOperationResult with success status and public URL
  */
 export async function getPublicFileUrl(bucketName: string, filePath: string): Promise<StorageOperationResult> {
-  // First check if the file exists
-  const fileResult = await checkFileExists(bucketName, filePath);
-  if (!fileResult.success) {
-    return fileResult;
-  }
-  
-  // Get the public URL
   return await handleStorageOperation(
     async () => {
       // Use the correct method to get the URL
