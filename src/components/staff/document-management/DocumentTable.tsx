@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { FileText, Users, X } from 'lucide-react';
+import { FileText, Users, X, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { StaffDocumentWithUrl } from '@/services/staff-documents/types';
@@ -11,13 +11,15 @@ interface DocumentTableProps {
   assignedStaff: Record<string, any[]>;
   onAssign: (documentId: string) => void;
   onDelete: (documentId: string) => void;
+  isLoadingAssignments?: boolean;
 }
 
 const DocumentTable: React.FC<DocumentTableProps> = ({
   documents,
   assignedStaff,
   onAssign,
-  onDelete
+  onDelete,
+  isLoadingAssignments = false
 }) => {
   return (
     <Table>
@@ -47,7 +49,12 @@ const DocumentTable: React.FC<DocumentTableProps> = ({
             <TableCell>{doc.description || '-'}</TableCell>
             <TableCell>{doc.file_size}</TableCell>
             <TableCell>
-              {assignedStaff[doc.id]?.length ? (
+              {isLoadingAssignments ? (
+                <div className="flex items-center">
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <span className="text-xs">Loading...</span>
+                </div>
+              ) : assignedStaff[doc.id]?.length ? (
                 <div className="flex flex-wrap gap-1">
                   {assignedStaff[doc.id].slice(0, 2).map((staff: any) => (
                     <Badge key={staff.id} variant="secondary">

@@ -2,7 +2,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { 
   fetchAllDocuments,
-  getStaffDocumentAssignments
+  getStaffDocumentAssignments,
+  getDocumentAssignments
 } from '@/services/staff-documents';
 import { getStaffDocuments } from '@/services/staff-documents/utils';
 import { ensureStorageBucket } from '@/services/staff-documents/storage';
@@ -48,6 +49,8 @@ export function useDocumentQueries(staffId?: string) {
   // Fetch document assignments
   const { 
     data: documentAssignments = {},
+    isLoading: isLoadingAssignments,
+    error: assignmentError,
     refetch: refetchAssignments
   } = useQuery({
     queryKey: ['documentAssignments', documents],
@@ -56,21 +59,29 @@ export function useDocumentQueries(staffId?: string) {
       
       console.log('Fetching assignments for documents:', documents.map(d => d.id));
       const assignments: Record<string, any[]> = {};
+      
+      // Fetch assignments for each document
       for (const doc of documents) {
-        assignments[doc.id] = await getStaffDocumentAssignments(doc.id);
+        console.log(`Fetching assignments for document: ${doc.id} - ${doc.name}`);
+        assignments[doc.id] = await getDocumentAssignments(doc.id);
+        console.log(`Document ${doc.id} has ${assignments[doc.id].length} assignments`);
       }
       
       console.log('Document assignments retrieved:', assignments);
       return assignments;
     },
-    enabled: documents.length > 0 && !staffId,
+    enabled: documents.length > 0,
+    staleTime: 1000 * 30, // 30 seconds for assignments to improve refresh rate
+    refetchOnWindowFocus: true,
   });
 
   return {
     documents,
     documentAssignments,
     isLoading,
+    isLoadingAssignments,
     error,
+    assignmentError,
     refetch,
     refetchAssignments
   };

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Upload } from 'lucide-react';
+import { Upload, RefreshCw } from 'lucide-react';
 import { useStaffDocuments } from '@/hooks/staff-documents';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -14,6 +14,7 @@ import DocumentDeleteDialog from './DocumentDeleteDialog';
 import AssignDocumentDialog from './AssignDocumentDialog';
 import DocumentTable from './DocumentTable';
 import EmptyDocumentState from './EmptyDocumentState';
+import { toast } from '@/hooks/use-toast';
 
 const DocumentManagementContainer: React.FC = () => {
   // Get staff members for assignment
@@ -27,7 +28,7 @@ const DocumentManagementContainer: React.FC = () => {
           .order('full_name', { ascending: true });
         
         if (error) throw error;
-        console.log("Fetched staff members:", data);
+        console.log("Fetched staff members:", data?.length || 0);
         return data || [];
       } catch (error) {
         console.error('Error loading staff members:', error);
@@ -41,6 +42,7 @@ const DocumentManagementContainer: React.FC = () => {
     documents,
     documentAssignments,
     isLoading,
+    isLoadingAssignments,
     isUploadDialogOpen,
     setIsUploadDialogOpen,
     isAssignDialogOpen,
@@ -55,6 +57,8 @@ const DocumentManagementContainer: React.FC = () => {
     refetch,
     refetchAssignments
   } = useStaffDocuments();
+
+  const [refreshing, setRefreshing] = useState(false);
 
   // States for delete dialog
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -75,6 +79,28 @@ const DocumentManagementContainer: React.FC = () => {
     setDocumentToDelete(null);
   };
 
+  // Handle manual refresh of assignments
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refetch();
+      await refetchAssignments();
+      toast({
+        title: "Refreshed",
+        description: "Document assignments updated",
+      });
+    } catch (err) {
+      console.error("Error refreshing:", err);
+      toast({
+        title: "Error",
+        description: "Failed to refresh assignments",
+        variant: "destructive",
+      });
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   // Open assignment dialog with the current document
   const onAssignRequest = (documentId: string) => {
     const document = documents.find(doc => doc.id === documentId);
@@ -85,8 +111,8 @@ const DocumentManagementContainer: React.FC = () => {
       
       console.log('Opening assignment dialog with:', {
         documentId,
-        document,
-        assignedStaff: assignedStaff.length,
+        document: document.name,
+        assignedStaffCount: assignedStaff.length,
         currentAssignedIds
       });
       
@@ -100,7 +126,9 @@ const DocumentManagementContainer: React.FC = () => {
     
     console.log('Saving assignments:', {
       documentId: currentDocument.id,
+      documentName: currentDocument.name,
       selectedStaffIds,
+      selectedStaffCount: selectedStaffIds.length,
       currentAssignments: documentAssignments ? Object.keys(documentAssignments).length : 0
     });
     
@@ -110,12 +138,17 @@ const DocumentManagementContainer: React.FC = () => {
       // Close the dialog
       setIsAssignDialogOpen(false);
       
+      toast({
+        title: "Assignments saved",
+        description: `Document assigned to ${selectedStaffIds.length} staff members`
+      });
+      
       // Force refetch assignments after save with a delay to ensure DB is updated
       setTimeout(() => {
         console.log("Refreshing all data after save");
         refetch();
         refetchAssignments();
-      }, 2000);
+      }, 1500);
     }
   };
 
@@ -136,13 +169,23 @@ const DocumentManagementContainer: React.FC = () => {
           <CardTitle>Staff Documents</CardTitle>
           <CardDescription>Upload and assign documents to staff members</CardDescription>
         </div>
-        <Button 
-          className="flex items-center" 
-          onClick={() => setIsUploadDialogOpen(true)}
-        >
-          <Upload className="mr-2 h-4 w-4" />
-          Upload Document
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            variant="outline"
+            onClick={handleRefresh}
+            disabled={refreshing}
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+          <Button 
+            className="flex items-center" 
+            onClick={() => setIsUploadDialogOpen(true)}
+          >
+            <Upload className="mr-2 h-4 w-4" />
+            Upload Document
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -150,12 +193,18 @@ const DocumentManagementContainer: React.FC = () => {
         ) : documents.length === 0 ? (
           <EmptyDocumentState />
         ) : (
-          <DocumentTable 
-            documents={documents}
-            assignedStaff={documentAssignments}
-            onAssign={onAssignRequest}
-            onDelete={onDeleteRequest}
-          />
+          <>
+            <DocumentTable 
+              documents={documents}
+              assignedStaff={documentAssignments}
+              onAssign={onAssignRequest}
+              onDelete={onDeleteRequest}
+              isLoadingAssignments={isLoadingAssignments}
+            />
+            {isLoadingAssignments && (
+              <div className="mt-2 text-xs text-gray-500">Loading assignments...</div>
+            )}
+          </>
         )}
       </CardContent>
 

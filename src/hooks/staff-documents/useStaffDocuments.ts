@@ -10,7 +10,9 @@ export function useStaffDocuments(staffId?: string) {
     documents, 
     documentAssignments, 
     isLoading, 
+    isLoadingAssignments,
     error, 
+    assignmentError,
     refetch,
     refetchAssignments 
   } = useDocumentQueries(staffId);
@@ -31,7 +33,9 @@ export function useStaffDocuments(staffId?: string) {
     documents,
     documentAssignments,
     isLoading,
+    isLoadingAssignments,
     error,
+    assignmentError,
     refetch,
     refetchAssignments,
     
