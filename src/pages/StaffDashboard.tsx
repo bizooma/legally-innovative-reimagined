@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -161,7 +160,7 @@ const StaffDashboard = () => {
           {!isAdmin && currentStaffMember && (
             <div className="mb-8">
               <StaffDocuments staffMemberId={currentStaffMember.id} />
-              {console.log('Rendering StaffDocuments with ID:', currentStaffMember.id)}
+              {console.log('Rendering StaffDocuments with ID:', currentStaffMember.id) || null}
             </div>
           )}
           
