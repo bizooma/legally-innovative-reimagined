@@ -50,15 +50,39 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- ElevenLabs Convai Chat Widget (temporarily disabled) -->
-    <!-- <elevenlabs-convai agent-id="cylHD3Ay9g1H7eGVdSdj"></elevenlabs-convai> -->
-    <!-- <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script> -->
+    <!-- ElevenLabs Convai Chat Widget -->
+    <elevenlabs-convai agent-id="cylHD3Ay9g1H7eGVdSdj"></elevenlabs-convai>
+    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 
     <script>
       // Script to hide chatbots on the admin dashboard page (temporarily modified)
       (function() {
         function hideChatbotsIfAdminDashboard() {
-          // Function kept but chatbot elements are currently commented out
+          // Check if the current URL contains admin-dashboard
+          if (window.location.href.includes('admin-dashboard')) {
+            // Hide the ElevenLabs Convai widget if it exists
+            const convaiWidget = document.querySelector('elevenlabs-convai');
+            if (convaiWidget) {
+              convaiWidget.style.display = 'none';
+            }
+            
+            // Hide the Calendly widget if it exists
+            const calendlyWidget = document.querySelector('.calendly-badge-widget');
+            if (calendlyWidget) {
+              calendlyWidget.style.display = 'none';
+            }
+          } else {
+            // Show the widgets on non-admin pages
+            const convaiWidget = document.querySelector('elevenlabs-convai');
+            if (convaiWidget) {
+              convaiWidget.style.display = 'block';
+            }
+            
+            const calendlyWidget = document.querySelector('.calendly-badge-widget');
+            if (calendlyWidget) {
+              calendlyWidget.style.display = 'block';
+            }
+          }
         }
 
         // Run the function when the page loads
