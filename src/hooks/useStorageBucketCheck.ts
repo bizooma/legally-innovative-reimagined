@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { handleStorageOperation, isConnectionError, isNotFoundError } from "@/utils/storageErrorUtils";
+import { checkBucketExists } from "@/services/documentService";
 
 interface StorageBucketStatus {
   isChecking: boolean;
@@ -16,44 +17,23 @@ export const useStorageBucketCheck = (bucketName: string) => {
     isRetrying: false
   });
 
-  const checkBucketExists = async () => {
+  const checkBucketExistsInternal = async () => {
     try {
       console.log(`Checking if bucket "${bucketName}" exists...`);
       
-      const result = await handleStorageOperation(
-        async () => {
-          const { data, error } = await supabase.storage.listBuckets();
-          if (error) throw error;
-          return data || [];
-        },
-        false
-      );
+      // Use the checkBucketExists utility from documentService
+      const result = await checkBucketExists(bucketName);
       
       if (!result.success) {
-        console.error("Error checking buckets:", result.errorMessage);
+        console.error("Error checking bucket:", result.errorMessage);
         setStatus(prev => ({ ...prev, hasError: true, isChecking: false }));
         return false;
       }
       
-      const buckets = result.data;
+      // If we get here, the bucket exists
+      setStatus(prev => ({ ...prev, hasError: false, isChecking: false }));
+      return true;
       
-      if (!buckets || !Array.isArray(buckets) || buckets.length === 0) {
-        console.warn("No storage buckets found in Supabase");
-        setStatus(prev => ({ ...prev, hasError: true, isChecking: false }));
-        return false;
-      }
-      
-      console.log("Available buckets:", buckets.map(b => b.name));
-      
-      const bucketExists = buckets.some(b => b.name === bucketName);
-      if (!bucketExists) {
-        console.warn(`Bucket "${bucketName}" not found in list:`, buckets.map(b => b.name));
-        setStatus(prev => ({ ...prev, hasError: true, isChecking: false }));
-        return false;
-      } else {
-        setStatus(prev => ({ ...prev, hasError: false, isChecking: false }));
-        return true;
-      }
     } catch (err) {
       console.error("Failed to check bucket existence:", err);
       setStatus(prev => ({ ...prev, hasError: true, isChecking: false }));
@@ -67,7 +47,12 @@ export const useStorageBucketCheck = (bucketName: string) => {
         async () => {
           const { data, error } = await supabase.storage.from(bucketName).list();
           if (error) throw error;
-          return data || [];
+          
+          if (!data || !Array.isArray(data)) {
+            throw new Error("Invalid response format when listing files");
+          }
+          
+          return data;
         },
         false
       );
@@ -77,14 +62,10 @@ export const useStorageBucketCheck = (bucketName: string) => {
         return false;
       }
       
-      if (!Array.isArray(result.data)) {
-        console.error("Invalid response format when listing files");
-        return false;
-      }
+      const files = result.data;
+      console.log(`Files in bucket "${bucketName}":`, files.map(f => f.name));
       
-      console.log(`Files in bucket "${bucketName}":`, result.data.map(f => f.name));
-      
-      const fileExists = result.data.some(f => f.name === fileName);
+      const fileExists = files.some(f => f.name === fileName);
       if (!fileExists) {
         console.warn(`File "${fileName}" not found in bucket "${bucketName}"`);
         return false;
@@ -102,7 +83,7 @@ export const useStorageBucketCheck = (bucketName: string) => {
     setStatus(prev => ({ ...prev, isRetrying: true, hasError: false }));
     
     try {
-      const bucketExists = await checkBucketExists();
+      const bucketExists = await checkBucketExistsInternal();
       
       if (bucketExists && fileName) {
         await checkFileExists(fileName);
@@ -114,7 +95,7 @@ export const useStorageBucketCheck = (bucketName: string) => {
 
   // Initial check on mount
   useEffect(() => {
-    checkBucketExists();
+    checkBucketExistsInternal();
   }, [bucketName]);
 
   return {

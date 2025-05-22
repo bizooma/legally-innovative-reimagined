@@ -24,6 +24,7 @@ export const DownloadableResource = ({
   displayName,
   buttonText = "Download"
 }: DownloadableResourceProps) => {
+  const [fileNotFound, setFileNotFound] = useState(false);
   const { 
     hasError, 
     isRetrying, 
@@ -36,11 +37,14 @@ export const DownloadableResource = ({
   // Check file existence after bucket check completes
   useEffect(() => {
     if (!hasError) {
-      checkFileExists(fileName);
+      checkFileExists(fileName).then(exists => {
+        setFileNotFound(!exists);
+      });
     }
   }, [hasError, fileName]);
 
   const handleRetry = async () => {
+    setFileNotFound(false);
     retryBucketCheck(fileName);
     
     // Notify about retry attempt
@@ -59,10 +63,17 @@ export const DownloadableResource = ({
     }
   };
 
+  // Only show error state if there's a connection issue or the file wasn't found
+  const showErrorState = hasError || fileNotFound;
+
   return (
     <ResourceCard title={title} description={description}>
-      {hasError ? (
-        <ResourceErrorState isRetrying={isRetrying} onRetry={handleRetry} />
+      {showErrorState ? (
+        <ResourceErrorState 
+          isRetrying={isRetrying} 
+          onRetry={handleRetry}
+          errorMessage={fileNotFound ? `File not available` : "Storage connection issue detected"}
+        />
       ) : (
         <ResourceDownloadButton 
           isDownloading={isDownloading} 
