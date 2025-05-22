@@ -31,6 +31,7 @@ export const DownloadableResource = ({
   const { 
     hasError: bucketError, 
     isRetrying, 
+    errorMessage,
     retryBucketCheck, 
     checkFileExists 
   } = useStorageBucketCheck(bucketName);
@@ -116,8 +117,8 @@ export const DownloadableResource = ({
           onRetry={handleRetry}
           errorMessage={
             bucketError 
-              ? "Storage connection issue detected" 
-              : `File not available`
+              ? errorMessage || "Storage connection issue detected" 
+              : `File "${displayName || fileName}" not available`
           }
           errorType={bucketError ? "connection" : "not-found"}
         />

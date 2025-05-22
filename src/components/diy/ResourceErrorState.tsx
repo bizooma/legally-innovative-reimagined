@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { AlertCircle, RefreshCw, Loader2 } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 interface ResourceErrorStateProps {
   isRetrying: boolean;
@@ -17,10 +18,16 @@ export const ResourceErrorState = ({
 }: ResourceErrorStateProps) => {
   return (
     <div className="flex flex-col gap-3">
-      <div className={`text-sm flex items-center gap-1.5 ${errorType === "not-found" ? "text-amber-600" : "text-red-600"}`}>
+      <Alert variant={errorType === "not-found" ? "default" : "destructive"} className="py-2">
         <AlertCircle className="h-4 w-4" />
-        <span>{errorMessage}</span>
-      </div>
+        <AlertTitle className="text-sm font-medium">
+          {errorType === "not-found" ? "Resource unavailable" : "Storage connection error"}
+        </AlertTitle>
+        <AlertDescription className="text-xs mt-1">
+          {errorMessage}
+        </AlertDescription>
+      </Alert>
+      
       <Button
         variant="outline"
         className="flex items-center justify-center w-full sm:w-auto"

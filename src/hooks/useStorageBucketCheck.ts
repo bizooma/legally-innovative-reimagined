@@ -8,13 +8,15 @@ interface StorageBucketStatus {
   isChecking: boolean;
   hasError: boolean;
   isRetrying: boolean;
+  errorMessage?: string;
 }
 
 export const useStorageBucketCheck = (bucketName: string) => {
   const [status, setStatus] = useState<StorageBucketStatus>({
     isChecking: true,
     hasError: false,
-    isRetrying: false
+    isRetrying: false,
+    errorMessage: undefined
   });
 
   const checkBucketExistsInternal = async () => {
@@ -26,17 +28,27 @@ export const useStorageBucketCheck = (bucketName: string) => {
       
       if (!result.success) {
         console.error("Error checking bucket:", result.errorMessage);
-        setStatus(prev => ({ ...prev, hasError: true, isChecking: false }));
+        setStatus(prev => ({ 
+          ...prev, 
+          hasError: true, 
+          isChecking: false,
+          errorMessage: `Storage bucket "${bucketName}" not found. Please create it in your Supabase project.`
+        }));
         return false;
       }
       
       // If we get here, the bucket exists
-      setStatus(prev => ({ ...prev, hasError: false, isChecking: false }));
+      setStatus(prev => ({ ...prev, hasError: false, isChecking: false, errorMessage: undefined }));
       return true;
       
     } catch (err) {
       console.error("Failed to check bucket existence:", err);
-      setStatus(prev => ({ ...prev, hasError: true, isChecking: false }));
+      setStatus(prev => ({ 
+        ...prev, 
+        hasError: true, 
+        isChecking: false,
+        errorMessage: err instanceof Error ? err.message : "Unknown error checking bucket"
+      }));
       return false;
     }
   };
