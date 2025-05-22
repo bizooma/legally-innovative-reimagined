@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
@@ -12,7 +11,7 @@ import {
   assignDocumentToStaff,
   removeDocumentAssignment,
   getStaffDocuments
-} from '@/services/staffDocumentService';
+} from '@/services/documentService';
 
 export const useStaffDocuments = (staffId?: string) => {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);

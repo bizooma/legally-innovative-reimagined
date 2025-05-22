@@ -17,7 +17,7 @@ import {
   assignDocumentToStaff,
   getDocumentAssignments,
   removeDocumentAssignment
-} from '@/services/staffDocumentService';
+} from '@/services/documentService';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
