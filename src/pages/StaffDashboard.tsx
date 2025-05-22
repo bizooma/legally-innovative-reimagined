@@ -161,9 +161,13 @@ const StaffDashboard = () => {
           {!isAdmin && currentStaffMember && (
             <div className="mb-8">
               <StaffDocuments staffMemberId={currentStaffMember.id} />
-              {/* Fix for void expression cannot be tested for truthiness */}
+              {/* Fix for void expression TypeScript error */}
               <div className="hidden">
-                {console.log('Rendering StaffDocuments with ID:', currentStaffMember.id)}
+                {/* Using a self-executing function to handle the console.log properly */}
+                {(() => {
+                  console.log('Rendering StaffDocuments with ID:', currentStaffMember.id);
+                  return null;
+                })()}
               </div>
             </div>
           )}
