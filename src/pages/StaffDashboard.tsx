@@ -166,12 +166,6 @@ const StaffDashboard = () => {
           {!isAdmin && currentStaffMember && (
             <div className="mb-8">
               <StaffDocuments staffMemberId={currentStaffMember.id} />
-              <div className="hidden">
-                {(() => {
-                  console.log('Staff Member ID for StaffDocuments:', currentStaffMember.id);
-                  return null;
-                })()}
-              </div>
             </div>
           )}
           

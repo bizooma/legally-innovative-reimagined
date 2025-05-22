@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { FileText, Download, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { getStaffDocuments } from '@/services/staffDocumentService';
+import { getStaffDocuments } from '@/services/staff-documents'; // Updated import path
 import { StaffDocumentWithUrl } from '@/types/staffDocument';
 
 interface StaffDocumentsProps {
@@ -26,9 +26,17 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
       console.log('Loading documents for staff member ID:', staffMemberId);
       setIsLoading(true);
       try {
+        // Clear existing documents before loading new ones
+        setDocuments([]);
+        
         const docs = await getStaffDocuments(staffMemberId);
         console.log('Retrieved documents:', docs);
-        setDocuments(docs);
+        
+        if (docs && docs.length > 0) {
+          setDocuments(docs);
+        } else {
+          console.log('No documents found for this staff member');
+        }
       } catch (error) {
         console.error('Error loading staff documents:', error);
         toast({

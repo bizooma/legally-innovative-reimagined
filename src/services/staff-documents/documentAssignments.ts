@@ -85,6 +85,7 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
   try {
     console.log('Fetching documents for staff member:', staffId);
     
+    // Modified query to ensure we get document data correctly
     const { data, error } = await supabase
       .from('staff_document_assignments')
       .select(`
@@ -105,15 +106,14 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
       return [];
     }
 
-    // Extract the documents and properly cast the type
+    // Modified logic to properly extract documents
     const documents: StaffDocument[] = [];
     
-    for (const item of data) {
+    data.forEach(item => {
       if (item.staff_documents) {
-        // Type assertion to handle the Supabase response structure
         documents.push(item.staff_documents as unknown as StaffDocument);
       }
-    }
+    });
     
     console.log('Extracted documents:', documents);
 

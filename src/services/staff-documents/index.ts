@@ -14,3 +14,5 @@ export * from './documentAssignments';
 // Utility functions
 export * from './utils';
 
+// Types
+export * from './types';
