@@ -2,12 +2,15 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +39,16 @@ const Navbar = () => {
 
   const handlePortalClick = () => {
     navigate('/portal');
+  };
+
+  const handleNavLinkClick = (link: { name: string; href: string | null; path?: string; isExternal: boolean }) => {
+    if (link.path) {
+      navigate(link.path);
+    } else if (link.href && !isHomePage) {
+      // If we're not on the home page, navigate to the home page with hash
+      navigate(`/${link.href}`);
+    }
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -69,8 +82,14 @@ const Navbar = () => {
             ) : (
               <a
                 key={link.name}
-                href={link.href}
+                href={isHomePage ? link.href : `/${link.href}`}
                 className="text-legal-dark hover:text-legal-primary transition-colors font-medium"
+                onClick={(e) => {
+                  if (!isHomePage && link.href) {
+                    e.preventDefault();
+                    navigate(`/${link.href}`);
+                  }
+                }}
               >
                 {link.name}
               </a>
@@ -110,9 +129,17 @@ const Navbar = () => {
               ) : (
                 <a
                   key={link.name}
-                  href={link.href}
+                  href={isHomePage ? link.href : `/${link.href}`}
                   className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    if (!isHomePage && link.href) {
+                      e.preventDefault();
+                      navigate(`/${link.href}`);
+                      setMobileMenuOpen(false);
+                    } else {
+                      setMobileMenuOpen(false);
+                    }
+                  }}
                 >
                   {link.name}
                 </a>
