@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { AlertCircle, RefreshCw, Loader2 } from "lucide-react";
+import { AlertCircle, RefreshCw, Loader2, UploadCloud } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 interface ResourceErrorStateProps {
@@ -8,13 +8,15 @@ interface ResourceErrorStateProps {
   onRetry: () => void;
   errorMessage?: string;
   errorType?: "connection" | "not-found" | "generic";
+  fileName?: string;
 }
 
 export const ResourceErrorState = ({ 
   isRetrying, 
   onRetry, 
   errorMessage = "Storage connection issue detected",
-  errorType = "connection"
+  errorType = "connection",
+  fileName
 }: ResourceErrorStateProps) => {
   return (
     <div className="flex flex-col gap-3">
@@ -25,6 +27,11 @@ export const ResourceErrorState = ({
         </AlertTitle>
         <AlertDescription className="text-xs mt-1">
           {errorMessage}
+          {errorType === "not-found" && fileName && (
+            <div className="mt-1 text-xs text-gray-500">
+              File required: <code className="bg-gray-100 px-1 rounded">{fileName}</code>
+            </div>
+          )}
         </AlertDescription>
       </Alert>
       

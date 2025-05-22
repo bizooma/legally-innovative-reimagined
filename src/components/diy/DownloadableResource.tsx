@@ -118,9 +118,10 @@ export const DownloadableResource = ({
           errorMessage={
             bucketError 
               ? errorMessage || "Storage connection issue detected" 
-              : `File "${displayName || fileName}" not available`
+              : `File "${displayName || fileName}" not available in the storage bucket`
           }
           errorType={bucketError ? "connection" : "not-found"}
+          fileName={fileName}
         />
       ) : (
         <ResourceDownloadButton 

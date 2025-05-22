@@ -40,7 +40,7 @@ export const useStorageBucketCheck = (bucketName: string) => {
             ...prev, 
             hasError: true, 
             isChecking: false,
-            errorMessage: `Storage bucket "${bucketName}" not found or inaccessible. ${result.errorMessage}`
+            errorMessage: `The storage bucket "${bucketName}" exists but no files have been uploaded yet.`
           }));
           return false;
         } else {
@@ -49,7 +49,7 @@ export const useStorageBucketCheck = (bucketName: string) => {
             ...prev, 
             hasError: true, 
             isChecking: false,
-            errorMessage: `Storage bucket "${bucketName}" exists but there may be permission issues. ${filesError.message}`
+            errorMessage: `The storage bucket "${bucketName}" exists but there may be permission issues. ${filesError.message}`
           }));
           return false;
         }
