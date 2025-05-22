@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import StaffDirectory from '@/components/staff/StaffDirectory';
 import DocumentManagement from '@/components/staff/DocumentManagement';
-import StaffDocuments from '@/components/staff/StaffDocuments';
+import StaffDashboardHeader from '@/components/staff/StaffDashboardHeader';
+import DashboardCards from '@/components/staff/DashboardCards';
+import StaffDocumentsSection from '@/components/staff/StaffDocumentsSection';
+import StaffDashboardLoading from '@/components/staff/StaffDashboardLoading';
 
 const StaffDashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -125,17 +126,7 @@ const StaffDashboard = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow flex items-center justify-center">
-          <div className="text-center">
-            <p className="text-xl">Loading dashboard...</p>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+    return <StaffDashboardLoading />;
   }
 
   return (
@@ -143,63 +134,12 @@ const StaffDashboard = () => {
       <Navbar />
       <main className="flex-grow bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold font-playfair">
-              Staff <span className="text-legal-accent">Dashboard</span>
-            </h1>
-            <Button onClick={handleLogout} variant="outline">
-              Log Out
-            </Button>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Documents</CardTitle>
-                <CardDescription>Access company documents and forms</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">Access internal documents, policies, and procedures.</p>
-                <Button variant="outline" className="w-full" disabled={loading}>
-                  View Documents
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Announcements</CardTitle>
-                <CardDescription>Latest company news and updates</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">Stay updated with the latest company news and announcements.</p>
-                <Button variant="outline" className="w-full" disabled>Read Updates</Button>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Welcome, {user?.email}</CardTitle>
-                <CardDescription>Your staff portal dashboard</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  This is your personalized staff dashboard. Here you can access important
-                  company resources, view announcements, and connect with team members.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+          <StaffDashboardHeader handleLogout={handleLogout} />
+          <DashboardCards loading={loading} userEmail={user?.email} />
           
           {/* Staff Documents Section */}
           {!isAdmin && currentStaffMember && (
-            <div className="mb-8">
-              <h2 className="text-xl font-bold mb-4">My Documents</h2>
-              <StaffDocuments staffMemberId={currentStaffMember.id} />
-              <div className="mt-2 text-xs text-gray-500">
-                Staff ID: {currentStaffMember.id}
-              </div>
-            </div>
+            <StaffDocumentsSection currentStaffMember={currentStaffMember} />
           )}
           
           {/* Admin Only: Document Management Section */}
