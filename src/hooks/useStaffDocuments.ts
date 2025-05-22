@@ -1,8 +1,7 @@
+
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
-import { StaffDocumentWithUrl } from '@/types/staffDocument';
-import { StaffMember } from '@/hooks/useStaffMembers';
 import { 
   fetchAllDocuments, 
   getDocumentAssignments,
@@ -11,7 +10,9 @@ import {
   assignDocumentToStaff,
   removeDocumentAssignment,
   getStaffDocuments
-} from '@/services/staffDocumentService';
+} from '@/services/staff-documents';
+import { StaffDocumentWithUrl } from '@/services/staff-documents/types';
+import { StaffMember } from '@/hooks/useStaffMembers';
 
 export const useStaffDocuments = (staffId?: string) => {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);

@@ -5,8 +5,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { FileText, Download, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { getStaffDocuments } from '@/services/staff-documents'; // Updated import path
-import { StaffDocumentWithUrl } from '@/types/staffDocument';
+import { getStaffDocuments } from '@/services/staff-documents';
+import { StaffDocumentWithUrl } from '@/services/staff-documents/types';
 
 interface StaffDocumentsProps {
   staffMemberId: string;
