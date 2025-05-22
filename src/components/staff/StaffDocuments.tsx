@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { FileText, Download, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { getStaffDocuments } from '@/services/documentService';
+import { getStaffDocuments } from '@/services/staffDocumentService';
 import { StaffDocumentWithUrl } from '@/types/staffDocument';
 
 interface StaffDocumentsProps {

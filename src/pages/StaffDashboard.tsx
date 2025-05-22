@@ -55,7 +55,10 @@ const StaffDashboard = () => {
           .single();
           
         if (!staffError && staffData) {
+          console.log('Found staff member data:', staffData);
           setCurrentStaffMember(staffData);
+        } else {
+          console.error('Error fetching staff data:', staffError);
         }
       }
       
@@ -158,6 +161,7 @@ const StaffDashboard = () => {
           {!isAdmin && currentStaffMember && (
             <div className="mb-8">
               <StaffDocuments staffMemberId={currentStaffMember.id} />
+              {console.log('Rendering StaffDocuments with ID:', currentStaffMember.id)}
             </div>
           )}
           

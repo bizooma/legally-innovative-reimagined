@@ -11,7 +11,7 @@ import {
   assignDocumentToStaff,
   removeDocumentAssignment,
   getStaffDocuments
-} from '@/services/documentService';
+} from '@/services/staffDocumentService';
 
 export const useStaffDocuments = (staffId?: string) => {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);

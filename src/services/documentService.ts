@@ -12,4 +12,4 @@ export * from './documents/types';
 export * from './documents/storageUtils';
 
 // Re-export all staff document functionality from the new module
-export * from './staff-documents';
+export * from './staffDocumentService';

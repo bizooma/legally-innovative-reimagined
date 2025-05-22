@@ -46,12 +46,8 @@ export const getDocumentAssignments = async (documentId: string): Promise<StaffM
 
     if (error) throw error;
 
-    // Extract the staff members from the data and ensure proper typing
-    return data?.map(item => {
-      // The item.staff_members is actually an object, not an array
-      // Convert it explicitly to the StaffMember type
-      return item.staff_members as unknown as StaffMember;
-    }) || [];
+    // Extract the staff members from the data
+    return data?.map(item => item.staff_members as StaffMember) || [];
   } catch (error) {
     console.error('Get document assignments error:', error);
     return [];
@@ -84,6 +80,8 @@ export const removeDocumentAssignment = async (
  */
 export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentWithUrl[]> => {
   try {
+    console.log('Fetching documents for staff member:', staffId);
+    
     const { data, error } = await supabase
       .from('staff_document_assignments')
       .select(`
@@ -92,26 +90,32 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
       `)
       .eq('staff_id', staffId);
 
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase query error:', error);
+      throw error;
+    }
+    
+    console.log('Raw assignment data:', data);
 
-    // Extract the documents and ensure proper typing
+    // Extract the documents
     const documents = data?.map(item => {
-      // The item.staff_documents is an object, not an array
-      // Convert it explicitly to the StaffDocument type
-      return item.staff_documents as unknown as StaffDocument;
+      return item.staff_documents as StaffDocument;
     }) || [];
+    
+    console.log('Extracted documents:', documents);
 
     // Get signed URLs for each document
     const documentsWithUrls = await Promise.all(
       documents.map(async (doc) => {
         const url = await createSignedUrl(doc.file_path);
-        
         return {
           ...doc,
           url
         };
       })
     );
+    
+    console.log('Documents with URLs:', documentsWithUrls);
 
     return documentsWithUrls;
   } catch (error) {
@@ -119,4 +123,3 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
     return [];
   }
 };
-
