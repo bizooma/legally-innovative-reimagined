@@ -8,10 +8,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import StaffDirectory from '@/components/staff/StaffDirectory';
+import DocumentManagement from '@/components/staff/DocumentManagement';
+import StaffDocuments from '@/components/staff/StaffDocuments';
 
 const StaffDashboard = () => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [currentStaffMember, setCurrentStaffMember] = useState<any>(null);
   const navigate = useNavigate();
 
   // Check if user is authenticated
@@ -30,6 +34,31 @@ const StaffDashboard = () => {
       }
       
       setUser(session.user);
+      
+      // Get user profile to determine if admin
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('is_admin')
+        .eq('id', session.user.id)
+        .single();
+        
+      if (!userError && userData) {
+        setIsAdmin(userData.is_admin);
+      }
+      
+      // Get staff member data for the current user
+      if (!userData?.is_admin) {
+        const { data: staffData, error: staffError } = await supabase
+          .from('staff_members')
+          .select('*')
+          .eq('user_id', session.user.id)
+          .single();
+          
+        if (!staffError && staffData) {
+          setCurrentStaffMember(staffData);
+        }
+      }
+      
       setLoading(false);
     };
     
@@ -94,7 +123,9 @@ const StaffDashboard = () => {
               </CardHeader>
               <CardContent>
                 <p className="mb-4">Access internal documents, policies, and procedures.</p>
-                <Button variant="outline" className="w-full" disabled>View Documents</Button>
+                <Button variant="outline" className="w-full" disabled={loading}>
+                  View Documents
+                </Button>
               </CardContent>
             </Card>
             
@@ -122,6 +153,20 @@ const StaffDashboard = () => {
               </CardContent>
             </Card>
           </div>
+          
+          {/* Staff Documents Section */}
+          {!isAdmin && currentStaffMember && (
+            <div className="mb-8">
+              <StaffDocuments staffMemberId={currentStaffMember.id} />
+            </div>
+          )}
+          
+          {/* Admin Only: Document Management Section */}
+          {isAdmin && (
+            <div className="mb-8">
+              <DocumentManagement />
+            </div>
+          )}
           
           <div className="mb-8">
             <StaffDirectory />

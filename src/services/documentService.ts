@@ -9,3 +9,4 @@ export * from './documents/updateDocumentDescription';
 export * from './documents/deleteDocument';
 export * from './documents/types';
 export * from './documents/storageUtils';
+export * from './staffDocumentService';

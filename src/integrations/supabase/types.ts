@@ -101,6 +101,75 @@ export type Database = {
           },
         ]
       }
+      staff_document_assignments: {
+        Row: {
+          assigned_at: string
+          document_id: string
+          id: string
+          staff_id: string
+        }
+        Insert: {
+          assigned_at?: string
+          document_id: string
+          id?: string
+          staff_id: string
+        }
+        Update: {
+          assigned_at?: string
+          document_id?: string
+          id?: string
+          staff_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_document_assignments_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "staff_documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_document_assignments_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "staff_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      staff_documents: {
+        Row: {
+          created_at: string
+          description: string | null
+          file_path: string
+          file_size: string
+          file_type: string
+          id: string
+          name: string
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          file_path: string
+          file_size: string
+          file_type: string
+          id?: string
+          name: string
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          file_path?: string
+          file_size?: string
+          file_type?: string
+          id?: string
+          name?: string
+          uploaded_by?: string
+        }
+        Relationships: []
+      }
       staff_members: {
         Row: {
           created_at: string
