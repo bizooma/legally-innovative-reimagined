@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import { Phone } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -13,6 +14,10 @@ const Hero = () => {
             <p className="text-lg md:text-xl mb-8 text-gray-700 max-w-xl">
               At Legally Innovative, we are passionate about helping law firms thrive in the digital age. As a full-service marketing and AI automations provider, we understand the unique challenges that law firms face in generating, nurturing, and converting leads.
             </p>
+            <div className="flex items-center mb-6 text-legal-primary">
+              <Phone size={20} className="mr-2" />
+              <a href="tel:8453779730" className="text-lg hover:underline">845-377-9730</a>
+            </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg"
