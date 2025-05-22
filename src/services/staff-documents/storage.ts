@@ -1,6 +1,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { STORAGE_BUCKET } from './utils';
+import { toast } from '@/hooks/use-toast';
 
 /**
  * Check if a storage bucket exists and create it if it doesn't
@@ -26,31 +27,21 @@ export async function ensureStorageBucket(): Promise<boolean> {
       return true;
     }
     
-    console.log(`Storage bucket '${STORAGE_BUCKET}' not found, creating it...`);
+    // If we're here, the bucket doesn't exist
+    console.log(`Storage bucket '${STORAGE_BUCKET}' not found.`);
     
-    // Create bucket if it doesn't exist
-    try {
-      const { data, error } = await supabase
-        .storage
-        .createBucket(STORAGE_BUCKET, {
-          public: false,
-          fileSizeLimit: 52428800, // 50MB
-        });
-      
-      if (error) {
-        console.error('Error creating storage bucket:', error);
-        return false;
-      }
-      
-      console.log(`Storage bucket '${STORAGE_BUCKET}' created successfully`);
-      return true;
-    } catch (createError) {
-      console.error('Error creating storage bucket:', createError);
-      // If bucket creation fails due to permissions, assume it exists
-      // This is common for staff members without admin privileges
-      console.log('Assuming bucket already exists but user lacks creation permissions');
-      return true; // Return true to allow the application to continue
-    }
+    // Instead of trying to create the bucket automatically (which might fail due to RLS),
+    // we'll assume it needs to be created by an admin and just return false
+    
+    // Display a toast notification about the missing bucket for better user feedback
+    toast({
+      title: "Storage configuration issue",
+      description: "Please contact an administrator to set up document storage.",
+      variant: "destructive",
+    });
+    
+    // Return false to indicate that the bucket doesn't exist or we can't access it
+    return false;
   } catch (error) {
     console.error('Error in ensureStorageBucket:', error);
     return false;

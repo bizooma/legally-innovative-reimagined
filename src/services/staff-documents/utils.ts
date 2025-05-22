@@ -18,6 +18,7 @@ export const formatFileSize = (bytes: number): string => {
 
 /**
  * Create a signed URL for a file path
+ * If bucket doesn't exist or user lacks access, returns an empty string
  */
 export const createSignedUrl = async (filePath: string): Promise<string> => {
   try {
@@ -28,7 +29,8 @@ export const createSignedUrl = async (filePath: string): Promise<string> => {
 
     if (error) {
       console.error('Error creating signed URL:', error);
-      throw error;
+      // Don't throw the error, just return empty string
+      return '';
     }
     
     if (!data?.signedUrl) {
@@ -77,13 +79,13 @@ export const checkAssignmentExists = async (documentId: string, staffId: string)
 export async function getStaffDocuments(staffMemberId: string): Promise<StaffDocumentWithUrl[]> {
   try {
     if (!staffMemberId) {
-      console.error('No staff member ID provided');
+      console.error('No staff member ID provided to getStaffDocuments');
       throw new Error('No staff member ID provided');
     }
 
-    console.log(`[DEBUG] Fetching documents for staff ID: ${staffMemberId}`);
+    console.log(`[DOCUMENT-DEBUG] Fetching documents for staff ID: ${staffMemberId}`);
 
-    // First get document IDs assigned to the staff member
+    // IMPORTANT: First get document IDs assigned to the staff member
     const { data: assignments, error: assignmentError } = await supabase
       .from('staff_document_assignments')
       .select('document_id')
@@ -96,15 +98,17 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
 
     // If no assignments, return empty array
     if (!assignments || assignments.length === 0) {
-      console.log(`[DEBUG] No documents assigned to staff ID: ${staffMemberId}`);
+      console.log(`[DOCUMENT-DEBUG] No documents assigned to staff ID: ${staffMemberId}`);
       return [];
     }
 
-    console.log(`[DEBUG] Found ${assignments.length} document assignments for staff ID: ${staffMemberId}`);
-    console.log('[DEBUG] Assignment IDs:', assignments.map(a => a.document_id));
+    // Log all assignments for debugging
+    console.log(`[DOCUMENT-DEBUG] Found ${assignments.length} document assignments for staff ${staffMemberId}`);
+    console.log('[DOCUMENT-DEBUG] Assignment document IDs:', assignments.map(a => a.document_id));
     
     // Get document details for each assignment
     const documentIds = assignments.map(assignment => assignment.document_id);
+    
     const { data: documents, error: documentError } = await supabase
       .from('staff_documents')
       .select('*')
@@ -115,27 +119,31 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       throw documentError;
     }
 
-    console.log(`[DEBUG] Retrieved ${documents?.length || 0} documents for staff ID: ${staffMemberId}`);
+    console.log(`[DOCUMENT-DEBUG] Retrieved ${documents?.length || 0} documents for staff ID: ${staffMemberId}`);
     
     if (!documents || documents.length === 0) {
-      console.log('[DEBUG] No documents found despite having assignments');
+      console.log('[DOCUMENT-DEBUG] No documents found despite having assignments');
       return [];
     }
+    
+    // Log each document for debugging
+    documents.forEach(doc => {
+      console.log(`[DOCUMENT-DEBUG] Document found - ID: ${doc.id}, Name: ${doc.name}, Path: ${doc.file_path}`);
+    });
     
     // Get signed URLs for each document
     const documentsWithUrls = await Promise.all(
       documents.map(async (doc) => {
-        console.log(`[DEBUG] Processing document: ${doc.id} - ${doc.name}`);
         let url = '';
         try {
           url = await createSignedUrl(doc.file_path);
           if (!url) {
-            console.warn(`[DEBUG] Failed to create signed URL for document: ${doc.id} - ${doc.name}`);
+            console.warn(`[DOCUMENT-DEBUG] Failed to create signed URL for document: ${doc.id} - ${doc.name}`);
           } else {
-            console.log(`[DEBUG] Successfully created URL for document: ${doc.id}`);
+            console.log(`[DOCUMENT-DEBUG] Successfully created URL for document: ${doc.id}`);
           }
         } catch (urlError) {
-          console.error(`[DEBUG] Error creating URL for document ${doc.id}:`, urlError);
+          console.error(`[DOCUMENT-DEBUG] Error creating URL for document ${doc.id}:`, urlError);
         }
         
         return {
@@ -145,7 +153,7 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       })
     );
 
-    console.log(`[DEBUG] Returning ${documentsWithUrls.length} documents with URLs`);
+    console.log(`[DOCUMENT-DEBUG] Returning ${documentsWithUrls.length} documents with URLs`);
     return documentsWithUrls;
   } catch (error) {
     console.error('Error fetching staff documents:', error);

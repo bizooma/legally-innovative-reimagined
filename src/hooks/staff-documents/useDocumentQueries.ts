@@ -7,9 +7,13 @@ import {
 } from '@/services/staff-documents';
 import { getStaffDocuments } from '@/services/staff-documents/utils';
 import { ensureStorageBucket } from '@/services/staff-documents/storage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from '@/hooks/use-toast';
 
 export function useDocumentQueries(staffId?: string) {
+  // State to track if bucket exists
+  const [bucketExists, setBucketExists] = useState<boolean | null>(null);
+
   // Check storage bucket exists on first load
   useEffect(() => {
     const checkBucket = async () => {
@@ -17,11 +21,13 @@ export function useDocumentQueries(staffId?: string) {
         console.log("useDocumentQueries: Checking bucket existence");
         const exists = await ensureStorageBucket();
         console.log(`useDocumentQueries: Bucket exists: ${exists}`);
+        setBucketExists(exists);
         if (!exists) {
           console.error('Storage bucket does not exist or could not be created');
         }
       } catch (error) {
         console.error("Error checking bucket:", error);
+        setBucketExists(false);
       }
     };
     
@@ -41,6 +47,15 @@ export function useDocumentQueries(staffId?: string) {
       if (staffId) {
         console.log(`useDocumentQueries: Fetching for staff member: ${staffId}`);
         try {
+          // If bucket doesn't exist and we've checked, show warning
+          if (bucketExists === false) {
+            toast({
+              title: "Storage not configured",
+              description: "Document storage is not properly configured. Please contact an administrator.",
+              variant: "destructive", 
+            });
+          }
+          
           const docs = await getStaffDocuments(staffId);
           console.log(`useDocumentQueries: Retrieved ${docs.length} docs for staff ${staffId}`);
           return docs;
@@ -60,9 +75,11 @@ export function useDocumentQueries(staffId?: string) {
         }
       }
     },
-    staleTime: 1000 * 30, // 30 seconds
-    retry: 3, // Increase retry attempts
+    staleTime: 1000 * 10, // 10 seconds instead of 30 for more frequent updates
+    retry: 3,
     refetchOnWindowFocus: true,
+    // Only run the query if we've checked the bucket status or if we're in admin mode (no staffId)
+    enabled: bucketExists !== null || !staffId,
   });
   
   // Fetch document assignments
@@ -99,9 +116,23 @@ export function useDocumentQueries(staffId?: string) {
       return assignments;
     },
     enabled: documents.length > 0,
-    staleTime: 1000 * 30, // 30 seconds
+    staleTime: 1000 * 10, // 10 seconds
     refetchOnWindowFocus: true,
   });
+
+  // Function to force refresh all data
+  const refreshAllData = async () => {
+    try {
+      await refetch();
+      if (documents.length > 0) {
+        await refetchAssignments();
+      }
+      return true;
+    } catch (error) {
+      console.error("Error refreshing document data:", error);
+      return false;
+    }
+  };
 
   return {
     documents,
@@ -111,6 +142,8 @@ export function useDocumentQueries(staffId?: string) {
     error,
     assignmentError,
     refetch,
-    refetchAssignments
+    refetchAssignments,
+    refreshAllData,
+    bucketExists
   };
 }
