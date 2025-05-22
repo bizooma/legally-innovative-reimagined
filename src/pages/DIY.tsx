@@ -6,10 +6,54 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ExternalLink } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/components/ui/use-toast";
 
 const DIY = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isTaskBossOpen, setIsTaskBossOpen] = useState(false);
+
+  const downloadFile = async (bucketName: string, fileName: string, displayName: string) => {
+    try {
+      const { data, error } = await supabase.storage
+        .from(bucketName)
+        .download(fileName);
+      
+      if (error) {
+        toast({
+          title: "Download failed",
+          description: error.message,
+          variant: "destructive",
+        });
+        console.error("Error downloading file:", error);
+        return;
+      }
+      
+      if (data) {
+        // Create a URL for the file and trigger download
+        const url = URL.createObjectURL(data);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = displayName || fileName;
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        
+        toast({
+          title: "Download started",
+          description: `${displayName || fileName} is downloading.`,
+        });
+      }
+    } catch (error) {
+      console.error("Unexpected error downloading file:", error);
+      toast({
+        title: "Download failed",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -47,7 +91,12 @@ const DIY = () => {
                 <div className="bg-white rounded-lg shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
                   <h3 className="text-xl font-semibold mb-3">Law Firm Digital Marketing Checklist</h3>
                   <p className="text-gray-600 mb-4">Essential marketing considerations when promoting your law practice online.</p>
-                  <Button className="bg-legal-primary hover:bg-legal-secondary">Download Checklist</Button>
+                  <Button 
+                    className="bg-legal-primary hover:bg-legal-secondary"
+                    onClick={() => downloadFile("downloads", "digital-marketing-checklist.pdf", "Law Firm Digital Marketing Checklist.pdf")}
+                  >
+                    Download Checklist
+                  </Button>
                 </div>
                 
                 <div className="bg-white rounded-lg shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">

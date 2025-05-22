@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Document } from '@/types/document';
-import { Download, ExternalLink, Pencil, Trash2 } from 'lucide-react';
+import { Download, ExternalLink, Pencil, Trash2, FileText } from 'lucide-react';
 
 interface DocumentItemProps {
   doc: Document;
@@ -19,6 +19,14 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
   onDownload,
   onDelete
 }) => {
+  // Function to render the appropriate icon based on document type
+  const renderDocIcon = (type: string) => {
+    if (type === 'PDF') {
+      return <FileText className="h-5 w-5 text-red-700" />;
+    }
+    return null;
+  };
+  
   return (
     <div 
       key={doc.id}
@@ -31,7 +39,7 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
           doc.type === 'DOCX' || doc.type === 'DOC' ? 'bg-blue-100 text-blue-800' :
           'bg-gray-100 text-gray-800'
         }`}>
-          <span className="text-xs font-bold">{doc.type}</span>
+          {renderDocIcon(doc.type) || <span className="text-xs font-bold">{doc.type}</span>}
         </div>
         <div className="flex-1">
           <h3 className="font-medium">{doc.name}</h3>
