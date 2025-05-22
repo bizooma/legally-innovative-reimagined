@@ -63,6 +63,7 @@ export const checkAssignmentExists = async (documentId: string, staffId: string)
       throw error;
     }
 
+    console.log(`Assignment check result for document ${documentId} and staff ${staffId}:`, !!data);
     return !!data;
   } catch (error) {
     console.error('Error in checkAssignmentExists:', error);
@@ -80,7 +81,7 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       throw new Error('No staff member ID provided');
     }
 
-    console.log(`Fetching documents for staff ID: ${staffMemberId}`);
+    console.log(`[DEBUG] Fetching documents for staff ID: ${staffMemberId}`);
 
     // First get document IDs assigned to the staff member
     const { data: assignments, error: assignmentError } = await supabase
@@ -95,12 +96,12 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
 
     // If no assignments, return empty array
     if (!assignments || assignments.length === 0) {
-      console.log(`No documents assigned to staff ID: ${staffMemberId}`);
+      console.log(`[DEBUG] No documents assigned to staff ID: ${staffMemberId}`);
       return [];
     }
 
-    console.log(`Found ${assignments.length} document assignments for staff ID: ${staffMemberId}`);
-    console.log('Assignment IDs:', assignments.map(a => a.document_id));
+    console.log(`[DEBUG] Found ${assignments.length} document assignments for staff ID: ${staffMemberId}`);
+    console.log('[DEBUG] Assignment IDs:', assignments.map(a => a.document_id));
     
     // Get document details for each assignment
     const documentIds = assignments.map(assignment => assignment.document_id);
@@ -114,18 +115,23 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       throw documentError;
     }
 
-    console.log(`Retrieved ${documents?.length || 0} documents for staff ID: ${staffMemberId}`);
+    console.log(`[DEBUG] Retrieved ${documents?.length || 0} documents for staff ID: ${staffMemberId}`);
     
     if (!documents || documents.length === 0) {
-      console.log('No documents found despite having assignments');
+      console.log('[DEBUG] No documents found despite having assignments');
       return [];
     }
     
     // Get signed URLs for each document
     const documentsWithUrls = await Promise.all(
       documents.map(async (doc) => {
-        console.log(`Processing document: ${doc.id} - ${doc.name}`);
+        console.log(`[DEBUG] Processing document: ${doc.id} - ${doc.name}`);
         const url = await createSignedUrl(doc.file_path);
+        if (!url) {
+          console.warn(`[DEBUG] Failed to create signed URL for document: ${doc.id} - ${doc.name}`);
+        } else {
+          console.log(`[DEBUG] Successfully created URL for document: ${doc.id}`);
+        }
         return {
           ...doc,
           url
@@ -133,7 +139,7 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       })
     );
 
-    console.log(`Returning ${documentsWithUrls.length} documents with URLs`);
+    console.log(`[DEBUG] Returning ${documentsWithUrls.length} documents with URLs`);
     return documentsWithUrls;
   } catch (error) {
     console.error('Error fetching staff documents:', error);

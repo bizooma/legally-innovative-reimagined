@@ -18,7 +18,10 @@ interface StaffDocumentsProps {
 const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
   // Check if storage bucket exists
   useEffect(() => {
-    ensureStorageBucket();
+    ensureStorageBucket().catch(err => {
+      console.error('Error ensuring storage bucket exists:', err);
+      // Continue anyway as the bucket might already exist
+    });
   }, []);
 
   const { 
@@ -36,13 +39,18 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
         throw new Error('No staff member ID provided');
       }
       
-      const docs = await getStaffDocuments(staffMemberId);
-      console.log('Documents fetched in StaffDocuments component:', docs);
-      return docs;
+      try {
+        const docs = await getStaffDocuments(staffMemberId);
+        console.log('Documents fetched in StaffDocuments component:', docs);
+        return docs;
+      } catch (err) {
+        console.error('Error fetching staff documents in component:', err);
+        throw err;
+      }
     },
     enabled: !!staffMemberId,
-    retry: 1,
-    staleTime: 1000 * 30, // 30 seconds
+    retry: 2,
+    staleTime: 1000 * 10, // 10 seconds for more frequent updates
     refetchOnWindowFocus: true,
   });
 
