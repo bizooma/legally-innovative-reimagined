@@ -14,7 +14,7 @@ const Services = () => {
       title: "Mobile App Development",
       description: "Create powerful, user-friendly mobile applications for iOS and Android platforms that engage your customers and enhance your brand's digital presence.",
       icon: "📱",
-      bgImage: "https://images.unsplash.com/photo-1588702547919-26089e690ecc?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?q=80&w=1932&auto=format&fit=crop"
     },
     {
       title: "Website Development",
