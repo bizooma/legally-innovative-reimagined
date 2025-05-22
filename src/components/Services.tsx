@@ -56,7 +56,7 @@ const Services = () => {
       title: "Voice Experience",
       description: "Create custom voice applications for Amazon Alexa and Google Assistant that allow your law firm to engage with clients through natural language interactions and provide valuable information on demand.",
       icon: "🔊",
-      bgImage: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png"
     },
   ];
 
