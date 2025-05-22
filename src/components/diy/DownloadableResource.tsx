@@ -31,7 +31,7 @@ export const DownloadableResource = ({
     try {
       console.log(`Attempting to download ${fileName} from bucket ${bucketName}`);
       
-      // First check if the bucket exists
+      // First check if the bucket exists and is public
       const { data: buckets, error: bucketError } = await supabase.storage
         .listBuckets();
       
@@ -46,8 +46,8 @@ export const DownloadableResource = ({
         return;
       }
       
-      const bucketExists = buckets.some(b => b.name === bucketName);
-      if (!bucketExists) {
+      const bucket = buckets.find(b => b.name === bucketName);
+      if (!bucket) {
         console.error(`Bucket "${bucketName}" does not exist`);
         toast({
           title: "Download failed",
@@ -57,6 +57,8 @@ export const DownloadableResource = ({
         setIsDownloading(false);
         return;
       }
+      
+      console.log(`Bucket "${bucketName}" found, public: ${bucket.public}`);
       
       // List files in the bucket to check if the file exists
       const { data: files, error: listError } = await supabase.storage
