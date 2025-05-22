@@ -21,11 +21,22 @@ export const formatFileSize = (bytes: number): string => {
  */
 export const createSignedUrl = async (filePath: string): Promise<string> => {
   try {
+    console.log(`Creating signed URL for file: ${filePath}`);
     const { data, error } = await supabase.storage
       .from(STORAGE_BUCKET)
       .createSignedUrl(filePath, 60 * 60); // 1 hour expiry
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error creating signed URL:', error);
+      throw error;
+    }
+    
+    if (!data?.signedUrl) {
+      console.error('No signed URL returned', data);
+      return '';
+    }
+    
+    console.log(`Successfully created signed URL for: ${filePath}`);
     return data.signedUrl;
   } catch (error) {
     console.error('Error creating signed URL:', error);
@@ -89,6 +100,7 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
     }
 
     console.log(`Found ${assignments.length} document assignments for staff ID: ${staffMemberId}`);
+    console.log('Assignment IDs:', assignments.map(a => a.document_id));
     
     // Get document details for each assignment
     const documentIds = assignments.map(assignment => assignment.document_id);
@@ -104,9 +116,15 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
 
     console.log(`Retrieved ${documents?.length || 0} documents for staff ID: ${staffMemberId}`);
     
+    if (!documents || documents.length === 0) {
+      console.log('No documents found despite having assignments');
+      return [];
+    }
+    
     // Get signed URLs for each document
     const documentsWithUrls = await Promise.all(
-      (documents || []).map(async (doc) => {
+      documents.map(async (doc) => {
+        console.log(`Processing document: ${doc.id} - ${doc.name}`);
         const url = await createSignedUrl(doc.file_path);
         return {
           ...doc,
@@ -115,6 +133,7 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       })
     );
 
+    console.log(`Returning ${documentsWithUrls.length} documents with URLs`);
     return documentsWithUrls;
   } catch (error) {
     console.error('Error fetching staff documents:', error);

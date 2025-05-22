@@ -1,12 +1,13 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { FileText, Download, ExternalLink, AlertCircle } from 'lucide-react';
+import { FileText, Download, ExternalLink, AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { useQuery } from '@tanstack/react-query';
 import { getStaffDocuments } from '@/services/staff-documents/utils';
+import { ensureStorageBucket } from '@/services/staff-documents/storage';
 import { StaffDocumentWithUrl } from '@/types/staffDocument';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -15,11 +16,17 @@ interface StaffDocumentsProps {
 }
 
 const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
+  // Check if storage bucket exists
+  useEffect(() => {
+    ensureStorageBucket();
+  }, []);
+
   const { 
     data: documents = [], 
     isLoading, 
     error, 
-    refetch 
+    refetch,
+    isRefetching
   } = useQuery({
     queryKey: ['staffDocuments', staffMemberId],
     queryFn: async () => {
@@ -35,13 +42,17 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
     },
     enabled: !!staffMemberId,
     retry: 1,
+    staleTime: 1000 * 30, // 30 seconds
+    refetchOnWindowFocus: true,
   });
 
-  useEffect(() => {
-    if (staffMemberId) {
-      refetch();
-    }
-  }, [staffMemberId, refetch]);
+  const handleRefresh = () => {
+    refetch();
+    toast({
+      title: "Refreshing",
+      description: "Looking for new document assignments...",
+    });
+  };
 
   const handleDownload = (url: string, filename: string) => {
     try {
@@ -63,9 +74,20 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>My Documents</CardTitle>
-        <CardDescription>Documents assigned to you</CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
+          <CardTitle>My Documents</CardTitle>
+          <CardDescription>Documents assigned to you</CardDescription>
+        </div>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={handleRefresh}
+          disabled={isRefetching}
+        >
+          <RefreshCw className={`h-4 w-4 mr-2 ${isRefetching ? 'animate-spin' : ''}`} />
+          Refresh
+        </Button>
       </CardHeader>
       <CardContent>
         {error && (
@@ -113,7 +135,17 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => window.open(doc.url, '_blank')}
+                          onClick={() => {
+                            if (doc.url) {
+                              window.open(doc.url, '_blank');
+                            } else {
+                              toast({
+                                title: 'Error',
+                                description: 'Document URL not available',
+                                variant: 'destructive',
+                              });
+                            }
+                          }}
                           title="View Document"
                         >
                           <ExternalLink className="h-4 w-4" />
@@ -123,6 +155,7 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
                           size="icon"
                           onClick={() => handleDownload(doc.url, doc.name)}
                           title="Download Document"
+                          disabled={!doc.url}
                         >
                           <Download className="h-4 w-4" />
                         </Button>
