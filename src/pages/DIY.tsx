@@ -75,20 +75,6 @@ const DIY = () => {
 
   const resources = [
     {
-      title: "Law Firm Marketing NDA Template",
-      description: "A specialized non-disclosure agreement template for marketing agencies and law firms.",
-      bucketName: "downloads",
-      fileName: RESOURCE_FILES.MARKETING_NDA,
-      buttonText: "Download Template"
-    },
-    {
-      title: "Legal Marketing Service Agreement",
-      description: "Protect your marketing agency with our professional service agreement template for legal clients.",
-      bucketName: "downloads",
-      fileName: RESOURCE_FILES.SERVICE_AGREEMENT,
-      buttonText: "Download Template"
-    },
-    {
       title: "Law Firm Digital Marketing Checklist",
       description: "Essential marketing considerations when promoting your law practice online.",
       bucketName: "downloads",
