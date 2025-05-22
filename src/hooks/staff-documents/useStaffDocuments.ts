@@ -22,8 +22,8 @@ export function useStaffDocuments(staffId?: string) {
   const documentOperations = useDocumentOperations(refetch, refetchAssignments);
 
   // Handle document assignment with proper type handling
-  const handleAssignment = async (documentId: string, staffIds: string[]) => {
-    return documentOperations.handleAssignment(documentId, staffIds, documentAssignments);
+  const handleAssignment = async (documentId: string, staffIds: string[], currentAssignments: Record<string, any[]>) => {
+    return documentOperations.handleAssignment(documentId, staffIds, currentAssignments);
   };
   
   return {
@@ -33,6 +33,7 @@ export function useStaffDocuments(staffId?: string) {
     isLoading,
     error,
     refetch,
+    refetchAssignments,
     
     // Document state
     ...documentState,

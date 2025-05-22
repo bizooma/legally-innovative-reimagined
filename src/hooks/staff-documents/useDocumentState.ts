@@ -11,13 +11,12 @@ export function useDocumentState() {
   // Open assignment dialog with pre-selected staff
   const openAssignDialog = (
     document: StaffDocumentWithUrl,
-    currentAssignments: Record<string, any[]> = {}
+    currentAssignedIds: string[] = []
   ) => {
     setCurrentDocument(document);
     
     // Pre-select currently assigned staff
-    const assigned = currentAssignments[document.id] || [];
-    setSelectedStaffIds(assigned.map((staff: any) => staff.id));
+    setSelectedStaffIds(currentAssignedIds);
     
     setIsAssignDialogOpen(true);
   };

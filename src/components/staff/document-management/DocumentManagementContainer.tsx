@@ -52,6 +52,8 @@ const DocumentManagementContainer: React.FC = () => {
     handleUpload,
     handleDelete,
     handleAssignment,
+    refetch,
+    refetchAssignments
   } = useStaffDocuments();
 
   // States for delete dialog
@@ -77,7 +79,18 @@ const DocumentManagementContainer: React.FC = () => {
   const onAssignRequest = (documentId: string) => {
     const document = documents.find(doc => doc.id === documentId);
     if (document) {
-      openAssignDialog(document, documentAssignments);
+      // Get current assignments and pre-select them in the dialog
+      const assignedStaff = documentAssignments[documentId] || [];
+      const currentAssignedIds = assignedStaff.map(staff => staff.id);
+      
+      console.log('Opening assignment dialog with:', {
+        documentId,
+        document,
+        assignedStaff,
+        currentAssignedIds
+      });
+      
+      openAssignDialog(document, currentAssignedIds);
     }
   };
 
@@ -85,7 +98,15 @@ const DocumentManagementContainer: React.FC = () => {
   const saveAssignment = async () => {
     if (!currentDocument) return;
     
-    await handleAssignment(currentDocument.id, selectedStaffIds);
+    console.log('Saving assignments:', {
+      documentId: currentDocument.id,
+      selectedStaffIds
+    });
+    
+    await handleAssignment(currentDocument.id, selectedStaffIds, documentAssignments);
+    
+    // Force refetch assignments after save
+    refetchAssignments();
     setIsAssignDialogOpen(false);
   };
 

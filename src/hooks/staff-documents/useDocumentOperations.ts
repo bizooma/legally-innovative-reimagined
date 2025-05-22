@@ -63,26 +63,25 @@ export function useDocumentOperations(refetch: () => void, refetchAssignments?: 
       const currentlyAssigned = currentAssignments[documentId] || [];
       const currentIds = currentlyAssigned.map((staff: any) => staff.id);
       
-      // Find staff to add and remove
-      const toAdd = staffIds.filter(id => !currentIds.includes(id));
-      const toRemove = currentIds.filter(id => !staffIds.includes(id));
-      
       console.log('Document assignment changes:', {
         documentId,
-        toAdd,
-        toRemove,
+        staffIds,
         currentIds,
-        newIds: staffIds
+        currentlyAssigned
       });
       
-      // Add new assignments
-      if (toAdd.length > 0) {
-        await assignDocumentToStaff(documentId, toAdd);
+      // Clear all existing assignments first to avoid duplicate key errors
+      // This is a simple approach to ensure we don't have issues with duplicate assignments
+      for (const staffId of currentIds) {
+        await removeDocumentAssignment(documentId, staffId);
       }
       
-      // Remove old assignments
-      for (const staffId of toRemove) {
-        await removeDocumentAssignment(documentId, staffId);
+      // Add new assignments
+      if (staffIds.length > 0) {
+        const success = await assignDocumentToStaff(documentId, staffIds);
+        if (!success) {
+          throw new Error("Failed to assign document to staff members");
+        }
       }
       
       toast({
