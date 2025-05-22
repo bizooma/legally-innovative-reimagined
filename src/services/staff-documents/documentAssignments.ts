@@ -99,22 +99,17 @@ export const getStaffDocuments = async (staffId: string): Promise<StaffDocumentW
       throw assignmentError;
     }
     
-    console.log('Raw assignment data:', JSON.stringify(assignments, null, 2));
+    console.log('Raw assignment data:', assignments);
 
     if (!assignments || assignments.length === 0) {
       console.log('No document assignments found for this staff member');
       return [];
     }
 
-    // Extract documents from the assignments
-    const documents: StaffDocument[] = [];
-    
-    for (const item of assignments) {
-      if (item.staff_documents) {
-        // Ensure proper type extraction
-        documents.push(item.staff_documents as unknown as StaffDocument);
-      }
-    }
+    // Extract documents from the assignments and ensure we handle the array of objects properly
+    const documents: StaffDocument[] = assignments
+      .filter(item => item.staff_documents !== null)
+      .map(item => item.staff_documents as unknown as StaffDocument);
     
     console.log('Extracted documents:', documents);
 

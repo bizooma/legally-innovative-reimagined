@@ -52,14 +52,15 @@ const StaffDashboard = () => {
         setIsAdmin(userData.is_admin);
       }
       
-      // If not admin, get staff member details
+      // If not admin, find staff member by email instead of user_id
+      // since the data shows staff members without user_id associations
       if (!userData?.is_admin) {
-        console.log('User is not admin, finding staff profile');
+        console.log('User is not admin, finding staff profile by email');
         const { data: staffData, error: staffError } = await supabase
           .from('staff_members')
           .select('*')
-          .eq('user_id', session.user.id)
-          .single();
+          .eq('email', session.user.email)
+          .maybeSingle(); // Use maybeSingle instead of single to avoid errors
           
         if (staffError) {
           console.error('Error fetching staff data:', staffError);
@@ -69,10 +70,29 @@ const StaffDashboard = () => {
             variant: "destructive",
           });
         } else if (staffData) {
-          console.log('Found staff member data:', staffData);
+          console.log('Found staff member data by email:', staffData);
           setCurrentStaffMember(staffData);
         } else {
-          console.log('No staff profile found for user');
+          console.log('No staff profile found for user email');
+          
+          // Fall back to trying user_id if email doesn't match
+          const { data: staffDataById, error: staffErrorById } = await supabase
+            .from('staff_members')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .maybeSingle();
+            
+          if (!staffErrorById && staffDataById) {
+            console.log('Found staff member data by user_id:', staffDataById);
+            setCurrentStaffMember(staffDataById);
+          } else {
+            console.log('No staff profile found for this user');
+            toast({
+              title: "Staff Profile Missing",
+              description: "You're logged in but don't have a staff profile. Please contact an administrator.",
+              variant: "destructive",
+            });
+          }
         }
       }
       

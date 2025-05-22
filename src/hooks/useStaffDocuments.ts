@@ -29,6 +29,7 @@ export const useStaffDocuments = (staffId?: string) => {
   } = useQuery({
     queryKey: ['staffDocuments', staffId],
     queryFn: async () => {
+      console.log('Fetching staff documents with staffId:', staffId);
       if (staffId) {
         return await getStaffDocuments(staffId);
       } else {
