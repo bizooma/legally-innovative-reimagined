@@ -12,7 +12,7 @@ import { STORAGE_BUCKET } from './fileUtils';
  */
 export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDocumentWithUrl[]> {
   try {
-    console.log(`[DOCUMENT-DEBUG] Fetching all staff documents (visible to all)`);
+    console.log(`[DOCUMENT-DEBUG] Fetching all staff documents`);
 
     // Fetch all documents directly, ignoring assignments
     const { data: documents, error: documentError } = await supabase
@@ -40,7 +40,7 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
     const { data: bucketCheck, error: bucketError } = await supabase
       .storage
       .from(STORAGE_BUCKET)
-      .list('', { limit: 1 }); // Just try to list one file to check access
+      .list('', { limit: 1 }); 
       
     const canAccessBucket = !bucketError;
     
@@ -54,6 +54,18 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
       });
     } else {
       console.log('[DOCUMENT-DEBUG] Successfully accessed storage bucket');
+      // Try to check an actual file to verify access
+      if (documents[0]?.file_path) {
+        const testPath = documents[0].file_path;
+        console.log(`[DOCUMENT-DEBUG] Testing file existence for: ${testPath}`);
+        
+        const { data: fileExists } = await supabase
+          .storage
+          .from(STORAGE_BUCKET)
+          .getPublicUrl(testPath);
+          
+        console.log('[DOCUMENT-DEBUG] Public URL test result:', fileExists ? 'Success' : 'Failed');
+      }
     }
     
     // Get signed URLs for each document if we have bucket access
@@ -61,11 +73,23 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
       documents.map(async (doc) => {
         let url = '';
         
-        if (canAccessBucket) {
+        if (canAccessBucket && doc.file_path) {
           try {
-            url = await createSignedUrl(doc.file_path);
+            // Try using public URL first (since our bucket is public)
+            const { data: publicUrlData } = supabase
+              .storage
+              .from(STORAGE_BUCKET)
+              .getPublicUrl(doc.file_path);
+              
+            url = publicUrlData?.publicUrl || '';
+            
+            // If public URL fails, try signed URL as fallback
             if (!url) {
-              console.warn(`[DOCUMENT-DEBUG] Failed to create signed URL for document: ${doc.id} - ${doc.name}`);
+              url = await createSignedUrl(doc.file_path);
+            }
+            
+            if (!url) {
+              console.warn(`[DOCUMENT-DEBUG] Failed to create URL for document: ${doc.id} - ${doc.name}`);
             } else {
               console.log(`[DOCUMENT-DEBUG] Successfully created URL for document: ${doc.id}`);
             }

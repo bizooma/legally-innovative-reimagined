@@ -10,51 +10,32 @@ export async function ensureStorageBucket(): Promise<boolean> {
   try {
     console.log(`Checking if storage bucket '${STORAGE_BUCKET}' exists...`);
     
-    // First try to create the bucket if it doesn't exist
-    // This is more reliable than just checking if it exists
-    const { data: createData, error: createError } = await supabase
-      .storage
-      .createBucket(STORAGE_BUCKET, {
-        public: true,
-        fileSizeLimit: 50 * 1024 * 1024, // 50MB limit
-        allowedMimeTypes: ['application/pdf', 'image/jpeg', 'image/png', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
-      });
-      
-    if (createError) {
-      // Error might be because bucket already exists, which is fine
-      console.log(`Could not create bucket: ${createError.message}`);
-      if (!createError.message.includes('already exists')) {
-        console.error('Error creating storage bucket:', createError);
-      }
-    } else {
-      console.log(`Successfully created bucket '${STORAGE_BUCKET}'`);
-      
-      toast({
-        title: "Storage configured",
-        description: "Document storage has been set up successfully.",
-      });
-      
-      return true;
-    }
-    
-    // Verify bucket exists by attempting to list files
+    // First try to list files to check if we have access to the bucket
     const { data: files, error: listError } = await supabase
       .storage
       .from(STORAGE_BUCKET)
-      .list('', { limit: 1 }); // Just list one file to verify access
+      .list('', { limit: 1 });
       
     if (listError) {
       console.error(`Error listing files in bucket: ${listError.message}`);
       
-      if (listError.message.includes('Not found') || listError.message.includes('does not exist')) {
+      // Check if bucket exists by trying to get bucket details
+      const { data: buckets } = await supabase.storage.listBuckets();
+      const bucketExists = buckets?.some(b => b.name === STORAGE_BUCKET);
+      
+      if (!bucketExists) {
+        console.error(`Storage bucket "${STORAGE_BUCKET}" not found`);
+        
         toast({
           title: "Storage setup required",
-          description: "Document storage needs to be configured by an administrator.",
+          description: "Document storage bucket not found. Please contact an administrator.",
           variant: "default",
         });
         return false;
       } else {
-        // Permission issue likely
+        // Bucket exists but we can't list files - likely a permissions issue
+        console.error(`Bucket exists but there may be permission issues: ${listError.message}`);
+        
         toast({
           title: "Storage access issue",
           description: "You may not have permission to access document storage.",
@@ -64,11 +45,8 @@ export async function ensureStorageBucket(): Promise<boolean> {
       }
     }
     
-    console.log(`Successfully verified bucket '${STORAGE_BUCKET}'. Found ${files?.length || 0} files.`);
-    toast({
-      title: "Storage connected",
-      description: "Document storage is properly configured.",
-    });
+    // Success! We were able to list files in the bucket
+    console.log(`Successfully connected to bucket '${STORAGE_BUCKET}'. Found ${files?.length || 0} files.`);
     
     return true;
   } catch (error) {
@@ -103,19 +81,6 @@ export async function userCanManageDocumentStorage(): Promise<boolean> {
     }
     
     // Try checking bucket existence without creating it
-    const { data: buckets, error: bucketError } = await supabase
-      .storage
-      .listBuckets();
-    
-    if (bucketError) {
-      console.error('Error checking storage buckets:', bucketError);
-      return false;
-    }
-    
-    const bucketExists = buckets?.some(bucket => bucket.name === STORAGE_BUCKET);
-    if (!bucketExists) return false;
-    
-    // If bucket exists, try to list files to check permissions
     const { error: listError } = await supabase
       .storage
       .from(STORAGE_BUCKET)

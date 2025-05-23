@@ -9,16 +9,27 @@ import { STORAGE_BUCKET } from './fileUtils';
  */
 export const createSignedUrl = async (filePath: string): Promise<string> => {
   try {
-    console.log(`Creating signed URL for file: ${filePath}`);
+    console.log(`Creating URL for file: ${filePath}`);
     
     if (!filePath) {
-      console.error('Cannot create signed URL - empty file path');
+      console.error('Cannot create URL - empty file path');
       return '';
     }
     
+    // First try to get a public URL since our bucket is public
+    const { data: publicUrlData } = supabase.storage
+      .from(STORAGE_BUCKET)
+      .getPublicUrl(filePath);
+      
+    if (publicUrlData?.publicUrl) {
+      console.log(`Successfully created public URL for: ${filePath}`);
+      return publicUrlData.publicUrl;
+    }
+    
+    // Fallback to signed URL if public URL doesn't work
     const { data, error } = await supabase.storage
       .from(STORAGE_BUCKET)
-      .createSignedUrl(filePath, 60 * 5); // 5 minutes expiry (shorter for security)
+      .createSignedUrl(filePath, 60 * 30); // 30 minutes expiry
 
     if (error) {
       console.error('Error creating signed URL:', error);
