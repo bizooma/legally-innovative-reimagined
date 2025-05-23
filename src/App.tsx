@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import DIY from "./pages/DIY";
@@ -27,6 +27,9 @@ const RouteDebug = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     console.log("Current route:", window.location.pathname);
     console.log("Route component rendering");
+    console.log("Hash:", window.location.hash);
+    console.log("Search params:", window.location.search);
+    console.log("Full URL:", window.location.href);
   }, []);
   
   return <>{children}</>;
@@ -34,19 +37,18 @@ const RouteDebug = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
+    {/* Using HashRouter instead of BrowserRouter to support direct URL access */}
+    <HashRouter>
       <HelmetProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
           <RouteDebug>
             <Routes>
-              {/* Donut page routes with highest priority and multiple variations */}
+              {/* Donut page with highest priority */}
               <Route path="/donuts" element={<DonutsPage />} />
-              <Route path="/Donuts" element={<DonutsPage />} />
-              <Route path="donuts" element={<DonutsPage />} />
-              <Route path="Donuts" element={<DonutsPage />} />
-
+              
+              {/* Main routes */}
               <Route path="/" element={<Index />} />
               <Route path="/diy" element={<DIY />} />
               <Route path="/portal" element={<Portal />} />
@@ -62,7 +64,6 @@ const App = () => (
               
               {/* Google Auth callback routes */}
               <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
-              <Route path="auth/google/callback" element={<GoogleAuthCallback />} />
               
               {/* Handle all auth callback variations and paths */}
               <Route path="*/auth/google/callback" element={<GoogleAuthCallback />} />
@@ -76,7 +77,7 @@ const App = () => (
           </RouteDebug>
         </TooltipProvider>
       </HelmetProvider>
-    </BrowserRouter>
+    </HashRouter>
   </QueryClientProvider>
 );
 

@@ -13,6 +13,7 @@ const DonutsPage = () => {
     console.log("DonutsPage component mounted");
     console.log("Current URL:", window.location.href);
     console.log("Current pathname:", window.location.pathname);
+    console.log("Current hash:", window.location.hash);
     console.log("DonutsPage rendering timestamp:", new Date().toISOString());
     
     // Check if component elements exist
