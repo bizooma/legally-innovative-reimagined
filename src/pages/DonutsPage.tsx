@@ -8,11 +8,19 @@ import Navbar from "@/components/Navbar";
 import { useEffect } from "react";
 
 const DonutsPage = () => {
-  // Add more detailed debug logs to verify the component is rendering
+  // Add extensive debug logs to verify the component is rendering
   useEffect(() => {
     console.log("DonutsPage component mounted");
     console.log("Current URL:", window.location.href);
     console.log("Current pathname:", window.location.pathname);
+    console.log("DonutsPage rendering timestamp:", new Date().toISOString());
+    
+    // Check if component elements exist
+    setTimeout(() => {
+      console.log("DonutHero element exists:", !!document.querySelector('#donut-hero'));
+      console.log("DonutServices element exists:", !!document.querySelector('#donut-services'));
+      console.log("Body classes:", document.body.className);
+    }, 100);
   }, []);
 
   return (

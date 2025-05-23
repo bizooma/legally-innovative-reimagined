@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 const DonutHero = () => {
   return (
-    <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-gradient-to-b from-amber-50 to-white py-16">
+    <section id="donut-hero" className="relative min-h-[80vh] flex items-center overflow-hidden bg-gradient-to-b from-amber-50 to-white py-16">
       {/* Decorative donut elements */}
       <div className="absolute -top-5 left-10 w-24 h-24 bg-pink-200 rounded-full opacity-20 animate-float"></div>
       <div className="absolute top-20 right-10 w-16 h-16 bg-amber-300 rounded-full opacity-30 animate-float-delay"></div>

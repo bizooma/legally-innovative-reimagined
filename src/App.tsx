@@ -41,18 +41,18 @@ const App = () => (
           <Sonner />
           <RouteDebug>
             <Routes>
+              {/* Donut page routes with highest priority and multiple variations */}
+              <Route path="/donuts" element={<DonutsPage />} />
+              <Route path="/Donuts" element={<DonutsPage />} />
+              <Route path="donuts" element={<DonutsPage />} />
+              <Route path="Donuts" element={<DonutsPage />} />
+
               <Route path="/" element={<Index />} />
               <Route path="/diy" element={<DIY />} />
               <Route path="/portal" element={<Portal />} />
               <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
               <Route path="/portal/client/:id" element={<ClientDetails />} />
-              
-              {/* Donut page routes with multiple variations for maximum compatibility */}
-              <Route path="/donuts" element={<DonutsPage />} />
-              <Route path="/Donuts" element={<Navigate to="/donuts" replace />} />
-              <Route path="donuts" element={<DonutsPage />} />
-              <Route path="Donuts" element={<Navigate to="/donuts" replace />} />
               
               {/* Staff routes */}
               <Route path="/staff" element={<StaffLogin />} />
