@@ -89,50 +89,18 @@ export const checkAssignmentExists = async (documentId: string, staffId: string)
 };
 
 /**
- * Get documents assigned to a staff member
+ * Get all documents (visible to all staff members)
+ * 
+ * This function now returns ALL documents regardless of staff assignment
  */
-export async function getStaffDocuments(staffMemberId: string): Promise<StaffDocumentWithUrl[]> {
+export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDocumentWithUrl[]> {
   try {
-    if (!staffMemberId) {
-      console.error('No staff member ID provided to getStaffDocuments');
-      throw new Error('No staff member ID provided');
-    }
+    console.log(`[DOCUMENT-DEBUG] Fetching all staff documents (visible to all)`);
 
-    console.log(`[DOCUMENT-DEBUG] Fetching documents for staff ID: ${staffMemberId}`);
-
-    // IMPORTANT: First get document IDs assigned to the staff member
-    const { data: assignments, error: assignmentError } = await supabase
-      .from('staff_document_assignments')
-      .select('document_id')
-      .eq('staff_id', staffMemberId);
-
-    if (assignmentError) {
-      console.error('Error fetching staff document assignments:', assignmentError);
-      toast({
-        title: "Error fetching assignments",
-        description: "Could not retrieve document assignments. Please try again.",
-        variant: "destructive",
-      });
-      return [];
-    }
-
-    // If no assignments, return empty array
-    if (!assignments || assignments.length === 0) {
-      console.log(`[DOCUMENT-DEBUG] No documents assigned to staff ID: ${staffMemberId}`);
-      return [];
-    }
-
-    // Log all assignments for debugging
-    console.log(`[DOCUMENT-DEBUG] Found ${assignments.length} document assignments for staff ${staffMemberId}`);
-    console.log('[DOCUMENT-DEBUG] Assignment document IDs:', assignments.map(a => a.document_id));
-    
-    // Get document details for each assignment
-    const documentIds = assignments.map(assignment => assignment.document_id);
-    
+    // Fetch all documents directly, ignoring assignments
     const { data: documents, error: documentError } = await supabase
       .from('staff_documents')
-      .select('*')
-      .in('id', documentIds);
+      .select('*');
 
     if (documentError) {
       console.error('Error fetching staff documents:', documentError);
@@ -144,10 +112,10 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
       return [];
     }
 
-    console.log(`[DOCUMENT-DEBUG] Retrieved ${documents?.length || 0} documents for staff ID: ${staffMemberId}`);
+    console.log(`[DOCUMENT-DEBUG] Retrieved ${documents?.length || 0} documents (all documents)`);
     
     if (!documents || documents.length === 0) {
-      console.log('[DOCUMENT-DEBUG] No documents found despite having assignments');
+      console.log('[DOCUMENT-DEBUG] No documents found in the system');
       return [];
     }
     

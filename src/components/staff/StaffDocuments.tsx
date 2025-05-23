@@ -44,7 +44,7 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
     refreshAllData();
     toast({
       title: "Refreshing Documents",
-      description: "Checking document storage and assignments...",
+      description: "Checking document storage...",
     });
   };
 
@@ -79,8 +79,8 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
-          <CardTitle>My Documents</CardTitle>
-          <CardDescription>Documents assigned to you</CardDescription>
+          <CardTitle>Company Documents</CardTitle>
+          <CardDescription>All documents available to staff members</CardDescription>
         </div>
         <Button 
           variant="outline" 
@@ -121,15 +121,14 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
         ) : documents.length === 0 ? (
           <div className="text-center py-10">
             <FileText className="h-16 w-16 mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500">No documents have been assigned to you</p>
-            <p className="text-sm text-gray-400 mt-2">Staff ID: {staffMemberId}</p>
+            <p className="text-gray-500">No documents available</p>
             <Button 
               variant="outline"
               size="sm"
               onClick={handleRefresh}
               className="mt-4"
             >
-              Check for New Documents
+              Check for Documents
             </Button>
           </div>
         ) : (
@@ -190,7 +189,7 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
               </TableBody>
             </Table>
             <div className="mt-4 text-xs text-gray-400 text-right">
-              {documents.length} document(s) assigned to you
+              {documents.length} document(s) available
             </div>
           </>
         )}

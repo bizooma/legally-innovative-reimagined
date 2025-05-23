@@ -13,11 +13,8 @@ const StaffDocumentsSection: React.FC<StaffDocumentsSectionProps> = ({ currentSt
   
   return (
     <div className="mb-8">
-      <h2 className="text-xl font-bold mb-4">My Documents</h2>
+      <h2 className="text-xl font-bold mb-4">Company Documents</h2>
       <StaffDocuments staffMemberId={currentStaffMember.id} />
-      <div className="mt-2 text-xs text-gray-500">
-        Staff ID: {currentStaffMember.id}
-      </div>
     </div>
   );
 };

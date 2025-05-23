@@ -46,7 +46,7 @@ export function useDocumentQueries(staffId?: string) {
     checkBucket();
   }, [bucketChecked, bucketCheckInProgress, checkBucket]);
 
-  // Fetch all documents or just those assigned to a specific staff member
+  // Fetch all documents (now available to all staff members)
   const { 
     data: documents = [], 
     isLoading, 
@@ -54,48 +54,30 @@ export function useDocumentQueries(staffId?: string) {
     refetch,
     isPending: isRefetching 
   } = useQuery({
-    queryKey: ['staffDocuments', staffId],
+    queryKey: ['allStaffDocuments'],
     queryFn: async () => {
-      console.log('useDocumentQueries: Fetching with staffId:', staffId);
-      if (staffId) {
-        console.log(`useDocumentQueries: Fetching for staff member: ${staffId}`);
-        try {
-          // Check if bucket exists before fetching docs
-          if (!bucketChecked) {
-            await checkBucket();
-          }
-          
-          // Even if bucket doesn't exist, try to fetch documents
-          // This will allow us to show document names even if URLs aren't available
-          const docs = await getStaffDocuments(staffId);
-          console.log(`useDocumentQueries: Retrieved ${docs.length} docs for staff ${staffId}`);
-          
-          // If no documents, show appropriate message
-          if (docs.length === 0) {
-            console.log('No documents assigned to this staff member');
-          }
-          
-          return docs;
-        } catch (error) {
-          console.error("Error fetching staff documents:", error);
-          // Re-throw to trigger the error state
-          throw error;
+      console.log('useDocumentQueries: Fetching all documents for all staff');
+      try {
+        // Check if bucket exists before fetching docs
+        if (!bucketChecked) {
+          await checkBucket();
         }
-      } else {
-        console.log('useDocumentQueries: Fetching all documents (admin view)');
-        try {
-          // Check bucket for admin views as well
-          if (!bucketChecked) {
-            await checkBucket();
-          }
-          
-          const allDocs = await fetchAllDocuments();
-          console.log(`useDocumentQueries: Retrieved ${allDocs.length} docs (all documents)`);
-          return allDocs;
-        } catch (error) {
-          console.error("Error fetching all documents:", error);
-          throw error;
+        
+        // Even if bucket doesn't exist, try to fetch documents
+        // This will allow us to show document names even if URLs aren't available
+        const docs = await getStaffDocuments();
+        console.log(`useDocumentQueries: Retrieved ${docs.length} documents (all accessible)`);
+        
+        // If no documents, show appropriate message
+        if (docs.length === 0) {
+          console.log('No documents available in the system');
         }
+        
+        return docs;
+      } catch (error) {
+        console.error("Error fetching documents:", error);
+        // Re-throw to trigger the error state
+        throw error;
       }
     },
     staleTime: 1000 * 5, // 5 seconds for more frequent updates
@@ -104,7 +86,7 @@ export function useDocumentQueries(staffId?: string) {
     enabled: true, // Always enabled, we'll handle errors appropriately
   });
   
-  // Fetch document assignments
+  // Fetch document assignments (still useful for admin view)
   const { 
     data: documentAssignments = {},
     isLoading: isLoadingAssignments,
@@ -115,7 +97,7 @@ export function useDocumentQueries(staffId?: string) {
     queryFn: async () => {
       if (!documents.length) return {};
       
-      console.log('useDocumentQueries: Fetching assignments for documents:', 
+      console.log('useDocumentQueries: Fetching assignments for documents (for admin tracking):', 
         documents.map(d => d.id));
       
       const assignments: Record<string, any[]> = {};
