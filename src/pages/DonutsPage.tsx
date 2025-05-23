@@ -4,8 +4,14 @@ import DonutHero from "@/components/donuts/DonutHero";
 import DonutServices from "@/components/donuts/DonutServices";
 import DonutCTA from "@/components/donuts/DonutCTA";
 import Footer from "@/components/Footer";
+import { useEffect } from "react";
 
 const DonutsPage = () => {
+  // Add a debug log to verify the component is rendering
+  useEffect(() => {
+    console.log("DonutsPage component mounted");
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
