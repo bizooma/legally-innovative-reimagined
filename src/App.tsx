@@ -47,9 +47,12 @@ const App = () => (
               <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
               <Route path="/portal/client/:id" element={<ClientDetails />} />
+              
+              {/* Donut page routes with multiple variations for maximum compatibility */}
               <Route path="/donuts" element={<DonutsPage />} />
-              {/* Add a redirect for case sensitivity issues */}
               <Route path="/Donuts" element={<Navigate to="/donuts" replace />} />
+              <Route path="donuts" element={<DonutsPage />} />
+              <Route path="Donuts" element={<Navigate to="/donuts" replace />} />
               
               {/* Staff routes */}
               <Route path="/staff" element={<StaffLogin />} />
