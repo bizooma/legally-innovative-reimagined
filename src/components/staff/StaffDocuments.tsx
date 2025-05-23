@@ -1,12 +1,17 @@
 
 import React, { useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { FileText, Download, ExternalLink, AlertCircle, RefreshCw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { useDocumentQueries } from '@/hooks/staff-documents';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+
+// Import our refactored components
+import { 
+  StaffDocumentsList, 
+  StorageAlert, 
+  ErrorAlert, 
+  EmptyDocumentState,
+  RefreshButton
+} from './staff-documents';
 
 interface StaffDocumentsProps {
   staffMemberId: string;
@@ -48,33 +53,6 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
     });
   };
 
-  const handleDownload = (url: string, filename: string) => {
-    if (!url) {
-      toast({
-        title: 'Document Not Available',
-        description: 'Document URL not available. Storage setup may be needed.',
-        variant: "default",
-      });
-      return;
-    }
-    
-    try {
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } catch (err) {
-      console.error('Download error:', err);
-      toast({
-        title: 'Error',
-        description: 'Failed to download document',
-        variant: 'destructive',
-      });
-    }
-  };
-
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -82,116 +60,18 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
           <CardTitle>Company Documents</CardTitle>
           <CardDescription>All documents available to staff members</CardDescription>
         </div>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={handleRefresh}
-          disabled={isRefetching}
-        >
-          <RefreshCw className={`h-4 w-4 mr-2 ${isRefetching ? 'animate-spin' : ''}`} />
-          Refresh
-        </Button>
+        <RefreshButton onRefresh={handleRefresh} isRefetching={isRefetching} />
       </CardHeader>
       <CardContent>
-        {bucketChecked && !bucketExists && (
-          <Alert variant="default" className="mb-4 border-amber-300 bg-amber-50">
-            <AlertCircle className="h-4 w-4 text-amber-500" />
-            <AlertTitle className="text-amber-700">Storage Setup Required</AlertTitle>
-            <AlertDescription className="text-amber-600">
-              Document storage needs to be configured. You may only see document names until this is resolved.
-              <div className="mt-2 text-sm">
-                If you are an administrator, please check Supabase storage settings or use the refresh button.
-              </div>
-            </AlertDescription>
-          </Alert>
-        )}
-        
-        {error && (
-          <Alert variant="destructive" className="mb-4">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>
-              {error instanceof Error ? error.message : 'Failed to load documents'}
-            </AlertDescription>
-          </Alert>
-        )}
+        <StorageAlert bucketExists={bucketExists} bucketChecked={bucketChecked} />
+        <ErrorAlert error={error} />
         
         {isLoading ? (
           <div className="text-center py-10">Loading documents...</div>
         ) : documents.length === 0 ? (
-          <div className="text-center py-10">
-            <FileText className="h-16 w-16 mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500">No documents available</p>
-            <Button 
-              variant="outline"
-              size="sm"
-              onClick={handleRefresh}
-              className="mt-4"
-            >
-              Check for Documents
-            </Button>
-          </div>
+          <EmptyDocumentState onRefresh={handleRefresh} />
         ) : (
-          <>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Size</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {documents.map((doc) => (
-                  <TableRow key={doc.id}>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center">
-                        <FileText className="h-4 w-4 mr-2" />
-                        {doc.name}
-                      </div>
-                    </TableCell>
-                    <TableCell>{doc.description || '-'}</TableCell>
-                    <TableCell>{doc.file_size}</TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => {
-                            if (doc.url) {
-                              window.open(doc.url, '_blank');
-                            } else {
-                              toast({
-                                title: 'Document Preview',
-                                description: 'URL not available. Storage setup may be needed.',
-                                variant: 'default',
-                              });
-                            }
-                          }}
-                          title="View Document"
-                        >
-                          <ExternalLink className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleDownload(doc.url, doc.name)}
-                          title="Download Document"
-                          disabled={!doc.url}
-                        >
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <div className="mt-4 text-xs text-gray-400 text-right">
-              {documents.length} document(s) available
-            </div>
-          </>
+          <StaffDocumentsList documents={documents} />
         )}
       </CardContent>
     </Card>
