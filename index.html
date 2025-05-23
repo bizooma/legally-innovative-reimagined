@@ -18,31 +18,7 @@
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     
     <link rel="icon" href="/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png" type="image/png">
-    <!-- Calendly badge widget begin -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <script type="text/javascript">
-      window.onload = function() { 
-        Calendly.initBadgeWidget({
-          url: 'https://calendly.com/joe-bizooma/30min',
-          text: 'Schedule a Meeting',
-          color: '#a41b0c',
-          textColor: '#ffffff',
-          branding: false
-        });
-        
-        // Add custom positioning to the Calendly widget
-        setTimeout(function() {
-          const calendlyWidget = document.querySelector('.calendly-badge-widget');
-          if (calendlyWidget) {
-            calendlyWidget.style.left = '20px';
-            calendlyWidget.style.right = 'auto';
-            calendlyWidget.style.bottom = '20px';
-          }
-        }, 1000);
-      }
-    </script>
-    <!-- Calendly badge widget end -->
+    <!-- Calendly badge widget code removed -->
   </head>
 
   <body>
@@ -66,11 +42,7 @@
               convaiWidget.style.display = 'none';
             }
             
-            // Hide the Calendly widget if it exists
-            const calendlyWidget = document.querySelector('.calendly-badge-widget');
-            if (calendlyWidget) {
-              calendlyWidget.style.display = 'none';
-            }
+            // Calendly widget code removed
           } else {
             // Show the widgets on non-admin pages
             const convaiWidget = document.querySelector('elevenlabs-convai');
@@ -78,10 +50,7 @@
               convaiWidget.style.display = 'block';
             }
             
-            const calendlyWidget = document.querySelector('.calendly-badge-widget');
-            if (calendlyWidget) {
-              calendlyWidget.style.display = 'block';
-            }
+            // Calendly widget code removed
           }
         }
 
