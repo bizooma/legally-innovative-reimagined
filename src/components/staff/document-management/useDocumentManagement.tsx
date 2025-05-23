@@ -45,7 +45,9 @@ export function useDocumentManagement() {
     handleDelete,
     handleAssignment,
     refetch,
-    refetchAssignments
+    refetchAssignments,
+    bucketExists,
+    bucketChecked
   } = useStaffDocuments();
 
   const [refreshing, setRefreshing] = useState(false);
@@ -176,6 +178,8 @@ export function useDocumentManagement() {
     saveAssignment,
     toggleStaffSelection,
     handleUpload, // Make sure to include handleUpload in the returned object
+    bucketExists,
+    bucketChecked
   };
 }
 

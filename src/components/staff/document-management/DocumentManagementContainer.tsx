@@ -31,7 +31,8 @@ const DocumentManagementContainer: React.FC = () => {
     onAssignRequest,
     saveAssignment,
     toggleStaffSelection,
-    handleUpload
+    handleUpload,
+    bucketExists
   } = useDocumentManagement();
 
   return (
@@ -49,6 +50,8 @@ const DocumentManagementContainer: React.FC = () => {
         onAssign={onAssignRequest}
         onDelete={onDeleteRequest}
         isLoadingAssignments={isLoadingAssignments}
+        bucketExists={bucketExists}
+        onRefresh={handleRefresh}
       />
 
       {/* Dialogs */}

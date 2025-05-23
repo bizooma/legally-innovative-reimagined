@@ -14,7 +14,10 @@ export function useStaffDocuments(staffId?: string) {
     error, 
     assignmentError,
     refetch,
-    refetchAssignments 
+    refetchAssignments,
+    bucketExists,
+    bucketChecked,
+    checkBucket
   } = useDocumentQueries(staffId);
   
   // Get document state
@@ -38,6 +41,9 @@ export function useStaffDocuments(staffId?: string) {
     assignmentError,
     refetch,
     refetchAssignments,
+    bucketExists,
+    bucketChecked,
+    checkBucket,
     
     // Document state
     ...documentState,
