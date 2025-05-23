@@ -15,6 +15,7 @@ import GoogleAuthCallback from "./pages/GoogleAuthCallback";
 import StaffLogin from "./pages/StaffLogin";
 import StaffDashboard from "./pages/StaffDashboard";
 import ProtectedRoute from "./components/staff/ProtectedRoute";
+import DonutsPage from "./pages/DonutsPage"; // Add this import
 import { useEffect } from "react";
 
 // Create a new query client
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
             <Route path="/portal/client/:id" element={<ClientDetails />} />
+            <Route path="/donuts" element={<DonutsPage />} /> {/* Add this route */}
             
             {/* Staff routes */}
             <Route path="/staff" element={<StaffLogin />} />
