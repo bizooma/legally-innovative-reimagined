@@ -41,7 +41,7 @@ export function useDocumentManagement() {
     selectedStaffIds,
     setSelectedStaffIds,
     openAssignDialog,
-    handleUpload,
+    handleUpload, // Make sure we're accessing this from the useStaffDocuments hook
     handleDelete,
     handleAssignment,
     refetch,
@@ -174,7 +174,8 @@ export function useDocumentManagement() {
     handleRefresh,
     onAssignRequest,
     saveAssignment,
-    toggleStaffSelection
+    toggleStaffSelection,
+    handleUpload, // Make sure to include handleUpload in the returned object
   };
 }
 
