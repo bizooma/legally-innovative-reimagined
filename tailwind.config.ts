@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import animate from "tailwindcss-animate";
@@ -21,6 +20,11 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+        playfair: ["Playfair Display", "serif"],
+        raleway: ["Raleway", "sans-serif"],
+      },
       colors: {
         legal: {
           primary: "#003366",
@@ -101,9 +105,6 @@ const config = {
         "float-slow": "float-slow 6s ease-in-out infinite",
         "float-delay": "float-delay 5s ease-in-out infinite 1s",
         "bounce-slow": "bounce-slow 3s ease-in-out infinite",
-      },
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
       },
     },
   },
