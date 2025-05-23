@@ -37,6 +37,7 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
     }
     
     // Check if we have access to the storage bucket before trying to get URLs
+    console.log(`[DOCUMENT-DEBUG] Attempting to access storage bucket: ${STORAGE_BUCKET}`);
     const { data: bucketCheck, error: bucketError } = await supabase
       .storage
       .from(STORAGE_BUCKET)
@@ -45,7 +46,7 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
     const canAccessBucket = !bucketError;
     
     if (!canAccessBucket) {
-      console.error('Cannot access storage bucket:', bucketError);
+      console.error('[DOCUMENT-DEBUG] Cannot access storage bucket:', bucketError);
       // Still return documents, but URLs will be empty
       toast({
         title: "Storage access issue",
@@ -54,6 +55,12 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
       });
     } else {
       console.log('[DOCUMENT-DEBUG] Successfully accessed storage bucket');
+      // Print bucket contents to debug
+      if (bucketCheck && bucketCheck.length > 0) {
+        console.log('[DOCUMENT-DEBUG] Files in bucket:', 
+          bucketCheck.map(f => f.name).join(', '));
+      }
+      
       // Try to check an actual file to verify access
       if (documents[0]?.file_path) {
         const testPath = documents[0].file_path;
@@ -64,7 +71,8 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
           .from(STORAGE_BUCKET)
           .getPublicUrl(testPath);
           
-        console.log('[DOCUMENT-DEBUG] Public URL test result:', fileExists ? 'Success' : 'Failed');
+        console.log('[DOCUMENT-DEBUG] Public URL test result:', 
+          fileExists?.publicUrl ? `Success: ${fileExists.publicUrl}` : 'Failed');
       }
     }
     
@@ -82,16 +90,18 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
               .getPublicUrl(doc.file_path);
               
             url = publicUrlData?.publicUrl || '';
+            console.log(`[DOCUMENT-DEBUG] Public URL for ${doc.name}: ${url || 'NONE'}`);
             
             // If public URL fails, try signed URL as fallback
             if (!url) {
+              console.log(`[DOCUMENT-DEBUG] Trying signed URL for: ${doc.file_path}`);
               url = await createSignedUrl(doc.file_path);
             }
             
             if (!url) {
               console.warn(`[DOCUMENT-DEBUG] Failed to create URL for document: ${doc.id} - ${doc.name}`);
             } else {
-              console.log(`[DOCUMENT-DEBUG] Successfully created URL for document: ${doc.id}`);
+              console.log(`[DOCUMENT-DEBUG] Successfully created URL for document: ${doc.id} - ${url.substring(0, 50)}...`);
             }
           } catch (urlError) {
             console.error(`[DOCUMENT-DEBUG] Error creating URL for document ${doc.id}:`, urlError);
@@ -106,6 +116,11 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
     );
 
     console.log(`[DOCUMENT-DEBUG] Returning ${documentsWithUrls.length} documents with URLs`);
+    // Print first URL for debugging
+    if (documentsWithUrls[0]) {
+      console.log(`[DOCUMENT-DEBUG] First document URL: ${documentsWithUrls[0].url.substring(0, 50)}...`);
+    }
+    
     return documentsWithUrls;
   } catch (error) {
     console.error('Error fetching staff documents:', error);

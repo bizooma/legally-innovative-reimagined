@@ -16,7 +16,7 @@ export const createSignedUrl = async (filePath: string): Promise<string> => {
       return '';
     }
     
-    // First try to get a public URL since our bucket is public
+    // First try to get a public URL since our bucket should be public
     const { data: publicUrlData } = supabase.storage
       .from(STORAGE_BUCKET)
       .getPublicUrl(filePath);
@@ -25,6 +25,8 @@ export const createSignedUrl = async (filePath: string): Promise<string> => {
       console.log(`Successfully created public URL for: ${filePath}`);
       return publicUrlData.publicUrl;
     }
+    
+    console.log('Public URL not available, trying signed URL...');
     
     // Fallback to signed URL if public URL doesn't work
     const { data, error } = await supabase.storage

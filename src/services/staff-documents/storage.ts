@@ -1,6 +1,6 @@
 
 import { supabase } from '@/integrations/supabase/client';
-import { STORAGE_BUCKET } from './utils';
+import { STORAGE_BUCKET } from './fileUtils';
 import { toast } from '@/hooks/use-toast';
 
 /**

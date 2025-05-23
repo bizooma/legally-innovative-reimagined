@@ -68,6 +68,16 @@ export function useDocumentQueries(staffId?: string) {
         const docs = await getStaffDocuments();
         console.log(`useDocumentQueries: Retrieved ${docs.length} documents (all accessible)`);
         
+        // Enhanced debugging for document URLs
+        docs.forEach((doc, index) => {
+          console.log(`Document ${index+1}: ${doc.name}, URL: ${doc.url ? 'Yes' : 'No'}`);
+          if (!doc.url) {
+            console.log(`Missing URL for document: ${doc.name}, file_path: ${doc.file_path}`);
+          } else {
+            console.log(`URL preview for ${doc.name}: ${doc.url.substring(0, 50)}...`);
+          }
+        });
+        
         // If no documents, show appropriate message
         if (docs.length === 0) {
           console.log('No documents available in the system');
