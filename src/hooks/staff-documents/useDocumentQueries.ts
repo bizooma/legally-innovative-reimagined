@@ -5,7 +5,7 @@ import {
   getStaffDocumentAssignments,
   getDocumentAssignments
 } from '@/services/staff-documents';
-import { getStaffDocuments } from '@/services/staff-documents/utils';
+import { getStaffDocuments } from '@/services/staff-documents/documentFetcher';
 import { ensureStorageBucket } from '@/services/staff-documents/storage';
 import { useEffect, useState, useCallback } from 'react';
 import { toast } from '@/hooks/use-toast';
