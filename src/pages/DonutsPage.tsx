@@ -8,9 +8,9 @@ import Navbar from "@/components/Navbar";
 import { useEffect } from "react";
 
 const DonutsPage = () => {
-  // Add even more extensive debug logs to verify the component is rendering
+  // Add extensive debug logs to verify the component is rendering
   useEffect(() => {
-    console.log("%c DonutsPage MOUNTED", "background: pink; color: black; padding: 4px; font-size: 16px;");
+    console.log("DonutsPage component mounted");
     console.log("Current URL:", window.location.href);
     console.log("Current pathname:", window.location.pathname);
     console.log("Current hash:", window.location.hash);
@@ -20,25 +20,8 @@ const DonutsPage = () => {
     setTimeout(() => {
       console.log("DonutHero element exists:", !!document.querySelector('#donut-hero'));
       console.log("DonutServices element exists:", !!document.querySelector('#donut-services'));
-      console.log("DonutCTA element exists:", !!document.querySelector('#schedule-meeting'));
       console.log("Body classes:", document.body.className);
-      
-      // Add visible indicator to verify page load
-      const indicator = document.createElement('div');
-      indicator.style.position = 'fixed';
-      indicator.style.top = '10px';
-      indicator.style.right = '10px';
-      indicator.style.background = 'pink';
-      indicator.style.padding = '8px';
-      indicator.style.borderRadius = '4px';
-      indicator.style.zIndex = '9999';
-      indicator.innerText = 'Donut Page Active';
-      document.body.appendChild(indicator);
     }, 100);
-    
-    return () => {
-      console.log("%c DonutsPage UNMOUNTED", "background: red; color: white; padding: 4px; font-size: 16px;");
-    };
   }, []);
 
   return (
