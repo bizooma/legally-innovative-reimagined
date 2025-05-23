@@ -28,13 +28,6 @@ const DonutHero = () => {
               >
                 See Our Services
               </Button>
-              <Button 
-                variant="outline" 
-                className="border-pink-500 text-pink-500 hover:bg-pink-50 px-8 py-6 text-lg rounded-full"
-                onClick={() => document.getElementById('schedule-meeting')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Schedule a Meeting
-              </Button>
             </div>
           </div>
           
