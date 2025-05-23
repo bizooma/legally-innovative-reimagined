@@ -1,16 +1,20 @@
 
 import React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { FileText, Download, ExternalLink } from 'lucide-react';
+import { FileText, Download, ExternalLink, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { StaffDocumentWithUrl } from '@/types/staffDocument';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface StaffDocumentsListProps {
   documents: StaffDocumentWithUrl[];
 }
 
 const StaffDocumentsList: React.FC<StaffDocumentsListProps> = ({ documents }) => {
+  // Track any documents with missing URLs
+  const documentsWithMissingUrls = documents.filter(doc => !doc.url).length;
+
   const handleDownload = (url: string, filename: string) => {
     if (!url) {
       toast({
@@ -40,6 +44,15 @@ const StaffDocumentsList: React.FC<StaffDocumentsListProps> = ({ documents }) =>
 
   return (
     <>
+      {documentsWithMissingUrls > 0 && (
+        <Alert variant="warning" className="mb-4">
+          <AlertTriangle className="h-4 w-4 mr-2" />
+          <AlertDescription>
+            {documentsWithMissingUrls} document(s) have missing URLs. Storage access may be restricted.
+          </AlertDescription>
+        </Alert>
+      )}
+    
       <Table>
         <TableHeader>
           <TableRow>
@@ -56,6 +69,9 @@ const StaffDocumentsList: React.FC<StaffDocumentsListProps> = ({ documents }) =>
                 <div className="flex items-center">
                   <FileText className="h-4 w-4 mr-2" />
                   {doc.name}
+                  {!doc.url && (
+                    <span className="ml-2 text-xs text-amber-500">(URL unavailable)</span>
+                  )}
                 </div>
               </TableCell>
               <TableCell>{doc.description || '-'}</TableCell>
@@ -77,6 +93,7 @@ const StaffDocumentsList: React.FC<StaffDocumentsListProps> = ({ documents }) =>
                       }
                     }}
                     title="View Document"
+                    disabled={!doc.url}
                   >
                     <ExternalLink className="h-4 w-4" />
                   </Button>
@@ -97,6 +114,7 @@ const StaffDocumentsList: React.FC<StaffDocumentsListProps> = ({ documents }) =>
       </Table>
       <div className="mt-4 text-xs text-gray-400 text-right">
         {documents.length} document(s) available
+        {documentsWithMissingUrls > 0 && ` • ${documentsWithMissingUrls} with missing URLs`}
       </div>
     </>
   );

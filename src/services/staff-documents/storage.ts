@@ -10,43 +10,75 @@ export async function ensureStorageBucket(): Promise<boolean> {
   try {
     console.log(`Checking if storage bucket '${STORAGE_BUCKET}' exists...`);
     
-    // First try to list files to check if we have access to the bucket
+    // Check if the bucket exists
+    const { data: buckets, error: listBucketsError } = await supabase.storage.listBuckets();
+    
+    if (listBucketsError) {
+      console.error(`Error listing buckets: ${listBucketsError.message}`);
+      toast({
+        title: "Storage error",
+        description: "Error retrieving storage information.",
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    const bucketExists = buckets?.some(b => b.name === STORAGE_BUCKET);
+    
+    if (!bucketExists) {
+      console.error(`Storage bucket "${STORAGE_BUCKET}" not found`);
+      
+      toast({
+        title: "Storage setup required",
+        description: "Document storage bucket not found. Please contact an administrator.",
+        variant: "default",
+      });
+      return false;
+    }
+    
+    // If bucket exists, check its public status
+    const { data: bucketInfo, error: getBucketError } = await supabase.storage.getBucket(STORAGE_BUCKET);
+    
+    if (getBucketError) {
+      console.error(`Error getting bucket info: ${getBucketError.message}`);
+      return false;
+    }
+    
+    const isPublic = bucketInfo?.public || false;
+    console.log(`Bucket '${STORAGE_BUCKET}' exists and public status is: ${isPublic}`);
+    
+    if (!isPublic) {
+      console.warn(`Bucket '${STORAGE_BUCKET}' exists but is not public. Documents may not be accessible.`);
+      toast({
+        title: "Storage configuration issue",
+        description: "Document storage is not configured for public access. Some documents may not be viewable.",
+        variant: "default",
+      });
+    }
+    
+    // Check if we can list files to verify access
     const { data: files, error: listError } = await supabase
       .storage
       .from(STORAGE_BUCKET)
-      .list('', { limit: 1 });
+      .list('', { limit: 10 });
       
     if (listError) {
       console.error(`Error listing files in bucket: ${listError.message}`);
       
-      // Check if bucket exists by trying to get bucket details
-      const { data: buckets } = await supabase.storage.listBuckets();
-      const bucketExists = buckets?.some(b => b.name === STORAGE_BUCKET);
-      
-      if (!bucketExists) {
-        console.error(`Storage bucket "${STORAGE_BUCKET}" not found`);
-        
-        toast({
-          title: "Storage setup required",
-          description: "Document storage bucket not found. Please contact an administrator.",
-          variant: "default",
-        });
-        return false;
-      } else {
-        // Bucket exists but we can't list files - likely a permissions issue
-        console.error(`Bucket exists but there may be permission issues: ${listError.message}`);
-        
-        toast({
-          title: "Storage access issue",
-          description: "You may not have permission to access document storage.",
-          variant: "destructive",
-        });
-        return false;
-      }
+      toast({
+        title: "Storage access issue",
+        description: "You may not have permission to access document storage.",
+        variant: "destructive",
+      });
+      return isPublic; // Return public status even if we can't list files
     }
     
     // Success! We were able to list files in the bucket
     console.log(`Successfully connected to bucket '${STORAGE_BUCKET}'. Found ${files?.length || 0} files.`);
+    
+    if (files && files.length > 0) {
+      console.log('Sample files:', files.slice(0, 3).map(f => f.name).join(', ') + (files.length > 3 ? '...' : ''));
+    }
     
     return true;
   } catch (error) {

@@ -63,6 +63,10 @@ export function useDocumentQueries(staffId?: string) {
           await checkBucket();
         }
         
+        // Get bucket details to verify public status
+        const { data: bucketInfo } = await supabase.storage.getBucket('staff_documents');
+        console.log('Bucket public status:', bucketInfo?.public);
+        
         // Even if bucket doesn't exist, try to fetch documents
         // This will allow us to show document names even if URLs aren't available
         const docs = await getStaffDocuments();
@@ -183,3 +187,6 @@ export function useDocumentQueries(staffId?: string) {
     checkBucket
   };
 }
+
+// Add missing import
+import { supabase } from '@/integrations/supabase/client';

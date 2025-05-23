@@ -16,13 +16,18 @@ export const createSignedUrl = async (filePath: string): Promise<string> => {
       return '';
     }
     
+    // Make sure filePath doesn't have a leading slash when accessing Supabase storage
+    const normalizedPath = filePath.startsWith('/') ? filePath.substring(1) : filePath;
+    console.log(`Normalized file path: ${normalizedPath}`);
+    
     // First try to get a public URL since our bucket should be public
     const { data: publicUrlData } = supabase.storage
       .from(STORAGE_BUCKET)
-      .getPublicUrl(filePath);
+      .getPublicUrl(normalizedPath);
       
     if (publicUrlData?.publicUrl) {
-      console.log(`Successfully created public URL for: ${filePath}`);
+      console.log(`Successfully created public URL for: ${normalizedPath}`);
+      console.log(`Public URL: ${publicUrlData.publicUrl}`);
       return publicUrlData.publicUrl;
     }
     
@@ -31,7 +36,7 @@ export const createSignedUrl = async (filePath: string): Promise<string> => {
     // Fallback to signed URL if public URL doesn't work
     const { data, error } = await supabase.storage
       .from(STORAGE_BUCKET)
-      .createSignedUrl(filePath, 60 * 30); // 30 minutes expiry
+      .createSignedUrl(normalizedPath, 60 * 30); // 30 minutes expiry
 
     if (error) {
       console.error('Error creating signed URL:', error);
@@ -52,7 +57,7 @@ export const createSignedUrl = async (filePath: string): Promise<string> => {
       return '';
     }
     
-    console.log(`Successfully created signed URL for: ${filePath}`);
+    console.log(`Successfully created signed URL for: ${normalizedPath}`);
     return data.signedUrl;
   } catch (error) {
     console.error('Error creating signed URL:', error);
