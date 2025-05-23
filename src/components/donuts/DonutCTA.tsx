@@ -16,12 +16,12 @@ const DonutCTA = () => {
         </div>
         
         <div className="max-w-4xl mx-auto">
-          {/* Calendly inline widget */}
-          <div className="calendly-inline-widget rounded-lg shadow-lg border border-pink-200" 
-               data-url="https://calendly.com/joe-bizooma/30min" 
+          {/* TidyCal inline widget */}
+          <div className="tidycal-embed rounded-lg shadow-lg border border-pink-200" 
+               data-path="bizooma/30-minute-meeting"
                style={{ minWidth: "320px", height: "700px" }}>
           </div>
-          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <script src="https://asset-tidycal.b-cdn.net/js/embed.js" async></script>
         </div>
       </div>
     </section>
