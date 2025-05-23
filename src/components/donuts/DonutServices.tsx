@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { QrCode } from "lucide-react";
 
 const DonutServices = () => {
   // Services list with sweet donut-themed descriptions
@@ -81,13 +80,22 @@ const DonutServices = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <div className="inline-block p-6 bg-white rounded-xl shadow-md">
-            <div className="flex items-center justify-center gap-4">
-              <QrCode size={48} className="text-legal-primary" />
-              <div className="text-left">
-                <h3 className="font-bold text-lg text-legal-dark">Scan Me Again Later</h3>
-                <p className="text-gray-600">Share this page with your colleagues who missed the donuts!</p>
-              </div>
+          <div className="inline-flex items-center p-6 bg-white rounded-xl shadow-md max-w-lg mx-auto">
+            <div className="flex-shrink-0 mr-4">
+              <img 
+                src="/lovable-uploads/fe60785d-1380-4920-a47b-48ec9f13c3ec.png"
+                alt="Alanna Knight" 
+                className="h-24 w-24 object-cover rounded-full border-2 border-pink-200"
+              />
+            </div>
+            <div className="text-left">
+              <h3 className="font-bold text-xl text-legal-dark mb-1">Meet Alanna Knight</h3>
+              <p className="text-gray-700">Your Account Manager who delivered the donuts today!</p>
+              <p className="text-sm text-legal-primary mt-2">
+                <a href="mailto:alanna@legallyinnovative.com" className="hover:underline">
+                  alanna@legallyinnovative.com
+                </a>
+              </p>
             </div>
           </div>
         </div>
