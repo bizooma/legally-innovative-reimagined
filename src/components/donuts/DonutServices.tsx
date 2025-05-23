@@ -79,25 +79,40 @@ const DonutServices = () => {
           ))}
         </div>
         
-        <div className="mt-16 text-center">
-          <div className="inline-flex items-center p-6 bg-white rounded-xl shadow-md max-w-lg mx-auto">
-            <div className="flex-shrink-0 mr-4">
-              <img 
-                src="/lovable-uploads/fe60785d-1380-4920-a47b-48ec9f13c3ec.png"
-                alt="Alanna Knight" 
-                className="h-24 w-24 object-cover rounded-full border-2 border-pink-200"
-              />
-            </div>
-            <div className="text-left">
-              <h3 className="font-bold text-xl text-legal-dark mb-1">Meet Alanna Knight</h3>
-              <p className="text-gray-700">Your Account Manager who delivered the donuts today!</p>
-              <p className="text-sm text-legal-primary mt-2">
-                <a href="mailto:alanna@legallyinnovative.com" className="hover:underline">
-                  alanna@legallyinnovative.com
-                </a>
-              </p>
-            </div>
-          </div>
+        <div className="mt-16 px-4">
+          <Card className="max-w-4xl mx-auto shadow-lg border-pink-200 overflow-hidden">
+            <CardContent className="p-0">
+              <div className="flex flex-col md:flex-row">
+                <div className="md:w-1/3 bg-pink-50 p-6 flex justify-center items-center">
+                  <div className="text-center">
+                    <img 
+                      src="/lovable-uploads/fe60785d-1380-4920-a47b-48ec9f13c3ec.png"
+                      alt="Alanna Knight" 
+                      className="h-36 w-36 object-cover rounded-full border-4 border-pink-200 mx-auto shadow-md"
+                    />
+                    <h3 className="font-bold text-xl text-legal-dark mt-4 mb-1">Alanna Knight</h3>
+                    <p className="text-pink-500 font-medium">Account Manager</p>
+                    <p className="mt-3">
+                      <a href="mailto:alanna@legallyinnovative.com" className="text-legal-primary hover:underline">
+                        alanna@legallyinnovative.com
+                      </a>
+                    </p>
+                  </div>
+                </div>
+                <div className="md:w-2/3 p-6 md:p-8">
+                  <h3 className="text-2xl font-bold text-legal-dark mb-4">Meet Your Account Manager</h3>
+                  <div className="space-y-4 text-gray-700">
+                    <p>
+                      Alanna Knight serves as the dedicated Account Manager at Legally Innovative. With a deep understanding of digital marketing strategies tailored specifically for law firms, Alanna ensures that every client's vision is translated into actionable campaigns that drive measurable results. She manages project timelines, coordinates deliverables, and maintains clear, proactive communication to keep clients informed and confident at every stage of their engagement.
+                    </p>
+                    <p>
+                      As an Account Manager, Alanna is committed to delivering a seamless client experience from onboarding to execution. She provides strategic oversight on services such as SEO, content development, website enhancements, PPC campaigns, and chatbot integration—ensuring that each initiative aligns with the firm's business goals. Clients rely on her to anticipate needs, resolve issues quickly, and provide thoughtful guidance backed by industry insight. Whether you're launching a new site or optimizing an existing campaign, Alanna is your trusted partner in achieving long-term marketing success.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>
