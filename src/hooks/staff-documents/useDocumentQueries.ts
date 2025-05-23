@@ -1,3 +1,4 @@
+
 import { useQuery } from '@tanstack/react-query';
 import { 
   fetchAllDocuments,
@@ -6,7 +7,7 @@ import {
 } from '@/services/staff-documents';
 import { getStaffDocuments } from '@/services/staff-documents/utils';
 import { ensureStorageBucket } from '@/services/staff-documents/storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { toast } from '@/hooks/use-toast';
 
 export function useDocumentQueries(staffId?: string) {
@@ -15,33 +16,35 @@ export function useDocumentQueries(staffId?: string) {
   const [bucketChecked, setBucketChecked] = useState(false);
   const [bucketCheckInProgress, setBucketCheckInProgress] = useState(false);
 
+  // Function to check bucket existence
+  const checkBucket = useCallback(async () => {
+    try {
+      if (bucketCheckInProgress) return; // Avoid redundant checks
+      
+      setBucketCheckInProgress(true);
+      console.log("useDocumentQueries: Checking bucket existence");
+      const exists = await ensureStorageBucket();
+      console.log(`useDocumentQueries: Bucket exists: ${exists}`);
+      setBucketExists(exists);
+      setBucketChecked(true);
+      setBucketCheckInProgress(false);
+      
+      if (!exists) {
+        console.error('Storage bucket does not exist or could not be created');
+      }
+    } catch (error) {
+      console.error("Error checking bucket:", error);
+      setBucketExists(false);
+      setBucketChecked(true);
+      setBucketCheckInProgress(false);
+    }
+  }, [bucketCheckInProgress]);
+
   // Check storage bucket exists on first load
   useEffect(() => {
-    const checkBucket = async () => {
-      try {
-        if (bucketChecked || bucketCheckInProgress) return; // Avoid redundant checks
-        
-        setBucketCheckInProgress(true);
-        console.log("useDocumentQueries: Checking bucket existence");
-        const exists = await ensureStorageBucket();
-        console.log(`useDocumentQueries: Bucket exists: ${exists}`);
-        setBucketExists(exists);
-        setBucketChecked(true);
-        setBucketCheckInProgress(false);
-        
-        if (!exists) {
-          console.error('Storage bucket does not exist or could not be created');
-        }
-      } catch (error) {
-        console.error("Error checking bucket:", error);
-        setBucketExists(false);
-        setBucketChecked(true);
-        setBucketCheckInProgress(false);
-      }
-    };
-    
+    if (bucketChecked || bucketCheckInProgress) return; // Avoid redundant checks
     checkBucket();
-  }, [bucketChecked, bucketCheckInProgress]);
+  }, [bucketChecked, bucketCheckInProgress, checkBucket]);
 
   // Fetch all documents or just those assigned to a specific staff member
   const { 
@@ -132,12 +135,12 @@ export function useDocumentQueries(staffId?: string) {
   // Function to force check bucket and refresh all data
   const refreshAllData = async () => {
     try {
-      // Re-check bucket first
-      setBucketChecked(false); // Reset so useEffect will check again
+      // Reset bucket check status
+      setBucketChecked(false);
       setBucketCheckInProgress(false);
-      const exists = await ensureStorageBucket(); // Manually check immediately
-      setBucketExists(exists);
-      setBucketChecked(true);
+      
+      // Re-check bucket immediately
+      await checkBucket();
       
       // Then refetch documents and assignments
       await refetch();
@@ -147,7 +150,7 @@ export function useDocumentQueries(staffId?: string) {
       
       toast({
         title: "Refresh complete",
-        description: exists ? "Document data refreshed successfully" : "Storage bucket issue detected",
+        description: bucketExists ? "Document data refreshed successfully" : "Storage bucket issue detected",
       });
       
       return true;

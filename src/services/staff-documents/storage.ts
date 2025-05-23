@@ -10,72 +10,67 @@ export async function ensureStorageBucket(): Promise<boolean> {
   try {
     console.log(`Checking if storage bucket '${STORAGE_BUCKET}' exists...`);
     
-    // First check if bucket exists
-    const { data: buckets, error: bucketError } = await supabase
+    // First try to create the bucket if it doesn't exist
+    // This is more reliable than just checking if it exists
+    const { data: createData, error: createError } = await supabase
       .storage
-      .listBuckets();
-    
-    if (bucketError) {
-      console.error('Error checking storage buckets:', bucketError);
-      toast({
-        title: "Storage access error",
-        description: `Unable to access document storage: ${bucketError.message}`,
-        variant: "destructive",
+      .createBucket(STORAGE_BUCKET, {
+        public: true,
+        fileSizeLimit: 50 * 1024 * 1024, // 50MB limit
+        allowedMimeTypes: ['application/pdf', 'image/jpeg', 'image/png', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
       });
-      return false;
-    }
-    
-    const bucketExists = buckets?.some(bucket => bucket.name === STORAGE_BUCKET);
-    
-    if (bucketExists) {
-      console.log(`Storage bucket '${STORAGE_BUCKET}' exists`);
       
-      // Additional check: Try to list files to verify we have access
-      const { data, error: listError } = await supabase
-        .storage
-        .from(STORAGE_BUCKET)
-        .list();
-        
-      if (listError) {
-        console.error(`Bucket exists but cannot list files: ${listError.message}`);
-        
-        if (listError.message.includes('Not found') || listError.message.includes('does not exist')) {
-          // This suggests the bucket exists in the database but not in storage
-          toast({
-            title: "Storage inconsistency",
-            description: "Document storage exists but may need repair. Please contact an administrator.",
-            variant: "warning",
-          });
-        } else {
-          // Permission issue likely
-          console.warn('User may not have permissions to list files, but bucket exists');
-        }
-        
-        // Return true since the bucket exists, even if we can't list files
-        // This allows document names to be displayed even without URLs
-        return true;
+    if (createError) {
+      // Error might be because bucket already exists, which is fine
+      console.log(`Could not create bucket: ${createError.message}`);
+      if (!createError.message.includes('already exists')) {
+        console.error('Error creating storage bucket:', createError);
       }
+    } else {
+      console.log(`Successfully created bucket '${STORAGE_BUCKET}'`);
       
-      console.log(`Successfully accessed bucket. Found ${data?.length || 0} files.`);
       toast({
-        title: "Storage connected",
-        description: "Document storage is properly configured.",
+        title: "Storage configured",
+        description: "Document storage has been set up successfully.",
       });
       
       return true;
     }
     
-    console.log(`Storage bucket '${STORAGE_BUCKET}' not found.`);
+    // Verify bucket exists by attempting to list files
+    const { data: files, error: listError } = await supabase
+      .storage
+      .from(STORAGE_BUCKET)
+      .list();
+      
+    if (listError) {
+      console.error(`Error listing files in bucket: ${listError.message}`);
+      
+      if (listError.message.includes('Not found') || listError.message.includes('does not exist')) {
+        toast({
+          title: "Storage setup required",
+          description: "Document storage needs to be configured by an administrator.",
+          variant: "warning",
+        });
+        return false;
+      } else {
+        // Permission issue likely
+        toast({
+          title: "Storage access issue",
+          description: "You may not have permission to access document storage.",
+          variant: "destructive",
+        });
+        return false;
+      }
+    }
     
-    // Show a message that storage is not available
+    console.log(`Successfully verified bucket '${STORAGE_BUCKET}'. Found ${files?.length || 0} files.`);
     toast({
-      title: "Storage setup required",
-      description: "Document storage needs to be set up by an administrator.",
-      variant: "warning",
+      title: "Storage connected",
+      description: "Document storage is properly configured.",
     });
     
-    // Return false indicating bucket is not available yet
-    return false;
+    return true;
   } catch (error) {
     console.error('Error in ensureStorageBucket:', error);
     toast({

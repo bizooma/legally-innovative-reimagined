@@ -31,27 +31,28 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
       const timer = setTimeout(() => {
         console.log("StaffDocuments: Auto-retrying bucket check");
         refreshAllData();
-      }, 3000);
+      }, 5000); // Increased to 5 seconds to avoid rate limiting
       
       return () => clearTimeout(timer);
     }
   }, [bucketChecked, bucketExists, refreshAllData]);
 
+  // Handle manual refresh button click
   const handleRefresh = () => {
     console.log("StaffDocuments: Manual refresh triggered");
     refreshAllData();
     toast({
       title: "Refreshing Documents",
-      description: "Checking for new document assignments...",
+      description: "Checking document storage and assignments...",
     });
   };
 
   const handleDownload = (url: string, filename: string) => {
     if (!url) {
       toast({
-        title: 'Error',
-        description: 'Document URL not available. Please try refreshing.',
-        variant: 'destructive',
+        title: 'Document Not Available',
+        description: 'Document URL not available. Storage setup may be needed.',
+        variant: 'warning',
       });
       return;
     }
@@ -97,6 +98,10 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
             <AlertTitle>Storage Setup Required</AlertTitle>
             <AlertDescription>
               Document storage needs to be configured. You may only see document names until this is resolved.
+              {/* Adding instructions for admins */}
+              <div className="mt-2 text-sm">
+                If you are an administrator, please check Supabase storage settings or use the refresh button.
+              </div>
             </AlertDescription>
           </Alert>
         )}
@@ -160,8 +165,8 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
                             } else {
                               toast({
                                 title: 'Document Preview',
-                                description: 'URL not available. Storage access may be needed.',
-                                variant: 'destructive',
+                                description: 'URL not available. Storage setup may be needed.',
+                                variant: 'warning',
                               });
                             }
                           }}
