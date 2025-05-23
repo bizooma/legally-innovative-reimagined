@@ -26,7 +26,7 @@ const DocumentManagement: React.FC = () => {
         .eq('id', session.user.id)
         .single();
         
-      return data || { isAdmin: false };
+      return data ? { isAdmin: data.is_admin } : { isAdmin: false };
     }
   });
   
