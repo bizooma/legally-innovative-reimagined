@@ -36,8 +36,8 @@ export const createSignedUrl = async (filePath: string): Promise<string> => {
     // Fallback to signed URL if public URL doesn't work
     const { data, error } = await supabase.storage
       .from(STORAGE_BUCKET)
-      .createSignedUrl(normalizedPath, 60 * 30); // 30 minutes expiry
-
+      .createSignedUrl(normalizedPath, 60 * 60); // 60 minutes expiry
+      
     if (error) {
       console.error('Error creating signed URL:', error);
       
@@ -45,6 +45,13 @@ export const createSignedUrl = async (filePath: string): Promise<string> => {
         toast({
           title: "Permission denied",
           description: "You don't have permission to access this document.",
+          variant: "destructive",
+        });
+      } else if (error.message.includes('does not exist')) {
+        console.error(`File "${normalizedPath}" not found in bucket`);
+        toast({
+          title: "File not found",
+          description: "The requested document could not be found in storage.",
           variant: "destructive",
         });
       }
@@ -58,6 +65,7 @@ export const createSignedUrl = async (filePath: string): Promise<string> => {
     }
     
     console.log(`Successfully created signed URL for: ${normalizedPath}`);
+    console.log(`Signed URL: ${data.signedUrl.substring(0, 50)}...`);
     return data.signedUrl;
   } catch (error) {
     console.error('Error creating signed URL:', error);

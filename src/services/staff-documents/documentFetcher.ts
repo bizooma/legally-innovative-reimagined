@@ -17,7 +17,8 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
     // Fetch all documents directly, ignoring assignments
     const { data: documents, error: documentError } = await supabase
       .from('staff_documents')
-      .select('*');
+      .select('*')
+      .order('created_at', { ascending: false });
 
     if (documentError) {
       console.error('Error fetching staff documents:', documentError);
@@ -56,7 +57,7 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
             const cleanPath = doc.file_path.replace(/^\/+/, '');
             console.log(`[DOCUMENT-DEBUG] Getting URL for document: ${doc.name} (path: ${cleanPath})`);
             
-            // Try using public URL first (since our bucket is public)
+            // Try using public URL first
             const { data: publicUrlData } = supabase
               .storage
               .from(STORAGE_BUCKET)
@@ -70,6 +71,8 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
             }
             
             console.log(`[DOCUMENT-DEBUG] Final URL for ${doc.name}: ${url ? `${url.substring(0, 50)}...` : 'NONE'}`);
+          } else {
+            console.log(`[DOCUMENT-DEBUG] Document ${doc.id} has no file path`);
           }
         } catch (urlError) {
           console.error(`[DOCUMENT-DEBUG] Error creating URL for document ${doc.id}:`, urlError);
@@ -84,7 +87,7 @@ export async function getStaffDocuments(staffMemberId?: string): Promise<StaffDo
 
     console.log(`[DOCUMENT-DEBUG] Returning ${documentsWithUrls.length} documents with URLs`);
     // Print first document path and URL for debugging
-    if (documentsWithUrls[0]) {
+    if (documentsWithUrls.length > 0) {
       console.log(`[DOCUMENT-DEBUG] First document: ${documentsWithUrls[0].name}`);
       console.log(`[DOCUMENT-DEBUG] First document file_path: ${documentsWithUrls[0].file_path}`);
       console.log(`[DOCUMENT-DEBUG] First document URL: ${documentsWithUrls[0].url ? documentsWithUrls[0].url.substring(0, 100) : 'NONE'}`);

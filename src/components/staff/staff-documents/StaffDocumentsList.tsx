@@ -87,7 +87,7 @@ const StaffDocumentsList: React.FC<StaffDocumentsListProps> = ({ documents }) =>
                       } else {
                         toast({
                           title: 'Document Preview',
-                          description: 'URL not available. Storage setup may be needed.',
+                          description: 'URL not available. Storage access may be required.',
                           variant: 'default',
                         });
                       }

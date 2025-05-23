@@ -28,6 +28,8 @@ export async function ensureStorageBucket(): Promise<boolean> {
     if (!bucketExists) {
       console.error(`Storage bucket "${STORAGE_BUCKET}" not found`);
       
+      // Instead of trying to create the bucket which requires admin privileges, 
+      // just notify the user
       toast({
         title: "Storage setup required",
         description: "Document storage bucket not found. Please contact an administrator.",
@@ -47,16 +49,18 @@ export async function ensureStorageBucket(): Promise<boolean> {
     const isPublic = bucketInfo?.public || false;
     console.log(`Bucket '${STORAGE_BUCKET}' exists and public status is: ${isPublic}`);
     
+    // Even if the bucket is not public, we'll try to proceed
+    // But warn the user if it's not public
     if (!isPublic) {
       console.warn(`Bucket '${STORAGE_BUCKET}' exists but is not public. Documents may not be accessible.`);
       toast({
         title: "Storage configuration issue",
-        description: "Document storage is not configured for public access. Some documents may not be viewable.",
+        description: "Document storage may not be configured for public access. Contact an administrator if documents aren't viewable.",
         variant: "default",
       });
     }
     
-    // Check if we can list files to verify access
+    // Test bucket access by listing files
     const { data: files, error: listError } = await supabase
       .storage
       .from(STORAGE_BUCKET)

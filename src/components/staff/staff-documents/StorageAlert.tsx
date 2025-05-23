@@ -20,7 +20,12 @@ const StorageAlert: React.FC<StorageAlertProps> = ({ bucketExists, bucketChecked
       <AlertDescription className="text-amber-600">
         Document storage needs to be configured. You may only see document names until this is resolved.
         <div className="mt-2 text-sm">
-          If you are an administrator, please check Supabase storage settings or use the refresh button.
+          If you are an administrator, please check Supabase storage settings.
+          <ul className="mt-1 list-disc pl-5">
+            <li>Ensure the "staff_documents" bucket exists</li>
+            <li>Make sure the bucket is set to public access</li>
+            <li>Verify that storage policies allow access to objects</li>
+          </ul>
         </div>
       </AlertDescription>
     </Alert>
