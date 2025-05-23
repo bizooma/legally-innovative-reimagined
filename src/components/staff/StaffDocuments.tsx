@@ -21,7 +21,8 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
     refreshAllData,
     bucketExists,
     bucketChecked,
-    isRefetching 
+    isRefetching,
+    checkBucket
   } = useDocumentQueries(staffMemberId);
 
   // Automatically try refreshing if bucket check failed initially
@@ -30,12 +31,12 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
       // Wait a moment before retrying to avoid too many requests
       const timer = setTimeout(() => {
         console.log("StaffDocuments: Auto-retrying bucket check");
-        refreshAllData();
+        checkBucket();
       }, 5000); // Increased to 5 seconds to avoid rate limiting
       
       return () => clearTimeout(timer);
     }
-  }, [bucketChecked, bucketExists, refreshAllData]);
+  }, [bucketChecked, bucketExists, checkBucket]);
 
   // Handle manual refresh button click
   const handleRefresh = () => {
@@ -52,7 +53,7 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
       toast({
         title: 'Document Not Available',
         description: 'Document URL not available. Storage setup may be needed.',
-        variant: 'warning',
+        variant: "default",
       });
       return;
     }
@@ -93,12 +94,11 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
       </CardHeader>
       <CardContent>
         {bucketChecked && !bucketExists && (
-          <Alert variant="warning" className="mb-4">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Storage Setup Required</AlertTitle>
-            <AlertDescription>
+          <Alert variant="default" className="mb-4 border-amber-300 bg-amber-50">
+            <AlertCircle className="h-4 w-4 text-amber-500" />
+            <AlertTitle className="text-amber-700">Storage Setup Required</AlertTitle>
+            <AlertDescription className="text-amber-600">
               Document storage needs to be configured. You may only see document names until this is resolved.
-              {/* Adding instructions for admins */}
               <div className="mt-2 text-sm">
                 If you are an administrator, please check Supabase storage settings or use the refresh button.
               </div>
@@ -166,7 +166,7 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
                               toast({
                                 title: 'Document Preview',
                                 description: 'URL not available. Storage setup may be needed.',
-                                variant: 'warning',
+                                variant: 'default',
                               });
                             }
                           }}

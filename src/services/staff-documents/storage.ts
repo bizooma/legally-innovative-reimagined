@@ -41,7 +41,7 @@ export async function ensureStorageBucket(): Promise<boolean> {
     const { data: files, error: listError } = await supabase
       .storage
       .from(STORAGE_BUCKET)
-      .list();
+      .list('', { limit: 1 }); // Just list one file to verify access
       
     if (listError) {
       console.error(`Error listing files in bucket: ${listError.message}`);
@@ -50,7 +50,7 @@ export async function ensureStorageBucket(): Promise<boolean> {
         toast({
           title: "Storage setup required",
           description: "Document storage needs to be configured by an administrator.",
-          variant: "warning",
+          variant: "default",
         });
         return false;
       } else {
@@ -119,7 +119,7 @@ export async function userCanManageDocumentStorage(): Promise<boolean> {
     const { error: listError } = await supabase
       .storage
       .from(STORAGE_BUCKET)
-      .list();
+      .list('', { limit: 1 });
     
     return !listError; // No error means we have access
   } catch (error) {

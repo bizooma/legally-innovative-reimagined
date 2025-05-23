@@ -60,6 +60,11 @@ export function useDocumentQueries(staffId?: string) {
       if (staffId) {
         console.log(`useDocumentQueries: Fetching for staff member: ${staffId}`);
         try {
+          // Check if bucket exists before fetching docs
+          if (!bucketChecked) {
+            await checkBucket();
+          }
+          
           // Even if bucket doesn't exist, try to fetch documents
           // This will allow us to show document names even if URLs aren't available
           const docs = await getStaffDocuments(staffId);
@@ -73,11 +78,17 @@ export function useDocumentQueries(staffId?: string) {
           return docs;
         } catch (error) {
           console.error("Error fetching staff documents:", error);
+          // Re-throw to trigger the error state
           throw error;
         }
       } else {
         console.log('useDocumentQueries: Fetching all documents (admin view)');
         try {
+          // Check bucket for admin views as well
+          if (!bucketChecked) {
+            await checkBucket();
+          }
+          
           const allDocs = await fetchAllDocuments();
           console.log(`useDocumentQueries: Retrieved ${allDocs.length} docs (all documents)`);
           return allDocs;
@@ -90,8 +101,7 @@ export function useDocumentQueries(staffId?: string) {
     staleTime: 1000 * 5, // 5 seconds for more frequent updates
     retry: 3,
     refetchOnWindowFocus: true,
-    // Run the query regardless of bucket status to get at least document names
-    enabled: true,
+    enabled: true, // Always enabled, we'll handle errors appropriately
   });
   
   // Fetch document assignments
@@ -177,6 +187,7 @@ export function useDocumentQueries(staffId?: string) {
     refreshAllData,
     bucketExists,
     bucketChecked,
-    isRefetching
+    isRefetching,
+    checkBucket
   };
 }

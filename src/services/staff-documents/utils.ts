@@ -108,7 +108,12 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
 
     if (assignmentError) {
       console.error('Error fetching staff document assignments:', assignmentError);
-      throw assignmentError;
+      toast({
+        title: "Error fetching assignments",
+        description: "Could not retrieve document assignments. Please try again.",
+        variant: "destructive",
+      });
+      return [];
     }
 
     // If no assignments, return empty array
@@ -131,7 +136,12 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
 
     if (documentError) {
       console.error('Error fetching staff documents:', documentError);
-      throw documentError;
+      toast({
+        title: "Error fetching documents",
+        description: "Could not retrieve document details. Please try again.",
+        variant: "destructive",
+      });
+      return [];
     }
 
     console.log(`[DOCUMENT-DEBUG] Retrieved ${documents?.length || 0} documents for staff ID: ${staffMemberId}`);
@@ -145,13 +155,20 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
     const { data: bucketCheck, error: bucketError } = await supabase
       .storage
       .from(STORAGE_BUCKET)
-      .list();
+      .list('', { limit: 1 }); // Just try to list one file to check access
       
-    const canAccessBucket = !bucketError && !!bucketCheck;
+    const canAccessBucket = !bucketError;
     
     if (!canAccessBucket) {
       console.error('Cannot access storage bucket:', bucketError);
       // Still return documents, but URLs will be empty
+      toast({
+        title: "Storage access issue",
+        description: "Document preview unavailable. Storage access required.",
+        variant: "default",
+      });
+    } else {
+      console.log('[DOCUMENT-DEBUG] Successfully accessed storage bucket');
     }
     
     // Get signed URLs for each document if we have bucket access
@@ -183,6 +200,11 @@ export async function getStaffDocuments(staffMemberId: string): Promise<StaffDoc
     return documentsWithUrls;
   } catch (error) {
     console.error('Error fetching staff documents:', error);
+    toast({
+      title: "Error",
+      description: "Failed to load documents. Please try again later.",
+      variant: "destructive",
+    });
     return [];
   }
 }
