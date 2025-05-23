@@ -1,7 +1,26 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const DonutCTA = () => {
+  // Add useEffect to ensure the script loads after component mounts
+  useEffect(() => {
+    // Create script element
+    const script = document.createElement('script');
+    script.src = 'https://asset-tidycal.b-cdn.net/js/embed.js';
+    script.async = true;
+    
+    // Append script to document
+    document.body.appendChild(script);
+    
+    // Cleanup function to remove script when component unmounts
+    return () => {
+      // Remove script from document
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []); // Empty dependency array means this runs once on mount
+
   return (
     <section id="schedule-meeting" className="py-20 bg-gradient-to-b from-amber-50 to-white">
       <div className="container mx-auto px-4">
@@ -16,12 +35,12 @@ const DonutCTA = () => {
         </div>
         
         <div className="max-w-4xl mx-auto">
-          {/* TidyCal inline widget */}
-          <div className="tidycal-embed rounded-lg shadow-lg border border-pink-200" 
-               data-path="bizooma/30-minute-meeting"
-               style={{ minWidth: "320px", height: "700px" }}>
-          </div>
-          <script src="https://asset-tidycal.b-cdn.net/js/embed.js" async></script>
+          {/* TidyCal embed widget */}
+          <div 
+            className="tidycal-embed rounded-lg shadow-lg border border-pink-200" 
+            data-path="bizooma/30-minute-meeting"
+            style={{ minWidth: "320px", height: "700px" }}
+          ></div>
         </div>
       </div>
     </section>
