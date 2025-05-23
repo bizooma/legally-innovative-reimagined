@@ -37,7 +37,7 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
       const timer = setTimeout(() => {
         console.log("StaffDocuments: Auto-retrying bucket check");
         checkBucket();
-      }, 5000); // Increased to 5 seconds to avoid rate limiting
+      }, 5000); // 5 seconds to avoid rate limiting
       
       return () => clearTimeout(timer);
     }
@@ -63,7 +63,11 @@ const StaffDocuments: React.FC<StaffDocumentsProps> = ({ staffMemberId }) => {
         <RefreshButton onRefresh={handleRefresh} isRefetching={isRefetching} />
       </CardHeader>
       <CardContent>
-        <StorageAlert bucketExists={bucketExists} bucketChecked={bucketChecked} />
+        <StorageAlert 
+          bucketExists={bucketExists} 
+          bucketChecked={bucketChecked} 
+          onRefresh={handleRefresh} 
+        />
         <ErrorAlert error={error} />
         
         {isLoading ? (
