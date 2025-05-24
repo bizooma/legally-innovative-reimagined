@@ -21,9 +21,9 @@ export async function uploadDocument(
       throw new Error(`Failed to ensure bucket exists: ${bucketResult.errorMessage}`);
     }
 
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${clientId}/${Math.random().toString(36).substring(2)}.${fileExt}`;
-    const filePath = `${fileName}`;
+    // Use original filename with client ID as folder path
+    const fileName = `${clientId}/${file.name}`;
+    const filePath = fileName;
     
     // Upload to storage
     const { error: uploadError } = await supabase.storage
@@ -51,7 +51,7 @@ export async function uploadDocument(
       .from('documents')
       .insert({
         client_id: clientId,
-        name: file.name,
+        name: file.name, // Keep original filename
         description: description,
         file_path: filePath,
         file_size: fileSize,
