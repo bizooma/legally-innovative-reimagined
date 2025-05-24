@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import PortalHero from '@/components/portal/PortalHero';
 import PortalFeatures from '@/components/portal/PortalFeatures';
 import LoginForm from '@/components/portal/LoginForm';
+import AdminPasswordReset from '@/components/auth/AdminPasswordReset';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
@@ -103,8 +104,13 @@ const Portal = () => {
               <PortalFeatures />
               
               {/* Login Form */}
-              <div>
+              <div className="space-y-6">
                 <LoginForm />
+                
+                {/* Temporary Password Reset Tool */}
+                <div className="border-t pt-6">
+                  <AdminPasswordReset />
+                </div>
               </div>
             </div>
           </div>
