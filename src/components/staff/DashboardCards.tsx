@@ -30,7 +30,14 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
               disabled={loading}
               onClick={() => handlePlatformClick('https://app.unum.la/home')}
             >
-              Unum
+              <div className="flex items-center gap-2">
+                <img 
+                  src="/lovable-uploads/429b2bde-e490-457e-89c8-e3a1d9fc62a7.png" 
+                  alt="Unum" 
+                  className="w-4 h-4"
+                />
+                Unum
+              </div>
               <ExternalLink className="h-4 w-4" />
             </Button>
           </div>
