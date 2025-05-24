@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { ExternalLink } from 'lucide-react';
 
 interface DashboardCardsProps {
   loading: boolean;
@@ -9,18 +10,30 @@ interface DashboardCardsProps {
 }
 
 const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) => {
+  const handlePlatformClick = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="grid md:grid-cols-3 gap-6 mb-8">
       <Card>
         <CardHeader>
-          <CardTitle>Documents</CardTitle>
-          <CardDescription>Access company documents and forms</CardDescription>
+          <CardTitle>Platforms</CardTitle>
+          <CardDescription>Quick access to team platforms</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="mb-4">Access internal documents, policies, and procedures.</p>
-          <Button variant="outline" className="w-full" disabled={loading}>
-            View Documents
-          </Button>
+          <p className="mb-4">Access the platforms your team uses daily.</p>
+          <div className="space-y-2">
+            <Button 
+              variant="outline" 
+              className="w-full justify-between" 
+              disabled={loading}
+              onClick={() => handlePlatformClick('https://app.unum.la/home')}
+            >
+              Unum
+              <ExternalLink className="h-4 w-4" />
+            </Button>
+          </div>
         </CardContent>
       </Card>
       
