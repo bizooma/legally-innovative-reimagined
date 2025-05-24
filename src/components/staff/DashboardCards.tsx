@@ -112,7 +112,6 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                 <ExternalLink className="h-4 w-4" />
               </Button>
             </div>
-            {console.log('DashboardCards: Finished rendering platform buttons')}
           </CardContent>
         </Card>
         
