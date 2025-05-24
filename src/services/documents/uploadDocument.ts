@@ -18,7 +18,7 @@ export async function uploadDocument(
     // Ensure bucket exists
     const bucketResult = await createBucketIfNotExists(BUCKET_NAME);
     if (!bucketResult.success) {
-      throw new Error(`Failed to ensure bucket exists: ${bucketResult.error}`);
+      throw new Error(`Failed to ensure bucket exists: ${bucketResult.errorMessage}`);
     }
 
     const fileExt = file.name.split('.').pop();

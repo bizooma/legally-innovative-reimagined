@@ -4,23 +4,6 @@ import { toast } from 'sonner';
 import { BUCKET_NAME } from '@/config/documentConfig';
 import { getFileType, formatFileSize } from '@/utils/fileUtils';
 
-interface StorageFile {
-  name: string;
-  id: string;
-  updated_at: string;
-  created_at: string;
-  last_accessed_at: string;
-  metadata: {
-    eTag: string;
-    size: number;
-    mimetype: string;
-    cacheControl: string;
-    lastModified: string;
-    contentLength: number;
-    httpStatusCode: number;
-  };
-}
-
 /**
  * Migrates existing documents from storage to the documents table
  */
@@ -58,7 +41,7 @@ export async function migrateStorageDocuments(): Promise<{ success: boolean; mig
       
       for (const file of batch) {
         try {
-          await processSingleFile(file as StorageFile);
+          await processSingleFile(file);
           migrated++;
           console.log(`Migrated file: ${file.name}`);
         } catch (error) {
@@ -84,7 +67,7 @@ export async function migrateStorageDocuments(): Promise<{ success: boolean; mig
   }
 }
 
-async function processSingleFile(file: StorageFile): Promise<void> {
+async function processSingleFile(file: any): Promise<void> {
   // Extract client ID from file path (assuming format: clientId/filename or just filename)
   const pathParts = file.name.split('/');
   let clientId: string;
