@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -86,10 +87,7 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                 variant="outline" 
                 className="w-full justify-between" 
                 disabled={loading}
-                onClick={() => {
-                  console.log('Acumbamail button clicked');
-                  handlePlatformClick('https://acumbamail.com/app/newsletter/');
-                }}
+                onClick={() => handlePlatformClick('https://acumbamail.com/app/newsletter/')}
               >
                 <div className="flex items-center gap-2">
                   <img 
