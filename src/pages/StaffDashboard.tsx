@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -20,109 +21,146 @@ const StaffDashboard = () => {
   const [currentStaffMember, setCurrentStaffMember] = useState<any>(null);
   const navigate = useNavigate();
 
-  console.log('StaffDashboard: Component rendering');
+  console.log('=== StaffDashboard: Component rendering ===');
 
   // Check if user is authenticated
   useEffect(() => {
     const checkAuth = async () => {
-      console.log('StaffDashboard: Starting auth check');
-      const { data: { session } } = await supabase.auth.getSession();
+      console.log('StaffDashboard: Starting detailed auth check');
       
-      if (!session) {
-        console.log('StaffDashboard: No session found, redirecting to /staff');
-        toast({
-          title: "Authentication Required",
-          description: "Please log in to access the staff dashboard",
-          variant: "destructive",
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        console.log('StaffDashboard: Session check result:', {
+          hasSession: !!session,
+          hasUser: !!session?.user,
+          userEmail: session?.user?.email,
+          userId: session?.user?.id,
+          error: error
         });
-        navigate('/staff');
-        return;
-      }
-      
-      console.log('StaffDashboard: Session found for user:', session.user.email);
-      setUser(session.user);
-      
-      // Get user profile to determine if admin
-      const { data: userData, error: userError } = await supabase
-        .from('users')
-        .select('is_admin')
-        .eq('id', session.user.id)
-        .single();
         
-      if (userError) {
-        console.error('Error fetching user data:', userError);
-      }
-        
-      if (userData) {
-        console.log('User data:', userData);
-        setIsAdmin(userData.is_admin);
-      }
-      
-      // If not admin, find staff member by email instead of user_id
-      // since the data shows staff members without user_id associations
-      if (!userData?.is_admin) {
-        console.log('User is not admin, finding staff profile by email');
-        const { data: staffData, error: staffError } = await supabase
-          .from('staff_members')
-          .select('*')
-          .eq('email', session.user.email)
-          .maybeSingle(); // Use maybeSingle instead of single to avoid errors
-          
-        if (staffError) {
-          console.error('Error fetching staff data:', staffError);
+        if (error) {
+          console.error('StaffDashboard: Session error:', error);
           toast({
-            title: "Staff Profile Error",
-            description: "Could not find your staff profile",
+            title: "Authentication Error",
+            description: "There was an error checking your authentication status",
             variant: "destructive",
           });
-        } else if (staffData) {
-          console.log('Found staff member data by email:', staffData);
-          setCurrentStaffMember(staffData);
-        } else {
-          console.log('No staff profile found for user email');
+          navigate('/staff');
+          return;
+        }
+        
+        if (!session) {
+          console.log('StaffDashboard: No session found, redirecting to /staff');
+          toast({
+            title: "Authentication Required",
+            description: "Please log in to access the staff dashboard",
+            variant: "destructive",
+          });
+          navigate('/staff');
+          return;
+        }
+        
+        console.log('StaffDashboard: Valid session found for user:', session.user.email);
+        setUser(session.user);
+        
+        // Get user profile to determine if admin
+        console.log('StaffDashboard: Checking admin status for user ID:', session.user.id);
+        
+        const { data: userData, error: userError } = await supabase
+          .from('users')
+          .select('is_admin')
+          .eq('id', session.user.id)
+          .single();
           
-          // Fall back to trying user_id if email doesn't match
-          const { data: staffDataById, error: staffErrorById } = await supabase
+        console.log('StaffDashboard: User data query result:', {
+          userData,
+          userError,
+          isAdmin: userData?.is_admin
+        });
+          
+        if (userError) {
+          console.error('Error fetching user data:', userError);
+        }
+          
+        if (userData) {
+          console.log('User admin status:', userData.is_admin);
+          setIsAdmin(userData.is_admin);
+        }
+        
+        // If not admin, find staff member by email
+        if (!userData?.is_admin) {
+          console.log('User is not admin, finding staff profile by email');
+          const { data: staffData, error: staffError } = await supabase
             .from('staff_members')
             .select('*')
-            .eq('user_id', session.user.id)
+            .eq('email', session.user.email)
             .maybeSingle();
             
-          if (!staffErrorById && staffDataById) {
-            console.log('Found staff member data by user_id:', staffDataById);
-            setCurrentStaffMember(staffDataById);
+          console.log('StaffDashboard: Staff member query result:', {
+            staffData,
+            staffError
+          });
+            
+          if (staffError) {
+            console.error('Error fetching staff data:', staffError);
+          } else if (staffData) {
+            console.log('Found staff member data by email:', staffData);
+            setCurrentStaffMember(staffData);
           } else {
-            console.log('No staff profile found for this user');
-            toast({
-              title: "Staff Profile Missing",
-              description: "You're logged in but don't have a staff profile. Please contact an administrator.",
-              variant: "destructive",
-            });
+            console.log('No staff profile found for user email, trying by user_id');
+            
+            const { data: staffDataById, error: staffErrorById } = await supabase
+              .from('staff_members')
+              .select('*')
+              .eq('user_id', session.user.id)
+              .maybeSingle();
+              
+            if (!staffErrorById && staffDataById) {
+              console.log('Found staff member data by user_id:', staffDataById);
+              setCurrentStaffMember(staffDataById);
+            } else {
+              console.log('No staff profile found for this user');
+            }
           }
         }
+        
+        console.log('StaffDashboard: Auth check complete, setting loading to false');
+        setLoading(false);
+      } catch (err) {
+        console.error('StaffDashboard: Unexpected error during auth check:', err);
+        setLoading(false);
+        navigate('/staff');
       }
-      
-      setLoading(false);
     };
     
     checkAuth();
     
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('StaffDashboard: Auth state changed:', event, !!session);
+      console.log('StaffDashboard: Auth state changed:', {
+        event,
+        hasSession: !!session,
+        userEmail: session?.user?.email
+      });
+      
       if (event === 'SIGNED_OUT') {
+        console.log('StaffDashboard: User signed out, redirecting');
         navigate('/staff');
       } else if (session) {
+        console.log('StaffDashboard: User signed in, updating user state');
         setUser(session.user);
       }
     });
     
     return () => {
+      console.log('StaffDashboard: Cleaning up auth subscription');
       subscription.unsubscribe();
     };
   }, [navigate]);
 
   const handleLogout = async () => {
+    console.log('StaffDashboard: Logging out user');
     await supabase.auth.signOut();
     toast({
       title: "Logged Out",
@@ -132,11 +170,18 @@ const StaffDashboard = () => {
   };
 
   if (loading) {
-    console.log('StaffDashboard: Still loading...');
+    console.log('StaffDashboard: Still loading, showing loading component');
     return <StaffDashboardLoading />;
   }
 
   console.log('StaffDashboard: Rendering dashboard content');
+  console.log('StaffDashboard: Current state:', {
+    hasUser: !!user,
+    userEmail: user?.email,
+    isAdmin,
+    hasCurrentStaffMember: !!currentStaffMember
+  });
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
