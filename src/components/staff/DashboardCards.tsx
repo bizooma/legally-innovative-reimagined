@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -79,6 +78,22 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                     className="w-4 h-4"
                   />
                   Unum
+                </div>
+                <ExternalLink className="h-4 w-4" />
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full justify-between" 
+                disabled={loading}
+                onClick={() => handlePlatformClick('https://acumbamail.com/app/newsletter/')}
+              >
+                <div className="flex items-center gap-2">
+                  <img 
+                    src="/lovable-uploads/59e51f8e-610f-44a9-9530-a964b738ff51.png" 
+                    alt="Acumbamail" 
+                    className="w-4 h-4"
+                  />
+                  Acumbamail
                 </div>
                 <ExternalLink className="h-4 w-4" />
               </Button>
