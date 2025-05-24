@@ -8,13 +8,17 @@ const ProtectedRoute = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      console.log('ProtectedRoute: Checking authentication...');
       const { data: { session } } = await supabase.auth.getSession();
+      console.log('ProtectedRoute: Session found:', !!session);
+      console.log('ProtectedRoute: User email:', session?.user?.email);
       setIsAuthenticated(!!session);
     };
     
     checkAuth();
     
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log('ProtectedRoute: Auth state changed:', !!session);
       setIsAuthenticated(!!session);
     });
     
@@ -22,6 +26,8 @@ const ProtectedRoute = () => {
       subscription.unsubscribe();
     };
   }, []);
+
+  console.log('ProtectedRoute: Current auth state:', isAuthenticated);
 
   if (isAuthenticated === null) {
     // Still checking authentication
@@ -32,7 +38,13 @@ const ProtectedRoute = () => {
     );
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/staff" />;
+  if (!isAuthenticated) {
+    console.log('ProtectedRoute: Not authenticated, redirecting to /staff');
+    return <Navigate to="/staff" />;
+  }
+
+  console.log('ProtectedRoute: Authenticated, rendering dashboard');
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

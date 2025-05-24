@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -21,12 +20,16 @@ const StaffDashboard = () => {
   const [currentStaffMember, setCurrentStaffMember] = useState<any>(null);
   const navigate = useNavigate();
 
+  console.log('StaffDashboard: Component rendering');
+
   // Check if user is authenticated
   useEffect(() => {
     const checkAuth = async () => {
+      console.log('StaffDashboard: Starting auth check');
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
+        console.log('StaffDashboard: No session found, redirecting to /staff');
         toast({
           title: "Authentication Required",
           description: "Please log in to access the staff dashboard",
@@ -36,8 +39,8 @@ const StaffDashboard = () => {
         return;
       }
       
+      console.log('StaffDashboard: Session found for user:', session.user.email);
       setUser(session.user);
-      console.log('Current authenticated user:', session.user);
       
       // Get user profile to determine if admin
       const { data: userData, error: userError } = await supabase
@@ -106,6 +109,7 @@ const StaffDashboard = () => {
     
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('StaffDashboard: Auth state changed:', event, !!session);
       if (event === 'SIGNED_OUT') {
         navigate('/staff');
       } else if (session) {
@@ -128,9 +132,11 @@ const StaffDashboard = () => {
   };
 
   if (loading) {
+    console.log('StaffDashboard: Still loading...');
     return <StaffDashboardLoading />;
   }
 
+  console.log('StaffDashboard: Rendering dashboard content');
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
