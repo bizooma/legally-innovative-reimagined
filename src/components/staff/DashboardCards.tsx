@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -53,11 +54,6 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
       return updated;
     });
   };
-
-  // Debug the platforms section rendering
-  console.log('DashboardCards: About to render platforms section');
-  console.log('DashboardCards: Rendering Unum button');
-  console.log('DashboardCards: About to render Acumbamail button');
 
   return (
     <>
