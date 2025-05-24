@@ -9,6 +9,8 @@ import { BUCKET_NAME } from '@/config/documentConfig';
  */
 export async function fetchClientDocuments(clientId: string): Promise<Document[]> {
   try {
+    console.log('Fetching documents for client:', clientId);
+    
     // Fetch documents from database
     const { data, error } = await supabase
       .from('documents')
@@ -17,12 +19,16 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
       .order('created_at', { ascending: false });
     
     if (error) {
+      console.error('Error fetching documents:', error);
       throw error;
     }
     
     if (!data || data.length === 0) {
+      console.log('No documents found for client');
       return [];
     }
+    
+    console.log(`Found ${data.length} documents for client`);
     
     // Map database records to Document interface
     const documents: Document[] = data.map((record) => {
@@ -43,10 +49,11 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
       };
     });
     
+    console.log('Mapped documents:', documents);
     return documents;
   } catch (error: any) {
+    console.error('Error in fetchClientDocuments:', error);
     toast.error(`Failed to fetch documents: ${error.message}`);
-    console.error('Error fetching documents:', error);
     return [];
   }
 }

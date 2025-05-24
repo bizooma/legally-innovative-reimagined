@@ -9,21 +9,23 @@ export async function updateDocumentDescription(documentId: string, description:
   try {
     console.log('Updating document description:', { documentId, description });
     
-    // Update the document description in the database
-    const { error } = await supabase
+    // Update the document description in the database with explicit timestamp
+    const { data, error } = await supabase
       .from('documents')
       .update({ 
         description: description,
         updated_at: new Date().toISOString()
       })
-      .eq('id', documentId);
+      .eq('id', documentId)
+      .select()
+      .single();
     
     if (error) {
       console.error('Database update error:', error);
       throw error;
     }
     
-    console.log('Document description updated successfully');
+    console.log('Document description updated successfully:', data);
     return true;
   } catch (error: any) {
     console.error('Error updating document description:', error);
