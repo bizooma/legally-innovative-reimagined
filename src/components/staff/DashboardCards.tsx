@@ -2,7 +2,8 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Plus } from 'lucide-react';
+import { useAdminStatus } from '@/hooks/staff/useAdminStatus';
 
 interface DashboardCardsProps {
   loading: boolean;
@@ -10,8 +11,15 @@ interface DashboardCardsProps {
 }
 
 const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) => {
+  const { isAdmin } = useAdminStatus();
+
   const handlePlatformClick = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleCreateAnnouncement = () => {
+    // TODO: Implement announcement creation dialog
+    console.log('Create announcement clicked');
   };
 
   return (
@@ -51,7 +59,20 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
         </CardHeader>
         <CardContent>
           <p className="mb-4">Stay updated with the latest company news and announcements.</p>
-          <Button variant="outline" className="w-full" disabled>Read Updates</Button>
+          <div className="space-y-2">
+            <Button variant="outline" className="w-full" disabled>Read Updates</Button>
+            {isAdmin && (
+              <Button 
+                variant="default" 
+                className="w-full"
+                onClick={handleCreateAnnouncement}
+                disabled={loading}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Create Announcement
+              </Button>
+            )}
+          </div>
         </CardContent>
       </Card>
       
