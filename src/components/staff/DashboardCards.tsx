@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -54,6 +55,9 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
     });
   };
 
+  // Debug the platforms section rendering
+  console.log('DashboardCards: About to render platforms section');
+
   return (
     <>
       <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -65,6 +69,7 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
           <CardContent>
             <p className="mb-4">Access the platforms your team uses daily.</p>
             <div className="space-y-2">
+              {console.log('DashboardCards: Rendering Unum button')}
               <Button 
                 variant="outline" 
                 className="w-full justify-between" 
@@ -81,11 +86,15 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                 </div>
                 <ExternalLink className="h-4 w-4" />
               </Button>
+              {console.log('DashboardCards: About to render Acumbamail button')}
               <Button 
                 variant="outline" 
                 className="w-full justify-between" 
                 disabled={loading}
-                onClick={() => handlePlatformClick('https://acumbamail.com/app/newsletter/')}
+                onClick={() => {
+                  console.log('Acumbamail button clicked');
+                  handlePlatformClick('https://acumbamail.com/app/newsletter/');
+                }}
               >
                 <div className="flex items-center gap-2">
                   <img 
@@ -93,7 +102,8 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                     alt="Acumbamail" 
                     className="w-4 h-4"
                     onError={(e) => {
-                      console.error('Failed to load Acumbamail image');
+                      console.error('Failed to load Acumbamail image:', e);
+                      console.log('Image src was:', e.currentTarget.src);
                       e.currentTarget.style.display = 'none';
                     }}
                     onLoad={() => console.log('Acumbamail image loaded successfully')}
@@ -102,6 +112,7 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                 </div>
                 <ExternalLink className="h-4 w-4" />
               </Button>
+              {console.log('DashboardCards: Finished rendering platform buttons')}
             </div>
           </CardContent>
         </Card>
