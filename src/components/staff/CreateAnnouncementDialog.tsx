@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -27,6 +27,11 @@ const CreateAnnouncementDialog: React.FC<CreateAnnouncementDialogProps> = ({
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Add effect to track when the dialog open state changes
+  useEffect(() => {
+    console.log('CreateAnnouncementDialog: open prop changed to:', open);
+  }, [open]);
 
   console.log('CreateAnnouncementDialog render:', { open, title, content });
 
@@ -87,6 +92,9 @@ const CreateAnnouncementDialog: React.FC<CreateAnnouncementDialogProps> = ({
     setContent('');
     onOpenChange(false);
   };
+
+  // Debug the dialog rendering
+  console.log('CreateAnnouncementDialog: About to render with open =', open);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

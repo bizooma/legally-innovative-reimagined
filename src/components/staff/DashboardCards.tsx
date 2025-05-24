@@ -37,9 +37,13 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
   const handleCreateAnnouncement = () => {
     console.log('DashboardCards: Create Announcement button clicked');
     console.log('DashboardCards: Current isAdmin status:', isAdmin);
-    console.log('DashboardCards: Current dialog state:', isAnnouncementDialogOpen);
+    console.log('DashboardCards: Current dialog state before:', isAnnouncementDialogOpen);
     setIsAnnouncementDialogOpen(true);
     console.log('DashboardCards: Dialog state set to true');
+    // Force a small delay to ensure state is updated
+    setTimeout(() => {
+      console.log('DashboardCards: Dialog state after timeout:', isAnnouncementDialogOpen);
+    }, 100);
   };
 
   const handleAnnouncementCreated = (announcement: Announcement) => {
@@ -49,11 +53,6 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
       console.log('DashboardCards: Updated announcements array:', updated);
       return updated;
     });
-  };
-
-  const handleDialogOpenChange = (open: boolean) => {
-    console.log('DashboardCards: Dialog open change:', open);
-    setIsAnnouncementDialogOpen(open);
   };
 
   return (
@@ -156,7 +155,7 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
 
       <CreateAnnouncementDialog
         open={isAnnouncementDialogOpen}
-        onOpenChange={handleDialogOpenChange}
+        onOpenChange={setIsAnnouncementDialogOpen}
         onAnnouncementCreated={handleAnnouncementCreated}
       />
     </>
