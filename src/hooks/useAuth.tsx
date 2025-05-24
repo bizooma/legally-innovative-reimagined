@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "@/hooks/use-toast";
 import { supabase } from '@/integrations/supabase/client';
-import { LoginFormValues, ADMIN_EMAILS, ADMIN_TEMP_PASSWORD } from '@/schemas/authSchema';
+import { LoginFormValues } from '@/schemas/authSchema';
 
 export function useAuth() {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,9 +13,6 @@ export function useAuth() {
     setIsLoading(true);
     
     console.log('useAuth: Starting login process for:', values.email);
-    console.log('useAuth: Admin emails:', ADMIN_EMAILS);
-    console.log('useAuth: Is admin check:', ADMIN_EMAILS.includes(values.email.toLowerCase()));
-    console.log('useAuth: Password check:', values.password === ADMIN_TEMP_PASSWORD);
     
     toast({
       title: "Logging in...",
@@ -23,25 +20,9 @@ export function useAuth() {
     });
     
     try {
-      // Check for hardcoded admin credentials first
-      const isAdmin = ADMIN_EMAILS.includes(values.email.toLowerCase());
+      // Use Supabase authentication for all users
+      console.log('useAuth: Attempting Supabase authentication');
       
-      if (isAdmin && values.password === ADMIN_TEMP_PASSWORD) {
-        console.log('useAuth: Admin credentials matched - bypassing Supabase auth');
-        // Successful admin login - just navigate without Supabase auth for demo
-        toast({
-          title: "Login Successful",
-          description: "You have been logged in as the portal administrator.",
-        });
-        
-        console.log('useAuth: Navigating to admin dashboard');
-        navigate('/portal/admin-dashboard');
-        return;
-      }
-      
-      console.log('useAuth: Not admin or incorrect admin password, trying Supabase auth');
-      
-      // For non-admin users, try regular Supabase auth
       const { data, error } = await supabase.auth.signInWithPassword({
         email: values.email,
         password: values.password
@@ -52,7 +33,7 @@ export function useAuth() {
         throw error;
       }
       
-      console.log('useAuth: Supabase auth successful, checking user data');
+      console.log('useAuth: Supabase auth successful');
       
       // Check if user is admin or client
       const { data: userData, error: userError } = await supabase
@@ -63,11 +44,12 @@ export function useAuth() {
         
       if (userError) {
         console.error('Error fetching user data:', userError);
-        // Continue with basic login - don't throw here to allow login to proceed
         toast({
           title: "Login Successful",
           description: "User data could not be fully loaded",
         });
+        navigate('/portal/client-dashboard');
+        return;
       }
         
       if (userData?.is_admin) {
@@ -83,7 +65,6 @@ export function useAuth() {
           title: "Login Successful",
           description: "Welcome to your client workspace.",
         });
-        // Redirect to the specific client workspace
         navigate(`/portal/client/${userData.client_id}`);
       } else {
         console.log('useAuth: Regular client user');

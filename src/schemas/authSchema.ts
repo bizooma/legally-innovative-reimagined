@@ -9,7 +9,3 @@ export const loginFormSchema = z.object({
 
 // Type for the form values
 export type LoginFormValues = z.infer<typeof loginFormSchema>;
-
-// Admin configuration - hardcoded for demo purposes
-export const ADMIN_EMAILS = ["joe@bizooma.com", "angafford@yahoo.com"];
-export const ADMIN_TEMP_PASSWORD = "admin123";
