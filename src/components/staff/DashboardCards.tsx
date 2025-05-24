@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,15 +23,21 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
   const [isAnnouncementDialogOpen, setIsAnnouncementDialogOpen] = useState(false);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
+  console.log('DashboardCards render - isAdmin:', isAdmin, 'userEmail:', userEmail);
+
   const handlePlatformClick = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const handleCreateAnnouncement = () => {
+    console.log('Create Announcement button clicked');
+    console.log('Current isAdmin status:', isAdmin);
     setIsAnnouncementDialogOpen(true);
+    console.log('Dialog state set to true');
   };
 
   const handleAnnouncementCreated = (announcement: Announcement) => {
+    console.log('New announcement created:', announcement);
     setAnnouncements(prev => [announcement, ...prev]);
   };
 
@@ -84,6 +91,11 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                   <Plus className="w-4 h-4 mr-2" />
                   Create Announcement
                 </Button>
+              )}
+              {!isAdmin && (
+                <div className="text-sm text-gray-500 mt-2">
+                  Admin access required to create announcements
+                </div>
               )}
             </div>
           </CardContent>

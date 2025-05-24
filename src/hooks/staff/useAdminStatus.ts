@@ -8,8 +8,15 @@ export function useAdminStatus() {
   // Check if current user is an admin
   useEffect(() => {
     const checkAdminStatus = async () => {
+      console.log('Checking admin status...');
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
+      
+      if (!session) {
+        console.log('No session found');
+        return;
+      }
+      
+      console.log('Session found, checking user admin status for:', session.user.email);
       
       const { data, error } = await supabase
         .from('users')
@@ -22,7 +29,10 @@ export function useAdminStatus() {
         return;
       }
       
-      setIsAdmin(data?.is_admin || false);
+      console.log('Admin status data:', data);
+      const adminStatus = data?.is_admin || false;
+      setIsAdmin(adminStatus);
+      console.log('Set isAdmin to:', adminStatus);
     };
     
     checkAdminStatus();
