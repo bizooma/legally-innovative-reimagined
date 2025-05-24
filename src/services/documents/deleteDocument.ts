@@ -13,14 +13,37 @@ export async function deleteDocument(path: string): Promise<boolean> {
     // First, find the document record by file path
     const { data: document, error: findError } = await supabase
       .from('documents')
-      .select('id')
+      .select('id, file_path')
       .eq('file_path', path)
       .single();
     
     if (findError) {
       console.error('Error finding document:', findError);
-      // If we can't find the document in DB, still try to delete from storage
+      toast.error(`Document not found: ${findError.message}`);
+      return false;
     }
+    
+    if (!document) {
+      console.error('Document not found with path:', path);
+      toast.error('Document not found');
+      return false;
+    }
+
+    console.log('Found document to delete:', document);
+    
+    // Delete from database first
+    const { error: dbError } = await supabase
+      .from('documents')
+      .delete()
+      .eq('id', document.id);
+    
+    if (dbError) {
+      console.error('Error deleting from database:', dbError);
+      toast.error(`Database deletion failed: ${dbError.message}`);
+      return false;
+    }
+    
+    console.log('Document deleted from database successfully');
     
     // Delete from storage
     const { error: storageError } = await supabase.storage
@@ -29,24 +52,11 @@ export async function deleteDocument(path: string): Promise<boolean> {
     
     if (storageError) {
       console.error('Storage deletion error:', storageError);
-      throw storageError;
-    }
-    
-    console.log('File deleted from storage successfully');
-    
-    // Delete from database if we found the record
-    if (document) {
-      const { error: dbError } = await supabase
-        .from('documents')
-        .delete()
-        .eq('id', document.id);
-      
-      if (dbError) {
-        console.error('Error deleting from database:', dbError);
-        // Don't fail the entire operation if DB deletion fails
-      } else {
-        console.log('Document deleted from database successfully');
-      }
+      // Don't fail the entire operation if storage deletion fails
+      // since the database record is already deleted
+      console.warn('Storage deletion failed but database record was removed');
+    } else {
+      console.log('File deleted from storage successfully');
     }
     
     return true;

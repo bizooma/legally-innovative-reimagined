@@ -17,6 +17,7 @@ export const useClientDocuments = (clientId: string) => {
       setDocuments(docs);
     } catch (error) {
       console.error('Error loading documents:', error);
+      toast.error('Failed to load documents');
     } finally {
       setIsLoading(false);
     }
@@ -33,12 +34,26 @@ export const useClientDocuments = (clientId: string) => {
   };
 
   const handleDelete = async (docPath: string, docName: string) => {
-    if (window.confirm(`Are you sure you want to delete "${docName}"?`)) {
+    if (!window.confirm(`Are you sure you want to delete "${docName}"?`)) {
+      return;
+    }
+
+    console.log('Attempting to delete document:', { docPath, docName });
+    
+    try {
       const success = await deleteClientDocument(docPath);
       if (success) {
         toast.success(`"${docName}" deleted successfully`);
+        // Immediately remove from local state for better UX
+        setDocuments(prev => prev.filter(doc => doc.path !== docPath));
+        // Also reload to ensure consistency
         await loadDocuments();
+      } else {
+        toast.error(`Failed to delete "${docName}"`);
       }
+    } catch (error) {
+      console.error('Delete error in handler:', error);
+      toast.error(`Error deleting "${docName}"`);
     }
   };
 
