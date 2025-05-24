@@ -5,6 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [debugInfo, setDebugInfo] = useState<string>('');
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -12,12 +13,23 @@ const ProtectedRoute = () => {
       console.log('ProtectedRoute: Current URL:', window.location.href);
       console.log('ProtectedRoute: Current pathname:', window.location.pathname);
       
+      setDebugInfo('Starting auth check...');
+      
       try {
-        console.log('ProtectedRoute: Calling supabase.auth.getSession()...');
-        const { data: { session }, error } = await supabase.auth.getSession();
+        console.log('ProtectedRoute: About to call supabase.auth.getSession()...');
+        setDebugInfo('Calling getSession...');
         
-        console.log('ProtectedRoute: Raw session response:', { data: { session }, error });
-        console.log('ProtectedRoute: Session details:', {
+        const sessionResult = await supabase.auth.getSession();
+        console.log('ProtectedRoute: getSession() completed');
+        console.log('ProtectedRoute: Raw session result:', sessionResult);
+        
+        const { data, error } = sessionResult;
+        const { session } = data;
+        
+        setDebugInfo(`Session result received. Has session: ${!!session}, Has error: ${!!error}`);
+        
+        console.log('ProtectedRoute: Session details breakdown:', {
+          dataExists: !!data,
           sessionExists: !!session,
           sessionIsNull: session === null,
           sessionIsUndefined: session === undefined,
@@ -33,12 +45,13 @@ const ProtectedRoute = () => {
         });
         
         if (error) {
-          console.error('ProtectedRoute: Session error details:', {
+          console.error('ProtectedRoute: Session error detected:', {
             message: error.message,
             status: error.status,
             name: error.name,
             stack: error.stack
           });
+          setDebugInfo(`Error detected: ${error.message}`);
           console.log('ProtectedRoute: Setting authenticated to false due to error');
           setIsAuthenticated(false);
           return;
@@ -46,14 +59,16 @@ const ProtectedRoute = () => {
         
         if (!session) {
           console.log('ProtectedRoute: No session found (session is null/undefined)');
-          console.log('ProtectedRoute: Setting authenticated to false');
+          setDebugInfo('No session found');
+          console.log('ProtectedRoute: Setting authenticated to false - no session');
           setIsAuthenticated(false);
           return;
         }
         
         if (!session.user) {
           console.log('ProtectedRoute: Session exists but no user object');
-          console.log('ProtectedRoute: Setting authenticated to false');
+          setDebugInfo('Session exists but no user');
+          console.log('ProtectedRoute: Setting authenticated to false - no user');
           setIsAuthenticated(false);
           return;
         }
@@ -64,12 +79,14 @@ const ProtectedRoute = () => {
           console.log('ProtectedRoute: Session is expired');
           console.log('ProtectedRoute: Expires at:', new Date(session.expires_at * 1000));
           console.log('ProtectedRoute: Current time:', new Date());
-          console.log('ProtectedRoute: Setting authenticated to false');
+          setDebugInfo('Session expired');
+          console.log('ProtectedRoute: Setting authenticated to false - expired');
           setIsAuthenticated(false);
           return;
         }
         
         console.log('ProtectedRoute: ✅ Valid session and user found');
+        setDebugInfo('✅ Valid session found');
         console.log('ProtectedRoute: Setting authenticated to true');
         setIsAuthenticated(true);
         
@@ -79,6 +96,7 @@ const ProtectedRoute = () => {
           message: err instanceof Error ? err.message : 'Unknown error',
           stack: err instanceof Error ? err.stack : 'No stack trace'
         });
+        setDebugInfo(`Exception: ${err instanceof Error ? err.message : 'Unknown error'}`);
         console.log('ProtectedRoute: Setting authenticated to false due to exception');
         setIsAuthenticated(false);
       }
@@ -98,6 +116,8 @@ const ProtectedRoute = () => {
         sessionValid: session ? new Date(session.expires_at * 1000) > new Date() : 'no session'
       });
       
+      setDebugInfo(`Auth change: ${event}, has session: ${!!session}`);
+      
       if (session && session.user && new Date(session.expires_at * 1000) > new Date()) {
         console.log('ProtectedRoute: Auth state change - ✅ setting authenticated to true');
         setIsAuthenticated(true);
@@ -113,19 +133,23 @@ const ProtectedRoute = () => {
     };
   }, []);
 
-  console.log('ProtectedRoute: 🎨 Render phase - isAuthenticated:', isAuthenticated, 'Current path:', window.location.pathname);
+  console.log('ProtectedRoute: 🎨 Render phase - isAuthenticated:', isAuthenticated, 'Current path:', window.location.pathname, 'Debug:', debugInfo);
 
   if (isAuthenticated === null) {
     console.log('ProtectedRoute: Still checking authentication, showing loading...');
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-xl">Verifying authentication...</p>
+        <div className="text-center">
+          <p className="text-xl">Verifying authentication...</p>
+          <p className="text-sm text-gray-500 mt-2">{debugInfo}</p>
+        </div>
       </div>
     );
   }
 
   if (!isAuthenticated) {
     console.log('ProtectedRoute: ❌ Not authenticated, redirecting to /staff');
+    console.log('ProtectedRoute: Debug info:', debugInfo);
     console.log('ProtectedRoute: About to render Navigate component to /staff');
     return <Navigate to="/staff" replace />;
   }

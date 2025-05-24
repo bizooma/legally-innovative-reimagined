@@ -10,32 +10,58 @@ import { useQuery } from '@tanstack/react-query';
 const StaffLogin = () => {
   console.log('StaffLogin: 🎬 Component rendering');
   console.log('StaffLogin: Current URL:', window.location.href);
+  console.log('StaffLogin: Current pathname:', window.location.pathname);
   
   const { data: session, isLoading, error } = useQuery({
     queryKey: ['staffSession'],
     queryFn: async () => {
-      console.log('StaffLogin: 🔍 Fetching session via useQuery...');
-      const { data, error } = await supabase.auth.getSession();
+      console.log('StaffLogin: 🔍 Starting session fetch via useQuery...');
       
-      console.log('StaffLogin: Session fetch result:', {
-        hasSession: !!data.session,
-        sessionIsNull: data.session === null,
-        hasUser: !!data.session?.user,
-        userEmail: data.session?.user?.email,
-        accessToken: data.session?.access_token ? 'present' : 'missing',
-        error: error
-      });
-      
-      if (error) {
-        console.error('StaffLogin: Session fetch error:', error);
+      try {
+        const result = await supabase.auth.getSession();
+        console.log('StaffLogin: Session fetch completed');
+        console.log('StaffLogin: Raw result:', result);
+        
+        const { data, error } = result;
+        
+        console.log('StaffLogin: Session fetch result details:', {
+          hasData: !!data,
+          hasSession: !!data.session,
+          sessionIsNull: data.session === null,
+          sessionIsUndefined: data.session === undefined,
+          hasUser: !!data.session?.user,
+          userEmail: data.session?.user?.email,
+          accessToken: data.session?.access_token ? 'present' : 'missing',
+          sessionExpired: data.session ? new Date(data.session.expires_at * 1000) <= new Date() : 'no session',
+          currentTime: new Date().toISOString(),
+          expiresAt: data.session?.expires_at ? new Date(data.session.expires_at * 1000).toISOString() : 'no expiry',
+          error: error
+        });
+        
+        if (error) {
+          console.error('StaffLogin: Session fetch error:', error);
+          throw error;
+        }
+        
+        return data.session;
+      } catch (err) {
+        console.error('StaffLogin: Exception during session fetch:', err);
+        throw err;
       }
-      
-      return data.session;
     },
+    retry: false,
+    refetchOnWindowFocus: false,
   });
 
-  console.log('StaffLogin: Query state:', { 
-    hasSession: !!session, 
+  console.log('StaffLogin: Query state details:', { 
+    hasSession: !!session,
+    sessionDetails: session ? {
+      hasUser: !!session.user,
+      userEmail: session.user?.email,
+      userId: session.user?.id,
+      isExpired: new Date(session.expires_at * 1000) <= new Date(),
+      expiresAt: new Date(session.expires_at * 1000).toISOString()
+    } : 'no session',
     isLoading, 
     hasError: !!error,
     error: error 
@@ -43,17 +69,28 @@ const StaffLogin = () => {
 
   // If user is already logged in, redirect to dashboard
   if (session && !isLoading) {
-    console.log('StaffLogin: ✅ User already logged in, redirecting to dashboard');
-    console.log('StaffLogin: Session details:', {
-      userEmail: session.user?.email,
-      userId: session.user?.id,
-      sessionValid: new Date(session.expires_at * 1000) > new Date()
-    });
-    return <Navigate to="/staff/dashboard" />;
+    const isExpired = new Date(session.expires_at * 1000) <= new Date();
+    if (!isExpired) {
+      console.log('StaffLogin: ✅ User already logged in with valid session, redirecting to dashboard');
+      console.log('StaffLogin: Session details for redirect:', {
+        userEmail: session.user?.email,
+        userId: session.user?.id,
+        sessionValid: new Date(session.expires_at * 1000) > new Date(),
+        expiresAt: new Date(session.expires_at * 1000).toISOString(),
+        currentTime: new Date().toISOString()
+      });
+      return <Navigate to="/staff/dashboard" />;
+    } else {
+      console.log('StaffLogin: Session exists but is expired, staying on login page');
+    }
   }
 
   if (isLoading) {
     console.log('StaffLogin: ⏳ Still loading session...');
+  }
+
+  if (error) {
+    console.log('StaffLogin: ❌ Error loading session, showing login form');
   }
 
   console.log('StaffLogin: 🎨 Rendering login form');
@@ -68,7 +105,10 @@ const StaffLogin = () => {
               Staff <span className="text-legal-accent">Portal</span>
             </h1>
             {isLoading ? (
-              <div className="text-center py-8">Loading...</div>
+              <div className="text-center py-8">
+                <div>Loading...</div>
+                <div className="text-sm text-gray-500 mt-2">Checking authentication status...</div>
+              </div>
             ) : (
               <StaffLoginForm />
             )}
