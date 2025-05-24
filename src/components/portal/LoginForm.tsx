@@ -32,6 +32,7 @@ const LoginForm = () => {
   });
 
   const onSubmit = (values: LoginFormValues) => {
+    console.log('Portal LoginForm: Attempting login with:', { email: values.email, hasPassword: !!values.password });
     handleLogin(values);
   };
 

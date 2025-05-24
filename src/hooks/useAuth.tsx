@@ -12,25 +12,34 @@ export function useAuth() {
   const handleLogin = async (values: LoginFormValues) => {
     setIsLoading(true);
     
+    console.log('useAuth: Starting login process for:', values.email);
+    console.log('useAuth: Admin emails:', ADMIN_EMAILS);
+    console.log('useAuth: Is admin check:', ADMIN_EMAILS.includes(values.email.toLowerCase()));
+    console.log('useAuth: Password check:', values.password === ADMIN_TEMP_PASSWORD);
+    
     toast({
       title: "Logging in...",
       description: "Please wait while we verify your credentials.",
     });
     
     try {
-      // For demo purposes, check hardcoded admin credentials first
+      // Check for hardcoded admin credentials first
       const isAdmin = ADMIN_EMAILS.includes(values.email.toLowerCase());
       
       if (isAdmin && values.password === ADMIN_TEMP_PASSWORD) {
+        console.log('useAuth: Admin credentials matched - bypassing Supabase auth');
         // Successful admin login - just navigate without Supabase auth for demo
         toast({
           title: "Login Successful",
           description: "You have been logged in as the portal administrator.",
         });
         
+        console.log('useAuth: Navigating to admin dashboard');
         navigate('/portal/admin-dashboard');
         return;
       }
+      
+      console.log('useAuth: Not admin or incorrect admin password, trying Supabase auth');
       
       // For non-admin users, try regular Supabase auth
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -39,8 +48,11 @@ export function useAuth() {
       });
       
       if (error) {
+        console.error('useAuth: Supabase auth error:', error);
         throw error;
       }
+      
+      console.log('useAuth: Supabase auth successful, checking user data');
       
       // Check if user is admin or client
       const { data: userData, error: userError } = await supabase
@@ -59,12 +71,14 @@ export function useAuth() {
       }
         
       if (userData?.is_admin) {
+        console.log('useAuth: User is admin in database');
         toast({
           title: "Login Successful",
           description: "You have been logged in as an administrator.",
         });
         navigate('/portal/admin-dashboard');
       } else if (userData?.client_id) {
+        console.log('useAuth: User has client_id:', userData.client_id);
         toast({
           title: "Login Successful",
           description: "Welcome to your client workspace.",
@@ -72,6 +86,7 @@ export function useAuth() {
         // Redirect to the specific client workspace
         navigate(`/portal/client/${userData.client_id}`);
       } else {
+        console.log('useAuth: Regular client user');
         toast({
           title: "Login Successful",
           description: "You have been logged in successfully.",

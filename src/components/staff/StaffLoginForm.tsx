@@ -45,6 +45,11 @@ const StaffLoginForm = () => {
   const onSubmit = async (values: StaffLoginValues) => {
     setIsLoading(true);
     
+    console.log('StaffLoginForm: Starting staff login for:', values.email);
+    console.log('StaffLoginForm: Admin emails:', ADMIN_EMAILS);
+    console.log('StaffLoginForm: Is admin check:', ADMIN_EMAILS.includes(values.email.toLowerCase()));
+    console.log('StaffLoginForm: Password check:', values.password === ADMIN_TEMP_PASSWORD);
+    
     try {
       toast({
         title: "Logging in...",
@@ -55,6 +60,7 @@ const StaffLoginForm = () => {
       const isAdmin = ADMIN_EMAILS.includes(values.email.toLowerCase());
       
       if (isAdmin && values.password === ADMIN_TEMP_PASSWORD) {
+        console.log('StaffLoginForm: Admin credentials matched');
         // Admin login success
         toast({
           title: "Admin Login Successful",
@@ -69,6 +75,7 @@ const StaffLoginForm = () => {
           });
           
           if (error) {
+            console.log('StaffLoginForm: Supabase auth failed, trying signup');
             // If sign in fails, try to create the admin account
             const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
               email: values.email,
@@ -84,15 +91,20 @@ const StaffLoginForm = () => {
             if (!signUpError) {
               console.log("Created admin account in Supabase");
             }
+          } else {
+            console.log('StaffLoginForm: Supabase auth successful');
           }
         } catch (supabaseError) {
           // Silent catch - we'll still allow admin login for demo purposes
           console.log("Supabase admin auth error:", supabaseError);
         }
         
+        console.log('StaffLoginForm: Navigating to staff dashboard');
         navigate('/staff/dashboard');
         return;
       }
+      
+      console.log('StaffLoginForm: Not admin or incorrect admin password, trying Supabase auth');
       
       // Not an admin or incorrect admin password, try regular Supabase auth
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -101,8 +113,11 @@ const StaffLoginForm = () => {
       });
       
       if (error) {
+        console.error('StaffLoginForm: Supabase auth failed:', error);
         throw error;
       }
+      
+      console.log('StaffLoginForm: Supabase auth successful');
       
       toast({
         title: "Login Successful",
