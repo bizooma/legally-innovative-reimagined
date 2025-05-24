@@ -32,6 +32,53 @@ export async function checkBucketExists(bucketName: string): Promise<StorageOper
 }
 
 /**
+ * Create a storage bucket if it doesn't exist
+ * 
+ * @param bucketName - The name of the bucket to create
+ * @returns A promise resolving to a StorageOperationResult
+ */
+export async function createBucketIfNotExists(bucketName: string): Promise<StorageOperationResult> {
+  return await handleStorageOperation(
+    async () => {
+      // First check if bucket exists
+      const bucketCheck = await checkBucketExists(bucketName);
+      if (bucketCheck.success) {
+        console.log(`Bucket "${bucketName}" already exists`);
+        return bucketCheck.data;
+      }
+
+      // Create the bucket
+      const { data, error } = await supabase.storage.createBucket(bucketName, {
+        public: true,
+        allowedMimeTypes: [
+          'application/pdf',
+          'application/msword',
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+          'application/vnd.ms-excel',
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          'application/vnd.ms-powerpoint',
+          'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+          'text/plain',
+          'text/csv',
+          'image/jpeg',
+          'image/png',
+          'image/gif'
+        ],
+        fileSizeLimit: 52428800 // 50MB
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      console.log(`Created bucket "${bucketName}" successfully`);
+      return data;
+    },
+    false
+  );
+}
+
+/**
  * Check if a file exists in a specific bucket
  * 
  * @param bucketName - The name of the bucket to check
@@ -88,6 +135,31 @@ export async function getPublicFileUrl(bucketName: string, filePath: string): Pr
         .getPublicUrl(filePath);
       
       return data.publicUrl;
+    },
+    false
+  );
+}
+
+/**
+ * List all files in a storage bucket
+ * 
+ * @param bucketName - The name of the bucket
+ * @param path - Optional path within the bucket
+ * @returns A promise resolving to a StorageOperationResult with file list
+ */
+export async function listStorageFiles(bucketName: string, path: string = ''): Promise<StorageOperationResult> {
+  return await handleStorageOperation(
+    async () => {
+      const { data, error } = await supabase.storage
+        .from(bucketName)
+        .list(path, {
+          limit: 1000,
+          sortBy: { column: 'created_at', order: 'desc' }
+        });
+      
+      if (error) throw error;
+      
+      return data || [];
     },
     false
   );

@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { Document } from '@/types/document';
 import { formatFileSize, getFileType } from '@/utils/fileUtils';
 import { BUCKET_NAME } from '@/config/documentConfig';
+import { createBucketIfNotExists } from './storageUtils';
 
 /**
  * Uploads a document to Supabase storage and creates a database record
@@ -14,6 +15,12 @@ export async function uploadDocument(
   description: string = ''
 ): Promise<Document | null> {
   try {
+    // Ensure bucket exists
+    const bucketResult = await createBucketIfNotExists(BUCKET_NAME);
+    if (!bucketResult.success) {
+      throw new Error(`Failed to ensure bucket exists: ${bucketResult.error}`);
+    }
+
     const fileExt = file.name.split('.').pop();
     const fileName = `${clientId}/${Math.random().toString(36).substring(2)}.${fileExt}`;
     const filePath = `${fileName}`;

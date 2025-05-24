@@ -1,11 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Document, fetchClientDocuments, deleteClientDocument, updateDocumentDescription } from '@/services/documentService';
 import { toast } from 'sonner';
+import { RefreshCw } from 'lucide-react';
 import DocumentItem from './document-components/DocumentItem';
 import DocumentEditDialog from './document-components/DocumentEditDialog';
 import EmptyDocumentState from './document-components/EmptyDocumentState';
 import { DocumentUploadDialog } from './DocumentUploadDialog';
+import { runDocumentMigration } from '@/utils/documentMigration';
 
 interface ClientDocumentsProps {
   clientId: string;
@@ -17,6 +21,7 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
   const [editingDoc, setEditingDoc] = useState<Document | null>(null);
   const [newDescription, setNewDescription] = useState('');
   const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [isMigrating, setIsMigrating] = useState(false);
 
   const loadDocuments = async () => {
     setIsLoading(true);
@@ -93,6 +98,19 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
     }
   };
 
+  const handleMigration = async () => {
+    setIsMigrating(true);
+    try {
+      await runDocumentMigration();
+      // Reload documents after migration
+      await loadDocuments();
+    } catch (error) {
+      console.error('Migration error:', error);
+    } finally {
+      setIsMigrating(false);
+    }
+  };
+
   const renderContent = () => {
     if (isLoading) {
       return (
@@ -104,10 +122,28 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
 
     if (documents.length === 0) {
       return (
-        <EmptyDocumentState 
-          clientId={clientId}
-          onDocumentUploaded={handleDocumentUploaded}
-        />
+        <div className="space-y-4">
+          <EmptyDocumentState 
+            clientId={clientId}
+            onDocumentUploaded={handleDocumentUploaded}
+          />
+          
+          {/* Migration button for empty state */}
+          <div className="text-center py-4 border-t">
+            <p className="text-sm text-gray-600 mb-3">
+              If you had documents before, you can migrate them from storage:
+            </p>
+            <Button 
+              variant="outline" 
+              onClick={handleMigration}
+              disabled={isMigrating}
+              className="gap-2"
+            >
+              <RefreshCw className={`h-4 w-4 ${isMigrating ? 'animate-spin' : ''}`} />
+              {isMigrating ? 'Migrating...' : 'Migrate Existing Documents'}
+            </Button>
+          </div>
+        </div>
       );
     }
 
@@ -134,10 +170,24 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
           <CardTitle>Client Documents</CardTitle>
           <CardDescription>Manage and share documents</CardDescription>
         </div>
-        <DocumentUploadDialog 
-          clientId={clientId} 
-          onDocumentUploaded={handleDocumentUploaded}
-        />
+        <div className="flex gap-2">
+          {documents.length > 0 && (
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={handleMigration}
+              disabled={isMigrating}
+              className="gap-2"
+            >
+              <RefreshCw className={`h-4 w-4 ${isMigrating ? 'animate-spin' : ''}`} />
+              {isMigrating ? 'Migrating...' : 'Migrate'}
+            </Button>
+          )}
+          <DocumentUploadDialog 
+            clientId={clientId} 
+            onDocumentUploaded={handleDocumentUploaded}
+          />
+        </div>
       </CardHeader>
       <CardContent>
         {renderContent()}
