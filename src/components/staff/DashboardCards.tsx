@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -57,6 +56,8 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
 
   // Debug the platforms section rendering
   console.log('DashboardCards: About to render platforms section');
+  console.log('DashboardCards: Rendering Unum button');
+  console.log('DashboardCards: About to render Acumbamail button');
 
   return (
     <>
@@ -69,7 +70,6 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
           <CardContent>
             <p className="mb-4">Access the platforms your team uses daily.</p>
             <div className="space-y-2">
-              {console.log('DashboardCards: Rendering Unum button')}
               <Button 
                 variant="outline" 
                 className="w-full justify-between" 
@@ -86,7 +86,6 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                 </div>
                 <ExternalLink className="h-4 w-4" />
               </Button>
-              {console.log('DashboardCards: About to render Acumbamail button')}
               <Button 
                 variant="outline" 
                 className="w-full justify-between" 
@@ -112,8 +111,8 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                 </div>
                 <ExternalLink className="h-4 w-4" />
               </Button>
-              {console.log('DashboardCards: Finished rendering platform buttons')}
             </div>
+            {console.log('DashboardCards: Finished rendering platform buttons')}
           </CardContent>
         </Card>
         
