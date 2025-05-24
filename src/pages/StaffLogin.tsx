@@ -22,6 +22,11 @@ const StaffLogin = () => {
         userEmail: data.session?.user?.email,
         error: error
       });
+      
+      if (error) {
+        console.error('StaffLogin: Session fetch error:', error);
+      }
+      
       return data.session;
     },
   });
