@@ -28,8 +28,12 @@ const CreateAnnouncementDialog: React.FC<CreateAnnouncementDialogProps> = ({
   const [content, setContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  console.log('CreateAnnouncementDialog render:', { open, title, content });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    console.log('CreateAnnouncementDialog: Form submitted', { title, content });
     
     if (!title.trim() || !content.trim()) {
       toast({
@@ -50,6 +54,8 @@ const CreateAnnouncementDialog: React.FC<CreateAnnouncementDialogProps> = ({
         content: content.trim(),
         created_at: new Date().toISOString(),
       };
+
+      console.log('CreateAnnouncementDialog: Creating announcement', newAnnouncement);
 
       // Call the callback to add to parent state
       onAnnouncementCreated(newAnnouncement);
@@ -75,9 +81,16 @@ const CreateAnnouncementDialog: React.FC<CreateAnnouncementDialogProps> = ({
     }
   };
 
+  const handleClose = () => {
+    console.log('CreateAnnouncementDialog: Closing dialog');
+    setTitle('');
+    setContent('');
+    onOpenChange(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Create Announcement</DialogTitle>
           <DialogDescription>
@@ -85,42 +98,44 @@ const CreateAnnouncementDialog: React.FC<CreateAnnouncementDialogProps> = ({
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium mb-1">
+          <div className="space-y-2">
+            <label htmlFor="announcement-title" className="block text-sm font-medium">
               Title
             </label>
             <Input
-              id="title"
+              id="announcement-title"
               type="text"
-              placeholder="Announcement title"
+              placeholder="Enter announcement title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
+              disabled={isSubmitting}
             />
           </div>
-          <div>
-            <label htmlFor="content" className="block text-sm font-medium mb-1">
+          <div className="space-y-2">
+            <label htmlFor="announcement-content" className="block text-sm font-medium">
               Content
             </label>
             <Textarea
-              id="content"
-              placeholder="Announcement content"
+              id="announcement-content"
+              placeholder="Enter announcement content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={4}
               required
+              disabled={isSubmitting}
             />
           </div>
-          <DialogFooter>
+          <DialogFooter className="flex gap-2">
             <Button
               type="button"
               variant="outline"
-              onClick={() => onOpenChange(false)}
+              onClick={handleClose}
               disabled={isSubmitting}
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={!title.trim() || !content.trim() || isSubmitting}>
               {isSubmitting ? 'Creating...' : 'Create Announcement'}
             </Button>
           </DialogFooter>

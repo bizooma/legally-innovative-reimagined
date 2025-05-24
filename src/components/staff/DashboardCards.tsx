@@ -23,22 +23,37 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
   const [isAnnouncementDialogOpen, setIsAnnouncementDialogOpen] = useState(false);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
-  console.log('DashboardCards render - isAdmin:', isAdmin, 'userEmail:', userEmail);
+  console.log('DashboardCards render:', { 
+    isAdmin, 
+    userEmail, 
+    isAnnouncementDialogOpen,
+    announcementsCount: announcements.length 
+  });
 
   const handlePlatformClick = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const handleCreateAnnouncement = () => {
-    console.log('Create Announcement button clicked');
-    console.log('Current isAdmin status:', isAdmin);
+    console.log('DashboardCards: Create Announcement button clicked');
+    console.log('DashboardCards: Current isAdmin status:', isAdmin);
+    console.log('DashboardCards: Current dialog state:', isAnnouncementDialogOpen);
     setIsAnnouncementDialogOpen(true);
-    console.log('Dialog state set to true');
+    console.log('DashboardCards: Dialog state set to true');
   };
 
   const handleAnnouncementCreated = (announcement: Announcement) => {
-    console.log('New announcement created:', announcement);
-    setAnnouncements(prev => [announcement, ...prev]);
+    console.log('DashboardCards: New announcement created:', announcement);
+    setAnnouncements(prev => {
+      const updated = [announcement, ...prev];
+      console.log('DashboardCards: Updated announcements array:', updated);
+      return updated;
+    });
+  };
+
+  const handleDialogOpenChange = (open: boolean) => {
+    console.log('DashboardCards: Dialog open change:', open);
+    setIsAnnouncementDialogOpen(open);
   };
 
   return (
@@ -141,7 +156,7 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
 
       <CreateAnnouncementDialog
         open={isAnnouncementDialogOpen}
-        onOpenChange={setIsAnnouncementDialogOpen}
+        onOpenChange={handleDialogOpenChange}
         onAnnouncementCreated={handleAnnouncementCreated}
       />
     </>
