@@ -4,9 +4,6 @@ import { toast } from 'sonner';
 
 /**
  * Updates the description of a document in the database
- * 
- * This function updates the document description in the database record,
- * not in the storage metadata
  */
 export async function updateDocumentDescription(documentId: string, description: string): Promise<boolean> {
   try {
@@ -15,7 +12,10 @@ export async function updateDocumentDescription(documentId: string, description:
     // Update the document description in the database
     const { error } = await supabase
       .from('documents')
-      .update({ description: description })
+      .update({ 
+        description: description,
+        updated_at: new Date().toISOString()
+      })
       .eq('id', documentId);
     
     if (error) {

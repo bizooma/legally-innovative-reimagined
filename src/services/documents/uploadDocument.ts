@@ -6,7 +6,7 @@ import { formatFileSize, getFileType } from '@/utils/fileUtils';
 import { BUCKET_NAME } from '@/config/documentConfig';
 
 /**
- * Uploads a document to Supabase storage 
+ * Uploads a document to Supabase storage and creates a database record
  */
 export async function uploadDocument(
   clientId: string,
@@ -18,42 +18,57 @@ export async function uploadDocument(
     const fileName = `${clientId}/${Math.random().toString(36).substring(2)}.${fileExt}`;
     const filePath = `${fileName}`;
     
-    // Store description in metadata
-    const options = {
-      cacheControl: '3600',
-      upsert: false,
-      metadata: {
-        description: description
-      }
-    };
-    
+    // Upload to storage
     const { error: uploadError } = await supabase.storage
       .from(BUCKET_NAME)
-      .upload(filePath, file, options);
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
     
     if (uploadError) {
       throw uploadError;
     }
     
+    // Get public URL
     const { data: urlData } = supabase.storage
       .from(BUCKET_NAME)
       .getPublicUrl(filePath);
     
-    // Format file size
+    // Format file details
     const fileSize = formatFileSize(file.size);
-    
-    // Get file type
     const fileType = getFileType(file.name);
     
+    // Create database record
+    const { data: dbRecord, error: dbError } = await supabase
+      .from('documents')
+      .insert({
+        client_id: clientId,
+        name: file.name,
+        description: description,
+        file_path: filePath,
+        file_size: fileSize,
+        file_type: fileType,
+        storage_object_id: filePath
+      })
+      .select()
+      .single();
+    
+    if (dbError) {
+      // If database insert fails, clean up the uploaded file
+      await supabase.storage.from(BUCKET_NAME).remove([filePath]);
+      throw dbError;
+    }
+    
     const document: Document = {
-      id: filePath,
-      name: file.name,
-      type: fileType,
-      size: fileSize,
-      lastUpdated: new Date().toISOString().split('T')[0], // YYYY-MM-DD
-      path: filePath,
+      id: dbRecord.id,
+      name: dbRecord.name,
+      type: dbRecord.file_type,
+      size: dbRecord.file_size,
+      lastUpdated: new Date(dbRecord.updated_at).toISOString().split('T')[0],
+      path: dbRecord.file_path,
       url: urlData.publicUrl,
-      description: description
+      description: dbRecord.description
     };
     
     return document;

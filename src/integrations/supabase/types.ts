@@ -57,6 +57,53 @@ export type Database = {
         }
         Relationships: []
       }
+      documents: {
+        Row: {
+          client_id: string
+          created_at: string
+          description: string | null
+          file_path: string
+          file_size: string | null
+          file_type: string | null
+          id: string
+          name: string
+          storage_object_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          description?: string | null
+          file_path: string
+          file_size?: string | null
+          file_type?: string | null
+          id?: string
+          name: string
+          storage_object_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          description?: string | null
+          file_path?: string
+          file_size?: string | null
+          file_type?: string | null
+          id?: string
+          name?: string
+          storage_object_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           client_id: string
