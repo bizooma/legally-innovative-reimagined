@@ -92,6 +92,11 @@ const DashboardCards: React.FC<DashboardCardsProps> = ({ loading, userEmail }) =
                     src="/lovable-uploads/59e51f8e-610f-44a9-9530-a964b738ff51.png" 
                     alt="Acumbamail" 
                     className="w-4 h-4"
+                    onError={(e) => {
+                      console.error('Failed to load Acumbamail image');
+                      e.currentTarget.style.display = 'none';
+                    }}
+                    onLoad={() => console.log('Acumbamail image loaded successfully')}
                   />
                   Acumbamail
                 </div>
