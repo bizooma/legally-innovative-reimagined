@@ -1,49 +1,33 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { BUCKET_NAME } from '@/config/documentConfig';
 
 /**
- * Updates the description of a document
+ * Updates the description of a document in the database
  * 
- * This function uses the Supabase Storage API to update a file's metadata
- * by downloading the file and re-uploading it with updated metadata
+ * This function updates the document description in the database record,
+ * not in the storage metadata
  */
-export async function updateDocumentDescription(path: string, description: string): Promise<boolean> {
+export async function updateDocumentDescription(documentId: string, description: string): Promise<boolean> {
   try {
-    // First, download the file to get its content
-    const { data: fileData, error: downloadError } = await supabase.storage
-      .from(BUCKET_NAME)
-      .download(path);
+    console.log('Updating document description:', { documentId, description });
     
-    if (downloadError) {
-      throw downloadError;
+    // Update the document description in the database
+    const { error } = await supabase
+      .from('documents')
+      .update({ description: description })
+      .eq('id', documentId);
+    
+    if (error) {
+      console.error('Database update error:', error);
+      throw error;
     }
     
-    if (!fileData) {
-      throw new Error("File not found");
-    }
-    
-    // Re-upload the file with updated metadata
-    const { error: uploadError } = await supabase.storage
-      .from(BUCKET_NAME)
-      .upload(path, fileData, {
-        upsert: true, // Override the existing file
-        contentType: 'application/octet-stream',
-        cacheControl: '3600',
-        metadata: {
-          description: description
-        }
-      });
-    
-    if (uploadError) {
-      throw uploadError;
-    }
-    
+    console.log('Document description updated successfully');
     return true;
   } catch (error: any) {
-    toast.error(`Failed to update description: ${error.message}`);
     console.error('Error updating document description:', error);
+    toast.error(`Failed to update description: ${error.message}`);
     return false;
   }
 }

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Document, fetchClientDocuments, deleteClientDocument, updateDocumentDescription } from '@/services/documentService';
@@ -74,7 +73,8 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
     if (!editingDoc) return;
 
     try {
-      const success = await updateDocumentDescription(editingDoc.path, newDescription);
+      console.log('Saving description for document:', editingDoc.id, 'with description:', newDescription);
+      const success = await updateDocumentDescription(editingDoc.id, newDescription);
       if (success) {
         toast.success("Description updated successfully");
         setEditDialogOpen(false);
