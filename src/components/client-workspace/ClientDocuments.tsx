@@ -101,7 +101,7 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
   const handleMigration = async () => {
     setIsMigrating(true);
     try {
-      await runDocumentMigration();
+      await runDocumentMigration(clientId); // Pass the current client ID
       // Reload documents after migration
       await loadDocuments();
     } catch (error) {

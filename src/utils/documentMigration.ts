@@ -7,7 +7,7 @@ import { getFileType, formatFileSize } from '@/utils/fileUtils';
 /**
  * Migrates existing documents from storage to the documents table
  */
-export async function migrateStorageDocuments(): Promise<{ success: boolean; migrated: number; errors: string[] }> {
+export async function migrateStorageDocuments(currentClientId?: string): Promise<{ success: boolean; migrated: number; errors: string[] }> {
   const errors: string[] = [];
   let migrated = 0;
 
@@ -41,7 +41,7 @@ export async function migrateStorageDocuments(): Promise<{ success: boolean; mig
       
       for (const file of batch) {
         try {
-          await processSingleFile(file);
+          await processSingleFile(file, currentClientId);
           migrated++;
           console.log(`Migrated file: ${file.name}`);
         } catch (error) {
@@ -67,7 +67,7 @@ export async function migrateStorageDocuments(): Promise<{ success: boolean; mig
   }
 }
 
-async function processSingleFile(file: any): Promise<void> {
+async function processSingleFile(file: any, fallbackClientId?: string): Promise<void> {
   // Extract client ID from file path (assuming format: clientId/filename or just filename)
   const pathParts = file.name.split('/');
   let clientId: string;
@@ -80,17 +80,35 @@ async function processSingleFile(file: any): Promise<void> {
     fileName = pathParts[1];
     filePath = file.name;
   } else {
-    // Format: just filename - we need to determine client ID
+    // Format: just filename - use fallback client ID if provided
     fileName = file.name;
     filePath = file.name;
     
-    // Try to extract client ID from metadata or use a default approach
-    // This is a fallback - you might need to adjust this logic based on your file naming
-    console.warn(`File ${fileName} doesn't follow clientId/filename pattern, checking for client associations...`);
-    
-    // For now, we'll skip files that don't follow the expected pattern
-    // You can modify this logic based on your specific needs
-    throw new Error('Unable to determine client ID for file');
+    if (fallbackClientId) {
+      clientId = fallbackClientId;
+      console.log(`Using fallback client ID ${fallbackClientId} for file ${fileName}`);
+    } else {
+      // Try to extract UUID pattern from filename as potential client ID
+      const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      if (uuidPattern.test(fileName)) {
+        // Check if this UUID corresponds to an existing client
+        const { data: clientCheck } = await supabase
+          .from('clients')
+          .select('id')
+          .eq('id', fileName)
+          .single();
+        
+        if (clientCheck) {
+          clientId = fileName;
+          fileName = `Document_${fileName.substring(0, 8)}`;
+          console.log(`Found matching client for UUID filename: ${clientId}`);
+        } else {
+          throw new Error('Unable to determine client ID for file and no fallback provided');
+        }
+      } else {
+        throw new Error('Unable to determine client ID for file and no fallback provided');
+      }
+    }
   }
 
   // Validate that the client exists
@@ -147,12 +165,12 @@ async function processSingleFile(file: any): Promise<void> {
 /**
  * Runs the migration and shows progress to the user
  */
-export async function runDocumentMigration(): Promise<void> {
+export async function runDocumentMigration(currentClientId?: string): Promise<void> {
   toast.info('Starting document migration...', {
     description: 'This may take a few moments to complete.'
   });
 
-  const result = await migrateStorageDocuments();
+  const result = await migrateStorageDocuments(currentClientId);
 
   if (result.success) {
     if (result.migrated > 0) {
