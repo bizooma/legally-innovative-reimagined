@@ -13,6 +13,7 @@ export const useClientDocuments = (clientId: string) => {
   const loadDocuments = async () => {
     setIsLoading(true);
     try {
+      console.log('Loading documents for client:', clientId);
       const docs = await fetchClientDocuments(clientId);
       console.log('Documents loaded from database:', docs);
       setDocuments(docs);
@@ -30,6 +31,7 @@ export const useClientDocuments = (clientId: string) => {
 
   const handleDocumentUploaded = async (success: boolean) => {
     if (success) {
+      console.log('Document uploaded, reloading list...');
       await loadDocuments();
     }
   };
@@ -39,34 +41,58 @@ export const useClientDocuments = (clientId: string) => {
       return;
     }
 
+    console.log('=== DELETION HANDLER START ===');
     console.log('Attempting to delete document:', { docPath, docName });
+    console.log('Current documents count:', documents.length);
+    
+    // Store original state for potential rollback
+    const originalDocuments = [...documents];
     
     try {
+      // Optimistically update UI
+      setDocuments(prev => {
+        const filtered = prev.filter(doc => doc.path !== docPath);
+        console.log('Optimistically updated documents:', {
+          before: prev.length,
+          after: filtered.length,
+          removedPath: docPath
+        });
+        return filtered;
+      });
+      
+      console.log('Calling deleteClientDocument...');
       const success = await deleteClientDocument(docPath);
+      
       if (success) {
-        console.log('Document deleted successfully from backend');
+        console.log('✓ Document deleted successfully from backend');
         toast.success(`"${docName}" deleted successfully`);
         
-        // Immediately update local state and then reload to ensure consistency
-        setDocuments(prev => {
-          const filtered = prev.filter(doc => doc.path !== docPath);
-          console.log('Updated local documents state:', filtered);
-          return filtered;
-        });
-        
-        // Force a fresh reload after a short delay to ensure backend consistency
+        // Wait a moment then force reload to ensure consistency
+        console.log('Scheduling reload to verify deletion...');
         setTimeout(async () => {
-          console.log('Reloading documents from database after deletion...');
-          await loadDocuments();
-        }, 1000);
+          console.log('Executing scheduled reload...');
+          try {
+            await loadDocuments();
+            console.log('✓ Reload completed after deletion');
+          } catch (reloadError) {
+            console.error('Error during post-deletion reload:', reloadError);
+          }
+        }, 2000); // Increased delay for live environment
+        
       } else {
-        console.error('Document deletion failed');
+        console.error('❌ Document deletion failed');
+        console.log('Rolling back UI state...');
+        setDocuments(originalDocuments);
         toast.error(`Failed to delete "${docName}"`);
       }
     } catch (error) {
-      console.error('Delete error in handler:', error);
-      toast.error(`Error deleting "${docName}"`);
+      console.error('❌ Delete error in handler:', error);
+      console.log('Rolling back UI state due to error...');
+      setDocuments(originalDocuments);
+      toast.error(`Error deleting "${docName}": ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
+    
+    console.log('=== DELETION HANDLER END ===');
   };
 
   const openEditDialog = (doc: Document) => {

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Document } from '@/types/document';
-import { Download, ExternalLink, Pencil, Trash2, FileText } from 'lucide-react';
+import { Download, ExternalLink, Pencil, Trash2, FileText, RefreshCw } from 'lucide-react';
 
 interface DocumentItemProps {
   doc: Document;
@@ -26,6 +26,9 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
     }
     return null;
   };
+
+  // Add debug info for live vs preview environment
+  const isLiveEnvironment = window.location.hostname !== 'localhost' && !window.location.hostname.includes('lovable.app');
   
   return (
     <div 
@@ -44,6 +47,11 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
         <div className="flex-1">
           <h3 className="font-medium">{doc.name}</h3>
           <p className="text-sm text-gray-500 mb-1">{doc.size} • Updated {doc.lastUpdated}</p>
+          {isLiveEnvironment && (
+            <p className="text-xs text-blue-600 mb-1">
+              🌐 Live Environment - ID: {doc.id.substring(0, 8)}...
+            </p>
+          )}
           {doc.description && (
             <p className="text-sm text-gray-700 mt-1 mb-2 bg-gray-50 p-2 rounded border border-gray-100">
               {doc.description}
@@ -69,7 +77,14 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
           <Download className="h-4 w-4 mr-1" />
           Download
         </Button>
-        <Button variant="outline" size="sm" onClick={() => onDelete(doc.path, doc.name)}>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => {
+            console.log('Manual delete triggered for:', { path: doc.path, name: doc.name, id: doc.id });
+            onDelete(doc.path, doc.name);
+          }}
+        >
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
