@@ -121,16 +121,15 @@ export const useClientDocuments = (clientId: string) => {
           )
         );
         
-        console.log('Local state updated, description should now be visible');
+        console.log('Local state updated, reloading to verify update');
         
-        // Also reload documents after a short delay to ensure DB consistency
+        // Reload documents to ensure consistency
         setTimeout(() => {
           console.log('Reloading documents to verify description update');
           loadDocuments();
-        }, 1000);
+        }, 500);
       } else {
         console.error('Description update failed');
-        toast.error("Failed to update description. Please try again.");
       }
     } catch (error) {
       console.error("Error saving description:", error);
