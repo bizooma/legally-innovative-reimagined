@@ -297,6 +297,10 @@ export type Database = {
         Args: { user_id: string }
         Returns: boolean
       }
+      update_document_description: {
+        Args: { doc_id: string; new_description: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
