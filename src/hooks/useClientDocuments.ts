@@ -107,17 +107,30 @@ export const useClientDocuments = (clientId: string) => {
     try {
       console.log('Saving description for document:', editingDoc.id, 'with description:', newDescription);
       const success = await updateDocumentDescription(editingDoc.id, newDescription);
+      
       if (success) {
-        toast.success("Description updated successfully");
+        console.log('Description update successful, updating local state');
         setEditDialogOpen(false);
         
-        // Update the document in the local state
-        const updatedDocuments = documents.map(doc => 
-          doc.id === editingDoc.id 
-            ? { ...doc, description: newDescription } 
-            : doc
+        // Update the document in the local state immediately
+        setDocuments(prevDocs => 
+          prevDocs.map(doc => 
+            doc.id === editingDoc.id 
+              ? { ...doc, description: newDescription } 
+              : doc
+          )
         );
-        setDocuments(updatedDocuments);
+        
+        console.log('Local state updated, description should now be visible');
+        
+        // Also reload documents after a short delay to ensure DB consistency
+        setTimeout(() => {
+          console.log('Reloading documents to verify description update');
+          loadDocuments();
+        }, 1000);
+      } else {
+        console.error('Description update failed');
+        toast.error("Failed to update description. Please try again.");
       }
     } catch (error) {
       console.error("Error saving description:", error);

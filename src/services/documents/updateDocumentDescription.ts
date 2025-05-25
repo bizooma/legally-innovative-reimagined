@@ -11,22 +11,18 @@ export async function updateDocumentDescription(documentId: string, description:
     console.log('Document ID:', documentId);
     console.log('New description:', description);
     
-    // Skip all authentication and permission checks - just try the raw SQL function directly
-    console.log('Calling database function directly...');
+    // Call the database function directly - this should bypass RLS
+    console.log('Calling database function update_document_description...');
     const { data: result, error: functionError } = await supabase
       .rpc('update_document_description', { 
         doc_id: documentId, 
         new_description: description 
       });
     
+    console.log('Database function response:', { result, error: functionError });
+    
     if (functionError) {
       console.error('Database function failed:', functionError);
-      console.log('Function error details:', {
-        code: functionError.code,
-        message: functionError.message,
-        details: functionError.details,
-        hint: functionError.hint
-      });
       toast.error(`Update failed: ${functionError.message}`);
       return false;
     }
