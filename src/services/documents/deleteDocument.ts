@@ -59,9 +59,19 @@ export async function deleteDocument(path: string): Promise<boolean> {
       console.log('File deleted from storage successfully');
     }
     
-    // Add a small delay to ensure database changes are propagated
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Verify deletion by trying to fetch the document again
+    const { data: verifyData, error: verifyError } = await supabase
+      .from('documents')
+      .select('id')
+      .eq('file_path', path)
+      .maybeSingle();
     
+    if (verifyData) {
+      console.error('Document still exists in database after deletion attempt');
+      return false;
+    }
+    
+    console.log('Document deletion verified - record no longer exists in database');
     return true;
   } catch (error: any) {
     console.error('Error deleting document:', error);

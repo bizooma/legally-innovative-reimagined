@@ -14,6 +14,7 @@ export const useClientDocuments = (clientId: string) => {
     setIsLoading(true);
     try {
       const docs = await fetchClientDocuments(clientId);
+      console.log('Documents loaded from database:', docs);
       setDocuments(docs);
     } catch (error) {
       console.error('Error loading documents:', error);
@@ -40,27 +41,30 @@ export const useClientDocuments = (clientId: string) => {
 
     console.log('Attempting to delete document:', { docPath, docName });
     
-    // Immediately remove from local state for better UX
-    const originalDocuments = [...documents];
-    setDocuments(prev => prev.filter(doc => doc.path !== docPath));
-    
     try {
       const success = await deleteClientDocument(docPath);
       if (success) {
+        console.log('Document deleted successfully from backend');
         toast.success(`"${docName}" deleted successfully`);
-        // Force a fresh reload to ensure consistency
+        
+        // Immediately update local state and then reload to ensure consistency
+        setDocuments(prev => {
+          const filtered = prev.filter(doc => doc.path !== docPath);
+          console.log('Updated local documents state:', filtered);
+          return filtered;
+        });
+        
+        // Force a fresh reload after a short delay to ensure backend consistency
         setTimeout(async () => {
+          console.log('Reloading documents from database after deletion...');
           await loadDocuments();
-        }, 500); // Small delay to ensure backend has processed the deletion
+        }, 1000);
       } else {
-        // Restore original state if deletion failed
-        setDocuments(originalDocuments);
+        console.error('Document deletion failed');
         toast.error(`Failed to delete "${docName}"`);
       }
     } catch (error) {
       console.error('Delete error in handler:', error);
-      // Restore original state if deletion failed
-      setDocuments(originalDocuments);
       toast.error(`Error deleting "${docName}"`);
     }
   };
