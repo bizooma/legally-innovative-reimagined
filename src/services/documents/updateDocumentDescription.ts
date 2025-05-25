@@ -27,6 +27,27 @@ export async function updateDocumentDescription(documentId: string, description:
     }
     
     console.log('Authenticated user:', session.user.id);
+    console.log('Session details:', {
+      access_token: session.access_token ? 'Present' : 'Missing',
+      refresh_token: session.refresh_token ? 'Present' : 'Missing',
+      expires_at: session.expires_at,
+      user_role: session.user.role
+    });
+    
+    // Test basic database connectivity
+    console.log('Testing basic database connection...');
+    const { data: testData, error: testError } = await supabase
+      .from('documents')
+      .select('count')
+      .limit(1);
+    
+    if (testError) {
+      console.error('Basic database test failed:', testError);
+      toast.error('Database connection issue');
+      return false;
+    }
+    
+    console.log('Database connection test passed');
     
     // First, verify the document exists
     console.log('Checking if document exists...');
@@ -44,32 +65,46 @@ export async function updateDocumentDescription(documentId: string, description:
     
     console.log('Found document:', existingDoc);
     
-    // Update the document description in the database with explicit timestamp
-    console.log('Performing update...');
-    const { data, error } = await supabase
+    // Try a simple update first without the timestamp
+    console.log('Attempting simple update without timestamp...');
+    const { data: simpleData, error: simpleError } = await supabase
       .from('documents')
-      .update({ 
-        description: description,
-        updated_at: new Date().toISOString()
-      })
+      .update({ description: description })
       .eq('id', documentId)
       .select()
       .single();
     
-    if (error) {
-      console.error('Database update error:', error);
-      console.log('Update error details:', {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        hint: error.hint
+    if (simpleError) {
+      console.error('Simple update failed:', simpleError);
+      console.log('Simple update error details:', {
+        code: simpleError.code,
+        message: simpleError.message,
+        details: simpleError.details,
+        hint: simpleError.hint
       });
-      toast.error(`Failed to update description: ${error.message}`);
-      return false;
+      
+      // Try an even more basic update with raw SQL
+      console.log('Trying raw SQL update...');
+      const { data: rawData, error: rawError } = await supabase
+        .rpc('update_document_description', { 
+          doc_id: documentId, 
+          new_description: description 
+        });
+      
+      if (rawError) {
+        console.error('Raw SQL update also failed:', rawError);
+        toast.error(`All update methods failed: ${simpleError.message}`);
+        return false;
+      }
+      
+      console.log('Raw SQL update succeeded:', rawData);
+      toast.success('Description updated successfully (via raw SQL)');
+      return true;
     }
     
-    console.log('Document description updated successfully:', data);
+    console.log('Simple update succeeded:', simpleData);
     console.log('=== UPDATE DOCUMENT DESCRIPTION SUCCESS ===');
+    toast.success('Description updated successfully');
     return true;
   } catch (error: any) {
     console.error('=== UPDATE DOCUMENT DESCRIPTION FAILED ===');
