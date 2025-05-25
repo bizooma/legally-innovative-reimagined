@@ -98,14 +98,53 @@ export function useDashboard() {
     }));
   };
 
-  // Handle logout
+  // Handle logout with improved error handling
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    toast({
-      title: "Logged Out",
-      description: "You have been successfully logged out",
-    });
-    navigate('/portal');
+    try {
+      console.log('Starting logout process...');
+      
+      // Clear local state first
+      setUser(null);
+      setClients([]);
+      setIsAdmin(false);
+      
+      // Attempt to sign out from Supabase
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        console.error('Logout error:', error);
+        // Even if there's an error, we still want to redirect and clear local state
+        toast({
+          title: "Logged Out",
+          description: "You have been logged out (with warnings)",
+          variant: "default",
+        });
+      } else {
+        console.log('Logout successful');
+        toast({
+          title: "Logged Out",
+          description: "You have been successfully logged out",
+        });
+      }
+      
+      // Always navigate to portal regardless of logout result
+      navigate('/portal');
+      
+    } catch (error: any) {
+      console.error('Unexpected logout error:', error);
+      
+      // Clear local state and redirect even on error
+      setUser(null);
+      setClients([]);
+      setIsAdmin(false);
+      
+      toast({
+        title: "Logged Out",
+        description: "Session ended",
+      });
+      
+      navigate('/portal');
+    }
   };
 
   return {
