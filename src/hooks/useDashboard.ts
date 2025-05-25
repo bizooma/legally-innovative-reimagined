@@ -98,42 +98,55 @@ export function useDashboard() {
     }));
   };
 
-  // Handle logout with improved error handling
+  // Handle logout with improved session error handling
   const handleLogout = async () => {
     try {
       console.log('Starting logout process...');
       
-      // Clear local state first
+      // Clear local state immediately
       setUser(null);
       setClients([]);
       setIsAdmin(false);
       
-      // Attempt to sign out from Supabase
+      // Check if we have a valid session before attempting logout
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session) {
+        console.log('No valid session found, proceeding with local logout');
+        toast({
+          title: "Logged Out",
+          description: "You have been logged out",
+        });
+        navigate('/portal');
+        return;
+      }
+      
+      // Attempt to sign out from Supabase only if we have a valid session
+      console.log('Valid session found, attempting Supabase logout...');
       const { error } = await supabase.auth.signOut();
       
       if (error) {
         console.error('Logout error:', error);
-        // Even if there's an error, we still want to redirect and clear local state
-        toast({
-          title: "Logged Out",
-          description: "You have been logged out (with warnings)",
-          variant: "default",
-        });
+        // Don't treat session errors as failures since we're logging out anyway
+        if (error.message?.includes('session') || error.message?.includes('Session')) {
+          console.log('Session-related logout error, treating as successful logout');
+        }
       } else {
         console.log('Logout successful');
-        toast({
-          title: "Logged Out",
-          description: "You have been successfully logged out",
-        });
       }
       
-      // Always navigate to portal regardless of logout result
+      toast({
+        title: "Logged Out", 
+        description: "You have been successfully logged out",
+      });
+      
+      // Always navigate to portal
       navigate('/portal');
       
     } catch (error: any) {
       console.error('Unexpected logout error:', error);
       
-      // Clear local state and redirect even on error
+      // Ensure we still clear state and redirect on any error
       setUser(null);
       setClients([]);
       setIsAdmin(false);
