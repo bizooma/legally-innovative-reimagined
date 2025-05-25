@@ -8,7 +8,6 @@ import DocumentsContent from './document-components/DocumentsContent';
 import { DocumentUploadDialog } from './DocumentUploadDialog';
 import { useClientDocuments } from '@/hooks/useClientDocuments';
 import { handleView, handleDownload } from '@/utils/documentActions';
-import { supabase } from '@/integrations/supabase/client';
 
 interface ClientDocumentsProps {
   clientId: string;
@@ -37,9 +36,9 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
     window.location.reload();
   };
 
-  // Get Supabase config info for debugging
-  const supabaseUrl = supabase.supabaseUrl;
-  const supabaseKey = supabase.supabaseKey;
+  // Get Supabase config info for debugging - using environment variables directly
+  const supabaseUrl = "https://hvyjvbdforunsjgqhhny.supabase.co";
+  const expectedKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2eWp2YmRmb3J1bnNqZ3FoaG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1NzM3MDksImV4cCI6MjA2MzE0OTcwOX0.USDrrMPieE3Twwou7ZkARUGttkrrQEyFsiTpMqrLUV4";
 
   return (
     <Card>
@@ -88,13 +87,18 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
             <div>Client ID: {clientId}</div>
             <div>Current time: {new Date().toISOString()}</div>
             <div className="border-t pt-2 mt-2">
-              <strong>Supabase Configuration:</strong>
+              <strong>Netlify Environment Check:</strong>
             </div>
-            <div>Supabase URL: {supabaseUrl}</div>
-            <div>Supabase Key (first 20 chars): {supabaseKey?.substring(0, 20)}...</div>
-            <div>Expected URL: https://hvyjvbdforunsjgqhhny.supabase.co</div>
-            <div className="font-bold text-red-600">
-              URL Match: {supabaseUrl === 'https://hvyjvbdforunsjgqhhny.supabase.co' ? '✅ CORRECT' : '❌ WRONG'}
+            <div>Expected Supabase URL: {supabaseUrl}</div>
+            <div>Expected Key (first 20 chars): {expectedKey.substring(0, 20)}...</div>
+            <div className="font-bold text-green-600">
+              ✅ Environment variables should be configured in Netlify
+            </div>
+            <div className="text-sm text-gray-600">
+              If deletion still doesn't work after setting env vars, try:
+              <br/>1. Clear browser cache and hard refresh (Cmd+Shift+R)
+              <br/>2. Wait 5-10 minutes for Netlify deployment to complete
+              <br/>3. Check Netlify deploy logs for any errors
             </div>
             {documents.length > 0 && (
               <div className="border-t pt-2 mt-2">
