@@ -13,9 +13,17 @@ export const useClientDocuments = (clientId: string) => {
   const loadDocuments = async () => {
     setIsLoading(true);
     try {
+      console.log('=== DEBUGGING DOCUMENT FETCH ===');
+      console.log('Environment:', window.location.hostname);
       console.log('Loading documents for client:', clientId);
+      console.log('Current timestamp:', new Date().toISOString());
+      
       const docs = await fetchClientDocuments(clientId);
       console.log('Documents loaded from database:', docs);
+      console.log('Number of documents found:', docs.length);
+      console.log('Document IDs:', docs.map(d => d.id));
+      console.log('=== END DEBUGGING ===');
+      
       setDocuments(docs);
     } catch (error) {
       console.error('Error loading documents:', error);

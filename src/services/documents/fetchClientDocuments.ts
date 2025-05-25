@@ -9,7 +9,10 @@ import { BUCKET_NAME } from '@/config/documentConfig';
  */
 export async function fetchClientDocuments(clientId: string): Promise<Document[]> {
   try {
+    console.log('=== DEBUGGING DATABASE QUERY ===');
     console.log('Fetching documents for client:', clientId);
+    console.log('Supabase URL:', supabase.supabaseUrl);
+    console.log('Query timestamp:', new Date().toISOString());
     
     // Fetch documents from database
     const { data, error } = await supabase
@@ -18,17 +21,21 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
       .eq('client_id', clientId)
       .order('created_at', { ascending: false });
     
+    console.log('Database query response:', { data, error });
+    console.log('Raw data length:', data?.length || 0);
+    
     if (error) {
       console.error('Error fetching documents:', error);
       throw error;
     }
     
     if (!data || data.length === 0) {
-      console.log('No documents found for client');
+      console.log('No documents found for client in database');
       return [];
     }
     
-    console.log(`Found ${data.length} documents for client`);
+    console.log(`Found ${data.length} documents for client in database`);
+    console.log('Document details:', data.map(d => ({ id: d.id, name: d.name, created_at: d.created_at })));
     
     // Map database records to Document interface
     const documents: Document[] = data.map((record) => {
@@ -50,6 +57,7 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
     });
     
     console.log('Mapped documents:', documents);
+    console.log('=== END DATABASE DEBUGGING ===');
     return documents;
   } catch (error: any) {
     console.error('Error in fetchClientDocuments:', error);
