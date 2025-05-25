@@ -19,9 +19,25 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
     const { data: { session }, error: authError } = await supabase.auth.getSession();
     console.log('Auth session:', session ? 'authenticated' : 'not authenticated');
     console.log('User ID:', session?.user?.id || 'none');
+    console.log('User email:', session?.user?.email || 'none');
     if (authError) {
       console.error('Auth error:', authError);
     }
+    
+    if (!session?.user) {
+      console.error('No authenticated user found');
+      toast.error('You must be logged in to view documents');
+      return [];
+    }
+    
+    // Check user admin status for debugging
+    const { data: userData } = await supabase
+      .from('users')
+      .select('is_admin')
+      .eq('id', session.user.id)
+      .maybeSingle();
+    
+    console.log('User admin status:', userData?.is_admin || false);
     
     // Fetch documents from database
     console.log('Executing database query...');
@@ -43,15 +59,23 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
         details: error.details,
         hint: error.hint
       });
-      throw error;
+      
+      // Provide more helpful error messages based on the error
+      if (error.message?.includes('permission') || error.message?.includes('policy')) {
+        console.error('RLS policy error - user may not have permission to view documents');
+        toast.error('You do not have permission to view these documents. Please contact an administrator.');
+      } else {
+        toast.error(`Failed to fetch documents: ${error.message}`);
+      }
+      return [];
     }
     
     if (!data || data.length === 0) {
       console.log('❌ NO DOCUMENTS FOUND in database for client:', clientId);
       console.log('This could indicate:');
-      console.log('1. Wrong client ID being used');
-      console.log('2. Documents exist but user lacks permissions');
-      console.log('3. Documents are in a different environment/database');
+      console.log('1. No documents have been uploaded for this client');
+      console.log('2. Documents exist but user lacks permissions (RLS policy issue)');
+      console.log('3. Wrong client ID being used');
       return [];
     }
     
