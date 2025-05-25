@@ -10,6 +10,7 @@ export function useDashboard() {
   const { toast } = useToast();
   const [clients, setClients] = useState<Client[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [stats, setStats] = useState({
     activeClients: 0,
     pendingApprovals: 0,
@@ -17,7 +18,7 @@ export function useDashboard() {
   });
   const [user, setUser] = useState<any>(null);
 
-  // Check auth status
+  // Check auth status and admin permissions
   useEffect(() => {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -25,12 +26,24 @@ export function useDashboard() {
       if (!session) {
         toast({
           title: "Authentication Required",
-          description: "Please login to access the admin dashboard",
+          description: "Please login to access the dashboard",
           variant: "destructive",
         });
         navigate('/portal');
-      } else {
-        setUser(session.user);
+        return;
+      }
+      
+      setUser(session.user);
+      
+      // Check if user is admin
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('is_admin')
+        .eq('id', session.user.id)
+        .maybeSingle();
+        
+      if (!userError && userData) {
+        setIsAdmin(userData.is_admin || false);
       }
     };
     
@@ -75,8 +88,9 @@ export function useDashboard() {
     }
   }, [user, toast]);
 
-  // Handle adding a new client
+  // Handle adding a new client (admin only)
   const handleAddClient = (client: Client) => {
+    if (!isAdmin) return;
     setClients(prev => [client, ...prev]);
     setStats(prev => ({
       ...prev,
@@ -99,6 +113,7 @@ export function useDashboard() {
     isLoading,
     stats,
     user,
+    isAdmin,
     handleAddClient,
     handleLogout
   };

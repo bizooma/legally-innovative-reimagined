@@ -12,9 +12,15 @@ interface ClientDirectoryProps {
   clients: Client[];
   isLoading: boolean;
   onClientAdded: (client: Client) => void;
+  isAdmin?: boolean;
 }
 
-export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoading, onClientAdded }) => {
+export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ 
+  clients, 
+  isLoading, 
+  onClientAdded,
+  isAdmin = false
+}) => {
   const navigate = useNavigate();
   
   const handleViewDetails = (clientId: string) => {
@@ -22,6 +28,9 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoa
   };
   
   const handleLogoUpdated = async (clientId: string, logoUrl: string) => {
+    // Only allow logo updates for admins
+    if (!isAdmin) return;
+    
     // Find and update the client in the local state
     const updatedClients = clients.map(client => 
       client.id === clientId ? { ...client, logo_url: logoUrl } : client
@@ -36,9 +45,11 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoa
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle>Client Directory</CardTitle>
-          <CardDescription>All registered portal clients</CardDescription>
+          <CardDescription>
+            {isAdmin ? 'All registered portal clients' : 'View client workspaces and projects'}
+          </CardDescription>
         </div>
-        <AddClientDialog onClientAdded={onClientAdded} />
+        {isAdmin && <AddClientDialog onClientAdded={onClientAdded} />}
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -48,12 +59,26 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoa
             {clients.map(client => (
               <div key={client.id} className="flex justify-between items-center p-4 border rounded-md hover:bg-gray-50">
                 <div className="flex items-center gap-4">
-                  <ClientLogoUploader 
-                    clientId={client.id}
-                    existingLogoUrl={client.logo_url}
-                    onLogoUpdated={(logoUrl) => handleLogoUpdated(client.id, logoUrl)}
-                    size="sm"
-                  />
+                  {isAdmin ? (
+                    <ClientLogoUploader 
+                      clientId={client.id}
+                      existingLogoUrl={client.logo_url}
+                      onLogoUpdated={(logoUrl) => handleLogoUpdated(client.id, logoUrl)}
+                      size="sm"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
+                      {client.logo_url ? (
+                        <img 
+                          src={client.logo_url} 
+                          alt={`${client.company_name} logo`}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-xs text-gray-400">Logo</span>
+                      )}
+                    </div>
+                  )}
                   <div>
                     <h3 className="font-medium">{client.company_name}</h3>
                     <p className="text-sm text-gray-500">{client.contact_name} • {client.contact_email}</p>
@@ -72,7 +97,12 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({ clients, isLoa
           </div>
         ) : (
           <div className="flex items-center justify-center py-8 text-center text-gray-500">
-            <p>No clients yet. Click "Add New Client" to get started</p>
+            <p>
+              {isAdmin 
+                ? 'No clients yet. Click "Add New Client" to get started' 
+                : 'No clients available to view'
+              }
+            </p>
           </div>
         )}
       </CardContent>

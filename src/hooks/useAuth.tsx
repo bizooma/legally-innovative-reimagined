@@ -35,45 +35,14 @@ export function useAuth() {
       
       console.log('useAuth: Supabase auth successful');
       
-      // Check if user is admin or client
-      const { data: userData, error: userError } = await supabase
-        .from('users')
-        .select('*, clients(*)')
-        .eq('id', data.user?.id)
-        .maybeSingle();
-        
-      if (userError) {
-        console.error('Error fetching user data:', userError);
-        toast({
-          title: "Login Successful",
-          description: "User data could not be fully loaded",
-        });
-        navigate('/portal/client-dashboard');
-        return;
-      }
-        
-      if (userData?.is_admin) {
-        console.log('useAuth: User is admin in database');
-        toast({
-          title: "Login Successful",
-          description: "You have been logged in as an administrator.",
-        });
-        navigate('/portal/admin-dashboard');
-      } else if (userData?.client_id) {
-        console.log('useAuth: User has client_id:', userData.client_id);
-        toast({
-          title: "Login Successful",
-          description: "Welcome to your client workspace.",
-        });
-        navigate(`/portal/client/${userData.client_id}`);
-      } else {
-        console.log('useAuth: Regular client user');
-        toast({
-          title: "Login Successful",
-          description: "You have been logged in successfully.",
-        });
-        navigate('/portal/client-dashboard');
-      }
+      // Route all users to admin dashboard - they'll see appropriate features based on their permissions
+      console.log('useAuth: Routing user to admin dashboard');
+      toast({
+        title: "Login Successful",
+        description: "Welcome to your dashboard.",
+      });
+      navigate('/portal/admin-dashboard');
+      
     } catch (error: any) {
       console.error("Login error:", error);
       toast({

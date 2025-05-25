@@ -8,6 +8,7 @@ import DocumentsContent from './document-components/DocumentsContent';
 import { DocumentUploadDialog } from './DocumentUploadDialog';
 import { useClientDocuments } from '@/hooks/useClientDocuments';
 import { handleView, handleDownload } from '@/utils/documentActions';
+import { useAdminStatus } from '@/hooks/staff/useAdminStatus';
 
 interface ClientDocumentsProps {
   clientId: string;
@@ -28,6 +29,7 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
     handleSaveDescription
   } = useClientDocuments(clientId);
 
+  const { isAdmin } = useAdminStatus();
   const [showDebug, setShowDebug] = useState(false);
   const isLiveEnvironment = window.location.hostname !== 'localhost' && !window.location.hostname.includes('lovable.app');
 
@@ -46,21 +48,23 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
         <div>
           <CardTitle>Client Documents</CardTitle>
           <CardDescription>
-            Manage and share documents
+            {isAdmin ? 'Manage and share documents' : 'View and download documents'}
             {isLiveEnvironment && (
               <span className="ml-2 text-blue-600 font-medium">🌐 Live Environment</span>
             )}
           </CardDescription>
         </div>
         <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => setShowDebug(!showDebug)}
-          >
-            <Bug className="h-4 w-4 mr-1" />
-            Debug
-          </Button>
+          {isAdmin && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => setShowDebug(!showDebug)}
+            >
+              <Bug className="h-4 w-4 mr-1" />
+              Debug
+            </Button>
+          )}
           <Button 
             variant="outline" 
             size="sm" 
@@ -69,14 +73,16 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
             <RefreshCw className="h-4 w-4 mr-1" />
             Force Refresh
           </Button>
-          <DocumentUploadDialog 
-            clientId={clientId} 
-            onDocumentUploaded={handleDocumentUploaded}
-          />
+          {isAdmin && (
+            <DocumentUploadDialog 
+              clientId={clientId} 
+              onDocumentUploaded={handleDocumentUploaded}
+            />
+          )}
         </div>
       </CardHeader>
       <CardContent>
-        {showDebug && (
+        {showDebug && isAdmin && (
           <div className="mb-4 p-3 bg-gray-100 rounded text-xs space-y-2">
             <div><strong>Environment Debug Info:</strong></div>
             <div>Environment: {isLiveEnvironment ? 'Live' : 'Preview'}</div>
@@ -114,21 +120,23 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
           isLoading={isLoading}
           clientId={clientId}
           onDocumentUploaded={handleDocumentUploaded}
-          onEdit={openEditDialog}
+          onEdit={isAdmin ? openEditDialog : undefined}
           onView={handleView}
           onDownload={handleDownload}
-          onDelete={handleDelete}
+          onDelete={isAdmin ? handleDelete : undefined}
         />
       </CardContent>
 
-      <DocumentEditDialog
-        open={editDialogOpen}
-        onOpenChange={setEditDialogOpen}
-        document={editingDoc}
-        description={newDescription}
-        onDescriptionChange={setNewDescription}
-        onSave={handleSaveDescription}
-      />
+      {isAdmin && (
+        <DocumentEditDialog
+          open={editDialogOpen}
+          onOpenChange={setEditDialogOpen}
+          document={editingDoc}
+          description={newDescription}
+          onDescriptionChange={setNewDescription}
+          onSave={handleSaveDescription}
+        />
+      )}
     </Card>
   );
 };

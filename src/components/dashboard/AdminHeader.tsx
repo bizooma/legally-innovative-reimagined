@@ -2,37 +2,38 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
-import { AddClientContactDialog } from '@/components/portal/AddClientContactDialog';
-import { ChangePasswordDialog } from '@/components/auth/ChangePasswordDialog';
 import { Client } from '@/types/database';
-import { useNavigate } from 'react-router-dom';
 
 interface AdminHeaderProps {
   onClientAdded: (client: Client) => void;
-  onLogout: () => Promise<void>;
+  onLogout: () => void;
   clients: Client[];
+  isAdmin?: boolean;
 }
 
-export const AdminHeader: React.FC<AdminHeaderProps> = ({ onClientAdded, onLogout, clients }) => {
-  const navigate = useNavigate();
-  
+export const AdminHeader: React.FC<AdminHeaderProps> = ({ 
+  onClientAdded, 
+  onLogout, 
+  clients,
+  isAdmin = false
+}) => {
   return (
     <div className="flex justify-between items-center mb-8">
       <div>
-        <h1 className="text-4xl font-playfair font-bold">Admin Dashboard</h1>
-        <p className="text-gray-600">Welcome, Joe from Bizooma</p>
+        <h1 className="text-4xl font-playfair font-bold">
+          {isAdmin ? 'Admin Dashboard' : 'Dashboard'}
+        </h1>
+        <p className="text-gray-600">
+          {isAdmin 
+            ? `Managing ${clients.length} clients` 
+            : `Viewing ${clients.length} clients`
+          }
+        </p>
       </div>
       <div className="flex gap-3">
-        <AddClientDialog onClientAdded={onClientAdded} />
-        <AddClientContactDialog clients={clients} />
-        <ChangePasswordDialog />
-        <Button 
-          variant="outline" 
-          onClick={() => navigate('/portal')}
-          className="bg-white hover:bg-gray-100"
-        >
-          Back to Portal
-        </Button>
+        {isAdmin && (
+          <AddClientDialog onClientAdded={onClientAdded} />
+        )}
         <Button 
           variant="outline"
           onClick={onLogout}

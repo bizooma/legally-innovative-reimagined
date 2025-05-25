@@ -9,7 +9,7 @@ import { AdminHeader } from '@/components/dashboard/AdminHeader';
 import { useDashboard } from '@/hooks/useDashboard';
 
 const AdminDashboard = () => {
-  const { clients, isLoading, stats, user, handleAddClient, handleLogout } = useDashboard();
+  const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
 
   if (isLoading && !user) {
     return (
@@ -30,6 +30,7 @@ const AdminDashboard = () => {
               onClientAdded={handleAddClient}
               onLogout={handleLogout}
               clients={clients}
+              isAdmin={isAdmin}
             />
 
             {/* Dashboard Stats */}
@@ -44,6 +45,7 @@ const AdminDashboard = () => {
               clients={clients} 
               isLoading={isLoading}
               onClientAdded={handleAddClient}
+              isAdmin={isAdmin}
             />
             
             {/* Recent Activity - Moved below Client Directory */}
