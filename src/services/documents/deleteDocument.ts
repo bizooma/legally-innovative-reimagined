@@ -112,9 +112,8 @@ export async function deleteDocument(path: string): Promise<boolean> {
       if (storageError) {
         console.error(`Storage deletion attempt ${storageAttempts} failed:`, storageError);
         console.log('Storage error details:', {
-          statusCode: storageError.statusCode,
-          error: storageError.error,
-          message: storageError.message
+          message: storageError.message,
+          name: storageError.name
         });
         
         if (storageAttempts < maxStorageAttempts) {
