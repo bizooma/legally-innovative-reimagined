@@ -59,6 +59,9 @@ export async function deleteDocument(path: string): Promise<boolean> {
       console.log('File deleted from storage successfully');
     }
     
+    // Add a small delay to ensure database changes are propagated
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
     return true;
   } catch (error: any) {
     console.error('Error deleting document:', error);

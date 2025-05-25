@@ -40,19 +40,27 @@ export const useClientDocuments = (clientId: string) => {
 
     console.log('Attempting to delete document:', { docPath, docName });
     
+    // Immediately remove from local state for better UX
+    const originalDocuments = [...documents];
+    setDocuments(prev => prev.filter(doc => doc.path !== docPath));
+    
     try {
       const success = await deleteClientDocument(docPath);
       if (success) {
         toast.success(`"${docName}" deleted successfully`);
-        // Immediately remove from local state for better UX
-        setDocuments(prev => prev.filter(doc => doc.path !== docPath));
-        // Also reload to ensure consistency
-        await loadDocuments();
+        // Force a fresh reload to ensure consistency
+        setTimeout(async () => {
+          await loadDocuments();
+        }, 500); // Small delay to ensure backend has processed the deletion
       } else {
+        // Restore original state if deletion failed
+        setDocuments(originalDocuments);
         toast.error(`Failed to delete "${docName}"`);
       }
     } catch (error) {
       console.error('Delete error in handler:', error);
+      // Restore original state if deletion failed
+      setDocuments(originalDocuments);
       toast.error(`Error deleting "${docName}"`);
     }
   };
