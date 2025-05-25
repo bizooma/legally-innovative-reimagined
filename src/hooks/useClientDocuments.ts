@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Document, fetchClientDocuments, deleteClientDocument, updateDocumentDescription } from '@/services/documentService';
 import { toast } from 'sonner';
@@ -13,16 +12,22 @@ export const useClientDocuments = (clientId: string) => {
   const loadDocuments = async () => {
     setIsLoading(true);
     try {
-      console.log('=== DEBUGGING DOCUMENT FETCH ===');
-      console.log('Environment:', window.location.hostname);
-      console.log('Loading documents for client:', clientId);
-      console.log('Current timestamp:', new Date().toISOString());
+      console.log('=== ENVIRONMENT DEBUGGING ===');
+      console.log('Current URL:', window.location.href);
+      console.log('Hostname:', window.location.hostname);
+      console.log('Is Live Site:', window.location.hostname.includes('legallyinnovative.com'));
+      console.log('Is Preview:', window.location.hostname.includes('lovableproject.com'));
+      console.log('Client ID being used:', clientId);
+      console.log('Timestamp:', new Date().toISOString());
+      console.log('=== END ENVIRONMENT DEBUG ===');
       
       const docs = await fetchClientDocuments(clientId);
-      console.log('Documents loaded from database:', docs);
-      console.log('Number of documents found:', docs.length);
+      console.log('=== FETCH RESULTS ===');
+      console.log('Documents returned:', docs);
+      console.log('Document count:', docs.length);
       console.log('Document IDs:', docs.map(d => d.id));
-      console.log('=== END DEBUGGING ===');
+      console.log('Document names:', docs.map(d => d.name));
+      console.log('=== END FETCH RESULTS ===');
       
       setDocuments(docs);
     } catch (error) {
@@ -50,53 +55,34 @@ export const useClientDocuments = (clientId: string) => {
     }
 
     console.log('=== DELETION HANDLER START ===');
+    console.log('Environment:', window.location.hostname);
     console.log('Attempting to delete document:', { docPath, docName });
-    console.log('Current documents count:', documents.length);
+    console.log('Current documents count before delete:', documents.length);
+    console.log('Document to delete path:', docPath);
     
     // Store original state for potential rollback
     const originalDocuments = [...documents];
     
     try {
-      // Optimistically update UI
-      setDocuments(prev => {
-        const filtered = prev.filter(doc => doc.path !== docPath);
-        console.log('Optimistically updated documents:', {
-          before: prev.length,
-          after: filtered.length,
-          removedPath: docPath
-        });
-        return filtered;
-      });
-      
-      console.log('Calling deleteClientDocument...');
+      console.log('Calling deleteClientDocument service...');
       const success = await deleteClientDocument(docPath);
       
+      console.log('Delete service returned:', success);
+      
       if (success) {
-        console.log('✓ Document deleted successfully from backend');
+        console.log('✓ Delete reported as successful');
         toast.success(`"${docName}" deleted successfully`);
         
-        // Wait a moment then force reload to ensure consistency
-        console.log('Scheduling reload to verify deletion...');
-        setTimeout(async () => {
-          console.log('Executing scheduled reload...');
-          try {
-            await loadDocuments();
-            console.log('✓ Reload completed after deletion');
-          } catch (reloadError) {
-            console.error('Error during post-deletion reload:', reloadError);
-          }
-        }, 2000); // Increased delay for live environment
+        // Force immediate reload to check actual database state
+        console.log('Forcing immediate reload to verify deletion...');
+        await loadDocuments();
         
       } else {
-        console.error('❌ Document deletion failed');
-        console.log('Rolling back UI state...');
-        setDocuments(originalDocuments);
+        console.error('❌ Delete service returned false');
         toast.error(`Failed to delete "${docName}"`);
       }
     } catch (error) {
       console.error('❌ Delete error in handler:', error);
-      console.log('Rolling back UI state due to error...');
-      setDocuments(originalDocuments);
       toast.error(`Error deleting "${docName}": ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
     

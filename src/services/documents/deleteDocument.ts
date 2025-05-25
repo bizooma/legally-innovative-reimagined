@@ -8,10 +8,12 @@ import { BUCKET_NAME } from '@/config/documentConfig';
  */
 export async function deleteDocument(path: string): Promise<boolean> {
   try {
-    console.log('=== DELETE DOCUMENT START ===');
+    console.log('=== DELETE DOCUMENT DEBUG START ===');
     console.log('Environment:', window.location.hostname);
-    console.log('Deleting document with path:', path);
+    console.log('Supabase URL:', 'https://hvyjvbdforunsjgqhhny.supabase.co');
+    console.log('Document path to delete:', path);
     console.log('Bucket name:', BUCKET_NAME);
+    console.log('Timestamp:', new Date().toISOString());
     
     // Check authentication state first
     const { data: { session }, error: authError } = await supabase.auth.getSession();
@@ -30,12 +32,14 @@ export async function deleteDocument(path: string): Promise<boolean> {
     console.log('Authenticated user:', session.user.id);
     
     // First, find the document record by file path
-    console.log('Step 1: Finding document in database...');
+    console.log('Step 1: Finding document in database by path...');
     const { data: document, error: findError } = await supabase
       .from('documents')
-      .select('id, file_path, client_id')
+      .select('id, file_path, client_id, name')
       .eq('file_path', path)
       .single();
+    
+    console.log('Document lookup result:', { document, findError });
     
     if (findError) {
       console.error('Error finding document:', findError);
@@ -45,6 +49,16 @@ export async function deleteDocument(path: string): Promise<boolean> {
         details: findError.details,
         hint: findError.hint
       });
+      
+      // Try alternative approach - search all documents to see what exists
+      console.log('Attempting alternative search to see what documents exist...');
+      const { data: allDocs, error: allDocsError } = await supabase
+        .from('documents')
+        .select('id, file_path, name');
+      
+      console.log('All documents in database:', allDocs);
+      console.log('All docs error:', allDocsError);
+      
       toast.error(`Document not found: ${findError.message}`);
       return false;
     }
@@ -64,6 +78,8 @@ export async function deleteDocument(path: string): Promise<boolean> {
       .delete()
       .eq('id', document.id);
     
+    console.log('Database deletion result:', { dbError });
+    
     if (dbError) {
       console.error('Database deletion error:', dbError);
       console.log('DB error details:', {
@@ -76,7 +92,7 @@ export async function deleteDocument(path: string): Promise<boolean> {
       return false;
     }
     
-    console.log('Document deleted from database successfully');
+    console.log('✅ Document deleted from database successfully');
     
     // Verify database deletion immediately
     console.log('Step 3: Verifying database deletion...');
@@ -86,78 +102,50 @@ export async function deleteDocument(path: string): Promise<boolean> {
       .eq('file_path', path)
       .maybeSingle();
     
+    console.log('Database verification result:', { verifyDb, verifyDbError });
+    
     if (verifyDbError) {
       console.error('Database verification error:', verifyDbError);
     } else if (verifyDb) {
-      console.error('WARNING: Document still exists in database after deletion!');
+      console.error('❌ WARNING: Document still exists in database after deletion!');
       return false;
     } else {
-      console.log('✓ Database deletion verified');
+      console.log('✅ Database deletion verified - document no longer exists');
     }
     
-    // Delete from storage with retry mechanism
+    // Delete from storage
     console.log('Step 4: Deleting from storage...');
-    let storageDeleteSuccess = false;
-    let storageAttempts = 0;
-    const maxStorageAttempts = 3;
+    const { error: storageError } = await supabase.storage
+      .from(BUCKET_NAME)
+      .remove([path]);
     
-    while (!storageDeleteSuccess && storageAttempts < maxStorageAttempts) {
-      storageAttempts++;
-      console.log(`Storage deletion attempt ${storageAttempts}/${maxStorageAttempts}`);
-      
-      const { error: storageError } = await supabase.storage
-        .from(BUCKET_NAME)
-        .remove([path]);
-      
-      if (storageError) {
-        console.error(`Storage deletion attempt ${storageAttempts} failed:`, storageError);
-        console.log('Storage error details:', {
-          message: storageError.message,
-          name: storageError.name
-        });
-        
-        if (storageAttempts < maxStorageAttempts) {
-          console.log('Retrying storage deletion...');
-          await new Promise(resolve => setTimeout(resolve, 1000 * storageAttempts));
-        }
-      } else {
-        console.log('✓ File deleted from storage successfully');
-        storageDeleteSuccess = true;
-      }
+    console.log('Storage deletion result:', { storageError });
+    
+    if (storageError) {
+      console.warn('Storage deletion failed:', storageError);
+      console.log('Storage error details:', {
+        message: storageError.message,
+        name: storageError.name
+      });
+      // Don't fail the whole operation for storage issues
+    } else {
+      console.log('✅ File deleted from storage successfully');
     }
     
-    if (!storageDeleteSuccess) {
-      console.warn('Storage deletion failed after all attempts, but database record was removed');
-    }
-    
-    // Final verification - check both database and attempt to access storage
-    console.log('Step 5: Final verification...');
-    const { data: finalVerifyData, error: finalVerifyError } = await supabase
-      .from('documents')
-      .select('id')
-      .eq('file_path', path)
-      .maybeSingle();
-    
-    if (finalVerifyError) {
-      console.error('Final verification error:', finalVerifyError);
-    }
-    
-    if (finalVerifyData) {
-      console.error('CRITICAL: Document still exists in database after deletion attempt');
-      return false;
-    }
-    
-    console.log('✓ Final verification: Document deletion confirmed');
-    console.log('=== DELETE DOCUMENT SUCCESS ===');
+    console.log('✅ DELETE DOCUMENT COMPLETED SUCCESSFULLY');
+    console.log('=== DELETE DOCUMENT DEBUG END ===');
     return true;
   } catch (error: any) {
-    console.error('=== DELETE DOCUMENT FAILED ===');
+    console.error('=== DELETE DOCUMENT ERROR ===');
     console.error('Unexpected error during deletion:', error);
     console.log('Error details:', {
       name: error.name,
       message: error.message,
-      stack: error.stack
+      stack: error.stack,
+      environment: window.location.hostname,
+      path: path
     });
+    console.error('=== END DELETE ERROR ===');
     toast.error(`Delete failed: ${error.message}`);
     return false;
   }

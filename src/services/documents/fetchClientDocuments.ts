@@ -9,42 +9,71 @@ import { BUCKET_NAME } from '@/config/documentConfig';
  */
 export async function fetchClientDocuments(clientId: string): Promise<Document[]> {
   try {
-    console.log('=== DEBUGGING DATABASE QUERY ===');
-    console.log('Fetching documents for client:', clientId);
-    console.log('Supabase URL:', 'https://hvyjvbdforunsjgqhhny.supabase.co');
+    console.log('=== FETCH CLIENT DOCUMENTS DEBUG ===');
+    console.log('Environment URL:', window.location.hostname);
+    console.log('Supabase URL being used:', 'https://hvyjvbdforunsjgqhhny.supabase.co');
+    console.log('Client ID parameter:', clientId);
     console.log('Query timestamp:', new Date().toISOString());
     
+    // Check authentication state
+    const { data: { session }, error: authError } = await supabase.auth.getSession();
+    console.log('Auth session:', session ? 'authenticated' : 'not authenticated');
+    console.log('User ID:', session?.user?.id || 'none');
+    if (authError) {
+      console.error('Auth error:', authError);
+    }
+    
     // Fetch documents from database
+    console.log('Executing database query...');
     const { data, error } = await supabase
       .from('documents')
       .select('*')
       .eq('client_id', clientId)
       .order('created_at', { ascending: false });
     
-    console.log('Database query response:', { data, error });
-    console.log('Raw data length:', data?.length || 0);
+    console.log('Database query response:');
+    console.log('- Data:', data);
+    console.log('- Error:', error);
+    console.log('- Raw data length:', data?.length || 0);
     
     if (error) {
-      console.error('Error fetching documents:', error);
+      console.error('Database query error details:', {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint
+      });
       throw error;
     }
     
     if (!data || data.length === 0) {
-      console.log('No documents found for client in database');
+      console.log('❌ NO DOCUMENTS FOUND in database for client:', clientId);
+      console.log('This could indicate:');
+      console.log('1. Wrong client ID being used');
+      console.log('2. Documents exist but user lacks permissions');
+      console.log('3. Documents are in a different environment/database');
       return [];
     }
     
-    console.log(`Found ${data.length} documents for client in database`);
-    console.log('Document details:', data.map(d => ({ id: d.id, name: d.name, created_at: d.created_at })));
+    console.log(`✅ Found ${data.length} documents in database`);
+    data.forEach((doc, index) => {
+      console.log(`Document ${index + 1}:`, {
+        id: doc.id,
+        name: doc.name,
+        client_id: doc.client_id,
+        created_at: doc.created_at
+      });
+    });
     
     // Map database records to Document interface
+    console.log('Mapping documents with URLs...');
     const documents: Document[] = data.map((record) => {
       // Get public URL for each document
       const { data: urlData } = supabase.storage
         .from(BUCKET_NAME)
         .getPublicUrl(record.file_path);
       
-      return {
+      const mappedDoc = {
         id: record.id,
         name: record.name,
         type: record.file_type,
@@ -54,13 +83,23 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
         url: urlData.publicUrl,
         description: record.description || ''
       };
+      
+      console.log('Mapped document:', mappedDoc);
+      return mappedDoc;
     });
     
-    console.log('Mapped documents:', documents);
-    console.log('=== END DATABASE DEBUGGING ===');
+    console.log('=== END FETCH CLIENT DOCUMENTS DEBUG ===');
     return documents;
   } catch (error: any) {
-    console.error('Error in fetchClientDocuments:', error);
+    console.error('=== FETCH CLIENT DOCUMENTS ERROR ===');
+    console.error('Error details:', {
+      name: error.name,
+      message: error.message,
+      stack: error.stack
+    });
+    console.error('Environment:', window.location.hostname);
+    console.error('Client ID:', clientId);
+    console.error('=== END ERROR DEBUG ===');
     toast.error(`Failed to fetch documents: ${error.message}`);
     return [];
   }
