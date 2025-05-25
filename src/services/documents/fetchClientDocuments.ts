@@ -11,7 +11,7 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
   try {
     console.log('=== DEBUGGING DATABASE QUERY ===');
     console.log('Fetching documents for client:', clientId);
-    console.log('Supabase URL:', supabase.supabaseUrl);
+    console.log('Supabase URL:', 'https://hvyjvbdforunsjgqhhny.supabase.co');
     console.log('Query timestamp:', new Date().toISOString());
     
     // Fetch documents from database
