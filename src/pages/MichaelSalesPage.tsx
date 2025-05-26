@@ -12,8 +12,8 @@ const MichaelSalesPage = () => {
     <div className="min-h-screen">
       <Navbar />
       <MichaelHero />
-      <Services />
       <MichaelEmployeeBio />
+      <Services />
       <MichaelCalendlySection />
       <MichaelCTA />
       <Footer />
