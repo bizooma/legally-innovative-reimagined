@@ -28,6 +28,18 @@ const Navbar = () => {
     };
   }, []);
 
+  // Handle scrolling to section after navigation
+  useEffect(() => {
+    if (isHomePage && location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [isHomePage, location.hash]);
+
   const navLinks = [
     { name: "Home", href: "#home", isExternal: false, path: "/" },
     { name: "About", href: "#about", isExternal: false },
@@ -44,9 +56,10 @@ const Navbar = () => {
 
   const handleNavLinkClick = (link: { name: string; href: string | null; path?: string; isExternal: boolean }) => {
     if (link.path) {
+      // Navigate to specific page
       navigate(link.path);
-    } else if (link.href && !isHomePage) {
-      // If we're not on the home page, navigate to the home page with hash
+    } else if (link.href) {
+      // Navigate to home page with hash
       navigate(`/${link.href}`);
     }
     setMobileMenuOpen(false);
@@ -86,21 +99,15 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ) : (
-              <a
+              <button
                 key={link.name}
-                href={isHomePage ? link.href : `/${link.href}`}
+                onClick={() => handleNavLinkClick(link)}
                 className={`hover:text-legal-primary transition-colors font-medium ${
                   isMichaelPage && !shouldHaveBackground ? "text-white" : "text-legal-dark"
                 }`}
-                onClick={(e) => {
-                  if (!isHomePage && link.href) {
-                    e.preventDefault();
-                    navigate(`/${link.href}`);
-                  }
-                }}
               >
                 {link.name}
-              </a>
+              </button>
             )
           ))}
           <Button 
@@ -137,22 +144,13 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ) : (
-                <a
+                <button
                   key={link.name}
-                  href={isHomePage ? link.href : `/${link.href}`}
-                  className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium"
-                  onClick={(e) => {
-                    if (!isHomePage && link.href) {
-                      e.preventDefault();
-                      navigate(`/${link.href}`);
-                      setMobileMenuOpen(false);
-                    } else {
-                      setMobileMenuOpen(false);
-                    }
-                  }}
+                  onClick={() => handleNavLinkClick(link)}
+                  className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium text-left"
                 >
                   {link.name}
-                </a>
+                </button>
               )
             ))}
             <Button 
