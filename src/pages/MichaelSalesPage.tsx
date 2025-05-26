@@ -196,18 +196,10 @@ const MichaelSalesPage = () => {
           
           <div className="max-w-4xl mx-auto">
             <Card className="p-8 shadow-xl">
-              <div className="bg-gray-100 rounded-lg p-8 min-h-[600px] flex items-center justify-center">
-                <div className="text-center text-gray-600">
-                  <div className="text-6xl mb-4">📅</div>
-                  <h3 className="text-2xl font-bold mb-4">Calendly Calendar Embed</h3>
-                  <p className="text-lg mb-4">
-                    This space is reserved for your Calendly calendar embed.
-                  </p>
-                  <p className="text-sm">
-                    Replace this section with your Calendly embed code.
-                  </p>
-                </div>
-              </div>
+              {/* Calendly inline widget begin */}
+              <div className="calendly-inline-widget" data-url="https://calendly.com/joe-bizooma/30min" style={{minWidth:'320px', height:'700px'}}></div>
+              <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+              {/* Calendly inline widget end */}
             </Card>
           </div>
         </div>
