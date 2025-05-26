@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -155,7 +154,7 @@ const MichaelSalesPage = () => {
                 <div className="p-8 flex flex-col justify-center">
                   <div className="space-y-4">
                     <h3 className="text-2xl font-bold text-legal-dark">
-                      [Employee Name]
+                      Michael Ham
                     </h3>
                     <p className="text-legal-primary font-semibold">
                       Business Development Specialist
