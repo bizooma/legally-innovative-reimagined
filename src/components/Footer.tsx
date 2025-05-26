@@ -19,9 +19,12 @@ const Footer = () => {
                 className="h-12 w-auto object-contain"
               />
             </div>
-            <p className="text-gray-300 mb-4">
-              Transforming legal services through innovation, training, and change management.
-            </p>
+            <div className="mb-4">
+              <h4 className="text-lg font-semibold mb-2 text-legal-accent">Built for Law Firms. Powered by Innovation.</h4>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                We understand the unique challenges law firms face because we work exclusively in the legal space. From trust-building client intake systems to AI-powered content strategies, our services are designed to make your firm more visible, more approachable, and more efficient — without ever compromising compliance.
+              </p>
+            </div>
             <Button 
               variant="outline" 
               size="sm" 
