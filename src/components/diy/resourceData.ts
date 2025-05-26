@@ -25,6 +25,7 @@ export const getResourceData = (): ResourceItem[] => {
       description: "A practical guide to understanding and implementing GDPR requirements in legal marketing.",
       bucketName: "downloads",
       fileName: RESOURCE_FILES.GDPR_GUIDE,
+      displayName: "Legal Marketing GDPR Compliance Guide.pdf",
       buttonText: "Download Guide"
     }
   ];
