@@ -17,6 +17,7 @@ import StaffLogin from "./pages/StaffLogin";
 import StaffDashboard from "./pages/StaffDashboard";
 import ProtectedRoute from "./components/staff/ProtectedRoute";
 import DonutsPage from "./pages/DonutsPage";
+import MichaelSalesPage from "./pages/MichaelSalesPage";
 import { useEffect } from "react";
 
 // Create a new query client
@@ -47,6 +48,9 @@ const App = () => (
             <Routes>
               {/* Donut page with highest priority */}
               <Route path="/donuts" element={<DonutsPage />} />
+              
+              {/* Michael sales page */}
+              <Route path="/michael" element={<MichaelSalesPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />
