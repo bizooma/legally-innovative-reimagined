@@ -1,0 +1,63 @@
+
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+const MichaelEmployeeBio = () => {
+  return (
+    <section className="section-padding">
+      <div className="container mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
+            Meet Your <span className="highlight-text">Business Development Partner</span>
+          </h2>
+        </div>
+        
+        <div className="max-w-4xl mx-auto">
+          <Card className="overflow-hidden shadow-xl">
+            <div className="grid md:grid-cols-2 gap-0">
+              {/* Photo Section */}
+              <div className="bg-gray-100 p-8 flex items-center justify-center">
+                <div className="w-64 h-64 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
+                  {/* Placeholder for employee photo */}
+                  <div className="text-center">
+                    <div className="text-4xl mb-2">👤</div>
+                    <p className="text-sm">Employee Photo</p>
+                    <p className="text-xs">To be added</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Bio Section */}
+              <div className="p-8 flex flex-col justify-center">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold text-legal-dark">
+                    Michael Ham
+                  </h3>
+                  <p className="text-legal-primary font-semibold">
+                    Business Development Specialist
+                  </p>
+                  <div className="space-y-3 text-gray-700">
+                    <p>
+                      [Employee bio paragraph 1 - background and experience]
+                    </p>
+                    <p>
+                      [Employee bio paragraph 2 - expertise and approach]
+                    </p>
+                    <p>
+                      [Employee bio paragraph 3 - commitment to client success]
+                    </p>
+                  </div>
+                  <Button className="mt-6 bg-legal-primary hover:bg-legal-primary/90">
+                    Schedule a Call
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default MichaelEmployeeBio;
