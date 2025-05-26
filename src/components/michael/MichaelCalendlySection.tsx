@@ -2,6 +2,13 @@
 import { Card } from "@/components/ui/card";
 import { useEffect } from "react";
 
+// Extend the Window interface to include Calendly
+declare global {
+  interface Window {
+    Calendly: any;
+  }
+}
+
 const MichaelCalendlySection = () => {
   useEffect(() => {
     // Check if Calendly script is already loaded
