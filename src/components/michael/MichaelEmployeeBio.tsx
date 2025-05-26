@@ -3,6 +3,13 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const MichaelEmployeeBio = () => {
+  const scrollToCalendly = () => {
+    const calendlySection = document.querySelector('.calendly-inline-widget');
+    if (calendlySection) {
+      calendlySection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="section-padding">
       <div className="container mx-auto">
@@ -47,8 +54,11 @@ const MichaelEmployeeBio = () => {
                       [Employee bio paragraph 3 - commitment to client success]
                     </p>
                   </div>
-                  <Button className="mt-6 bg-legal-primary hover:bg-legal-primary/90">
-                    Schedule a Call
+                  <Button 
+                    className="mt-6 bg-legal-primary hover:bg-legal-primary/90"
+                    onClick={scrollToCalendly}
+                  >
+                    Schedule a Meeting
                   </Button>
                 </div>
               </div>
