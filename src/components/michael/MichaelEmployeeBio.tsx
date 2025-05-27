@@ -40,6 +40,9 @@ const MichaelEmployeeBio = () => {
                     Michael Ham
                   </h3>
                   <p className="text-legal-primary font-semibold">
+                    214-808-4760
+                  </p>
+                  <p className="text-legal-primary font-semibold">
                     Business Development Specialist
                   </p>
                   <div className="space-y-3 text-gray-700">
