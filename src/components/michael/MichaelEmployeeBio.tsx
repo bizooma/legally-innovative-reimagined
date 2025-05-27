@@ -24,11 +24,11 @@ const MichaelEmployeeBio = () => {
             <div className="grid md:grid-cols-2 gap-0">
               {/* Photo Section */}
               <div className="bg-gray-100 p-8 flex items-center justify-center">
-                <div className="w-64 h-64 rounded-full overflow-hidden">
+                <div className="w-full max-w-sm">
                   <img 
                     src="/lovable-uploads/924cc48a-722c-40c0-a449-9ae43b8b9134.png"
                     alt="Michael Ham - Business Development Specialist"
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto object-contain rounded-lg"
                   />
                 </div>
               </div>
