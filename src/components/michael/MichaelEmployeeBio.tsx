@@ -62,7 +62,7 @@ const MichaelEmployeeBio = () => {
                   >
                     Schedule a Meeting
                   </Button>
-                  <p className="text-center text-legal-dark font-medium">
+                  <p className="text-center text-legal-dark font-medium text-2xl italic font-serif tracking-wide">
                     Let's Work Together
                   </p>
                 </div>
