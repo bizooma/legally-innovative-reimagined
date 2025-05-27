@@ -24,13 +24,12 @@ const MichaelEmployeeBio = () => {
             <div className="grid md:grid-cols-2 gap-0">
               {/* Photo Section */}
               <div className="bg-gray-100 p-8 flex items-center justify-center">
-                <div className="w-64 h-64 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
-                  {/* Placeholder for employee photo */}
-                  <div className="text-center">
-                    <div className="text-4xl mb-2">👤</div>
-                    <p className="text-sm">Employee Photo</p>
-                    <p className="text-xs">To be added</p>
-                  </div>
+                <div className="w-64 h-64 rounded-full overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/924cc48a-722c-40c0-a449-9ae43b8b9134.png"
+                    alt="Michael Ham - Business Development Specialist"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
               
