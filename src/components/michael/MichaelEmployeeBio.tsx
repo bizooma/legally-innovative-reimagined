@@ -26,7 +26,7 @@ const MichaelEmployeeBio = () => {
               <div className="bg-gray-100 p-8 flex items-center justify-center">
                 <div className="w-full max-w-xs">
                   <img 
-                    src="/lovable-uploads/924cc48a-722c-40c0-a449-9ae43b8b9134.png"
+                    src="/lovable-uploads/26a458f4-c2a1-4548-8dc8-ac6039a1a1e0.png"
                     alt="Michael Ham - Business Development Specialist"
                     className="w-full h-auto object-contain rounded-lg"
                   />
@@ -62,7 +62,7 @@ const MichaelEmployeeBio = () => {
                   >
                     Schedule a Meeting
                   </Button>
-                  <p className="text-center text-legal-dark font-medium text-2xl italic font-serif tracking-wide">
+                  <p className="text-center text-legal-dark font-medium text-3xl italic font-serif tracking-wide">
                     Let's Work Together
                   </p>
                 </div>
