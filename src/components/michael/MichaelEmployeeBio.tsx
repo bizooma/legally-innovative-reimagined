@@ -47,13 +47,7 @@ const MichaelEmployeeBio = () => {
                   </p>
                   <div className="space-y-3 text-gray-700">
                     <p>
-                      [Employee bio paragraph 1 - background and experience]
-                    </p>
-                    <p>
-                      [Employee bio paragraph 2 - expertise and approach]
-                    </p>
-                    <p>
-                      [Employee bio paragraph 3 - commitment to client success]
+                      Michael Ham, a native Texan from Dallas and the youngest of three, is a finance graduate and the first in his large extended family to earn a college degree. This MENSA member brings 30 years of experience in consultative selling, new business development, and leadership. A self-described "rainmaker and mayonnaise avoider," Michael is married with four children and two granddaughters. His interests include golf, travel, and spending time at the beach.
                     </p>
                   </div>
                   <Button 
