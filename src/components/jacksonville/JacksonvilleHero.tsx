@@ -16,7 +16,7 @@ const JacksonvilleHero = () => {
     phone: "",
     accidentType: "",
     justWantSettle: false,
-    wantHighSettlement: false,
+    wantHighSettlement: true,
     description: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -74,7 +74,7 @@ const JacksonvilleHero = () => {
         phone: "",
         accidentType: "",
         justWantSettle: false,
-        wantHighSettlement: false,
+        wantHighSettlement: true,
         description: ""
       });
     } catch (error: any) {
