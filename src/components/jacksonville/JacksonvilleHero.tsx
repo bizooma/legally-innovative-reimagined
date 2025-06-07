@@ -30,10 +30,17 @@ const JacksonvilleHero = () => {
     }));
   };
 
-  const handleCheckboxChange = (name: string) => (checked: boolean) => {
+  const handleSettleCheckboxChange = (value: boolean) => {
     setFormData(prev => ({
       ...prev,
-      [name]: checked
+      justWantSettle: value
+    }));
+  };
+
+  const handleHighSettlementCheckboxChange = (value: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      wantHighSettlement: value
     }));
   };
 
@@ -207,31 +214,57 @@ const JacksonvilleHero = () => {
 
                 <div>
                   <Label>Just want to Settle?</Label>
-                  <div className="flex items-center space-x-2 mt-2">
-                    <Checkbox
-                      id="justWantSettle"
-                      checked={formData.justWantSettle}
-                      onCheckedChange={handleCheckboxChange("justWantSettle")}
-                      disabled={isSubmitting}
-                    />
-                    <Label htmlFor="justWantSettle" className="text-sm font-normal">
-                      Yes
-                    </Label>
+                  <div className="flex items-center space-x-6 mt-2">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="justWantSettleYes"
+                        checked={formData.justWantSettle === true}
+                        onCheckedChange={() => handleSettleCheckboxChange(true)}
+                        disabled={isSubmitting}
+                      />
+                      <Label htmlFor="justWantSettleYes" className="text-sm font-normal">
+                        Yes
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="justWantSettleNo"
+                        checked={formData.justWantSettle === false}
+                        onCheckedChange={() => handleSettleCheckboxChange(false)}
+                        disabled={isSubmitting}
+                      />
+                      <Label htmlFor="justWantSettleNo" className="text-sm font-normal">
+                        No
+                      </Label>
+                    </div>
                   </div>
                 </div>
 
                 <div>
                   <Label>Want to Win more than $250,000</Label>
-                  <div className="flex items-center space-x-2 mt-2">
-                    <Checkbox
-                      id="wantHighSettlement"
-                      checked={formData.wantHighSettlement}
-                      onCheckedChange={handleCheckboxChange("wantHighSettlement")}
-                      disabled={isSubmitting}
-                    />
-                    <Label htmlFor="wantHighSettlement" className="text-sm font-normal">
-                      Yes
-                    </Label>
+                  <div className="flex items-center space-x-6 mt-2">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="wantHighSettlementYes"
+                        checked={formData.wantHighSettlement === true}
+                        onCheckedChange={() => handleHighSettlementCheckboxChange(true)}
+                        disabled={isSubmitting}
+                      />
+                      <Label htmlFor="wantHighSettlementYes" className="text-sm font-normal">
+                        Yes
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="wantHighSettlementNo"
+                        checked={formData.wantHighSettlement === false}
+                        onCheckedChange={() => handleHighSettlementCheckboxChange(false)}
+                        disabled={isSubmitting}
+                      />
+                      <Label htmlFor="wantHighSettlementNo" className="text-sm font-normal">
+                        No
+                      </Label>
+                    </div>
                   </div>
                 </div>
 
