@@ -1,10 +1,10 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -15,6 +15,7 @@ const JacksonvilleHero = () => {
     email: "",
     phone: "",
     accidentType: "",
+    wantHighSettlement: false,
     description: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,6 +26,13 @@ const JacksonvilleHero = () => {
     setFormData(prev => ({
       ...prev,
       [name]: value
+    }));
+  };
+
+  const handleCheckboxChange = (checked: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      wantHighSettlement: checked
     }));
   };
 
@@ -57,6 +65,7 @@ const JacksonvilleHero = () => {
         email: "",
         phone: "",
         accidentType: "",
+        wantHighSettlement: false,
         description: ""
       });
     } catch (error: any) {
@@ -192,6 +201,21 @@ const JacksonvilleHero = () => {
                     <option value="workplace-injury">Workplace Injury</option>
                     <option value="other">Other</option>
                   </select>
+                </div>
+
+                <div>
+                  <Label>Want to Win more than $250,000</Label>
+                  <div className="flex items-center space-x-2 mt-2">
+                    <Checkbox
+                      id="wantHighSettlement"
+                      checked={formData.wantHighSettlement}
+                      onCheckedChange={handleCheckboxChange}
+                      disabled={isSubmitting}
+                    />
+                    <Label htmlFor="wantHighSettlement" className="text-sm font-normal">
+                      Yes
+                    </Label>
+                  </div>
                 </div>
 
                 <div>
