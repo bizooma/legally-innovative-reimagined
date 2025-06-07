@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const JacksonvilleHero = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const JacksonvilleHero = () => {
     accidentType: "",
     description: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -26,22 +28,47 @@ const JacksonvilleHero = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Lead form submitted:", formData);
-    toast({
-      title: "Form Submitted!",
-      description: "We'll connect you with the best Jacksonville attorney for your case.",
-    });
-    // Reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      accidentType: "",
-      description: ""
-    });
+    setIsSubmitting(true);
+    
+    try {
+      console.log("Submitting lead form:", formData);
+      
+      const { data, error } = await supabase.functions.invoke('send-jacksonville-lead', {
+        body: formData
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      console.log("Lead submitted successfully:", data);
+      
+      toast({
+        title: "Form Submitted Successfully!",
+        description: "We'll connect you with the best Jacksonville attorney for your case. You should hear from someone soon.",
+      });
+      
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        accidentType: "",
+        description: ""
+      });
+    } catch (error: any) {
+      console.error("Error submitting lead form:", error);
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your form. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -100,6 +127,7 @@ const JacksonvilleHero = () => {
                       onChange={handleInputChange}
                       required
                       className="mt-1"
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
@@ -111,6 +139,7 @@ const JacksonvilleHero = () => {
                       onChange={handleInputChange}
                       required
                       className="mt-1"
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -125,6 +154,7 @@ const JacksonvilleHero = () => {
                     onChange={handleInputChange}
                     required
                     className="mt-1"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -138,6 +168,7 @@ const JacksonvilleHero = () => {
                     onChange={handleInputChange}
                     required
                     className="mt-1"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -149,7 +180,8 @@ const JacksonvilleHero = () => {
                     value={formData.accidentType}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    disabled={isSubmitting}
+                    className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <option value="">Select accident type</option>
                     <option value="car-accident">Car Accident</option>
@@ -172,14 +204,16 @@ const JacksonvilleHero = () => {
                     placeholder="Please describe what happened..."
                     className="mt-1"
                     rows={4}
+                    disabled={isSubmitting}
                   />
                 </div>
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-legal-primary hover:bg-legal-secondary text-white py-3 text-lg font-semibold"
+                  disabled={isSubmitting}
+                  className="w-full bg-legal-primary hover:bg-legal-secondary text-white py-3 text-lg font-semibold disabled:opacity-50"
                 >
-                  Get My Free Case Evaluation
+                  {isSubmitting ? "Submitting..." : "Get My Free Case Evaluation"}
                 </Button>
 
                 <p className="text-sm text-gray-600 text-center mt-4">
