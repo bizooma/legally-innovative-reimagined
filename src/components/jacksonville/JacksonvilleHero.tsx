@@ -15,6 +15,7 @@ const JacksonvilleHero = () => {
     email: "",
     phone: "",
     accidentType: "",
+    justWantSettle: false,
     wantHighSettlement: false,
     description: ""
   });
@@ -29,10 +30,10 @@ const JacksonvilleHero = () => {
     }));
   };
 
-  const handleCheckboxChange = (checked: boolean) => {
+  const handleCheckboxChange = (name: string) => (checked: boolean) => {
     setFormData(prev => ({
       ...prev,
-      wantHighSettlement: checked
+      [name]: checked
     }));
   };
 
@@ -65,6 +66,7 @@ const JacksonvilleHero = () => {
         email: "",
         phone: "",
         accidentType: "",
+        justWantSettle: false,
         wantHighSettlement: false,
         description: ""
       });
@@ -204,12 +206,27 @@ const JacksonvilleHero = () => {
                 </div>
 
                 <div>
+                  <Label>Just want to Settle?</Label>
+                  <div className="flex items-center space-x-2 mt-2">
+                    <Checkbox
+                      id="justWantSettle"
+                      checked={formData.justWantSettle}
+                      onCheckedChange={handleCheckboxChange("justWantSettle")}
+                      disabled={isSubmitting}
+                    />
+                    <Label htmlFor="justWantSettle" className="text-sm font-normal">
+                      Yes
+                    </Label>
+                  </div>
+                </div>
+
+                <div>
                   <Label>Want to Win more than $250,000</Label>
                   <div className="flex items-center space-x-2 mt-2">
                     <Checkbox
                       id="wantHighSettlement"
                       checked={formData.wantHighSettlement}
-                      onCheckedChange={handleCheckboxChange}
+                      onCheckedChange={handleCheckboxChange("wantHighSettlement")}
                       disabled={isSubmitting}
                     />
                     <Label htmlFor="wantHighSettlement" className="text-sm font-normal">

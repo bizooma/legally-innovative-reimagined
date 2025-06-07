@@ -15,6 +15,7 @@ interface LeadFormData {
   email: string;
   phone: string;
   accidentType: string;
+  justWantSettle: boolean;
   wantHighSettlement: boolean;
   description: string;
 }
@@ -45,6 +46,7 @@ const handler = async (req: Request): Promise<Response> => {
         <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #333; margin-top: 0;">Case Details</h3>
           <p><strong>Accident Type:</strong> ${formData.accidentType}</p>
+          <p><strong>Just want to Settle:</strong> ${formData.justWantSettle ? 'Yes' : 'No'}</p>
           <p><strong>Want to Win more than $250,000:</strong> ${formData.wantHighSettlement ? 'Yes' : 'No'}</p>
           <p><strong>Description:</strong></p>
           <div style="background-color: white; padding: 15px; border-left: 4px solid #d4a574; margin-top: 10px;">
