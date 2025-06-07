@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +17,7 @@ import StaffDashboard from "./pages/StaffDashboard";
 import ProtectedRoute from "./components/staff/ProtectedRoute";
 import DonutsPage from "./pages/DonutsPage";
 import MichaelSalesPage from "./pages/MichaelSalesPage";
+import JacksonvilleAttorneyPage from "./pages/JacksonvilleAttorneyPage";
 import { useEffect } from "react";
 
 // Create a new query client
@@ -51,6 +51,9 @@ const App = () => (
               
               {/* Michael sales page */}
               <Route path="/michael" element={<MichaelSalesPage />} />
+              
+              {/* Jacksonville attorney lead capture page */}
+              <Route path="/this-is-our-jax" element={<JacksonvilleAttorneyPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />
