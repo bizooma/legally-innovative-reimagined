@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Link } from "react-router-dom";
@@ -58,7 +57,8 @@ const Services = () => {
       title: "Lead Generation Systems",
       description: "Implement effective lead generation systems that capture high-quality leads, nurture prospects through automated workflows, and convert potential customers into loyal clients.",
       icon: "🎯",
-      bgImage: "https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=1932&auto=format&fit=crop",
+      link: "/law-firm-lead-generation"
     },
     {
       title: "Voice Experience",

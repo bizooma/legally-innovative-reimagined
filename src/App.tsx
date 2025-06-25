@@ -26,6 +26,7 @@ import AiConsultingPage from "./pages/AiConsultingPage";
 import LawFirmDigitalMarketingPage from "./pages/LawFirmDigitalMarketingPage";
 import GoogleBusinessProfilePage from "./pages/GoogleBusinessProfilePage";
 import LawFirmSeoAeoPage from "./pages/LawFirmSeoAeoPage";
+import LawFirmLeadGenerationPage from "./pages/LawFirmLeadGenerationPage";
 import { useEffect } from "react";
 
 // Create a new query client
@@ -83,6 +84,9 @@ const App = () => (
               
               {/* SEO/AEO/Voice SEO page */}
               <Route path="/law-firm-seo-aeo-voiceseo" element={<LawFirmSeoAeoPage />} />
+              
+              {/* Lead Generation page */}
+              <Route path="/law-firm-lead-generation" element={<LawFirmLeadGenerationPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />
