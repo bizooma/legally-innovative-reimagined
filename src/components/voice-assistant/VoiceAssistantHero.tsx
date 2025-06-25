@@ -9,7 +9,7 @@ const VoiceAssistantHero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Voice Assistant Marketing for <span className="text-legal-accent">Law Firms</span>
+              Voice Assistant Marketing for <span className="text-white">Law Firms</span>
             </h1>
             <p className="text-xl mb-8 text-legal-light leading-relaxed">
               Reach clients where they are with custom voice applications for Amazon Alexa and Google Assistant. 
@@ -19,7 +19,7 @@ const VoiceAssistantHero = () => {
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button 
                 size="lg" 
-                className="bg-legal-accent hover:bg-legal-accent/90 text-white px-8 py-4 text-lg"
+                className="bg-white hover:bg-gray-100 text-legal-primary px-8 py-4 text-lg"
               >
                 Start Voice Assistant Project
               </Button>
@@ -35,23 +35,23 @@ const VoiceAssistantHero = () => {
             <div className="grid grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Mic className="w-8 h-8 text-legal-accent" />
+                  <Mic className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-legal-accent">24/7</div>
+                <div className="text-2xl font-bold text-white">24/7</div>
                 <div className="text-sm text-legal-light">Voice Availability</div>
               </div>
               <div className="text-center">
                 <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <MessageSquare className="w-8 h-8 text-legal-accent" />
+                  <MessageSquare className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-legal-accent">90%</div>
+                <div className="text-2xl font-bold text-white">90%</div>
                 <div className="text-sm text-legal-light">Query Success Rate</div>
               </div>
               <div className="text-center">
                 <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Volume2 className="w-8 h-8 text-legal-accent" />
+                  <Volume2 className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-legal-accent">50M+</div>
+                <div className="text-2xl font-bold text-white">50M+</div>
                 <div className="text-sm text-legal-light">Voice Device Users</div>
               </div>
             </div>
@@ -65,7 +65,7 @@ const VoiceAssistantHero = () => {
                 className="rounded-lg shadow-2xl w-full"
               />
             </div>
-            <div className="absolute -top-4 -right-4 w-full h-full bg-legal-accent/20 rounded-lg"></div>
+            <div className="absolute -top-4 -right-4 w-full h-full bg-white/20 rounded-lg"></div>
           </div>
         </div>
       </div>

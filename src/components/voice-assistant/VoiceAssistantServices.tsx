@@ -51,8 +51,8 @@ const VoiceAssistantServices = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={index} className="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-shadow">
-              <div className="bg-legal-accent/10 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-                <service.icon className="w-8 h-8 text-legal-accent" />
+              <div className="bg-legal-primary/10 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                <service.icon className="w-8 h-8 text-legal-primary" />
               </div>
               <h3 className="text-xl font-bold mb-4 text-legal-dark">{service.title}</h3>
               <p className="text-gray-600 leading-relaxed">{service.description}</p>

@@ -58,9 +58,9 @@ const VoiceAssistantBenefits = () => {
           {benefits.map((benefit, index) => (
             <div key={index} className="text-center">
               <div className="bg-white/10 backdrop-blur-sm rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                <benefit.icon className="w-10 h-10 text-legal-accent" />
+                <benefit.icon className="w-10 h-10 text-white" />
               </div>
-              <div className="text-4xl font-bold text-legal-accent mb-2">{benefit.stat}</div>
+              <div className="text-4xl font-bold text-white mb-2">{benefit.stat}</div>
               <h3 className="text-xl font-semibold mb-3">{benefit.title}</h3>
               <p className="text-legal-light">{benefit.description}</p>
             </div>

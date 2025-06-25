@@ -29,7 +29,7 @@ const DigitalMarketingCTA = () => {
             <div className="space-y-4 mb-8">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-legal-accent mr-3 flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 text-white mr-3 flex-shrink-0" />
                   <span>{benefit}</span>
                 </div>
               ))}
@@ -37,11 +37,11 @@ const DigitalMarketingCTA = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex items-center">
-                <Phone className="w-5 h-5 text-legal-accent mr-2" />
+                <Phone className="w-5 h-5 text-white mr-2" />
                 <span>(555) 123-4567</span>
               </div>
               <div className="flex items-center">
-                <Mail className="w-5 h-5 text-legal-accent mr-2" />
+                <Mail className="w-5 h-5 text-white mr-2" />
                 <span>hello@legallyinnovative.com</span>
               </div>
             </div>
@@ -71,7 +71,7 @@ const DigitalMarketingCTA = () => {
                   <Label htmlFor="website">Current Website</Label>
                   <Input id="website" type="url" placeholder="https://yourfirm.com" className="mt-1" />
                 </div>
-                <Button className="w-full bg-legal-accent hover:bg-legal-accent/90 text-white py-3">
+                <Button className="w-full bg-legal-primary hover:bg-legal-secondary text-white py-3">
                   Get My Free Marketing Audit
                 </Button>
               </form>
