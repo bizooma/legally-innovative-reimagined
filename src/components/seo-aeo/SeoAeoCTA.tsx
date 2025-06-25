@@ -27,21 +27,21 @@ const SeoAeoCTA = () => {
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <div className="text-center">
               <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Search className="w-8 h-8 text-legal-accent" />
+                <Search className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Traditional SEO</h3>
               <p className="text-legal-light">Rank higher on Google & Bing</p>
             </div>
             <div className="text-center">
               <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="w-8 h-8 text-legal-accent" />
+                <TrendingUp className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Answer Engines</h3>
               <p className="text-legal-light">Get featured in AI responses</p>
             </div>
             <div className="text-center">
               <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Mic className="w-8 h-8 text-legal-accent" />
+                <Mic className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Voice Search</h3>
               <p className="text-legal-light">Capture voice query traffic</p>
@@ -53,7 +53,7 @@ const SeoAeoCTA = () => {
             <div className="grid md:grid-cols-2 gap-4 text-left">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-legal-accent flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 text-white flex-shrink-0" />
                   <span>{feature}</span>
                 </div>
               ))}
@@ -63,7 +63,7 @@ const SeoAeoCTA = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-legal-accent hover:bg-legal-accent/90 text-white px-8 py-4 text-lg"
+              className="bg-white hover:bg-gray-100 text-legal-primary px-8 py-4 text-lg"
             >
               Get Free SEO Audit
             </Button>

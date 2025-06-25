@@ -53,13 +53,13 @@ const SeoAeoProcess = () => {
             <div key={index} className="relative">
               <div className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
                 <div className="absolute -top-4 left-6">
-                  <div className="bg-legal-accent text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                  <div className="bg-legal-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
                     {index + 1}
                   </div>
                 </div>
                 <div className="pt-4">
-                  <div className="bg-legal-accent/10 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <step.icon className="w-8 h-8 text-legal-accent" />
+                  <div className="bg-legal-primary/10 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <step.icon className="w-8 h-8 text-legal-primary" />
                   </div>
                   <h3 className="text-xl font-bold mb-4 text-legal-dark">{step.title}</h3>
                   <p className="text-gray-600">{step.description}</p>

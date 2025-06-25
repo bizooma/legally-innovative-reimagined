@@ -9,7 +9,7 @@ const SeoAeoHero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              SEO, AEO & Voice SEO for <span className="text-legal-accent">Law Firms</span>
+              SEO, AEO & Voice SEO for <span className="text-white">Law Firms</span>
             </h1>
             <p className="text-xl mb-8 text-legal-light leading-relaxed">
               Dominate search results with comprehensive SEO, Answer Engine Optimization (AEO), 
@@ -20,7 +20,7 @@ const SeoAeoHero = () => {
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button 
                 size="lg" 
-                className="bg-legal-accent hover:bg-legal-accent/90 text-white px-8 py-4 text-lg"
+                className="bg-white hover:bg-gray-100 text-legal-primary px-8 py-4 text-lg"
               >
                 Get Free SEO Audit
               </Button>
@@ -36,23 +36,23 @@ const SeoAeoHero = () => {
             <div className="grid grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Search className="w-8 h-8 text-legal-accent" />
+                  <Search className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-legal-accent">500%</div>
+                <div className="text-2xl font-bold text-white">500%</div>
                 <div className="text-sm text-legal-light">Organic Traffic Growth</div>
               </div>
               <div className="text-center">
                 <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Mic className="w-8 h-8 text-legal-accent" />
+                  <Mic className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-legal-accent">75%</div>
+                <div className="text-2xl font-bold text-white">75%</div>
                 <div className="text-sm text-legal-light">Voice Search Ready</div>
               </div>
               <div className="text-center">
                 <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <TrendingUp className="w-8 h-8 text-legal-accent" />
+                  <TrendingUp className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-legal-accent">#1</div>
+                <div className="text-2xl font-bold text-white">#1</div>
                 <div className="text-sm text-legal-light">Local Rankings</div>
               </div>
             </div>
@@ -66,7 +66,7 @@ const SeoAeoHero = () => {
                 className="rounded-lg shadow-2xl w-full"
               />
             </div>
-            <div className="absolute -top-4 -right-4 w-full h-full bg-legal-accent/20 rounded-lg"></div>
+            <div className="absolute -top-4 -right-4 w-full h-full bg-white/20 rounded-lg"></div>
           </div>
         </div>
       </div>
