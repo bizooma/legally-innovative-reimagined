@@ -29,7 +29,8 @@ const Services = () => {
       title: "Digital Marketing",
       description: "Comprehensive digital marketing strategies that increase your online visibility, engage your target audience, and convert visitors into loyal customers.",
       icon: "📈",
-      bgImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1932&auto=format&fit=crop",
+      link: "/law-firm-digital-marketing"
     },
     {
       title: "Google Business Profile/Bing Places",
