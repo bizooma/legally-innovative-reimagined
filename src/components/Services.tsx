@@ -44,7 +44,8 @@ const Services = () => {
       title: "SEO/AEO",
       description: "Search Engine Optimization and Answer Engine Optimization services that improve your website's ranking, visibility, and traffic through proven, sustainable techniques.",
       icon: "🔍",
-      bgImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1932&auto=format&fit=crop",
+      link: "/law-firm-seo-aeo-voiceseo"
     },
     {
       title: "Custom AI Chatbot",

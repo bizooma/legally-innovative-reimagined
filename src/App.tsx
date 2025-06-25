@@ -25,6 +25,7 @@ import LawFirmMobileAppDevelopmentPage from "./pages/LawFirmMobileAppDevelopment
 import AiConsultingPage from "./pages/AiConsultingPage";
 import LawFirmDigitalMarketingPage from "./pages/LawFirmDigitalMarketingPage";
 import GoogleBusinessProfilePage from "./pages/GoogleBusinessProfilePage";
+import LawFirmSeoAeoPage from "./pages/LawFirmSeoAeoPage";
 import { useEffect } from "react";
 
 // Create a new query client
@@ -79,6 +80,9 @@ const App = () => (
               
               {/* Google Business Profile Optimization page */}
               <Route path="/google-business-profile-optimization" element={<GoogleBusinessProfilePage />} />
+              
+              {/* SEO/AEO/Voice SEO page */}
+              <Route path="/law-firm-seo-aeo-voiceseo" element={<LawFirmSeoAeoPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />
