@@ -143,7 +143,7 @@ const Navbar = () => {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger 
-                    className={`bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent ${
+                    className={`bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent h-auto p-0 font-medium hover:text-legal-primary transition-colors ${
                       isMichaelPage && !shouldHaveBackground ? "text-white" : "text-legal-dark"
                     }`}
                   >
