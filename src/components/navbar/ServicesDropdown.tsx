@@ -26,7 +26,7 @@ const ServicesDropdown = ({ serviceLinks, textColorClass }: ServicesDropdownProp
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent h-auto p-0 hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
+              className={`bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent h-auto p-0 border-none shadow-none hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
             >
               Services
             </NavigationMenuTrigger>
