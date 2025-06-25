@@ -21,7 +21,8 @@ const Services = () => {
       title: "Website Development",
       description: "Custom website solutions designed to meet your specific law firm needs, from simple informational sites to complex web applications with seamless user experiences.",
       icon: "💻",
-      bgImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1932&auto=format&fit=crop",
+      link: "/law-firm-website-development"
     },
     {
       title: "Digital Marketing",
