@@ -103,7 +103,10 @@ const Services = () => {
                     <div className="text-4xl mr-3">{service.icon}</div>
                     <h3 className="text-xl font-bold text-legal-dark">{service.title}</h3>
                   </div>
-                  <p className="text-gray-700">{service.description}</p>
+                  <p className="text-gray-700 mb-4">{service.description}</p>
+                  <div className="text-legal-primary font-semibold text-sm">
+                    Learn More →
+                  </div>
                 </CardContent>
               </Card>
             );
