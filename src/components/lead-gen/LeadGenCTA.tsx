@@ -17,7 +17,7 @@ const LeadGenCTA = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
           <Button 
             size="lg" 
-            className="bg-legal-accent hover:bg-legal-accent/90 text-legal-dark font-semibold"
+            className="bg-white hover:bg-gray-100 text-legal-primary font-semibold"
           >
             Get Lead Generation Audit
             <ArrowRight className="w-5 h-5 ml-2" />
