@@ -21,6 +21,7 @@ import MichaelSalesPage from "./pages/MichaelSalesPage";
 import JacksonvilleAttorneyPage from "./pages/JacksonvilleAttorneyPage";
 import AiCustomerSupportChatbotsPage from "./pages/AiCustomerSupportChatbotsPage";
 import LawFirmWebsiteDevelopmentPage from "./pages/LawFirmWebsiteDevelopmentPage";
+import LawFirmMobileAppDevelopmentPage from "./pages/LawFirmMobileAppDevelopmentPage";
 import { useEffect } from "react";
 
 // Create a new query client
@@ -63,6 +64,9 @@ const App = () => (
               
               {/* Law Firm Website Development page */}
               <Route path="/law-firm-website-development" element={<LawFirmWebsiteDevelopmentPage />} />
+              
+              {/* Law Firm Mobile App Development page */}
+              <Route path="/law-firm-mobile-app-development" element={<LawFirmMobileAppDevelopmentPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />

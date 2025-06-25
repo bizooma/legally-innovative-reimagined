@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Link } from "react-router-dom";
@@ -15,7 +14,8 @@ const Services = () => {
       title: "Mobile App Development",
       description: "Create powerful, user-friendly mobile applications for iOS and Android platforms that engage your customers and enhance your brand's digital presence.",
       icon: "📱",
-      bgImage: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?q=80&w=1932&auto=format&fit=crop",
+      link: "/law-firm-mobile-app-development"
     },
     {
       title: "Website Development",
