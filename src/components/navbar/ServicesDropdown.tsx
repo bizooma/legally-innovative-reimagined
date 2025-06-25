@@ -26,11 +26,11 @@ const ServicesDropdown = ({ serviceLinks, textColorClass }: ServicesDropdownProp
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent h-auto p-0 font-medium hover:text-legal-primary transition-colors ${textColorClass}`}
+              className={`bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent h-auto p-0 hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
             >
               Services
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="bg-white border shadow-lg rounded-md p-4 min-w-[300px]">
+            <NavigationMenuContent className="bg-white border shadow-lg rounded-md p-4 min-w-[300px] z-50">
               <div className="grid gap-2">
                 {serviceLinks.map((service) => (
                   <NavigationMenuLink key={service.name} asChild>
