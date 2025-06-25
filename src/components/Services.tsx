@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Link } from "react-router-dom";
@@ -61,10 +62,11 @@ const Services = () => {
       link: "/law-firm-lead-generation"
     },
     {
-      title: "Voice Experience",
+      title: "Voice Assistant Marketing",
       description: "Create custom voice applications for Amazon Alexa and Google Assistant that allow your law firm to engage with clients through natural language interactions and provide valuable information on demand.",
       icon: "🔊",
-      bgImage: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png"
+      bgImage: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
+      link: "/law-firm-voice-assistant-marketing"
     },
   ];
 
