@@ -1,12 +1,21 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -43,11 +52,22 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", href: "#home", isExternal: false, path: "/" },
     { name: "About", href: "#about", isExternal: false },
-    { name: "Services", href: "#services", isExternal: false },
     { name: "DIY", href: null, isExternal: false, path: "/diy" },
     { name: "FAQ", href: "#faq", isExternal: false },
     { name: "Why Us", href: "#why-us", isExternal: false },
     { name: "Contact", href: "#contact", isExternal: false },
+  ];
+
+  const serviceLinks = [
+    { name: "AI Consulting", path: "/ai-consulting-for-law-firms" },
+    { name: "AI Customer Support Chatbots", path: "/ai-customer-support-chatbots" },
+    { name: "Website Development", path: "/law-firm-website-development" },
+    { name: "Mobile App Development", path: "/law-firm-mobile-app-development" },
+    { name: "Digital Marketing", path: "/law-firm-digital-marketing" },
+    { name: "Google Business Profile", path: "/google-business-profile-optimization" },
+    { name: "SEO/AEO/Voice SEO", path: "/law-firm-seo-aeo-voiceseo" },
+    { name: "Lead Generation", path: "/law-firm-lead-generation" },
+    { name: "Voice Assistant Marketing", path: "/law-firm-voice-assistant-marketing" },
   ];
 
   const handlePortalClick = () => {
@@ -63,6 +83,12 @@ const Navbar = () => {
       navigate(`/${link.href}`);
     }
     setMobileMenuOpen(false);
+  };
+
+  const handleServiceLinkClick = (path: string) => {
+    navigate(path);
+    setMobileMenuOpen(false);
+    setServicesOpen(false);
   };
 
   // On Michael page, always show a visible background
@@ -110,6 +136,38 @@ const Navbar = () => {
               </button>
             )
           ))}
+          
+          {/* Services Dropdown */}
+          <div className="relative">
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger 
+                    className={`bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent ${
+                      isMichaelPage && !shouldHaveBackground ? "text-white" : "text-legal-dark"
+                    }`}
+                  >
+                    Services
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-white border shadow-lg rounded-md p-4 min-w-[300px]">
+                    <div className="grid gap-2">
+                      {serviceLinks.map((service) => (
+                        <NavigationMenuLink key={service.name} asChild>
+                          <Link
+                            to={service.path}
+                            className="block px-3 py-2 text-sm hover:bg-gray-100 rounded-md transition-colors text-legal-dark hover:text-legal-primary"
+                          >
+                            {service.name}
+                          </Link>
+                        </NavigationMenuLink>
+                      ))}
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+
           <Button 
             className="bg-legal-primary hover:bg-legal-secondary text-white"
             onClick={handlePortalClick}
@@ -153,6 +211,31 @@ const Navbar = () => {
                 </button>
               )
             ))}
+            
+            {/* Mobile Services Submenu */}
+            <div className="border-b border-gray-100">
+              <button
+                onClick={() => setServicesOpen(!servicesOpen)}
+                className="flex items-center justify-between w-full text-legal-dark hover:text-legal-primary transition-colors py-2 font-medium"
+              >
+                Services
+                <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {servicesOpen && (
+                <div className="pl-4 pb-2 space-y-2">
+                  {serviceLinks.map((service) => (
+                    <button
+                      key={service.name}
+                      onClick={() => handleServiceLinkClick(service.path)}
+                      className="block w-full text-left text-sm text-gray-600 hover:text-legal-primary transition-colors py-1"
+                    >
+                      {service.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <Button 
               className="bg-legal-primary hover:bg-legal-secondary text-white w-full flex items-center justify-center"
               onClick={() => {
