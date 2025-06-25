@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Link } from "react-router-dom";
@@ -36,7 +37,8 @@ const Services = () => {
       title: "Google Business Profile/Bing Places",
       description: "Optimize your local online presence with professionally managed Google Business Profile and Bing Places listings to improve local search visibility and customer engagement.",
       icon: "🗺️",
-      bgImage: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=1932&auto=format&fit=crop",
+      link: "/google-business-profile-optimization"
     },
     {
       title: "SEO/AEO",
