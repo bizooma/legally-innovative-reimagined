@@ -1,3 +1,4 @@
+
 import { Linkedin, Facebook } from "lucide-react";
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
 import TermsOfServiceModal from "./TermsOfServiceModal";
@@ -63,6 +64,11 @@ const Footer = () => {
               <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Legal Design Thinking</a></li>
               <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Technology Implementation</a></li>
               <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Training Programs</a></li>
+              <li>
+                <Link to="/ai-customer-support-chatbots" className="text-gray-300 hover:text-legal-accent transition-colors">
+                  AI Customer Support
+                </Link>
+              </li>
             </ul>
           </div>
           

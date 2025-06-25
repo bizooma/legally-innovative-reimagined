@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +19,7 @@ import ProtectedRoute from "./components/staff/ProtectedRoute";
 import DonutsPage from "./pages/DonutsPage";
 import MichaelSalesPage from "./pages/MichaelSalesPage";
 import JacksonvilleAttorneyPage from "./pages/JacksonvilleAttorneyPage";
+import AiCustomerSupportChatbotsPage from "./pages/AiCustomerSupportChatbotsPage";
 import { useEffect } from "react";
 
 // Create a new query client
@@ -54,6 +56,9 @@ const App = () => (
               
               {/* Jacksonville attorney lead capture page */}
               <Route path="/this-is-our-jax" element={<JacksonvilleAttorneyPage />} />
+              
+              {/* AI Customer Support Chatbots page */}
+              <Route path="/ai-customer-support-chatbots" element={<AiCustomerSupportChatbotsPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />
