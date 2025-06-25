@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,7 @@ import JacksonvilleAttorneyPage from "./pages/JacksonvilleAttorneyPage";
 import AiCustomerSupportChatbotsPage from "./pages/AiCustomerSupportChatbotsPage";
 import LawFirmWebsiteDevelopmentPage from "./pages/LawFirmWebsiteDevelopmentPage";
 import LawFirmMobileAppDevelopmentPage from "./pages/LawFirmMobileAppDevelopmentPage";
+import AiConsultingPage from "./pages/AiConsultingPage";
 import { useEffect } from "react";
 
 // Create a new query client
@@ -61,6 +61,9 @@ const App = () => (
               
               {/* AI Customer Support Chatbots page */}
               <Route path="/ai-customer-support-chatbots" element={<AiCustomerSupportChatbotsPage />} />
+              
+              {/* AI Consulting page */}
+              <Route path="/ai-consulting-for-law-firms" element={<AiConsultingPage />} />
               
               {/* Law Firm Website Development page */}
               <Route path="/law-firm-website-development" element={<LawFirmWebsiteDevelopmentPage />} />

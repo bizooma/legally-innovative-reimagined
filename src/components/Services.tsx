@@ -8,7 +8,8 @@ const Services = () => {
       title: "AI Consulting",
       description: "We help law firms leverage artificial intelligence to streamline operations, enhance customer experiences, and drive innovation through strategic planning and implementation.",
       icon: "🤖",
-      bgImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1932&auto=format&fit=crop"
+      bgImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1932&auto=format&fit=crop",
+      link: "/ai-consulting-for-law-firms"
     },
     {
       title: "Mobile App Development",
