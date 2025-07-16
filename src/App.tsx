@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate, HashRouter } from "react-router
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import StayInformed from "./pages/StayInformed";
+import DeathOfTraditionalSeo from "./pages/DeathOfTraditionalSeo";
 import DIY from "./pages/DIY";
 import Portal from "./pages/Portal";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -96,6 +97,7 @@ const App = () => (
               {/* Main routes */}
               <Route path="/" element={<Index />} />
               <Route path="/stay-informed" element={<StayInformed />} />
+              <Route path="/death-of-traditional-seo" element={<DeathOfTraditionalSeo />} />
               <Route path="/diy" element={<DIY />} />
               <Route path="/portal" element={<Portal />} />
               <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
