@@ -48,10 +48,10 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="#home" className="text-legal-light hover:text-legal-accent transition-colors">Home</a></li>
-              <li><a href="#about" className="text-legal-light hover:text-legal-accent transition-colors">About Us</a></li>
-              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Services</a></li>
-              <li><a href="#contact" className="text-legal-light hover:text-legal-accent transition-colors">Contact</a></li>
+              <li><Link to="/#home" className="text-legal-light hover:text-legal-accent transition-colors">Home</Link></li>
+              <li><Link to="/#about" className="text-legal-light hover:text-legal-accent transition-colors">About Us</Link></li>
+              <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Services</Link></li>
+              <li><Link to="/#contact" className="text-legal-light hover:text-legal-accent transition-colors">Contact</Link></li>
               <li>
                 <Link to="/this-is-our-jax" className="text-legal-light hover:text-legal-accent transition-colors">
                   Jacksonville Attorney
@@ -69,10 +69,10 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Services</h4>
             <ul className="space-y-2">
-              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Innovation Consulting</a></li>
-              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Legal Design Thinking</a></li>
-              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Technology Implementation</a></li>
-              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Training Programs</a></li>
+              <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Innovation Consulting</Link></li>
+              <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Legal Design Thinking</Link></li>
+              <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Technology Implementation</Link></li>
+              <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Training Programs</Link></li>
               <li>
                 <Link to="/ai-customer-support-chatbots" className="text-legal-light hover:text-legal-accent transition-colors">
                   AI Customer Support
