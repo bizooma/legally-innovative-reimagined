@@ -6,7 +6,7 @@ const OpenAiWebBrowserPage = () => {
     <ArticleLayout
       title="OpenAI's Browser Challenge: What Legal Professionals Need to Know About the Coming Disruption to Digital Research and Client Interaction"
       excerpt="How OpenAI's upcoming web browser could fundamentally transform legal research, client communication, and the competitive landscape for legal technology"
-      date="2024-01-15"
+      date="2025-07-14"
       readTime="5 min read"
       author="Legal Innovation Team"
       category="Technology"
