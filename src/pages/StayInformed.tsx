@@ -3,18 +3,20 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const StayInformed = () => {
   const blogPosts = [
     {
       id: 1,
-      title: "The Future of AI in Legal Practice: Transforming Law Firms",
-      excerpt: "Discover how artificial intelligence is revolutionizing the legal industry and what it means for modern law firms.",
-      date: "2024-01-15",
-      readTime: "5 min read",
-      author: "Legal Tech Team",
-      category: "AI Technology",
-      image: "/lovable-uploads/0e8bdb38-d5a7-4ced-b3d0-d0a37c64ac55.png"
+      title: "The Death of Traditional SEO",
+      excerpt: "How artificial intelligence and changing search behaviors are fundamentally transforming the way law firms need to approach search engine optimization.",
+      date: "2024-01-20",
+      readTime: "8 min read",
+      author: "SEO Strategy Team",
+      category: "SEO",
+      image: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
+      link: "/death-of-traditional-seo"
     },
     {
       id: 2,
@@ -108,48 +110,60 @@ const StayInformed = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group">
-                <div className="aspect-video overflow-hidden">
-                  <img 
-                    src={post.image} 
-                    alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+            {blogPosts.map((post) => {
+              const CardComponent = (
+                <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="aspect-video overflow-hidden">
+                    <img 
+                      src={post.image} 
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant="secondary" className="text-xs">
+                        {post.category}
+                      </Badge>
+                    </div>
+                    <CardTitle className="text-xl leading-tight group-hover:text-legal-primary transition-colors">
+                      {post.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between text-sm text-gray-500">
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          <span>{new Date(post.date).toLocaleDateString()}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-4 w-4" />
+                          <span>{post.readTime}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <User className="h-4 w-4" />
+                        <span>{post.author}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+
+              return post.link ? (
+                <Link key={post.id} to={post.link}>
+                  {CardComponent}
+                </Link>
+              ) : (
+                <div key={post.id}>
+                  {CardComponent}
                 </div>
-                <CardHeader>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="secondary" className="text-xs">
-                      {post.category}
-                    </Badge>
-                  </div>
-                  <CardTitle className="text-xl leading-tight group-hover:text-legal-primary transition-colors">
-                    {post.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-gray-500">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{new Date(post.date).toLocaleDateString()}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        <span>{post.readTime}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <User className="h-4 w-4" />
-                      <span>{post.author}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+              );
+            })}
           </div>
 
           {/* Load More Button */}
