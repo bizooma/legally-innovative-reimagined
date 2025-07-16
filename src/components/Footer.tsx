@@ -4,12 +4,21 @@ import PrivacyPolicyModal from "./PrivacyPolicyModal";
 import TermsOfServiceModal from "./TermsOfServiceModal";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import footerTechBg from "@/assets/footer-tech-bg.jpg";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-black text-white py-12">
+    <footer 
+      className="text-white py-12 relative overflow-hidden"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.9)), url('${footerTechBg}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
@@ -22,7 +31,7 @@ const Footer = () => {
             </div>
             <div className="mb-4">
               <h4 className="text-lg font-semibold mb-2 text-legal-accent">Built for Law Firms. Powered by Innovation.</h4>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-legal-light text-sm leading-relaxed">
                 We understand the unique challenges law firms face because we work exclusively in the legal space. From trust-building client intake systems to AI-powered content strategies, our services are designed to make your firm more visible, more approachable, and more efficient — without ever compromising compliance.
               </p>
             </div>
@@ -39,20 +48,20 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="#home" className="text-gray-300 hover:text-legal-accent transition-colors">Home</a></li>
-              <li><a href="#about" className="text-gray-300 hover:text-legal-accent transition-colors">About Us</a></li>
-              <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Services</a></li>
-              <li><a href="#contact" className="text-gray-300 hover:text-legal-accent transition-colors">Contact</a></li>
+              <li><a href="#home" className="text-legal-light hover:text-legal-accent transition-colors">Home</a></li>
+              <li><a href="#about" className="text-legal-light hover:text-legal-accent transition-colors">About Us</a></li>
+              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Services</a></li>
+              <li><a href="#contact" className="text-legal-light hover:text-legal-accent transition-colors">Contact</a></li>
               <li>
-                <Link to="/this-is-our-jax" className="text-gray-300 hover:text-legal-accent transition-colors">
+                <Link to="/this-is-our-jax" className="text-legal-light hover:text-legal-accent transition-colors">
                   Jacksonville Attorney
                 </Link>
               </li>
               <li>
-                <PrivacyPolicyModal triggerClassName="text-gray-300 hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
+                <PrivacyPolicyModal triggerClassName="text-legal-light hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
               </li>
               <li>
-                <TermsOfServiceModal triggerClassName="text-gray-300 hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
+                <TermsOfServiceModal triggerClassName="text-legal-light hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
               </li>
             </ul>
           </div>
@@ -60,12 +69,12 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Services</h4>
             <ul className="space-y-2">
-              <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Innovation Consulting</a></li>
-              <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Legal Design Thinking</a></li>
-              <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Technology Implementation</a></li>
-              <li><a href="#services" className="text-gray-300 hover:text-legal-accent transition-colors">Training Programs</a></li>
+              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Innovation Consulting</a></li>
+              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Legal Design Thinking</a></li>
+              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Technology Implementation</a></li>
+              <li><a href="#services" className="text-legal-light hover:text-legal-accent transition-colors">Training Programs</a></li>
               <li>
-                <Link to="/ai-customer-support-chatbots" className="text-gray-300 hover:text-legal-accent transition-colors">
+                <Link to="/ai-customer-support-chatbots" className="text-legal-light hover:text-legal-accent transition-colors">
                   AI Customer Support
                 </Link>
               </li>
@@ -87,9 +96,9 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-gray-700 pt-6">
+        <div className="border-t border-white/20 pt-6">
           <div className="flex flex-col md:flex-row justify-center items-center">
-            <p className="text-gray-400 text-sm text-center">
+            <p className="text-legal-light text-sm text-center">
               © Legally Innovative 2025. A Bizooma, LLC property, All rights reserved.
             </p>
           </div>
