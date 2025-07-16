@@ -37,7 +37,7 @@ const Hero = () => {
                   className="bg-white hover:bg-legal-accent text-legal-primary hover:text-white px-8 py-6 text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                   onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                 >
-                  Discover Our Services
+                  Our Services
                 </Button>
               </div>
             </div>
