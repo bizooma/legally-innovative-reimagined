@@ -1,5 +1,6 @@
 
 import { Check } from "lucide-react";
+import whyChooseBg from "@/assets/why-choose-bg.jpg";
 
 const WhyChooseUs = () => {
   const reasons = [
@@ -30,7 +31,16 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section id="why-us" className="section-padding bg-white">
+    <section 
+      id="why-us" 
+      className="section-padding relative overflow-hidden"
+      style={{
+        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url('${whyChooseBg}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2">
