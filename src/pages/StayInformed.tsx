@@ -11,7 +11,7 @@ const StayInformed = () => {
       id: 1,
       title: "The Death of Traditional SEO",
       excerpt: "How artificial intelligence and changing search behaviors are fundamentally transforming the way law firms need to approach search engine optimization.",
-      date: "2024-01-20",
+      date: "2025-07-15",
       readTime: "8 min read",
       author: "SEO Strategy Team",
       category: "SEO",
@@ -22,11 +22,11 @@ const StayInformed = () => {
       id: 2,
       title: "OpenAI's Browser Challenge: What Legal Professionals Need to Know",
       excerpt: "How OpenAI's upcoming web browser could fundamentally transform legal research, client communication, and the competitive landscape for legal technology.",
-      date: "2024-01-15",
+      date: "2025-07-14",
       readTime: "12 min read",
       author: "AI Technology Team",
       category: "AI Technology",
-      image: "/src/assets/openai-browser-legal-tech.jpg",
+      image: "/lovable-uploads/26a458f4-c2a1-4548-8dc8-ac6039a1a1e0.png",
       link: "/openai-web-browser"
     },
     {
