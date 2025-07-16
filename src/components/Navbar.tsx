@@ -59,8 +59,8 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
-  // On Michael page, always show a visible background
-  const shouldHaveBackground = isScrolled || isMichaelPage;
+  // On Michael page, always show a visible background. On home page, always show white background for visibility
+  const shouldHaveBackground = isScrolled || isMichaelPage || isHomePage;
   const textColorClass = isMichaelPage && !shouldHaveBackground ? "text-white" : "text-legal-dark";
 
   return (
