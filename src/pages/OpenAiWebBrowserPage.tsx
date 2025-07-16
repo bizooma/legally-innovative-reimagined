@@ -1,4 +1,5 @@
 import ArticleLayout from "@/components/ArticleLayout";
+import openAiBrowserImage from "@/assets/openai-browser-legal-tech.jpg";
 
 const OpenAiWebBrowserPage = () => {
   return (
@@ -9,6 +10,7 @@ const OpenAiWebBrowserPage = () => {
       readTime="5 min read"
       author="Legal Innovation Team"
       category="Technology"
+      image={openAiBrowserImage}
     >
       <div className="prose prose-lg max-w-none text-muted-foreground">
         <p>
