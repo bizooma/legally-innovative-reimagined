@@ -20,13 +20,14 @@ const StayInformed = () => {
     },
     {
       id: 2,
-      title: "Digital Marketing Strategies That Convert Legal Leads",
-      excerpt: "Learn proven digital marketing tactics specifically designed for law firms to attract and convert high-quality leads.",
-      date: "2024-01-10",
-      readTime: "7 min read",
-      author: "Marketing Experts",
-      category: "Digital Marketing",
-      image: "/lovable-uploads/26a458f4-c2a1-4548-8dc8-ac6039a1a1e0.png"
+      title: "OpenAI's Browser Challenge: What Legal Professionals Need to Know",
+      excerpt: "How OpenAI's upcoming web browser could fundamentally transform legal research, client communication, and the competitive landscape for legal technology.",
+      date: "2024-01-15",
+      readTime: "12 min read",
+      author: "AI Technology Team",
+      category: "AI Technology",
+      image: "/lovable-uploads/26a458f4-c2a1-4548-8dc8-ac6039a1a1e0.png",
+      link: "/openai-web-browser"
     },
     {
       id: 3,
