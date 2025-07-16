@@ -5,7 +5,7 @@ const DeathOfTraditionalSeo = () => {
     <ArticleLayout
       title="The Death of Traditional SEO"
       excerpt="How artificial intelligence and changing search behaviors are fundamentally transforming the way law firms need to approach search engine optimization."
-      date="2024-01-20"
+      date="2025-07-15"
       readTime="8 min read"
       author="SEO Strategy Team"
       category="SEO"
