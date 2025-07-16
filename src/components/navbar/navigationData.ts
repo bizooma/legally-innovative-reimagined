@@ -2,7 +2,6 @@
 export const navLinks = [
   { name: "Home", href: "#home", isExternal: false, path: "/" },
   { name: "About", href: "#about", isExternal: false },
-  { name: "DIY", href: null, isExternal: false, path: "/diy" },
   { name: "FAQ", href: "#faq", isExternal: false },
   { name: "Why Us", href: "#why-us", isExternal: false },
   { name: "Contact", href: "#contact", isExternal: false },
