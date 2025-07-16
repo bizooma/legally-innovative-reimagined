@@ -26,7 +26,7 @@ const StayInformed = () => {
       readTime: "12 min read",
       author: "AI Technology Team",
       category: "AI Technology",
-      image: "/lovable-uploads/26a458f4-c2a1-4548-8dc8-ac6039a1a1e0.png",
+      image: "/src/assets/openai-browser-legal-tech.jpg",
       link: "/openai-web-browser"
     },
     {
