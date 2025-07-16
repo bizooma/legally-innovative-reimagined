@@ -1,26 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Phone, Play, Pause } from "lucide-react";
-import { useState, useRef } from "react";
+import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
 
 const Hero = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const toggleVideo = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
 
   return (
     <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
-      {/* Video Background */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img 
           src={techBg}
@@ -30,15 +16,6 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-legal-primary/90 via-legal-primary/70 to-legal-primary/80"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-legal-primary/60"></div>
       </div>
-
-      {/* Video Controls */}
-      <button
-        onClick={toggleVideo}
-        className="absolute top-28 right-8 z-30 bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 rounded-full p-3"
-        aria-label={isPlaying ? "Pause background" : "Play background"}
-      >
-        {isPlaying ? <Pause className="w-5 h-5 text-white" /> : <Play className="w-5 h-5 text-white" />}
-      </button>
 
       {/* Content */}
       <div className="container mx-auto relative z-10">
