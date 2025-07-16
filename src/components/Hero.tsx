@@ -1,26 +1,63 @@
 import { Button } from "@/components/ui/button";
-import { Phone } from "lucide-react";
+import { Phone, Play, Pause } from "lucide-react";
+import { useState, useRef } from "react";
+import techBg from "@/assets/hero-tech-bg.jpg";
 
 const Hero = () => {
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center pt-20 section-padding bg-gradient-to-br from-white via-legal-light/10 to-white">
-      <div className="container mx-auto">
+    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 section-padding overflow-hidden">
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={techBg}
+          alt="Technology Background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-legal-primary/90 via-legal-primary/70 to-legal-primary/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-legal-primary/60"></div>
+      </div>
+
+      {/* Video Controls */}
+      <button
+        onClick={toggleVideo}
+        className="absolute top-28 right-8 z-30 bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 rounded-full p-3"
+        aria-label={isPlaying ? "Pause background" : "Play background"}
+      >
+        {isPlaying ? <Pause className="w-5 h-5 text-white" /> : <Play className="w-5 h-5 text-white" />}
+      </button>
+
+      {/* Content */}
+      <div className="container mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2 mb-12 lg:mb-0 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Where <span className="bg-gradient-to-r from-black to-red-600 bg-clip-text text-transparent">Accountability</span> Meets <span className="bg-gradient-to-r from-black to-red-600 bg-clip-text text-transparent">Creativity</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
+              Where <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Innovation</span> Meets <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Excellence</span>
             </h1>
-            <p className="text-lg md:text-xl mb-8 text-gray-700 max-w-xl">
+            <p className="text-lg md:text-xl mb-8 text-legal-light max-w-xl">
               At Legally Innovative, we are passionate about helping law firms thrive in the digital age. As a full-service marketing and AI automations provider, we understand the unique challenges that law firms face in generating, nurturing, and converting leads.
             </p>
-            <div className="flex flex-col md:flex-row md:items-center gap-6 text-legal-primary mb-6">
-              <div className="flex items-center">
+            <div className="flex flex-col md:flex-row md:items-center gap-6 text-white mb-6">
+              <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
                 <Phone size={20} className="mr-2" />
                 <a href="tel:8453779730" className="text-lg hover:underline">845-377-9730</a>
               </div>
               <div>
                 <Button 
-                  className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg"
+                  className="bg-white hover:bg-legal-accent text-legal-primary hover:text-white px-8 py-6 text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                   onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   Discover Our Services
@@ -30,20 +67,27 @@ const Hero = () => {
           </div>
           <div className="lg:w-1/2 flex justify-center lg:justify-end animate-fade-in" style={{animationDelay: '0.3s'}}>
             <div className="relative w-full max-w-2xl">
-              <div className="absolute -top-6 -left-6 w-64 h-64 bg-legal-light rounded-full opacity-50 -z-10"></div>
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-legal-accent rounded-full opacity-20 -z-10"></div>
-              <iframe 
-                src="https://www.videoask.com/fc5vpzgv1" 
-                allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" 
-                width="100%" 
-                height="600px" 
-                style={{border: 'none', borderRadius: '24px'}}
-                className="w-full shadow-xl"
-              />
+              <div className="absolute -top-6 -left-6 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-legal-accent/30 rounded-full blur-2xl"></div>
+              <div className="relative backdrop-blur-sm bg-white/5 p-2 rounded-3xl border border-white/20">
+                <iframe 
+                  src="https://www.videoask.com/fc5vpzgv1" 
+                  allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" 
+                  width="100%" 
+                  height="600px" 
+                  style={{border: 'none', borderRadius: '20px'}}
+                  className="w-full shadow-2xl"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Floating Elements */}
+      <div className="absolute top-1/4 left-10 w-2 h-2 bg-legal-accent rounded-full animate-pulse opacity-60"></div>
+      <div className="absolute top-1/3 right-20 w-3 h-3 bg-white rounded-full animate-pulse opacity-40 animation-delay-1000"></div>
+      <div className="absolute bottom-1/4 left-1/4 w-1 h-1 bg-legal-accent rounded-full animate-pulse opacity-80 animation-delay-2000"></div>
     </section>
   );
 };
