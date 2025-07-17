@@ -1,4 +1,5 @@
 import ArticleLayout from "@/components/ArticleLayout";
+import voiceSeoHeroImage from "@/assets/voice-seo-hero.jpg";
 
 const VoiceSeoAeoStatsPage = () => {
   return (
@@ -9,7 +10,7 @@ const VoiceSeoAeoStatsPage = () => {
       readTime="15 min read"
       author="Digital Marketing Research Team"
       category="SEO"
-      image="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      image={voiceSeoHeroImage}
     >
       <div className="prose prose-lg max-w-none text-muted-foreground">
         <h2 className="text-2xl font-bold text-foreground mt-8 mb-4">Executive Summary</h2>
