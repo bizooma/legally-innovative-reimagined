@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import StayInformed from "./pages/StayInformed";
 import DeathOfTraditionalSeo from "./pages/DeathOfTraditionalSeo";
+import AppleMapsMarketingPage from "./pages/AppleMapsMarketingPage";
 import OpenAiWebBrowserPage from "./pages/OpenAiWebBrowserPage";
 import VoiceSeoAeoStatsPage from "./pages/VoiceSeoAeoStatsPage";
 import DIY from "./pages/DIY";
@@ -100,6 +101,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/stay-informed" element={<StayInformed />} />
               <Route path="/death-of-traditional-seo" element={<DeathOfTraditionalSeo />} />
+              <Route path="/apple-maps-marketing" element={<AppleMapsMarketingPage />} />
               <Route path="/openai-web-browser" element={<OpenAiWebBrowserPage />} />
               <Route path="/voice-seo-aeo-stats" element={<VoiceSeoAeoStatsPage />} />
               <Route path="/diy" element={<DIY />} />
