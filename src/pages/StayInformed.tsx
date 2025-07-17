@@ -34,7 +34,7 @@ const StayInformed = () => {
       id: 3,
       title: "Voice SEO and Answer Engine Optimization: Critical Statistics for Law Firms",
       excerpt: "The legal industry is experiencing a fundamental shift in how potential clients discover and engage with legal services. This comprehensive report presents compelling statistics that demonstrate why law firms must adapt their digital marketing strategies.",
-      date: "2025-01-16",
+      date: "2025-06-20",
       readTime: "15 min read",
       author: "SEO Strategy Team",
       category: "SEO",
