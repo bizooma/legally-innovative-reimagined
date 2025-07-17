@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import voiceSeoHeroImage from "@/assets/voice-seo-hero.jpg";
 
 const StayInformed = () => {
   const blogPosts = [
@@ -37,7 +38,7 @@ const StayInformed = () => {
       readTime: "15 min read",
       author: "SEO Strategy Team",
       category: "SEO",
-      image: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
+      image: voiceSeoHeroImage,
       link: "/voice-seo-aeo-stats"
     },
     {
