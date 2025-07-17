@@ -31,13 +31,14 @@ const StayInformed = () => {
     },
     {
       id: 3,
-      title: "Voice Search Optimization: The Next Frontier for Law Firms",
-      excerpt: "Understanding how voice search is changing legal discovery and how your firm can optimize for this growing trend.",
-      date: "2024-01-05",
-      readTime: "6 min read",
-      author: "SEO Specialists",
+      title: "Voice SEO and Answer Engine Optimization: Critical Statistics for Law Firms",
+      excerpt: "The legal industry is experiencing a fundamental shift in how potential clients discover and engage with legal services. This comprehensive report presents compelling statistics that demonstrate why law firms must adapt their digital marketing strategies.",
+      date: "2025-01-16",
+      readTime: "15 min read",
+      author: "SEO Strategy Team",
       category: "SEO",
-      image: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png"
+      image: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
+      link: "/voice-seo-aeo-stats"
     },
     {
       id: 4,
