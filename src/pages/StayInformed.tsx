@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import voiceSeoHeroImage from "@/assets/voice-seo-hero.jpg";
+import appleMapsLawFirmImage from "@/assets/apple-maps-law-firm.jpg";
 
 const StayInformed = () => {
   const blogPosts = [
@@ -49,7 +50,7 @@ const StayInformed = () => {
       readTime: "15 min read",
       author: "SEO Strategy Team",
       category: "Digital Marketing",
-      image: "/lovable-uploads/429b2bde-e490-457e-89c8-e3a1d9fc62a7.png",
+      image: appleMapsLawFirmImage,
       link: "/apple-maps-marketing"
     },
     {
