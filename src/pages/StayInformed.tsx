@@ -43,13 +43,14 @@ const StayInformed = () => {
     },
     {
       id: 4,
-      title: "Building Client Trust Through Modern Website Design",
-      excerpt: "How modern, responsive website design builds credibility and trust with potential legal clients.",
-      date: "2023-12-28",
-      readTime: "4 min read",
-      author: "Design Team",
-      category: "Web Development",
-      image: "/lovable-uploads/429b2bde-e490-457e-89c8-e3a1d9fc62a7.png"
+      title: "Why Your Law Firm Can't Afford to Ignore Apple Maps in 2025: The Hidden Marketing Goldmine",
+      excerpt: "Discover why Apple Maps is essential for law firm marketing in 2025. With 110 million users and premium clientele, learn how to claim your listing and attract high-value legal clients.",
+      date: "2025-01-17",
+      readTime: "15 min read",
+      author: "SEO Strategy Team",
+      category: "Digital Marketing",
+      image: "/lovable-uploads/429b2bde-e490-457e-89c8-e3a1d9fc62a7.png",
+      link: "/apple-maps-marketing"
     },
     {
       id: 5,
