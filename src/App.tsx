@@ -87,6 +87,7 @@ const App = () => (
               
               {/* Google Business Profile Optimization page */}
               <Route path="/google-business-profile-optimization" element={<GoogleBusinessProfilePage />} />
+              <Route path="/google-business-profile" element={<GoogleBusinessProfilePage />} />
               
               {/* SEO/AEO/Voice SEO page */}
               <Route path="/law-firm-seo-aeo-voiceseo" element={<LawFirmSeoAeoPage />} />
