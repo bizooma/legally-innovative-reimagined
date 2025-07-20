@@ -55,13 +55,14 @@ const StayInformed = () => {
     },
     {
       id: 5,
-      title: "Mobile Apps for Law Firms: Enhancing Client Experience",
-      excerpt: "Explore how custom mobile applications can improve client communication and streamline legal processes.",
-      date: "2023-12-20",
-      readTime: "5 min read",
-      author: "Development Team",
-      category: "Mobile Development",
-      image: "/lovable-uploads/59e51f8e-610f-44a9-9530-a964b738ff51.png"
+      title: "Why Google Business Profiles and NAP Consistency Are Critical for Legal Practices: The 3-Pack Advantage",
+      excerpt: "Discover how Google's Local Pack dominates 93% of local searches and why NAP consistency is essential for legal practice visibility and client acquisition.",
+      date: "2025-01-15",
+      readTime: "18 min read",
+      author: "Legal Marketing Research Team",
+      category: "Local SEO",
+      image: appleMapsLawFirmImage,
+      link: "/google-business-profile"
     },
     {
       id: 6,
