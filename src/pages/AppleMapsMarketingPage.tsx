@@ -1,5 +1,5 @@
 import ArticleLayout from "@/components/ArticleLayout";
-import appleMapsLawFirmImage from "@/assets/apple-maps-law-firm.jpg";
+import appleMapsInterfaceImage from "@/assets/apple-maps-interface.jpg";
 
 const AppleMapsMarketingPage = () => {
   return (
@@ -10,7 +10,7 @@ const AppleMapsMarketingPage = () => {
       readTime="15 min read"
       author="Legally Innovative Team"
       category="Local Marketing"
-      image={appleMapsLawFirmImage}
+      image={appleMapsInterfaceImage}
     >
       <div className="space-y-8">
         <div className="space-y-6">
