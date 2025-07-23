@@ -1,5 +1,5 @@
 import ArticleLayout from "@/components/ArticleLayout";
-import appleMapsImage from "@/assets/apple-maps-law-firm.jpg";
+import openaiImage from "@/assets/openai-browser-legal-tech.jpg";
 
 const WhyReviewsMatterPage = () => {
   return (
@@ -10,7 +10,7 @@ const WhyReviewsMatterPage = () => {
       readTime="12 min read"
       author="Legal Marketing Team"
       category="Digital Marketing"
-      image={appleMapsImage}
+      image={openaiImage}
     >
       <h2>The 2025 Review Landscape</h2>
       <p>
