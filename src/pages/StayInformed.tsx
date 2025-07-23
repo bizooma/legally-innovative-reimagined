@@ -173,12 +173,6 @@ const StayInformed = () => {
             })}
           </div>
 
-          {/* Load More Button */}
-          <div className="text-center mt-12">
-            <button className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-3 rounded-lg font-medium transition-colors">
-              Load More Articles
-            </button>
-          </div>
         </div>
       </section>
 
