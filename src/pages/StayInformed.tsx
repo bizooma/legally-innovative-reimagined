@@ -67,13 +67,14 @@ const StayInformed = () => {
     },
     {
       id: 6,
-      title: "Data Security and Privacy in Legal Technology",
-      excerpt: "Essential considerations for maintaining client confidentiality while leveraging modern legal technology.",
-      date: "2023-12-15",
-      readTime: "8 min read",
-      author: "Security Team",
-      category: "Security",
-      image: "/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png"
+      title: "Why Reviews Matter for Law Firms",
+      excerpt: "The 2025 Review Landscape: Understanding how online reviews have become the primary gateway between potential clients and legal services.",
+      date: "2025-01-15",
+      readTime: "12 min read",
+      author: "Legal Marketing Team",
+      category: "Digital Marketing",
+      image: appleMapsLawFirmImage,
+      link: "/why-reviews-matter-for-law-firms"
     }
   ];
 
