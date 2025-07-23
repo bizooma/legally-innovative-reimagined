@@ -106,11 +106,6 @@ const Portal = () => {
               {/* Login Form */}
               <div className="space-y-6">
                 <LoginForm />
-                
-                {/* Temporary Password Reset Tool */}
-                <div className="border-t pt-6">
-                  <AdminPasswordReset />
-                </div>
               </div>
             </div>
           </div>
