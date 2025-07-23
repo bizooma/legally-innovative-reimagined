@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import voiceSeoHeroImage from "@/assets/voice-seo-hero.jpg";
 import appleMapsInterfaceImage from "@/assets/apple-maps-interface.jpg";
 import appleMapsLawFirmImage from "@/assets/apple-maps-law-firm.jpg";
+import openaiImage from "@/assets/openai-browser-legal-tech.jpg";
 
 const StayInformed = () => {
   const blogPosts = [
@@ -73,7 +74,7 @@ const StayInformed = () => {
       readTime: "12 min read",
       author: "Legal Marketing Team",
       category: "Digital Marketing",
-      image: appleMapsLawFirmImage,
+      image: openaiImage,
       link: "/why-reviews-matter-for-law-firms"
     }
   ];
