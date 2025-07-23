@@ -30,6 +30,7 @@ import LawFirmMobileAppDevelopmentPage from "./pages/LawFirmMobileAppDevelopment
 import AiConsultingPage from "./pages/AiConsultingPage";
 import LawFirmDigitalMarketingPage from "./pages/LawFirmDigitalMarketingPage";
 import GoogleBusinessProfilePage from "./pages/GoogleBusinessProfilePage";
+import WhyReviewsMatterPage from "./pages/WhyReviewsMatterPage";
 import LawFirmSeoAeoPage from "./pages/LawFirmSeoAeoPage";
 import LawFirmLeadGenerationPage from "./pages/LawFirmLeadGenerationPage";
 import LawFirmVoiceAssistantMarketingPage from "./pages/LawFirmVoiceAssistantMarketingPage";
@@ -103,6 +104,7 @@ const App = () => (
               <Route path="/stay-informed" element={<StayInformed />} />
               <Route path="/death-of-traditional-seo" element={<DeathOfTraditionalSeo />} />
               <Route path="/apple-maps-marketing" element={<AppleMapsMarketingPage />} />
+              <Route path="/why-reviews-matter-for-law-firms" element={<WhyReviewsMatterPage />} />
               <Route path="/openai-web-browser" element={<OpenAiWebBrowserPage />} />
               <Route path="/voice-seo-aeo-stats" element={<VoiceSeoAeoStatsPage />} />
               <Route path="/diy" element={<DIY />} />
