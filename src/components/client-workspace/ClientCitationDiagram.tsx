@@ -262,28 +262,6 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
         status: 'active'
       },
     },
-    {
-      id: 'avvo',
-      type: 'citation',
-      position: { x: 400, y: 500 },
-      data: { 
-        label: 'Avvo Profile', 
-        type: 'directory',
-        url: 'avvo.com/attorneys/casey',
-        status: 'active'
-      },
-    },
-    {
-      id: 'justia',
-      type: 'citation',
-      position: { x: 600, y: 500 },
-      data: { 
-        label: 'Justia Listing', 
-        type: 'directory',
-        url: 'lawyers.justia.com/casey',
-        status: 'active'
-      },
-    },
 
     // Review sites
     {
@@ -308,17 +286,6 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
         status: 'active'
       },
     },
-    {
-      id: 'martindale',
-      type: 'citation',
-      position: { x: 500, y: 600 },
-      data: { 
-        label: 'Martindale-Hubbell', 
-        type: 'review',
-        url: 'martindale.com/casey',
-        status: 'active'
-      },
-    },
   ], [clientName]);
 
   const initialEdges: Edge[] = useMemo(() => [
@@ -337,13 +304,10 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
     
     // Business to directories
     { id: 'e-business-google', source: 'business', target: 'google-business', type: 'smoothstep' },
-    { id: 'e-business-avvo', source: 'business', target: 'avvo', type: 'smoothstep' },
-    { id: 'e-business-justia', source: 'business', target: 'justia', type: 'smoothstep' },
     
     // Business to reviews
     { id: 'e-business-greview', source: 'business', target: 'google-reviews', type: 'smoothstep' },
     { id: 'e-business-yelp', source: 'business', target: 'yelp', type: 'smoothstep' },
-    { id: 'e-business-martindale', source: 'business', target: 'martindale', type: 'smoothstep' },
   ], []);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
