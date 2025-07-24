@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import {
   ReactFlow,
   MiniMap,
@@ -13,8 +13,11 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star, Save, Lock, Unlock } from 'lucide-react';
 import { handleView } from '@/utils/documentActions';
+import { loadDiagramNodePositions, saveDiagramNodePositions, NodePosition } from '@/services/diagramService';
+import { useToast } from '@/hooks/use-toast';
 
 interface ClientCitationDiagramProps {
   clientId: string;
@@ -119,6 +122,11 @@ const nodeTypes = {
 };
 
 const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId, clientName }) => {
+  const { toast } = useToast();
+  const [isLocked, setIsLocked] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [hasLoadedPositions, setHasLoadedPositions] = useState(false);
+
   // Sample data for Win with Casey - replace with actual data from your database
   const initialNodes: Node[] = useMemo(() => [
     // Central business node
@@ -353,6 +361,75 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  // Load saved node positions from database
+  useEffect(() => {
+    const loadPositions = async () => {
+      try {
+        const savedPositions = await loadDiagramNodePositions(clientId);
+        if (savedPositions.length > 0) {
+          setNodes(currentNodes => 
+            currentNodes.map(node => {
+              const savedPos = savedPositions.find(pos => pos.nodeId === node.id);
+              return savedPos 
+                ? { ...node, position: { x: savedPos.x, y: savedPos.y } }
+                : node;
+            })
+          );
+        }
+        setHasLoadedPositions(true);
+      } catch (error) {
+        console.error('Failed to load node positions:', error);
+        setHasLoadedPositions(true);
+      }
+    };
+
+    if (clientId && !hasLoadedPositions) {
+      loadPositions();
+    }
+  }, [clientId, hasLoadedPositions, setNodes]);
+
+  // Save current node positions to database
+  const handleSaveLayout = async () => {
+    setIsSaving(true);
+    try {
+      const positions: NodePosition[] = nodes.map(node => ({
+        nodeId: node.id,
+        x: node.position.x,
+        y: node.position.y
+      }));
+
+      const success = await saveDiagramNodePositions(clientId, positions);
+      if (success) {
+        toast({
+          title: "Layout saved",
+          description: "Node positions have been saved and will be preserved for all users.",
+        });
+      } else {
+        toast({
+          title: "Save failed",
+          description: "Failed to save node positions. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Failed to save positions:', error);
+      toast({
+        title: "Save error",
+        description: "An error occurred while saving positions.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Handle node changes with lock check
+  const handleNodesChange = useCallback((changes: any) => {
+    if (!isLocked) {
+      onNodesChange(changes);
+    }
+  }, [isLocked, onNodesChange]);
+
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
     [setEdges],
@@ -361,16 +438,41 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
   return (
     <Card className="w-full h-[800px]">
       <CardHeader>
-        <CardTitle>Citation Network Diagram</CardTitle>
-        <p className="text-sm text-gray-600">
-          Interactive diagram showing all digital citations and online presence for {clientName}
-        </p>
+        <div className="flex justify-between items-start">
+          <div>
+            <CardTitle>Citation Network Diagram</CardTitle>
+            <p className="text-sm text-gray-600">
+              Interactive diagram showing all digital citations and online presence for {clientName}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsLocked(!isLocked)}
+              className="flex items-center gap-2"
+            >
+              {isLocked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
+              {isLocked ? 'Locked' : 'Unlocked'}
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={handleSaveLayout}
+              disabled={isSaving || isLocked}
+              className="flex items-center gap-2"
+            >
+              <Save className="h-4 w-4" />
+              {isSaving ? 'Saving...' : 'Save Layout'}
+            </Button>
+          </div>
+        </div>
       </CardHeader>
       <CardContent className="h-[700px] p-0">
         <ReactFlow
           nodes={nodes}
           edges={edges}
-          onNodesChange={onNodesChange}
+          onNodesChange={handleNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
