@@ -160,17 +160,6 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
       },
     },
     {
-      id: 'legal-resources',
-      type: 'citation',
-      position: { x: 600, y: 100 },
-      data: { 
-        label: 'Legal Resources', 
-        type: 'website',
-        url: 'resources.winwithcasey.com',
-        status: 'active'
-      },
-    },
-    {
       id: 'casey-at-bat',
       type: 'citation',
       position: { x: 800, y: 100 },
@@ -324,7 +313,6 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
   const initialEdges: Edge[] = useMemo(() => [
     // Business to websites
     { id: 'e-business-main', source: 'business', target: 'main-website', type: 'smoothstep' },
-    { id: 'e-business-resources', source: 'business', target: 'legal-resources', type: 'smoothstep' },
     { id: 'e-business-casey-at-bat', source: 'business', target: 'casey-at-bat', type: 'smoothstep' },
     { id: 'e-business-casey-fights', source: 'business', target: 'casey-fights', type: 'smoothstep' },
     { id: 'e-business-casey-arbenz', source: 'business', target: 'casey-arbenz', type: 'smoothstep' },
