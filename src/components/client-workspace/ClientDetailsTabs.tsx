@@ -64,7 +64,7 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
             value="communication"
             className="rounded-none border-b-2 border-transparent px-4 py-3 font-medium text-muted-foreground hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground"
           >
-            Communication
+            Diagram
           </TabsTrigger>
         </TabsList>
       </div>
