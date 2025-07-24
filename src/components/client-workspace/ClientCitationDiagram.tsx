@@ -18,8 +18,6 @@ import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star, S
 import { handleView } from '@/utils/documentActions';
 import { loadDiagramNodePositions, saveDiagramNodePositions, NodePosition } from '@/services/diagramService';
 import { useToast } from '@/hooks/use-toast';
-import AnimatedParticle from './AnimatedParticle';
-import { useParticleAnimation } from '@/hooks/useParticleAnimation';
 
 interface ClientCitationDiagramProps {
   clientId: string;
@@ -346,13 +344,6 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  
-  // Particle animation system
-  const { particles, resetParticles } = useParticleAnimation({ 
-    nodes, 
-    edges, 
-    isAnimating 
-  });
 
   // Animation functions
   const startAnimation = useCallback(() => {
@@ -465,8 +456,7 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
 
   const resetAnimation = useCallback(() => {
     stopAnimation();
-    resetParticles();
-  }, [stopAnimation, resetParticles]);
+  }, [stopAnimation]);
 
   // Load saved node positions from database
   useEffect(() => {
@@ -612,20 +602,6 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
           <MiniMap />
           <Background gap={12} size={1} />
         </ReactFlow>
-        
-        {/* Render particles during animation */}
-        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1000 }}>
-          {isAnimating && particles.map(particle => (
-            <AnimatedParticle
-              key={particle.id}
-              id={particle.id}
-              sourcePosition={particle.sourcePosition}
-              targetPosition={particle.targetPosition}
-              progress={particle.progress}
-              type={particle.type}
-            />
-          ))}
-        </div>
       </CardContent>
     </Card>
   );
