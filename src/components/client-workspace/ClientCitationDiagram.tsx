@@ -14,7 +14,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star, Save, Lock, Unlock } from 'lucide-react';
+import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star, Save, Lock, Unlock, Music } from 'lucide-react';
 import { handleView } from '@/utils/documentActions';
 import { loadDiagramNodePositions, saveDiagramNodePositions, NodePosition } from '@/services/diagramService';
 import { useToast } from '@/hooks/use-toast';
@@ -44,6 +44,8 @@ const CitationNode = ({ data }: { data: any }) => {
         return <MapPin className="h-4 w-4" />;
       case 'review':
         return <Star className="h-4 w-4" />;
+      case 'soundcloud':
+        return <Music className="h-4 w-4" />;
       default:
         return <Globe className="h-4 w-4" />;
     }
@@ -67,6 +69,8 @@ const CitationNode = ({ data }: { data: any }) => {
         return 'bg-green-100 border-green-500';
       case 'review':
         return 'bg-yellow-100 border-yellow-500';
+      case 'soundcloud':
+        return 'bg-orange-100 border-orange-500';
       default:
         return 'bg-gray-100 border-gray-300';
     }
@@ -262,6 +266,39 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
         status: 'active'
       },
     },
+    {
+      id: 'apple-maps',
+      type: 'citation',
+      position: { x: 400, y: 500 },
+      data: { 
+        label: 'Apple Maps', 
+        type: 'directory',
+        url: 'Apple Maps Listing',
+        status: 'active'
+      },
+    },
+    {
+      id: 'bing-places',
+      type: 'citation',
+      position: { x: 600, y: 500 },
+      data: { 
+        label: 'Bing Places', 
+        type: 'directory',
+        url: 'Bing Places Listing',
+        status: 'active'
+      },
+    },
+    {
+      id: 'soundcloud',
+      type: 'citation',
+      position: { x: 500, y: 400 },
+      data: { 
+        label: 'SoundCloud', 
+        type: 'soundcloud',
+        url: 'soundcloud.com/win-with-casey',
+        status: 'active'
+      },
+    },
 
     // Review sites
     {
@@ -304,6 +341,11 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
     
     // Business to directories
     { id: 'e-business-google', source: 'business', target: 'google-business', type: 'smoothstep' },
+    { id: 'e-business-apple-maps', source: 'business', target: 'apple-maps', type: 'smoothstep' },
+    { id: 'e-business-bing-places', source: 'business', target: 'bing-places', type: 'smoothstep' },
+    
+    // Business to SoundCloud
+    { id: 'e-business-soundcloud', source: 'business', target: 'soundcloud', type: 'smoothstep' },
     
     // Business to reviews
     { id: 'e-business-greview', source: 'business', target: 'google-reviews', type: 'smoothstep' },
