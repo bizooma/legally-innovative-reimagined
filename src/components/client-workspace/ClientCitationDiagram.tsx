@@ -302,17 +302,6 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
 
     // Review sites
     {
-      id: 'google-reviews',
-      type: 'citation',
-      position: { x: 100, y: 600 },
-      data: { 
-        label: 'Google Reviews', 
-        type: 'review',
-        url: 'Google Reviews (4.8/5)',
-        status: 'active'
-      },
-    },
-    {
       id: 'yelp',
       type: 'citation',
       position: { x: 300, y: 600 },
@@ -348,7 +337,6 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
     { id: 'e-business-soundcloud', source: 'business', target: 'soundcloud', type: 'smoothstep' },
     
     // Business to reviews
-    { id: 'e-business-greview', source: 'business', target: 'google-reviews', type: 'smoothstep' },
     { id: 'e-business-yelp', source: 'business', target: 'yelp', type: 'smoothstep' },
   ], []);
 
