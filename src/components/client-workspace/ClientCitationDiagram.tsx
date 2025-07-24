@@ -192,6 +192,17 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
         status: 'active'
       },
     },
+    {
+      id: 'casey-arbenz-wins',
+      type: 'citation',
+      position: { x: 800, y: 200 },
+      data: { 
+        label: 'Casey Arbenz Wins', 
+        type: 'website',
+        url: 'caseyarbenzwins.com',
+        status: 'active'
+      },
+    },
 
     // Social media nodes
     {
@@ -316,6 +327,7 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
     { id: 'e-business-casey-at-bat', source: 'business', target: 'casey-at-bat', type: 'smoothstep' },
     { id: 'e-business-casey-fights', source: 'business', target: 'casey-fights', type: 'smoothstep' },
     { id: 'e-business-casey-arbenz', source: 'business', target: 'casey-arbenz', type: 'smoothstep' },
+    { id: 'e-business-casey-arbenz-wins', source: 'business', target: 'casey-arbenz-wins', type: 'smoothstep' },
     
     // Business to social media
     { id: 'e-business-facebook', source: 'business', target: 'facebook', type: 'smoothstep' },
