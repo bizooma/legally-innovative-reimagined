@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      client_diagram_nodes: {
+        Row: {
+          client_id: string
+          id: string
+          node_id: string
+          updated_at: string
+          updated_by: string
+          x_position: number
+          y_position: number
+        }
+        Insert: {
+          client_id: string
+          id?: string
+          node_id: string
+          updated_at?: string
+          updated_by: string
+          x_position: number
+          y_position: number
+        }
+        Update: {
+          client_id?: string
+          id?: string
+          node_id?: string
+          updated_at?: string
+          updated_by?: string
+          x_position?: number
+          y_position?: number
+        }
+        Relationships: []
+      }
       clients: {
         Row: {
           company_name: string
