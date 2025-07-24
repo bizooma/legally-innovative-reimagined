@@ -145,6 +145,39 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
         status: 'active'
       },
     },
+    {
+      id: 'casey-at-bat',
+      type: 'citation',
+      position: { x: 800, y: 100 },
+      data: { 
+        label: 'Casey at Bat', 
+        type: 'website',
+        url: 'caseyatbat.com',
+        status: 'active'
+      },
+    },
+    {
+      id: 'casey-fights',
+      type: 'citation',
+      position: { x: 200, y: 200 },
+      data: { 
+        label: 'Casey Fights', 
+        type: 'website',
+        url: 'caseyfights.com',
+        status: 'active'
+      },
+    },
+    {
+      id: 'casey-arbenz',
+      type: 'citation',
+      position: { x: 600, y: 200 },
+      data: { 
+        label: 'Casey Arbenz', 
+        type: 'website',
+        url: 'caseyarbenz.com',
+        status: 'active'
+      },
+    },
 
     // Social media nodes
     {
@@ -268,6 +301,9 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
     { id: 'e-business-main', source: 'business', target: 'main-website', type: 'smoothstep' },
     { id: 'e-business-blog', source: 'business', target: 'blog', type: 'smoothstep' },
     { id: 'e-business-resources', source: 'business', target: 'legal-resources', type: 'smoothstep' },
+    { id: 'e-business-casey-at-bat', source: 'business', target: 'casey-at-bat', type: 'smoothstep' },
+    { id: 'e-business-casey-fights', source: 'business', target: 'casey-fights', type: 'smoothstep' },
+    { id: 'e-business-casey-arbenz', source: 'business', target: 'casey-arbenz', type: 'smoothstep' },
     
     // Business to social media
     { id: 'e-business-facebook', source: 'business', target: 'facebook', type: 'smoothstep' },
