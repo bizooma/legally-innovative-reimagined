@@ -38,11 +38,12 @@ const AnimatedParticle: React.FC<AnimatedParticleProps> = ({
   const getParticleStyle = () => {
     const baseStyle = {
       position: 'absolute' as const,
-      width: '8px',
-      height: '8px',
+      width: '10px',
+      height: '10px',
       borderRadius: '50%',
-      transform: `translate(${position.x}px, ${position.y}px)`,
-      transition: 'transform 0.1s linear',
+      left: `${position.x}px`,
+      top: `${position.y}px`,
+      transform: 'translate(-50%, -50%)',
       zIndex: 1000,
       pointerEvents: 'none' as const,
     };
@@ -51,32 +52,32 @@ const AnimatedParticle: React.FC<AnimatedParticleProps> = ({
       case 'website':
         return {
           ...baseStyle,
-          backgroundColor: 'hsl(var(--primary))',
-          boxShadow: '0 0 10px hsl(var(--primary) / 0.6)',
+          backgroundColor: '#3b82f6',
+          boxShadow: '0 0 10px rgba(59, 130, 246, 0.6)',
         };
       case 'social':
         return {
           ...baseStyle,
-          backgroundColor: 'hsl(var(--accent))',
-          boxShadow: '0 0 10px hsl(var(--accent) / 0.6)',
+          backgroundColor: '#10b981',
+          boxShadow: '0 0 10px rgba(16, 185, 129, 0.6)',
         };
       case 'directory':
         return {
           ...baseStyle,
-          backgroundColor: 'hsl(var(--secondary))',
-          boxShadow: '0 0 10px hsl(var(--secondary) / 0.6)',
+          backgroundColor: '#f59e0b',
+          boxShadow: '0 0 10px rgba(245, 158, 11, 0.6)',
         };
       case 'review':
         return {
           ...baseStyle,
-          backgroundColor: 'hsl(var(--destructive))',
-          boxShadow: '0 0 10px hsl(var(--destructive) / 0.6)',
+          backgroundColor: '#ef4444',
+          boxShadow: '0 0 10px rgba(239, 68, 68, 0.6)',
         };
       default:
         return {
           ...baseStyle,
-          backgroundColor: 'hsl(var(--muted-foreground))',
-          boxShadow: '0 0 10px hsl(var(--muted-foreground) / 0.6)',
+          backgroundColor: '#6b7280',
+          boxShadow: '0 0 10px rgba(107, 114, 128, 0.6)',
         };
     }
   };

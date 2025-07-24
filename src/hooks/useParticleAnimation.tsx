@@ -24,11 +24,21 @@ export const useParticleAnimation = ({ nodes, edges, isAnimating }: UseParticleA
 
   const getNodePosition = useCallback((nodeId: string) => {
     const node = nodes.find(n => n.id === nodeId);
-    if (!node) return { x: 0, y: 0 };
-    return {
-      x: node.position.x + (node.measured?.width || 150) / 2,
-      y: node.position.y + (node.measured?.height || 100) / 2
+    if (!node) {
+      console.log(`Node ${nodeId} not found`);
+      return { x: 0, y: 0 };
+    }
+    
+    const width = node.measured?.width || node.width || 150;
+    const height = node.measured?.height || node.height || 100;
+    
+    const position = {
+      x: node.position.x + width / 2,
+      y: node.position.y + height / 2
     };
+    
+    console.log(`Position for ${nodeId}:`, position);
+    return position;
   }, [nodes]);
 
   const getNodeType = useCallback((nodeId: string): 'website' | 'social' | 'directory' | 'review' => {
@@ -100,16 +110,26 @@ export const useParticleAnimation = ({ nodes, edges, isAnimating }: UseParticleA
   useEffect(() => {
     if (!isAnimating) return;
 
+    // Spawn initial burst of particles
+    const initialBurst = setTimeout(() => {
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => spawnParticle(), i * 200);
+      }
+    }, 100);
+
     const animationInterval = setInterval(() => {
       updateParticles();
       
-      // Spawn new particles randomly (about every 500ms)
-      if (Math.random() < 0.3) {
+      // Spawn new particles more frequently (about every 300ms)
+      if (Math.random() < 0.8) {
         spawnParticle();
       }
     }, 50); // 20 FPS
 
-    return () => clearInterval(animationInterval);
+    return () => {
+      clearInterval(animationInterval);
+      clearTimeout(initialBurst);
+    };
   }, [isAnimating, updateParticles, spawnParticle]);
 
   // Reset particles when animation stops

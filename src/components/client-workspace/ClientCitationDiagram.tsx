@@ -613,17 +613,19 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
           <Background gap={12} size={1} />
         </ReactFlow>
         
-        {/* Render particles */}
-        {particles.map((particle) => (
-          <AnimatedParticle
-            key={particle.id}
-            id={particle.id}
-            sourcePosition={particle.sourcePosition}
-            targetPosition={particle.targetPosition}
-            progress={particle.progress}
-            type={particle.type}
-          />
-        ))}
+        {/* Render particles during animation */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1000 }}>
+          {isAnimating && particles.map(particle => (
+            <AnimatedParticle
+              key={particle.id}
+              id={particle.id}
+              sourcePosition={particle.sourcePosition}
+              targetPosition={particle.targetPosition}
+              progress={particle.progress}
+              type={particle.type}
+            />
+          ))}
+        </div>
       </CardContent>
     </Card>
   );
