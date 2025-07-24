@@ -18,6 +18,8 @@ import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star, S
 import { handleView } from '@/utils/documentActions';
 import { loadDiagramNodePositions, saveDiagramNodePositions, NodePosition } from '@/services/diagramService';
 import { useToast } from '@/hooks/use-toast';
+import AnimatedParticle from './AnimatedParticle';
+import { useParticleAnimation } from '@/hooks/useParticleAnimation';
 
 interface ClientCitationDiagramProps {
   clientId: string;
@@ -317,33 +319,40 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
   ], [clientName]);
 
   const initialEdges: Edge[] = useMemo(() => [
-    // Business to websites
-    { id: 'e-business-main', source: 'business', target: 'main-website', type: 'smoothstep' },
-    { id: 'e-business-casey-at-bat', source: 'business', target: 'casey-at-bat', type: 'smoothstep' },
-    { id: 'e-business-casey-fights', source: 'business', target: 'casey-fights', type: 'smoothstep' },
-    { id: 'e-business-casey-arbenz', source: 'business', target: 'casey-arbenz', type: 'smoothstep' },
-    { id: 'e-business-casey-arbenz-wins', source: 'business', target: 'casey-arbenz-wins', type: 'smoothstep' },
+    // Citations TO business (reversed for particle flow)
+    { id: 'e-main-business', source: 'main-website', target: 'business', type: 'smoothstep' },
+    { id: 'e-casey-at-bat-business', source: 'casey-at-bat', target: 'business', type: 'smoothstep' },
+    { id: 'e-casey-fights-business', source: 'casey-fights', target: 'business', type: 'smoothstep' },
+    { id: 'e-casey-arbenz-business', source: 'casey-arbenz', target: 'business', type: 'smoothstep' },
+    { id: 'e-casey-arbenz-wins-business', source: 'casey-arbenz-wins', target: 'business', type: 'smoothstep' },
     
-    // Business to social media
-    { id: 'e-business-facebook', source: 'business', target: 'facebook', type: 'smoothstep' },
-    { id: 'e-business-instagram', source: 'business', target: 'instagram', type: 'smoothstep' },
-    { id: 'e-business-linkedin', source: 'business', target: 'linkedin', type: 'smoothstep' },
-    { id: 'e-business-youtube', source: 'business', target: 'youtube', type: 'smoothstep' },
+    // Social media TO business
+    { id: 'e-facebook-business', source: 'facebook', target: 'business', type: 'smoothstep' },
+    { id: 'e-instagram-business', source: 'instagram', target: 'business', type: 'smoothstep' },
+    { id: 'e-linkedin-business', source: 'linkedin', target: 'business', type: 'smoothstep' },
+    { id: 'e-youtube-business', source: 'youtube', target: 'business', type: 'smoothstep' },
     
-    // Business to directories
-    { id: 'e-business-google', source: 'business', target: 'google-business', type: 'smoothstep' },
-    { id: 'e-business-apple-maps', source: 'business', target: 'apple-maps', type: 'smoothstep' },
-    { id: 'e-business-bing-places', source: 'business', target: 'bing-places', type: 'smoothstep' },
+    // Directories TO business
+    { id: 'e-google-business', source: 'google-business', target: 'business', type: 'smoothstep' },
+    { id: 'e-apple-maps-business', source: 'apple-maps', target: 'business', type: 'smoothstep' },
+    { id: 'e-bing-places-business', source: 'bing-places', target: 'business', type: 'smoothstep' },
     
-    // Business to SoundCloud
-    { id: 'e-business-soundcloud', source: 'business', target: 'soundcloud', type: 'smoothstep' },
+    // SoundCloud TO business
+    { id: 'e-soundcloud-business', source: 'soundcloud', target: 'business', type: 'smoothstep' },
     
-    // Business to reviews
-    { id: 'e-business-yelp', source: 'business', target: 'yelp', type: 'smoothstep' },
+    // Reviews TO business
+    { id: 'e-yelp-business', source: 'yelp', target: 'business', type: 'smoothstep' },
   ], []);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  
+  // Particle animation system
+  const { particles, resetParticles } = useParticleAnimation({ 
+    nodes, 
+    edges, 
+    isAnimating 
+  });
 
   // Animation functions
   const startAnimation = useCallback(() => {
@@ -456,7 +465,8 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
 
   const resetAnimation = useCallback(() => {
     stopAnimation();
-  }, [stopAnimation]);
+    resetParticles();
+  }, [stopAnimation, resetParticles]);
 
   // Load saved node positions from database
   useEffect(() => {
@@ -587,7 +597,7 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
           </div>
         </div>
       </CardHeader>
-      <CardContent className="h-[700px] p-0">
+      <CardContent className="h-[700px] p-0 relative">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -602,6 +612,18 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
           <MiniMap />
           <Background gap={12} size={1} />
         </ReactFlow>
+        
+        {/* Render particles */}
+        {particles.map((particle) => (
+          <AnimatedParticle
+            key={particle.id}
+            id={particle.id}
+            sourcePosition={particle.sourcePosition}
+            targetPosition={particle.targetPosition}
+            progress={particle.progress}
+            type={particle.type}
+          />
+        ))}
       </CardContent>
     </Card>
   );
