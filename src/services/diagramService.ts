@@ -75,7 +75,9 @@ export async function saveDiagramNodePositions(
 
   const { error } = await supabase
     .from('client_diagram_nodes')
-    .upsert(records);
+    .upsert(records, {
+      onConflict: 'client_id,node_id'
+    });
 
   if (error) {
     console.error('Error saving diagram node positions:', error);
