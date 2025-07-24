@@ -14,7 +14,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star, Save, Lock, Unlock, Music } from 'lucide-react';
+import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star, Save, Lock, Unlock, Music, Play, Pause, RotateCcw } from 'lucide-react';
 import { handleView } from '@/utils/documentActions';
 import { loadDiagramNodePositions, saveDiagramNodePositions, NodePosition } from '@/services/diagramService';
 import { useToast } from '@/hooks/use-toast';
@@ -100,9 +100,9 @@ const CitationNode = ({ data }: { data: any }) => {
 
   return (
     <div 
-      className={`px-4 py-2 shadow-md rounded-md border-2 ${getNodeColor()} min-w-[150px] ${
+      className={`px-4 py-2 shadow-md rounded-md border-2 ${getNodeColor()} min-w-[150px] transition-all duration-300 ${
         isClickable ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''
-      }`}
+      } ${data.isAnimating ? 'animation-pulse ring-2 ring-blue-400' : ''}`}
       onClick={handleClick}
     >
       <div className="flex items-center gap-2">
@@ -130,6 +130,8 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
   const [isLocked, setIsLocked] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [hasLoadedPositions, setHasLoadedPositions] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [animationSpeed, setAnimationSpeed] = useState(1000); // ms per node
 
   // Sample data for Win with Casey - replace with actual data from your database
   const initialNodes: Node[] = useMemo(() => [
@@ -343,6 +345,119 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  // Animation functions
+  const startAnimation = useCallback(() => {
+    if (isAnimating) return;
+    
+    setIsAnimating(true);
+    
+    // Get all nodes except the business node
+    const citationNodes = nodes.filter(node => node.id !== 'business');
+    
+    // Animate edges first - add flowing dots
+    setEdges(currentEdges => 
+      currentEdges.map(edge => ({
+        ...edge,
+        animated: true,
+        style: { 
+          ...edge.style, 
+          stroke: '#3b82f6',
+          strokeWidth: 2
+        }
+      }))
+    );
+    
+    // Then animate nodes in sequence
+    citationNodes.forEach((node, index) => {
+      setTimeout(() => {
+        setNodes(currentNodes =>
+          currentNodes.map(n =>
+            n.id === node.id
+              ? { ...n, data: { ...n.data, isAnimating: true } }
+              : n
+          )
+        );
+        
+        // Remove node animation after a brief period
+        setTimeout(() => {
+          setNodes(currentNodes =>
+            currentNodes.map(n =>
+              n.id === node.id
+                ? { ...n, data: { ...n.data, isAnimating: false } }
+                : n
+            )
+          );
+        }, animationSpeed / 2);
+        
+      }, index * (animationSpeed / 4));
+    });
+    
+    // Highlight business node at the end
+    setTimeout(() => {
+      setNodes(currentNodes =>
+        currentNodes.map(n =>
+          n.id === 'business'
+            ? { ...n, data: { ...n.data, isAnimating: true } }
+            : n
+        )
+      );
+      
+      setTimeout(() => {
+        setNodes(currentNodes =>
+          currentNodes.map(n =>
+            n.id === 'business'
+              ? { ...n, data: { ...n.data, isAnimating: false } }
+              : n
+          )
+        );
+        
+        // Stop edge animation
+        setEdges(currentEdges => 
+          currentEdges.map(edge => ({
+            ...edge,
+            animated: false,
+            style: { 
+              ...edge.style, 
+              stroke: '#64748b',
+              strokeWidth: 1
+            }
+          }))
+        );
+        
+        setIsAnimating(false);
+      }, animationSpeed);
+      
+    }, citationNodes.length * (animationSpeed / 4) + animationSpeed / 2);
+  }, [nodes, isAnimating, animationSpeed, setNodes, setEdges]);
+
+  const stopAnimation = useCallback(() => {
+    setIsAnimating(false);
+    
+    // Reset all animations
+    setNodes(currentNodes =>
+      currentNodes.map(node => ({
+        ...node,
+        data: { ...node.data, isAnimating: false }
+      }))
+    );
+    
+    setEdges(currentEdges => 
+      currentEdges.map(edge => ({
+        ...edge,
+        animated: false,
+        style: { 
+          ...edge.style, 
+          stroke: '#64748b',
+          strokeWidth: 1
+        }
+      }))
+    );
+  }, [setNodes, setEdges]);
+
+  const resetAnimation = useCallback(() => {
+    stopAnimation();
+  }, [stopAnimation]);
+
   // Load saved node positions from database
   useEffect(() => {
     const loadPositions = async () => {
@@ -428,6 +543,28 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
             </p>
           </div>
           <div className="flex gap-2">
+            <div className="flex gap-1 border rounded-md p-1">
+              <Button
+                variant={isAnimating ? "secondary" : "outline"}
+                size="sm"
+                onClick={isAnimating ? stopAnimation : startAnimation}
+                disabled={isLocked}
+                className="flex items-center gap-1 h-8 px-2"
+              >
+                {isAnimating ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
+                {isAnimating ? 'Stop' : 'Flow'}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={resetAnimation}
+                disabled={isLocked}
+                className="flex items-center gap-1 h-8 px-2"
+              >
+                <RotateCcw className="h-3 w-3" />
+                Reset
+              </Button>
+            </div>
             <Button
               variant="outline"
               size="sm"
