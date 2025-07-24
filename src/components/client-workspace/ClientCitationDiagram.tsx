@@ -14,6 +14,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star } from 'lucide-react';
+import { handleView } from '@/utils/documentActions';
 
 interface ClientCitationDiagramProps {
   clientId: string;
@@ -68,8 +69,35 @@ const CitationNode = ({ data }: { data: any }) => {
     }
   };
 
+  const getClickableUrl = (url: string, type: string) => {
+    if (url.includes('http')) return url;
+    if (type === 'facebook') return `https://${url}`;
+    if (type === 'instagram') return `https://${url}`;
+    if (type === 'linkedin') return `https://${url}`;
+    if (type === 'youtube') return `https://${url}`;
+    if (type === 'website') return `https://${url}`;
+    if (type === 'directory' && url.includes('.com')) return `https://${url}`;
+    if (type === 'review' && url.includes('.com')) return `https://${url}`;
+    return null;
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const clickableUrl = getClickableUrl(data.url, data.type);
+    if (clickableUrl && data.type !== 'business') {
+      handleView(clickableUrl);
+    }
+  };
+
+  const isClickable = data.url && data.type !== 'business' && getClickableUrl(data.url, data.type);
+
   return (
-    <div className={`px-4 py-2 shadow-md rounded-md border-2 ${getNodeColor()} min-w-[150px]`}>
+    <div 
+      className={`px-4 py-2 shadow-md rounded-md border-2 ${getNodeColor()} min-w-[150px] ${
+        isClickable ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''
+      }`}
+      onClick={handleClick}
+    >
       <div className="flex items-center gap-2">
         {getIcon()}
         <div className="font-medium text-sm">{data.label}</div>
