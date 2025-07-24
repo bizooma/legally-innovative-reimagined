@@ -1,5 +1,6 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useNavigate } from "react-router-dom";
 import ClientOverview from "./ClientOverview";
 import ClientProjects from "./ClientProjects";
 import ClientDocuments from "./ClientDocuments";
@@ -15,7 +16,15 @@ interface ClientDetailsTabsProps {
 }
 
 const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: ClientDetailsTabsProps) => {
+  const navigate = useNavigate();
+
   const handleValueChange = (value: string) => {
+    if (value === 'communication') {
+      // Navigate to the diagram page instead of showing a tab
+      navigate(`/portal/client/${client.id}/diagram`);
+      return;
+    }
+    
     if (onTabChange) {
       onTabChange(value);
     }
@@ -82,9 +91,6 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
       </TabsContent>
       <TabsContent value="documents" className="py-6">
         <ClientDocuments clientId={client.id} />
-      </TabsContent>
-      <TabsContent value="communication" className="py-6">
-        <ClientCommunication clientId={client.id} clientName={client.company_name} />
       </TabsContent>
     </Tabs>
   );
