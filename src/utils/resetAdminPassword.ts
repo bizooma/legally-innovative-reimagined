@@ -30,3 +30,8 @@ export const resetAdminPassword = async (email: string, newPassword: string) => 
 export const resetJoePassword = () => {
   return resetAdminPassword('joe@bizooma.com', 'admin123');
 };
+
+// Function to create Puget Law Group user
+export const createPugetLawUser = () => {
+  return resetAdminPassword('dmontgomery@pugetlawgroup.com', 'pugetlawgroup2025');
+};
