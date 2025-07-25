@@ -240,7 +240,7 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
       data: { 
         label: 'LinkedIn', 
         type: 'linkedin',
-        url: 'linkedin.com/company/winwithcasey',
+        url: 'linkedin.com/company/win-with-casey',
         status: 'active'
       },
     },
