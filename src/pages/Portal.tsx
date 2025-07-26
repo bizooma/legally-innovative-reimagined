@@ -108,6 +108,11 @@ const Portal = () => {
                 <LoginForm />
               </div>
             </div>
+            
+            {/* Admin Tools Section */}
+            <div className="mt-12 pt-8 border-t border-gray-200">
+              <AdminPasswordReset />
+            </div>
           </div>
         </div>
       </div>
