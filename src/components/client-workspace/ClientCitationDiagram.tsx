@@ -84,7 +84,7 @@ const CitationNode = ({ data }: { data: any }) => {
     if (type === 'youtube') return `https://${url}`;
     if (type === 'soundcloud') return `https://${url}`;
     if (type === 'website') return `https://${url}`;
-    if (type === 'directory' && url.includes('.com')) return `https://${url}`;
+    if (type === 'directory' && (url.includes('.com') || url.includes('share.google'))) return `https://${url}`;
     if (type === 'review' && url.includes('.com')) return `https://${url}`;
     return null;
   };
