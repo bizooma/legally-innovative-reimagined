@@ -265,7 +265,7 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
       data: { 
         label: 'Google Business Profile', 
         type: 'directory',
-        url: 'Google My Business',
+        url: 'share.google/el9yIDz61LdN2vgXC',
         status: 'active'
       },
     },
