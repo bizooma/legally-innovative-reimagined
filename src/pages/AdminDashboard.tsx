@@ -33,12 +33,14 @@ const AdminDashboard = () => {
               isAdmin={isAdmin}
             />
 
-            {/* Dashboard Stats */}
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <StatCard title="Active Clients" value={stats.activeClients.toString()} description="Currently active marketing clients" />
-              <StatCard title="Pending Approvals" value={stats.pendingApprovals.toString()} description="Materials awaiting client approval" />
-              <StatCard title="New Messages" value={stats.newMessages.toString()} description="Unread client messages" />
-            </div>
+            {/* Dashboard Stats - Only show for admins */}
+            {isAdmin && (
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <StatCard title="Active Clients" value={stats.activeClients.toString()} description="Currently active marketing clients" />
+                <StatCard title="Pending Approvals" value={stats.pendingApprovals.toString()} description="Materials awaiting client approval" />
+                <StatCard title="New Messages" value={stats.newMessages.toString()} description="Unread client messages" />
+              </div>
+            )}
 
             {/* Client List */}
             <ClientDirectory 
@@ -48,8 +50,10 @@ const AdminDashboard = () => {
               isAdmin={isAdmin}
             />
             
-            {/* Recent Activity - Moved below Client Directory */}
-            <RecentActivity clients={clients} isLoading={isLoading} />
+            {/* Recent Activity - Only show for admins */}
+            {isAdmin && (
+              <RecentActivity clients={clients} isLoading={isLoading} />
+            )}
           </div>
         </div>
       </div>
