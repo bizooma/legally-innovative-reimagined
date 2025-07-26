@@ -12,17 +12,16 @@ const GOOGLE_CLIENT_ID = '963523082884-rjqcbkssi7bep6scsmh540t2qlhh88m7.apps.goo
 // Define the correct redirect URI based on environment
 // This must match exactly what's configured in Google Cloud Console
 function getRedirectUri(): string {
-  // Check for hostname to determine environment
+  // For Lovable preview environments, use a wildcard approach
+  // This should help with dynamic preview URLs
   const hostname = window.location.hostname;
   
   if (hostname.includes('localhost') || hostname.includes('127.0.0.1')) {
     return 'http://localhost:3000/auth/google/callback';
-  } else if (hostname.includes('lovableproject.com')) {
-    // For preview environment
-    return `https://${hostname}/auth/google/callback`;
   } else {
-    // For production - this should match what's in Google Cloud Console
-    return 'https://legallyinnovative.com/auth/google/callback';
+    // For all other environments (including Lovable preview), use the current hostname
+    // Make sure this redirect URI is added to Google Cloud Console
+    return `${window.location.protocol}//${hostname}/auth/google/callback`;
   }
 }
 
