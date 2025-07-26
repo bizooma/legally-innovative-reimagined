@@ -310,7 +310,7 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
       data: { 
         label: 'Yelp Reviews', 
         type: 'review',
-        url: 'yelp.com/biz/winwithcasey',
+        url: 'yelp.com/biz/puget-law-group-kent-2',
         status: 'active'
       },
     },
