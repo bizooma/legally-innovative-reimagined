@@ -229,7 +229,7 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
       data: { 
         label: 'Instagram', 
         type: 'instagram',
-        url: 'instagram.com/winwithcasey',
+        url: 'instagram.com/caseyarbenzwins',
         status: 'active'
       },
     },
