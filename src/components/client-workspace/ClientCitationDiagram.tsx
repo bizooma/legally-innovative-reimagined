@@ -82,6 +82,7 @@ const CitationNode = ({ data }: { data: any }) => {
     if (type === 'instagram') return `https://${url}`;
     if (type === 'linkedin') return `https://${url}`;
     if (type === 'youtube') return `https://${url}`;
+    if (type === 'soundcloud') return `https://${url}`;
     if (type === 'website') return `https://${url}`;
     if (type === 'directory' && url.includes('.com')) return `https://${url}`;
     if (type === 'review' && url.includes('.com')) return `https://${url}`;
