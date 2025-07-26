@@ -5,7 +5,7 @@ import { Client } from '@/types/database';
 import { useClientDocumentCount } from '@/hooks/useClientDocumentCount';
 import { useClientProjectsWithDates } from '@/hooks/useClientProjectsWithDates';
 import ClientGanttChart from './ClientGanttChart';
-import GoogleDriveConnector from './GoogleDriveConnector';
+
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
@@ -35,14 +35,6 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
         isLoading={isLoadingProjects} 
       />
 
-      {/* Google Drive Connector */}
-      <GoogleDriveConnector 
-        clientId={client.id}
-        clientName={client.company_name}
-        folderId={client.google_drive_folder_id}
-        onFolderConnected={handleFolderConnected}
-        onFolderDisconnected={handleFolderDisconnected}
-      />
 
       {/* Account Summary Card */}
       <Card>
