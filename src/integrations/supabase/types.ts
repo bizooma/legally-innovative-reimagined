@@ -183,6 +183,51 @@ export type Database = {
           },
         ]
       }
+      social_media_posts: {
+        Row: {
+          client_id: string
+          content: string | null
+          created_at: string
+          engagement_metrics: Json | null
+          id: string
+          media_urls: string[] | null
+          platform: string
+          post_id: string
+          post_url: string | null
+          published_at: string | null
+          updated_at: string
+          webhook_data: Json | null
+        }
+        Insert: {
+          client_id: string
+          content?: string | null
+          created_at?: string
+          engagement_metrics?: Json | null
+          id?: string
+          media_urls?: string[] | null
+          platform: string
+          post_id: string
+          post_url?: string | null
+          published_at?: string | null
+          updated_at?: string
+          webhook_data?: Json | null
+        }
+        Update: {
+          client_id?: string
+          content?: string | null
+          created_at?: string
+          engagement_metrics?: Json | null
+          id?: string
+          media_urls?: string[] | null
+          platform?: string
+          post_id?: string
+          post_url?: string | null
+          published_at?: string | null
+          updated_at?: string
+          webhook_data?: Json | null
+        }
+        Relationships: []
+      }
       staff_document_assignments: {
         Row: {
           assigned_at: string
