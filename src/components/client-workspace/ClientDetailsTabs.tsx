@@ -25,6 +25,12 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
       return;
     }
     
+    if (value === 'analytics') {
+      // Open external analytics dashboard in new tab
+      window.open('https://dashthis.com/app/view/dashboard-8UWDIVAuj0OuzfMTIsmxuA', '_blank');
+      return;
+    }
+    
     if (onTabChange) {
       onTabChange(value);
     }
@@ -68,6 +74,12 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
             className="rounded-none border-b-2 border-transparent px-4 py-3 font-medium text-muted-foreground hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground"
           >
             Documents
+          </TabsTrigger>
+          <TabsTrigger
+            value="analytics"
+            className="rounded-none border-b-2 border-transparent px-4 py-3 font-medium text-muted-foreground hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground"
+          >
+            Analytics
           </TabsTrigger>
           <TabsTrigger
             value="communication"
