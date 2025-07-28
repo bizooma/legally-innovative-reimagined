@@ -35,13 +35,33 @@ export function useAuth() {
       
       console.log('useAuth: Supabase auth successful');
       
-      // Route all users to admin dashboard - they'll see appropriate features based on their permissions
-      console.log('useAuth: Routing user to admin dashboard');
+      // Check if user is admin or client user and route accordingly
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('is_admin, client_id')
+        .eq('id', data.user.id)
+        .single();
+      
+      if (userError) {
+        console.error('useAuth: Error fetching user data:', userError);
+        throw new Error('Failed to fetch user permissions');
+      }
+      
+      if (userData.is_admin) {
+        console.log('useAuth: Routing admin user to admin dashboard');
+        navigate('/portal/admin-dashboard');
+      } else if (userData.client_id) {
+        console.log('useAuth: Routing client user to their workspace');
+        navigate(`/portal/clients/${userData.client_id}`);
+      } else {
+        console.log('useAuth: User has no assigned client, routing to admin dashboard');
+        navigate('/portal/admin-dashboard');
+      }
+      
       toast({
         title: "Login Successful",
         description: "Welcome to your dashboard.",
       });
-      navigate('/portal/admin-dashboard');
       
     } catch (error: any) {
       console.error("Login error:", error);
