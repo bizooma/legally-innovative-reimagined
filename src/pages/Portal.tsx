@@ -35,11 +35,22 @@ const Portal = () => {
             
           if (userData) {
             console.log('User role found:', userData.is_admin ? 'Admin' : 'Client');
-            // Direct to appropriate dashboard
-            if (userData.is_admin) {
-              navigate('/portal/admin-dashboard');
-            } else {
-              navigate('/portal/client-dashboard');
+            // Get full user data including client_id for proper routing
+            const { data: fullUserData, error: userError } = await supabase
+              .from('users')
+              .select('is_admin, client_id')
+              .eq('id', session.user.id)
+              .single();
+              
+            if (fullUserData && !userError) {
+              // Direct to appropriate dashboard
+              if (fullUserData.is_admin) {
+                navigate('/portal/admin-dashboard');
+              } else if (fullUserData.client_id) {
+                navigate(`/portal/clients/${fullUserData.client_id}`);
+              } else {
+                navigate('/portal/admin-dashboard');
+              }
             }
           } else {
             // If no user data found, still allow access to portal but stop loading state
