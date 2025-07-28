@@ -31,6 +31,12 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
       return;
     }
     
+    if (value === 'form-submissions') {
+      // Open Google Sheets form submissions in new tab
+      window.open('https://docs.google.com/spreadsheets/d/12i-NHjZ8fVO-eE9l47hp9pRW_w_fRz2NPXhuiKoDsfM/edit?usp=sharing', '_blank');
+      return;
+    }
+    
     if (onTabChange) {
       onTabChange(value);
     }
@@ -80,6 +86,12 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
             className="rounded-none border-b-2 border-transparent px-4 py-3 font-medium text-muted-foreground hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground"
           >
             Analytics
+          </TabsTrigger>
+          <TabsTrigger
+            value="form-submissions"
+            className="rounded-none border-b-2 border-transparent px-4 py-3 font-medium text-muted-foreground hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground"
+          >
+            Form Submissions
           </TabsTrigger>
           <TabsTrigger
             value="communication"
