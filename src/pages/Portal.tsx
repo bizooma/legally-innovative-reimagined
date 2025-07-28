@@ -14,7 +14,7 @@ const Portal = () => {
   const navigate = useNavigate();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  console.log('Portal component rendering');
+  console.log('Portal component rendering, current pathname:', window.location.pathname);
 
   // Check if user is already logged in
   useEffect(() => {
@@ -25,39 +25,31 @@ const Portal = () => {
         console.log('Session check result:', session ? 'Session found' : 'No session');
         
         if (session) {
-          // Check if user is admin
-          console.log('Checking user role...');
-          const { data: userData, error } = await supabase
-            .from('users')
-            .select('is_admin')
-            .eq('id', session.user.id)
-            .maybeSingle();
-            
-          if (userData) {
-            console.log('User role found:', userData.is_admin ? 'Admin' : 'Client');
-            // Get full user data including client_id for proper routing
-            const { data: fullUserData, error: userError } = await supabase
+          // Only redirect if we're on the portal page itself, not on a client workspace
+          if (window.location.pathname === '/portal' || window.location.hash === '#/portal') {
+            console.log('User is authenticated, redirecting from portal page...');
+            // Check if user is admin
+            const { data: userData, error } = await supabase
               .from('users')
               .select('is_admin, client_id')
               .eq('id', session.user.id)
               .single();
               
-            if (fullUserData && !userError) {
+            if (userData && !error) {
               // Direct to appropriate dashboard
-              if (fullUserData.is_admin) {
+              if (userData.is_admin) {
                 navigate('/portal/admin-dashboard');
-              } else if (fullUserData.client_id) {
-                navigate(`/portal/clients/${fullUserData.client_id}`);
+              } else if (userData.client_id) {
+                navigate(`/portal/clients/${userData.client_id}`);
               } else {
                 navigate('/portal/admin-dashboard');
               }
             } else {
-              console.log('User data error or no data:', userError);
+              console.log('User data error or no data:', error);
               setIsCheckingAuth(false);
             }
           } else {
-            // If no user data found, still allow access to portal but stop loading state
-            console.log('No user data found in database');
+            // User is authenticated but on a different portal page, stop loading
             setIsCheckingAuth(false);
           }
         } else {
