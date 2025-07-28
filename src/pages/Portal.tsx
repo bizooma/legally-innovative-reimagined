@@ -51,6 +51,9 @@ const Portal = () => {
               } else {
                 navigate('/portal/admin-dashboard');
               }
+            } else {
+              console.log('User data error or no data:', userError);
+              setIsCheckingAuth(false);
             }
           } else {
             // If no user data found, still allow access to portal but stop loading state
