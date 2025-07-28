@@ -112,23 +112,9 @@ const App = () => (
               <Route path="/portal" element={<Portal />} />
               <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
+              <Route path="/portal/clients/:id" element={<ClientDetails />} />
               <Route path="/portal/client/:id" element={<ClientDetails />} />
               <Route path="/portal/client/:id/diagram" element={<ClientDiagram />} />
-              
-              {/* Staff routes */}
-              <Route path="/staff" element={<StaffLogin />} />
-              <Route element={<ProtectedRoute />}>
-                <Route path="/staff/dashboard" element={<StaffDashboard />} />
-              </Route>
-              
-              {/* Google Auth callback routes */}
-              <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
-              
-              {/* Handle all auth callback variations and paths */}
-              <Route path="*/auth/google/callback" element={<GoogleAuthCallback />} />
-              
-              {/* Create a catch-all route for all client routes to handle page refreshes */}
-              <Route path="/portal/*" element={<Portal />} />
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />
