@@ -44,10 +44,6 @@ const ClientDetailsHeader: React.FC<ClientDetailsHeaderProps> = ({
           <Mail className="mr-2 h-4 w-4" />
           Contact Client
         </Button>
-        <Button variant="outline">
-          <FileText className="mr-2 h-4 w-4" />
-          Generate Report
-        </Button>
       </div>
       
       <ClientContactsModal
