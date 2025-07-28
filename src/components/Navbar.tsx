@@ -59,8 +59,8 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
-  // Always show white background except on home page when not scrolled
-  const shouldHaveBackground = isScrolled || !isHomePage;
+  // Always show white background on all pages for consistent visibility
+  const shouldHaveBackground = true;
   const textColorClass = "text-legal-dark";
 
   return (
