@@ -373,6 +373,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_reset_user_password: {
+        Args: { user_email: string; new_password: string }
+        Returns: Json
+      }
       get_current_user_admin_status: {
         Args: Record<PropertyKey, never>
         Returns: boolean
