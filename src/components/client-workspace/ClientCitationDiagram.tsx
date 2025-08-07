@@ -315,6 +315,52 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
         status: 'active'
       },
     },
+
+    // Landing pages
+    {
+      id: 'kent-personal-injury',
+      type: 'citation',
+      position: { x: 100, y: 700 },
+      data: { 
+        label: 'Kent Personal Injury', 
+        type: 'website',
+        url: 'personalinjurylawyerkent.com',
+        status: 'active'
+      },
+    },
+    {
+      id: 'olympia-personal-injury',
+      type: 'citation',
+      position: { x: 300, y: 700 },
+      data: { 
+        label: 'Olympia Personal Injury', 
+        type: 'website',
+        url: 'personalinjurylawyerolympia.com',
+        status: 'active'
+      },
+    },
+    {
+      id: 'king-county-personal-injury',
+      type: 'citation',
+      position: { x: 500, y: 700 },
+      data: { 
+        label: 'King County Personal Injury', 
+        type: 'website',
+        url: 'kingcountypersonalinjury.com',
+        status: 'active'
+      },
+    },
+    {
+      id: 'olympia-car-accident',
+      type: 'citation',
+      position: { x: 700, y: 700 },
+      data: { 
+        label: 'Olympia Car Accident', 
+        type: 'website',
+        url: 'olympiacaraccidentlawyer.com',
+        status: 'active'
+      },
+    },
   ], [clientName]);
 
   const initialEdges: Edge[] = useMemo(() => [
@@ -341,6 +387,12 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
     
     // Reviews TO business
     { id: 'e-yelp-business', source: 'yelp', target: 'business', type: 'smoothstep' },
+    
+    // Landing pages TO business
+    { id: 'e-kent-personal-injury-business', source: 'kent-personal-injury', target: 'business', type: 'smoothstep' },
+    { id: 'e-olympia-personal-injury-business', source: 'olympia-personal-injury', target: 'business', type: 'smoothstep' },
+    { id: 'e-king-county-personal-injury-business', source: 'king-county-personal-injury', target: 'business', type: 'smoothstep' },
+    { id: 'e-olympia-car-accident-business', source: 'olympia-car-accident', target: 'business', type: 'smoothstep' },
   ], []);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
