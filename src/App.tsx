@@ -36,6 +36,8 @@ import LawFirmSeoAeoPage from "./pages/LawFirmSeoAeoPage";
 import LawFirmLeadGenerationPage from "./pages/LawFirmLeadGenerationPage";
 import LawFirmVoiceAssistantMarketingPage from "./pages/LawFirmVoiceAssistantMarketingPage";
 import { useEffect } from "react";
+import GlobalSEO from "./components/SEO/GlobalSEO";
+import CanonicalMeta from "./components/SEO/CanonicalMeta";
 
 // Create a new query client
 const queryClient = new QueryClient();
@@ -61,6 +63,9 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          {/* Global SEO and Canonical tags */}
+          <GlobalSEO />
+          <CanonicalMeta />
           <RouteDebug>
             <Routes>
               {/* Donut page with highest priority */}

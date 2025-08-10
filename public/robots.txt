@@ -10,5 +10,15 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# Disallow sensitive/private routes
 User-agent: *
+Disallow: /portal/
+Disallow: /portal/*
+Disallow: /staff
+Disallow: /staff*
+Disallow: /admin
+Disallow: /admin*
+Disallow: /this-is-our-jax
 Allow: /
+
+Sitemap: https://legallyinnovative.com/sitemap.xml
