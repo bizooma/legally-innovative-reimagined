@@ -28,16 +28,19 @@ const GlobalSEO = () => {
   };
 
   return (
-    <Helmet>
-      {/* Global defaults for social */}
-      <meta property="og:site_name" content={BUSINESS_NAME} />
-      <meta property="og:type" content="website" />
-      <meta name="twitter:card" content="summary_large_image" />
+      <Helmet>
+        {/* Global defaults for social */}
+        <meta property="og:site_name" content={BUSINESS_NAME} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
 
-      {/* Global JSON-LD */}
-      <script type="application/ld+json">{JSON.stringify(organizationLd)}</script>
-      <script type="application/ld+json">{JSON.stringify(websiteLd)}</script>
-    </Helmet>
+        {/* Google Search Console Verification */}
+        <meta name="google-site-verification" content="KGi7cTbcqjyL6GMPEq14A0Iwg55cc6flZO0ObLKPbQM" />
+
+        {/* Global JSON-LD */}
+        <script type="application/ld+json">{JSON.stringify(organizationLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(websiteLd)}</script>
+      </Helmet>
   );
 };
 
