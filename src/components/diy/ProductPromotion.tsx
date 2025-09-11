@@ -44,7 +44,7 @@ export const ProductPromotion = ({
   const [isOpen, setIsOpen] = useState(false);
   
   const bgGradient = colorScheme === "blue" 
-    ? "bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-100" 
+    ? "bg-gradient-to-br from-legal-primary/10 to-legal-secondary/10 border-legal-primary/20" 
     : "bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-100";
   
   const primaryBg = colorScheme === "blue" 
