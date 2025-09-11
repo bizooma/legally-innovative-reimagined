@@ -35,7 +35,7 @@ const WhyChooseUs = () => {
       id="why-us" 
       className="section-padding relative overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), url('${whyChooseBg}')`,
+        backgroundImage: `linear-gradient(rgba(122, 10, 10, 0.85), rgba(122, 10, 10, 0.85)), url('${whyChooseBg}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'

@@ -13,7 +13,7 @@ const Footer = () => {
     <footer 
       className="text-white py-12 relative overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.9)), url('${footerTechBg}')`,
+        backgroundImage: `linear-gradient(rgba(122, 10, 10, 0.9), rgba(122, 10, 10, 0.9)), url('${footerTechBg}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
