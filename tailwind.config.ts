@@ -27,11 +27,11 @@ const config = {
       },
       colors: {
         legal: {
-          primary: "#003366",
-          secondary: "#004d99",
-          accent: "#ff9900",
-          dark: "#001a33",
-          light: "#e6f0ff",
+          primary: "#7A0A0A",
+          secondary: "#8C1B1B",
+          accent: "#E63946",
+          dark: "#1A0000",
+          light: "#F9E5E5",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
