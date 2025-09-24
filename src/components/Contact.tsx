@@ -112,8 +112,8 @@ const Contact = () => {
                   <div>
                     <p className="font-medium text-gray-600">Visit Us</p>
                     <p className="text-legal-dark font-semibold">
-                      2465 US-1S, Suite 1045<br/>
-                      St. Augustine, FL 32086
+                      200 N Laura St<br/>
+                      Jacksonville, FL 32202
                     </p>
                   </div>
                 </div>
