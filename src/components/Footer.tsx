@@ -91,7 +91,7 @@ const Footer = () => {
         <div className="border-t border-white/20 pt-6">
           <div className="flex flex-col md:flex-row justify-center items-center">
             <p className="text-legal-light text-sm text-center">
-              © Legally Innovative 2025. A Bizooma, LLC property, All rights reserved.
+              © Legally Innovative 2025. A <a href="https://bizooma.com" target="_blank" rel="noopener noreferrer" className="text-legal-accent hover:text-white transition-colors">Bizooma, LLC</a> property, All rights reserved.
             </p>
           </div>
         </div>
