@@ -12,10 +12,10 @@ const DemoSite = () => {
             DIY Digital Marketing <span className="highlight-text">Platform for Law Firms</span>
           </h2>
           <p className="text-lg text-gray-700 mb-4">
-            Experience our capabilities firsthand through our demonstration site at <a href="https://amicusedge.com" className="text-legal-primary font-semibold hover:underline" target="_blank" rel="noopener noreferrer">amicusedge.com</a>. This interactive showcase highlights the powerful features and solutions we provide to legal practices.
+            Experience our comprehensive SaaS marketing platform firsthand at <a href="https://amicusedge.com" className="text-legal-primary font-semibold hover:underline" target="_blank" rel="noopener noreferrer">amicusedge.com</a>. AmicusEdge is an AI-powered legal technology platform featuring video chatbots, QR code generators, SEO/AEO analyzers, and voice search simulators - all integrated into one powerful marketing solution.
           </p>
           <p className="text-lg text-gray-700">
-            Our demo environment illustrates how our marketing and AI automation tools work together to transform your firm's digital presence and operational efficiency.
+            Our platform streamlines workflows, automates repetitive tasks, and enhances client engagement through cutting-edge AI technology designed specifically for modern law firms looking to thrive in the digital landscape.
           </p>
         </div>
 
@@ -27,9 +27,9 @@ const DemoSite = () => {
                   <Monitor className="h-6 w-6 text-legal-primary" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-legal-dark">Interactive Dashboard</h3>
+                  <h3 className="text-xl font-bold mb-3 text-legal-dark">AI Video Chatbots</h3>
                   <p className="text-gray-700">
-                    Navigate through our intuitive dashboard that provides real-time analytics, client management tools, and marketing performance metrics all in one central location.
+                    Deploy intelligent video chatbots on your website to engage potential clients 24/7, qualify leads automatically, and provide instant responses to common legal questions while you focus on practicing law.
                   </p>
                 </div>
               </div>
@@ -43,9 +43,9 @@ const DemoSite = () => {
                   <Users className="h-6 w-6 text-legal-primary" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-legal-dark">Lead Management</h3>
+                  <h3 className="text-xl font-bold mb-3 text-legal-dark">SEO/AEO Optimization</h3>
                   <p className="text-gray-700">
-                    See how our system captures, qualifies, and nurtures leads through automated workflows designed specifically for legal practices, increasing conversion rates and client acquisition.
+                    Boost your online visibility with our advanced SEO and Answer Engine Optimization (AEO) tools that help your law firm rank higher in search results and voice search queries, driving more qualified leads to your practice.
                   </p>
                 </div>
               </div>
@@ -59,9 +59,9 @@ const DemoSite = () => {
                   <Database className="h-6 w-6 text-legal-primary" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-legal-dark">AI Document Automation</h3>
+                  <h3 className="text-xl font-bold mb-3 text-legal-dark">Document Automation & QR Tools</h3>
                   <p className="text-gray-700">
-                    Explore our AI-powered document generation and management system that streamlines client intake, contract creation, and case documentation, saving your firm valuable time.
+                    Automate document drafting including wills, trusts, and legal forms while using QR code generators to create seamless client intake processes and streamline your practice operations.
                   </p>
                 </div>
               </div>
@@ -75,9 +75,9 @@ const DemoSite = () => {
                   <Shield className="h-6 w-6 text-legal-primary" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-legal-dark">Secure Client Portal</h3>
+                  <h3 className="text-xl font-bold mb-3 text-legal-dark">Voice Search & Analytics</h3>
                   <p className="text-gray-700">
-                    Test our secure client portal that facilitates confidential communication, document sharing, and case updates between your firm and clients, enhancing client satisfaction.
+                    Stay ahead of the curve with voice search simulators and comprehensive analytics that track your digital marketing performance, helping you understand and optimize your firm's online presence.
                   </p>
                 </div>
               </div>
