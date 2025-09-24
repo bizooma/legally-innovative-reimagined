@@ -9,7 +9,7 @@ const DemoSite = () => {
       <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
-            Demo <span className="highlight-text">Site</span>
+            DIY Digital Marketing <span className="highlight-text">Platform for Law Firms</span>
           </h2>
           <p className="text-lg text-gray-700 mb-4">
             Experience our capabilities firsthand through our demonstration site at <a href="https://amicusedge.com" className="text-legal-primary font-semibold hover:underline" target="_blank" rel="noopener noreferrer">amicusedge.com</a>. This interactive showcase highlights the powerful features and solutions we provide to legal practices.
