@@ -29,50 +29,6 @@
     <div id="root"></div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- ElevenLabs Convai Chat Widget -->
-    <elevenlabs-convai agent-id="cylHD3Ay9g1H7eGVdSdj"></elevenlabs-convai>
-    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 
-    <script>
-      // Script to hide chatbots on the admin dashboard page (temporarily modified)
-      (function() {
-        function hideChatbotsIfAdminDashboard() {
-          // Check if the current URL contains admin-dashboard
-          if (window.location.href.includes('admin-dashboard')) {
-            // Hide the ElevenLabs Convai widget if it exists
-            const convaiWidget = document.querySelector('elevenlabs-convai');
-            if (convaiWidget) {
-              convaiWidget.style.display = 'none';
-            }
-            
-            // Calendly widget code removed
-          } else {
-            // Show the widgets on non-admin pages
-            const convaiWidget = document.querySelector('elevenlabs-convai');
-            if (convaiWidget) {
-              convaiWidget.style.display = 'block';
-            }
-            
-            // Calendly widget code removed
-          }
-        }
-
-        // Run the function when the page loads
-        window.addEventListener('load', hideChatbotsIfAdminDashboard);
-        
-        // Also run when URL changes (for single page applications)
-        window.addEventListener('popstate', hideChatbotsIfAdminDashboard);
-        
-        // For React Router navigation that doesn't trigger popstate
-        // Create a MutationObserver to detect DOM changes
-        const observer = new MutationObserver(function() {
-          hideChatbotsIfAdminDashboard();
-        });
-        
-        // Start observing the document with the configured parameters
-        observer.observe(document.body, { childList: true, subtree: true });
-      })();
-    </script>
   </body>
 </html>
