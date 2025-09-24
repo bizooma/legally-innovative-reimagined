@@ -35,14 +35,6 @@ const Footer = () => {
                 We understand the unique challenges law firms face because we work exclusively in the legal space. From trust-building client intake systems to AI-powered content strategies, our services are designed to make your firm more visible, more approachable, and more efficient — without ever compromising compliance.
               </p>
             </div>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="bg-white text-black hover:bg-gray-200"
-              asChild
-            >
-              <Link to="/staff">Staff</Link>
-            </Button>
           </div>
           
           <div>
