@@ -22,7 +22,7 @@ const DemoSite = () => {
             DIY Digital Marketing <span className="text-legal-accent">Platform for Law Firms</span>
           </h2>
           <p className="text-lg text-white/90 mb-4">
-            Experience our comprehensive SaaS marketing platform firsthand at <a href="https://amicusedge.com" className="text-legal-primary font-semibold hover:underline" target="_blank" rel="noopener noreferrer">amicusedge.com</a>. AmicusEdge is an AI-powered legal technology platform featuring video chatbots, QR code generators, SEO/AEO analyzers, and voice search simulators - all integrated into one powerful marketing solution.
+            Experience our comprehensive SaaS marketing platform firsthand at <a href="https://amicusedge.com" className="text-white font-semibold underline hover:text-white/90 transition-colors" target="_blank" rel="noopener noreferrer">amicusedge.com</a>. AmicusEdge is an AI-powered legal technology platform featuring video chatbots, QR code generators, SEO/AEO analyzers, and voice search simulators - all integrated into one powerful marketing solution.
           </p>
           <p className="text-lg text-white/90">
             Our platform streamlines workflows, automates repetitive tasks, and enhances client engagement through cutting-edge AI technology designed specifically for modern law firms looking to thrive in the digital landscape.
