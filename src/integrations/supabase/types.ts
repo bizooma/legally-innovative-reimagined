@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -138,6 +138,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      newsletter_subscriptions: {
+        Row: {
+          email: string
+          id: string
+          is_active: boolean
+          subscribed_at: string
+        }
+        Insert: {
+          email: string
+          id?: string
+          is_active?: boolean
+          subscribed_at?: string
+        }
+        Update: {
+          email?: string
+          id?: string
+          is_active?: boolean
+          subscribed_at?: string
+        }
+        Relationships: []
       }
       projects: {
         Row: {
@@ -374,7 +395,7 @@ export type Database = {
     }
     Functions: {
       admin_reset_user_password: {
-        Args: { user_email: string; new_password: string }
+        Args: { new_password: string; user_email: string }
         Returns: Json
       }
       get_current_user_admin_status: {

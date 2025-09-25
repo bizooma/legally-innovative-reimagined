@@ -9,6 +9,7 @@ import DemoSite from "@/components/DemoSite";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import GoogleMap from "@/components/GoogleMap";
+import Newsletter from "@/components/Newsletter";
 
 const Index = () => {
   return (
@@ -21,6 +22,7 @@ const Index = () => {
       <WhyChooseUs />
       <Contact />
       <DemoSite />
+      <Newsletter />
       <GoogleMap />
       <Footer />
     </div>
