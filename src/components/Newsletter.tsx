@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { Mail, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import routeToResultsLogo from "@/assets/route-to-results-logo.png";
 
 const newsletterSchema = z.object({
   email: z.string().trim().email({ message: "Invalid email address" }).max(255, { message: "Email must be less than 255 characters" })
@@ -74,8 +75,12 @@ const Newsletter = () => {
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center mb-6">
-            <div className="h-16 w-16 bg-legal-light rounded-full flex items-center justify-center">
-              <Mail className="h-8 w-8 text-legal-primary" />
+            <div className="h-16 w-auto flex items-center justify-center">
+              <img 
+                src={routeToResultsLogo} 
+                alt="Route to Results Logo" 
+                className="h-12 w-auto object-contain"
+              />
             </div>
           </div>
           
