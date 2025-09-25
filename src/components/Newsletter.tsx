@@ -84,9 +84,13 @@ const Newsletter = () => {
             </div>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-legal-dark">
             Stay Ahead of Legal <span className="highlight-text">Innovation</span>
           </h2>
+          
+          <h3 className="text-xl md:text-2xl font-semibold mb-6 text-gray-600">
+            With the Route to Results Newsletter
+          </h3>
           
           <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
             Get exclusive insights, case studies, and updates on the latest legal technology trends. 
