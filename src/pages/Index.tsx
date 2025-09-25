@@ -8,6 +8,7 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import DemoSite from "@/components/DemoSite";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import GoogleMap from "@/components/GoogleMap";
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
       <WhyChooseUs />
       <Contact />
       <DemoSite />
+      <GoogleMap />
       <Footer />
     </div>
   );
