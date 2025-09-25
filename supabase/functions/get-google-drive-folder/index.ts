@@ -82,7 +82,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("Error in get-google-drive-folder function:", error);
     return new Response(
-      JSON.stringify({ error: error.message || "Unknown error occurred" }),
+      JSON.stringify({ error: (error as Error)?.message || "Unknown error occurred" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
