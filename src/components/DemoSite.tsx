@@ -30,15 +30,15 @@ const DemoSite = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <Card className="border-none shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-br from-white to-gray-50">
+          <Card className="border border-white/20 shadow-lg hover:shadow-xl transition-shadow bg-white/10 backdrop-blur-md">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
-                <div className="h-12 w-12 bg-legal-light rounded-full flex items-center justify-center mb-6">
-                  <Monitor className="h-6 w-6 text-legal-primary" />
+                <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-6">
+                  <Monitor className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-legal-dark">AI Video Chatbots</h3>
-                  <p className="text-gray-700">
+                  <h3 className="text-xl font-bold mb-3 text-white">AI Video Chatbots</h3>
+                  <p className="text-white/90">
                     Deploy intelligent video chatbots on your website to engage potential clients 24/7, qualify leads automatically, and provide instant responses to common legal questions while you focus on practicing law.
                   </p>
                 </div>
@@ -46,15 +46,15 @@ const DemoSite = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-br from-white to-gray-50">
+          <Card className="border border-white/20 shadow-lg hover:shadow-xl transition-shadow bg-white/10 backdrop-blur-md">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
-                <div className="h-12 w-12 bg-legal-light rounded-full flex items-center justify-center mb-6">
-                  <Users className="h-6 w-6 text-legal-primary" />
+                <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-6">
+                  <Users className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-legal-dark">SEO/AEO Optimization</h3>
-                  <p className="text-gray-700">
+                  <h3 className="text-xl font-bold mb-3 text-white">SEO/AEO Optimization</h3>
+                  <p className="text-white/90">
                     Boost your online visibility with our advanced SEO and Answer Engine Optimization (AEO) tools that help your law firm rank higher in search results and voice search queries, driving more qualified leads to your practice.
                   </p>
                 </div>
@@ -62,15 +62,15 @@ const DemoSite = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-br from-white to-gray-50">
+          <Card className="border border-white/20 shadow-lg hover:shadow-xl transition-shadow bg-white/10 backdrop-blur-md">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
-                <div className="h-12 w-12 bg-legal-light rounded-full flex items-center justify-center mb-6">
-                  <Database className="h-6 w-6 text-legal-primary" />
+                <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-6">
+                  <Database className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-legal-dark">Document Automation & QR Tools</h3>
-                  <p className="text-gray-700">
+                  <h3 className="text-xl font-bold mb-3 text-white">Document Automation & QR Tools</h3>
+                  <p className="text-white/90">
                     Automate document drafting including wills, trusts, and legal forms while using QR code generators to create seamless client intake processes and streamline your practice operations.
                   </p>
                 </div>
@@ -78,15 +78,15 @@ const DemoSite = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-br from-white to-gray-50">
+          <Card className="border border-white/20 shadow-lg hover:shadow-xl transition-shadow bg-white/10 backdrop-blur-md">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
-                <div className="h-12 w-12 bg-legal-light rounded-full flex items-center justify-center mb-6">
-                  <Shield className="h-6 w-6 text-legal-primary" />
+                <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-6">
+                  <Shield className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-legal-dark">Voice Search & Analytics</h3>
-                  <p className="text-gray-700">
+                  <h3 className="text-xl font-bold mb-3 text-white">Voice Search & Analytics</h3>
+                  <p className="text-white/90">
                     Stay ahead of the curve with voice search simulators and comprehensive analytics that track your digital marketing performance, helping you understand and optimize your firm's online presence.
                   </p>
                 </div>
