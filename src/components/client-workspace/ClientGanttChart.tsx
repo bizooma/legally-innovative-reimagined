@@ -126,10 +126,10 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
     const end = new Date(data.start + data.duration);
 
     return (
-      <div className="bg-white p-2 shadow-md rounded border">
-        <p className="font-medium">{data.name}</p>
-        <p className="text-xs text-gray-500 capitalize">{data.type}</p>
-        <p className="text-xs">
+      <div className="bg-popover text-popover-foreground p-3 shadow-lg rounded-lg border z-50">
+        <p className="font-medium text-sm">{data.name}</p>
+        <p className="text-xs text-muted-foreground capitalize">{data.type}</p>
+        <p className="text-xs mt-1">
           {format(start, 'MMM d, yyyy')} - {format(end, 'MMM d, yyyy')}
         </p>
       </div>
@@ -162,7 +162,12 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
                 width={90} 
                 tick={{ fontSize: 12 }}
               />
-              <Tooltip content={renderTooltipContent} />
+              <Tooltip 
+                content={renderTooltipContent}
+                cursor={{ fill: 'rgba(155, 135, 245, 0.1)' }}
+                wrapperStyle={{ zIndex: 1000, pointerEvents: 'none' }}
+                allowEscapeViewBox={{ x: false, y: false }}
+              />
               <Bar 
                 dataKey="duration" 
                 stackId="a" 
