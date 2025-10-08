@@ -1,7 +1,6 @@
 
 import React, { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartContainer } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO, addDays } from 'date-fns';
 import { ProjectWithDates } from '@/hooks/useClientProjectsWithDates';
@@ -143,7 +142,7 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
       </CardHeader>
       <CardContent>
         <div className="h-64">
-          <ChartContainer config={{}}>
+          <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={chartData}
               layout="vertical"
@@ -165,18 +164,24 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
               <Tooltip 
                 content={renderTooltipContent}
                 cursor={{ fill: 'rgba(155, 135, 245, 0.1)' }}
-                wrapperStyle={{ zIndex: 1000, pointerEvents: 'none' }}
+                wrapperStyle={{ 
+                  zIndex: 1000,
+                  pointerEvents: 'none',
+                  visibility: 'visible'
+                }}
                 allowEscapeViewBox={{ x: false, y: false }}
+                isAnimationActive={false}
+                position={{ x: 0, y: 0 }}
               />
               <Bar 
                 dataKey="duration" 
                 stackId="a" 
                 fill="#9b87f5" 
                 radius={4}
-                // Removed the invalid 'baseValue' property
+                isAnimationActive={false}
               />
             </BarChart>
-          </ChartContainer>
+          </ResponsiveContainer>
         </div>
         <div className="flex justify-center mt-4 text-sm">
           <div className="flex items-center mr-4">
