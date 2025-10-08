@@ -59,6 +59,7 @@ export type Database = {
           id: string
           logo_url: string | null
           notes: string | null
+          status: string
         }
         Insert: {
           company_name: string
@@ -74,6 +75,7 @@ export type Database = {
           id?: string
           logo_url?: string | null
           notes?: string | null
+          status?: string
         }
         Update: {
           company_name?: string
@@ -89,6 +91,7 @@ export type Database = {
           id?: string
           logo_url?: string | null
           notes?: string | null
+          status?: string
         }
         Relationships: []
       }

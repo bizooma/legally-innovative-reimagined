@@ -1,12 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
 import { Client } from '@/types/database';
 import { useNavigate } from 'react-router-dom';
 import ClientLogoUploader from '@/components/client-workspace/ClientLogoUploader';
-import { supabase } from '@/integrations/supabase/client';
+import { ClientStatusBadge } from './ClientStatusBadge';
+import { ClientStatusSelect } from './ClientStatusSelect';
+import { updateClientStatus } from '@/services/clientService';
+import { useToast } from '@/hooks/use-toast';
 
 interface ClientDirectoryProps {
   clients: Client[];
@@ -22,6 +25,8 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
   isAdmin = false
 }) => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   
   const handleViewDetails = (clientId: string) => {
     navigate(`/portal/client/${clientId}`);
@@ -38,6 +43,31 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
     
     // This will trigger a re-render with the updated logo
     onClientAdded({ ...clients.find(c => c.id === clientId)!, logo_url: logoUrl });
+  };
+
+  const handleStatusChange = async (clientId: string, newStatus: 'active' | 'paused' | 'terminated') => {
+    if (!isAdmin) return;
+    
+    setUpdatingStatus(clientId);
+    
+    try {
+      const updatedClient = await updateClientStatus(clientId, newStatus);
+      onClientAdded(updatedClient);
+      
+      toast({
+        title: 'Status updated',
+        description: `Client status changed to ${newStatus}`,
+      });
+    } catch (error) {
+      console.error('Error updating client status:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update client status',
+        variant: 'destructive',
+      });
+    } finally {
+      setUpdatingStatus(null);
+    }
   };
   
   return (
@@ -58,7 +88,7 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
           <div className="space-y-4">
             {clients.map(client => (
               <div key={client.id} className="flex justify-between items-center p-4 border rounded-md hover:bg-gray-50">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 flex-1">
                   {isAdmin ? (
                     <ClientLogoUploader 
                       clientId={client.id}
@@ -79,8 +109,18 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
                       )}
                     </div>
                   )}
-                  <div>
-                    <h3 className="font-medium">{client.company_name}</h3>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-1">
+                      <h3 className="font-medium">{client.company_name}</h3>
+                      <ClientStatusBadge status={client.status || 'active'} />
+                      {isAdmin && (
+                        <ClientStatusSelect 
+                          status={client.status || 'active'}
+                          onStatusChange={(newStatus) => handleStatusChange(client.id, newStatus)}
+                          disabled={updatingStatus === client.id}
+                        />
+                      )}
+                    </div>
                     <p className="text-sm text-gray-500">{client.contact_name} • {client.contact_email}</p>
                     {client.contact_phone && <p className="text-sm text-gray-500">{client.contact_phone}</p>}
                   </div>

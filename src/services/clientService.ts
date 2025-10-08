@@ -28,3 +28,25 @@ export async function addClient(data: ClientFormValues, userId: string): Promise
   
   return client as Client;
 }
+
+export async function updateClientStatus(
+  clientId: string, 
+  status: 'active' | 'paused' | 'terminated'
+): Promise<Client> {
+  const { data: client, error } = await supabase
+    .from('clients')
+    .update({ status })
+    .eq('id', clientId)
+    .select('*')
+    .single();
+  
+  if (error) {
+    throw error;
+  }
+  
+  if (!client) {
+    throw new Error('Failed to update client status');
+  }
+  
+  return client as Client;
+}

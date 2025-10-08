@@ -13,6 +13,7 @@ export interface Client {
   created_by: string;
   logo_url?: string | null;
   google_drive_folder_id?: string | null;
+  status: 'active' | 'paused' | 'terminated';
 }
 
 export interface UserProfile {
