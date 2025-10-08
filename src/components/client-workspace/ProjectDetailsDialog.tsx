@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -9,6 +8,8 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +22,8 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Project } from '@/types/database';
 import { formatDistanceToNow } from 'date-fns';
+import { KanbanSquare } from 'lucide-react';
+import { KanbanBoard } from './kanban/KanbanBoard';
 
 interface ProjectDetailsDialogProps {
   project: Project;
@@ -54,79 +57,102 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Completed':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400';
       case 'In Progress':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400';
       case 'On Hold':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400';
     }
   };
-
-  const lastUpdated = formatDistanceToNow(new Date(project.updated_at), { addSuffix: true });
 
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
           <DialogHeader>
-            <DialogTitle>{project.name}</DialogTitle>
+            <DialogTitle className="text-2xl flex items-center gap-2">
+              <KanbanSquare className="h-6 w-6" />
+              {project.name}
+            </DialogTitle>
             <DialogDescription>
-              Project details and management options
+              Manage your project tasks and track progress
             </DialogDescription>
           </DialogHeader>
+          
+          <Tabs defaultValue="kanban" className="flex-1 flex flex-col overflow-hidden">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="kanban">Kanban Board</TabsTrigger>
+              <TabsTrigger value="details">Project Details</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="kanban" className="flex-1 overflow-auto mt-4">
+              <KanbanBoard projectId={project.id} />
+            </TabsContent>
+            
+            <TabsContent value="details" className="overflow-auto mt-4">
+              <div className="space-y-6 py-4">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Status:</span>
+                    <Badge className={getStatusColor(project.status)}>
+                      {project.status}
+                    </Badge>
+                  </div>
 
-          <div className="space-y-4 py-4">
-            <div>
-              <h4 className="font-medium text-sm">Status</h4>
-              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${getStatusColor(project.status)}`}>
-                {project.status}
-              </span>
-            </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Progress</h4>
+                    <div className="w-full bg-secondary rounded-full h-2.5">
+                      <div 
+                        className="bg-primary h-2.5 rounded-full transition-all" 
+                        style={{ width: `${project.progress}%` }}
+                      />
+                    </div>
+                    <span className="text-xs text-muted-foreground mt-1">{project.progress}%</span>
+                  </div>
+                  
+                  {project.description && (
+                    <div className="space-y-2">
+                      <span className="text-sm font-medium">Description:</span>
+                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                        {project.description}
+                      </p>
+                    </div>
+                  )}
+                  
+                  <div className="pt-4 border-t">
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="font-medium">Created:</span>
+                        <p className="text-muted-foreground">
+                          {formatDistanceToNow(new Date(project.created_at), { addSuffix: true })}
+                        </p>
+                      </div>
+                      <div>
+                        <span className="font-medium">Last Updated:</span>
+                        <p className="text-muted-foreground">
+                          {formatDistanceToNow(new Date(project.updated_at), { addSuffix: true })}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-            <div>
-              <h4 className="font-medium text-sm">Progress</h4>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-                <div 
-                  className="bg-primary h-2.5 rounded-full" 
-                  style={{ width: `${project.progress}%` }}
-                />
+                <DialogFooter className="gap-2 pt-4 border-t">
+                  <Button variant="outline" onClick={onClose}>
+                    Close
+                  </Button>
+                  <Button 
+                    variant="destructive" 
+                    onClick={() => setConfirmDeleteOpen(true)}
+                  >
+                    Delete Project
+                  </Button>
+                </DialogFooter>
               </div>
-              <span className="text-xs text-gray-500 mt-1">{project.progress}%</span>
-            </div>
-
-            {project.description && (
-              <div>
-                <h4 className="font-medium text-sm">Description</h4>
-                <p className="text-sm text-gray-600 mt-1">{project.description}</p>
-              </div>
-            )}
-
-            <div>
-              <h4 className="font-medium text-sm">Last Updated</h4>
-              <p className="text-sm text-gray-600 mt-1">{lastUpdated}</p>
-            </div>
-
-            <div>
-              <h4 className="font-medium text-sm">Created</h4>
-              <p className="text-sm text-gray-600 mt-1">
-                {formatDistanceToNow(new Date(project.created_at), { addSuffix: true })}
-              </p>
-            </div>
-          </div>
-
-          <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={onClose}>
-              Close
-            </Button>
-            <Button 
-              variant="destructive" 
-              onClick={() => setConfirmDeleteOpen(true)}
-            >
-              Delete Project
-            </Button>
-          </DialogFooter>
+            </TabsContent>
+          </Tabs>
         </DialogContent>
       </Dialog>
 
@@ -135,7 +161,7 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete the project "{project.name}" and cannot be undone.
+              This will permanently delete the project "{project.name}" and all associated tasks. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
