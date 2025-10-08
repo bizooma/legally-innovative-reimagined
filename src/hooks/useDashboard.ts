@@ -86,7 +86,7 @@ export function useDashboard() {
           setClients(data as Client[]);
           setStats(prev => ({
             ...prev,
-            activeClients: data.length
+            activeClients: data.filter(client => client.status === 'active').length
           }));
         } else {
           console.log('useDashboard: No client data returned');
@@ -108,18 +108,38 @@ export function useDashboard() {
     fetchClients();
   }, [user, toast]);
 
-  // Handle adding a new client (admin only)
+  // Handle adding or updating a client (admin only)
   const handleAddClient = (client: Client) => {
     if (!isAdmin) {
       console.log('useDashboard: Non-admin user attempted to add client');
       return;
     }
-    console.log('useDashboard: Adding new client to local state');
-    setClients(prev => [client, ...prev]);
-    setStats(prev => ({
-      ...prev,
-      activeClients: prev.activeClients + 1
-    }));
+    
+    setClients(prev => {
+      // Check if client already exists
+      const existingIndex = prev.findIndex(c => c.id === client.id);
+      
+      let updatedClients;
+      if (existingIndex !== -1) {
+        // Update existing client
+        console.log('useDashboard: Updating existing client in local state');
+        updatedClients = [...prev];
+        updatedClients[existingIndex] = client;
+      } else {
+        // Add new client
+        console.log('useDashboard: Adding new client to local state');
+        updatedClients = [client, ...prev];
+      }
+      
+      // Recalculate active clients based on updated array
+      const activeCount = updatedClients.filter(c => c.status === 'active').length;
+      setStats(prev => ({
+        ...prev,
+        activeClients: activeCount
+      }));
+      
+      return updatedClients;
+    });
   };
 
   // Handle logout with improved session error handling
