@@ -36,13 +36,11 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
     // Only allow logo updates for admins
     if (!isAdmin) return;
     
-    // Find and update the client in the local state
-    const updatedClients = clients.map(client => 
-      client.id === clientId ? { ...client, logo_url: logoUrl } : client
-    );
-    
-    // This will trigger a re-render with the updated logo
-    onClientAdded({ ...clients.find(c => c.id === clientId)!, logo_url: logoUrl });
+    // Find the updated client and pass it to the parent callback
+    const client = clients.find(c => c.id === clientId);
+    if (client) {
+      onClientAdded({ ...client, logo_url: logoUrl });
+    }
   };
 
   const handleStatusChange = async (clientId: string, newStatus: 'active' | 'paused' | 'terminated') => {
@@ -51,8 +49,13 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
     setUpdatingStatus(clientId);
     
     try {
-      const updatedClient = await updateClientStatus(clientId, newStatus);
-      onClientAdded(updatedClient);
+      await updateClientStatus(clientId, newStatus);
+      
+      // Find the updated client and pass it to the parent callback with the new status
+      const client = clients.find(c => c.id === clientId);
+      if (client) {
+        onClientAdded({ ...client, status: newStatus });
+      }
       
       toast({
         title: 'Status updated',
