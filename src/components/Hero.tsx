@@ -60,7 +60,7 @@ const Hero = () => {
           <div className="hidden lg:flex lg:w-1/2 items-center justify-center">
             <div 
               id="did-agent-hero-container" 
-              className="w-full h-[600px] rounded-lg shadow-2xl bg-white/5 backdrop-blur-sm border border-white/10"
+              className="relative z-20 w-full h-[600px] min-h-[560px] rounded-lg shadow-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10"
             />
           </div>
         </div>

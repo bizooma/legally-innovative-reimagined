@@ -44,6 +44,7 @@ const EMBED_CONFIG = {
 };
 
 const INIT_TIMEOUT = 6000; // 6 seconds
+const EMBED_INIT_TIMEOUT = 15000; // 15 seconds for embed
 
 function loadScript(url: string, attrs: Record<string, string>): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -142,7 +143,7 @@ async function injectFabio(version: 'v1' | 'v2' = 'v2'): Promise<boolean> {
   }
 }
 
-async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2'): Promise<boolean> {
+async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2', isRetry = false): Promise<boolean> {
   // Check if target div exists
   const targetDiv = document.getElementById(targetId);
   if (!targetDiv) {
@@ -152,8 +153,27 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2'): Promi
 
   const url = `https://agent.d-id.com/${version}/index.js`;
   
-  console.log(`[D-ID] Loading Embed ${version} for target #${targetId}`);
+  console.log(`[D-ID] Loading Embed ${version} for target #${targetId}${isRetry ? ' (retry)' : ''}`);
   console.log('[D-ID] Current origin:', window.location.origin);
+  
+  // Domain compatibility check
+  if (!isRetry) {
+    const allowedOrigins = [
+      'https://legally-innovative-reimagined.lovable.app',
+      'https://e0d24ae1-4402-4fb8-a83d-117e708f17c5.lovableproject.com',
+      'https://legallyinnovative.com',
+      'https://www.legallyinnovative.com'
+    ];
+    const currentOrigin = window.location.origin;
+    if (!allowedOrigins.includes(currentOrigin)) {
+      console.warn('[D-ID] ⚠️ Your current origin is not in D-ID Studio "Allowed Origins" — please add it:', currentOrigin);
+      console.warn('[D-ID] Expected origins:', allowedOrigins);
+    }
+  }
+  
+  // Log target dimensions
+  const rect = targetDiv.getBoundingClientRect();
+  console.log('[D-ID] Embed target rect:', rect);
 
   try {
     const attrs = {
@@ -166,8 +186,9 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2'): Promi
     };
 
     await loadScript(url, attrs);
+    console.log('[D-ID] Embed script appended with attrs:', attrs);
 
-    // Wait for agent initialization
+    // Wait for agent initialization with extended timeout
     const initialized = await Promise.race([
       new Promise<boolean>((resolve) => {
         const checkInterval = setInterval(() => {
@@ -178,14 +199,20 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2'): Promi
           }
         }, 100);
       }),
-      new Promise<boolean>((resolve) => setTimeout(() => resolve(false), INIT_TIMEOUT)),
+      new Promise<boolean>((resolve) => setTimeout(() => resolve(false), EMBED_INIT_TIMEOUT)),
     ]);
 
     if (initialized) {
       console.log(`[D-ID] Embed initialized successfully in #${targetId}`);
       return true;
     } else {
-      throw new Error('Embed initialization timeout');
+      // Retry once on timeout if this isn't already a retry
+      if (!isRetry) {
+        console.log('[D-ID] Embed timeout, retrying in 1.5s...');
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        return injectEmbed(targetId, version, true);
+      }
+      throw new Error('Embed initialization timeout after retry');
     }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
