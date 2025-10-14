@@ -19,8 +19,8 @@ const Hero = () => {
 
       {/* Content */}
       <div className="container mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <div className="lg:w-1/2 animate-fade-in">
+        <div className="flex flex-col items-center justify-center">
+          <div className="max-w-3xl animate-fade-in text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
               Where <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Innovation</span> Meets <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Excellence</span>
             </h1>
@@ -41,21 +41,6 @@ const Hero = () => {
                 </Button>
               </div>
             </div>
-          </div>
-          
-          {/* D-ID Agent Embed */}
-          <div className="w-full lg:w-1/2 flex items-center justify-center">
-            <div id="did-agent-hero" className="w-full h-[600px] min-h-[560px]" />
-            <script
-              type="module"
-              src="https://agent.d-id.com/v2/index.js"
-              data-mode="full"
-              data-client-key="Z29vZ2xlLW9hdXRoMnwxMDc0NjQ2Njc4OTg3MTA5ODM4ODA6b0ZNWUp4Xy1oV01PYzJtVFFQYkhP"
-              data-agent-id="v2_agt_aHkCdBDR"
-              data-name="did-agent"
-              data-monitor="true"
-              data-target-id="did-agent-hero">
-            </script>
           </div>
         </div>
       </div>
