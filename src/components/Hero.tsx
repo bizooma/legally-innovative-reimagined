@@ -1,8 +1,39 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
 
 const Hero = () => {
+  useEffect(() => {
+    // Create the script element dynamically so it runs after mount
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = 'https://agent.d-id.com/v2/index.js';
+
+    // Required data attributes
+    script.setAttribute('data-mode', 'full');
+    script.setAttribute('data-client-key', 'Z29vZ2xlLW9hdXRoMnwxMDc0NjQ2Njc4OTg3MTA5ODM4ODA6b0ZNWUp4Xy1oV01PYzJtVFFQYkhP');
+    script.setAttribute('data-agent-id', 'v2_agt_aHkCdBDR');
+    script.setAttribute('data-name', 'did-agent');
+    script.setAttribute('data-monitor', 'true');
+    script.setAttribute('data-target-id', 'did-agent-hero');
+
+    // Debugging hooks
+    script.onload = () => {
+      console.log('✅ D-ID script loaded successfully in Hero');
+    };
+    script.onerror = (error) => {
+      console.error('❌ D-ID script failed to load:', error);
+    };
+
+    document.body.appendChild(script);
+
+    // Cleanup script on unmount
+    return () => {
+      console.log('🧹 Cleaning up D-ID script from Hero');
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
@@ -19,8 +50,9 @@ const Hero = () => {
 
       {/* Content */}
       <div className="container mx-auto relative z-10">
-        <div className="flex flex-col items-center justify-center">
-          <div className="max-w-3xl animate-fade-in text-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Column - Text Content */}
+          <div className="animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
               Where <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Innovation</span> Meets <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Excellence</span>
             </h1>
@@ -41,6 +73,14 @@ const Hero = () => {
                 </Button>
               </div>
             </div>
+          </div>
+
+          {/* Right Column - D-ID Agent */}
+          <div className="relative">
+            <div 
+              id="did-agent-hero"
+              className="w-full h-[600px] min-h-[560px] bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl relative z-10"
+            />
           </div>
         </div>
       </div>
