@@ -19,8 +19,8 @@ const Hero = () => {
 
       {/* Content */}
       <div className="container mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row items-center">
-          <div className="lg:w-1/2 mb-12 lg:mb-0 animate-fade-in">
+        <div className="flex flex-col items-center text-center">
+          <div className="max-w-4xl animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
               Where <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Innovation</span> Meets <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Excellence</span>
             </h1>
@@ -39,22 +39,6 @@ const Hero = () => {
                 >
                   Our Services
                 </Button>
-              </div>
-            </div>
-          </div>
-          <div className="lg:w-1/2 flex justify-center lg:justify-end animate-fade-in" style={{animationDelay: '0.3s'}}>
-            <div className="relative w-full max-w-2xl">
-              <div className="absolute -top-6 -left-6 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-legal-accent/30 rounded-full blur-2xl"></div>
-              <div className="relative backdrop-blur-sm bg-white/5 p-2 rounded-3xl border border-white/20">
-                <iframe 
-                  src="https://www.videoask.com/fc5vpzgv1" 
-                  allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" 
-                  width="100%" 
-                  height="600px" 
-                  style={{border: 'none', borderRadius: '20px'}}
-                  className="w-full shadow-2xl"
-                />
               </div>
             </div>
           </div>
