@@ -1,8 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
+import { useEffect } from "react";
+import { loadDidAgentEmbed } from "@/utils/loadDidAgent";
 
 const Hero = () => {
+  useEffect(() => {
+    // Load D-ID embed after component mounts
+    const timer = setTimeout(() => {
+      loadDidAgentEmbed('did-agent-hero-container').catch((error) => {
+        console.error('[Hero] Failed to load D-ID embed:', error);
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
       {/* Background Image */}
@@ -42,6 +55,13 @@ const Hero = () => {
             </div>
           </div>
           
+          {/* D-ID Agent Embed */}
+          <div className="hidden lg:flex lg:w-1/2 items-center justify-center">
+            <div 
+              id="did-agent-hero-container" 
+              className="w-full h-[600px] rounded-lg shadow-2xl bg-white/5 backdrop-blur-sm border border-white/10"
+            />
+          </div>
         </div>
       </div>
 
