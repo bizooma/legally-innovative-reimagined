@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
 import { useEffect } from "react";
+// Import D-ID embed loader
 import { loadDidAgentEmbed } from "@/utils/loadDidAgent";
 
 const Hero = () => {

@@ -1,5 +1,5 @@
 /**
- * D-ID Fabio Agent Loader
+ * D-ID Agent Loader
  * 
  * Allowed domains to configure in D-ID Studio:
  * - https://e0d24ae1-4402-4fb8-a83d-117e708f17c5.lovableproject.com
@@ -186,8 +186,10 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2'): Promi
   }
 }
 
+/**
+ * Load the D-ID floatable widget (Fabio mode)
+ */
 export async function loadDidAgent(): Promise<void> {
-  // Check for force version override
   const forceVersion = window.__DID_FORCE_VERSION;
   const initialVersion = forceVersion || 'v2';
 
@@ -201,6 +203,9 @@ export async function loadDidAgent(): Promise<void> {
   }
 }
 
+/**
+ * Load the D-ID embedded agent in a specific container (Full mode)
+ */
 export async function loadDidAgentEmbed(targetId: string): Promise<void> {
   const forceVersion = window.__DID_FORCE_VERSION;
   const initialVersion = forceVersion || 'v2';
