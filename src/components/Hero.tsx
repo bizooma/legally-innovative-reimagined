@@ -7,6 +7,16 @@ const Hero = () => {
   const [agentStatus, setAgentStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
 
   useEffect(() => {
+    // Check if current origin is likely whitelisted
+    const currentOrigin = window.location.origin;
+    const isLocalhost = currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1');
+    const isLovableStaging = currentOrigin.includes('lovable.app');
+    const isProductionDomain = currentOrigin.includes('legallyinnovative.com');
+    
+    if (!isLocalhost && !isLovableStaging && !isProductionDomain) {
+      console.warn(`⚠️ D-ID Agent: Current origin "${currentOrigin}" may not be whitelisted in D-ID Studio. Add it to Allowed domains in your D-ID agent settings.`);
+    }
+
     const script = document.createElement('script');
     script.type = 'module';
     script.src = 'https://agent.d-id.com/v2/index.js';
@@ -18,14 +28,20 @@ const Hero = () => {
     script.setAttribute('data-target-id', 'did-agent-container');
     
     script.onload = () => {
-      console.log('D-ID script loaded successfully');
+      console.log('✅ D-ID script loaded successfully');
+      console.log(`📍 Running on: ${currentOrigin}`);
+      
       // Give the agent time to initialize
       setTimeout(() => {
         const container = document.getElementById('did-agent-container');
         if (container && container.children.length > 0) {
+          console.log('✅ D-ID agent initialized successfully');
           setAgentStatus('loaded');
         } else {
-          console.error('D-ID agent failed to initialize in container');
+          console.error('❌ D-ID agent failed to initialize. Check:');
+          console.error('1. Agent is published in D-ID Studio');
+          console.error('2. Current origin is whitelisted in Allowed domains');
+          console.error('3. Agent ID and credentials are correct');
           setAgentStatus('error');
         }
       }, 3000);
