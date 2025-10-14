@@ -1,8 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
+import { useEffect } from "react";
 
 const Hero = () => {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = 'https://agent.d-id.com/v2/index.js';
+    script.setAttribute('data-mode', 'full');
+    script.setAttribute('data-client-key', 'Z29vZ2xlLW9hdXRoMnwxMDc0NjQ2Njc4OTg3MTA5ODM4ODA6b0ZNWUp4Xy1oV01PYzJtVFFQYkhP');
+    script.setAttribute('data-agent-id', 'v2_agt_aHkCdBDR');
+    script.setAttribute('data-name', 'did-agent');
+    script.setAttribute('data-monitor', 'true');
+    script.setAttribute('data-target-id', 'did-agent-container');
+    
+    document.body.appendChild(script);
+    
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
@@ -19,12 +37,12 @@ const Hero = () => {
 
       {/* Content */}
       <div className="container mx-auto relative z-10">
-        <div className="flex flex-col items-center text-center">
-          <div className="max-w-4xl animate-fade-in">
+        <div className="flex flex-col lg:flex-row items-center gap-12">
+          <div className="lg:w-1/2 animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
               Where <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Innovation</span> Meets <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Excellence</span>
             </h1>
-            <p className="text-lg md:text-xl mb-8 text-legal-light max-w-xl">
+            <p className="text-lg md:text-xl mb-8 text-legal-light">
               At Legally Innovative, we are passionate about helping law firms thrive in the digital age. As a full-service marketing and AI automations provider, we understand the unique challenges that law firms face in generating, nurturing, and converting leads.
             </p>
             <div className="flex flex-col md:flex-row md:items-center gap-6 text-white mb-6">
@@ -39,6 +57,20 @@ const Hero = () => {
                 >
                   Our Services
                 </Button>
+              </div>
+            </div>
+          </div>
+          
+          <div className="lg:w-1/2 flex justify-center lg:justify-end animate-fade-in" style={{animationDelay: '0.3s'}}>
+            <div className="relative w-full max-w-2xl">
+              <div className="absolute -top-6 -left-6 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-legal-accent/30 rounded-full blur-2xl"></div>
+              <div className="relative backdrop-blur-sm bg-white/5 p-4 rounded-3xl border border-white/20">
+                <div 
+                  id="did-agent-container" 
+                  className="w-full rounded-2xl overflow-hidden"
+                  style={{ minHeight: '600px' }}
+                />
               </div>
             </div>
           </div>
