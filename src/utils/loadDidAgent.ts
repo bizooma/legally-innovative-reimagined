@@ -47,9 +47,17 @@ const INIT_TIMEOUT = 6000; // 6 seconds
 
 function loadScript(url: string, attrs: Record<string, string>): Promise<void> {
   return new Promise((resolve, reject) => {
-    // Check if script already exists
-    if (document.querySelector(`script[src="${url}"]`)) {
-      console.log('[D-ID] Script already loaded:', url);
+    // Allow multiple instances: only skip if same src AND same instance (name or target) exists
+    const existingScripts = Array.from(document.querySelectorAll(`script[src="${url}"]`));
+    const desiredName = attrs['data-name'];
+    const desiredTarget = attrs['data-target-id'];
+    const hasSameInstance = existingScripts.some((s) => {
+      const n = s.getAttribute('data-name');
+      const t = s.getAttribute('data-target-id');
+      return (desiredName && n === desiredName) || (desiredTarget && t === desiredTarget);
+    });
+    if (hasSameInstance) {
+      console.log('[D-ID] Script for this instance already present:', url, desiredName || desiredTarget || '');
       resolve();
       return;
     }
@@ -163,8 +171,8 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2'): Promi
     const initialized = await Promise.race([
       new Promise<boolean>((resolve) => {
         const checkInterval = setInterval(() => {
-          const embedAgent = targetDiv.querySelector('iframe, [data-did-agent]');
-          if (embedAgent) {
+          const embedAgent = targetDiv.querySelector('iframe, [data-did-agent], .d-id-agent-container');
+          if (embedAgent || targetDiv.childElementCount > 0) {
             clearInterval(checkInterval);
             resolve(true);
           }
