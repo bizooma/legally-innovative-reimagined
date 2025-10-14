@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Phone } from "lucide-react";
+import { Phone, Loader2 } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
+  const [agentStatus, setAgentStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
+
   useEffect(() => {
     const script = document.createElement('script');
     script.type = 'module';
@@ -15,10 +17,31 @@ const Hero = () => {
     script.setAttribute('data-monitor', 'true');
     script.setAttribute('data-target-id', 'did-agent-container');
     
+    script.onload = () => {
+      console.log('D-ID script loaded successfully');
+      // Give the agent time to initialize
+      setTimeout(() => {
+        const container = document.getElementById('did-agent-container');
+        if (container && container.children.length > 0) {
+          setAgentStatus('loaded');
+        } else {
+          console.error('D-ID agent failed to initialize in container');
+          setAgentStatus('error');
+        }
+      }, 3000);
+    };
+    
+    script.onerror = () => {
+      console.error('Failed to load D-ID script');
+      setAgentStatus('error');
+    };
+    
     document.body.appendChild(script);
     
     return () => {
-      document.body.removeChild(script);
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
     };
   }, []);
 
@@ -68,9 +91,25 @@ const Hero = () => {
               <div className="relative backdrop-blur-sm bg-white/5 p-4 rounded-3xl border border-white/20">
                 <div 
                   id="did-agent-container" 
-                  className="w-full rounded-2xl overflow-hidden"
+                  className="w-full rounded-2xl overflow-hidden bg-gradient-to-br from-legal-primary/40 to-legal-dark/40 flex items-center justify-center"
                   style={{ minHeight: '600px' }}
-                />
+                >
+                  {agentStatus === 'loading' && (
+                    <div className="flex flex-col items-center gap-4 text-white">
+                      <Loader2 className="w-12 h-12 animate-spin" />
+                      <p className="text-lg">Loading AI Assistant...</p>
+                    </div>
+                  )}
+                  {agentStatus === 'error' && (
+                    <div className="flex flex-col items-center gap-4 text-white p-8 text-center">
+                      <div className="text-5xl">🤖</div>
+                      <p className="text-lg font-semibold">AI Assistant Unavailable</p>
+                      <p className="text-sm text-legal-light">
+                        Please verify your D-ID agent credentials and ensure the agent is published and accessible.
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
