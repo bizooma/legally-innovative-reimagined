@@ -1,66 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Phone, Loader2 } from "lucide-react";
+import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
-import { useEffect, useState } from "react";
 
 const Hero = () => {
-  const [agentStatus, setAgentStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
-
-  useEffect(() => {
-    // Check if current origin is likely whitelisted
-    const currentOrigin = window.location.origin;
-    const isLocalhost = currentOrigin.includes('localhost') || currentOrigin.includes('127.0.0.1');
-    const isLovableStaging = currentOrigin.includes('lovable.app');
-    const isProductionDomain = currentOrigin.includes('legallyinnovative.com');
-    
-    if (!isLocalhost && !isLovableStaging && !isProductionDomain) {
-      console.warn(`⚠️ D-ID Agent: Current origin "${currentOrigin}" may not be whitelisted in D-ID Studio. Add it to Allowed domains in your D-ID agent settings.`);
-    }
-
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = 'https://agent.d-id.com/v2/index.js';
-    script.setAttribute('data-mode', 'full');
-    script.setAttribute('data-client-key', 'Z29vZ2xlLW9hdXRoMnwxMDc0NjQ2Njc4OTg3MTA5ODM4ODA6b0ZNWUp4Xy1oV01PYzJtVFFQYkhP');
-    script.setAttribute('data-agent-id', 'v2_agt_aHkCdBDR');
-    script.setAttribute('data-name', 'did-agent');
-    script.setAttribute('data-monitor', 'true');
-    script.setAttribute('data-target-id', 'did-agent-container');
-    
-    script.onload = () => {
-      console.log('✅ D-ID script loaded successfully');
-      console.log(`📍 Running on: ${currentOrigin}`);
-      
-      // Give the agent time to initialize
-      setTimeout(() => {
-        const container = document.getElementById('did-agent-container');
-        if (container && container.children.length > 0) {
-          console.log('✅ D-ID agent initialized successfully');
-          setAgentStatus('loaded');
-        } else {
-          console.error('❌ D-ID agent failed to initialize. Check:');
-          console.error('1. Agent is published in D-ID Studio');
-          console.error('2. Current origin is whitelisted in Allowed domains');
-          console.error('3. Agent ID and credentials are correct');
-          setAgentStatus('error');
-        }
-      }, 3000);
-    };
-    
-    script.onerror = () => {
-      console.error('Failed to load D-ID script');
-      setAgentStatus('error');
-    };
-    
-    document.body.appendChild(script);
-    
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
-  }, []);
-
   return (
     <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
       {/* Background Image */}
@@ -100,35 +42,6 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className="lg:w-1/2 flex justify-center lg:justify-end animate-fade-in" style={{animationDelay: '0.3s'}}>
-            <div className="relative w-full max-w-2xl">
-              <div className="absolute -top-6 -left-6 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-legal-accent/30 rounded-full blur-2xl"></div>
-              <div className="relative backdrop-blur-sm bg-white/5 p-4 rounded-3xl border border-white/20">
-                <div 
-                  id="did-agent-container" 
-                  className="w-full rounded-2xl overflow-hidden bg-gradient-to-br from-legal-primary/40 to-legal-dark/40 flex items-center justify-center"
-                  style={{ minHeight: '600px' }}
-                >
-                  {agentStatus === 'loading' && (
-                    <div className="flex flex-col items-center gap-4 text-white">
-                      <Loader2 className="w-12 h-12 animate-spin" />
-                      <p className="text-lg">Loading AI Assistant...</p>
-                    </div>
-                  )}
-                  {agentStatus === 'error' && (
-                    <div className="flex flex-col items-center gap-4 text-white p-8 text-center">
-                      <div className="text-5xl">🤖</div>
-                      <p className="text-lg font-semibold">AI Assistant Unavailable</p>
-                      <p className="text-sm text-legal-light">
-                        Please verify your D-ID agent credentials and ensure the agent is published and accessible.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
