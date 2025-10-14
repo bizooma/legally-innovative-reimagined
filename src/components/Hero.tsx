@@ -1,21 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
-import { useEffect } from "react";
-// Import D-ID embed loader
-import { loadDidAgentEmbed } from "@/utils/loadDidAgent";
 
 const Hero = () => {
-  useEffect(() => {
-    // Load D-ID embed after component mounts
-    const timer = setTimeout(() => {
-      loadDidAgentEmbed('did-agent-hero-container').catch((error) => {
-        console.error('[Hero] Failed to load D-ID embed:', error);
-      });
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
@@ -57,11 +44,18 @@ const Hero = () => {
           </div>
           
           {/* D-ID Agent Embed */}
-          <div className="hidden lg:flex lg:w-1/2 items-center justify-center">
-            <div 
-              id="did-agent-hero-container" 
-              className="relative z-20 w-full h-[600px] min-h-[560px] rounded-lg shadow-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10"
-            />
+          <div className="w-full lg:w-1/2 flex items-center justify-center">
+            <div id="did-agent-hero" className="w-full h-[600px] min-h-[560px]" />
+            <script
+              type="module"
+              src="https://agent.d-id.com/v2/index.js"
+              data-mode="full"
+              data-client-key="Z29vZ2xlLW9hdXRoMnwxMDc0NjQ2Njc4OTg3MTA5ODM4ODA6b0ZNWUp4Xy1oV01PYzJtVFFQYkhP"
+              data-agent-id="v2_agt_aHkCdBDR"
+              data-name="did-agent"
+              data-monitor="true"
+              data-target-id="did-agent-hero">
+            </script>
           </div>
         </div>
       </div>
