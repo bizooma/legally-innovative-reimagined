@@ -16,14 +16,21 @@ if (!rootElement) {
   const root = createRoot(rootElement);
   root.render(<App />);
   
-  // Load D-ID agent after React mounts - delay Fabio if embed container exists
+  // Load D-ID agent after React mounts - skip Fabio on home page (control test)
   const tryLoadFabio = () => {
+    const isHomePage = window.location.pathname === '/';
     const hasHeroEmbed = !!document.getElementById('did-agent-hero-container');
+    
+    if (isHomePage && hasHeroEmbed) {
+      console.log('[D-ID] Home page with embed detected - SKIPPING Fabio widget (control test)');
+      return; // Skip Fabio completely on home page
+    }
+    
     if (hasHeroEmbed) {
       console.log('[D-ID] Hero embed container detected, delaying Fabio widget');
       setTimeout(() => loadDidAgent().catch((error) => {
         console.error('[D-ID] Failed to load Fabio agent:', error);
-      }), 4000); // Let embed load first
+      }), 4000);
     } else {
       loadDidAgent().catch((error) => {
         console.error('[D-ID] Failed to load agent:', error);
