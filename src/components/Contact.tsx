@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -26,21 +27,22 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      // Send email using formsubmit.co
-      const formAction = "https://formsubmit.co/joe@bizooma.com";
-      
-      const formElement = e.target as HTMLFormElement;
-      const formSubmitData = new FormData(formElement);
-      
-      await fetch(formAction, {
-        method: "POST",
-        body: formSubmitData,
-        headers: {
-          'Accept': 'application/json'
-        },
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          message: formData.message,
+        }
       });
-      
-      console.log("Form submitted:", formData);
+
+      if (error) throw error;
+
+      if (!data?.success) {
+        throw new Error(data?.error || 'Failed to send email');
+      }
+
+      console.log("Form submitted successfully:", data);
       
       toast({
         title: "Message Sent!",
@@ -54,11 +56,11 @@ const Contact = () => {
         company: "",
         message: "",
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error submitting form:", error);
       toast({
         title: "Error",
-        description: "There was a problem sending your message. Please try again.",
+        description: error.message || "There was a problem sending your message. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -122,11 +124,7 @@ const Contact = () => {
           </div>
           
           <div className="lg:w-3/5">
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg p-8 shadow-lg" action="https://formsubmit.co/joe@bizooma.com" method="POST">
-              <input type="hidden" name="_subject" value="New contact form submission from LegallyInnovative" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_next" value={window.location.href} />
+            <form onSubmit={handleSubmit} className="bg-white rounded-lg p-8 shadow-lg">
               
               <h3 className="text-2xl font-bold mb-6 text-legal-dark">Send us a Message</h3>
               
