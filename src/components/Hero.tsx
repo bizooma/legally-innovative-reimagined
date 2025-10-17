@@ -62,7 +62,7 @@ const Hero = () => {
             <div className="flex flex-col md:flex-row md:items-center gap-6 text-white mb-6">
               <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
                 <Phone size={20} className="mr-2" />
-                <a href="tel:8453779730" className="text-lg hover:underline">845-377-9730</a>
+                <a href="tel:9042956670" className="text-lg hover:underline">904-295-6670</a>
               </div>
               <div>
                 <Button 

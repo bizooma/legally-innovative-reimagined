@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 
 const SITE_URL = "https://legallyinnovative.com";
 const BUSINESS_NAME = "Legally Innovative";
-const PHONE = "+1-845-377-9730";
+const PHONE = "+1-904-295-6670";
 const LOGO_URL = `${SITE_URL}/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png`;
 
 const GlobalSEO = () => {

@@ -228,7 +228,7 @@ const PrivacyPolicyModal = ({ triggerClassName }: PrivacyPolicyModalProps) => {
             2465 US-1S, Suite 1045<br />
             St. Augustine, FL 32086<br />
             Email: joe@legallyinnovative.com<br />
-            Phone: 845-377-9730
+            Phone: <a href="tel:9042956670" className="text-legal-primary hover:underline">904-295-6670</a>
           </p>
           
           <h2 className="text-xl font-semibold mt-6">Governing Law</h2>
