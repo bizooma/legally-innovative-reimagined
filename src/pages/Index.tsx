@@ -11,10 +11,12 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import GoogleMap from "@/components/GoogleMap";
 import Newsletter from "@/components/Newsletter";
+import HalloweenDecorations from "@/components/HalloweenDecorations";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <HalloweenDecorations />
       <Navbar />
       <Hero />
       <About />
