@@ -1,7 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Link } from "react-router-dom";
 
 const Services = () => {
   const services = [
@@ -84,47 +83,29 @@ const Services = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            const cardContent = (
-              <Card 
-                className="border-t-4 border-t-legal-primary border-r-0 border-l-0 border-b-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group"
-              >
-                <div className="relative">
-                  <AspectRatio ratio={16/5}>
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url(${service.bgImage})` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/10" />
-                  </AspectRatio>
-                </div>
-                <CardContent className="p-6 relative z-10 bg-white">
-                  <div className="flex items-center mb-4">
-                    <div className="text-4xl mr-3">{service.icon}</div>
-                    <h3 className="text-xl font-bold text-legal-dark">{service.title}</h3>
-                  </div>
-                  <p className="text-gray-700 mb-4">{service.description}</p>
-                  <div className="text-legal-primary font-semibold text-sm">
-                    Learn More →
-                  </div>
-                </CardContent>
-              </Card>
-            );
-
-            if (service.link) {
-              return (
-                <Link key={index} to={service.link} className="block">
-                  {cardContent}
-                </Link>
-              );
-            }
-
-            return (
-              <div key={index}>
-                {cardContent}
+          {services.map((service, index) => (
+            <Card 
+              key={index}
+              className="border-t-4 border-t-legal-primary border-r-0 border-l-0 border-b-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group"
+            >
+              <div className="relative">
+                <AspectRatio ratio={16/5}>
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${service.bgImage})` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/10" />
+                </AspectRatio>
               </div>
-            );
-          })}
+              <CardContent className="p-6 relative z-10 bg-white">
+                <div className="flex items-center mb-4">
+                  <div className="text-4xl mr-3">{service.icon}</div>
+                  <h3 className="text-xl font-bold text-legal-dark">{service.title}</h3>
+                </div>
+                <p className="text-gray-700">{service.description}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>
