@@ -20,7 +20,7 @@ const Footer = () => {
       }}
     >
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="mb-4">
               <img 
@@ -54,21 +54,6 @@ const Footer = () => {
               </li>
               <li>
                 <TermsOfServiceModal triggerClassName="text-legal-light hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Services</h4>
-            <ul className="space-y-2">
-              <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Innovation Consulting</Link></li>
-              <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Legal Design Thinking</Link></li>
-              <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Technology Implementation</Link></li>
-              <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Training Programs</Link></li>
-              <li>
-                <Link to="/ai-customer-support-chatbots" className="text-legal-light hover:text-legal-accent transition-colors">
-                  AI Customer Support
-                </Link>
               </li>
             </ul>
           </div>
