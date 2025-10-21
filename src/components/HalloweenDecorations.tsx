@@ -2,10 +2,55 @@ import { useEffect, useState } from "react";
 
 const HalloweenDecorations = () => {
   const [spiderPosition, setSpiderPosition] = useState(0);
+  const [spiderSpeed, setSpiderSpeed] = useState(0.5);
+  const [isPaused, setIsPaused] = useState(false);
+  const [bat1Position, setBat1Position] = useState({ x: 33, y: 25 });
+  const [bat2Position, setBat2Position] = useState({ x: 75, y: 33 });
+  const [bat3Position, setBat3Position] = useState({ x: 50, y: 50 });
 
+  // Varied spider animation
   useEffect(() => {
     const interval = setInterval(() => {
-      setSpiderPosition((prev) => (prev >= 100 ? 0 : prev + 0.5));
+      if (!isPaused) {
+        setSpiderPosition((prev) => {
+          if (prev >= 100) {
+            // Reset with random speed
+            setSpiderSpeed(Math.random() * 0.5 + 0.3);
+            // Random pause chance
+            if (Math.random() > 0.7) {
+              setIsPaused(true);
+              setTimeout(() => setIsPaused(false), Math.random() * 2000 + 1000);
+            }
+            return 0;
+          }
+          return prev + spiderSpeed;
+        });
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [spiderSpeed, isPaused]);
+
+  // Flying bats animation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Bat 1 - flies in a circular pattern
+      setBat1Position((prev) => ({
+        x: 33 + Math.sin(Date.now() / 2000) * 20,
+        y: 25 + Math.cos(Date.now() / 2000) * 10
+      }));
+
+      // Bat 2 - flies across screen
+      setBat2Position((prev) => ({
+        x: (prev.x + 0.15) % 100,
+        y: 33 + Math.sin(prev.x / 10) * 8
+      }));
+
+      // Bat 3 - flies in figure-8 pattern
+      setBat3Position((prev) => ({
+        x: 50 + Math.sin(Date.now() / 3000) * 25,
+        y: 50 + Math.sin(Date.now() / 1500) * 15
+      }));
     }, 50);
 
     return () => clearInterval(interval);
@@ -158,7 +203,14 @@ const HalloweenDecorations = () => {
       </div>
 
       {/* Realistic Flying Bats */}
-      <div className="absolute top-1/4 left-1/3 animate-[float_6s_ease-in-out_infinite]">
+      <div 
+        className="absolute transition-all duration-100 ease-linear"
+        style={{ 
+          left: `${bat1Position.x}%`, 
+          top: `${bat1Position.y}%`,
+          transform: `scaleX(${Math.sin(Date.now() / 500) > 0 ? 1 : -1})`
+        }}
+      >
         <svg width="48" height="32" viewBox="0 0 64 48" className="opacity-80 drop-shadow-xl">
           {/* Left wing */}
           <path d="M 32,24 Q 24,16 16,18 Q 12,20 8,18 Q 4,16 2,20 Q 0,24 2,28 Q 4,24 8,26 Q 12,28 16,26 Q 24,24 32,24" 
@@ -179,7 +231,14 @@ const HalloweenDecorations = () => {
         </svg>
       </div>
 
-      <div className="absolute top-1/3 right-1/4 animate-[float_8s_ease-in-out_infinite_2s]">
+      <div 
+        className="absolute transition-all duration-100 ease-linear"
+        style={{ 
+          left: `${bat2Position.x}%`, 
+          top: `${bat2Position.y}%`,
+          transform: `scaleX(${bat2Position.x % 20 > 10 ? 1 : -1})`
+        }}
+      >
         <svg width="40" height="28" viewBox="0 0 64 48" className="opacity-75 drop-shadow-xl">
           <path d="M 32,24 Q 24,16 16,18 Q 12,20 8,18 Q 4,16 2,20 Q 0,24 2,28 Q 4,24 8,26 Q 12,28 16,26 Q 24,24 32,24" 
                 fill="#0a0a0a" stroke="#1a1a1a" strokeWidth="0.5" />
@@ -194,7 +253,14 @@ const HalloweenDecorations = () => {
         </svg>
       </div>
 
-      <div className="absolute top-1/2 left-1/2 animate-[float_9s_ease-in-out_infinite_4s]">
+      <div 
+        className="absolute transition-all duration-100 ease-linear"
+        style={{ 
+          left: `${bat3Position.x}%`, 
+          top: `${bat3Position.y}%`,
+          transform: `scaleX(${Math.sin(Date.now() / 800) > 0 ? -1 : 1})`
+        }}
+      >
         <svg width="36" height="26" viewBox="0 0 64 48" className="opacity-70 drop-shadow-xl">
           <path d="M 32,24 Q 24,16 16,18 Q 12,20 8,18 Q 4,16 2,20 Q 0,24 2,28 Q 4,24 8,26 Q 12,28 16,26 Q 24,24 32,24" 
                 fill="#0a0a0a" stroke="#1a1a1a" strokeWidth="0.5" />
