@@ -117,7 +117,7 @@ const FAQ = () => {
   return (
     <section id="faq" className="section-padding bg-white">
       <div className="container mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-left max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
             Frequently Asked <span className="highlight-text">Questions</span>
           </h2>
