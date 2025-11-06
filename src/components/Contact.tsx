@@ -180,7 +180,7 @@ const Contact = () => {
               <h3 className="text-2xl font-bold mb-6 text-legal-dark text-center">
                 Or Schedule a <span className="highlight-text">Meeting</span>
               </h3>
-              <div className="tidycal-embed" data-path="bizooma" style={{
+              <div className="tidycal-embed" data-path="bizooma/30-minute-meeting" style={{
               minWidth: '320px',
               height: '700px'
             }}></div>
