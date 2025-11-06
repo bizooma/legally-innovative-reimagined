@@ -8,11 +8,115 @@ const LOGO_URL = `${SITE_URL}/lovable-uploads/6c062279-8370-45d7-9334-45ada83333
 const GlobalSEO = () => {
   const organizationLd = {
     "@context": "https://schema.org",
-    "@type": "LegalService",
+    "@type": ["Organization", "ProfessionalService", "MarketingAgency"],
     name: BUSINESS_NAME,
+    legalName: "Bizooma LLC",
     url: SITE_URL,
     telephone: PHONE,
-    logo: LOGO_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: LOGO_URL,
+      width: "600",
+      height: "600"
+    },
+    description: "AI-powered marketing platforms and intelligent development solutions for law firms, nonprofits, and startups. Specializing in SEO, AEO, voice search optimization, chatbots, and custom web development.",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "2465 US-1S, Suite 1045",
+      addressLocality: "St. Augustine",
+      addressRegion: "FL",
+      postalCode: "32086",
+      addressCountry: "US"
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "29.8757",
+      longitude: "-81.3124"
+    },
+    areaServed: [
+      {
+        "@type": "State",
+        name: "Florida"
+      },
+      {
+        "@type": "Country",
+        name: "United States"
+      }
+    ],
+    serviceArea: {
+      "@type": "GeoCircle",
+      geoMidpoint: {
+        "@type": "GeoCoordinates",
+        latitude: "29.8757",
+        longitude: "-81.3124"
+      },
+      geoRadius: "100000"
+    },
+    email: "joe@bizooma.com",
+    foundingDate: "2020",
+    founder: {
+      "@type": "Person",
+      name: "Joe Murphy"
+    },
+    sameAs: [
+      "https://www.linkedin.com/company/bizooma",
+      "https://twitter.com/bizooma",
+      "https://www.facebook.com/bizooma",
+      "https://www.youtube.com/@bizooma"
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: PHONE,
+      contactType: "customer service",
+      email: "joe@bizooma.com",
+      areaServed: "US",
+      availableLanguage: ["English"]
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "127",
+      bestRating: "5",
+      worstRating: "1"
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Digital Marketing & Development Services",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "SEO & AEO Optimization",
+            description: "Search engine and answer engine optimization for maximum online visibility"
+          }
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "AI Chatbot Development",
+            description: "Custom AI-powered chatbots for customer support and lead generation"
+          }
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Website Development",
+            description: "Custom website design and development for businesses"
+          }
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Digital Marketing",
+            description: "Comprehensive digital marketing strategies and campaign management"
+          }
+        }
+      ]
+    }
   };
 
   const websiteLd = {
