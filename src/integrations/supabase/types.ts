@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      client_citations: {
+        Row: {
+          client_id: string
+          created_at: string | null
+          id: string
+          label: string
+          node_id: string
+          status: string | null
+          type: string
+          updated_at: string | null
+          url: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string | null
+          id?: string
+          label: string
+          node_id: string
+          status?: string | null
+          type: string
+          updated_at?: string | null
+          url?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string | null
+          id?: string
+          label?: string
+          node_id?: string
+          status?: string | null
+          type?: string
+          updated_at?: string | null
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_citations_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_diagram_nodes: {
         Row: {
           client_id: string

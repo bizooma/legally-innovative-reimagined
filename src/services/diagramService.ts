@@ -16,6 +16,18 @@ export interface NodePosition {
   y: number;
 }
 
+export interface ClientCitation {
+  id?: string;
+  client_id: string;
+  node_id: string;
+  label: string;
+  type: string;
+  url?: string;
+  status?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export async function loadDiagramNodePositions(clientId: string): Promise<NodePosition[]> {
   const { data, error } = await supabase
     .from('client_diagram_nodes')
@@ -81,6 +93,60 @@ export async function saveDiagramNodePositions(
 
   if (error) {
     console.error('Error saving diagram node positions:', error);
+    return false;
+  }
+
+  return true;
+}
+
+// Citation Management Functions
+
+export async function loadClientCitations(clientId: string): Promise<ClientCitation[]> {
+  const { data, error } = await supabase
+    .from('client_citations')
+    .select('*')
+    .eq('client_id', clientId)
+    .eq('status', 'active');
+
+  if (error) {
+    console.error('Error loading client citations:', error);
+    return [];
+  }
+
+  return data || [];
+}
+
+export async function saveClientCitation(citation: ClientCitation): Promise<boolean> {
+  const { error } = await supabase
+    .from('client_citations')
+    .upsert({
+      client_id: citation.client_id,
+      node_id: citation.node_id,
+      label: citation.label,
+      type: citation.type,
+      url: citation.url,
+      status: citation.status || 'active'
+    }, {
+      onConflict: 'client_id,node_id'
+    });
+
+  if (error) {
+    console.error('Error saving client citation:', error);
+    return false;
+  }
+
+  return true;
+}
+
+export async function deleteClientCitation(clientId: string, nodeId: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('client_citations')
+    .delete()
+    .eq('client_id', clientId)
+    .eq('node_id', nodeId);
+
+  if (error) {
+    console.error('Error deleting client citation:', error);
     return false;
   }
 

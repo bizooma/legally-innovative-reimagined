@@ -14,10 +14,12 @@ import {
 import '@xyflow/react/dist/style.css';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star, Save, Lock, Unlock, Music, Play, Pause, RotateCcw } from 'lucide-react';
+import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, MapPin, Star, Save, Lock, Unlock, Music, Play, Pause, RotateCcw, Plus, Edit, Trash2 } from 'lucide-react';
 import { handleView } from '@/utils/documentActions';
-import { loadDiagramNodePositions, saveDiagramNodePositions, NodePosition } from '@/services/diagramService';
+import { loadDiagramNodePositions, saveDiagramNodePositions, NodePosition, loadClientCitations, saveClientCitation, deleteClientCitation, ClientCitation } from '@/services/diagramService';
 import { useToast } from '@/hooks/use-toast';
+import CitationEditorDialog from './CitationEditorDialog';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ClientCitationDiagramProps {
   clientId: string;
@@ -41,10 +43,14 @@ const CitationNode = ({ data }: { data: any }) => {
       case 'youtube':
         return <Youtube className="h-4 w-4" />;
       case 'directory':
+      case 'google':
         return <MapPin className="h-4 w-4" />;
       case 'review':
+      case 'yelp':
+      case 'avvo':
         return <Star className="h-4 w-4" />;
       case 'soundcloud':
+      case 'tiktok':
         return <Music className="h-4 w-4" />;
       default:
         return <Globe className="h-4 w-4" />;
@@ -66,10 +72,14 @@ const CitationNode = ({ data }: { data: any }) => {
       case 'youtube':
         return 'bg-red-100 border-red-500';
       case 'directory':
+      case 'google':
         return 'bg-green-100 border-green-500';
       case 'review':
+      case 'yelp':
+      case 'avvo':
         return 'bg-yellow-100 border-yellow-500';
       case 'soundcloud':
+      case 'tiktok':
         return 'bg-orange-100 border-orange-500';
       default:
         return 'bg-gray-100 border-gray-300';
@@ -77,15 +87,14 @@ const CitationNode = ({ data }: { data: any }) => {
   };
 
   const getClickableUrl = (url: string, type: string) => {
+    if (!url) return null;
     if (url.includes('http')) return url;
-    if (type === 'facebook') return `https://${url}`;
-    if (type === 'instagram') return `https://${url}`;
-    if (type === 'linkedin') return `https://${url}`;
-    if (type === 'youtube') return `https://${url}`;
-    if (type === 'soundcloud') return `https://${url}`;
-    if (type === 'website') return `https://${url}`;
-    if (type === 'directory' && (url.includes('.com') || url.includes('share.google'))) return `https://${url}`;
-    if (type === 'review' && url.includes('.com')) return `https://${url}`;
+    if (['facebook', 'instagram', 'linkedin', 'youtube', 'soundcloud', 'twitter', 'tiktok'].includes(type)) {
+      return `https://${url}`;
+    }
+    if (type === 'website' || url.includes('.com')) {
+      return url.startsWith('http') ? url : `https://${url}`;
+    }
     return null;
   };
 
@@ -97,13 +106,28 @@ const CitationNode = ({ data }: { data: any }) => {
     }
   };
 
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (data.onEdit) {
+      data.onEdit(data);
+    }
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (data.onDelete) {
+      data.onDelete(data.nodeId);
+    }
+  };
+
   const isClickable = data.url && data.type !== 'business' && getClickableUrl(data.url, data.type);
+  const isEditable = data.type !== 'business' && data.onEdit;
 
   return (
     <div 
       className={`px-4 py-2 shadow-md rounded-md border-2 ${getNodeColor()} min-w-[150px] transition-all duration-300 ${
         isClickable ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''
-      } ${data.isAnimating ? 'animation-pulse ring-2 ring-blue-400' : ''}`}
+      } ${data.isAnimating ? 'animation-pulse ring-2 ring-blue-400' : ''} group relative`}
       onClick={handleClick}
     >
       <div className="flex items-center gap-2">
@@ -113,9 +137,22 @@ const CitationNode = ({ data }: { data: any }) => {
       {data.url && (
         <div className="text-xs text-gray-600 mt-1 truncate">{data.url}</div>
       )}
-      {data.status && (
-        <div className={`text-xs mt-1 ${data.status === 'active' ? 'text-green-600' : 'text-red-600'}`}>
-          {data.status}
+      {isEditable && (
+        <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button
+            onClick={handleEdit}
+            className="bg-blue-500 text-white p-1 rounded hover:bg-blue-600"
+            title="Edit citation"
+          >
+            <Edit className="h-3 w-3" />
+          </button>
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white p-1 rounded hover:bg-red-600"
+            title="Delete citation"
+          >
+            <Trash2 className="h-3 w-3" />
+          </button>
         </div>
       )}
     </div>
@@ -131,272 +168,172 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
   const [isLocked, setIsLocked] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [hasLoadedPositions, setHasLoadedPositions] = useState(false);
+  const [hasLoadedCitations, setHasLoadedCitations] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [animationSpeed, setAnimationSpeed] = useState(1000); // ms per node
+  const [animationSpeed, setAnimationSpeed] = useState(1000);
+  const [citations, setCitations] = useState<ClientCitation[]>([]);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [editingCitation, setEditingCitation] = useState<ClientCitation | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  // Sample data for Win with Casey - replace with actual data from your database
-  const initialNodes: Node[] = useMemo(() => [
-    // Central business node
-    {
-      id: 'business',
-      type: 'citation',
-      position: { x: 400, y: 300 },
-      data: { 
-        label: clientName, 
-        type: 'business',
-        url: 'Main Business'
-      },
-      style: { 
-        background: '#fef3c7', 
-        border: '3px solid #f59e0b',
-        borderRadius: '10px',
-        fontWeight: 'bold'
-      },
-    },
-    
-    // Website nodes
-    {
-      id: 'main-website',
-      type: 'citation',
-      position: { x: 200, y: 100 },
-      data: { 
-        label: 'Main Website', 
-        type: 'website',
-        url: 'winwithcasey.com',
-        status: 'active'
-      },
-    },
-    {
-      id: 'casey-at-bat',
-      type: 'citation',
-      position: { x: 800, y: 100 },
-      data: { 
-        label: 'Casey at Bat', 
-        type: 'website',
-        url: 'caseyatbat.com',
-        status: 'active'
-      },
-    },
-    {
-      id: 'casey-fights',
-      type: 'citation',
-      position: { x: 200, y: 200 },
-      data: { 
-        label: 'Casey Fights', 
-        type: 'website',
-        url: 'caseyfights.com',
-        status: 'active'
-      },
-    },
-    {
-      id: 'casey-arbenz',
-      type: 'citation',
-      position: { x: 600, y: 200 },
-      data: { 
-        label: 'Casey Arbenz', 
-        type: 'website',
-        url: 'caseyarbenz.com',
-        status: 'active'
-      },
-    },
-    {
-      id: 'casey-arbenz-wins',
-      type: 'citation',
-      position: { x: 800, y: 200 },
-      data: { 
-        label: 'Casey Arbenz Wins', 
-        type: 'website',
-        url: 'caseyarbenzwins.com',
-        status: 'active'
-      },
-    },
+  // Check if user is admin
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      
+      const { data } = await supabase
+        .from('users')
+        .select('is_admin')
+        .eq('id', session.user.id)
+        .single();
+      
+      if (data?.is_admin) {
+        setIsAdmin(true);
+      }
+    };
+    checkAdmin();
+  }, []);
 
-    // Social media nodes
-    {
-      id: 'facebook',
-      type: 'citation',
-      position: { x: 100, y: 300 },
-      data: { 
-        label: 'Facebook Page', 
-        type: 'facebook',
-        url: 'facebook.com/winwithcasey',
-        status: 'active'
-      },
-    },
-    {
-      id: 'instagram',
-      type: 'citation',
-      position: { x: 100, y: 400 },
-      data: { 
-        label: 'Instagram', 
-        type: 'instagram',
-        url: 'instagram.com/caseyarbenzwins',
-        status: 'active'
-      },
-    },
-    {
-      id: 'linkedin',
-      type: 'citation',
-      position: { x: 700, y: 300 },
-      data: { 
-        label: 'LinkedIn', 
-        type: 'linkedin',
-        url: 'linkedin.com/company/win-with-casey',
-        status: 'active'
-      },
-    },
-    {
-      id: 'youtube',
-      type: 'citation',
-      position: { x: 700, y: 400 },
-      data: { 
-        label: 'YouTube Channel', 
-        type: 'youtube',
-        url: 'youtube.com/@winwithcasey',
-        status: 'active'
-      },
-    },
+  // Load citations from database
+  useEffect(() => {
+    const loadCitations = async () => {
+      try {
+        const loadedCitations = await loadClientCitations(clientId);
+        setCitations(loadedCitations);
+        setHasLoadedCitations(true);
+      } catch (error) {
+        console.error('Failed to load citations:', error);
+        toast({
+          title: "Load failed",
+          description: "Failed to load citations from database.",
+          variant: "destructive",
+        });
+        setHasLoadedCitations(true);
+      }
+    };
 
-    // Directory listings
-    {
-      id: 'google-business',
-      type: 'citation',
-      position: { x: 200, y: 500 },
-      data: { 
-        label: 'Google Business Profile', 
-        type: 'directory',
-        url: 'share.google/el9yIDz61LdN2vgXC',
-        status: 'active'
-      },
-    },
-    {
-      id: 'apple-maps',
-      type: 'citation',
-      position: { x: 400, y: 500 },
-      data: { 
-        label: 'Apple Maps', 
-        type: 'directory',
-        url: 'Apple Maps Listing',
-        status: 'active'
-      },
-    },
-    {
-      id: 'bing-places',
-      type: 'citation',
-      position: { x: 600, y: 500 },
-      data: { 
-        label: 'Bing Places', 
-        type: 'directory',
-        url: 'Bing Places Listing',
-        status: 'active'
-      },
-    },
-    {
-      id: 'soundcloud',
-      type: 'citation',
-      position: { x: 500, y: 400 },
-      data: { 
-        label: 'SoundCloud', 
-        type: 'soundcloud',
-        url: 'soundcloud.com/win-with-casey',
-        status: 'active'
-      },
-    },
+    if (clientId && !hasLoadedCitations) {
+      loadCitations();
+    }
+  }, [clientId, hasLoadedCitations, toast]);
 
-    // Review sites
-    {
-      id: 'yelp',
-      type: 'citation',
-      position: { x: 300, y: 600 },
-      data: { 
-        label: 'Yelp Reviews', 
-        type: 'review',
-        url: 'yelp.com/biz/puget-law-group-kent-2',
-        status: 'active'
+  // Build nodes from citations
+  const initialNodes: Node[] = useMemo(() => {
+    const nodes: Node[] = [
+      // Central business node
+      {
+        id: 'business',
+        type: 'citation',
+        position: { x: 400, y: 300 },
+        data: { 
+          label: clientName, 
+          type: 'business',
+          url: 'Main Business'
+        },
+        style: { 
+          background: '#fef3c7', 
+          border: '3px solid #f59e0b',
+          borderRadius: '10px',
+          fontWeight: 'bold'
+        },
       },
-    },
+    ];
 
-    // Landing pages
-    {
-      id: 'kent-personal-injury',
-      type: 'citation',
-      position: { x: 100, y: 700 },
-      data: { 
-        label: 'Kent Personal Injury', 
-        type: 'website',
-        url: 'personalinjurylawyerkent.com',
-        status: 'active'
-      },
-    },
-    {
-      id: 'olympia-personal-injury',
-      type: 'citation',
-      position: { x: 300, y: 700 },
-      data: { 
-        label: 'Olympia Personal Injury', 
-        type: 'website',
-        url: 'personalinjurylawyerolympia.com',
-        status: 'active'
-      },
-    },
-    {
-      id: 'king-county-personal-injury',
-      type: 'citation',
-      position: { x: 500, y: 700 },
-      data: { 
-        label: 'King County Personal Injury', 
-        type: 'website',
-        url: 'kingcountypersonalinjury.com',
-        status: 'active'
-      },
-    },
-    {
-      id: 'olympia-car-accident',
-      type: 'citation',
-      position: { x: 700, y: 700 },
-      data: { 
-        label: 'Olympia Car Accident', 
-        type: 'website',
-        url: 'olympiacaraccidentlawyer.com',
-        status: 'active'
-      },
-    },
-  ], [clientName]);
+    // Add citation nodes from database
+    citations.forEach((citation, index) => {
+      // Calculate position in a circular layout if no saved position exists
+      const angle = (index / citations.length) * 2 * Math.PI;
+      const radius = 250;
+      const x = 400 + radius * Math.cos(angle);
+      const y = 300 + radius * Math.sin(angle);
 
-  const initialEdges: Edge[] = useMemo(() => [
-    // Citations TO business (reversed for particle flow)
-    { id: 'e-main-business', source: 'main-website', target: 'business', type: 'smoothstep' },
-    { id: 'e-casey-at-bat-business', source: 'casey-at-bat', target: 'business', type: 'smoothstep' },
-    { id: 'e-casey-fights-business', source: 'casey-fights', target: 'business', type: 'smoothstep' },
-    { id: 'e-casey-arbenz-business', source: 'casey-arbenz', target: 'business', type: 'smoothstep' },
-    { id: 'e-casey-arbenz-wins-business', source: 'casey-arbenz-wins', target: 'business', type: 'smoothstep' },
-    
-    // Social media TO business
-    { id: 'e-facebook-business', source: 'facebook', target: 'business', type: 'smoothstep' },
-    { id: 'e-instagram-business', source: 'instagram', target: 'business', type: 'smoothstep' },
-    { id: 'e-linkedin-business', source: 'linkedin', target: 'business', type: 'smoothstep' },
-    { id: 'e-youtube-business', source: 'youtube', target: 'business', type: 'smoothstep' },
-    
-    // Directories TO business
-    { id: 'e-google-business', source: 'google-business', target: 'business', type: 'smoothstep' },
-    { id: 'e-apple-maps-business', source: 'apple-maps', target: 'business', type: 'smoothstep' },
-    { id: 'e-bing-places-business', source: 'bing-places', target: 'business', type: 'smoothstep' },
-    
-    // SoundCloud TO business
-    { id: 'e-soundcloud-business', source: 'soundcloud', target: 'business', type: 'smoothstep' },
-    
-    // Reviews TO business
-    { id: 'e-yelp-business', source: 'yelp', target: 'business', type: 'smoothstep' },
-    
-    // Landing pages TO business
-    { id: 'e-kent-personal-injury-business', source: 'kent-personal-injury', target: 'business', type: 'smoothstep' },
-    { id: 'e-olympia-personal-injury-business', source: 'olympia-personal-injury', target: 'business', type: 'smoothstep' },
-    { id: 'e-king-county-personal-injury-business', source: 'king-county-personal-injury', target: 'business', type: 'smoothstep' },
-    { id: 'e-olympia-car-accident-business', source: 'olympia-car-accident', target: 'business', type: 'smoothstep' },
-  ], []);
+      nodes.push({
+        id: citation.node_id,
+        type: 'citation',
+        position: { x, y },
+        data: {
+          nodeId: citation.node_id,
+          label: citation.label,
+          type: citation.type,
+          url: citation.url,
+          status: citation.status,
+          onEdit: isAdmin ? (data: any) => {
+            setEditingCitation(citation);
+            setIsEditorOpen(true);
+          } : undefined,
+          onDelete: isAdmin ? async (nodeId: string) => {
+            if (confirm(`Delete citation "${citation.label}"?`)) {
+              const success = await deleteClientCitation(clientId, nodeId);
+              if (success) {
+                setCitations(prev => prev.filter(c => c.node_id !== nodeId));
+                toast({
+                  title: "Citation deleted",
+                  description: "The citation has been removed.",
+                });
+              } else {
+                toast({
+                  title: "Delete failed",
+                  description: "Failed to delete citation.",
+                  variant: "destructive",
+                });
+              }
+            }
+          } : undefined,
+        },
+      });
+    });
+
+    return nodes;
+  }, [clientName, citations, isAdmin, clientId, toast]);
+
+  // Build edges from citations to business
+  const initialEdges: Edge[] = useMemo(() => {
+    return citations.map(citation => ({
+      id: `e-${citation.node_id}-business`,
+      source: citation.node_id,
+      target: 'business',
+      type: 'smoothstep',
+    }));
+  }, [citations]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  // Update nodes when citations change
+  useEffect(() => {
+    setNodes(initialNodes);
+  }, [initialNodes, setNodes]);
+
+  // Update edges when citations change
+  useEffect(() => {
+    setEdges(initialEdges);
+  }, [initialEdges, setEdges]);
+
+  // Handle saving a citation
+  const handleSaveCitation = async (citation: ClientCitation) => {
+    const success = await saveClientCitation(citation);
+    if (success) {
+      // Reload citations
+      const loadedCitations = await loadClientCitations(clientId);
+      setCitations(loadedCitations);
+      toast({
+        title: "Citation saved",
+        description: "The citation has been saved successfully.",
+      });
+    } else {
+      toast({
+        title: "Save failed",
+        description: "Failed to save citation.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleAddCitation = () => {
+    setEditingCitation(null);
+    setIsEditorOpen(true);
+  };
 
   // Animation functions
   const startAnimation = useCallback(() => {
@@ -596,6 +533,17 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
             </p>
           </div>
           <div className="flex gap-2">
+            {isAdmin && (
+              <Button
+                variant="default"
+                size="sm"
+                onClick={handleAddCitation}
+                className="flex items-center gap-2"
+              >
+                <Plus className="h-4 w-4" />
+                Add Citation
+              </Button>
+            )}
             <div className="flex gap-1 border rounded-md p-1">
               <Button
                 variant={isAnimating ? "secondary" : "outline"}
@@ -656,6 +604,13 @@ const ClientCitationDiagram: React.FC<ClientCitationDiagramProps> = ({ clientId,
           <Background gap={12} size={1} />
         </ReactFlow>
       </CardContent>
+      <CitationEditorDialog
+        isOpen={isEditorOpen}
+        onOpenChange={setIsEditorOpen}
+        citation={editingCitation}
+        clientId={clientId}
+        onSave={handleSaveCitation}
+      />
     </Card>
   );
 };
