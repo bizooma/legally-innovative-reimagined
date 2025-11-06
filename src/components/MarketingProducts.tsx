@@ -2,8 +2,40 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
+import { useEffect, useRef, useState } from "react";
 
 const MarketingProducts = () => {
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observers = cardsRef.current.map((card, index) => {
+      if (!card) return null;
+      
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setVisibleCards((prev) => {
+                const newVisible = [...prev];
+                newVisible[index] = true;
+                return newVisible;
+              });
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(card);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer) => observer?.disconnect());
+    };
+  }, []);
+
   const products = [
     {
       title: "NPOBots",
@@ -98,10 +130,17 @@ const MarketingProducts = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product, index) => (
-            <Card 
+            <div
               key={index}
-              className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1 overflow-hidden group"
+              ref={(el) => (cardsRef.current[index] = el)}
+              className={`transition-all duration-700 ${
+                visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
+              <Card 
+                className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1 overflow-hidden group h-full"
+              >
               <div className="relative h-64 overflow-hidden">
                 <img 
                   src={product.image} 
@@ -157,6 +196,7 @@ const MarketingProducts = () => {
                 </a>
               </CardContent>
             </Card>
+            </div>
           ))}
         </div>
       </div>
