@@ -15,7 +15,7 @@ const Footer = () => {
     backgroundRepeat: 'no-repeat'
   }}>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="mb-4">
               <ResponsiveImage 
@@ -34,6 +34,8 @@ Powered by Innovation.</h4>
               </p>
             </div>
           </div>
+          
+          <div></div>
           
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
