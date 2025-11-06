@@ -1,78 +1,25 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { CheckCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { z } from "zod";
+import { useEffect } from "react";
 import routeToResultsLogo from "@/assets/route-to-results-logo.png";
-const newsletterSchema = z.object({
-  email: z.string().trim().email({
-    message: "Invalid email address"
-  }).max(255, {
-    message: "Email must be less than 255 characters"
-  })
-});
 const Newsletter = () => {
-  const {
-    toast
-  } = useToast();
-  const [email, setEmail] = useState("");
-  const [isSubscribing, setIsSubscribing] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubscribing(true);
-    try {
-      // Validate email
-      const validatedData = newsletterSchema.parse({
-        email
-      });
+  useEffect(() => {
+    // Load Mailchimp CSS
+    const cssLink = document.createElement("link");
+    cssLink.href = "//cdn-images.mailchimp.com/embedcode/classic-061523.css";
+    cssLink.rel = "stylesheet";
+    cssLink.type = "text/css";
+    document.head.appendChild(cssLink);
 
-      // Insert into newsletter_subscriptions table
-      const {
-        error
-      } = await supabase.from('newsletter_subscriptions').insert([{
-        email: validatedData.email
-      }]);
-      if (error) {
-        // Check if email already exists
-        if (error.code === '23505') {
-          toast({
-            title: "Already Subscribed",
-            description: "This email is already subscribed to our newsletter.",
-            variant: "destructive"
-          });
-        } else {
-          throw error;
-        }
-      } else {
-        setIsSubscribed(true);
-        setEmail("");
-        toast({
-          title: "Successfully Subscribed!",
-          description: "Thank you for subscribing to our newsletter. You'll receive updates about legal innovation and technology."
-        });
-      }
-    } catch (error: any) {
-      console.error("Newsletter subscription error:", error);
-      if (error instanceof z.ZodError) {
-        toast({
-          title: "Invalid Email",
-          description: error.errors[0]?.message || "Please enter a valid email address.",
-          variant: "destructive"
-        });
-      } else {
-        toast({
-          title: "Subscription Failed",
-          description: "There was a problem subscribing you to our newsletter. Please try again.",
-          variant: "destructive"
-        });
-      }
-    } finally {
-      setIsSubscribing(false);
-    }
-  };
+    // Load Mailchimp validation script
+    const validateScript = document.createElement("script");
+    validateScript.src = "//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js";
+    validateScript.type = "text/javascript";
+    document.body.appendChild(validateScript);
+
+    return () => {
+      document.head.removeChild(cssLink);
+      document.body.removeChild(validateScript);
+    };
+  }, []);
   return <section className="section-padding bg-white">
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto text-center">
@@ -92,28 +39,112 @@ const Newsletter = () => {
           
           <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">Get exclusive insights, case studies, and updates on the latest technology trends. Join thousands of legal professionals transforming their practices with innovative solutions.</p>
 
-          {isSubscribed ? <div className="bg-green-50 border border-green-200 rounded-lg p-6 max-w-md mx-auto">
-              <div className="flex items-center justify-center gap-3 text-green-800">
-                <CheckCircle className="h-6 w-6" />
-                <span className="font-semibold">Successfully Subscribed!</span>
-              </div>
-              <p className="text-green-700 mt-2">
-                You'll receive our latest updates and insights directly in your inbox.
-              </p>
-            </div> : <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex-1">
-                  <Input type="email" placeholder="Enter your email address" value={email} onChange={e => setEmail(e.target.value)} required className="w-full px-4 py-3 text-base border-legal-light focus:border-legal-primary focus:ring-legal-primary" disabled={isSubscribing} />
+          <div id="mc_embed_shell" className="max-w-2xl mx-auto">
+            <style dangerouslySetInnerHTML={{__html: `
+              #mc_embed_signup {
+                background: #fff;
+                clear: left;
+                font: 14px Helvetica, Arial, sans-serif;
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+              }
+              #mc_embed_signup h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+              }
+              #mc_embed_signup .mc-field-group {
+                margin-bottom: 1rem;
+              }
+              #mc_embed_signup .mc-field-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+              }
+              #mc_embed_signup .mc-field-group input {
+                width: 100%;
+                padding: 0.75rem;
+                border: 1px solid #d1d5db;
+                border-radius: 0.375rem;
+                font-size: 1rem;
+              }
+              #mc_embed_signup .button {
+                background-color: #991b1b;
+                color: white;
+                padding: 0.75rem 2rem;
+                border: none;
+                border-radius: 0.375rem;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background-color 0.3s;
+              }
+              #mc_embed_signup .button:hover {
+                background-color: #7f1d1d;
+              }
+              #mc_embed_signup .asterisk {
+                color: #991b1b;
+              }
+              #mc_embed_signup .indicates-required {
+                text-align: right;
+                font-size: 0.875rem;
+                margin-bottom: 1rem;
+              }
+            `}} />
+            
+            <div id="mc_embed_signup">
+              <form 
+                action="https://bizooma.us14.list-manage.com/subscribe/post?u=621f128c71e19e8d9b92ff1e3&amp;id=7f8858c903&amp;f_id=00f8b5e5f0" 
+                method="post" 
+                id="mc-embedded-subscribe-form" 
+                name="mc-embedded-subscribe-form" 
+                className="validate" 
+                target="_blank"
+              >
+                <div id="mc_embed_signup_scroll">
+                  <h2>Subscribe</h2>
+                  <div className="indicates-required">
+                    <span className="asterisk">*</span> indicates required
+                  </div>
+                  <div className="mc-field-group">
+                    <label htmlFor="mce-EMAIL">
+                      Email Address <span className="asterisk">*</span>
+                    </label>
+                    <input 
+                      type="email" 
+                      name="EMAIL" 
+                      className="required email" 
+                      id="mce-EMAIL" 
+                      required 
+                      defaultValue=""
+                    />
+                  </div>
+                  <div id="mce-responses" className="clear">
+                    <div className="response" id="mce-error-response" style={{ display: 'none' }}></div>
+                    <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
+                  </div>
+                  <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
+                    <input 
+                      type="text" 
+                      name="b_621f128c71e19e8d9b92ff1e3_7f8858c903" 
+                      tabIndex={-1} 
+                      defaultValue=""
+                    />
+                  </div>
+                  <div className="clear">
+                    <input 
+                      type="submit" 
+                      name="subscribe" 
+                      id="mc-embedded-subscribe" 
+                      className="button" 
+                      value="Subscribe"
+                    />
+                  </div>
                 </div>
-                <Button type="submit" className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-3 text-base whitespace-nowrap" disabled={isSubscribing}>
-                  {isSubscribing ? "Subscribing..." : "Subscribe"}
-                </Button>
-              </div>
-              
-              <p className="text-sm text-gray-500 mt-4">
-                We respect your privacy. Unsubscribe at any time.
-              </p>
-            </form>}
+              </form>
+            </div>
+          </div>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             <div className="bg-gray-50 rounded-lg p-6">
