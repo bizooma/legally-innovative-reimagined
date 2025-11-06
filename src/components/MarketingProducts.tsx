@@ -131,10 +131,18 @@ const MarketingProducts = () => {
       }}
     >
       <div className="container mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-4xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             Marketing <span className="text-legal-accent">Products</span>
           </h2>
+          <div className="text-white/90 text-lg space-y-4">
+            <p>
+              At Bizooma, we design and develop intelligent marketing platforms that transform how businesses attract, engage, and convert customers. Built with scalability and automation at their core, our platforms seamlessly integrate AI, analytics, and automation to give your team the competitive edge it deserves.
+            </p>
+            <p>
+              Whether you're a law firm, nonprofit, or emerging startup, our custom solutions adapt to your goals and workflows—delivering performance, precision, and measurable growth.
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
