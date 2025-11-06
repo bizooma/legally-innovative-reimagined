@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
+import underConstructionImg from "@/assets/under-construction.webp";
 import { useEffect, useRef, useState } from "react";
 
 const MarketingProducts = () => {
@@ -73,7 +74,7 @@ const MarketingProducts = () => {
         "Real-Time Updates",
         "10K+ Businesses"
       ],
-      image: "/lovable-uploads/59e51f8e-610f-44a9-9530-a964b738ff51.png",
+      image: underConstructionImg,
       link: "/products/quickie-qr"
     },
     {
@@ -86,7 +87,7 @@ const MarketingProducts = () => {
         "95% Email Accuracy",
         "10x Pipeline Growth"
       ],
-      image: "/lovable-uploads/0e8bdb38-d5a7-4ced-b3d0-d0a37c64ac55.png",
+      image: underConstructionImg,
       link: "/products/lead-scraper-crm"
     },
     {
@@ -99,7 +100,7 @@ const MarketingProducts = () => {
         "60% Cost Reduction",
         "24/7 Availability"
       ],
-      image: "/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png",
+      image: underConstructionImg,
       link: "/products/support-bots"
     },
     {
@@ -112,7 +113,7 @@ const MarketingProducts = () => {
         "8K+ Impressions/Year",
         "Zero Extra Cost"
       ],
-      image: "/lovable-uploads/a88cbdbd-0e22-4907-afe1-0622b2c876ab.png",
+      image: underConstructionImg,
       link: "/products/signature-pop"
     }
   ];
