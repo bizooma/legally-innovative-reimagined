@@ -16,6 +16,28 @@ const LawFirmDigitalMarketingPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Digital Marketing",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "url": "https://bizooma.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "description": "Comprehensive digital marketing services for law firms. Increase online visibility, generate quality leads, and grow your legal practice with proven digital strategies.",
+    "offers": {
+      "@type": "Offer",
+      "priceRange": "$2,000 - $10,000/month",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -24,6 +46,7 @@ const LawFirmDigitalMarketingPage = () => {
           name="description" 
           content="Comprehensive digital marketing services for law firms. Increase online visibility, generate quality leads, and grow your legal practice with proven digital strategies." 
         />
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
         <Navbar />

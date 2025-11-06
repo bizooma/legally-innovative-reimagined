@@ -16,6 +16,28 @@ const LawFirmLeadGenerationPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Lead Generation Systems",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "url": "https://bizooma.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "description": "Professional lead generation systems for law firms. Capture high-quality leads, nurture prospects, and convert potential clients with automated workflows and proven strategies.",
+    "offers": {
+      "@type": "Offer",
+      "priceRange": "$1,000 - $5,000/month",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -24,6 +46,7 @@ const LawFirmLeadGenerationPage = () => {
           name="description" 
           content="Professional lead generation systems for law firms. Capture high-quality leads, nurture prospects, and convert potential clients with automated workflows and proven strategies." 
         />
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
         <Navbar />

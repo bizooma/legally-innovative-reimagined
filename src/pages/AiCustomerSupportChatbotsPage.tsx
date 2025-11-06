@@ -16,6 +16,29 @@ const AiCustomerSupportChatbotsPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "AI Customer Support Chatbots",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "url": "https://bizooma.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "description": "Transform your law firm's client support with AI-powered chatbots. Available 24/7, handle inquiries, schedule consultations, and improve client satisfaction.",
+    "offers": {
+      "@type": "Offer",
+      "priceRange": "$2,500 - $8,000",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "duration": "P4W"
+  };
+
   return (
     <>
       <Helmet>
@@ -24,6 +47,7 @@ const AiCustomerSupportChatbotsPage = () => {
           name="description" 
           content="Transform your law firm's client support with AI-powered chatbots. Available 24/7, handle inquiries, schedule consultations, and improve client satisfaction." 
         />
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
         <Navbar />

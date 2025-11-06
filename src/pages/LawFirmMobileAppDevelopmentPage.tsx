@@ -16,6 +16,29 @@ const LawFirmMobileAppDevelopmentPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Mobile App Development",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "url": "https://bizooma.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "description": "Custom mobile app development for law firms. iOS and Android apps that enhance client communication, streamline processes, and grow your legal practice.",
+    "offers": {
+      "@type": "Offer",
+      "priceRange": "$15,000 - $50,000",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "duration": "P12W"
+  };
+
   return (
     <>
       <Helmet>
@@ -24,6 +47,7 @@ const LawFirmMobileAppDevelopmentPage = () => {
           name="description" 
           content="Custom mobile app development for law firms. iOS and Android apps that enhance client communication, streamline processes, and grow your legal practice." 
         />
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
         <Navbar />

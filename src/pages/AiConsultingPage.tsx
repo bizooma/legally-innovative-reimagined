@@ -16,6 +16,29 @@ const AiConsultingPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "AI Consulting & Implementation",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "url": "https://bizooma.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "description": "Expert AI consulting services for law firms. Streamline operations, enhance client experiences, and drive innovation with strategic AI implementation tailored for legal practices.",
+    "offers": {
+      "@type": "Offer",
+      "priceRange": "$5,000 - $25,000",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "duration": "P8W"
+  };
+
   return (
     <>
       <Helmet>
@@ -24,6 +47,7 @@ const AiConsultingPage = () => {
           name="description" 
           content="Expert AI consulting services for law firms. Streamline operations, enhance client experiences, and drive innovation with strategic AI implementation tailored for legal practices." 
         />
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
         <Navbar />

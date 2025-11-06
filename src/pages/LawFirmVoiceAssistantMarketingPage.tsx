@@ -16,6 +16,29 @@ const LawFirmVoiceAssistantMarketingPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Voice Assistant Marketing & Development",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "url": "https://bizooma.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "description": "Develop custom voice assistants for Amazon Alexa and Google Assistant to enhance your law firm's marketing reach and provide 24/7 client engagement through voice technology.",
+    "offers": {
+      "@type": "Offer",
+      "priceRange": "$3,000 - $10,000",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "duration": "P6W"
+  };
+
   return (
     <>
       <Helmet>
@@ -24,6 +47,7 @@ const LawFirmVoiceAssistantMarketingPage = () => {
           name="description" 
           content="Develop custom voice assistants for Amazon Alexa and Google Assistant to enhance your law firm's marketing reach and provide 24/7 client engagement through voice technology." 
         />
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
         <Navbar />

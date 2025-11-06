@@ -16,6 +16,29 @@ const LawFirmSeoAeoPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "SEO, AEO & Voice Search Optimization",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "url": "https://bizooma.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "description": "Professional SEO, AEO, and Voice SEO services for law firms. Improve search rankings, answer engine optimization, and voice search visibility to attract more clients.",
+    "offers": {
+      "@type": "Offer",
+      "priceRange": "$1,500 - $5,000/month",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "termsOfService": "https://bizooma.com"
+  };
+
   return (
     <>
       <Helmet>
@@ -24,6 +47,7 @@ const LawFirmSeoAeoPage = () => {
           name="description" 
           content="Professional SEO, AEO, and Voice SEO services for law firms. Improve search rankings, answer engine optimization, and voice search visibility to attract more clients." 
         />
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
         <Navbar />

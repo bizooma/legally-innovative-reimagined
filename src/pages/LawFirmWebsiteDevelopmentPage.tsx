@@ -16,6 +16,29 @@ const LawFirmWebsiteDevelopmentPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Website Development",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "url": "https://bizooma.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "description": "Professional website development for law firms. Custom designs, responsive layouts, SEO optimization, and compliance-focused solutions to grow your legal practice online.",
+    "offers": {
+      "@type": "Offer",
+      "priceRange": "$5,000 - $15,000",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "duration": "P6W"
+  };
+
   return (
     <>
       <Helmet>
@@ -24,6 +47,7 @@ const LawFirmWebsiteDevelopmentPage = () => {
           name="description" 
           content="Professional website development for law firms. Custom designs, responsive layouts, SEO optimization, and compliance-focused solutions to grow your legal practice online." 
         />
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
         <Navbar />

@@ -1,10 +1,37 @@
 
+import { Helmet } from "react-helmet-async";
 import ArticleLayout from "@/components/ArticleLayout";
 import appleMapsLawFirmImage from "@/assets/apple-maps-law-firm.jpg";
 
 const GoogleBusinessProfilePage = () => {
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Google Business Profile Optimization",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "url": "https://bizooma.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "description": "Professional Google Business Profile optimization and NAP consistency management for law firms. Improve local search rankings and 3-Pack visibility to attract more clients.",
+    "offers": {
+      "@type": "Offer",
+      "priceRange": "$500 - $2,000/month",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    }
+  };
+
   return (
-    <ArticleLayout
+    <>
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
+      </Helmet>
+      <ArticleLayout
       title="Why Google Business Profiles and NAP Consistency Are Critical for Legal Practices: The 3-Pack Advantage"
       excerpt="Discover how Google's Local Pack dominates 93% of local searches and why NAP consistency is essential for legal practice visibility and client acquisition."
       date="2025-01-15"
@@ -210,6 +237,7 @@ const GoogleBusinessProfilePage = () => {
         </div>
       </div>
     </ArticleLayout>
+    </>
   );
 };
 
