@@ -35,9 +35,7 @@ const About = () => {
               </div>
               <h3 className="text-xl font-bold mb-3 text-legal-dark">Vision Statement</h3>
               <p className="text-gray-700">
-                Through our platform, resources, and community, we will shape a future where the legal profession 
-                leads technological adoption rather than follows it, ensuring that legal innovation serves the 
-                highest purposes of justice and human dignity.
+                Our vision is to empower business professionals to lead the way in technological innovation—using our platform, resources, and community to drive meaningful value for their customers and the communities they serve.
               </p>
             </CardContent>
           </Card>
