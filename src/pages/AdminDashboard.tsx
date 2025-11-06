@@ -6,6 +6,7 @@ import { StatCard } from '@/components/dashboard/StatCard';
 import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { ClientDirectory } from '@/components/dashboard/ClientDirectory';
 import { AdminHeader } from '@/components/dashboard/AdminHeader';
+import { TimeTrackingSection } from '@/components/dashboard/TimeTrackingSection';
 import { useDashboard } from '@/hooks/useDashboard';
 
 const AdminDashboard = () => {
@@ -39,6 +40,14 @@ const AdminDashboard = () => {
                 <StatCard title="Active Clients" value={stats.activeClients.toString()} description="Currently active marketing clients" />
                 <StatCard title="Pending Approvals" value={stats.pendingApprovals.toString()} description="Materials awaiting client approval" />
                 <StatCard title="New Messages" value={stats.newMessages.toString()} description="Unread client messages" />
+              </div>
+            )}
+
+            {/* Time Tracking Section - Only show for admins */}
+            {isAdmin && (
+              <div className="mb-8">
+                <h2 className="text-2xl font-playfair font-bold mb-4">Time Tracking</h2>
+                <TimeTrackingSection clients={clients} />
               </div>
             )}
 
