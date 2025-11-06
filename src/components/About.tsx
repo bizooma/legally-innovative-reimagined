@@ -1,24 +1,13 @@
-
 import { Card, CardContent } from "@/components/ui/card";
-
 const About = () => {
-  return (
-    <section id="about" className="section-padding bg-white">
+  return <section id="about" className="section-padding bg-white">
       <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
             About <span className="highlight-text">Bizooma</span>
           </h2>
-          <p className="text-lg text-gray-700 mb-4">
-            At Bizooma, we are passionate about helping law firms thrive in the digital age.
-            As a full-service marketing and accounting solutions provider, we understand the unique challenges 
-            that law firms face in attracting clients and managing finances.
-          </p>
-          <p className="text-lg text-gray-700 mb-4">
-            That's why we've designed our services to meet the specific needs of the legal industry, 
-            giving you the tools to grow your practice, streamline your operations, and stay ahead of 
-            the competition. Bizooma is a legal entity of Bizooma, LLC.
-          </p>
+          <p className="text-lg text-gray-700 mb-4">At Bizooma, we are passionate about helping companies thrive in the digital age. As a full-service marketing and software development provider, we understand the unique challenges that companies face in attracting clients and managing finances.</p>
+          <p className="text-lg text-gray-700 mb-4">That's why we've designed our services to take advantage of the strengths of marketing and so, giving you the tools to grow your practice, streamline your operations, and stay ahead of the competition. </p>
           <p className="text-lg text-gray-700">
             Bizooma is proud to be a veteran-owned business dedicated to excellence and innovation. 
             Our entire team is based in the United States, ensuring that every project is handled with 
@@ -70,8 +59,6 @@ const About = () => {
           </Card>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default About;
