@@ -24,7 +24,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/0e8bdb38-d5a7-4ced-b3d0-d0a37c64ac55.png" 
+                src="/logo.png" 
                 alt="Bizooma Logo"
                 className="h-12 w-auto object-contain"
               />
