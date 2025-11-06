@@ -22,16 +22,16 @@ const GlobalSEO = () => {
     description: "AI-powered marketing platforms and intelligent development solutions for law firms, nonprofits, and startups. Specializing in SEO, AEO, voice search optimization, chatbots, and custom web development.",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "2465 US-1S, Suite 1045",
-      addressLocality: "St. Augustine",
+      streetAddress: "200 N Laura St",
+      addressLocality: "Jacksonville",
       addressRegion: "FL",
-      postalCode: "32086",
+      postalCode: "32202",
       addressCountry: "US"
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: "29.8757",
-      longitude: "-81.3124"
+      latitude: "30.3282",
+      longitude: "-81.6616"
     },
     areaServed: [
       {
@@ -47,8 +47,8 @@ const GlobalSEO = () => {
       "@type": "GeoCircle",
       geoMidpoint: {
         "@type": "GeoCoordinates",
-        latitude: "29.8757",
-        longitude: "-81.3124"
+        latitude: "30.3282",
+        longitude: "-81.6616"
       },
       geoRadius: "100000"
     },
