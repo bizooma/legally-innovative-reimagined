@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import routeToResultsLogo from "@/assets/route-to-results-logo.png";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { trackFormSubmission } from "@/utils/gtmTracking";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 const Newsletter = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   useEffect(() => {
@@ -48,7 +49,13 @@ const Newsletter = () => {
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <div className="h-16 w-auto flex items-center justify-center">
-              <img src={routeToResultsLogo} alt="Route to Results Logo" className="h-12 w-auto object-contain" />
+              <ResponsiveImage 
+                src={routeToResultsLogo} 
+                alt="Route to Results Newsletter - AI Marketing & Development Insights" 
+                sizes="48px"
+                widths={[48, 96]}
+                className="h-12 w-auto object-contain" 
+              />
             </div>
           </div>
           

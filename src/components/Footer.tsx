@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import footerTechBg from "@/assets/footer-tech-bg.jpg";
 import { trackEvent } from "@/utils/gtmTracking";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return <footer className="text-white py-12 relative overflow-hidden" style={{
@@ -17,7 +18,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="mb-4">
-              <img src="/logo.png" alt="Bizooma Logo" className="h-20 w-auto object-contain" />
+              <ResponsiveImage 
+                src="/logo.png" 
+                alt="Bizooma - AI-Powered Marketing & Development for Law Firms" 
+                sizes="80px"
+                widths={[80, 160]}
+                className="h-20 w-auto object-contain" 
+              />
             </div>
             <div className="mb-4">
               <h4 className="text-lg font-semibold mb-2 text-legal-accent">Built for Business.

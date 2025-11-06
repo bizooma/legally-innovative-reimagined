@@ -1,6 +1,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 const MichaelEmployeeBio = () => {
   const scrollToCalendly = () => {
@@ -25,9 +26,11 @@ const MichaelEmployeeBio = () => {
               {/* Photo Section */}
               <div className="bg-gray-100 p-8 flex items-center justify-center">
                 <div className="w-full max-w-xs">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/26a458f4-c2a1-4548-8dc8-ac6039a1a1e0.jpg"
-                    alt="Michael Ham - Business Development Specialist"
+                    alt="Michael Ham - Business Development Specialist at Bizooma"
+                    sizes="(max-width: 768px) 100vw, 320px"
+                    widths={[320, 640]}
                     className="w-full h-auto object-contain rounded-lg"
                   />
                 </div>

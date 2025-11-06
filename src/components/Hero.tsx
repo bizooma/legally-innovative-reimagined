@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
 import { trackPhoneClick, trackCTAClick } from "@/utils/gtmTracking";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 const Hero = () => {
   useEffect(() => {
     // Create the script element dynamically so it runs after mount
@@ -36,7 +37,13 @@ const Hero = () => {
   return <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img src={techBg} alt="Technology Background" className="w-full h-full object-cover" />
+        <ResponsiveImage 
+          src={techBg} 
+          alt="AI-Powered Marketing Technology Background - Digital Innovation for Law Firms" 
+          sizes="100vw"
+          widths={[640, 1024, 1280, 1536, 1920]}
+          className="w-full h-full object-cover" 
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-legal-primary/90 via-legal-primary/70 to-legal-primary/80"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-legal-primary/60"></div>
       </div>

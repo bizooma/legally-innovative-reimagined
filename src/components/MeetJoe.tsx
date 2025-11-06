@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Linkedin, Phone, Mail } from "lucide-react";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 const MeetJoe = () => {
   return <section id="meet-joe" className="py-20 bg-gradient-to-b from-background to-secondary/20">
@@ -15,7 +16,13 @@ const MeetJoe = () => {
         <Card className="max-w-6xl mx-auto overflow-hidden">
           <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
             <div className="flex flex-col items-center justify-center space-y-4">
-              <img src="/joe-murphy.jpg" alt="Joseph Murphy - Marketing Technologist and Founder of Bizooma" className="rounded-lg shadow-2xl w-full max-w-[288px] h-auto object-cover" />
+              <ResponsiveImage 
+                src="/joe-murphy.jpg" 
+                alt="Joseph Murphy - Marketing Technologist and Founder of Bizooma" 
+                sizes="(max-width: 768px) 100vw, 288px"
+                widths={[288, 576]}
+                className="rounded-lg shadow-2xl w-full max-w-[288px] h-auto object-cover" 
+              />
               
               <div className="flex items-center gap-4">
                 <a 
