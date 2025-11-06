@@ -36,7 +36,7 @@ const MeetJoe = () => {
                 </a>
                 
                 <a 
-                  href="tel:+1234567890" 
+                  href="tel:+19042956670" 
                   className="flex items-center gap-2 text-legal-primary hover:text-legal-dark transition-colors"
                 >
                   <Phone className="w-6 h-6" />
