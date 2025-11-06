@@ -6,12 +6,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-// Extend the Window interface to include Calendly
-declare global {
-  interface Window {
-    Calendly: any;
-  }
-}
 const Contact = () => {
   const {
     toast
@@ -24,13 +18,18 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
-    // Check if Calendly script is already loaded
-    if (!window.Calendly) {
-      const script = document.createElement('script');
-      script.src = 'https://assets.calendly.com/assets/external/widget.js';
-      script.async = true;
-      document.head.appendChild(script);
-    }
+    // Load TidyCal script
+    const script = document.createElement('script');
+    script.src = 'https://asset-tidycal.b-cdn.net/js/embed.js';
+    script.async = true;
+    document.body.appendChild(script);
+    
+    // Cleanup function to remove script when component unmounts
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
   }, []);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {
@@ -176,12 +175,12 @@ const Contact = () => {
               </Button>
             </form>
 
-            {/* Calendly inline widget */}
+            {/* TidyCal inline widget */}
             <div className="mt-12">
               <h3 className="text-2xl font-bold mb-6 text-legal-dark text-center">
                 Or Schedule a <span className="highlight-text">Meeting</span>
               </h3>
-              <div className="calendly-inline-widget" data-url="https://calendly.com/joe-bizooma/30min" style={{
+              <div className="tidycal-embed" data-path="bizooma" style={{
               minWidth: '320px',
               height: '700px'
             }}></div>
