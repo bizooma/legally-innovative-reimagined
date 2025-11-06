@@ -1,24 +1,18 @@
 import { Card } from "@/components/ui/card";
-
 const MeetJoe = () => {
-  return (
-    <section id="meet-joe" className="py-20 bg-gradient-to-b from-background to-secondary/20">
+  return <section id="meet-joe" className="py-20 bg-gradient-to-b from-background to-secondary/20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Meet Joseph Murphy
           </h2>
-          <p className="text-xl text-muted-foreground">Marketing Technologist & Founder</p>
+          <p className="text-xl text-muted-foreground">Marketing Technologist</p>
         </div>
 
         <Card className="max-w-6xl mx-auto overflow-hidden">
           <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
             <div className="flex items-center justify-center">
-              <img
-                src="/joe-murphy.jpg"
-                alt="Joseph Murphy - Marketing Technologist and Founder of Bizooma"
-                className="rounded-lg shadow-2xl w-full h-auto object-cover"
-              />
+              <img src="/joe-murphy.jpg" alt="Joseph Murphy - Marketing Technologist and Founder of Bizooma" className="rounded-lg shadow-2xl w-full h-auto object-cover" />
             </div>
 
             <div className="flex flex-col justify-center space-y-4">
@@ -37,8 +31,6 @@ const MeetJoe = () => {
           </div>
         </Card>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default MeetJoe;
