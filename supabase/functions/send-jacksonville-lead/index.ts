@@ -55,7 +55,7 @@ const handler = async (req: Request): Promise<Response> => {
         </div>
         
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 12px;">
-          <p>This lead was submitted from the Jacksonville Attorney page on Legally Innovative.</p>
+          <p>This lead was submitted from the Jacksonville Attorney page on Bizooma.</p>
           <p>Submitted at: ${new Date().toLocaleString()}</p>
         </div>
       </div>

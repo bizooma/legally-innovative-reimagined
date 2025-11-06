@@ -29,7 +29,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send notification email to joe@bizooma.com
     const notificationEmail = await resend.emails.send({
-      from: 'Legally Innovative <onboarding@resend.dev>',
+      from: 'Bizooma <onboarding@resend.dev>',
       to: ['joe@bizooma.com'],
       replyTo: email,
       subject: `New Contact Form Submission from ${name}`,
@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
           </div>
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px;">
-            <p>This email was sent from the Legally Innovative contact form.</p>
+            <p>This email was sent from the Bizooma contact form.</p>
             <p>To reply, simply respond to this email or click the email address above.</p>
           </div>
         </div>
@@ -62,9 +62,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to customer
     const confirmationEmail = await resend.emails.send({
-      from: 'Legally Innovative <onboarding@resend.dev>',
+      from: 'Bizooma <onboarding@resend.dev>',
       to: [email],
-      subject: 'Thank you for contacting Legally Innovative',
+      subject: 'Thank you for contacting Bizooma',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px;">
@@ -76,7 +76,7 @@ const handler = async (req: Request): Promise<Response> => {
           </p>
           
           <p style="margin: 20px 0; line-height: 1.6;">
-            Thank you for contacting Legally Innovative. We have received your message and will get back to you as soon as possible.
+            Thank you for contacting Bizooma. We have received your message and will get back to you as soon as possible.
           </p>
           
           <div style="margin: 30px 0; padding: 20px; background-color: #f0f9ff; border-left: 4px solid #1e3a8a; border-radius: 5px;">
@@ -89,7 +89,7 @@ const handler = async (req: Request): Promise<Response> => {
           </p>
           
           <div style="margin: 30px 0; padding: 20px; background-color: #f3f4f6; border-radius: 5px;">
-            <p style="margin: 0; font-weight: bold;">Legally Innovative</p>
+            <p style="margin: 0; font-weight: bold;">Bizooma</p>
             <p style="margin: 5px 0;">200 N Laura St</p>
             <p style="margin: 5px 0;">Jacksonville, FL 32202</p>
             <p style="margin: 5px 0;">📞 <a href="tel:8452046343" style="color: #1e3a8a;">845-204-6343</a></p>
@@ -97,7 +97,7 @@ const handler = async (req: Request): Promise<Response> => {
           </div>
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px; text-align: center;">
-            <p>© 2025 Legally Innovative. All rights reserved.</p>
+            <p>© 2025 Bizooma. All rights reserved.</p>
           </div>
         </div>
       `,
