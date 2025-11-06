@@ -24,10 +24,7 @@ const About = () => {
                 <span className="text-legal-primary text-2xl font-bold">01</span>
               </div>
               <h3 className="text-xl font-bold mb-3 text-legal-dark">Mission Statement</h3>
-              <p className="text-gray-700">
-                Our mission is to bridge the gap between traditional legal marketing and the digital future, 
-                empowering legal professionals to deliver more efficient, accessible, and client-centered solutions.
-              </p>
+              <p className="text-gray-700">Our mission is to bridge the gap between traditional marketing and the digital future, empowering business professionals to deliver more efficient, accessible, and client-centered solutions.</p>
             </CardContent>
           </Card>
 
