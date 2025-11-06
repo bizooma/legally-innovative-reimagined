@@ -468,18 +468,10 @@ export type Database = {
         Args: { new_password: string; user_email: string }
         Returns: Json
       }
-      get_current_user_admin_status: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      get_current_user_client_id: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      is_admin: {
-        Args: { user_id: string }
-        Returns: boolean
-      }
+      delete_client: { Args: { client_id: string }; Returns: boolean }
+      get_current_user_admin_status: { Args: never; Returns: boolean }
+      get_current_user_client_id: { Args: never; Returns: string }
+      is_admin: { Args: { user_id: string }; Returns: boolean }
       update_document_description: {
         Args: { doc_id: string; new_description: string }
         Returns: boolean
