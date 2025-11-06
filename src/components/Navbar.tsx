@@ -35,12 +35,16 @@ const Navbar = () => {
 
   // Handle scrolling to section after navigation
   useEffect(() => {
-    if (isHomePage && location.hash) {
-      const element = document.querySelector(location.hash);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+    if (isHomePage && location.hash && location.hash.length > 1 && location.hash !== '#/') {
+      try {
+        const element = document.querySelector(location.hash);
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      } catch (error) {
+        console.warn('Invalid hash selector:', location.hash);
       }
     }
   }, [isHomePage, location.hash]);
