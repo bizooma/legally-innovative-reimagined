@@ -12,7 +12,7 @@ const MeetJoe = () => {
         <Card className="max-w-6xl mx-auto overflow-hidden">
           <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
             <div className="flex items-center justify-center">
-              <img src="/joe-murphy.jpg" alt="Joseph Murphy - Marketing Technologist and Founder of Bizooma" className="rounded-lg shadow-2xl w-full h-auto object-cover" />
+              <img src="/joe-murphy.jpg" alt="Joseph Murphy - Marketing Technologist and Founder of Bizooma" className="rounded-lg shadow-2xl w-full max-w-sm h-auto object-cover" />
             </div>
 
             <div className="flex flex-col justify-center space-y-4">
