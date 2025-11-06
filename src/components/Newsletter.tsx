@@ -1,6 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import routeToResultsLogo from "@/assets/route-to-results-logo.png";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 const Newsletter = () => {
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+
   useEffect(() => {
     // Load Mailchimp CSS
     const cssLink = document.createElement("link");
@@ -141,10 +144,61 @@ const Newsletter = () => {
                       value="Subscribe"
                     />
                   </div>
+                  
+                  <p className="text-sm text-gray-500 mt-4 text-center">
+                    We respect your privacy. Unsubscribe at any time.{' '}
+                    <button
+                      type="button"
+                      onClick={() => setShowPrivacyPolicy(true)}
+                      className="text-legal-primary hover:text-legal-secondary underline"
+                    >
+                      Privacy Policy
+                    </button>
+                  </p>
                 </div>
               </form>
             </div>
           </div>
+
+          <Dialog open={showPrivacyPolicy} onOpenChange={setShowPrivacyPolicy}>
+            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold">Privacy Policy</DialogTitle>
+              </DialogHeader>
+              <div className="prose dark:prose-invert max-w-none text-sm">
+                <p className="text-gray-500">Last Updated: May 3, 2025</p>
+                <h2 className="text-xl font-semibold mt-6">Introduction</h2>
+                <p>
+                  Welcome to our newsletter. We respect your privacy and are committed to protecting your personal information. 
+                  By subscribing to our newsletter, you agree to receive updates about AI marketing, development innovations, 
+                  and related services.
+                </p>
+                <h2 className="text-xl font-semibold mt-6">Information We Collect</h2>
+                <p>
+                  When you subscribe to our newsletter, we collect your email address. This information is used solely 
+                  to send you updates and newsletters.
+                </p>
+                <h2 className="text-xl font-semibold mt-6">How We Use Your Information</h2>
+                <p>
+                  We use your email address to:
+                </p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Send newsletter updates and insights</li>
+                  <li>Provide information about our services</li>
+                  <li>Share case studies and industry trends</li>
+                </ul>
+                <h2 className="text-xl font-semibold mt-6">Your Rights</h2>
+                <p>
+                  You can unsubscribe from our newsletter at any time by clicking the unsubscribe link 
+                  at the bottom of any email we send you.
+                </p>
+                <h2 className="text-xl font-semibold mt-6">Contact Us</h2>
+                <p>
+                  If you have questions about this privacy policy, please contact us at joe@bizooma.com
+                </p>
+              </div>
+            </DialogContent>
+          </Dialog>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             <div className="bg-gray-50 rounded-lg p-6">
