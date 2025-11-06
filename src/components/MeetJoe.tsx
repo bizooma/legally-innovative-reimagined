@@ -1,4 +1,6 @@
 import { Card } from "@/components/ui/card";
+import { Linkedin, Phone } from "lucide-react";
+
 const MeetJoe = () => {
   return <section id="meet-joe" className="py-20 bg-gradient-to-b from-background to-secondary/20">
       <div className="container mx-auto px-4">
@@ -11,8 +13,28 @@ const MeetJoe = () => {
 
         <Card className="max-w-6xl mx-auto overflow-hidden">
           <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
-            <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center justify-center space-y-4">
               <img src="/joe-murphy.jpg" alt="Joseph Murphy - Marketing Technologist and Founder of Bizooma" className="rounded-lg shadow-2xl w-full max-w-sm h-auto object-cover" />
+              
+              <div className="flex items-center gap-4">
+                <a 
+                  href="https://www.linkedin.com/in/josephmurphy" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-legal-primary hover:text-legal-dark transition-colors"
+                >
+                  <Linkedin className="w-6 h-6" />
+                  <span className="font-medium">LinkedIn</span>
+                </a>
+                
+                <a 
+                  href="tel:+1234567890" 
+                  className="flex items-center gap-2 text-legal-primary hover:text-legal-dark transition-colors"
+                >
+                  <Phone className="w-6 h-6" />
+                  <span className="font-medium">Call Me</span>
+                </a>
+              </div>
             </div>
 
             <div className="flex flex-col justify-center space-y-4">
