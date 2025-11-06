@@ -77,8 +77,7 @@ const Services = () => {
             Our <span className="highlight-text">Services</span>
           </h2>
           <p className="text-lg text-gray-700">
-            We provide a comprehensive suite of services designed to help companies 
-            establish a strong digital presence and leverage technology for growth.
+            We offer a comprehensive suite of services that empower companies to build a strong digital presence and harness technology to accelerate growth. Our expertise lies in developing AI-powered marketing solutions, intelligent chatbots, and data-driven digital strategies that help businesses stand out and lead in their industries.
           </p>
         </div>
 
