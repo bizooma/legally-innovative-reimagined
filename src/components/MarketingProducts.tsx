@@ -114,54 +114,6 @@ const MarketingProducts = () => {
       ],
       image: "/lovable-uploads/a88cbdbd-0e22-4907-afe1-0622b2c876ab.png",
       link: "/products/signature-pop"
-    },
-    {
-      title: "Amicus Edge",
-      subtitle: "AI-Powered Legal Technology Platform",
-      description: "Comprehensive legal tech platform that modernizes law firms with AI-powered brief creation, video chatbots, voice search optimization, and automated document drafting. Empowers firms to increase efficiency while enhancing client experience.",
-      badges: ["Legal Tech", "AI Automation", "Client Experience"],
-      keyResults: [
-        "300% ↑ Organic Traffic",
-        "2x Lead Conversion",
-        "24/7 Client Support"
-      ],
-      image: "/lovable-uploads/59e51f8e-610f-44a9-9530-a964b738ff51.png"
-    },
-    {
-      title: "VoiceFirst SEO",
-      subtitle: "Voice Search Optimization Suite",
-      description: "Next-generation voice search optimization platform that helps businesses dominate voice assistant results across Alexa, Siri, and Google Assistant with AI-powered content optimization.",
-      badges: ["Voice SEO", "AI Content", "Multi-Platform"],
-      keyResults: [
-        "450% ↑ Voice Queries",
-        "Top 3 Voice Results",
-        "85% Answer Rate"
-      ],
-      image: "/lovable-uploads/0e8bdb38-d5a7-4ced-b3d0-d0a37c64ac55.png"
-    },
-    {
-      title: "CitationBuilder Pro",
-      subtitle: "Local SEO Automation Platform",
-      description: "Automated citation building and management system that maintains consistent NAP data across 200+ directories, helping local businesses dominate search results in their area.",
-      badges: ["Local SEO", "Automation", "Directory Management"],
-      keyResults: [
-        "200+ Citations Built",
-        "100% NAP Accuracy",
-        "First Page Rankings"
-      ],
-      image: "/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png"
-    },
-    {
-      title: "ContentGenius AI",
-      subtitle: "AI-Powered Content Marketing",
-      description: "Intelligent content creation and distribution platform that generates SEO-optimized blog posts, social media content, and email campaigns using advanced AI, saving marketing teams 20+ hours per week.",
-      badges: ["Content Marketing", "AI Writing", "Multi-Channel"],
-      keyResults: [
-        "20+ Hours Saved/Week",
-        "250% ↑ Content Output",
-        "90% Engagement Rate"
-      ],
-      image: "/lovable-uploads/a88cbdbd-0e22-4907-afe1-0622b2c876ab.png"
     }
   ];
 
