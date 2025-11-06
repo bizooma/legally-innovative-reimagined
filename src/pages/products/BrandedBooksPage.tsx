@@ -6,6 +6,7 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, Gift, Eye, Users, Sparkles, Check } from "lucide-react";
+import brandedBooksShowcase from "@/assets/branded-books-showcase.jpg";
 
 const BrandedBooksPage = () => {
   useEffect(() => {
@@ -61,6 +62,27 @@ const BrandedBooksPage = () => {
               <div className="text-center">
                 <div className="text-4xl font-bold text-legal-primary mb-2">2+ Years</div>
                 <div className="text-gray-700">Client Retention</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Product Showcase */}
+        <section className="section-padding bg-legal-light/30">
+          <div className="container mx-auto">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-legal-dark">
+                See Our Work in Action
+              </h2>
+              <p className="text-center text-gray-700 mb-8 text-lg">
+                Custom coloring books and journals designed to engage clients and keep your brand visible
+              </p>
+              <div className="rounded-lg overflow-hidden shadow-2xl">
+                <img 
+                  src={brandedBooksShowcase} 
+                  alt="Custom branded coloring books showing bilingual content and animal-themed illustrations for law firm marketing" 
+                  className="w-full h-auto"
+                />
               </div>
             </div>
           </div>
