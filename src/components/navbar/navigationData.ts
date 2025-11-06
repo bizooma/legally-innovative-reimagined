@@ -26,4 +26,5 @@ export const productLinks = [
   { name: "Lead Scraper CRM", path: "/products/lead-scraper-crm", description: "Automated Lead Generation" },
   { name: "Support Bots", path: "/products/support-bots", description: "AI Customer Support" },
   { name: "Signature Pop", path: "/products/signature-pop", description: "Email Signature Marketing" },
+  { name: "Branded Books", path: "/products/branded-books", description: "Custom Coloring Books & Journals" },
 ];

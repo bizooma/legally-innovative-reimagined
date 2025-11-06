@@ -41,6 +41,7 @@ import QuickieQrPage from "./pages/products/QuickieQrPage";
 import LeadScraperCrmPage from "./pages/products/LeadScraperCrmPage";
 import SupportBotsPage from "./pages/products/SupportBotsPage";
 import SignaturePopPage from "./pages/products/SignaturePopPage";
+import BrandedBooksPage from "./pages/products/BrandedBooksPage";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -113,10 +114,11 @@ const App = () => (
               {/* Product pages */}
               <Route path="/products/npo-bots" element={<NpoBotsPage />} />
               <Route path="/products/aeo-analyzer" element={<AeoAnalyzerPage />} />
-              <Route path="/products/quickie-qr" element={<QuickieQrPage />} />
-              <Route path="/products/lead-scraper-crm" element={<LeadScraperCrmPage />} />
-              <Route path="/products/support-bots" element={<SupportBotsPage />} />
-              <Route path="/products/signature-pop" element={<SignaturePopPage />} />
+          <Route path="/products/quickie-qr" element={<QuickieQrPage />} />
+          <Route path="/products/lead-scraper-crm" element={<LeadScraperCrmPage />} />
+          <Route path="/products/support-bots" element={<SupportBotsPage />} />
+          <Route path="/products/signature-pop" element={<SignaturePopPage />} />
+          <Route path="/products/branded-books" element={<BrandedBooksPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />
