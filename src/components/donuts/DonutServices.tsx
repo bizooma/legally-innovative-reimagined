@@ -93,8 +93,8 @@ const DonutServices = () => {
                     <h3 className="font-bold text-xl text-legal-dark mt-4 mb-1">Alanna Knight</h3>
                     <p className="text-pink-500 font-medium">Account Manager</p>
                     <p className="mt-3">
-                      <a href="mailto:alanna@legallyinnovative.com" className="text-legal-primary hover:underline">
-                        alanna@legallyinnovative.com
+                      <a href="mailto:alanna@bizooma.com" className="text-legal-primary hover:underline">
+                        alanna@bizooma.com
                       </a>
                     </p>
                   </div>

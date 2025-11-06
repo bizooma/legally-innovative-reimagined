@@ -21,4 +21,4 @@ Disallow: /admin*
 Disallow: /this-is-our-jax
 Allow: /
 
-Sitemap: https://legallyinnovative.com/sitemap.xml
+Sitemap: https://bizooma.com/sitemap.xml

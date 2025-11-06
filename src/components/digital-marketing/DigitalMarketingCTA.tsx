@@ -42,7 +42,7 @@ const DigitalMarketingCTA = () => {
               </div>
               <div className="flex items-center">
                 <Mail className="w-5 h-5 text-white mr-2" />
-                <span>hello@legallyinnovative.com</span>
+                <span>hello@bizooma.com</span>
               </div>
             </div>
           </div>

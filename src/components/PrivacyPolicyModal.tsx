@@ -30,7 +30,7 @@ const PrivacyPolicyModal = ({ triggerClassName }: PrivacyPolicyModalProps) => {
           
           <h2 className="text-xl font-semibold mt-6">Introduction</h2>
           <p>
-            Welcome to LegallyInnovative.com. We understand that privacy is critically important, especially when dealing with sensitive immigration matters. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our Alexa skill, interact with our microsites, complete our quizzes, or engage with our services.
+            Welcome to Bizooma.com. We understand that privacy is critically important. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our services, interact with our platforms, or engage with our AI-powered marketing and development solutions.
           </p>
           <p>
             Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site or use our services.
@@ -224,10 +224,10 @@ const PrivacyPolicyModal = ({ triggerClassName }: PrivacyPolicyModalProps) => {
             If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:
           </p>
           <p className="font-semibold">
-            LegallyInnovative Immigration Law Firm<br />
+            Bizooma<br />
             2465 US-1S, Suite 1045<br />
             St. Augustine, FL 32086<br />
-            Email: joe@legallyinnovative.com<br />
+            Email: joe@bizooma.com<br />
             Phone: <a href="tel:9042956670" className="text-legal-primary hover:underline">904-295-6670</a>
           </p>
           
@@ -239,7 +239,7 @@ const PrivacyPolicyModal = ({ triggerClassName }: PrivacyPolicyModalProps) => {
           <hr className="my-6" />
           
           <p className="italic">
-            By using LegallyInnovative.com, our Alexa skill, microsites, or any of our services, you acknowledge that you have read and understand this Privacy Policy.
+            By using Bizooma.com or any of our services, you acknowledge that you have read and understand this Privacy Policy.
           </p>
         </div>
       </DialogContent>

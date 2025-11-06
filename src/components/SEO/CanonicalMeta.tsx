@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
-const SITE_URL = "https://legallyinnovative.com";
+const SITE_URL = "https://bizooma.com";
 
 const CanonicalMeta = () => {
   const { pathname } = useLocation();

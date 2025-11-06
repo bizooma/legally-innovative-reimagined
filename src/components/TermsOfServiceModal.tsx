@@ -29,7 +29,7 @@ const TermsOfServiceModal = ({ triggerClassName }: TermsOfServiceModalProps) => 
           
           <h2 className="text-xl font-semibold mt-6">Introduction</h2>
           <p>
-            Welcome to LegallyInnovative.com. These Terms of Service ("Terms") govern your access to and use of our website, Alexa skill, microsites, interactive quizzes, and other digital services (collectively, the "Services") operated by LegallyInnovative Immigration Law Firm ("we," "us," or "our").
+            Welcome to Bizooma.com. These Terms of Service ("Terms") govern your access to and use of our website, AI-powered platforms, interactive tools, and other digital services (collectively, the "Services") operated by Bizooma ("we," "us," or "our").
           </p>
           <p>
             Please read these Terms carefully before using our Services. By accessing or using our Services, you agree to be bound by these Terms. If you do not agree to these Terms, you must not access or use our Services.
@@ -274,7 +274,7 @@ const TermsOfServiceModal = ({ triggerClassName }: TermsOfServiceModalProps) => 
           
           <h3 className="text-lg font-medium mt-4">Informal Resolution</h3>
           <p>
-            Before filing a claim against us, you agree to attempt to resolve the dispute informally by contacting us at joe@legallyinnovative.com. We will similarly attempt to resolve the dispute by contacting you via the email address you provide.
+            Before filing a claim against us, you agree to attempt to resolve the dispute informally by contacting us at joe@bizooma.com. We will similarly attempt to resolve the dispute by contacting you via the email address you provide.
           </p>
           
           <h3 className="text-lg font-medium mt-4">Arbitration</h3>
@@ -307,10 +307,10 @@ const TermsOfServiceModal = ({ triggerClassName }: TermsOfServiceModalProps) => 
             If you have any questions about these Terms, please contact us at:
           </p>
           <p className="font-semibold">
-            LegallyInnovative Immigration Law Firm<br />
+            Bizooma<br />
             2465 US-1S, Suite 1045<br />
             St. Augustine, FL 32086<br />
-            Email: joe@legallyinnovative.com<br />
+            Email: joe@bizooma.com<br />
             Phone: <a href="tel:9042956670" className="text-legal-primary hover:underline">904-295-6670</a>
           </p>
           

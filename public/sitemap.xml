@@ -1,105 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://legallyinnovative.com/</loc>
+    <loc>https://bizooma.com/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-08-10</lastmod>
+    <priority>1.0</priority>
+    <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://legallyinnovative.com/stay-informed</loc>
+    <loc>https://bizooma.com/stay-informed</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://legallyinnovative.com/death-of-traditional-seo</loc>
+    <loc>https://bizooma.com/death-of-traditional-seo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://legallyinnovative.com/apple-maps-marketing</loc>
+    <loc>https://bizooma.com/apple-maps-marketing</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://legallyinnovative.com/openai-web-browser</loc>
+    <loc>https://bizooma.com/openai-web-browser</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://legallyinnovative.com/voice-seo-aeo-stats</loc>
+    <loc>https://bizooma.com/voice-seo-aeo-stats</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://legallyinnovative.com/diy</loc>
+    <loc>https://bizooma.com/diy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://legallyinnovative.com/ai-customer-support-chatbots</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-08-10</lastmod>
-  </url>
-  <url>
-    <loc>https://legallyinnovative.com/ai-consulting-for-law-firms</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-08-10</lastmod>
-  </url>
-  <url>
-    <loc>https://legallyinnovative.com/law-firm-website-development</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-08-10</lastmod>
-  </url>
-  <url>
-    <loc>https://legallyinnovative.com/law-firm-mobile-app-development</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-08-10</lastmod>
-  </url>
-  <url>
-    <loc>https://legallyinnovative.com/law-firm-digital-marketing</loc>
+    <loc>https://bizooma.com/ai-customer-support-chatbots</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://legallyinnovative.com/google-business-profile-optimization</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-08-10</lastmod>
-  </url>
-  <url>
-    <loc>https://legallyinnovative.com/google-business-profile</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2025-08-10</lastmod>
-  </url>
-  <url>
-    <loc>https://legallyinnovative.com/law-firm-seo-aeo-voiceseo</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-08-10</lastmod>
-  </url>
-  <url>
-    <loc>https://legallyinnovative.com/law-firm-lead-generation</loc>
+    <loc>https://bizooma.com/ai-consulting-for-law-firms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://legallyinnovative.com/law-firm-voice-assistant-marketing</loc>
+    <loc>https://bizooma.com/law-firm-website-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/law-firm-mobile-app-development</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/law-firm-digital-marketing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/google-business-profile-optimization</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/google-business-profile</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/law-firm-seo-aeo-voiceseo</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/law-firm-lead-generation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/law-firm-voice-assistant-marketing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/products/npo-bots</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/products/aeo-analyzer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/products/branded-books</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/products/quickie-qr</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/products/signature-pop</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/products/support-bots</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2025-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/products/lead-scraper-crm</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2025-11-06</lastmod>
   </url>
 </urlset>

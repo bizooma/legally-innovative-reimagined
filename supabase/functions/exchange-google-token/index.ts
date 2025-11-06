@@ -40,7 +40,7 @@ serve(async (req) => {
     }
     
     // Use the provided redirect URI or default to production URL
-    const finalRedirectUri = redirectUri || "https://legallyinnovative.com/auth/google/callback";
+    const finalRedirectUri = redirectUri || "https://bizooma.com/auth/google/callback";
 
     console.log(`Exchanging code for token with redirect URI: ${finalRedirectUri}`);
     

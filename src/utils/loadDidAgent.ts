@@ -3,8 +3,8 @@
  * 
  * Allowed domains to configure in D-ID Studio:
  * - https://e0d24ae1-4402-4fb8-a83d-117e708f17c5.lovableproject.com
- * - https://legallyinnovative.com
- * - https://www.legallyinnovative.com
+ * - https://bizooma.com
+ * - https://www.bizooma.com
  * 
  * If you have CSP headers, ensure:
  * - script-src: https://agent.d-id.com
@@ -161,8 +161,8 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2', isRetr
     const allowedOrigins = [
       'https://legally-innovative-reimagined.lovable.app',
       'https://e0d24ae1-4402-4fb8-a83d-117e708f17c5.lovableproject.com',
-      'https://legallyinnovative.com',
-      'https://www.legallyinnovative.com'
+      'https://bizooma.com',
+      'https://www.bizooma.com'
     ];
     const currentOrigin = window.location.origin;
     if (!allowedOrigins.includes(currentOrigin)) {

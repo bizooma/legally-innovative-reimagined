@@ -103,7 +103,7 @@ const StaffLoginForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="yourname@legallyinnovative.com" {...field} type="email" />
+                    <Input placeholder="yourname@bizooma.com" {...field} type="email" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

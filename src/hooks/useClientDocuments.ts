@@ -15,7 +15,7 @@ export const useClientDocuments = (clientId: string) => {
       console.log('=== ENVIRONMENT DEBUGGING ===');
       console.log('Current URL:', window.location.href);
       console.log('Hostname:', window.location.hostname);
-      console.log('Is Live Site:', window.location.hostname.includes('legallyinnovative.com'));
+      console.log('Is Live Site:', window.location.hostname.includes('bizooma.com'));
       console.log('Is Preview:', window.location.hostname.includes('lovableproject.com'));
       console.log('Client ID being used:', clientId);
       console.log('Timestamp:', new Date().toISOString());
