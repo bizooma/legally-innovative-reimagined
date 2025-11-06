@@ -8,19 +8,28 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { RefreshCw, Calendar, Plus } from 'lucide-react';
+import { RefreshCw, Calendar, Plus, Download, FileText, FileSpreadsheet } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Client } from '@/types/database';
 import { useTimeEntries } from '@/hooks/useTimeEntries';
 import { TimeEntriesTable } from './TimeEntriesTable';
 import { ManualTimeEntryDialog } from './ManualTimeEntryDialog';
 import { formatDuration } from '@/hooks/useTimeTracker';
 import { startOfToday, startOfWeek, startOfMonth, endOfToday } from 'date-fns';
+import { exportTimeReport } from '@/utils/reportExports';
+import { useToast } from '@/hooks/use-toast';
 
 interface TimeTrackingSectionProps {
   clients: Client[];
 }
 
 export const TimeTrackingSection: React.FC<TimeTrackingSectionProps> = ({ clients }) => {
+  const { toast } = useToast();
   const [isManualEntryOpen, setIsManualEntryOpen] = useState(false);
   
   const {
@@ -71,6 +80,41 @@ export const TimeTrackingSection: React.FC<TimeTrackingSectionProps> = ({ client
 
   const clientTotals = getClientTotals();
   const totalSeconds = getTotalSeconds();
+
+  const handleExport = (format: 'csv' | 'pdf') => {
+    if (entries.length === 0) {
+      toast({
+        title: 'No data to export',
+        description: 'Add some time entries before exporting a report.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      exportTimeReport({
+        entries,
+        clientTotals,
+        dateRange: {
+          start: filters.startDate || undefined,
+          end: filters.endDate || undefined,
+        },
+        format,
+      });
+
+      toast({
+        title: 'Report exported',
+        description: `Time tracking report exported as ${format.toUpperCase()}`,
+      });
+    } catch (error) {
+      console.error('Error exporting report:', error);
+      toast({
+        title: 'Export failed',
+        description: 'Failed to export the report. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -160,6 +204,25 @@ export const TimeTrackingSection: React.FC<TimeTrackingSectionProps> = ({ client
             </Select>
 
             <div className="flex gap-2 ml-auto">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => handleExport('csv')}>
+                    <FileSpreadsheet className="w-4 h-4 mr-2" />
+                    Export as CSV
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleExport('pdf')}>
+                    <FileText className="w-4 h-4 mr-2" />
+                    Export as PDF
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
               <Button
                 variant="default"
                 size="sm"
@@ -168,6 +231,7 @@ export const TimeTrackingSection: React.FC<TimeTrackingSectionProps> = ({ client
                 <Plus className="w-4 h-4 mr-2" />
                 Add Entry
               </Button>
+              
               <Button variant="outline" size="sm" onClick={refreshEntries}>
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Refresh
