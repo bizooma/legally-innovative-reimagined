@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
+import { trackPhoneClick, trackCTAClick } from "@/utils/gtmTracking";
 const Hero = () => {
   useEffect(() => {
     // Create the script element dynamically so it runs after mount
@@ -55,12 +56,22 @@ const Hero = () => {
             <div className="flex flex-col md:flex-row md:items-center gap-6 text-white mb-6">
               <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
                 <Phone size={20} className="mr-2" />
-                <a href="tel:9042956670" className="text-lg hover:underline">904-295-6670</a>
+                <a 
+                  href="tel:9042956670" 
+                  onClick={() => trackPhoneClick('904-295-6670', 'Hero Section')}
+                  className="text-lg hover:underline"
+                >
+                  904-295-6670
+                </a>
               </div>
               <div>
-                <Button className="bg-white hover:bg-legal-accent text-legal-primary hover:text-white px-8 py-6 text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl" onClick={() => document.getElementById('services')?.scrollIntoView({
-                behavior: 'smooth'
-              })}>
+                <Button 
+                  className="bg-white hover:bg-legal-accent text-legal-primary hover:text-white px-8 py-6 text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl" 
+                  onClick={() => {
+                    trackCTAClick('Our Services', 'Hero Section');
+                    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
                   Our Services
                 </Button>
               </div>

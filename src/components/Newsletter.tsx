@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import routeToResultsLogo from "@/assets/route-to-results-logo.png";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { trackFormSubmission } from "@/utils/gtmTracking";
 const Newsletter = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   useEffect(() => {
@@ -22,6 +23,9 @@ const Newsletter = () => {
       const form = document.getElementById('mc-embedded-subscribe-form');
       if (form) {
         form.addEventListener('submit', () => {
+          // Track newsletter signup
+          trackFormSubmission('Route to Results Newsletter', 'newsletter');
+          
           setTimeout(() => {
             const successDiv = document.getElementById('mce-success-response');
             if (successDiv && successDiv.style.display !== 'none') {

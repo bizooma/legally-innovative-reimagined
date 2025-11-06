@@ -4,6 +4,7 @@ import TermsOfServiceModal from "./TermsOfServiceModal";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import footerTechBg from "@/assets/footer-tech-bg.jpg";
+import { trackEvent } from "@/utils/gtmTracking";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return <footer className="text-white py-12 relative overflow-hidden" style={{
@@ -51,11 +52,33 @@ Powered by Innovation.</h4>
           <div>
             <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
             <div className="flex space-x-4 mb-4">
-              <a href="https://www.linkedin.com/in/heyjoe0/" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 hover:bg-opacity-20 h-10 w-10 rounded-full flex items-center justify-center transition-colors">
+              <a 
+                href="https://www.linkedin.com/in/heyjoe0/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                onClick={() => trackEvent({
+                  event: 'social_click',
+                  event_category: 'engagement',
+                  event_label: 'LinkedIn',
+                  social_platform: 'linkedin',
+                })}
+                className="bg-white bg-opacity-10 hover:bg-opacity-20 h-10 w-10 rounded-full flex items-center justify-center transition-colors"
+              >
                 <span className="sr-only">LinkedIn</span>
                 <Linkedin size={18} />
               </a>
-              <a href="https://www.facebook.com/WeAreLegallyInnovative/" target="_blank" rel="noopener noreferrer" className="bg-white bg-opacity-10 hover:bg-opacity-20 h-10 w-10 rounded-full flex items-center justify-center transition-colors">
+              <a 
+                href="https://www.facebook.com/WeAreLegallyInnovative/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                onClick={() => trackEvent({
+                  event: 'social_click',
+                  event_category: 'engagement',
+                  event_label: 'Facebook',
+                  social_platform: 'facebook',
+                })}
+                className="bg-white bg-opacity-10 hover:bg-opacity-20 h-10 w-10 rounded-full flex items-center justify-center transition-colors"
+              >
                 <span className="sr-only">Facebook</span>
                 <Facebook size={18} />
               </a>

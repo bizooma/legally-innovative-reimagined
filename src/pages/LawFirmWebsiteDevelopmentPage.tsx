@@ -10,10 +10,12 @@ import WebsiteDevProcess from "@/components/website-dev/WebsiteDevProcess";
 import WebsiteDevBenefits from "@/components/website-dev/WebsiteDevBenefits";
 import WebsiteDevPortfolio from "@/components/website-dev/WebsiteDevPortfolio";
 import WebsiteDevCTA from "@/components/website-dev/WebsiteDevCTA";
+import { trackServiceView } from "@/utils/gtmTracking";
 
 const LawFirmWebsiteDevelopmentPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    trackServiceView('Law Firm Website Development');
   }, []);
 
   const serviceSchema = {

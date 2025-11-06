@@ -10,10 +10,12 @@ import AiChatbotsBenefits from "@/components/ai-chatbots/AiChatbotsBenefits";
 import AiChatbotsDemo from "@/components/ai-chatbots/AiChatbotsDemo";
 import AiChatbotsPricing from "@/components/ai-chatbots/AiChatbotsPricing";
 import AiChatbotsCTA from "@/components/ai-chatbots/AiChatbotsCTA";
+import { trackServiceView } from "@/utils/gtmTracking";
 
 const AiCustomerSupportChatbotsPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    trackServiceView('AI Customer Support Chatbots');
   }, []);
 
   const serviceSchema = {

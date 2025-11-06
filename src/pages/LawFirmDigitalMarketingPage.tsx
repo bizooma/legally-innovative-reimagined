@@ -10,10 +10,12 @@ import DigitalMarketingBenefits from "@/components/digital-marketing/DigitalMark
 import DigitalMarketingProcess from "@/components/digital-marketing/DigitalMarketingProcess";
 import DigitalMarketingResults from "@/components/digital-marketing/DigitalMarketingResults";
 import DigitalMarketingCTA from "@/components/digital-marketing/DigitalMarketingCTA";
+import { trackServiceView } from "@/utils/gtmTracking";
 
 const LawFirmDigitalMarketingPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    trackServiceView('Law Firm Digital Marketing');
   }, []);
 
   const serviceSchema = {

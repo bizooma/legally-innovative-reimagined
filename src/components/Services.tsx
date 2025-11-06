@@ -1,6 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { trackNavigation } from "@/utils/gtmTracking";
 
 const Services = () => {
   const services = [
@@ -83,10 +84,14 @@ const Services = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <Card 
+            <a
               key={index}
-              className="border-t-4 border-t-legal-primary border-r-0 border-l-0 border-b-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group"
+              href={service.link}
+              onClick={() => trackNavigation(service.link, service.title)}
             >
+              <Card 
+                className="border-t-4 border-t-legal-primary border-r-0 border-l-0 border-b-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group cursor-pointer"
+              >
               <div className="relative">
                 <AspectRatio ratio={16/5}>
                   <div 
@@ -104,6 +109,7 @@ const Services = () => {
                 <p className="text-gray-700">{service.description}</p>
               </CardContent>
             </Card>
+            </a>
           ))}
         </div>
       </div>

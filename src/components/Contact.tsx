@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { trackFormSubmission, trackPhoneClick, trackEmailClick, trackCalendarClick } from "@/utils/gtmTracking";
 const Contact = () => {
   const {
     toast
@@ -46,6 +47,10 @@ const Contact = () => {
         throw new Error(data?.error || 'Failed to send email');
       }
       console.log("Form submitted successfully:", data);
+      
+      // Track form submission
+      trackFormSubmission('Contact Form', 'contact');
+      
       toast({
         title: "Message Sent!",
         description: "Thank you for contacting us. We'll be in touch soon."
@@ -90,7 +95,13 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-600">Email Us</p>
-                    <p className="text-legal-dark font-semibold">joe@bizooma.com</p>
+                    <a 
+                      href="mailto:joe@bizooma.com" 
+                      onClick={() => trackEmailClick('Contact Section')}
+                      className="text-legal-dark font-semibold hover:underline"
+                    >
+                      joe@bizooma.com
+                    </a>
                   </div>
                 </div>
                 
@@ -100,7 +111,16 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-600">Call Us</p>
-                    <p className="text-legal-dark font-semibold">AI Receptionist<br /><a href="tel:8452046343" className="hover:underline">845-204-6343</a></p>
+                    <p className="text-legal-dark font-semibold">
+                      AI Receptionist<br />
+                      <a 
+                        href="tel:8452046343" 
+                        onClick={() => trackPhoneClick('845-204-6343', 'Contact Section')}
+                        className="hover:underline"
+                      >
+                        845-204-6343
+                      </a>
+                    </p>
                   </div>
                 </div>
                 
@@ -173,7 +193,12 @@ const Contact = () => {
                 Or Schedule a <span className="highlight-text">Meeting</span>
               </h3>
               <Button asChild className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg">
-                <a href="https://tidycal.com/bizooma/30-minute-meeting" target="_blank" rel="noopener noreferrer">
+                <a 
+                  href="https://tidycal.com/bizooma/30-minute-meeting" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => trackCalendarClick('Contact Section')}
+                >
                   Schedule a Meeting
                 </a>
               </Button>

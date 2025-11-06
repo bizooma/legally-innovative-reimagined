@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Monitor, Users, Database, Shield } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import diyMarketingBg from "@/assets/diy-marketing-bg.jpg";
+import { trackCalendarClick } from "@/utils/gtmTracking";
 const DemoSite = () => {
   return <section id="demo-site" className="section-padding relative overflow-hidden" style={{
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${diyMarketingBg}')`,
@@ -89,7 +90,13 @@ const DemoSite = () => {
         </div>
 
         <div className="text-center">
-          <Button className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 rounded-md text-lg" onClick={() => window.open("https://calendly.com/joe-bizooma/30min", "_blank", "noopener,noreferrer")}>
+          <Button 
+            className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 rounded-md text-lg" 
+            onClick={() => {
+              trackCalendarClick('Demo Site Section');
+              window.open("https://calendly.com/joe-bizooma/30min", "_blank", "noopener,noreferrer");
+            }}
+          >
             Request a Personalized Demo <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>
