@@ -4,6 +4,7 @@ import TermsOfServiceModal from "./TermsOfServiceModal";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import footerTechBg from "@/assets/footer-tech-bg.jpg";
+import veteranOwnedBadge from "@/assets/veteran-owned-badge.png";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return <footer className="text-white py-12 relative overflow-hidden" style={{
@@ -59,6 +60,13 @@ Powered by Innovation.</h4>
                 <span className="sr-only">Facebook</span>
                 <Facebook size={18} />
               </a>
+            </div>
+            <div className="mt-6">
+              <img 
+                src={veteranOwnedBadge} 
+                alt="Veteran Owned Business" 
+                className="w-48 h-auto"
+              />
             </div>
           </div>
         </div>
