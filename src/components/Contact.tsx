@@ -118,6 +118,13 @@ const Contact = () => {
                   </div>
                 </div>
               </div>
+
+              <div className="mt-8 pt-8 border-t border-gray-200">
+                <h4 className="text-xl font-bold mb-4 text-legal-dark">Why Choose Bizooma</h4>
+                <p className="text-gray-700 leading-relaxed">
+                  Our platforms are more than just tools—they're growth engines. Each system is tailored to your brand, powered by data, and designed to deliver measurable ROI. With AI-first development and automation-driven marketing, we help you streamline operations, cut costs, and achieve smarter, faster growth.
+                </p>
+              </div>
             </div>
           </div>
           
