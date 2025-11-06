@@ -19,13 +19,13 @@ const DemoSite = () => {
       <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            DIY Digital Marketing <span className="text-legal-accent">Platform for Law Firms</span>
+            DIY Digital Marketing <span className="text-legal-accent">Platform for Companies</span>
           </h2>
           <p className="text-lg text-white/90 mb-4">
             Experience our comprehensive SaaS marketing platform firsthand at <a href="https://amicusedge.com" className="text-white font-semibold underline hover:text-white/90 transition-colors" target="_blank" rel="noopener noreferrer">amicusedge.com</a>. AmicusEdge is an AI-powered legal technology platform featuring video chatbots, QR code generators, SEO/AEO analyzers, and voice search simulators - all integrated into one powerful marketing solution.
           </p>
           <p className="text-lg text-white/90">
-            Our platform streamlines workflows, automates repetitive tasks, and enhances client engagement through cutting-edge AI technology designed specifically for modern law firms looking to thrive in the digital landscape.
+            Our platform streamlines workflows, automates repetitive tasks, and enhances client engagement through cutting-edge AI technology designed specifically for modern companies looking to thrive in the digital landscape.
           </p>
         </div>
 
@@ -55,7 +55,7 @@ const DemoSite = () => {
                 <div className="flex-1">
                   <h3 className="text-xl font-bold mb-3 text-white">SEO/AEO Optimization</h3>
                   <p className="text-white/90">
-                    Boost your online visibility with our advanced SEO and Answer Engine Optimization (AEO) tools that help your law firm rank higher in search results and voice search queries, driving more qualified leads to your practice.
+                    Boost your online visibility with our advanced SEO and Answer Engine Optimization (AEO) tools that help your business rank higher in search results and voice search queries, driving more qualified leads to your practice.
                   </p>
                 </div>
               </div>

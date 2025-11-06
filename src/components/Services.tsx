@@ -6,7 +6,7 @@ const Services = () => {
   const services = [
     {
       title: "AI Consulting",
-      description: "We help law firms leverage artificial intelligence to streamline operations, enhance customer experiences, and drive innovation through strategic planning and implementation.",
+      description: "We help companies leverage artificial intelligence to streamline operations, enhance customer experiences, and drive innovation through strategic planning and implementation.",
       icon: "🤖",
       bgImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1932&auto=format&fit=crop",
       link: "/ai-consulting-for-law-firms"
@@ -20,7 +20,7 @@ const Services = () => {
     },
     {
       title: "Website Development",
-      description: "Custom website solutions designed to meet your specific law firm needs, from simple informational sites to complex web applications with seamless user experiences.",
+      description: "Custom website solutions designed to meet your specific business needs, from simple informational sites to complex web applications with seamless user experiences.",
       icon: "💻",
       bgImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1932&auto=format&fit=crop",
       link: "/law-firm-website-development"
@@ -62,7 +62,7 @@ const Services = () => {
     },
     {
       title: "Voice Assistant Marketing",
-      description: "Create custom voice applications for Amazon Alexa and Google Assistant that allow your law firm to engage with clients through natural language interactions and provide valuable information on demand.",
+      description: "Create custom voice applications for Amazon Alexa and Google Assistant that allow your business to engage with clients through natural language interactions and provide valuable information on demand.",
       icon: "🔊",
       bgImage: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
       link: "/law-firm-voice-assistant-marketing"
@@ -77,7 +77,7 @@ const Services = () => {
             Our <span className="highlight-text">Services</span>
           </h2>
           <p className="text-lg text-gray-700">
-            We provide a comprehensive suite of services designed to help law firms 
+            We provide a comprehensive suite of services designed to help companies 
             establish a strong digital presence and leverage technology for growth.
           </p>
         </div>

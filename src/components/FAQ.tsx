@@ -12,8 +12,8 @@ const FAQ = () => {
       category: "AI Consulting",
       questions: [
         {
-          question: "How can AI consulting benefit my law firm?",
-          answer: "AI consulting can benefit your law firm by identifying opportunities to automate repetitive tasks, enhance client interactions through intelligent systems, and provide data-driven insights for better decision-making. Our consultants analyze your specific needs and implement AI solutions that increase efficiency and reduce operational costs."
+          question: "How can AI consulting benefit my company?",
+          answer: "AI consulting can benefit your company by identifying opportunities to automate repetitive tasks, enhance client interactions through intelligent systems, and provide data-driven insights for better decision-making. Our consultants analyze your specific needs and implement AI solutions that increase efficiency and reduce operational costs."
         },
         {
           question: "What is the typical timeline for implementing AI solutions in my practice?",
@@ -25,8 +25,8 @@ const FAQ = () => {
       category: "Mobile App Development",
       questions: [
         {
-          question: "What types of mobile apps can you develop for law firms?",
-          answer: "We develop various mobile applications tailored to law firms, including client portals for case updates and document sharing, appointment scheduling systems, secure messaging platforms, billing and payment apps, and custom case management solutions. Each app is designed with your firm's specific workflows and branding in mind."
+          question: "What types of mobile apps can you develop for companies?",
+          answer: "We develop various mobile applications tailored to companies, including client portals for updates and document sharing, appointment scheduling systems, secure messaging platforms, billing and payment apps, and custom management solutions. Each app is designed with your company's specific workflows and branding in mind."
         },
         {
           question: "Do you develop for both iOS and Android platforms?",
@@ -38,8 +38,8 @@ const FAQ = () => {
       category: "Website Development",
       questions: [
         {
-          question: "How long does it take to develop a professional law firm website?",
-          answer: "A professional law firm website typically takes 6-10 weeks to develop, depending on the complexity and features required. This includes discovery and planning (1-2 weeks), design (2-3 weeks), development (2-4 weeks), and testing/launch (1 week). We prioritize creating websites that are not only visually impressive but also optimized for conversion and client engagement."
+          question: "How long does it take to develop a professional company website?",
+          answer: "A professional company website typically takes 6-10 weeks to develop, depending on the complexity and features required. This includes discovery and planning (1-2 weeks), design (2-3 weeks), development (2-4 weeks), and testing/launch (1 week). We prioritize creating websites that are not only visually impressive but also optimized for conversion and client engagement."
         },
         {
           question: "Will my website be mobile-responsive and SEO-friendly?",
@@ -51,12 +51,12 @@ const FAQ = () => {
       category: "Digital Marketing",
       questions: [
         {
-          question: "What digital marketing strategies work best for law firms?",
-          answer: "The most effective digital marketing strategies for law firms include local SEO optimization, targeted PPC campaigns for practice-specific keywords, content marketing focusing on legal guides and resources, email nurturing campaigns, and reputation management. We create a custom marketing mix based on your practice areas, target client base, and competitive landscape."
+          question: "What digital marketing strategies work best for companies?",
+          answer: "The most effective digital marketing strategies for companies include local SEO optimization, targeted PPC campaigns for industry-specific keywords, content marketing focusing on guides and resources, email nurturing campaigns, and reputation management. We create a custom marketing mix based on your business areas, target client base, and competitive landscape."
         },
         {
           question: "How do you measure the success of digital marketing campaigns?",
-          answer: "We measure success through comprehensive analytics tracking key performance indicators specific to law firms, including cost per lead acquisition, conversion rates from website visitors to consultations, organic search ranking improvements, engagement metrics, and ultimately new client acquisition. We provide transparent monthly reporting with actionable insights to continuously refine your marketing strategy."
+          answer: "We measure success through comprehensive analytics tracking key performance indicators specific to companies, including cost per lead acquisition, conversion rates from website visitors to consultations, organic search ranking improvements, engagement metrics, and ultimately new client acquisition. We provide transparent monthly reporting with actionable insights to continuously refine your marketing strategy."
         }
       ]
     },
@@ -64,8 +64,8 @@ const FAQ = () => {
       category: "Google Business Profile/Bing Places",
       questions: [
         {
-          question: "Why is Google Business Profile important for my law firm?",
-          answer: "Google Business Profile is crucial for law firms because it significantly impacts local search visibility. When potential clients search for legal services in your area, a well-optimized profile increases your chances of appearing in the valuable 'Local Pack' results. It also provides essential information like your location, hours, contact details, and showcases client reviews, all of which influence potential clients' decision-making process."
+          question: "Why is Google Business Profile important for my company?",
+          answer: "Google Business Profile is crucial for companies because it significantly impacts local search visibility. When potential clients search for services in your area, a well-optimized profile increases your chances of appearing in the valuable 'Local Pack' results. It also provides essential information like your location, hours, contact details, and showcases client reviews, all of which influence potential clients' decision-making process."
         },
         {
           question: "How do you optimize a Google Business Profile for legal services?",
@@ -77,12 +77,12 @@ const FAQ = () => {
       category: "SEO/AEO",
       questions: [
         {
-          question: "What's the difference between SEO and AEO for law firms?",
-          answer: "SEO (Search Engine Optimization) focuses on ranking your website in traditional search results by optimizing for keywords, content quality, and technical factors. AEO (Answer Engine Optimization) specifically targets voice searches and featured snippets by structuring content to directly answer questions potential clients might ask. For law firms, both are important – SEO drives overall visibility while AEO captures the growing segment of voice searches and question-based queries."
+          question: "What's the difference between SEO and AEO for companies?",
+          answer: "SEO (Search Engine Optimization) focuses on ranking your website in traditional search results by optimizing for keywords, content quality, and technical factors. AEO (Answer Engine Optimization) specifically targets voice searches and featured snippets by structuring content to directly answer questions potential clients might ask. For companies, both are important – SEO drives overall visibility while AEO captures the growing segment of voice searches and question-based queries."
         },
         {
           question: "How long does it take to see results from SEO efforts?",
-          answer: "SEO for law firms is typically a medium to long-term strategy, with initial improvements visible within 3-6 months. You may see some ranking improvements for less competitive keywords within the first few months, while more competitive practice area keywords may take 6-12 months to show significant movement. We set realistic expectations and provide monthly progress reports tracking key metrics to demonstrate incremental improvements."
+          answer: "SEO for companies is typically a medium to long-term strategy, with initial improvements visible within 3-6 months. You may see some ranking improvements for less competitive keywords within the first few months, while more competitive industry keywords may take 6-12 months to show significant movement. We set realistic expectations and provide monthly progress reports tracking key metrics to demonstrate incremental improvements."
         }
       ]
     },
@@ -90,8 +90,8 @@ const FAQ = () => {
       category: "Custom AI Chatbot",
       questions: [
         {
-          question: "How can an AI chatbot benefit my law firm?",
-          answer: "An AI chatbot provides immediate 24/7 response to potential client inquiries, qualifying leads by collecting key case information, answering common legal questions, scheduling consultations, and reducing administrative workload. This improves client experience by providing instant engagement while ensuring your firm never misses an opportunity, even outside business hours. Our chatbots can be trained on your specific practice areas to provide relevant, helpful responses."
+          question: "How can an AI chatbot benefit my company?",
+          answer: "An AI chatbot provides immediate 24/7 response to potential client inquiries, qualifying leads by collecting key information, answering common questions, scheduling consultations, and reducing administrative workload. This improves client experience by providing instant engagement while ensuring your company never misses an opportunity, even outside business hours. Our chatbots can be trained on your specific business areas to provide relevant, helpful responses."
         },
         {
           question: "Can AI chatbots handle sensitive legal information securely?",
@@ -103,12 +103,12 @@ const FAQ = () => {
       category: "Lead Generation Systems",
       questions: [
         {
-          question: "What lead generation methods are most effective for law firms?",
-          answer: "The most effective lead generation methods for law firms include optimized practice area landing pages with strong calls-to-action, targeted PPC campaigns for high-intent keywords, educational content marketing that addresses common legal questions, strategic email nurture campaigns, and reputation management systems that leverage positive reviews. We create comprehensive multi-channel lead generation systems tailored to your specific practice areas and ideal client profiles."
+          question: "What lead generation methods are most effective for companies?",
+          answer: "The most effective lead generation methods for companies include optimized landing pages with strong calls-to-action, targeted PPC campaigns for high-intent keywords, educational content marketing that addresses common questions, strategic email nurture campaigns, and reputation management systems that leverage positive reviews. We create comprehensive multi-channel lead generation systems tailored to your specific business areas and ideal client profiles."
         },
         {
           question: "How do you qualify and nurture leads for legal services?",
-          answer: "Our lead qualification and nurturing process for law firms uses strategic intake forms that assess case validity and potential value, automated email sequences providing relevant information based on the potential client's legal issue, retargeting campaigns to maintain visibility, and CRM integration to track all touchpoints. This systematic approach ensures you focus your valuable time on the most promising potential clients while still providing value to everyone who contacts your firm."
+          answer: "Our lead qualification and nurturing process for companies uses strategic intake forms that assess opportunity validity and potential value, automated email sequences providing relevant information based on the potential client's needs, retargeting campaigns to maintain visibility, and CRM integration to track all touchpoints. This systematic approach ensures you focus your valuable time on the most promising potential clients while still providing value to everyone who contacts your company."
         }
       ]
     }
@@ -122,7 +122,7 @@ const FAQ = () => {
             Frequently Asked <span className="highlight-text">Questions</span>
           </h2>
           <p className="text-lg text-gray-700">
-            Find answers to common questions about our services and how we can help your law firm succeed in the digital landscape.
+            Find answers to common questions about our services and how we can help your company succeed in the digital landscape.
           </p>
         </div>
 

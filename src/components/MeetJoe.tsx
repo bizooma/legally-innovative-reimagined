@@ -21,7 +21,7 @@ const MeetJoe = () => {
               </p>
 
               <p className="text-lg leading-relaxed">
-                As Marketing Director for a major law firm, he managed over $20 million in annual marketing budgets, overseeing multi-channel campaigns that delivered measurable growth and efficiency. He has also developed proprietary marketing platforms that leverage automation, analytics, and AI to scale operations and improve ROI.
+                As Marketing Director for a major company, he managed over $20 million in annual marketing budgets, overseeing multi-channel campaigns that delivered measurable growth and efficiency. He has also developed proprietary marketing platforms that leverage automation, analytics, and AI to scale operations and improve ROI.
               </p>
 
               <p className="text-lg leading-relaxed">
