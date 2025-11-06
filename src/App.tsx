@@ -45,6 +45,7 @@ import BrandedBooksPage from "./pages/products/BrandedBooksPage";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Create a new query client
 const queryClient = new QueryClient();
@@ -72,6 +73,7 @@ const App = () => (
           {/* Global SEO and Canonical tags */}
           <GlobalSEO />
           <CanonicalMeta />
+          <ScrollToTop />
           <RouteDebug>
             <Routes>
               {/* Donut page with highest priority */}
