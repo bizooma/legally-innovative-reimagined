@@ -18,7 +18,7 @@ const MeetJoe = () => {
               
               <div className="flex items-center gap-4">
                 <a 
-                  href="https://www.linkedin.com/in/josephmurphy" 
+                  href="https://www.linkedin.com/in/heyjoe0/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-legal-primary hover:text-legal-dark transition-colors"
