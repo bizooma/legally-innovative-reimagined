@@ -1,4 +1,4 @@
-import { Linkedin, Facebook } from "lucide-react";
+
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
 import TermsOfServiceModal from "./TermsOfServiceModal";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,7 @@ const Footer = () => {
     backgroundRepeat: 'no-repeat'
   }}>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <div>
             <div className="mb-4">
               <ResponsiveImage 
@@ -59,42 +59,6 @@ Powered by Innovation.</h4>
                 <TermsOfServiceModal triggerClassName="text-legal-light hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
               </li>
             </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
-            <div className="flex space-x-4 mb-4">
-              <a 
-                href="https://www.linkedin.com/in/heyjoe0/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                onClick={() => trackEvent({
-                  event: 'social_click',
-                  event_category: 'engagement',
-                  event_label: 'LinkedIn',
-                  social_platform: 'linkedin',
-                })}
-                className="bg-white bg-opacity-10 hover:bg-opacity-20 h-10 w-10 rounded-full flex items-center justify-center transition-colors"
-              >
-                <span className="sr-only">LinkedIn</span>
-                <Linkedin size={18} />
-              </a>
-              <a 
-                href="https://www.facebook.com/WeAreLegallyInnovative/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                onClick={() => trackEvent({
-                  event: 'social_click',
-                  event_category: 'engagement',
-                  event_label: 'Facebook',
-                  social_platform: 'facebook',
-                })}
-                className="bg-white bg-opacity-10 hover:bg-opacity-20 h-10 w-10 rounded-full flex items-center justify-center transition-colors"
-              >
-                <span className="sr-only">Facebook</span>
-                <Facebook size={18} />
-              </a>
-            </div>
           </div>
         </div>
         

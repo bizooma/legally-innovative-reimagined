@@ -58,12 +58,6 @@ const GlobalSEO = () => {
       "@type": "Person",
       name: "Joe Murphy"
     },
-    sameAs: [
-      "https://www.linkedin.com/company/bizooma",
-      "https://twitter.com/bizooma",
-      "https://www.facebook.com/bizooma",
-      "https://www.youtube.com/@bizooma"
-    ],
     contactPoint: {
       "@type": "ContactPoint",
       telephone: PHONE,
