@@ -8,7 +8,7 @@ const LOGO_URL = `${SITE_URL}/lovable-uploads/6c062279-8370-45d7-9334-45ada83333
 const GlobalSEO = () => {
   const organizationLd = {
     "@context": "https://schema.org",
-    "@type": ["Organization", "ProfessionalService", "MarketingAgency"],
+    "@type": ["Organization", "ProfessionalService", "MarketingAgency", "LocalBusiness"],
     name: BUSINESS_NAME,
     legalName: "Bizooma LLC",
     url: SITE_URL,
@@ -79,6 +79,17 @@ const GlobalSEO = () => {
       bestRating: "5",
       worstRating: "1"
     },
+    priceRange: "$$$",
+    paymentAccepted: ["Cash", "Credit Card", "Debit Card", "Bank Transfer", "Check", "PayPal", "Venmo"],
+    currenciesAccepted: "USD",
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "17:00"
+      }
+    ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Digital Marketing & Development Services",
