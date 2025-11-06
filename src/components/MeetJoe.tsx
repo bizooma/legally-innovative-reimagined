@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Linkedin, Phone, Mail } from "lucide-react";
 
 const MeetJoe = () => {
@@ -43,6 +44,19 @@ const MeetJoe = () => {
                   <span className="font-medium">Call Me</span>
                 </a>
               </div>
+              
+              <Button 
+                asChild
+                className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-3 mt-4"
+              >
+                <a 
+                  href="https://tidycal.com/bizooma/30-minute-meeting" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  Schedule a Meeting
+                </a>
+              </Button>
             </div>
 
             <div className="flex flex-col justify-center space-y-4">
