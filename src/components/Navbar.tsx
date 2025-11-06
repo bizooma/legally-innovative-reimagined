@@ -99,6 +99,13 @@ const Navbar = () => {
             textColorClass={textColorClass}
           />
 
+          <Link 
+            to="/stay-informed"
+            className={`hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
+          >
+            Stay Informed
+          </Link>
+
           <Button 
             className="bg-legal-primary hover:bg-legal-secondary text-white"
             onClick={handlePortalClick}
