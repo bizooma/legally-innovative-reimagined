@@ -4,7 +4,7 @@ const VideoSection = () => {
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-legal-primary mb-4">
-            See How We Can Help Your Firm
+            Transform Your Law Firm's Digital Presence
           </h2>
           <p className="text-lg text-legal-dark/80 max-w-2xl mx-auto">
             Watch our interactive video to learn more about our services and how we can transform your law firm's digital presence.
