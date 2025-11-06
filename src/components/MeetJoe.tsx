@@ -25,7 +25,7 @@ const MeetJoe = () => {
               </p>
 
               <p className="text-lg leading-relaxed">
-                Today, as a Marketing Technologist at his company, Bizooma, Joseph helps law firms modernize how they attract and convert clients—merging data, creativity, and technology to drive results in an increasingly competitive digital landscape.
+                Today, as a Marketing Technologist at his company, Bizooma, Joseph leads his team of developers and marketers to help companies modernize how they attract and convert clients—merging data, creativity, and technology to drive results in an increasingly competitive digital landscape.
               </p>
             </div>
           </div>
