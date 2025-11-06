@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Select,
@@ -8,10 +8,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { RefreshCw, Calendar } from 'lucide-react';
+import { RefreshCw, Calendar, Plus } from 'lucide-react';
 import { Client } from '@/types/database';
 import { useTimeEntries } from '@/hooks/useTimeEntries';
 import { TimeEntriesTable } from './TimeEntriesTable';
+import { ManualTimeEntryDialog } from './ManualTimeEntryDialog';
 import { formatDuration } from '@/hooks/useTimeTracker';
 import { startOfToday, startOfWeek, startOfMonth, endOfToday } from 'date-fns';
 
@@ -20,6 +21,8 @@ interface TimeTrackingSectionProps {
 }
 
 export const TimeTrackingSection: React.FC<TimeTrackingSectionProps> = ({ clients }) => {
+  const [isManualEntryOpen, setIsManualEntryOpen] = useState(false);
+  
   const {
     entries,
     isLoading,
@@ -71,6 +74,13 @@ export const TimeTrackingSection: React.FC<TimeTrackingSectionProps> = ({ client
 
   return (
     <div className="space-y-6">
+      <ManualTimeEntryDialog
+        open={isManualEntryOpen}
+        onOpenChange={setIsManualEntryOpen}
+        clients={clients}
+        entry={null}
+        onSuccess={refreshEntries}
+      />
       {/* Summary Cards */}
       <div className="grid md:grid-cols-2 gap-6">
         <Card>
@@ -149,16 +159,32 @@ export const TimeTrackingSection: React.FC<TimeTrackingSectionProps> = ({ client
               </SelectContent>
             </Select>
 
-            <Button variant="outline" size="sm" onClick={refreshEntries} className="ml-auto">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh
-            </Button>
+            <div className="flex gap-2 ml-auto">
+              <Button
+                variant="default"
+                size="sm"
+                onClick={() => setIsManualEntryOpen(true)}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Entry
+              </Button>
+              <Button variant="outline" size="sm" onClick={refreshEntries}>
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Refresh
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Time Entries Table */}
-      <TimeEntriesTable entries={entries} onDelete={deleteEntry} isLoading={isLoading} />
+      <TimeEntriesTable
+        entries={entries}
+        onDelete={deleteEntry}
+        onUpdate={refreshEntries}
+        clients={clients}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

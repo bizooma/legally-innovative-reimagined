@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { Trash2, Edit } from 'lucide-react';
+import { Client } from '@/types/database';
 import {
   Table,
   TableBody,
@@ -11,8 +12,9 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TimeEntryWithClient } from '@/types/timeEntry';
+import { TimeEntryWithClient, TimeEntry } from '@/types/timeEntry';
 import { formatDuration } from '@/hooks/useTimeTracker';
+import { ManualTimeEntryDialog } from './ManualTimeEntryDialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,14 +30,30 @@ import {
 interface TimeEntriesTableProps {
   entries: TimeEntryWithClient[];
   onDelete: (id: string) => void;
+  onUpdate: () => void;
+  clients: Client[];
   isLoading: boolean;
 }
 
 export const TimeEntriesTable: React.FC<TimeEntriesTableProps> = ({
   entries,
   onDelete,
+  onUpdate,
+  clients,
   isLoading,
 }) => {
+  const [editingEntry, setEditingEntry] = useState<TimeEntry | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+  const handleEdit = (entry: TimeEntryWithClient) => {
+    setEditingEntry(entry);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleEditSuccess = () => {
+    setEditingEntry(null);
+    onUpdate();
+  };
   if (isLoading) {
     return (
       <Card>
@@ -57,11 +75,20 @@ export const TimeEntriesTable: React.FC<TimeEntriesTableProps> = ({
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Time Entries</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <>
+      <ManualTimeEntryDialog
+        open={isEditDialogOpen}
+        onOpenChange={setIsEditDialogOpen}
+        clients={clients}
+        entry={editingEntry}
+        onSuccess={handleEditSuccess}
+      />
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Time Entries</CardTitle>
+        </CardHeader>
+        <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
@@ -92,7 +119,15 @@ export const TimeEntriesTable: React.FC<TimeEntriesTableProps> = ({
                   {entry.description || '-'}
                 </TableCell>
                 <TableCell>
-                  <AlertDialog>
+                  <div className="flex gap-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleEdit(entry)}
+                    >
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                    <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button variant="ghost" size="sm">
                         <Trash2 className="w-4 h-4" />
@@ -113,6 +148,7 @@ export const TimeEntriesTable: React.FC<TimeEntriesTableProps> = ({
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -120,5 +156,6 @@ export const TimeEntriesTable: React.FC<TimeEntriesTableProps> = ({
         </Table>
       </CardContent>
     </Card>
+    </>
   );
 };
