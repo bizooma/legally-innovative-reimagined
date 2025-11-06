@@ -47,7 +47,8 @@ const MarketingProducts = () => {
         "80% Automation",
         "24/7 Support"
       ],
-      image: "/lovable-uploads/924cc48a-722c-40c0-a449-9ae43b8b9134.png"
+      image: "/lovable-uploads/924cc48a-722c-40c0-a449-9ae43b8b9134.png",
+      link: "/products/npo-bots"
     },
     {
       title: "AEOAnalyzer",
@@ -59,7 +60,60 @@ const MarketingProducts = () => {
         "95% Accuracy",
         "500+ Cases Analyzed"
       ],
-      image: "/lovable-uploads/fe60785d-1380-4920-a47b-48ec9f13c3ec.png"
+      image: "/lovable-uploads/fe60785d-1380-4920-a47b-48ec9f13c3ec.png",
+      link: "/products/aeo-analyzer"
+    },
+    {
+      title: "Quickie QR",
+      subtitle: "Smart QR Code Marketing",
+      description: "Create dynamic QR codes with built-in analytics, A/B testing, and real-time content updates. Perfect for restaurants, retail, and professional services.",
+      badges: ["QR Marketing", "Analytics", "Mobile"],
+      keyResults: [
+        "250% ↑ Engagement",
+        "Real-Time Updates",
+        "10K+ Businesses"
+      ],
+      image: "/lovable-uploads/59e51f8e-610f-44a9-9530-a964b738ff51.png",
+      link: "/products/quickie-qr"
+    },
+    {
+      title: "Lead Scraper CRM",
+      subtitle: "Automated Lead Generation",
+      description: "Automatically find, verify, and manage quality leads with AI-powered scraping. Built-in CRM with email automation and enrichment.",
+      badges: ["Lead Gen", "CRM", "Automation"],
+      keyResults: [
+        "500+ Leads Daily",
+        "95% Email Accuracy",
+        "10x Pipeline Growth"
+      ],
+      image: "/lovable-uploads/0e8bdb38-d5a7-4ced-b3d0-d0a37c64ac55.png",
+      link: "/products/lead-scraper-crm"
+    },
+    {
+      title: "Support Bots",
+      subtitle: "AI Customer Support",
+      description: "Automate customer support with AI chatbots. Resolve 85% of inquiries instantly, reduce costs by 60%, and provide 24/7 multilingual support.",
+      badges: ["AI Support", "Automation", "24/7"],
+      keyResults: [
+        "85% Auto-Resolved",
+        "60% Cost Reduction",
+        "24/7 Availability"
+      ],
+      image: "/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png",
+      link: "/products/support-bots"
+    },
+    {
+      title: "Signature Pop",
+      subtitle: "Email Signature Marketing",
+      description: "Transform every email into a marketing opportunity with branded, interactive email signatures. Add dynamic banners and track clicks across your team.",
+      badges: ["Email Marketing", "Branding", "Analytics"],
+      keyResults: [
+        "425% ↑ Engagement",
+        "8K+ Impressions/Year",
+        "Zero Extra Cost"
+      ],
+      image: "/lovable-uploads/a88cbdbd-0e22-4907-afe1-0622b2c876ab.png",
+      link: "/products/signature-pop"
     },
     {
       title: "Amicus Edge",
@@ -188,10 +242,10 @@ const MarketingProducts = () => {
                 </div>
 
                 <a 
-                  href="#contact"
+                  href={product.link || "#contact"}
                   className="inline-flex items-center text-white font-semibold hover:text-legal-accent transition-colors group"
                 >
-                  View Case Study
+                  {product.link ? "Learn More" : "View Case Study"}
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </CardContent>

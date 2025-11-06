@@ -35,6 +35,12 @@ import WhyReviewsMatterPage from "./pages/WhyReviewsMatterPage";
 import LawFirmSeoAeoPage from "./pages/LawFirmSeoAeoPage";
 import LawFirmLeadGenerationPage from "./pages/LawFirmLeadGenerationPage";
 import LawFirmVoiceAssistantMarketingPage from "./pages/LawFirmVoiceAssistantMarketingPage";
+import NpoBotsPage from "./pages/products/NpoBotsPage";
+import AeoAnalyzerPage from "./pages/products/AeoAnalyzerPage";
+import QuickieQrPage from "./pages/products/QuickieQrPage";
+import LeadScraperCrmPage from "./pages/products/LeadScraperCrmPage";
+import SupportBotsPage from "./pages/products/SupportBotsPage";
+import SignaturePopPage from "./pages/products/SignaturePopPage";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -104,6 +110,14 @@ const App = () => (
               
               {/* Voice Assistant Marketing page */}
               <Route path="/law-firm-voice-assistant-marketing" element={<LawFirmVoiceAssistantMarketingPage />} />
+              
+              {/* Product pages */}
+              <Route path="/products/npo-bots" element={<NpoBotsPage />} />
+              <Route path="/products/aeo-analyzer" element={<AeoAnalyzerPage />} />
+              <Route path="/products/quickie-qr" element={<QuickieQrPage />} />
+              <Route path="/products/lead-scraper-crm" element={<LeadScraperCrmPage />} />
+              <Route path="/products/support-bots" element={<SupportBotsPage />} />
+              <Route path="/products/signature-pop" element={<SignaturePopPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />
