@@ -50,3 +50,15 @@ export async function updateClientStatus(
   
   return client as Client;
 }
+
+export async function deleteClient(clientId: string): Promise<boolean> {
+  const { data, error } = await supabase.rpc('delete_client', {
+    client_id: clientId
+  });
+  
+  if (error) {
+    throw error;
+  }
+  
+  return data as boolean;
+}

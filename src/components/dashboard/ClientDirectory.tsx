@@ -8,8 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import ClientLogoUploader from '@/components/client-workspace/ClientLogoUploader';
 import { ClientStatusBadge } from './ClientStatusBadge';
 import { ClientStatusSelect } from './ClientStatusSelect';
-import { updateClientStatus } from '@/services/clientService';
+import { updateClientStatus, deleteClient } from '@/services/clientService';
 import { useToast } from '@/hooks/use-toast';
+import { DeleteClientDialog } from './DeleteClientDialog';
+import { Trash2 } from 'lucide-react';
 
 interface ClientDirectoryProps {
   clients: Client[];
@@ -27,6 +29,8 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
   const navigate = useNavigate();
   const { toast } = useToast();
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
+  const [deletingClient, setDeletingClient] = useState<{ id: string; name: string } | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   
   const handleViewDetails = (clientId: string) => {
     navigate(`/portal/client/${clientId}`);
@@ -70,6 +74,43 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
       });
     } finally {
       setUpdatingStatus(null);
+    }
+  };
+
+  const handleDeleteClick = (clientId: string, clientName: string) => {
+    setDeletingClient({ id: clientId, name: clientName });
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deletingClient || !isAdmin) return;
+
+    setIsDeleting(true);
+
+    try {
+      await deleteClient(deletingClient.id);
+      
+      toast({
+        title: 'Client deleted',
+        description: `${deletingClient.name} has been permanently deleted`,
+      });
+
+      // Refresh the client list by removing the deleted client
+      const updatedClients = clients.filter(c => c.id !== deletingClient.id);
+      // Trigger a refresh by calling onClientAdded with an empty update
+      if (updatedClients.length > 0) {
+        onClientAdded(updatedClients[0]);
+      }
+      
+      setDeletingClient(null);
+    } catch (error) {
+      console.error('Error deleting client:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete client. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsDeleting(false);
     }
   };
   
@@ -128,13 +169,26 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
                     {client.contact_phone && <p className="text-sm text-gray-500">{client.contact_phone}</p>}
                   </div>
                 </div>
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  onClick={() => handleViewDetails(client.id)}
-                >
-                  View Workspace
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    onClick={() => handleViewDetails(client.id)}
+                  >
+                    View Workspace
+                  </Button>
+                  {isAdmin && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleDeleteClick(client.id, client.company_name)}
+                      disabled={isDeleting}
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -149,6 +203,13 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
           </div>
         )}
       </CardContent>
+
+      <DeleteClientDialog
+        isOpen={!!deletingClient}
+        onClose={() => setDeletingClient(null)}
+        onConfirm={handleDeleteConfirm}
+        clientName={deletingClient?.name || ''}
+      />
     </Card>
   );
 };
