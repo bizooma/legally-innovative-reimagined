@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check, MessageCircle, Clock, Users, Zap, BarChart3, Globe } from "lucide-react";
-import underConstructionImg from "@/assets/under-construction.jpg";
 
 const SupportBotsPage = () => {
   return (
@@ -34,9 +33,6 @@ const SupportBotsPage = () => {
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                   See Live Demo
                 </Button>
-              </div>
-              <div className="mt-8">
-                <img src={underConstructionImg} alt="Under Construction - Coming Soon" className="w-full max-w-3xl mx-auto rounded-lg shadow-2xl" />
               </div>
             </div>
           </div>
