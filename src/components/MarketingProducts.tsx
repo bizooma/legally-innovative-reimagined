@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
 import underConstructionImg from "@/assets/under-construction.webp";
+import aeoAnalyzerImg from "@/assets/aeo-analyzer-screenshot.png";
 import { useEffect, useRef, useState } from "react";
 
 const MarketingProducts = () => {
@@ -61,7 +62,7 @@ const MarketingProducts = () => {
         "95% Accuracy",
         "500+ Cases Analyzed"
       ],
-      image: "/lovable-uploads/fe60785d-1380-4920-a47b-48ec9f13c3ec.png",
+      image: aeoAnalyzerImg,
       link: "/products/aeo-analyzer"
     },
     {
