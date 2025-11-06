@@ -1,4 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
+import veteranOwnedBadge from "@/assets/veteran-owned-badge.png";
+
 const About = () => {
   return <section id="about" className="section-padding bg-white">
       <div className="container mx-auto">
@@ -52,6 +54,14 @@ const About = () => {
               </p>
             </CardContent>
           </Card>
+        </div>
+
+        <div className="flex justify-center mt-12">
+          <img 
+            src={veteranOwnedBadge} 
+            alt="Veteran Owned Business" 
+            className="w-64 h-auto"
+          />
         </div>
       </div>
     </section>;
