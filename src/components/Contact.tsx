@@ -76,7 +76,7 @@ const Contact = () => {
   };
   return <section id="contact" className="section-padding bg-gradient-to-br from-legal-light/50 via-white to-white">
       <div className="container mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-left max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
             Get In <span className="highlight-text">Touch</span>
           </h2>
