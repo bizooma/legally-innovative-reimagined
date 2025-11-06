@@ -131,7 +131,7 @@ const MarketingProducts = () => {
       }}
     >
       <div className="container mx-auto">
-        <div className="text-center max-w-4xl mx-auto mb-16">
+        <div className="text-left max-w-4xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             Marketing <span className="text-legal-accent">Products</span>
           </h2>
