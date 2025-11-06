@@ -8,8 +8,8 @@ const About = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
             About <span className="highlight-text">Bizooma</span>
           </h2>
-          <p className="text-lg text-gray-700 mb-4">At Bizooma, we are passionate about helping companies thrive in the digital age. As a full-service marketing and software development provider, we understand the unique challenges that companies face in attracting clients and managing finances.</p>
-          <p className="text-lg text-gray-700 mb-4">That's why we've designed our services to take advantage of the strengths of marketing and so, giving you the tools to grow your practice, streamline your operations, and stay ahead of the competition. </p>
+          <p className="text-lg text-gray-700 mb-4">At Bizooma, we specialize in building intelligent marketing and software solutions powered by artificial intelligence. We help law firms, nonprofits, and startups accelerate growth through AI-driven marketing strategies, custom software development, and automation tools.</p>
+          <p className="text-lg text-gray-700 mb-4">Our approach combines cutting-edge AI technology with proven marketing principles to attract, engage, and convert leads with precision. From intelligent chatbots and voice assistants to automated lead generation and custom web applications, we deliver solutions that work smarter, not harder.</p>
           <p className="text-lg text-gray-700">
             Bizooma is proud to be a veteran-owned business dedicated to excellence and innovation. 
             Our entire team is based in the United States, ensuring that every project is handled with 
@@ -26,7 +26,7 @@ const About = () => {
                 <span className="text-legal-primary text-2xl font-bold">01</span>
               </div>
               <h3 className="text-xl font-bold mb-3 text-legal-dark">Mission Statement</h3>
-              <p className="text-gray-700">Our mission is to bridge the gap between traditional marketing and the digital future, empowering business professionals to deliver more efficient, accessible, and client-centered solutions.</p>
+              <p className="text-gray-700">Our mission is to empower businesses with intelligent AI-driven marketing and software solutions that drive measurable growth. We bridge the gap between traditional marketing and cutting-edge AI technology to deliver exceptional results.</p>
             </CardContent>
           </Card>
 
@@ -37,7 +37,7 @@ const About = () => {
               </div>
               <h3 className="text-xl font-bold mb-3 text-legal-dark">Vision Statement</h3>
               <p className="text-gray-700">
-                Our vision is to empower business professionals to lead the way in technological innovation—using our platform, resources, and community to drive meaningful value for their customers and the communities they serve.
+                Our vision is to become the leading provider of AI-powered marketing and automation solutions for law firms, nonprofits, and startups—transforming how businesses attract, engage, and convert their ideal clients through intelligent technology.
               </p>
             </CardContent>
           </Card>
