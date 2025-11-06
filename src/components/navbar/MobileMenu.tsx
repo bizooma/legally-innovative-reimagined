@@ -127,6 +127,15 @@ const MobileMenu = ({ isOpen, navLinks, serviceLinks, productLinks, onNavLinkCli
           )}
         </div>
 
+        {/* Stay Informed Link */}
+        <Link
+          to="/stay-informed"
+          className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium"
+          onClick={onClose}
+        >
+          Stay Informed
+        </Link>
+
         <Button 
           className="bg-legal-primary hover:bg-legal-secondary text-white w-full flex items-center justify-center"
           onClick={() => {
