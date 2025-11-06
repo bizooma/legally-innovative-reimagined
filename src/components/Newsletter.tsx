@@ -3,7 +3,6 @@ import routeToResultsLogo from "@/assets/route-to-results-logo.png";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 const Newsletter = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
-
   useEffect(() => {
     // Load Mailchimp CSS
     const cssLink = document.createElement("link");
@@ -35,7 +34,6 @@ const Newsletter = () => {
 
     // Wait for DOM to be ready
     setTimeout(handleFormSubmit, 500);
-
     return () => {
       document.head.removeChild(cssLink);
       document.body.removeChild(validateScript);
@@ -61,7 +59,8 @@ const Newsletter = () => {
           <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">Get exclusive insights, case studies, and updates on the latest technology trends. Join thousands of legal professionals transforming their practices with innovative solutions.</p>
 
           <div id="mc_embed_shell" className="max-w-2xl mx-auto">
-            <style dangerouslySetInnerHTML={{__html: `
+            <style dangerouslySetInnerHTML={{
+            __html: `
               #mc_embed_signup {
                 background: #fff;
                 clear: left;
@@ -132,19 +131,13 @@ const Newsletter = () => {
                 font-size: 0.875rem;
                 margin-bottom: 1rem;
               }
-            `}} />
+            `
+          }} />
             
             <div id="mc_embed_signup">
-              <form 
-                action="https://bizooma.us14.list-manage.com/subscribe/post?u=621f128c71e19e8d9b92ff1e3&amp;id=7f8858c903&amp;f_id=00f8b5e5f0" 
-                method="post" 
-                id="mc-embedded-subscribe-form" 
-                name="mc-embedded-subscribe-form" 
-                className="validate" 
-                target="_blank"
-              >
+              <form action="https://bizooma.us14.list-manage.com/subscribe/post?u=621f128c71e19e8d9b92ff1e3&amp;id=7f8858c903&amp;f_id=00f8b5e5f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank">
                 <div id="mc_embed_signup_scroll">
-                  <h2>Subscribe</h2>
+                  
                   <div className="indicates-required">
                     <span className="asterisk">*</span> indicates required
                   </div>
@@ -152,44 +145,29 @@ const Newsletter = () => {
                     <label htmlFor="mce-EMAIL">
                       Email Address <span className="asterisk">*</span>
                     </label>
-                    <input 
-                      type="email" 
-                      name="EMAIL" 
-                      className="required email" 
-                      id="mce-EMAIL" 
-                      required 
-                      defaultValue=""
-                    />
+                    <input type="email" name="EMAIL" className="required email" id="mce-EMAIL" required defaultValue="" />
                   </div>
                   <div id="mce-responses" className="clear">
-                    <div className="response" id="mce-error-response" style={{ display: 'none' }}></div>
-                    <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
+                    <div className="response" id="mce-error-response" style={{
+                    display: 'none'
+                  }}></div>
+                    <div className="response" id="mce-success-response" style={{
+                    display: 'none'
+                  }}></div>
                   </div>
-                  <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
-                    <input 
-                      type="text" 
-                      name="b_621f128c71e19e8d9b92ff1e3_7f8858c903" 
-                      tabIndex={-1} 
-                      defaultValue=""
-                    />
+                  <div aria-hidden="true" style={{
+                  position: 'absolute',
+                  left: '-5000px'
+                }}>
+                    <input type="text" name="b_621f128c71e19e8d9b92ff1e3_7f8858c903" tabIndex={-1} defaultValue="" />
                   </div>
                   <div className="clear">
-                    <input 
-                      type="submit" 
-                      name="subscribe" 
-                      id="mc-embedded-subscribe" 
-                      className="button" 
-                      value="Subscribe"
-                    />
+                    <input type="submit" name="subscribe" id="mc-embedded-subscribe" className="button" value="Subscribe" />
                   </div>
                   
                   <p className="text-sm text-gray-500 mt-4 text-center">
                     We respect your privacy. Unsubscribe at any time.{' '}
-                    <button
-                      type="button"
-                      onClick={() => setShowPrivacyPolicy(true)}
-                      className="text-legal-primary hover:text-legal-secondary underline"
-                    >
+                    <button type="button" onClick={() => setShowPrivacyPolicy(true)} className="text-legal-primary hover:text-legal-secondary underline">
                       Privacy Policy
                     </button>
                   </p>
