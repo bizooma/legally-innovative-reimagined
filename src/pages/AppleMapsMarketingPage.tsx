@@ -8,7 +8,7 @@ const AppleMapsMarketingPage = () => {
       excerpt="Discover why Apple Maps is essential for law firm marketing in 2025. With 110 million users and premium clientele, learn how to claim your listing and attract high-value legal clients."
       date="2025-01-17"
       readTime="15 min read"
-      author="Legally Innovative Team"
+      author="Bizooma Team"
       category="Local Marketing"
       image={appleMapsInterfaceImage}
     >
@@ -329,12 +329,12 @@ const AppleMapsMarketingPage = () => {
           
           <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600 mt-8">
             <p className="text-lg text-gray-700">
-              <strong>At Legally Innovative,</strong> we help law firms stay ahead of the curve with cutting-edge marketing strategies and technology solutions. Want to learn more about optimizing your firm's digital presence? Contact us today for a free consultation.
+              <strong>At Bizooma,</strong> we help law firms stay ahead of the curve with cutting-edge marketing strategies and technology solutions. Want to learn more about optimizing your firm's digital presence? Contact us today for a free consultation.
             </p>
           </div>
           
           <div className="text-sm text-gray-600 italic mt-6">
-            <p>About the Author: This article was researched and written by the team at Legally Innovative, combining the latest industry data with practical insights for legal professionals looking to enhance their local marketing strategies.</p>
+            <p>About the Author: This article was researched and written by the team at Bizooma, combining the latest industry data with practical insights for legal professionals looking to enhance their local marketing strategies.</p>
           </div>
         </section>
       </div>

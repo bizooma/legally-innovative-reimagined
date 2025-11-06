@@ -27,8 +27,8 @@ const DonutsPage = () => {
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
-        <title>Thanks for the Donuts! | Legally Innovative</title>
-        <meta name="description" content="Enjoyed your donuts? Learn how Legally Innovative can help your law firm thrive with our innovative marketing and AI solutions." />
+        <title>Thanks for the Donuts! | Bizooma</title>
+        <meta name="description" content="Enjoyed your donuts? Learn how Bizooma can help your law firm thrive with our innovative marketing and AI solutions." />
       </Helmet>
       
       <Navbar />

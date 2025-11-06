@@ -75,7 +75,7 @@ const Navbar = () => {
         <Link to="/" className="flex items-center">
           <img 
             src="/logo.png" 
-            alt="Legally Innovative Logo" 
+            alt="Bizooma Logo"
             className="h-10 w-auto object-contain"
           />
         </Link>

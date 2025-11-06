@@ -18,7 +18,7 @@ const LawFirmMobileAppDevelopmentPage = () => {
   return (
     <>
       <Helmet>
-        <title>Law Firm Mobile App Development Services | Legally Innovative</title>
+        <title>Law Firm Mobile App Development Services | Bizooma</title>
         <meta 
           name="description" 
           content="Custom mobile app development for law firms. iOS and Android apps that enhance client communication, streamline processes, and grow your legal practice." 

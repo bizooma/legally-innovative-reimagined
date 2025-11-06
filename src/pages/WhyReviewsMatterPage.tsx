@@ -403,9 +403,9 @@ const WhyReviewsMatterPage = () => {
       <hr className="my-8" />
 
       <div className="bg-gray-50 p-6 rounded-lg">
-        <h3 className="font-semibold mb-3">About Legally Innovative</h3>
+        <h3 className="font-semibold mb-3">About Bizooma</h3>
         <p className="text-gray-700 mb-4">
-          Legally Innovative specializes in digital marketing solutions designed specifically for law firms. 
+          Bizooma specializes in digital marketing solutions designed specifically for law firms.
           Our team understands the unique challenges and opportunities in legal marketing, helping firms 
           build stronger online reputations and attract more qualified clients.
         </p>

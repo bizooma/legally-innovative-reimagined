@@ -45,7 +45,7 @@ const WhyChooseUs = () => {
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-              Why Choose <span className="text-legal-accent">Legally Innovative</span>
+              Why Choose <span className="text-legal-accent">Bizooma</span>
             </h2>
             <p className="text-lg text-legal-light mb-8">
               We're not just consultants – we're partners in your innovation journey. 
@@ -80,7 +80,7 @@ const WhyChooseUs = () => {
               <div className="space-y-6">
                 <div className="bg-white/10 backdrop-blur-sm p-4 rounded-md border border-white/10">
                   <p className="italic text-legal-light mb-4">
-                    "Legally Innovative helped us navigate our digital transformation journey, 
+                    "Bizooma helped us navigate our digital transformation journey,
                     resulting in a 30% increase in efficiency and significantly improved client satisfaction."
                   </p>
                   <div>
@@ -91,7 +91,7 @@ const WhyChooseUs = () => {
                 
                 <div className="bg-white/10 backdrop-blur-sm p-4 rounded-md border border-white/10">
                   <p className="italic text-legal-light mb-4">
-                    "The training programs provided by Legally Innovative have completely 
+                    "The training programs provided by Bizooma have completely
                     transformed how our team approaches legal service delivery."
                   </p>
                   <div>

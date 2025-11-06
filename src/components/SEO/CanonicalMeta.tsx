@@ -57,12 +57,12 @@ const CanonicalMeta = () => {
         mainEntityOfPage: canonical,
         author: {
           "@type": "Organization",
-          name: "Legally Innovative",
+          name: "Bizooma",
           url: SITE_URL,
         },
         publisher: {
           "@type": "Organization",
-          name: "Legally Innovative",
+          name: "Bizooma",
           logo: {
             "@type": "ImageObject",
             url: `${SITE_URL}/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png`,

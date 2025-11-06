@@ -18,7 +18,7 @@ const DonutHero = () => {
             </h1>
             <p className="text-xl mb-8 text-gray-700 max-w-xl mx-auto md:mx-0">
               Thank you for taking a moment to enjoy our sweet treat! We'd love to show you how 
-              Legally Innovative can help your law firm rise to new heights with our marketing 
+              Bizooma can help your law firm rise to new heights with our marketing
               and AI solutions.
             </p>
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">

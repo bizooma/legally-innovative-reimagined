@@ -18,7 +18,7 @@ const LawFirmLeadGenerationPage = () => {
   return (
     <>
       <Helmet>
-        <title>Law Firm Lead Generation Systems | Convert Prospects into Clients | Legally Innovative</title>
+        <title>Law Firm Lead Generation Systems | Convert Prospects into Clients | Bizooma</title>
         <meta 
           name="description" 
           content="Professional lead generation systems for law firms. Capture high-quality leads, nurture prospects, and convert potential clients with automated workflows and proven strategies." 

@@ -18,7 +18,7 @@ const LawFirmDigitalMarketingPage = () => {
   return (
     <>
       <Helmet>
-        <title>Digital Marketing for Law Firms | Grow Your Legal Practice Online | Legally Innovative</title>
+        <title>Digital Marketing for Law Firms | Grow Your Legal Practice Online | Bizooma</title>
         <meta 
           name="description" 
           content="Comprehensive digital marketing services for law firms. Increase online visibility, generate quality leads, and grow your legal practice with proven digital strategies." 

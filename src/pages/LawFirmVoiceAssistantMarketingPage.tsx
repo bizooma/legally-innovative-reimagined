@@ -18,7 +18,7 @@ const LawFirmVoiceAssistantMarketingPage = () => {
   return (
     <>
       <Helmet>
-        <title>Voice Assistant Marketing for Law Firms | Alexa & Google Assistant Development | Legally Innovative</title>
+        <title>Voice Assistant Marketing for Law Firms | Alexa & Google Assistant Development | Bizooma</title>
         <meta 
           name="description" 
           content="Develop custom voice assistants for Amazon Alexa and Google Assistant to enhance your law firm's marketing reach and provide 24/7 client engagement through voice technology." 

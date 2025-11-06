@@ -7,17 +7,17 @@ const About = () => {
       <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
-            About <span className="highlight-text">Legally Innovative</span>
+            About <span className="highlight-text">Bizooma</span>
           </h2>
           <p className="text-lg text-gray-700 mb-4">
-            At Legally Innovative, we are passionate about helping law firms thrive in the digital age. 
+            At Bizooma, we are passionate about helping law firms thrive in the digital age.
             As a full-service marketing and accounting solutions provider, we understand the unique challenges 
             that law firms face in attracting clients and managing finances.
           </p>
           <p className="text-lg text-gray-700 mb-4">
             That's why we've designed our services to meet the specific needs of the legal industry, 
             giving you the tools to grow your practice, streamline your operations, and stay ahead of 
-            the competition. Legally Innovative is a legal entity of Bizooma, LLC.
+            the competition. Bizooma is a legal entity of Bizooma, LLC.
           </p>
           <p className="text-lg text-gray-700">
             Bizooma is proud to be a veteran-owned business dedicated to excellence and innovation. 

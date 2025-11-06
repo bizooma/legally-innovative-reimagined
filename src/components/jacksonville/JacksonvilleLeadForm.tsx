@@ -254,7 +254,7 @@ const JacksonvilleLeadForm = () => {
           </Button>
 
           <p className="text-sm text-gray-600 text-center mt-4">
-            By submitting this form, you agree to be contacted by an attorney or law firm to discuss your case. Legally Innovative is not an attorney or law firm and as such can not provide you with legal advice, however may refer you to an attorney who can provide you with legal advice. We make no guarantees about settlements and verdicts.
+            By submitting this form, you agree to be contacted by an attorney or law firm to discuss your case. Bizooma is not an attorney or law firm and as such can not provide you with legal advice, however may refer you to an attorney who can provide you with legal advice. We make no guarantees about settlements and verdicts.
           </p>
         </form>
       </Card>
