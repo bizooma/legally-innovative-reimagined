@@ -26,7 +26,7 @@ const MichaelEmployeeBio = () => {
               <div className="bg-gray-100 p-8 flex items-center justify-center">
                 <div className="w-full max-w-xs">
                   <img 
-                    src="/lovable-uploads/26a458f4-c2a1-4548-8dc8-ac6039a1a1e0.png"
+                    src="/lovable-uploads/26a458f4-c2a1-4548-8dc8-ac6039a1a1e0.jpg"
                     alt="Michael Ham - Business Development Specialist"
                     className="w-full h-auto object-contain rounded-lg"
                   />
