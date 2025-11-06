@@ -1,36 +1,26 @@
-
 import { Linkedin, Facebook } from "lucide-react";
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
 import TermsOfServiceModal from "./TermsOfServiceModal";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import footerTechBg from "@/assets/footer-tech-bg.jpg";
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  
-  return (
-    <footer 
-      className="text-white py-12 relative overflow-hidden"
-      style={{
-        backgroundImage: `linear-gradient(rgba(122, 10, 10, 0.9), rgba(122, 10, 10, 0.9)), url('${footerTechBg}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
+  return <footer className="text-white py-12 relative overflow-hidden" style={{
+    backgroundImage: `linear-gradient(rgba(122, 10, 10, 0.9), rgba(122, 10, 10, 0.9)), url('${footerTechBg}')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
+  }}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="mb-4">
-              <img 
-                src="/logo.png" 
-                alt="Bizooma Logo"
-                className="h-20 w-auto object-contain"
-              />
+              <img src="/logo.png" alt="Bizooma Logo" className="h-20 w-auto object-contain" />
             </div>
             <div className="mb-4">
-              <h4 className="text-lg font-semibold mb-2 text-legal-accent">Built for Law Firms. Powered by Innovation.</h4>
+              <h4 className="text-lg font-semibold mb-2 text-legal-accent">Built for Business.
+Powered by Innovation.</h4>
               <p className="text-legal-light text-sm leading-relaxed">
                 We understand the unique challenges law firms face because we work exclusively in the legal space. From trust-building client intake systems to AI-powered content strategies, our services are designed to make your firm more visible, more approachable, and more efficient — without ever compromising compliance.
               </p>
@@ -81,8 +71,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
