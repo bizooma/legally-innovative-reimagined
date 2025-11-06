@@ -1,11 +1,18 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+
+// Extend the Window interface to include Calendly
+declare global {
+  interface Window {
+    Calendly: any;
+  }
+}
 
 const Contact = () => {
   const { toast } = useToast();
@@ -16,6 +23,16 @@ const Contact = () => {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    // Check if Calendly script is already loaded
+    if (!window.Calendly) {
+      const script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -198,6 +215,18 @@ const Contact = () => {
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
+
+            {/* Calendly inline widget */}
+            <div className="mt-12">
+              <h3 className="text-2xl font-bold mb-6 text-legal-dark text-center">
+                Or Schedule a <span className="highlight-text">Meeting</span>
+              </h3>
+              <div 
+                className="calendly-inline-widget" 
+                data-url="https://calendly.com/joe-bizooma/30min" 
+                style={{minWidth:'320px', height:'700px'}}
+              ></div>
+            </div>
           </div>
         </div>
       </div>
