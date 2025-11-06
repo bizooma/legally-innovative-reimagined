@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, Gift, Eye, Users, Sparkles, Check } from "lucide-react";
 import brandedBooksShowcase from "@/assets/branded-books-showcase.jpg";
+import brandedBooksGallery from "@/assets/branded-books-gallery.jpg";
 
 const BrandedBooksPage = () => {
   useEffect(() => {
@@ -77,12 +78,21 @@ const BrandedBooksPage = () => {
               <p className="text-center text-gray-700 mb-8 text-lg">
                 Custom coloring books and journals designed to engage clients and keep your brand visible
               </p>
-              <div className="rounded-lg overflow-hidden shadow-2xl">
-                <img 
-                  src={brandedBooksShowcase} 
-                  alt="Custom branded coloring books showing bilingual content and animal-themed illustrations for law firm marketing" 
-                  className="w-full h-auto"
-                />
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="rounded-lg overflow-hidden shadow-2xl">
+                  <img 
+                    src={brandedBooksShowcase} 
+                    alt="Custom branded coloring books showing bilingual content and animal-themed illustrations for law firm marketing" 
+                    className="w-full h-auto"
+                  />
+                </div>
+                <div className="rounded-lg overflow-hidden shadow-2xl">
+                  <img 
+                    src={brandedBooksGallery} 
+                    alt="Law firm branded coloring book featuring bilingual animal illustrations including tiger and cow characters for client engagement" 
+                    className="w-full h-auto"
+                  />
+                </div>
               </div>
             </div>
           </div>
