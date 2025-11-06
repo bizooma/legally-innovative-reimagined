@@ -13,11 +13,11 @@ const VideoSection = () => {
         <div className="max-w-4xl mx-auto">
           <div className="relative backdrop-blur-sm bg-white/80 p-2 rounded-3xl border border-legal-primary/20 shadow-2xl">
             <iframe 
-              src="https://www.videoask.com/fc5vpzgv1" 
+              src="https://www.videoask.com/f5jr9rk94" 
               allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" 
               width="100%" 
               height="600px" 
-              style={{border: 'none', borderRadius: '20px'}}
+              style={{border: 'none', borderRadius: '24px'}}
               className="w-full"
             />
           </div>
