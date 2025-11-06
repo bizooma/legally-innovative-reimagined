@@ -85,15 +85,15 @@ const handler = async (req: Request): Promise<Response> => {
           </div>
           
           <p style="margin: 20px 0; line-height: 1.6;">
-            In the meantime, feel free to explore our services or call us directly at <a href="tel:9042956670" style="color: #1e3a8a; text-decoration: none; font-weight: bold;">904-295-6670</a>.
+            In the meantime, feel free to explore our services or call us directly at <a href="tel:8452046343" style="color: #1e3a8a; text-decoration: none; font-weight: bold;">845-204-6343</a>.
           </p>
           
           <div style="margin: 30px 0; padding: 20px; background-color: #f3f4f6; border-radius: 5px;">
             <p style="margin: 0; font-weight: bold;">Legally Innovative</p>
             <p style="margin: 5px 0;">200 N Laura St</p>
             <p style="margin: 5px 0;">Jacksonville, FL 32202</p>
-            <p style="margin: 5px 0;">📞 <a href="tel:9042956670" style="color: #1e3a8a;">904-295-6670</a></p>
-            <p style="margin: 5px 0;">✉️ <a href="mailto:joe@legallyinnovative.com" style="color: #1e3a8a;">joe@legallyinnovative.com</a></p>
+            <p style="margin: 5px 0;">📞 <a href="tel:8452046343" style="color: #1e3a8a;">845-204-6343</a></p>
+            <p style="margin: 5px 0;">✉️ <a href="mailto:joe@bizooma.com" style="color: #1e3a8a;">joe@bizooma.com</a></p>
           </div>
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px; text-align: center;">
