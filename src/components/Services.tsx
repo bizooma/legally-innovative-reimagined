@@ -72,7 +72,7 @@ const Services = () => {
   return (
     <section id="services" className="section-padding bg-gray-50">
       <div className="container mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-left max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
             Our <span className="highlight-text">Services</span>
           </h2>
