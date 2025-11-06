@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface NavLink {
@@ -29,9 +29,11 @@ interface MobileMenuProps {
   productLinks: ProductLink[];
   onNavLinkClick: (link: NavLink) => void;
   onClose: () => void;
+  canInstall?: boolean;
+  onInstallClick?: () => void;
 }
 
-const MobileMenu = ({ isOpen, navLinks, serviceLinks, productLinks, onNavLinkClick, onClose }: MobileMenuProps) => {
+const MobileMenu = ({ isOpen, navLinks, serviceLinks, productLinks, onNavLinkClick, onClose, canInstall, onInstallClick }: MobileMenuProps) => {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const navigate = useNavigate();
@@ -135,6 +137,21 @@ const MobileMenu = ({ isOpen, navLinks, serviceLinks, productLinks, onNavLinkCli
         >
           Stay Informed
         </Link>
+
+        {/* Install App Button */}
+        {canInstall && onInstallClick && (
+          <Button 
+            variant="outline"
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full flex items-center justify-center"
+            onClick={() => {
+              onInstallClick();
+              onClose();
+            }}
+          >
+            <Download className="w-4 h-4 mr-2" />
+            Install App
+          </Button>
+        )}
 
         <Button 
           className="bg-legal-primary hover:bg-legal-secondary text-white w-full flex items-center justify-center"

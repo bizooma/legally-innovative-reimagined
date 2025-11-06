@@ -41,6 +41,11 @@ Powered by Innovation.</h4>
                 </Link>
               </li>
               <li>
+                <Link to="/install" className="text-legal-light hover:text-legal-accent transition-colors">
+                  Install App
+                </Link>
+              </li>
+              <li>
                 <PrivacyPolicyModal triggerClassName="text-legal-light hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
               </li>
               <li>

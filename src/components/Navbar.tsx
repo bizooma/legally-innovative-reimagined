@@ -1,19 +1,22 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import NavLinks from "./navbar/NavLinks";
 import ServicesDropdown from "./navbar/ServicesDropdown";
 import ProductsDropdown from "./navbar/ProductsDropdown";
 import MobileMenu from "./navbar/MobileMenu";
 import { navLinks, serviceLinks, productLinks } from "./navbar/navigationData";
+import { useInstallPrompt } from "@/hooks/useInstallPrompt";
+import { trackEvent } from "@/utils/gtmTracking";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { installApp, canInstall } = useInstallPrompt();
   
   const isHomePage = location.pathname === "/";
   const isMichaelPage = location.pathname === "/michael";
@@ -64,6 +67,24 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
+  const handleInstallClick = async () => {
+    trackEvent({
+      event: 'pwa_install_attempt',
+      event_category: 'engagement',
+      event_label: 'Navbar Install Button'
+    });
+    
+    const success = await installApp();
+    
+    if (success) {
+      trackEvent({
+        event: 'pwa_install_success',
+        event_category: 'engagement',
+        event_label: 'App Installed from Navbar'
+      });
+    }
+  };
+
   // Always show white background on all pages for consistent visibility
   const shouldHaveBackground = true;
   const textColorClass = "text-legal-dark";
@@ -110,6 +131,18 @@ const Navbar = () => {
             Stay Informed
           </Link>
 
+          {canInstall && (
+            <Button 
+              variant="outline"
+              size="sm"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+              onClick={handleInstallClick}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Install App
+            </Button>
+          )}
+
           <Button 
             className="bg-legal-primary hover:bg-legal-secondary text-white"
             onClick={handlePortalClick}
@@ -134,6 +167,8 @@ const Navbar = () => {
         productLinks={productLinks}
         onNavLinkClick={handleNavLinkClick}
         onClose={() => setMobileMenuOpen(false)}
+        canInstall={canInstall}
+        onInstallClick={handleInstallClick}
       />
     </header>
   );

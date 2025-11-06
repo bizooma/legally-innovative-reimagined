@@ -42,6 +42,7 @@ import LeadScraperCrmPage from "./pages/products/LeadScraperCrmPage";
 import SupportBotsPage from "./pages/products/SupportBotsPage";
 import SignaturePopPage from "./pages/products/SignaturePopPage";
 import BrandedBooksPage from "./pages/products/BrandedBooksPage";
+import InstallPWA from "./pages/InstallPWA";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -131,6 +132,7 @@ const App = () => (
               <Route path="/openai-web-browser" element={<OpenAiWebBrowserPage />} />
               <Route path="/voice-seo-aeo-stats" element={<VoiceSeoAeoStatsPage />} />
               <Route path="/diy" element={<DIY />} />
+              <Route path="/install" element={<InstallPWA />} />
               <Route path="/portal" element={<Portal />} />
               <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
