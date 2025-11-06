@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,20 +17,6 @@ const Contact = () => {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  useEffect(() => {
-    // Load TidyCal script
-    const script = document.createElement('script');
-    script.src = 'https://asset-tidycal.b-cdn.net/js/embed.js';
-    script.async = true;
-    document.body.appendChild(script);
-    
-    // Cleanup function to remove script when component unmounts
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
-  }, []);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {
       name,
@@ -175,15 +161,23 @@ const Contact = () => {
               </Button>
             </form>
 
-            {/* TidyCal inline widget */}
-            <div className="mt-12">
-              <h3 className="text-2xl font-bold mb-6 text-legal-dark text-center">
+            {/* Schedule Meeting Button */}
+            <div className="mt-12 text-center">
+              <h3 className="text-2xl font-bold mb-6 text-legal-dark">
                 Or Schedule a <span className="highlight-text">Meeting</span>
               </h3>
-              <div className="tidycal-embed" data-path="bizooma/30-minute-meeting" style={{
-              minWidth: '320px',
-              height: '700px'
-            }}></div>
+              <Button 
+                asChild
+                className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg"
+              >
+                <a 
+                  href="https://tidycal.com/bizooma/30-minute-meeting" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  Schedule a Meeting
+                </a>
+              </Button>
             </div>
           </div>
         </div>
