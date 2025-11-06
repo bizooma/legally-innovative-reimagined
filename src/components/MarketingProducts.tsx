@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
 import underConstructionImg from "@/assets/under-construction.webp";
 import aeoAnalyzerImg from "@/assets/aeo-analyzer-screenshot.png";
+import npobotsImg from "@/assets/npobots-screenshot.png";
 import { useEffect, useRef, useState } from "react";
 
 const MarketingProducts = () => {
@@ -49,7 +50,7 @@ const MarketingProducts = () => {
         "80% Automation",
         "24/7 Support"
       ],
-      image: "/lovable-uploads/924cc48a-722c-40c0-a449-9ae43b8b9134.png",
+      image: npobotsImg,
       link: "/products/npo-bots"
     },
     {
