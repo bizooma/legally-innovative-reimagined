@@ -13,6 +13,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import GoogleMap from "@/components/GoogleMap";
 import Newsletter from "@/components/Newsletter";
+import MobileFooterNav from "@/components/MobileFooterNav";
 
 const Index = () => {
   return (
@@ -31,6 +32,7 @@ const Index = () => {
       <Newsletter />
       <GoogleMap />
       <Footer />
+      <MobileFooterNav />
     </div>
   );
 };
