@@ -18,6 +18,24 @@ const Newsletter = () => {
     validateScript.type = "text/javascript";
     document.body.appendChild(validateScript);
 
+    // Add form submission handler for success message
+    const handleFormSubmit = () => {
+      const form = document.getElementById('mc-embedded-subscribe-form');
+      if (form) {
+        form.addEventListener('submit', () => {
+          setTimeout(() => {
+            const successDiv = document.getElementById('mce-success-response');
+            if (successDiv && successDiv.style.display !== 'none') {
+              successDiv.innerHTML = '✓ Thank you for subscribing! Check your email for confirmation.';
+            }
+          }, 1000);
+        });
+      }
+    };
+
+    // Wait for DOM to be ready
+    setTimeout(handleFormSubmit, 500);
+
     return () => {
       document.head.removeChild(cssLink);
       document.body.removeChild(validateScript);
@@ -82,9 +100,29 @@ const Newsletter = () => {
                 font-weight: 600;
                 cursor: pointer;
                 transition: background-color 0.3s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: 1;
               }
               #mc_embed_signup .button:hover {
                 background-color: #7f1d1d;
+              }
+              #mc_embed_signup .response {
+                margin: 1rem 0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                font-weight: 500;
+              }
+              #mce-success-response {
+                background-color: #f0fdf4;
+                border: 1px solid #86efac;
+                color: #166534;
+              }
+              #mce-error-response {
+                background-color: #fef2f2;
+                border: 1px solid #fca5a5;
+                color: #991b1b;
               }
               #mc_embed_signup .asterisk {
                 color: #991b1b;
