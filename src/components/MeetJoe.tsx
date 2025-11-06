@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Linkedin, Phone } from "lucide-react";
+import { Linkedin, Phone, Mail } from "lucide-react";
 
 const MeetJoe = () => {
   return <section id="meet-joe" className="py-20 bg-gradient-to-b from-background to-secondary/20">
@@ -25,6 +25,14 @@ const MeetJoe = () => {
                 >
                   <Linkedin className="w-6 h-6" />
                   <span className="font-medium">LinkedIn</span>
+                </a>
+                
+                <a 
+                  href="mailto:joe@bizooma.com" 
+                  className="flex items-center gap-2 text-legal-primary hover:text-legal-dark transition-colors"
+                >
+                  <Mail className="w-6 h-6" />
+                  <span className="font-medium">Email</span>
                 </a>
                 
                 <a 
