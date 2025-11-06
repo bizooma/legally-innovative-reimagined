@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
+import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
 
 const MarketingProducts = () => {
   const products = [
@@ -79,11 +80,19 @@ const MarketingProducts = () => {
   ];
 
   return (
-    <section className="section-padding bg-white">
+    <section 
+      className="section-padding"
+      style={{
+        backgroundImage: `linear-gradient(rgba(122, 10, 10, 0.85), rgba(122, 10, 10, 0.85)), url('${whyChooseBg}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
-            Marketing <span className="highlight-text">Products</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            Marketing <span className="text-legal-accent">Products</span>
           </h2>
         </div>
 
@@ -91,7 +100,7 @@ const MarketingProducts = () => {
           {products.map((product, index) => (
             <Card 
               key={index}
-              className="border-none shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group"
+              className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1 overflow-hidden group"
             >
               <div className="relative h-64 overflow-hidden">
                 <img 
@@ -107,31 +116,31 @@ const MarketingProducts = () => {
                     <Badge 
                       key={badgeIndex}
                       variant="secondary"
-                      className="bg-legal-light text-legal-primary border-legal-primary/20"
+                      className="bg-white/20 text-white border-white/30 backdrop-blur-sm"
                     >
                       {badge}
                     </Badge>
                   ))}
                 </div>
 
-                <h3 className="text-2xl font-bold text-legal-dark mb-2">
+                <h3 className="text-2xl font-bold text-white mb-2">
                   {product.title}
                 </h3>
                 
-                <p className="text-lg font-semibold text-legal-primary mb-3">
+                <p className="text-lg font-semibold text-legal-accent mb-3">
                   {product.subtitle}
                 </p>
 
-                <p className="text-gray-700 mb-4">
+                <p className="text-white/90 mb-4">
                   {product.description}
                 </p>
 
                 <div className="mb-4">
-                  <p className="font-semibold text-legal-dark mb-2">Key Results:</p>
+                  <p className="font-semibold text-white mb-2">Key Results:</p>
                   <ul className="space-y-1">
                     {product.keyResults.map((result, resultIndex) => (
-                      <li key={resultIndex} className="flex items-center text-gray-700">
-                        <span className="text-legal-primary mr-2">→</span>
+                      <li key={resultIndex} className="flex items-center text-white/90">
+                        <span className="text-legal-accent mr-2">→</span>
                         {result}
                       </li>
                     ))}
@@ -140,7 +149,7 @@ const MarketingProducts = () => {
 
                 <a 
                   href="#contact"
-                  className="inline-flex items-center text-legal-primary font-semibold hover:text-legal-dark transition-colors group"
+                  className="inline-flex items-center text-white font-semibold hover:text-legal-accent transition-colors group"
                 >
                   View Case Study
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
