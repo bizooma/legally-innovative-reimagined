@@ -5,8 +5,9 @@ import { Menu, X } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import NavLinks from "./navbar/NavLinks";
 import ServicesDropdown from "./navbar/ServicesDropdown";
+import ProductsDropdown from "./navbar/ProductsDropdown";
 import MobileMenu from "./navbar/MobileMenu";
-import { navLinks, serviceLinks } from "./navbar/navigationData";
+import { navLinks, serviceLinks, productLinks } from "./navbar/navigationData";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -93,6 +94,11 @@ const Navbar = () => {
             textColorClass={textColorClass}
           />
 
+          <ProductsDropdown 
+            productLinks={productLinks}
+            textColorClass={textColorClass}
+          />
+
           <Button 
             className="bg-legal-primary hover:bg-legal-secondary text-white"
             onClick={handlePortalClick}
@@ -114,6 +120,7 @@ const Navbar = () => {
         isOpen={mobileMenuOpen}
         navLinks={navLinks}
         serviceLinks={serviceLinks}
+        productLinks={productLinks}
         onNavLinkClick={handleNavLinkClick}
         onClose={() => setMobileMenuOpen(false)}
       />

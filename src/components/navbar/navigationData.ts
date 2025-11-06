@@ -19,3 +19,12 @@ export const serviceLinks = [
   { name: "Lead Generation", path: "/law-firm-lead-generation" },
   { name: "Voice Assistant Marketing", path: "/law-firm-voice-assistant-marketing" },
 ];
+
+export const productLinks = [
+  { name: "NPO Bots", path: "/products/npo-bots", description: "AI-Powered Nonprofit Engagement" },
+  { name: "AEO Analyzer", path: "/products/aeo-analyzer", description: "Legal Analytics Dashboard" },
+  { name: "Quickie QR", path: "/products/quickie-qr", description: "Smart QR Code Marketing" },
+  { name: "Lead Scraper CRM", path: "/products/lead-scraper-crm", description: "Automated Lead Generation" },
+  { name: "Support Bots", path: "/products/support-bots", description: "AI Customer Support" },
+  { name: "Signature Pop", path: "/products/signature-pop", description: "Email Signature Marketing" },
+];
