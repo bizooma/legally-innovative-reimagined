@@ -82,7 +82,7 @@ const Newsletter = () => {
             </div>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-legal-dark">Stay Ahead of AI & Marketing Innovation<span className="highlight-text">Innovation</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-legal-dark"><span className="highlight-text">Innovation</span>
           </h2>
           
           <h3 className="text-xl md:text-2xl font-semibold mb-6 text-gray-600">
