@@ -4,6 +4,7 @@ import DonutHero from "@/components/donuts/DonutHero";
 import DonutServices from "@/components/donuts/DonutServices";
 import DonutCTA from "@/components/donuts/DonutCTA";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import Navbar from "@/components/Navbar";
 import { useEffect } from "react";
 
@@ -40,6 +41,7 @@ const DonutsPage = () => {
       </main>
       
       <Footer />
+      <MobileFooterNav />
     </div>
   );
 };

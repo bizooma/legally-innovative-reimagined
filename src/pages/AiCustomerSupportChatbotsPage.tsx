@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import AiChatbotsHero from "@/components/ai-chatbots/AiChatbotsHero";
 import AiChatbotsFeatures from "@/components/ai-chatbots/AiChatbotsFeatures";
 import AiChatbotsBenefits from "@/components/ai-chatbots/AiChatbotsBenefits";
@@ -33,6 +34,7 @@ const AiCustomerSupportChatbotsPage = () => {
         <AiChatbotsPricing />
         <AiChatbotsCTA />
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );

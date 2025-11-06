@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import AiConsultingHero from "@/components/ai-consulting/AiConsultingHero";
 import AiConsultingServices from "@/components/ai-consulting/AiConsultingServices";
 import AiConsultingBenefits from "@/components/ai-consulting/AiConsultingBenefits";
@@ -33,6 +34,7 @@ const AiConsultingPage = () => {
         <AiConsultingCaseStudies />
         <AiConsultingCTA />
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );

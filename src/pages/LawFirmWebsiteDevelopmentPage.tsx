@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import WebsiteDevHero from "@/components/website-dev/WebsiteDevHero";
 import WebsiteDevServices from "@/components/website-dev/WebsiteDevServices";
 import WebsiteDevProcess from "@/components/website-dev/WebsiteDevProcess";
@@ -33,6 +34,7 @@ const LawFirmWebsiteDevelopmentPage = () => {
         <WebsiteDevPortfolio />
         <WebsiteDevCTA />
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );

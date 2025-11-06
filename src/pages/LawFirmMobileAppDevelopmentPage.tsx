@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import MobileAppHero from "@/components/mobile-app/MobileAppHero";
 import MobileAppServices from "@/components/mobile-app/MobileAppServices";
 import MobileAppFeatures from "@/components/mobile-app/MobileAppFeatures";
@@ -33,6 +34,7 @@ const LawFirmMobileAppDevelopmentPage = () => {
         <MobileAppProcess />
         <MobileAppCTA />
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );

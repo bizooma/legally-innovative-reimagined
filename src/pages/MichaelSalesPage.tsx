@@ -1,6 +1,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import Services from "@/components/Services";
 import MichaelHero from "@/components/michael/MichaelHero";
 import MichaelEmployeeBio from "@/components/michael/MichaelEmployeeBio";
@@ -17,6 +18,7 @@ const MichaelSalesPage = () => {
       <MichaelCalendlySection />
       <MichaelCTA />
       <Footer />
+      <MobileFooterNav />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import SeoAeoHero from "@/components/seo-aeo/SeoAeoHero";
 import SeoAeoServices from "@/components/seo-aeo/SeoAeoServices";
 import SeoAeoBenefits from "@/components/seo-aeo/SeoAeoBenefits";
@@ -33,6 +34,7 @@ const LawFirmSeoAeoPage = () => {
         <SeoAeoResults />
         <SeoAeoCTA />
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );

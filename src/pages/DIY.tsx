@@ -1,6 +1,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import { DIYHeader } from "@/components/diy/DIYHeader";
 import { ResourcesSection } from "@/components/diy/ResourcesSection";
 import { ProductPromotionsSection } from "@/components/diy/ProductPromotionsSection";
@@ -34,6 +35,7 @@ const DIY = () => {
         </div>
       </main>
       <Footer />
+      <MobileFooterNav />
     </div>
   );
 };

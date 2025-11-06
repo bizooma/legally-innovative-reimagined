@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check, QrCode, Smartphone, BarChart, Eye, Zap, Share2 } from "lucide-react";
@@ -261,6 +262,7 @@ const QuickieQrPage = () => {
         </section>
 
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );

@@ -2,6 +2,7 @@
 import JacksonvilleHero from "@/components/jacksonville/JacksonvilleHero";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 
 const JacksonvilleAttorneyPage = () => {
   return (
@@ -9,6 +10,7 @@ const JacksonvilleAttorneyPage = () => {
       <Navbar />
       <JacksonvilleHero />
       <Footer />
+      <MobileFooterNav />
     </div>
   );
 };

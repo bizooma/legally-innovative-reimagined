@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import VoiceAssistantHero from "@/components/voice-assistant/VoiceAssistantHero";
 import VoiceAssistantServices from "@/components/voice-assistant/VoiceAssistantServices";
 import VoiceAssistantBenefits from "@/components/voice-assistant/VoiceAssistantBenefits";
@@ -33,6 +34,7 @@ const LawFirmVoiceAssistantMarketingPage = () => {
         <VoiceAssistantResults />
         <VoiceAssistantCTA />
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );

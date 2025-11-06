@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check, BarChart3, Brain, Zap, FileSearch, TrendingUp, Shield } from "lucide-react";
@@ -261,6 +262,7 @@ const AeoAnalyzerPage = () => {
         </section>
 
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import DigitalMarketingHero from "@/components/digital-marketing/DigitalMarketingHero";
 import DigitalMarketingServices from "@/components/digital-marketing/DigitalMarketingServices";
 import DigitalMarketingBenefits from "@/components/digital-marketing/DigitalMarketingBenefits";
@@ -33,6 +34,7 @@ const LawFirmDigitalMarketingPage = () => {
         <DigitalMarketingResults />
         <DigitalMarketingCTA />
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );

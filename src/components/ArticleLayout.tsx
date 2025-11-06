@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, User, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -98,6 +99,7 @@ const ArticleLayout = ({
       </section>
 
       <Footer />
+      <MobileFooterNav />
     </div>
   );
 };

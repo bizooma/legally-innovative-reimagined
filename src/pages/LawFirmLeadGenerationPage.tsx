@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileFooterNav from "@/components/MobileFooterNav";
 import LeadGenHero from "@/components/lead-gen/LeadGenHero";
 import LeadGenServices from "@/components/lead-gen/LeadGenServices";
 import LeadGenBenefits from "@/components/lead-gen/LeadGenBenefits";
@@ -33,6 +34,7 @@ const LawFirmLeadGenerationPage = () => {
         <LeadGenResults />
         <LeadGenCTA />
         <Footer />
+        <MobileFooterNav />
       </div>
     </>
   );
