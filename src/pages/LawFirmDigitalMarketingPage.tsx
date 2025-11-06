@@ -11,12 +11,16 @@ import DigitalMarketingProcess from "@/components/digital-marketing/DigitalMarke
 import DigitalMarketingResults from "@/components/digital-marketing/DigitalMarketingResults";
 import DigitalMarketingCTA from "@/components/digital-marketing/DigitalMarketingCTA";
 import { trackServiceView } from "@/utils/gtmTracking";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 const LawFirmDigitalMarketingPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     trackServiceView('Law Firm Digital Marketing');
   }, []);
+
+  // Track scroll depth
+  useScrollTracking({ pageName: 'Digital Marketing' });
 
   const serviceSchema = {
     "@context": "https://schema.org",

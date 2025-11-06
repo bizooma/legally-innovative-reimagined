@@ -14,8 +14,12 @@ import Footer from "@/components/Footer";
 import GoogleMap from "@/components/GoogleMap";
 import Newsletter from "@/components/Newsletter";
 import MobileFooterNav from "@/components/MobileFooterNav";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 const Index = () => {
+  // Track scroll depth for homepage
+  useScrollTracking({ pageName: 'Homepage' });
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

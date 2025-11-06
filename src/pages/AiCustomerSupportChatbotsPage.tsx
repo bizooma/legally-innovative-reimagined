@@ -11,12 +11,16 @@ import AiChatbotsDemo from "@/components/ai-chatbots/AiChatbotsDemo";
 import AiChatbotsPricing from "@/components/ai-chatbots/AiChatbotsPricing";
 import AiChatbotsCTA from "@/components/ai-chatbots/AiChatbotsCTA";
 import { trackServiceView } from "@/utils/gtmTracking";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 const AiCustomerSupportChatbotsPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     trackServiceView('AI Customer Support Chatbots');
   }, []);
+
+  // Track scroll depth
+  useScrollTracking({ pageName: 'AI Customer Support Chatbots' });
 
   const serviceSchema = {
     "@context": "https://schema.org",

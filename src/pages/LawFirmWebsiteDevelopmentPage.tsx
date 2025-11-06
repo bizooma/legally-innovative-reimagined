@@ -11,12 +11,16 @@ import WebsiteDevBenefits from "@/components/website-dev/WebsiteDevBenefits";
 import WebsiteDevPortfolio from "@/components/website-dev/WebsiteDevPortfolio";
 import WebsiteDevCTA from "@/components/website-dev/WebsiteDevCTA";
 import { trackServiceView } from "@/utils/gtmTracking";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 const LawFirmWebsiteDevelopmentPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     trackServiceView('Law Firm Website Development');
   }, []);
+
+  // Track scroll depth
+  useScrollTracking({ pageName: 'Website Development' });
 
   const serviceSchema = {
     "@context": "https://schema.org",
