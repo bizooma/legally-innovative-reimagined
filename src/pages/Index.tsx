@@ -8,6 +8,7 @@ import VideoSection from "@/components/VideoSection";
 import FAQ from "@/components/FAQ";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import DemoSite from "@/components/DemoSite";
+import MarketingProducts from "@/components/MarketingProducts";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import GoogleMap from "@/components/GoogleMap";
@@ -26,6 +27,7 @@ const Index = () => {
       <WhyChooseUs />
       <Contact />
       <DemoSite />
+      <MarketingProducts />
       <Newsletter />
       <GoogleMap />
       <Footer />
