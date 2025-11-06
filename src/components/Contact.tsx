@@ -5,7 +5,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-
 const Contact = () => {
   const {
     toast
@@ -120,7 +119,7 @@ const Contact = () => {
               </div>
 
               <div className="mt-8 pt-8 border-t border-gray-200">
-                <h4 className="text-xl font-bold mb-4 text-legal-dark">Why Choose Bizooma</h4>
+                <h4 className="text-xl font-bold mb-4 text-legal-dark">At Bizooma:</h4>
                 <p className="text-gray-700 leading-relaxed">
                   Our platforms are more than just tools—they're growth engines. Each system is tailored to your brand, powered by data, and designed to deliver measurable ROI. With AI-first development and automation-driven marketing, we help you streamline operations, cut costs, and achieve smarter, faster growth.
                 </p>
@@ -173,15 +172,8 @@ const Contact = () => {
               <h3 className="text-2xl font-bold mb-6 text-legal-dark">
                 Or Schedule a <span className="highlight-text">Meeting</span>
               </h3>
-              <Button 
-                asChild
-                className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg"
-              >
-                <a 
-                  href="https://tidycal.com/bizooma/30-minute-meeting" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
+              <Button asChild className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg">
+                <a href="https://tidycal.com/bizooma/30-minute-meeting" target="_blank" rel="noopener noreferrer">
                   Schedule a Meeting
                 </a>
               </Button>
