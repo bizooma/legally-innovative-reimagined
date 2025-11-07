@@ -37,8 +37,10 @@ const BrandedBooksPage = () => {
                 Custom Coloring Books & Journals That Keep Your Brand Visible Every Day. Create memorable experiences with professionally designed branded books featuring your law firm's logo, colors, and message.
               </p>
               <div className="flex justify-center">
-                <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light">
-                  Get Started Today
+                <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light" asChild>
+                  <a href="https://tidycal.com/bizooma/30-minute-meeting" target="_blank" rel="noopener noreferrer">
+                    Let's Chat About Your Ideas
+                  </a>
                 </Button>
               </div>
             </div>
