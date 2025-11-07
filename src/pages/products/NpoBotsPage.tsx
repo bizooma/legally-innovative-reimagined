@@ -71,7 +71,7 @@ const NpoBotsPage = () => {
                 { icon: Clock, title: "24/7 Availability", description: "Never miss an opportunity to connect with supporters" },
                 { icon: Users, title: "Multi-Channel Support", description: "Deploy on multiple .org websites that are part of your organization" },
                 { icon: Zap, title: "Instant Responses", description: "Answer common questions immediately, freeing staff for complex issues" },
-                { icon: Check, title: "Easy Integration", description: "Seamlessly connects with your CRM and donation platforms" }
+                { icon: Check, title: "Easy Installation", description: "Seamlessly connects with your CRM and donation platforms" }
               ].map((feature, index) => (
                 <Card key={index} className="border-legal-primary/20 hover:shadow-lg transition-shadow">
                   <CardContent className="p-6">
