@@ -3,7 +3,12 @@ import { ArrowRight, Monitor, Users, Database, Shield } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import diyMarketingBg from "@/assets/diy-marketing-bg.jpg";
 import { trackCalendarClick } from "@/utils/gtmTracking";
-const DemoSite = () => {
+
+interface DemoSiteProps {
+  targetAudience?: string;
+}
+
+const DemoSite = ({ targetAudience = "Law Firms" }: DemoSiteProps) => {
   return <section id="demo-site" className="section-padding relative overflow-hidden" style={{
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${diyMarketingBg}')`,
     backgroundSize: 'cover',
@@ -13,7 +18,7 @@ const DemoSite = () => {
       <div className="container mx-auto">
         <div className="text-left max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            DIY Digital Marketing <span className="text-legal-accent">Platform for Law Firms</span>
+            DIY Digital Marketing <span className="text-legal-accent">Platform for {targetAudience}</span>
           </h2>
           <p className="text-lg text-white/90 mb-4">
             Experience our comprehensive SaaS marketing platform firsthand at <a href="https://amicusedge.com" className="text-white font-semibold underline hover:text-white/90 transition-colors" target="_blank" rel="noopener noreferrer">amicusedge.com</a>. AmicusEdge is an AI-powered legal technology platform featuring video chatbots, QR code generators, SEO/AEO analyzers, and voice search simulators - all integrated into one powerful marketing solution.
