@@ -67,7 +67,7 @@ const Newsletter = () => {
             With the Route to Results Newsletter
           </h3>
           
-          <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">Get exclusive insights, case studies, and updates on the latest technology trends. Join thousands of legal professionals transforming their practices with innovative solutions.</p>
+          <p className="text-lg text-gray-700 mb-8 max-w-2xl">Get exclusive insights, case studies, and updates on the latest technology trends. Join thousands of legal professionals transforming their practices with innovative solutions.</p>
 
           <div id="mc_embed_shell" className="max-w-2xl mx-auto">
             <style dangerouslySetInnerHTML={{
