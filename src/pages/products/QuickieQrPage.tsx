@@ -136,7 +136,7 @@ const QuickieQrPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
-                  quote: "Quickie QR transformed our restaurant operations. We update our menu daily with specials, and customers love the convenience. The analytics showed us our most popular items, helping us optimize our offerings.",
+                  quote: "TBD",
                   author: "Isabella Rodriguez",
                   role: "Owner, Bella's Bistro"
                 },
