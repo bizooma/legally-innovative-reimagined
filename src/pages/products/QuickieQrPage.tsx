@@ -41,7 +41,7 @@ const QuickieQrPage = () => {
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">250%</div>
+                <div className="text-4xl font-bold text-legal-primary mb-2">N/A</div>
                 <div className="text-gray-700">Increase in Engagement</div>
               </div>
               <div className="text-center">
