@@ -28,8 +28,10 @@ const AeoAnalyzerPage = () => {
                 Advanced analytics platform that helps law firms identify case patterns, predict outcomes, and optimize legal strategies with data-driven insights and 95% accuracy.
               </p>
               <div className="flex justify-center">
-                <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light">
-                  Request Demo
+                <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light" asChild>
+                  <a href="https://aeoanalyzer.com" target="_blank" rel="noopener noreferrer">
+                    Get Started
+                  </a>
                 </Button>
               </div>
             </div>
