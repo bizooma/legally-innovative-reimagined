@@ -169,77 +169,39 @@ const NpoBotsPage = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-legal-dark">
               Simple, Transparent Pricing
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {[
-                {
-                  name: "Starter",
-                  price: "$299",
-                  period: "/month",
-                  features: [
-                    "Up to 1,000 conversations/month",
-                    "Single channel (website)",
-                    "Basic analytics",
-                    "Email support",
-                    "Standard training"
-                  ]
-                },
-                {
-                  name: "Professional",
-                  price: "$599",
-                  period: "/month",
-                  popular: true,
-                  features: [
-                    "Up to 5,000 conversations/month",
-                    "Multi-channel (website + 2 platforms)",
-                    "Advanced analytics & reporting",
-                    "Priority support",
-                    "Custom training",
-                    "CRM integration"
-                  ]
-                },
-                {
-                  name: "Enterprise",
-                  price: "Custom",
-                  period: "",
-                  features: [
-                    "Unlimited conversations",
-                    "All channels included",
-                    "White-label solution",
-                    "Dedicated account manager",
-                    "Custom AI training",
-                    "API access",
-                    "SLA guarantee"
-                  ]
-                }
-              ].map((plan, index) => (
-                <Card key={index} className={`${plan.popular ? 'border-legal-primary border-2 shadow-xl' : 'border-legal-primary/20'} relative`}>
-                  {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-legal-primary text-white px-4 py-1 rounded-full text-sm font-semibold">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-                  <CardContent className="p-6">
-                    <h3 className="text-2xl font-bold mb-2 text-legal-dark">{plan.name}</h3>
-                    <div className="mb-6">
-                      <span className="text-4xl font-bold text-legal-primary">{plan.price}</span>
-                      <span className="text-gray-600">{plan.period}</span>
-                    </div>
-                    <ul className="space-y-3 mb-6">
-                      {plan.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-start">
-                          <Check className="w-5 h-5 text-legal-primary mr-2 mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-700">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Button className={`w-full ${plan.popular ? 'bg-legal-primary hover:bg-legal-dark' : ''}`}>
-                      {plan.price === "Custom" ? "Contact Sales" : "Start Free Trial"}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="max-w-md mx-auto">
+              <Card className="border-legal-primary border-2 shadow-xl">
+                <CardContent className="p-8">
+                  <h3 className="text-3xl font-bold mb-2 text-center text-legal-dark">NPO Bots</h3>
+                  <div className="mb-8 text-center">
+                    <span className="text-5xl font-bold text-legal-primary">$99</span>
+                    <span className="text-xl text-gray-600">/month</span>
+                  </div>
+                  <ul className="space-y-4 mb-8">
+                    {[
+                      "Up to 2,000 conversations/month",
+                      "Deploy on your website",
+                      "24/7 automated responses",
+                      "Donor engagement analytics",
+                      "Email support",
+                      "Custom AI training",
+                      "Lead capture & qualification",
+                      "Easy CRM integration"
+                    ].map((feature, index) => (
+                      <li key={index} className="flex items-start">
+                        <Check className="w-6 h-6 text-legal-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700 text-lg">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button className="w-full bg-legal-primary hover:bg-legal-dark text-lg py-6">
+                    Start Free Trial
+                  </Button>
+                  <p className="text-center text-sm text-gray-600 mt-4">
+                    14-day free trial • No credit card required
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
