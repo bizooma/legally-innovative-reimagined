@@ -146,6 +146,7 @@ const Index = () => {
       <Contact />
       <DemoSite />
       <Newsletter />
+      <DemoSite />
       <GoogleMap />
       <Footer />
       <MobileFooterNav />
