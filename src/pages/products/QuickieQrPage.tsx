@@ -49,7 +49,7 @@ const QuickieQrPage = () => {
                 <div className="text-gray-700">Content Updates</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">10K+</div>
+                <div className="text-4xl font-bold text-legal-primary mb-2">N/A</div>
                 <div className="text-gray-700">Businesses Using</div>
               </div>
             </div>
