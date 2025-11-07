@@ -178,6 +178,8 @@ const Index = () => {
         bodyParagraph2="Our platform simplifies digital outreach, automates repetitive marketing tasks, and strengthens donor and volunteer engagement through cutting-edge AI technology built specifically to help nonprofits grow their impact in the digital age."
         cards={nonprofitCards}
       />
+      {/* Transition gradient between Non-Profits section and Map */}
+      <div className="h-32 bg-gradient-to-b from-black/90 via-black/50 to-transparent"></div>
       <GoogleMap />
       <Footer />
       <MobileFooterNav />

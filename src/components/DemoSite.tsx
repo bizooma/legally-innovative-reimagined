@@ -55,16 +55,13 @@ const DemoSite = ({
   ];
 
   const cardData = cards || defaultCards;
-  return <section id="demo-site" className="py-20 pb-48 relative" style={{
+  return <section id="demo-site" className="py-20 relative" style={{
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${bgImage}')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'
   }}>
-      {/* Bottom gradient fade for smooth transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent via-black/40 to-black/90 pointer-events-none z-10"></div>
-      
-      <div className="container mx-auto relative z-20">
+      <div className="container mx-auto">
         <div className="text-left max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             DIY Digital Marketing<br /><span className="text-legal-accent">Platform for {targetAudience}</span>
