@@ -101,7 +101,7 @@ const QuickieQrPage = () => {
                   <div className="mb-6">
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Solution</h3>
                     <p className="text-gray-700 mb-4">
-                      We implemented Quickie QR table tents with dynamic menu links. Each location got custom QR codes linking to digital menus that could be updated instantly. We added feedback forms, loyalty program signup, and social media links.
+                      TBD
                     </p>
                   </div>
                   <div>
