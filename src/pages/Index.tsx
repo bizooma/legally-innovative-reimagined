@@ -15,6 +15,7 @@ import GoogleMap from "@/components/GoogleMap";
 import Newsletter from "@/components/Newsletter";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
+import nonprofitVolunteersBg from "@/assets/nonprofit-volunteers-bg.jpg";
 
 const Index = () => {
   // Track scroll depth for homepage
@@ -146,7 +147,7 @@ const Index = () => {
       <Contact />
       <DemoSite />
       <Newsletter />
-      <DemoSite targetAudience="Non-Profits" />
+      <DemoSite targetAudience="Non-Profits" backgroundImage={nonprofitVolunteersBg} />
       <GoogleMap />
       <Footer />
       <MobileFooterNav />

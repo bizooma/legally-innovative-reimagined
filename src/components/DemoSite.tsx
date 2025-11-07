@@ -2,15 +2,18 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Monitor, Users, Database, Shield } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import diyMarketingBg from "@/assets/diy-marketing-bg.jpg";
+import nonprofitVolunteersBg from "@/assets/nonprofit-volunteers-bg.jpg";
 import { trackCalendarClick } from "@/utils/gtmTracking";
 
 interface DemoSiteProps {
   targetAudience?: string;
+  backgroundImage?: string;
 }
 
-const DemoSite = ({ targetAudience = "Law Firms" }: DemoSiteProps) => {
+const DemoSite = ({ targetAudience = "Law Firms", backgroundImage }: DemoSiteProps) => {
+  const bgImage = backgroundImage || diyMarketingBg;
   return <section id="demo-site" className="section-padding relative overflow-hidden" style={{
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${diyMarketingBg}')`,
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${bgImage}')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'
