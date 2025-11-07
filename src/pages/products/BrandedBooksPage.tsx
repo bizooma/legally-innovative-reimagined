@@ -237,20 +237,20 @@ const BrandedBooksPage = () => {
         <section className="section-padding bg-legal-light/30">
           <div className="container mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-legal-dark">
-              Flexible Pricing Options
+              Pricing
             </h2>
             <p className="text-center text-gray-700 mb-12 text-lg">
-              Choose the perfect package for your law firm's needs
+              Simple, transparent pricing for your law firm
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <Card className="border-legal-primary/20">
+            <div className="max-w-md mx-auto">
+              <Card className="border-legal-primary border-2 shadow-xl">
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-4 text-legal-dark">Starter Package</h3>
-                  <div className="mb-6">
+                  <h3 className="text-2xl font-bold mb-4 text-center text-legal-dark">Starter Package</h3>
+                  <div className="mb-6 text-center">
                     <span className="text-4xl font-bold text-legal-primary">$1,499</span>
                     <span className="text-gray-600 ml-2">one-time</span>
                   </div>
-                  <p className="text-gray-700 mb-6">Perfect for small firms</p>
+                  <p className="text-gray-700 mb-6 text-center">Perfect for small firms</p>
                   <ul className="space-y-3 mb-8">
                     <li className="flex items-start">
                       <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
@@ -273,92 +273,8 @@ const BrandedBooksPage = () => {
                       <span className="text-gray-700">Email support</span>
                     </li>
                   </ul>
-                  <Button className="w-full bg-legal-primary hover:bg-legal-dark text-white" variant="outline">
-                    Get Started
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 border-legal-primary shadow-xl relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-legal-primary text-white px-4 py-1 rounded-full text-sm font-bold">
-                    Most Popular
-                  </span>
-                </div>
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-4 text-legal-dark">Professional Package</h3>
-                  <div className="mb-6">
-                    <span className="text-4xl font-bold text-legal-primary">$3,999</span>
-                    <span className="text-gray-600 ml-2">one-time</span>
-                  </div>
-                  <p className="text-gray-700 mb-6">Best for growing firms</p>
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">300 custom books</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">Full design customization</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">Custom content & illustrations</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">3-4 week delivery</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">Priority support</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">Digital preview before printing</span>
-                    </li>
-                  </ul>
                   <Button className="w-full bg-legal-primary hover:bg-legal-dark text-white">
                     Get Started
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-legal-primary/20">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-4 text-legal-dark">Enterprise Package</h3>
-                  <div className="mb-6">
-                    <span className="text-4xl font-bold text-legal-primary">Custom</span>
-                  </div>
-                  <p className="text-gray-700 mb-6">For large firms</p>
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">500+ custom books</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">Premium design customization</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">Multiple product types</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">Expedited delivery options</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">Dedicated account manager</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-5 h-5 text-legal-primary mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">Ongoing design support</span>
-                    </li>
-                  </ul>
-                  <Button className="w-full bg-legal-primary hover:bg-legal-dark text-white" variant="outline">
-                    Contact Sales
                   </Button>
                 </CardContent>
               </Card>
