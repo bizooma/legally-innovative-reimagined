@@ -95,7 +95,7 @@ const QuickieQrPage = () => {
                   <div className="mb-6">
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Challenge</h3>
                     <p className="text-gray-700 mb-4">
-                      Bella's Bistro, a popular restaurant chain with 8 locations, wanted to modernize their menus and collect customer feedback. Printing new menus for specials cost $500/week, and customer engagement was minimal.
+                      TBD
                     </p>
                   </div>
                   <div className="mb-6">
