@@ -55,13 +55,16 @@ const DemoSite = ({
   ];
 
   const cardData = cards || defaultCards;
-  return <section id="demo-site" className="section-padding relative overflow-hidden" style={{
+  return <section id="demo-site" className="py-20 pb-32 relative overflow-hidden" style={{
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${bgImage}')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'
   }}>
-      <div className="container mx-auto">
+      {/* Bottom gradient fade for smooth transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black/70 pointer-events-none z-10"></div>
+      
+      <div className="container mx-auto relative z-20">
         <div className="text-left max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             DIY Digital Marketing<br /><span className="text-legal-accent">Platform for {targetAudience}</span>
