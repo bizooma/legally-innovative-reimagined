@@ -28,8 +28,10 @@ const NpoBotsPage = () => {
                 Revolutionary AI-powered chatbot platform that increased donor engagement by 340% and automated 80% of common inquiries for nonprofit organizations.
               </p>
               <div className="flex justify-center">
-                <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light">
-                  Get Started
+                <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light" asChild>
+                  <a href="https://npobots.com" target="_blank" rel="noopener noreferrer">
+                    Get Started
+                  </a>
                 </Button>
               </div>
             </div>
