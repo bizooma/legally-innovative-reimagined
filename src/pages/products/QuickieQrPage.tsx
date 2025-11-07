@@ -108,11 +108,11 @@ const QuickieQrPage = () => {
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Results</h3>
                     <ul className="space-y-3">
                       {[
-                        "85% of diners now scan QR codes for menus",
-                        "$26,000 saved annually on menu printing",
-                        "250% increase in loyalty program signups",
-                        "Daily menu updates for specials at zero cost",
-                        "2,500+ customer feedback responses monthly"
+                        "TBD",
+                        "TBD",
+                        "TBD",
+                        "TBD",
+                        "TBD"
                       ].map((result, index) => (
                         <li key={index} className="flex items-start">
                           <Check className="w-5 h-5 text-legal-primary mr-3 mt-1 flex-shrink-0" />
