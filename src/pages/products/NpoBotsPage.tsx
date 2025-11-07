@@ -201,8 +201,10 @@ const NpoBotsPage = () => {
             <p className="text-xl mb-8 text-legal-light max-w-2xl mx-auto">
               Join hundreds of nonprofits using NPO Bots to engage more donors and make a bigger impact.
             </p>
-            <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light">
-              Get Started Today
+            <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light" asChild>
+              <a href="https://npobots.com" target="_blank" rel="noopener noreferrer">
+                Get Started Today
+              </a>
             </Button>
           </div>
         </section>
