@@ -10,8 +10,8 @@ const AeoAnalyzerPage = () => {
   return (
     <>
       <Helmet>
-        <title>AEO Analyzer - Legal Analytics Dashboard | Bizooma</title>
-        <meta name="description" content="Advanced AI analytics platform for law firms. Identify case patterns, predict outcomes, and optimize legal strategies with 95% accuracy." />
+        <title>AEO Analyzer - AI Search Optimization Tool | Bizooma</title>
+        <meta name="description" content="Analyze your website and get actionable insights to improve your chances of being featured in AI-powered search results and snippets. Includes comprehensive page speed analysis." />
       </Helmet>
 
       <div className="min-h-screen bg-white">
@@ -22,10 +22,10 @@ const AeoAnalyzerPage = () => {
           <div className="container mx-auto">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                AEO Analyzer: AI-Powered Legal Analytics
+                AEO Analyzer: Optimize for AI-Powered Search
               </h1>
               <p className="text-xl mb-8 text-legal-light">
-                Advanced analytics platform that helps law firms identify case patterns, predict outcomes, and optimize legal strategies with data-driven insights and 95% accuracy.
+                Analyze your website and get actionable insights to improve your chances of being featured in AI-powered search results and snippets. Includes comprehensive page speed analysis like Google PageSpeed Insights.
               </p>
               <div className="flex justify-center">
                 <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light" asChild>
@@ -43,16 +43,16 @@ const AeoAnalyzerPage = () => {
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">60%</div>
-                <div className="text-gray-700">Faster Case Analysis</div>
+                <div className="text-4xl font-bold text-legal-primary mb-2">100+</div>
+                <div className="text-gray-700">SEO Factors Analyzed</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">95%</div>
-                <div className="text-gray-700">Prediction Accuracy</div>
+                <div className="text-4xl font-bold text-legal-primary mb-2">3 Min</div>
+                <div className="text-gray-700">Complete Analysis</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">500+</div>
-                <div className="text-gray-700">Cases Analyzed Daily</div>
+                <div className="text-4xl font-bold text-legal-primary mb-2">AI-Ready</div>
+                <div className="text-gray-700">Optimization Tips</div>
               </div>
             </div>
           </div>
@@ -62,16 +62,16 @@ const AeoAnalyzerPage = () => {
         <section className="section-padding">
           <div className="container mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-legal-dark">
-              Powerful Analytics for Law Firms
+              Powerful Website Analysis Features
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
-                { icon: Brain, title: "AI Pattern Recognition", description: "Identify winning strategies from thousands of similar cases" },
-                { icon: BarChart3, title: "Visual Analytics", description: "Interactive dashboards with real-time case insights" },
-                { icon: FileSearch, title: "Document Analysis", description: "Extract key information from case files automatically" },
-                { icon: TrendingUp, title: "Outcome Prediction", description: "Forecast case results based on historical data" },
-                { icon: Zap, title: "Real-Time Insights", description: "Get instant recommendations during case preparation" },
-                { icon: Shield, title: "Secure & Compliant", description: "Bank-level encryption and HIPAA compliance" }
+                { icon: Brain, title: "AI Search Optimization", description: "Get insights on how to optimize content for ChatGPT, Perplexity, and other AI search engines" },
+                { icon: BarChart3, title: "Page Speed Analysis", description: "Comprehensive performance metrics like Google PageSpeed Insights with actionable recommendations" },
+                { icon: FileSearch, title: "Content Analysis", description: "Evaluate your content structure and identify opportunities for featured snippets" },
+                { icon: TrendingUp, title: "SEO Score", description: "Track your optimization progress with detailed scoring across 100+ factors" },
+                { icon: Zap, title: "Instant Reports", description: "Get comprehensive analysis in under 3 minutes with easy-to-understand recommendations" },
+                { icon: Shield, title: "Technical SEO", description: "Identify technical issues that prevent AI engines from properly indexing your content" }
               ].map((feature, index) => (
                 <Card key={index} className="border-legal-primary/20 hover:shadow-lg transition-shadow">
                   <CardContent className="p-6">
@@ -90,31 +90,31 @@ const AeoAnalyzerPage = () => {
           <div className="container mx-auto">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-legal-dark">
-                Success Story: Johnson & Associates
+                Success Story: Mountain View Real Estate
               </h2>
               <Card className="border-none shadow-xl">
                 <CardContent className="p-8">
                   <div className="mb-6">
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Challenge</h3>
                     <p className="text-gray-700 mb-4">
-                      Johnson & Associates, a personal injury firm with 15 attorneys, was spending 20+ hours per case on research and analysis. With 50+ active cases, they needed a way to work more efficiently without sacrificing quality.
+                      Mountain View Real Estate, a boutique agency with 50+ property listings, was struggling to appear in AI-powered search results. While their traditional SEO was strong, they were being overlooked by ChatGPT, Perplexity, and other AI search engines when potential buyers asked for property recommendations.
                     </p>
                   </div>
                   <div className="mb-6">
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Solution</h3>
                     <p className="text-gray-700 mb-4">
-                      We implemented AEO Analyzer with integration to their case management system. The AI analyzed their historical case data, identifying patterns and success factors across 500+ cases spanning 10 years.
+                      We used AEO Analyzer to audit their website and identify gaps in AI search optimization. The tool revealed issues with content structure, page speed (2.8s load time), and missing schema markup that prevented AI engines from understanding their listings. They implemented all recommended fixes within two weeks.
                     </p>
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Results</h3>
                     <ul className="space-y-3">
                       {[
-                        "60% reduction in case research time",
-                        "95% accuracy in settlement value predictions",
-                        "35% increase in successful case outcomes",
-                        "$2.4M additional settlements in first year",
-                        "Freed 300+ attorney hours monthly for client service"
+                        "Featured in AI search results within 3 weeks",
+                        "Page load time improved from 2.8s to 0.9s",
+                        "65% increase in organic traffic from AI-powered searches",
+                        "43% boost in qualified leads from voice search",
+                        "Improved visibility in ChatGPT and Perplexity AI recommendations"
                       ].map((result, index) => (
                         <li key={index} className="flex items-start">
                           <Check className="w-5 h-5 text-legal-primary mr-3 mt-1 flex-shrink-0" />
@@ -133,19 +133,19 @@ const AeoAnalyzerPage = () => {
         <section className="section-padding">
           <div className="container mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-legal-dark">
-              What Legal Professionals Say
+              What Our Customers Say
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
-                  quote: "AEO Analyzer has revolutionized how we approach cases. The predictive analytics have been remarkably accurate, helping us make better strategic decisions and achieve superior outcomes for our clients.",
-                  author: "Michael Johnson",
-                  role: "Managing Partner, Johnson & Associates"
+                  quote: "AEO Analyzer showed us exactly what we needed to fix to start appearing in AI search results. Within a month, we were being recommended by ChatGPT for local property searches. The page speed improvements alone were worth it.",
+                  author: "Jennifer Adams",
+                  role: "Owner, Mountain View Real Estate"
                 },
                 {
-                  quote: "The time savings alone justified the investment, but the insights we've gained have transformed our practice. We're winning more cases and our clients are more satisfied than ever.",
-                  author: "Rebecca Martinez",
-                  role: "Senior Trial Attorney, Martinez Law Group"
+                  quote: "This tool is a game-changer. It's like having Google PageSpeed Insights combined with AI search optimization in one place. The actionable recommendations are clear and easy to implement, even for non-technical users.",
+                  author: "Marcus Chen",
+                  role: "Digital Marketing Manager, TechStart Solutions"
                 }
               ].map((testimonial, index) => (
                 <Card key={index} className="border-legal-primary/20">
@@ -166,50 +166,50 @@ const AeoAnalyzerPage = () => {
         <section className="section-padding bg-legal-light/30">
           <div className="container mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-legal-dark">
-              Flexible Pricing Plans
+              Simple, Transparent Pricing
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {[
                 {
-                  name: "Solo",
-                  price: "$499",
+                  name: "Starter",
+                  price: "$49",
                   period: "/month",
                   features: [
-                    "Up to 50 active cases",
-                    "Basic analytics dashboard",
-                    "Document analysis (100/month)",
+                    "5 website analyses per month",
+                    "Basic AEO score and recommendations",
+                    "Page speed analysis",
                     "Email support",
                     "Standard reports"
                   ]
                 },
                 {
-                  name: "Firm",
-                  price: "$1,299",
+                  name: "Professional",
+                  price: "$149",
                   period: "/month",
                   popular: true,
                   features: [
-                    "Up to 200 active cases",
-                    "Advanced analytics & predictions",
-                    "Unlimited document analysis",
-                    "Priority phone support",
-                    "Custom reports & exports",
-                    "Team collaboration tools",
-                    "API access"
+                    "25 website analyses per month",
+                    "Advanced AEO insights",
+                    "Detailed page speed breakdown",
+                    "Priority email support",
+                    "Custom branded reports",
+                    "Competitor comparisons",
+                    "Monthly trend tracking"
                   ]
                 },
                 {
-                  name: "Enterprise",
-                  price: "Custom",
-                  period: "",
+                  name: "Agency",
+                  price: "$399",
+                  period: "/month",
                   features: [
-                    "Unlimited cases",
-                    "White-label solution",
-                    "Custom AI model training",
+                    "Unlimited website analyses",
+                    "White-label reports",
+                    "API access",
                     "Dedicated account manager",
-                    "Advanced integrations",
-                    "On-premise deployment option",
-                    "SLA guarantee",
-                    "Custom development"
+                    "Advanced competitor analysis",
+                    "Priority phone support",
+                    "Custom integrations",
+                    "Team collaboration tools"
                   ]
                 }
               ].map((plan, index) => (
@@ -236,7 +236,7 @@ const AeoAnalyzerPage = () => {
                       ))}
                     </ul>
                     <Button className={`w-full ${plan.popular ? 'bg-legal-primary hover:bg-legal-dark' : ''}`}>
-                      {plan.price === "Custom" ? "Contact Sales" : "Request Demo"}
+                      {plan.name === "Agency" ? "Contact Sales" : "Get Started"}
                     </Button>
                   </CardContent>
                 </Card>
@@ -249,13 +249,15 @@ const AeoAnalyzerPage = () => {
         <section className="section-padding bg-gradient-to-br from-legal-primary to-legal-dark text-white">
           <div className="container mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Transform Your Legal Practice?
+              Ready to Optimize for AI Search?
             </h2>
             <p className="text-xl mb-8 text-legal-light max-w-2xl mx-auto">
-              Join leading law firms using AEO Analyzer to win more cases and serve clients better.
+              Join hundreds of businesses using AEO Analyzer to dominate AI-powered search results and improve their website performance.
             </p>
-            <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light">
-              Schedule Your Demo Today
+            <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light" asChild>
+              <a href="https://aeoanalyzer.com" target="_blank" rel="noopener noreferrer">
+                Start Your Free Analysis
+              </a>
             </Button>
           </div>
         </section>
