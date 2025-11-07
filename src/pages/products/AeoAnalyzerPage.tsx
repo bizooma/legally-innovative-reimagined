@@ -168,79 +168,37 @@ const AeoAnalyzerPage = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-legal-dark">
               Simple, Transparent Pricing
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {[
-                {
-                  name: "Starter",
-                  price: "$49",
-                  period: "/month",
-                  features: [
-                    "5 website analyses per month",
-                    "Basic AEO score and recommendations",
-                    "Page speed analysis",
-                    "Email support",
-                    "Standard reports"
-                  ]
-                },
-                {
-                  name: "Professional",
-                  price: "$149",
-                  period: "/month",
-                  popular: true,
-                  features: [
-                    "25 website analyses per month",
-                    "Advanced AEO insights",
-                    "Detailed page speed breakdown",
-                    "Priority email support",
-                    "Custom branded reports",
-                    "Competitor comparisons",
-                    "Monthly trend tracking"
-                  ]
-                },
-                {
-                  name: "Agency",
-                  price: "$399",
-                  period: "/month",
-                  features: [
-                    "Unlimited website analyses",
-                    "White-label reports",
-                    "API access",
-                    "Dedicated account manager",
-                    "Advanced competitor analysis",
-                    "Priority phone support",
-                    "Custom integrations",
-                    "Team collaboration tools"
-                  ]
-                }
-              ].map((plan, index) => (
-                <Card key={index} className={`${plan.popular ? 'border-legal-primary border-2 shadow-xl' : 'border-legal-primary/20'} relative`}>
-                  {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-legal-primary text-white px-4 py-1 rounded-full text-sm font-semibold">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-                  <CardContent className="p-6">
-                    <h3 className="text-2xl font-bold mb-2 text-legal-dark">{plan.name}</h3>
-                    <div className="mb-6">
-                      <span className="text-4xl font-bold text-legal-primary">{plan.price}</span>
-                      <span className="text-gray-600">{plan.period}</span>
-                    </div>
-                    <ul className="space-y-3 mb-6">
-                      {plan.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-start">
-                          <Check className="w-5 h-5 text-legal-primary mr-2 mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-700">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Button className={`w-full ${plan.popular ? 'bg-legal-primary hover:bg-legal-dark' : ''}`}>
-                      {plan.name === "Agency" ? "Contact Sales" : "Get Started"}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="max-w-md mx-auto">
+              <Card className="border-legal-primary border-2 shadow-xl">
+                <CardContent className="p-8">
+                  <h3 className="text-3xl font-bold mb-2 text-center text-legal-dark">AEO Analyzer Pro</h3>
+                  <p className="text-center text-gray-600 mb-6">Get premium access to all AEO analysis features</p>
+                  <div className="mb-2 text-center">
+                    <span className="text-5xl font-bold text-legal-primary">$49.95</span>
+                    <span className="text-xl text-gray-600">/month</span>
+                  </div>
+                  <p className="text-center text-sm text-gray-600 mb-8">Billed monthly</p>
+                  <ul className="space-y-4 mb-8">
+                    {[
+                      "Comprehensive website analysis",
+                      "Detailed recommendations for content optimization",
+                      "Performance tracking and historical data",
+                      "Export analysis reports",
+                      "Priority support"
+                    ].map((feature, index) => (
+                      <li key={index} className="flex items-start">
+                        <Check className="w-6 h-6 text-legal-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700 text-lg">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button className="w-full bg-legal-primary hover:bg-legal-dark text-lg py-6" asChild>
+                    <a href="https://aeoanalyzer.com" target="_blank" rel="noopener noreferrer">
+                      Get Started
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
