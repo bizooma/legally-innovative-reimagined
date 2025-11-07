@@ -59,7 +59,7 @@ const Hero = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
               Where <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Marketing</span> Meets <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Code + AI</span>
             </h1>
-            <p className="text-lg md:text-xl mb-8 text-legal-light">At Bizooma, we specialize in building intelligent marketing and software solutions powered by artificial intelligence. Our team helps law firms, nonprofits, and startups accelerate growth through AI-driven marketing strategies, custom software development, and automation tools that attract, engage, and convert leads with precision.</p>
+            <p className="text-lg md:text-xl mb-8 text-legal-light">At Bizooma, we specialize in building intelligent marketing and software solutions powered by artificial intelligence.<br />Our team helps law firms, nonprofits, and startups accelerate growth through AI-driven marketing strategies, custom software development, and automation tools that attract, engage, and convert leads with precision.</p>
             <div className="flex flex-col md:flex-row md:items-center gap-6 text-white mb-6">
               <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
                 <Phone size={20} className="mr-2" />
