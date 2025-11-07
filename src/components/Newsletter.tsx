@@ -46,7 +46,7 @@ const Newsletter = () => {
   }, []);
   return <section className="section-padding bg-white">
       <div className="container mx-auto">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-left">
           <div className="flex justify-center mb-6">
             <div className="h-16 w-auto flex items-center justify-center">
               <ResponsiveImage 
