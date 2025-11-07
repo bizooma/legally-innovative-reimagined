@@ -18,6 +18,7 @@ interface DemoSiteProps {
   bodyParagraph2?: React.ReactNode;
   cards?: CardData[];
   titleAccentColor?: string;
+  logo?: string;
 }
 
 const DemoSite = ({ 
@@ -26,7 +27,8 @@ const DemoSite = ({
   bodyParagraph1,
   bodyParagraph2,
   cards,
-  titleAccentColor = "text-amber-200"
+  titleAccentColor = "text-amber-200",
+  logo
 }: DemoSiteProps) => {
   const bgImage = backgroundImage || diyMarketingBg;
   
@@ -65,6 +67,11 @@ const DemoSite = ({
   }}>
       <div className="container mx-auto">
         <div className="text-left max-w-3xl mx-auto mb-16">
+          {logo && (
+            <div className="mb-8">
+              <img src={logo} alt={`${targetAudience} Logo`} className="h-20 w-auto" />
+            </div>
+          )}
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             DIY Digital Marketing<br /><span className={titleAccentColor}>Platform for {targetAudience}</span>
           </h2>

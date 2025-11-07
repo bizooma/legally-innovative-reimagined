@@ -16,6 +16,7 @@ import Newsletter from "@/components/Newsletter";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
 import nonprofitVolunteersBg from "@/assets/nonprofit-volunteers-bg.jpg";
+import causeioLogo from "@/assets/causeio-logo.png";
 import { Heart, UserPlus, DollarSign, FileText } from "lucide-react";
 
 const Index = () => {
@@ -178,6 +179,7 @@ const Index = () => {
         bodyParagraph2="Our platform simplifies digital outreach, automates repetitive marketing tasks, and strengthens donor and volunteer engagement through cutting-edge AI technology built specifically to help nonprofits grow their impact in the digital age."
         cards={nonprofitCards}
         titleAccentColor="text-sky-300"
+        logo={causeioLogo}
       />
       {/* Transition gradient between Non-Profits section and Map */}
       <div className="h-32 bg-gradient-to-b from-black/90 via-black/50 to-transparent"></div>
