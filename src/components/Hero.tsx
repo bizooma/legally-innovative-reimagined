@@ -6,7 +6,25 @@ import { trackPhoneClick, trackCTAClick } from "@/utils/gtmTracking";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
 const Hero = () => {
   useEffect(() => {
-    // Create the script element dynamically so it runs after mount
+    // Check if script already exists
+    const existingScript = document.querySelector('script[src="https://agent.d-id.com/v2/index.js"]');
+    
+    // Clear the container to ensure fresh initialization
+    const container = document.getElementById('did-agent-hero');
+    if (container) {
+      container.innerHTML = '';
+    }
+    
+    if (existingScript) {
+      console.log('✅ D-ID script already loaded, container cleared for reinitialization');
+      return () => {
+        if (container) {
+          container.innerHTML = '';
+        }
+      };
+    }
+
+    // Create the script element dynamically
     const script = document.createElement('script');
     script.type = 'module';
     script.src = 'https://agent.d-id.com/v2/index.js';
@@ -28,10 +46,15 @@ const Hero = () => {
     };
     document.body.appendChild(script);
 
-    // Cleanup script on unmount
+    // Cleanup on unmount
     return () => {
-      console.log('🧹 Cleaning up D-ID script from Hero');
-      document.body.removeChild(script);
+      console.log('🧹 Cleaning up D-ID from Hero');
+      if (container) {
+        container.innerHTML = '';
+      }
+      if (script.parentNode) {
+        document.body.removeChild(script);
+      }
     };
   }, []);
   return <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
