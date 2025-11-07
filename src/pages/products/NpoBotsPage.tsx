@@ -69,7 +69,7 @@ const NpoBotsPage = () => {
                 { icon: MessageSquare, title: "Intelligent Conversations", description: "Natural language processing understands donor intent and responds contextually" },
                 { icon: TrendingUp, title: "Donor Analytics", description: "Track engagement patterns and optimize your fundraising strategies" },
                 { icon: Clock, title: "24/7 Availability", description: "Never miss an opportunity to connect with supporters" },
-                { icon: Users, title: "Multi-Channel Support", description: "Deploy on multiple .org websites that are part of your organization" },
+                { icon: Users, title: "Multi-Site Support", description: "Deploy on multiple .org websites that are part of your organization" },
                 { icon: Zap, title: "Instant Responses", description: "Answer common questions immediately, freeing staff for complex issues" },
                 { icon: Check, title: "Easy Installation", description: "Copy and paste a script onto your website" }
               ].map((feature, index) => (
