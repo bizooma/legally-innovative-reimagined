@@ -29,7 +29,7 @@ const NpoBotsPage = () => {
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light">
-                  Start Free Trial
+                  Get Started
                 </Button>
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                   Watch Demo
@@ -195,10 +195,10 @@ const NpoBotsPage = () => {
                     ))}
                   </ul>
                   <Button className="w-full bg-legal-primary hover:bg-legal-dark text-lg py-6">
-                    Start Free Trial
+                    Get Started Today
                   </Button>
                   <p className="text-center text-sm text-gray-600 mt-4">
-                    14-day free trial • No credit card required
+                    Easy setup • Cancel anytime
                   </p>
                 </CardContent>
               </Card>
@@ -216,7 +216,7 @@ const NpoBotsPage = () => {
               Join hundreds of nonprofits using NPO Bots to engage more donors and make a bigger impact.
             </p>
             <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light">
-              Start Your Free 14-Day Trial
+              Get Started Today
             </Button>
           </div>
         </section>
