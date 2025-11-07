@@ -8,8 +8,8 @@ import { trackCalendarClick } from "@/utils/gtmTracking";
 interface DemoSiteProps {
   targetAudience?: string;
   backgroundImage?: string;
-  bodyParagraph1?: string;
-  bodyParagraph2?: string;
+  bodyParagraph1?: React.ReactNode;
+  bodyParagraph2?: React.ReactNode;
 }
 
 const DemoSite = ({ 
@@ -20,7 +20,7 @@ const DemoSite = ({
 }: DemoSiteProps) => {
   const bgImage = backgroundImage || diyMarketingBg;
   
-  const defaultParagraph1 = "Experience our comprehensive SaaS marketing platform firsthand at amicusedge.com. AmicusEdge is an AI-powered legal technology platform featuring video chatbots, QR code generators, SEO/AEO analyzers, and voice search simulators - all integrated into one powerful marketing solution.";
+  const defaultParagraph1 = <>Experience our comprehensive SaaS marketing platform firsthand at <a href="https://amicusedge.com" className="text-white font-semibold underline hover:text-white/90 transition-colors" target="_blank" rel="noopener noreferrer">amicusedge.com</a>. AmicusEdge is an AI-powered legal technology platform featuring video chatbots, QR code generators, SEO/AEO analyzers, and voice search simulators - all integrated into one powerful marketing solution.</>;
   const defaultParagraph2 = "Our platform streamlines workflows, automates repetitive tasks, and enhances client engagement through cutting-edge AI technology designed specifically for modern companies looking to thrive in the digital landscape.";
   return <section id="demo-site" className="section-padding relative overflow-hidden" style={{
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${bgImage}')`,

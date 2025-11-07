@@ -150,7 +150,7 @@ const Index = () => {
       <DemoSite 
         targetAudience="Non-Profits" 
         backgroundImage={nonprofitVolunteersBg}
-        bodyParagraph1="Experience our all-in-one nonprofit marketing platform firsthand at Causeio.com. Causeio empowers mission-driven organizations with AI-powered tools including video chatbots, QR code generators, SEO/AEO analyzers, and volunteer engagement systems — all integrated into one powerful SaaS solution."
+        bodyParagraph1={<>Experience our all-in-one nonprofit marketing platform firsthand at <a href="https://causeio.com" className="text-white font-semibold underline hover:text-white/90 transition-colors" target="_blank" rel="noopener noreferrer">Causeio.com</a>. Causeio empowers mission-driven organizations with AI-powered tools including video chatbots, QR code generators, SEO/AEO analyzers, and volunteer engagement systems — all integrated into one powerful SaaS solution.</>}
         bodyParagraph2="Our platform simplifies digital outreach, automates repetitive marketing tasks, and strengthens donor and volunteer engagement through cutting-edge AI technology built specifically to help nonprofits grow their impact in the digital age."
       />
       <GoogleMap />
