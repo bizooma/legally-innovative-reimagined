@@ -48,13 +48,13 @@ const Newsletter = () => {
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto text-left">
           <div className="flex justify-center mb-6">
-            <div className="h-16 w-auto flex items-center justify-center">
+            <div className="h-24 w-auto flex items-center justify-center">
               <ResponsiveImage 
                 src={routeToResultsLogo} 
                 alt="Route to Results Newsletter - AI Marketing & Development Insights" 
-                sizes="48px"
-                widths={[48, 96]}
-                className="h-12 w-auto object-contain" 
+                sizes="96px"
+                widths={[96, 192]}
+                className="h-20 w-auto object-contain" 
               />
             </div>
           </div>
