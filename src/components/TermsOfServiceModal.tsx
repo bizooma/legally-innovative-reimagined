@@ -317,7 +317,7 @@ const TermsOfServiceModal = ({ triggerClassName }: TermsOfServiceModalProps) => 
           <hr className="my-6" />
           
           <p className="italic">
-            By using LegallyInnovative.com, our Alexa skill, microsites, or any of our services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
+            By using Bizooma.com, our Alexa skill, microsites, or any of our services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
           </p>
         </div>
       </DialogContent>
