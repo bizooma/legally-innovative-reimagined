@@ -6,8 +6,10 @@ import underConstructionImg from "@/assets/under-construction.webp";
 import aeoAnalyzerImg from "@/assets/aeo-analyzer-screenshot.png";
 import npobotsImg from "@/assets/npobots-screenshot.png";
 import { useEffect, useRef, useState } from "react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const MarketingProducts = () => {
+  const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
   const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -122,6 +124,7 @@ const MarketingProducts = () => {
 
   return (
     <section 
+      ref={sectionRef}
       className="section-padding"
       style={{
         backgroundImage: `linear-gradient(rgba(122, 10, 10, 0.85), rgba(122, 10, 10, 0.85)), url('${whyChooseBg}')`,

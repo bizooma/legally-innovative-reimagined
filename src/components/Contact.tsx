@@ -6,7 +6,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { trackFormSubmission, trackPhoneClick, trackEmailClick, trackCalendarClick } from "@/utils/gtmTracking";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+
 const Contact = () => {
+  const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
   const {
     toast
   } = useToast();
@@ -74,7 +77,7 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
-  return <section id="contact" className="section-padding bg-gradient-to-br from-legal-light/50 via-white to-white">
+  return <section id="contact" ref={sectionRef} className="section-padding bg-gradient-to-br from-legal-light/50 via-white to-white">
       <div className="container mx-auto">
         <div className="text-left max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">

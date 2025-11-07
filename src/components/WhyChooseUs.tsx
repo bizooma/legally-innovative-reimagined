@@ -1,8 +1,10 @@
 
 import { Check } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const WhyChooseUs = () => {
+  const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
   const reasons = [
     {
       title: "Industry Expertise",
@@ -33,6 +35,7 @@ const WhyChooseUs = () => {
   return (
     <section 
       id="why-us" 
+      ref={sectionRef}
       className="section-padding relative overflow-hidden"
       style={{
         backgroundImage: `linear-gradient(rgba(122, 10, 10, 0.85), rgba(122, 10, 10, 0.85)), url('${whyChooseBg}')`,
