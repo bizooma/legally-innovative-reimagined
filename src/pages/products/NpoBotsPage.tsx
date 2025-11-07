@@ -180,8 +180,10 @@ const NpoBotsPage = () => {
                         <span className="text-gray-700 text-lg">{feature}</span>
                       </li>)}
                   </ul>
-                  <Button className="w-full bg-legal-primary hover:bg-legal-dark text-lg py-6">
-                    Get Started Today
+                  <Button className="w-full bg-legal-primary hover:bg-legal-dark text-lg py-6" asChild>
+                    <a href="https://npobots.com" target="_blank" rel="noopener noreferrer">
+                      Get Started Today
+                    </a>
                   </Button>
                   <p className="text-center text-sm text-gray-600 mt-4">
                     Easy setup • Cancel anytime
