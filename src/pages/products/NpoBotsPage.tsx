@@ -5,10 +5,8 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check, MessageSquare, TrendingUp, Clock, Users, Zap } from "lucide-react";
-
 const NpoBotsPage = () => {
-  return (
-    <>
+  return <>
       <Helmet>
         <title>NPO Bots - AI-Powered Nonprofit Engagement | Bizooma</title>
         <meta name="description" content="Revolutionary AI chatbot platform for nonprofits. Increase donor engagement by 340% and automate 80% of inquiries with 24/7 support." />
@@ -65,22 +63,37 @@ const NpoBotsPage = () => {
               Powerful Features for Nonprofits
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                { icon: MessageSquare, title: "Intelligent Conversations", description: "Natural language processing understands donor intent and responds contextually" },
-                { icon: TrendingUp, title: "Donor Analytics", description: "Track engagement patterns and optimize your fundraising strategies" },
-                { icon: Clock, title: "24/7 Availability", description: "Never miss an opportunity to connect with supporters" },
-                { icon: Users, title: "Multi-Site Support", description: "Deploy on multiple .org websites that are part of your organization" },
-                { icon: Zap, title: "Instant Responses", description: "Answer common questions immediately, freeing staff for complex issues" },
-                { icon: Check, title: "Easy Installation", description: "Copy and paste a script onto your website" }
-              ].map((feature, index) => (
-                <Card key={index} className="border-legal-primary/20 hover:shadow-lg transition-shadow">
+              {[{
+              icon: MessageSquare,
+              title: "Intelligent Conversations",
+              description: "Natural language processing understands donor intent and responds contextually"
+            }, {
+              icon: TrendingUp,
+              title: "Donor Analytics",
+              description: "Track engagement patterns and optimize your fundraising strategies"
+            }, {
+              icon: Clock,
+              title: "24/7 Availability",
+              description: "Never miss an opportunity to connect with supporters"
+            }, {
+              icon: Users,
+              title: "Multi-Site Support",
+              description: "Deploy on multiple .org websites that are part of your organization"
+            }, {
+              icon: Zap,
+              title: "Instant Responses",
+              description: "Answer common questions immediately, freeing staff for complex issues"
+            }, {
+              icon: Check,
+              title: "Easy Installation",
+              description: "Copy and paste a script onto your website"
+            }].map((feature, index) => <Card key={index} className="border-legal-primary/20 hover:shadow-lg transition-shadow">
                   <CardContent className="p-6">
                     <feature.icon className="w-12 h-12 text-legal-primary mb-4" />
                     <h3 className="text-xl font-bold mb-2 text-legal-dark">{feature.title}</h3>
                     <p className="text-gray-700">{feature.description}</p>
                   </CardContent>
-                </Card>
-              ))}
+                </Card>)}
             </div>
           </div>
         </section>
@@ -102,25 +115,15 @@ const NpoBotsPage = () => {
                   </div>
                   <div className="mb-6">
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Solution</h3>
-                    <p className="text-gray-700 mb-4">
-                      We implemented NPO Bots with custom training on Hope Foundation's programs, FAQs, and donation processes. The AI chatbot was deployed across their website, Facebook page, and SMS platform, providing instant responses while escalating complex queries to staff.
-                    </p>
+                    <p className="text-gray-700 mb-4">We implemented NPO Bots with custom training on Hope Foundation's programs, FAQs, and donation processes. The AI chatbot was deployed across their website, providing instant responses while escalating complex queries to staff.</p>
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Results</h3>
                     <ul className="space-y-3">
-                      {[
-                        "340% increase in donor engagement rates",
-                        "80% of inquiries fully automated without staff intervention",
-                        "Response time reduced from 24 hours to under 30 seconds",
-                        "45% increase in online donations within 3 months",
-                        "Staff time redirected to strategic relationship building"
-                      ].map((result, index) => (
-                        <li key={index} className="flex items-start">
+                      {["340% increase in donor engagement rates", "80% of inquiries fully automated without staff intervention", "Response time reduced from 24 hours to under 30 seconds", "45% increase in online donations within 3 months", "Staff time redirected to strategic relationship building"].map((result, index) => <li key={index} className="flex items-start">
                           <Check className="w-5 h-5 text-legal-primary mr-3 mt-1 flex-shrink-0" />
                           <span className="text-gray-700">{result}</span>
-                        </li>
-                      ))}
+                        </li>)}
                     </ul>
                   </div>
                 </CardContent>
@@ -136,19 +139,15 @@ const NpoBotsPage = () => {
               What Nonprofits Say
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[
-                {
-                  quote: "NPO Bots transformed how we engage with donors. We're now available 24/7, and our donation rates have skyrocketed. It's like having a dedicated team working around the clock.",
-                  author: "Sarah Mitchell",
-                  role: "Executive Director, Hope Foundation"
-                },
-                {
-                  quote: "The ROI was immediate. Within the first month, we saw a 200% increase in donor inquiries being resolved, and our team could focus on building deeper relationships instead of answering repetitive questions.",
-                  author: "David Chen",
-                  role: "Development Director, Community Outreach Alliance"
-                }
-              ].map((testimonial, index) => (
-                <Card key={index} className="border-legal-primary/20">
+              {[{
+              quote: "NPO Bots transformed how we engage with donors. We're now available 24/7, and our donation rates have skyrocketed. It's like having a dedicated team working around the clock.",
+              author: "Sarah Mitchell",
+              role: "Executive Director, Hope Foundation"
+            }, {
+              quote: "The ROI was immediate. Within the first month, we saw a 200% increase in donor inquiries being resolved, and our team could focus on building deeper relationships instead of answering repetitive questions.",
+              author: "David Chen",
+              role: "Development Director, Community Outreach Alliance"
+            }].map((testimonial, index) => <Card key={index} className="border-legal-primary/20">
                   <CardContent className="p-6">
                     <p className="text-gray-700 italic mb-4">"{testimonial.quote}"</p>
                     <div className="border-t pt-4">
@@ -156,8 +155,7 @@ const NpoBotsPage = () => {
                       <p className="text-sm text-gray-600">{testimonial.role}</p>
                     </div>
                   </CardContent>
-                </Card>
-              ))}
+                </Card>)}
             </div>
           </div>
         </section>
@@ -177,21 +175,10 @@ const NpoBotsPage = () => {
                     <span className="text-xl text-gray-600">/month</span>
                   </div>
                   <ul className="space-y-4 mb-8">
-                    {[
-                      "Up to 2,000 conversations/month",
-                      "Deploy on your website",
-                      "24/7 automated responses",
-                      "Donor engagement analytics",
-                      "Email support",
-                      "Custom AI training",
-                      "Lead capture & qualification",
-                      "Easy CRM integration"
-                    ].map((feature, index) => (
-                      <li key={index} className="flex items-start">
+                    {["Up to 2,000 conversations/month", "Deploy on your website", "24/7 automated responses", "Donor engagement analytics", "Email support", "Custom AI training", "Lead capture & qualification", "Easy CRM integration"].map((feature, index) => <li key={index} className="flex items-start">
                         <Check className="w-6 h-6 text-legal-primary mr-3 mt-0.5 flex-shrink-0" />
                         <span className="text-gray-700 text-lg">{feature}</span>
-                      </li>
-                    ))}
+                      </li>)}
                   </ul>
                   <Button className="w-full bg-legal-primary hover:bg-legal-dark text-lg py-6">
                     Get Started Today
@@ -223,8 +210,6 @@ const NpoBotsPage = () => {
         <Footer />
         <MobileFooterNav />
       </div>
-    </>
-  );
+    </>;
 };
-
 export default NpoBotsPage;
