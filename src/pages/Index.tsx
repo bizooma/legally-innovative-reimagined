@@ -17,6 +17,7 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
 import nonprofitVolunteersBg from "@/assets/nonprofit-volunteers-bg.jpg";
 import causeioLogo from "@/assets/causeio-logo.png";
+import amicusedgeLogo from "@/assets/amicusedge-logo.png";
 import { Heart, UserPlus, DollarSign, FileText } from "lucide-react";
 
 const Index = () => {
@@ -170,7 +171,7 @@ const Index = () => {
       <FAQ />
       <WhyChooseUs />
       <Contact />
-      <DemoSite />
+      <DemoSite logo={amicusedgeLogo} />
       <Newsletter />
       <DemoSite 
         targetAudience="Non-Profits" 
