@@ -11,7 +11,7 @@ const DemoSite = () => {
     backgroundRepeat: 'no-repeat'
   }}>
       <div className="container mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-left max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             DIY Digital Marketing <span className="text-legal-accent">Platform for Law Firms</span>
           </h2>
