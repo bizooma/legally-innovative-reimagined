@@ -41,7 +41,7 @@ const QuickieQrPage = () => {
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">N/A</div>
+                <div className="text-4xl font-bold text-legal-primary mb-2">TBD</div>
                 <div className="text-gray-700">Increase in Engagement</div>
               </div>
               <div className="text-center">
@@ -49,7 +49,7 @@ const QuickieQrPage = () => {
                 <div className="text-gray-700">Content Updates</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">N/A</div>
+                <div className="text-4xl font-bold text-legal-primary mb-2">TBD</div>
                 <div className="text-gray-700">Businesses Using</div>
               </div>
             </div>
@@ -88,7 +88,7 @@ const QuickieQrPage = () => {
           <div className="container mx-auto">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-legal-dark">
-                Success Story: N/A
+                Success Story: TBD
               </h2>
               <Card className="border-none shadow-xl">
                 <CardContent className="p-8">
