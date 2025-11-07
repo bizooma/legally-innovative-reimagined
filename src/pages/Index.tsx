@@ -147,7 +147,12 @@ const Index = () => {
       <Contact />
       <DemoSite />
       <Newsletter />
-      <DemoSite targetAudience="Non-Profits" backgroundImage={nonprofitVolunteersBg} />
+      <DemoSite 
+        targetAudience="Non-Profits" 
+        backgroundImage={nonprofitVolunteersBg}
+        bodyParagraph1="Experience our all-in-one nonprofit marketing platform firsthand at Causeio.com. Causeio empowers mission-driven organizations with AI-powered tools including video chatbots, QR code generators, SEO/AEO analyzers, and volunteer engagement systems — all integrated into one powerful SaaS solution."
+        bodyParagraph2="Our platform simplifies digital outreach, automates repetitive marketing tasks, and strengthens donor and volunteer engagement through cutting-edge AI technology built specifically to help nonprofits grow their impact in the digital age."
+      />
       <GoogleMap />
       <Footer />
       <MobileFooterNav />
