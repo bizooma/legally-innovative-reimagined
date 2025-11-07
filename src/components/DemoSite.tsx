@@ -1,27 +1,60 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Monitor, Users, Database, Shield } from "lucide-react";
+import { ArrowRight, Monitor, Users, Database, Shield, Heart, UserPlus, DollarSign, FileText } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import diyMarketingBg from "@/assets/diy-marketing-bg.jpg";
 import nonprofitVolunteersBg from "@/assets/nonprofit-volunteers-bg.jpg";
 import { trackCalendarClick } from "@/utils/gtmTracking";
+
+interface CardData {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+}
 
 interface DemoSiteProps {
   targetAudience?: string;
   backgroundImage?: string;
   bodyParagraph1?: React.ReactNode;
   bodyParagraph2?: React.ReactNode;
+  cards?: CardData[];
 }
 
 const DemoSite = ({ 
   targetAudience = "Law Firms", 
   backgroundImage,
   bodyParagraph1,
-  bodyParagraph2
+  bodyParagraph2,
+  cards
 }: DemoSiteProps) => {
   const bgImage = backgroundImage || diyMarketingBg;
   
   const defaultParagraph1 = <>Experience our comprehensive SaaS marketing platform firsthand at <a href="https://amicusedge.com" className="text-white font-semibold underline hover:text-white/90 transition-colors" target="_blank" rel="noopener noreferrer">amicusedge.com</a>. AmicusEdge is an AI-powered legal technology platform featuring video chatbots, QR code generators, SEO/AEO analyzers, and voice search simulators - all integrated into one powerful marketing solution.</>;
   const defaultParagraph2 = "Our platform streamlines workflows, automates repetitive tasks, and enhances client engagement through cutting-edge AI technology designed specifically for modern companies looking to thrive in the digital landscape.";
+
+  const defaultCards: CardData[] = [
+    {
+      icon: Monitor,
+      title: "AI Video Chatbots",
+      description: "Deploy intelligent video chatbots on your website to engage potential clients 24/7, qualify leads automatically, and provide instant responses to common legal questions while you focus on practicing law."
+    },
+    {
+      icon: Users,
+      title: "SEO/AEO Optimization",
+      description: "Boost your online visibility with our advanced SEO and Answer Engine Optimization (AEO) tools that help your business rank higher in search results and voice search queries, driving more qualified leads to your practice."
+    },
+    {
+      icon: Database,
+      title: "Document Automation & QR Tools",
+      description: "Automate document drafting including wills, trusts, and legal forms while using QR code generators to create seamless client intake processes and streamline your practice operations."
+    },
+    {
+      icon: Shield,
+      title: "Voice Search & Analytics",
+      description: "Stay ahead of the curve with voice search simulators and comprehensive analytics that track your digital marketing performance, helping you understand and optimize your firm's online presence."
+    }
+  ];
+
+  const cardData = cards || defaultCards;
   return <section id="demo-site" className="section-padding relative overflow-hidden" style={{
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${bgImage}')`,
     backgroundSize: 'cover',
@@ -42,69 +75,26 @@ const DemoSite = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <Card className="border border-white/20 shadow-lg hover:shadow-xl transition-shadow bg-white/10 backdrop-blur-md">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-6">
-                  <Monitor className="h-6 w-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-white">AI Video Chatbots</h3>
-                  <p className="text-white/90">
-                    Deploy intelligent video chatbots on your website to engage potential clients 24/7, qualify leads automatically, and provide instant responses to common legal questions while you focus on practicing law.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border border-white/20 shadow-lg hover:shadow-xl transition-shadow bg-white/10 backdrop-blur-md">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-6">
-                  <Users className="h-6 w-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-white">SEO/AEO Optimization</h3>
-                  <p className="text-white/90">
-                    Boost your online visibility with our advanced SEO and Answer Engine Optimization (AEO) tools that help your business rank higher in search results and voice search queries, driving more qualified leads to your practice.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border border-white/20 shadow-lg hover:shadow-xl transition-shadow bg-white/10 backdrop-blur-md">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-6">
-                  <Database className="h-6 w-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-white">Document Automation & QR Tools</h3>
-                  <p className="text-white/90">
-                    Automate document drafting including wills, trusts, and legal forms while using QR code generators to create seamless client intake processes and streamline your practice operations.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border border-white/20 shadow-lg hover:shadow-xl transition-shadow bg-white/10 backdrop-blur-md">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-6">
-                  <Shield className="h-6 w-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-white">Voice Search & Analytics</h3>
-                  <p className="text-white/90">
-                    Stay ahead of the curve with voice search simulators and comprehensive analytics that track your digital marketing performance, helping you understand and optimize your firm's online presence.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          {cardData.map((card, index) => {
+            const IconComponent = card.icon;
+            return (
+              <Card key={index} className="border border-white/20 shadow-lg hover:shadow-xl transition-shadow bg-white/10 backdrop-blur-md">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-6">
+                      <IconComponent className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold mb-3 text-white">{card.title}</h3>
+                      <p className="text-white/90">
+                        {card.description}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         <div className="text-center">

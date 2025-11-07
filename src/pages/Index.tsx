@@ -16,10 +16,34 @@ import Newsletter from "@/components/Newsletter";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
 import nonprofitVolunteersBg from "@/assets/nonprofit-volunteers-bg.jpg";
+import { Heart, UserPlus, DollarSign, FileText } from "lucide-react";
 
 const Index = () => {
   // Track scroll depth for homepage
   useScrollTracking({ pageName: 'Homepage' });
+
+  const nonprofitCards = [
+    {
+      icon: Heart,
+      title: "Donor Management",
+      description: "Streamline donor relationships with intelligent CRM tools that track giving history, automate thank-you communications, and identify major gift opportunities to maximize your fundraising impact."
+    },
+    {
+      icon: UserPlus,
+      title: "Volunteer Coordination",
+      description: "Efficiently manage volunteer recruitment, scheduling, and engagement with automated communications, shift tracking, and recognition systems that keep your volunteers motivated and organized."
+    },
+    {
+      icon: DollarSign,
+      title: "Fundraising Campaigns",
+      description: "Launch and manage multi-channel fundraising campaigns with integrated email marketing, social media tools, donation tracking, and real-time analytics to help you reach and exceed your goals."
+    },
+    {
+      icon: FileText,
+      title: "Grant Tracking",
+      description: "Simplify grant management with deadline reminders, application tracking, reporting tools, and compliance monitoring to help you secure and maintain funding from foundations and government sources."
+    }
+  ];
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -152,6 +176,7 @@ const Index = () => {
         backgroundImage={nonprofitVolunteersBg}
         bodyParagraph1={<>Experience our all-in-one nonprofit marketing platform firsthand at <a href="https://causeio.com" className="text-white font-semibold underline hover:text-white/90 transition-colors" target="_blank" rel="noopener noreferrer">Causeio.com</a>. Causeio empowers mission-driven organizations with AI-powered tools including video chatbots, QR code generators, SEO/AEO analyzers, and volunteer engagement systems — all integrated into one powerful SaaS solution.</>}
         bodyParagraph2="Our platform simplifies digital outreach, automates repetitive marketing tasks, and strengthens donor and volunteer engagement through cutting-edge AI technology built specifically to help nonprofits grow their impact in the digital age."
+        cards={nonprofitCards}
       />
       <GoogleMap />
       <Footer />
