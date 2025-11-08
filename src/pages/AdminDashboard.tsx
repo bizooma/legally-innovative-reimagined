@@ -23,6 +23,7 @@ const AdminDashboard = () => {
   const { projects: allProjects, isLoading: isLoadingProjects } = useAllProjectsWithClients();
   const [isTimeTrackingOpen, setIsTimeTrackingOpen] = useState(false);
   const [isGanttOpen, setIsGanttOpen] = useState(true);
+  const [isClientDirectoryOpen, setIsClientDirectoryOpen] = useState(true);
 
   if (isLoading && !user) {
     return (
@@ -99,13 +100,30 @@ const AdminDashboard = () => {
               </Collapsible>
             )}
 
-            {/* Client List */}
-            <ClientDirectory
-              clients={clients} 
-              isLoading={isLoading}
-              onClientAdded={handleAddClient}
-              isAdmin={isAdmin}
-            />
+            {/* Client Directory */}
+            <Collapsible 
+              open={isClientDirectoryOpen} 
+              onOpenChange={setIsClientDirectoryOpen}
+              className="mb-8"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-playfair font-bold">Client Directory</h2>
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="sm" className="gap-2">
+                    {isClientDirectoryOpen ? 'Collapse' : 'Expand'}
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isClientDirectoryOpen ? 'rotate-180' : ''}`} />
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
+              <CollapsibleContent>
+                <ClientDirectory 
+                  clients={clients} 
+                  isLoading={isLoading}
+                  onClientAdded={handleAddClient}
+                  isAdmin={isAdmin}
+                />
+              </CollapsibleContent>
+            </Collapsible>
             
             {/* Recent Activity - Only show for admins */}
             {isAdmin && (
