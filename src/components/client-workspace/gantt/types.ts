@@ -1,4 +1,5 @@
 import { Project } from '@/types/database';
+import { ProjectTask } from '@/types/task';
 
 export interface GanttProject extends Project {
   start_date: string;
@@ -20,4 +21,15 @@ export interface TimelineMarker {
   date: Date;
   label: string;
   position: number;
+}
+
+export type GanttRowType = 'project' | 'task';
+
+export interface GanttRow {
+  id: string;
+  type: GanttRowType;
+  project?: GanttProject;
+  task?: ProjectTask;
+  projectId?: string;
+  level: number;
 }

@@ -7,7 +7,7 @@ import { GanttBar } from '@/components/client-workspace/gantt/GanttBar';
 import { TimelineGrid, TimelineHeader } from '@/components/client-workspace/gantt/TimelineGrid';
 import { DateRangeFilter } from '@/components/client-workspace/gantt/DateRangeFilter';
 import { useGanttCalculations } from '@/components/client-workspace/gantt/useGanttCalculations';
-import { DateRange } from '@/components/client-workspace/gantt/types';
+import { DateRange, GanttRow } from '@/components/client-workspace/gantt/types';
 import { ProjectWithClient } from '@/hooks/useAllProjectsWithClients';
 import { addDays, subDays } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
@@ -75,6 +75,16 @@ export function AdminGanttChartView({ projects, isLoading }: AdminGanttChartView
       return true;
     });
   }, [projects, dateRange, selectedClient, selectedStatus, searchQuery]);
+
+  // Convert projects to rows for the new GanttRow structure
+  const ganttRows = useMemo((): GanttRow[] => {
+    return visibleProjects.map(project => ({
+      id: project.id,
+      type: 'project' as const,
+      project: project,
+      level: 0,
+    }));
+  }, [visibleProjects]);
 
   const handleProjectClick = (project: ProjectWithClient) => {
     navigate(`/portal/client-details/${project.client_id}?tab=projects`);
@@ -164,8 +174,9 @@ export function AdminGanttChartView({ projects, isLoading }: AdminGanttChartView
                   <TimelineGrid
                     markers={timelineMarkers}
                     todayPosition={todayPosition}
-                    rowCount={visibleProjects.length}
-                    rowHeight={ROW_HEIGHT}
+                    rows={ganttRows}
+                    projectRowHeight={ROW_HEIGHT}
+                    taskRowHeight={ROW_HEIGHT}
                   />
                   
                   {/* Project Bars */}
@@ -183,6 +194,7 @@ export function AdminGanttChartView({ projects, isLoading }: AdminGanttChartView
                           position={position}
                           rowHeight={ROW_HEIGHT}
                           onClick={handleProjectClick}
+                          isTask={false}
                         />
                       );
                     })}

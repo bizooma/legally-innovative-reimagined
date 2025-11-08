@@ -1,15 +1,18 @@
-import { TimelineMarker } from './types';
+import { TimelineMarker, GanttRow } from './types';
 import { format } from 'date-fns';
 
 interface TimelineGridProps {
   markers: TimelineMarker[];
   todayPosition: number;
-  rowHeight: number;
-  rowCount: number;
+  rows: GanttRow[];
+  projectRowHeight: number;
+  taskRowHeight: number;
 }
 
-export function TimelineGrid({ markers, todayPosition, rowHeight, rowCount }: TimelineGridProps) {
-  const totalHeight = rowCount * rowHeight;
+export function TimelineGrid({ markers, todayPosition, rows, projectRowHeight, taskRowHeight }: TimelineGridProps) {
+  const totalHeight = rows.reduce((sum, row) => 
+    sum + (row.type === 'project' ? projectRowHeight : taskRowHeight), 0
+  );
   const isToday = todayPosition >= 0 && todayPosition <= 100;
 
   return (

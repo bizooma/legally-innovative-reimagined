@@ -9,9 +9,18 @@ interface GanttBarProps {
   position: BarPosition;
   rowHeight: number;
   onClick: (project: GanttProject) => void;
+  isTask?: boolean;
+  priority?: 'low' | 'medium' | 'high' | 'urgent';
 }
 
-export function GanttBar({ project, position, rowHeight, onClick }: GanttBarProps) {
+const PRIORITY_COLORS = {
+  low: 'border-l-blue-500',
+  medium: 'border-l-yellow-500',
+  high: 'border-l-orange-500',
+  urgent: 'border-l-red-500',
+};
+
+export function GanttBar({ project, position, rowHeight, onClick, isTask = false, priority }: GanttBarProps) {
   const { statusColor, isOverdue } = useMemo(() => {
     const today = startOfDay(new Date());
     const endDate = project.end_date ? startOfDay(new Date(project.end_date)) : today;
@@ -46,23 +55,29 @@ export function GanttBar({ project, position, rowHeight, onClick }: GanttBarProp
   if (!position.isVisible) return null;
 
   const progress = project.progress || 0;
-  const barHeightPx = Math.floor(rowHeight * 0.6);
+  const barHeightPx = isTask ? Math.floor(rowHeight * 0.5) : Math.floor(rowHeight * 0.6);
   const marginTop = Math.floor((rowHeight - barHeightPx) / 2);
 
   return (
     <div
-      className="absolute cursor-pointer group"
+      className={cn(
+        "absolute group",
+        isTask ? "cursor-default" : "cursor-pointer"
+      )}
       style={{
         left: position.left,
         width: position.width,
         height: `${rowHeight}px`,
         top: 0
       }}
-      onClick={() => onClick(project)}
+      onClick={() => !isTask && onClick(project)}
     >
       <div
         className={cn(
-          "relative rounded overflow-hidden transition-all group-hover:ring-2 group-hover:ring-primary",
+          "relative rounded overflow-hidden transition-all",
+          !isTask && "group-hover:ring-2 group-hover:ring-primary",
+          isTask ? "opacity-70 border-l-4" : "",
+          isTask && priority ? PRIORITY_COLORS[priority] : "",
           statusColor
         )}
         style={{
@@ -71,20 +86,25 @@ export function GanttBar({ project, position, rowHeight, onClick }: GanttBarProp
         }}
       >
         {/* Progress bar */}
-        {progress > 0 && project.status !== 'Completed' && (
+        {!isTask && progress > 0 && project.status !== 'Completed' && (
           <div
             className="absolute top-0 left-0 bottom-0 bg-black/20"
             style={{ width: `${progress}%` }}
           />
         )}
         
-        {/* Progress badge */}
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-background text-foreground text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-sm">
-          {progress}%
-        </div>
+        {/* Progress badge - only for projects */}
+        {!isTask && (
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-background text-foreground text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-sm">
+            {progress}%
+          </div>
+        )}
         
         {/* Hover tooltip */}
-        <div className="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-medium truncate pr-12 max-w-full opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className={cn(
+          "absolute left-2 top-1/2 -translate-y-1/2 text-xs font-medium truncate max-w-full transition-opacity",
+          isTask ? "pr-2 text-[10px]" : "pr-12 opacity-0 group-hover:opacity-100"
+        )}>
           {project.name}
         </div>
       </div>
