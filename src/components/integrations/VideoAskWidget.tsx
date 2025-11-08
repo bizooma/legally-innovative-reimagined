@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -18,7 +19,16 @@ declare global {
 }
 
 export const VideoAskWidget = () => {
+  const location = useLocation();
+  
+  // Don't show widget on portal pages
+  const isPortalPage = location.pathname.startsWith('/portal');
+  
   useEffect(() => {
+    // Don't load widget on portal pages
+    if (isPortalPage) {
+      return;
+    }
     // Set VideoAsk configuration
     window.VIDEOASK_EMBED_CONFIG = {
       kind: "widget",
@@ -46,7 +56,7 @@ export const VideoAskWidget = () => {
       }
       delete window.VIDEOASK_EMBED_CONFIG;
     };
-  }, []);
+  }, [isPortalPage]);
 
   return null;
 };
