@@ -6,8 +6,10 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 import { AnimatedParticles } from "./hero/AnimatedParticles";
 import { FloatingFeatureCards } from "./hero/FloatingFeatureCards";
 import { GradientMesh } from "./hero/GradientMesh";
+import { useScrollFade } from "@/hooks/useParallax";
 
 const Hero = () => {
+  const animationOpacity = useScrollFade(150, 500);
   return <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -60,7 +62,10 @@ const Hero = () => {
           </div>
 
           {/* Right Column - Animated Visualization */}
-          <div className="relative h-[600px] min-h-[560px]">
+          <div 
+            className="relative h-[600px] min-h-[560px] transition-opacity duration-300"
+            style={{ opacity: animationOpacity }}
+          >
             <div className="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden">
               <GradientMesh />
               <AnimatedParticles />
