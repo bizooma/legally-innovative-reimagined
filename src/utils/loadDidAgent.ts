@@ -51,10 +51,10 @@ function loadScript(url: string, attrs: Record<string, string>, parent?: HTMLEle
     // Allow multiple instances: only skip if same src AND same instance (name or target) exists
     const existingScripts = Array.from(document.querySelectorAll(`script[src="${url}"]`));
     const desiredName = attrs['data-name'];
-    const desiredTarget = attrs['data-target-id'];
+    const desiredTarget = attrs['data-target'];
     const hasSameInstance = existingScripts.some((s) => {
       const n = s.getAttribute('data-name');
-      const t = s.getAttribute('data-target-id');
+      const t = s.getAttribute('data-target');
       return (desiredName && n === desiredName) || (desiredTarget && t === desiredTarget);
     });
     if (hasSameInstance) {
@@ -64,7 +64,6 @@ function loadScript(url: string, attrs: Record<string, string>, parent?: HTMLEle
     }
 
     const script = document.createElement('script');
-    script.type = 'module';
     script.src = url;
     
     Object.entries(attrs).forEach(([key, value]) => {
@@ -81,12 +80,8 @@ function loadScript(url: string, attrs: Record<string, string>, parent?: HTMLEle
       reject(new Error(`Failed to load ${url}`));
     };
 
-    // Append to target parent if provided to help SDK anchor correctly
-    if (parent) {
-      parent.appendChild(script);
-    } else {
-      (document.head || document.body).appendChild(script);
-    }
+    // Append to body to let SDK discover target normally
+    (document.body || document.head).appendChild(script);
   });
 }
 
@@ -194,7 +189,7 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2', isRetr
       'data-agent-id': EMBED_CONFIG.agentId,
       'data-name': EMBED_CONFIG.name,
       'data-monitor': EMBED_CONFIG.monitor,
-      'data-target-id': targetId,
+      'data-target': `#${targetId}`,
     };
 
     await loadScript(url, attrs);
@@ -254,15 +249,48 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2', isRetr
         const scripts = Array.from(document.querySelectorAll(`script[src="${url}"]`));
         scripts.forEach((s) => {
           const n = s.getAttribute('data-name');
-          const t = s.getAttribute('data-target-id');
-          if (n === EMBED_CONFIG.name || t === targetId) {
+          const t = s.getAttribute('data-target');
+          if (n === EMBED_CONFIG.name || t === `#${targetId}`) {
             s.parentNode?.removeChild(s);
           }
         });
         await new Promise(resolve => setTimeout(resolve, 1500));
         return injectEmbed(targetId, version, true);
+      } else {
+        console.log('[D-ID] Embed timeout after retry, attempting directEmbed fallback...');
+        // Clean up any previous scripts for this target/name
+        const scripts = Array.from(document.querySelectorAll(`script[src="${url}"]`));
+        scripts.forEach((s) => {
+          const n = s.getAttribute('data-name');
+          const t = s.getAttribute('data-target');
+          if (n === EMBED_CONFIG.name || t === `#${targetId}`) {
+            s.parentNode?.removeChild(s);
+          }
+        });
+        const minimalAttrs = {
+          'data-mode': EMBED_CONFIG.mode,
+          'data-client-key': EMBED_CONFIG.clientKey,
+          'data-agent-id': EMBED_CONFIG.agentId,
+          'data-target': `#${targetId}`,
+        };
+        await loadScript(url, minimalAttrs);
+        console.log('[D-ID] Direct embed script appended with minimal attrs');
+        const fallbackOk = await Promise.race([
+          new Promise<boolean>((resolve) => {
+            const check = setInterval(() => {
+              const ok = !!targetDiv.querySelector('iframe, .d-id-agent-container');
+              if (ok) { clearInterval(check); resolve(true); }
+            }, 150);
+          }),
+          new Promise<boolean>((resolve) => setTimeout(() => resolve(false), 15000)),
+        ]);
+        if (fallbackOk) {
+          window.didAgentDebug = { status: 'initialized', version };
+          console.log(`[D-ID] Direct embed fallback initialized in #${targetId}`);
+          return true;
+        }
+        throw new Error('Embed initialization timeout after retry and direct fallback');
       }
-      throw new Error('Embed initialization timeout after retry');
     }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -322,8 +350,8 @@ export async function reloadDidAgentEmbed(targetId: string, preferVersion: 'v1' 
     const scripts = Array.from(document.querySelectorAll('script[src*="agent.d-id.com/"]')) as HTMLScriptElement[];
     scripts.forEach((s) => {
       const n = s.getAttribute('data-name');
-      const t = s.getAttribute('data-target-id');
-      if (n === EMBED_CONFIG.name || t === targetId) {
+      const t = s.getAttribute('data-target');
+      if (n === EMBED_CONFIG.name || t === `#${targetId}`) {
         s.parentNode?.removeChild(s);
       }
     });

@@ -87,18 +87,12 @@ const VideoAskWidget = () => {
 
     // Load after page is ready
     const isHome = window.location.pathname === '/';
-    if (document.readyState === 'complete') {
-      if (isHome) {
-        waitForDID();
-      } else {
-        injectVideoAsk();
-      }
+    if (isHome) {
+      console.log('[VideoAsk] Skipping injection on home route to avoid conflict with D-ID');
+    } else if (document.readyState === 'complete') {
+      injectVideoAsk();
     } else {
-      if (isHome) {
-        window.addEventListener('load', waitForDID);
-      } else {
-        window.addEventListener('load', injectVideoAsk);
-      }
+      window.addEventListener('load', injectVideoAsk);
     }
 
     return () => {
