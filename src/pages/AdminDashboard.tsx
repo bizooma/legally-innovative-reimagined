@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { StatCard } from '@/components/dashboard/StatCard';
-import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { ClientDirectory } from '@/components/dashboard/ClientDirectory';
 import { AdminHeader } from '@/components/dashboard/AdminHeader';
 import { TimeTrackingSection } from '@/components/dashboard/TimeTrackingSection';
@@ -124,11 +123,6 @@ const AdminDashboard = () => {
                 />
               </CollapsibleContent>
             </Collapsible>
-            
-            {/* Recent Activity - Only show for admins */}
-            {isAdmin && (
-              <RecentActivity clients={clients} isLoading={isLoading} />
-            )}
           </div>
         </div>
       </div>
