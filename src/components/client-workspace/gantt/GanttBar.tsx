@@ -1,8 +1,14 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 import { GanttProject } from './types';
 import { BarPosition } from './types';
-import { isBefore, startOfDay } from 'date-fns';
+import { isBefore, startOfDay, format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface GanttBarProps {
   project: GanttProject;
@@ -171,79 +177,127 @@ export function GanttBar({
     transform,
   };
 
-  return (
-    <div
-      ref={barRef}
-      className={cn(
-        "absolute group transition-transform",
-        isTask ? "cursor-grab active:cursor-grabbing" : "cursor-pointer",
-        (isDragging || isResizing) && "z-50"
-      )}
-      style={containerStyle}
-      onMouseDown={handleMouseDown}
-      onClick={handleClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div
-        className={cn(
-          "relative rounded overflow-hidden transition-all",
-          !isTask && "group-hover:ring-2 group-hover:ring-primary",
-          isTask ? "opacity-70 border-l-4 hover:opacity-90" : "",
-          isTask && priority ? PRIORITY_COLORS[priority] : "",
-          (isDragging || isResizing) && "opacity-60 shadow-xl ring-2 ring-primary",
-          statusColor
-        )}
-        style={{
-          height: `${barHeightPx}px`,
-          marginTop: `${marginTop}px`
-        }}
-      >
-        {/* Progress bar */}
-        {!isTask && progress > 0 && project.status !== 'Completed' && (
-          <div
-            className="absolute top-0 left-0 bottom-0 bg-black/20"
-            style={{ width: `${progress}%` }}
-          />
-        )}
-        
-        {/* Progress badge - only for projects */}
-        {!isTask && (
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-background text-foreground text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-sm">
-            {progress}%
-          </div>
-        )}
-        
-        {/* Hover tooltip */}
-        <div className={cn(
-          "absolute left-2 top-1/2 -translate-y-1/2 text-xs font-medium truncate max-w-full transition-opacity",
-          isTask ? "pr-2 text-[10px]" : "pr-12 opacity-0 group-hover:opacity-100"
-        )}>
-          {project.name}
-        </div>
-
-        {/* Resize handles - only show when not a task and when hovered or resizing */}
-        {!isTask && onResizeStart && (isHovered || isResizing) && (
-          <>
-            {/* Left resize handle */}
-            <div
-              className={cn(
-                "absolute left-0 top-0 bottom-0 w-2 cursor-ew-resize hover:bg-primary/30 transition-colors",
-                isResizing && resizingEdge === 'start' && "bg-primary/50"
-              )}
-              onMouseDown={handleResizeMouseDown('start')}
-            />
-            {/* Right resize handle */}
-            <div
-              className={cn(
-                "absolute right-0 top-0 bottom-0 w-2 cursor-ew-resize hover:bg-primary/30 transition-colors",
-                isResizing && resizingEdge === 'end' && "bg-primary/50"
-              )}
-              onMouseDown={handleResizeMouseDown('end')}
-            />
-          </>
-        )}
+  const tooltipContent = (
+    <div className="space-y-1 text-xs">
+      <div className="font-semibold">{project.name}</div>
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <span>Start:</span>
+        <span className="font-medium text-foreground">
+          {format(new Date(project.start_date), 'MMM d, yyyy')}
+        </span>
       </div>
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <span>End:</span>
+        <span className="font-medium text-foreground">
+          {format(new Date(project.end_date), 'MMM d, yyyy')}
+        </span>
+      </div>
+      {!isTask && (
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <span>Progress:</span>
+          <span className="font-medium text-foreground">{progress}%</span>
+        </div>
+      )}
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <span>Status:</span>
+        <span className={cn(
+          "font-medium px-1.5 py-0.5 rounded text-[10px]",
+          isOverdue ? "bg-destructive text-destructive-foreground" : statusColor
+        )}>
+          {isOverdue ? 'Overdue' : project.status}
+        </span>
+      </div>
+      {isTask && priority && (
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <span>Priority:</span>
+          <span className="font-medium text-foreground capitalize">{priority}</span>
+        </div>
+      )}
     </div>
+  );
+
+  return (
+    <TooltipProvider delayDuration={300}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div
+            ref={barRef}
+            className={cn(
+              "absolute group transition-transform",
+              isTask ? "cursor-grab active:cursor-grabbing" : "cursor-pointer",
+              (isDragging || isResizing) && "z-50"
+            )}
+            style={containerStyle}
+            onMouseDown={handleMouseDown}
+            onClick={handleClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <div
+              className={cn(
+                "relative rounded overflow-hidden transition-all",
+                !isTask && "group-hover:ring-2 group-hover:ring-primary",
+                isTask ? "opacity-70 border-l-4 hover:opacity-90" : "",
+                isTask && priority ? PRIORITY_COLORS[priority] : "",
+                (isDragging || isResizing) && "opacity-60 shadow-xl ring-2 ring-primary",
+                statusColor
+              )}
+              style={{
+                height: `${barHeightPx}px`,
+                marginTop: `${marginTop}px`
+              }}
+            >
+              {/* Progress bar */}
+              {!isTask && progress > 0 && project.status !== 'Completed' && (
+                <div
+                  className="absolute top-0 left-0 bottom-0 bg-black/20"
+                  style={{ width: `${progress}%` }}
+                />
+              )}
+              
+              {/* Progress badge - only for projects */}
+              {!isTask && (
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-background text-foreground text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-sm">
+                  {progress}%
+                </div>
+              )}
+              
+              {/* Hover tooltip */}
+              <div className={cn(
+                "absolute left-2 top-1/2 -translate-y-1/2 text-xs font-medium truncate max-w-full transition-opacity",
+                isTask ? "pr-2 text-[10px]" : "pr-12 opacity-0 group-hover:opacity-100"
+              )}>
+                {project.name}
+              </div>
+
+              {/* Resize handles - only show when not a task and when hovered or resizing */}
+              {!isTask && onResizeStart && (isHovered || isResizing) && (
+                <>
+                  {/* Left resize handle */}
+                  <div
+                    className={cn(
+                      "absolute left-0 top-0 bottom-0 w-2 cursor-ew-resize hover:bg-primary/30 transition-colors",
+                      isResizing && resizingEdge === 'start' && "bg-primary/50"
+                    )}
+                    onMouseDown={handleResizeMouseDown('start')}
+                  />
+                  {/* Right resize handle */}
+                  <div
+                    className={cn(
+                      "absolute right-0 top-0 bottom-0 w-2 cursor-ew-resize hover:bg-primary/30 transition-colors",
+                      isResizing && resizingEdge === 'end' && "bg-primary/50"
+                    )}
+                    onMouseDown={handleResizeMouseDown('end')}
+                  />
+                </>
+              )}
+            </div>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="max-w-xs">
+          {tooltipContent}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
