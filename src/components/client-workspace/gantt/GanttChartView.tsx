@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GanttProject, GanttRow } from './types';
 import { GanttTable } from './GanttTable';
@@ -36,6 +36,28 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
     start: subDays(today, 45),
     end: addDays(today, 45)
   });
+
+  // Auto-fit all projects on initial load
+  useEffect(() => {
+    if (projects.length === 0) return;
+    
+    const projectsWithDates = projects.filter(p => p.start_date && p.end_date);
+    
+    if (projectsWithDates.length === 0) return;
+    
+    // Find earliest start and latest end
+    const startDates = projectsWithDates.map(p => new Date(p.start_date));
+    const endDates = projectsWithDates.map(p => new Date(p.end_date));
+    
+    const earliestStart = min(startDates);
+    const latestEnd = max(endDates);
+    
+    // Add a small buffer (7 days on each side)
+    const bufferStart = subDays(earliestStart, 7);
+    const bufferEnd = addDays(latestEnd, 7);
+    
+    setDateRange({ start: bufferStart, end: bufferEnd });
+  }, [projects]);
 
   const { expandedProjects, toggleProject, expandAll, collapseAll } = useExpandedProjects();
   const { calculateBarPosition, timelineMarkers, todayPosition } = useGanttCalculations(dateRange);
