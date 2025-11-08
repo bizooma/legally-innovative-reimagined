@@ -63,7 +63,7 @@ const VideoAskWidget = () => {
 
     const waitForDID = async () => {
       console.log('[VideoAsk] Waiting for D-ID to be ready...');
-      const deadline = Date.now() + 25000; // 25 second timeout to match D-ID embed
+      const deadline = Date.now() + 15000; // 15 second timeout to avoid blocking
       
       while (Date.now() < deadline) {
         const target = document.getElementById('did-agent-hero');

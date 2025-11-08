@@ -85,7 +85,7 @@ function loadScript(url: string, attrs: Record<string, string>, parent?: HTMLEle
     if (parent) {
       parent.appendChild(script);
     } else {
-      document.body.appendChild(script);
+      (document.head || document.body).appendChild(script);
     }
   });
 }
@@ -197,17 +197,43 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2', isRetr
       'data-target-id': targetId,
     };
 
-    await loadScript(url, attrs, targetDiv);
+    await loadScript(url, attrs);
     console.log('[D-ID] Embed script appended with attrs:', attrs);
+
+    // Small delay to allow SDK to discover target in DOM
+    await new Promise((r) => setTimeout(r, 500));
+    console.log('[D-ID] Post-inject target state:', {
+      childElementCount: targetDiv.childElementCount,
+      hasIframe: !!targetDiv.querySelector('iframe'),
+      attrs: {
+        id: targetDiv.id,
+        class: targetDiv.className,
+      }
+    });
+
+    // Observe target briefly for added nodes (debug)
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.addedNodes.length > 0) {
+          console.log('[D-ID] Target mutated, nodes added:', m.addedNodes);
+          break;
+        }
+      }
+    });
+    observer.observe(targetDiv, { childList: true, subtree: true });
+    setTimeout(() => observer.disconnect(), 5000);
 
     // Wait for agent initialization with extended timeout
     const initialized = await Promise.race([
       new Promise<boolean>((resolve) => {
         const checkInterval = setInterval(() => {
-          const embedAgentInTarget = targetDiv.querySelector('iframe, [data-did-agent], .d-id-agent-container, iframe[src*="agent.d-id.com"]');
+          const embedAgentInTarget =
+            targetDiv.querySelector('iframe, [data-did-agent], .d-id-agent-container, iframe[src*="agent.d-id.com"], iframe[src*="d-id.com"]');
           const namedAgent = document.querySelector(`[data-name="${EMBED_CONFIG.name}"]`);
           const globalContainer = document.querySelector('.d-id-agent-container');
-          if (embedAgentInTarget || namedAgent || globalContainer || targetDiv.childElementCount > 0) {
+          const globalIframe = document.querySelector('iframe[src*="agent.d-id.com"], iframe[src*="d-id.com"]');
+
+          if (embedAgentInTarget || namedAgent || globalContainer || globalIframe || targetDiv.childElementCount > 0) {
             clearInterval(checkInterval);
             resolve(true);
           }
@@ -281,5 +307,39 @@ export async function loadDidAgentEmbed(targetId: string): Promise<void> {
   if (!success && !forceVersion && initialVersion === 'v2') {
     console.log('[D-ID] Falling back to v1 for embed...');
     await injectEmbed(targetId, 'v1');
+  }
+}
+
+/**
+ * Force reload the D-ID embed for a target, removing any previous scripts
+ * Optionally prefer a specific version ('v1' or 'v2')
+ */
+export async function reloadDidAgentEmbed(targetId: string, preferVersion: 'v1' | 'v2' = 'v2'): Promise<void> {
+  try {
+    console.log(`[D-ID] Reloading embed for #${targetId} (prefer ${preferVersion})`);
+
+    // Remove any previous scripts attached to this instance regardless of version
+    const scripts = Array.from(document.querySelectorAll('script[src*="agent.d-id.com/"]')) as HTMLScriptElement[];
+    scripts.forEach((s) => {
+      const n = s.getAttribute('data-name');
+      const t = s.getAttribute('data-target-id');
+      if (n === EMBED_CONFIG.name || t === targetId) {
+        s.parentNode?.removeChild(s);
+      }
+    });
+
+    // Clear target container content
+    const target = document.getElementById(targetId);
+    if (target) target.innerHTML = '';
+
+    // Try preferred version first; if it fails, try the other one
+    const ok = await injectEmbed(targetId, preferVersion, true);
+    if (!ok) {
+      const fallback = preferVersion === 'v2' ? 'v1' : 'v2';
+      console.log(`[D-ID] Preferred version failed, trying ${fallback}...`);
+      await injectEmbed(targetId, fallback as 'v1' | 'v2', true);
+    }
+  } catch (e) {
+    console.error('[D-ID] Reload failed:', e);
   }
 }

@@ -13,15 +13,19 @@ const Hero = () => {
       container.innerHTML = '';
     }
 
-    console.log('🚀 Loading D-ID agent embed in Hero');
-    loadDidAgentEmbed('did-agent-hero').catch(err => {
-      console.error('❌ Failed to load D-ID embed:', err);
-    });
+    const timeoutId = window.setTimeout(() => {
+      console.log('🚀 Loading D-ID agent embed in Hero (delayed 100ms)');
+      loadDidAgentEmbed('did-agent-hero').catch(err => {
+        console.error('❌ Failed to load D-ID embed:', err);
+      });
+    }, 100);
 
     return () => {
+      clearTimeout(timeoutId);
       console.log('🧹 Cleaning up D-ID from Hero');
-      if (container) {
-        container.innerHTML = '';
+      const c = document.getElementById('did-agent-hero');
+      if (c) {
+        c.innerHTML = '';
       }
     };
   }, []);
@@ -78,7 +82,7 @@ const Hero = () => {
 
           {/* Right Column - D-ID Agent */}
           <div className="relative">
-            <div id="did-agent-hero" className="w-full h-[600px] min-h-[560px] bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl relative z-20" />
+            <div id="did-agent-hero" data-testid="did-target" className="w-full h-[600px] min-h-[560px] bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl relative z-20" />
           </div>
         </div>
       </div>
