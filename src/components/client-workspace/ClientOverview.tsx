@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Client } from '@/types/database';
+import { Client, Project } from '@/types/database';
 import { useClientDocumentCount } from '@/hooks/useClientDocumentCount';
-import { useClientProjectsWithDates } from '@/hooks/useClientProjectsWithDates';
+import { useClientProjectsWithDates, ProjectWithDates } from '@/hooks/useClientProjectsWithDates';
+import { useClientProjects } from '@/hooks/useClientProjects';
 import ClientGanttChart from './ClientGanttChart';
+import ProjectDetailsDialog from './ProjectDetailsDialog';
 
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
@@ -17,6 +19,8 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
   const [client, setClient] = useState(initialClient);
   const { documentCount, isLoading: isLoadingDocuments } = useClientDocumentCount(client.id);
   const { projects, isLoading: isLoadingProjects } = useClientProjectsWithDates(client.id);
+  const { updateProject, deleteProject } = useClientProjects(client.id);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   // Handler for when a Google Drive folder is connected or disconnected
   const handleFolderConnected = (folderId: string) => {
@@ -27,12 +31,22 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
     setClient({ ...client, google_drive_folder_id: null });
   };
 
+  const handleProjectClick = (project: ProjectWithDates) => {
+    setSelectedProject(project as Project);
+  };
+
+  const handleDelete = async (id: string) => {
+    await deleteProject(id);
+    setSelectedProject(null);
+  };
+
   return (
     <div className="space-y-6">
       {/* Gantt Chart - Added at the top */}
       <ClientGanttChart 
         projects={projects} 
-        isLoading={isLoadingProjects} 
+        isLoading={isLoadingProjects}
+        onProjectClick={handleProjectClick}
       />
 
 
@@ -123,6 +137,16 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
           </CardContent>
         </Card>
       </div>
+
+      {selectedProject && (
+        <ProjectDetailsDialog 
+          project={selectedProject}
+          isOpen={Boolean(selectedProject)}
+          onClose={() => setSelectedProject(null)}
+          onDelete={handleDelete}
+          onUpdate={updateProject}
+        />
+      )}
     </div>
   );
 };

@@ -142,6 +142,7 @@ const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId }) => {
           isOpen={Boolean(selectedProject)}
           onClose={() => setSelectedProject(null)}
           onDelete={handleDelete}
+          onUpdate={updateProject}
         />
       )}
     </Card>

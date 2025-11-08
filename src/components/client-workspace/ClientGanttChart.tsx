@@ -17,12 +17,14 @@ interface ClientGanttChartProps {
   projects: ProjectWithDates[];
   campaigns?: any[]; // Will be typed properly when campaigns are implemented
   isLoading: boolean;
+  onProjectClick?: (project: ProjectWithDates) => void;
 }
 
 const ClientGanttChart: React.FC<ClientGanttChartProps> = ({ 
   projects, 
   campaigns = [], 
-  isLoading 
+  isLoading,
+  onProjectClick 
 }) => {
   // Get status color
   const getStatusColor = (status: string) => {
@@ -147,6 +149,15 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
     return format(new Date(timestamp), 'MMM d');
   };
 
+  const handleBarClick = (data: any) => {
+    if (data && data.type === 'project' && onProjectClick) {
+      const project = projects.find(p => p.id === data.id);
+      if (project) {
+        onProjectClick(project);
+      }
+    }
+  };
+
   const renderTooltipContent = (props: any) => {
     if (!props.active || !props.payload || props.payload.length === 0) {
       return null;
@@ -174,6 +185,9 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
             <p className="text-xs text-destructive font-medium">⚠️ Overdue</p>
           )}
         </div>
+        {onProjectClick && data.type === 'project' && (
+          <p className="text-xs text-muted-foreground mt-2 italic">Click to edit</p>
+        )}
       </div>
     );
   };
@@ -230,6 +244,8 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
                 stackId="a" 
                 radius={[4, 0, 0, 4]}
                 isAnimationActive={false}
+                onClick={handleBarClick}
+                cursor={onProjectClick ? "pointer" : "default"}
               >
                 {chartData.map((entry, index) => (
                   <Cell 
@@ -245,6 +261,8 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
                 stackId="a" 
                 radius={[0, 4, 4, 0]}
                 isAnimationActive={false}
+                onClick={handleBarClick}
+                cursor={onProjectClick ? "pointer" : "default"}
               >
                 {chartData.map((entry, index) => (
                   <Cell 

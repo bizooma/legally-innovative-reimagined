@@ -22,14 +22,16 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Project } from '@/types/database';
 import { format, formatDistanceToNow } from 'date-fns';
-import { KanbanSquare, Calendar } from 'lucide-react';
+import { KanbanSquare, Calendar, Pencil } from 'lucide-react';
 import { KanbanBoard } from './kanban/KanbanBoard';
+import EditProjectDialog from './EditProjectDialog';
 
 interface ProjectDetailsDialogProps {
   project: Project;
   isOpen: boolean;
   onClose: () => void;
   onDelete: (id: string) => Promise<void>;
+  onUpdate?: (id: string, updates: Partial<Project>) => Promise<void | Project>;
 }
 
 const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
@@ -37,9 +39,11 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
   isOpen,
   onClose,
   onDelete,
+  onUpdate,
 }) => {
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
   const handleDelete = async () => {
     setIsDeleting(true);
@@ -72,13 +76,27 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
           <DialogHeader>
-            <DialogTitle className="text-2xl flex items-center gap-2">
-              <KanbanSquare className="h-6 w-6" />
-              {project.name}
-            </DialogTitle>
-            <DialogDescription>
-              Manage your project tasks and track progress
-            </DialogDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <DialogTitle className="text-2xl flex items-center gap-2">
+                  <KanbanSquare className="h-6 w-6" />
+                  {project.name}
+                </DialogTitle>
+                <DialogDescription>
+                  Manage your project tasks and track progress
+                </DialogDescription>
+              </div>
+              {onUpdate && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsEditOpen(true)}
+                >
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Edit Project
+                </Button>
+              )}
+            </div>
           </DialogHeader>
           
           <Tabs defaultValue="kanban" className="flex-1 flex flex-col overflow-hidden">
@@ -202,6 +220,15 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {onUpdate && (
+        <EditProjectDialog
+          project={project}
+          isOpen={isEditOpen}
+          onClose={() => setIsEditOpen(false)}
+          onUpdate={onUpdate}
+        />
+      )}
     </>
   );
 };
