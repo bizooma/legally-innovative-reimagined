@@ -17,6 +17,7 @@ import { KanbanStats } from './KanbanStats';
 import { useProjectTasks } from '@/hooks/useProjectTasks';
 import { ProjectTask } from '@/types/task';
 import { TaskCard } from './TaskCard';
+import { supabase } from '@/integrations/supabase/client';
 
 interface KanbanBoardProps {
   projectId: string;
@@ -30,7 +31,7 @@ const columns = [
 ];
 
 export const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
-  const { tasks, isLoading, addTask, updateTask, deleteTask, updateTaskStatus } = useProjectTasks(projectId);
+  const { tasks, isLoading, addTask, updateTask, deleteTask, updateTaskStatus, refetch } = useProjectTasks(projectId);
   const [activeTask, setActiveTask] = useState<ProjectTask | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<ProjectTask | null>(null);
@@ -109,7 +110,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
     setActiveTask(task || null);
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     setActiveTask(null);
 
@@ -119,11 +120,56 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
     if (!activeTask) return;
 
     const overId = over.id as string;
+    
+    // Check if dropping on a column (changing status)
     const newStatus = columns.find(col => col.id === overId)?.id as ProjectTask['status'] | undefined;
-
+    
     if (newStatus && activeTask.status !== newStatus) {
+      // Moving to a different column
       const tasksInNewColumn = tasks.filter(t => t.status === newStatus);
-      updateTaskStatus(activeTask.id, newStatus, tasksInNewColumn.length);
+      await updateTaskStatus(activeTask.id, newStatus, tasksInNewColumn.length);
+    } else {
+      // Reordering within the same column
+      const overTask = tasks.find(t => t.id === overId);
+      
+      if (overTask && active.id !== over.id && activeTask.status === overTask.status) {
+        // Get tasks in this column sorted by order_index
+        const columnTasks = tasks
+          .filter(t => t.status === activeTask.status)
+          .sort((a, b) => a.order_index - b.order_index);
+        
+        const oldIndex = columnTasks.findIndex(t => t.id === active.id);
+        const newIndex = columnTasks.findIndex(t => t.id === over.id);
+        
+        if (oldIndex !== -1 && newIndex !== -1) {
+          // Reorder the tasks array
+          const reorderedTasks = arrayMove(columnTasks, oldIndex, newIndex);
+          
+          // Update order_index for all affected tasks
+          const updates = reorderedTasks.map((task, index) => ({
+            id: task.id,
+            order_index: index,
+          }));
+          
+          // Update in database
+          try {
+            await Promise.all(
+              updates.map(update =>
+                supabase
+                  .from('project_tasks')
+                  .update({ order_index: update.order_index })
+                  .eq('id', update.id)
+              )
+            );
+            // Refetch to get the updated order
+            await refetch();
+          } catch (error) {
+            console.error('Error reordering tasks:', error);
+            // Refetch to restore correct order on error
+            await refetch();
+          }
+        }
+      }
     }
   };
 
