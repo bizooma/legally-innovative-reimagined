@@ -1,4 +1,5 @@
 import { Brain, Code, TrendingUp, Zap } from 'lucide-react';
+import { useParallax } from '@/hooks/useParallax';
 
 const features = [
   { icon: Brain, label: 'AI-Powered', color: 'from-purple-400 to-pink-400' },
@@ -8,8 +9,13 @@ const features = [
 ];
 
 export const FloatingFeatureCards = () => {
+  const parallaxOffset = useParallax(0.7);
+  
   return (
-    <div className="grid grid-cols-2 gap-4 relative z-10">
+    <div 
+      className="grid grid-cols-2 gap-4 relative z-10 transition-transform duration-100"
+      style={{ transform: `translateY(${parallaxOffset}px)` }}
+    >
       {features.map((feature, index) => (
         <div
           key={feature.label}

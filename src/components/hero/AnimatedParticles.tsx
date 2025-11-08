@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useParallax } from '@/hooks/useParallax';
 
 interface Particle {
   x: number;
@@ -12,6 +13,7 @@ export const AnimatedParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationFrameRef = useRef<number>();
+  const parallaxOffset = useParallax(0.5);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -92,8 +94,12 @@ export const AnimatedParticles = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
-      style={{ width: '100%', height: '100%' }}
+      className="absolute inset-0 w-full h-full transition-transform duration-100"
+      style={{ 
+        width: '100%', 
+        height: '100%',
+        transform: `translateY(${parallaxOffset}px)`
+      }}
     />
   );
 };

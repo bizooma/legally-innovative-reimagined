@@ -1,6 +1,12 @@
+import { useParallax } from '@/hooks/useParallax';
+
 export const GradientMesh = () => {
+  const parallaxOffset = useParallax(0.3);
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div 
+      className="absolute inset-0 overflow-hidden transition-transform duration-100"
+      style={{ transform: `translateY(${parallaxOffset}px)` }}
+    >
       <div
         className="absolute w-96 h-96 rounded-full opacity-30 blur-3xl"
         style={{
