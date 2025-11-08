@@ -37,7 +37,7 @@ const AdminDashboard = () => {
             {/* Time Tracking Section - Only show for admins */}
             {isAdmin && (
               <div className="mb-8">
-                <h2 className="text-2xl font-playfair font-bold mb-4">Time Tracking</h2>
+                <h2 className="text-2xl font-playfair font-bold mb-6">Time Tracking</h2>
                 <TimeTrackingSection clients={clients} />
               </div>
             )}
