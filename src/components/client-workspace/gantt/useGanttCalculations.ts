@@ -4,7 +4,7 @@ import { BarPosition, TimelineMarker, DateRange } from './types';
 
 export function useGanttCalculations(dateRange: DateRange) {
   const totalDays = useMemo(() => 
-    differenceInDays(dateRange.end, dateRange.start),
+    differenceInDays(dateRange.end, dateRange.start) + 1, // +1 to include end date
     [dateRange]
   );
 
@@ -24,14 +24,14 @@ export function useGanttCalculations(dateRange: DateRange) {
       }
       
       const startOffset = differenceInDays(clampedStart, dateRange.start);
-      const duration = differenceInDays(clampedEnd, clampedStart);
+      const duration = differenceInDays(clampedEnd, clampedStart) + 1; // +1 to include end date
       
       const left = (startOffset / totalDays) * 100;
       const width = (duration / totalDays) * 100;
       
       return {
         left: `${Math.max(0, left)}%`,
-        width: `${Math.min(100 - left, width)}%`,
+        width: `${Math.max(0, Math.min(100 - left, width))}%`,
         isVisible: true
       };
     },
