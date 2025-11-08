@@ -5,7 +5,8 @@ import { Client, Project } from '@/types/database';
 import { useClientDocumentCount } from '@/hooks/useClientDocumentCount';
 import { useClientProjectsWithDates, ProjectWithDates } from '@/hooks/useClientProjectsWithDates';
 import { useClientProjects } from '@/hooks/useClientProjects';
-import ClientGanttChart from './ClientGanttChart';
+import { GanttChartView } from './gantt/GanttChartView';
+import { GanttProject } from './gantt/types';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
 
 import { supabase } from '@/integrations/supabase/client';
@@ -31,7 +32,7 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
     setClient({ ...client, google_drive_folder_id: null });
   };
 
-  const handleProjectClick = (project: ProjectWithDates) => {
+  const handleProjectClick = (project: ProjectWithDates | GanttProject) => {
     setSelectedProject(project as Project);
   };
 
@@ -40,11 +41,15 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
     setSelectedProject(null);
   };
 
+  const ganttProjects = projects.filter((p): p is GanttProject => 
+    p.start_date != null && p.end_date != null
+  );
+
   return (
     <div className="space-y-6">
-      {/* Gantt Chart - Added at the top */}
-      <ClientGanttChart 
-        projects={projects} 
+      {/* Gantt Chart - Professional timeline view */}
+      <GanttChartView 
+        projects={ganttProjects} 
         isLoading={isLoadingProjects}
         onProjectClick={handleProjectClick}
       />
