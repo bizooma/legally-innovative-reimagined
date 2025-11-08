@@ -72,7 +72,6 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <VideoAskWidget />
           {/* Global SEO and Canonical tags */}
           <GlobalSEO />
           <CanonicalMeta />
@@ -146,6 +145,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </RouteDebug>
+          <VideoAskWidget />
         </TooltipProvider>
       </HelmetProvider>
     </BrowserRouter>

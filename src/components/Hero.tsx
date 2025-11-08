@@ -78,7 +78,7 @@ const Hero = () => {
 
           {/* Right Column - D-ID Agent */}
           <div className="relative">
-            <div id="did-agent-hero" className="w-full h-[600px] min-h-[560px] bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl relative z-10" />
+            <div id="did-agent-hero" className="w-full h-[600px] min-h-[560px] bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl relative z-20" />
           </div>
         </div>
       </div>
