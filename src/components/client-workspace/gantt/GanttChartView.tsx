@@ -8,6 +8,7 @@ import { DateRangeFilter } from './DateRangeFilter';
 import { useGanttCalculations } from './useGanttCalculations';
 import { useExpandedProjects } from './useExpandedProjects';
 import { useMultipleProjectTasks } from '@/hooks/useMultipleProjectTasks';
+import { useProjectTaskCounts } from '@/hooks/useProjectTaskCounts';
 import { addDays, subDays, isWithinInterval } from 'date-fns';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
@@ -45,6 +46,9 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
              (start < dateRange.start && end > dateRange.end);
     });
   }, [projects, dateRange]);
+
+  const visibleProjectIds = useMemo(() => visibleProjects.map(p => p.id), [visibleProjects]);
+  const { taskCounts } = useProjectTaskCounts(visibleProjectIds);
 
   const expandedProjectIds = useMemo(() => 
     visibleProjects.filter(p => expandedProjects.has(p.id)).map(p => p.id),
@@ -180,6 +184,7 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
               expandedProjects={expandedProjects}
               onToggleExpand={toggleProject}
               tasksByProject={tasksByProject}
+              taskCounts={taskCounts}
             />
             
             {/* Right: Timeline Section */}

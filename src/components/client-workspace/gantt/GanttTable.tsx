@@ -12,6 +12,7 @@ interface GanttTableProps {
   expandedProjects: Set<string>;
   onToggleExpand: (projectId: string) => void;
   tasksByProject: Record<string, ProjectTask[]>;
+  taskCounts: Record<string, number>;
 }
 
 const PRIORITY_COLORS = {
@@ -28,6 +29,7 @@ export function GanttTable({
   expandedProjects,
   onToggleExpand,
   tasksByProject,
+  taskCounts,
 }: GanttTableProps) {
   return (
     <div className="min-w-[340px] border-r bg-card">
@@ -43,7 +45,7 @@ export function GanttTable({
       <div>
         {rows.map((row) => {
           const rowHeight = row.type === 'project' ? projectRowHeight : taskRowHeight;
-          const hasTasks = row.type === 'project' && row.project && (tasksByProject[row.project.id]?.length || 0) > 0;
+          const hasTasks = row.type === 'project' && row.project && (taskCounts[row.project.id] || 0) > 0;
           const isExpanded = row.type === 'project' && row.project && expandedProjects.has(row.project.id);
           
           return (
