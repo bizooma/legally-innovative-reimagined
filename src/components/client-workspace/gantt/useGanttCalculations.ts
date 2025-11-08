@@ -1,8 +1,22 @@
 import { useMemo } from 'react';
-import { differenceInDays, startOfMonth, endOfMonth, eachMonthOfInterval, addDays, isBefore, isAfter, isWithinInterval } from 'date-fns';
+import { 
+  differenceInDays, 
+  startOfMonth, 
+  endOfMonth, 
+  eachMonthOfInterval, 
+  eachWeekOfInterval,
+  eachDayOfInterval,
+  startOfWeek,
+  addDays, 
+  isBefore, 
+  isAfter, 
+  isWithinInterval 
+} from 'date-fns';
 import { BarPosition, TimelineMarker, DateRange } from './types';
 
-export function useGanttCalculations(dateRange: DateRange) {
+export type ZoomLevel = 'day' | 'week' | 'month';
+
+export function useGanttCalculations(dateRange: DateRange, zoomLevel: ZoomLevel = 'month') {
   const totalDays = useMemo(() => 
     differenceInDays(dateRange.end, dateRange.start) + 1, // +1 to include end date
     [dateRange]
@@ -39,20 +53,50 @@ export function useGanttCalculations(dateRange: DateRange) {
   );
 
   const timelineMarkers = useMemo((): TimelineMarker[] => {
-    const months = eachMonthOfInterval({ start: dateRange.start, end: dateRange.end });
-    
-    return months.map(month => {
-      const monthStart = startOfMonth(month);
-      const offset = differenceInDays(monthStart, dateRange.start);
-      const position = (offset / totalDays) * 100;
-      
-      return {
-        date: monthStart,
-        label: monthStart.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-        position
-      };
-    });
-  }, [dateRange, totalDays]);
+    if (zoomLevel === 'day') {
+      const days = eachDayOfInterval({ start: dateRange.start, end: dateRange.end });
+      return days.map(day => {
+        const offset = differenceInDays(day, dateRange.start);
+        const position = (offset / totalDays) * 100;
+        
+        return {
+          date: day,
+          label: day.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          position
+        };
+      });
+    } else if (zoomLevel === 'week') {
+      const weeks = eachWeekOfInterval(
+        { start: dateRange.start, end: dateRange.end },
+        { weekStartsOn: 0 } // Start on Sunday
+      );
+      return weeks.map(week => {
+        const weekStart = startOfWeek(week, { weekStartsOn: 0 });
+        const offset = differenceInDays(weekStart, dateRange.start);
+        const position = (offset / totalDays) * 100;
+        
+        return {
+          date: weekStart,
+          label: `Week of ${weekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`,
+          position
+        };
+      });
+    } else {
+      // month view (default)
+      const months = eachMonthOfInterval({ start: dateRange.start, end: dateRange.end });
+      return months.map(month => {
+        const monthStart = startOfMonth(month);
+        const offset = differenceInDays(monthStart, dateRange.start);
+        const position = (offset / totalDays) * 100;
+        
+        return {
+          date: monthStart,
+          label: monthStart.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+          position
+        };
+      });
+    }
+  }, [dateRange, totalDays, zoomLevel]);
 
   const todayPosition = useMemo(() => {
     const today = new Date();

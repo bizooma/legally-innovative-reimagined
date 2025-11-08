@@ -17,7 +17,7 @@ export function TimelineGrid({ markers, todayPosition, rows, projectRowHeight, t
 
   return (
     <div className="absolute inset-0 pointer-events-none">
-      {/* Month dividers */}
+      {/* Timeline dividers (days/weeks/months based on zoom) */}
       {markers.map((marker, index) => (
         <div
           key={index}

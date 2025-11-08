@@ -5,7 +5,7 @@ import { GanttTable } from './GanttTable';
 import { GanttBar } from './GanttBar';
 import { TimelineGrid, TimelineHeader } from './TimelineGrid';
 import { DateRangeFilter } from './DateRangeFilter';
-import { useGanttCalculations } from './useGanttCalculations';
+import { useGanttCalculations, ZoomLevel } from './useGanttCalculations';
 import { useExpandedProjects } from './useExpandedProjects';
 import { useMultipleProjectTasks } from '@/hooks/useMultipleProjectTasks';
 import { useProjectTaskCounts } from '@/hooks/useProjectTaskCounts';
@@ -14,7 +14,7 @@ import { useResizeGanttBar } from '@/hooks/useResizeGanttBar';
 import { addDays, subDays, isWithinInterval, min, max } from 'date-fns';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronRight, Maximize2 } from 'lucide-react';
+import { ChevronDown, ChevronRight, Maximize2, ZoomIn, ZoomOut } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
 
@@ -36,6 +36,8 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
     start: subDays(today, 45),
     end: addDays(today, 45)
   });
+  
+  const [zoomLevel, setZoomLevel] = useState<ZoomLevel>('month');
 
   // Auto-fit all projects on initial load
   useEffect(() => {
@@ -60,7 +62,7 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
   }, [projects]);
 
   const { expandedProjects, toggleProject, expandAll, collapseAll } = useExpandedProjects();
-  const { calculateBarPosition, timelineMarkers, todayPosition } = useGanttCalculations(dateRange);
+  const { calculateBarPosition, timelineMarkers, todayPosition } = useGanttCalculations(dateRange, zoomLevel);
 
   const handleTasksUpdate = () => {
     queryClient.invalidateQueries({ queryKey: ['project_tasks'] });
@@ -221,6 +223,34 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle>Project Timeline</CardTitle>
         <div className="flex items-center gap-2">
+          {/* Zoom Controls */}
+          <div className="flex items-center gap-1 border rounded-md p-1">
+            <Button
+              variant={zoomLevel === 'day' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setZoomLevel('day')}
+              className={cn("h-8 px-2", zoomLevel === 'day' && "pointer-events-none")}
+            >
+              Day
+            </Button>
+            <Button
+              variant={zoomLevel === 'week' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setZoomLevel('week')}
+              className={cn("h-8 px-2", zoomLevel === 'week' && "pointer-events-none")}
+            >
+              Week
+            </Button>
+            <Button
+              variant={zoomLevel === 'month' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setZoomLevel('month')}
+              className={cn("h-8 px-2", zoomLevel === 'month' && "pointer-events-none")}
+            >
+              Month
+            </Button>
+          </div>
+          
           <Button
             variant="outline"
             size="sm"
