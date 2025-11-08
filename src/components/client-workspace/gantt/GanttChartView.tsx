@@ -9,10 +9,13 @@ import { useGanttCalculations } from './useGanttCalculations';
 import { useExpandedProjects } from './useExpandedProjects';
 import { useMultipleProjectTasks } from '@/hooks/useMultipleProjectTasks';
 import { useProjectTaskCounts } from '@/hooks/useProjectTaskCounts';
+import { useDragTaskDate } from '@/hooks/useDragTaskDate';
 import { addDays, subDays, isWithinInterval } from 'date-fns';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronRight } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRef } from 'react';
 
 interface GanttChartViewProps {
   projects: GanttProject[];
@@ -25,6 +28,9 @@ const TASK_ROW_HEIGHT = 36;
 
 export function GanttChartView({ projects, isLoading, onProjectClick }: GanttChartViewProps) {
   const today = new Date();
+  const queryClient = useQueryClient();
+  const timelineRef = useRef<HTMLDivElement>(null);
+  
   const [dateRange, setDateRange] = useState({
     start: subDays(today, 45),
     end: addDays(today, 45)
@@ -32,6 +38,18 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
 
   const { expandedProjects, toggleProject, expandAll, collapseAll } = useExpandedProjects();
   const { calculateBarPosition, timelineMarkers, todayPosition } = useGanttCalculations(dateRange);
+
+  const handleTasksUpdate = () => {
+    queryClient.invalidateQueries({ queryKey: ['project_tasks'] });
+  };
+
+  const {
+    dragState,
+    startDrag,
+    updateDrag,
+    endDrag,
+    getDragOffset,
+  } = useDragTaskDate(dateRange, handleTasksUpdate);
 
   // Filter projects within date range
   const visibleProjects = useMemo(() => {
@@ -192,7 +210,7 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
               <TimelineHeader markers={timelineMarkers} />
               
               <ScrollArea className="h-[500px]">
-                <div className="relative min-w-full" style={{ height: `${totalHeight}px` }}>
+                <div ref={timelineRef} className="relative min-w-full" style={{ height: `${totalHeight}px` }}>
                   {/* Background grid */}
                   <TimelineGrid
                     markers={timelineMarkers}
@@ -250,6 +268,14 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
                               onClick={() => {}}
                               isTask={true}
                               priority={row.task.priority}
+                              taskId={row.task.id}
+                              onDragStart={startDrag}
+                              onDragMove={updateDrag}
+                              onDragEnd={() => {
+                                const containerWidth = timelineRef.current?.offsetWidth || 1000;
+                                endDrag(row.task!.due_date!, containerWidth);
+                              }}
+                              dragOffset={dragState?.taskId === row.task.id ? getDragOffset() : 0}
                             />
                           )}
                         </div>
