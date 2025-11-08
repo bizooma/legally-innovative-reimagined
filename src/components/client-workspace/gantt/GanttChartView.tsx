@@ -11,10 +11,10 @@ import { useMultipleProjectTasks } from '@/hooks/useMultipleProjectTasks';
 import { useProjectTaskCounts } from '@/hooks/useProjectTaskCounts';
 import { useDragTaskDate } from '@/hooks/useDragTaskDate';
 import { useResizeGanttBar } from '@/hooks/useResizeGanttBar';
-import { addDays, subDays, isWithinInterval } from 'date-fns';
+import { addDays, subDays, isWithinInterval, min, max } from 'date-fns';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, Maximize2 } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
 
@@ -133,6 +133,26 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
     collapseAll();
   };
 
+  const handleFitAllProjects = () => {
+    // Find all projects with dates
+    const projectsWithDates = projects.filter(p => p.start_date && p.end_date);
+    
+    if (projectsWithDates.length === 0) return;
+    
+    // Find earliest start and latest end
+    const startDates = projectsWithDates.map(p => new Date(p.start_date));
+    const endDates = projectsWithDates.map(p => new Date(p.end_date));
+    
+    const earliestStart = min(startDates);
+    const latestEnd = max(endDates);
+    
+    // Add a small buffer (7 days on each side)
+    const bufferStart = subDays(earliestStart, 7);
+    const bufferEnd = addDays(latestEnd, 7);
+    
+    setDateRange({ start: bufferStart, end: bufferEnd });
+  };
+
   const totalHeight = ganttRows.reduce((sum, row) => 
     sum + (row.type === 'project' ? PROJECT_ROW_HEIGHT : TASK_ROW_HEIGHT), 0
   );
@@ -179,6 +199,15 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle>Project Timeline</CardTitle>
         <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleFitAllProjects}
+            className="gap-2"
+          >
+            <Maximize2 className="h-4 w-4" />
+            Fit All Projects
+          </Button>
           {hasAnyTasks && (
             <>
               <Button
