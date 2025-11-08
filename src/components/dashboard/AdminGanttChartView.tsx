@@ -190,23 +190,36 @@ export function AdminGanttChartView({ projects, isLoading }: AdminGanttChartView
                   
                   {/* Project Bars */}
                   <div className="relative" style={{ minHeight: `${visibleProjects.length * ROW_HEIGHT}px` }}>
-                    {visibleProjects.map((project, index) => {
-                      const position = calculateBarPosition(
-                        new Date(project.start_date),
-                        new Date(project.end_date)
-                      );
-                      
-                      return (
-                        <GanttBar
-                          key={project.id}
-                          project={project}
-                          position={position}
-                          rowHeight={ROW_HEIGHT}
-                          onClick={handleProjectClick}
-                          isTask={false}
-                        />
-                      );
-                    })}
+                    {(() => {
+                      let currentTop = 0;
+                      return ganttRows.map((row, index) => {
+                        const top = currentTop;
+                        currentTop += ROW_HEIGHT;
+                        
+                        if (row.type !== 'project' || !row.project) return null;
+                        
+                        const position = calculateBarPosition(
+                          new Date(row.project.start_date),
+                          new Date(row.project.end_date)
+                        );
+                        
+                        return (
+                          <div 
+                            key={row.id} 
+                            className="absolute left-0 right-0" 
+                            style={{ top: `${top}px`, height: `${ROW_HEIGHT}px` }}
+                          >
+                            <GanttBar
+                              project={row.project}
+                              position={position}
+                              rowHeight={ROW_HEIGHT}
+                              onClick={handleProjectClick}
+                              isTask={false}
+                            />
+                          </div>
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
               </div>
