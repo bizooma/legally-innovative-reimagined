@@ -44,9 +44,9 @@ const EMBED_CONFIG = {
 };
 
 const INIT_TIMEOUT = 6000; // 6 seconds
-const EMBED_INIT_TIMEOUT = 15000; // 15 seconds for embed
+const EMBED_INIT_TIMEOUT = 25000; // 25 seconds for embed (slower init on first paint)
 
-function loadScript(url: string, attrs: Record<string, string>): Promise<void> {
+function loadScript(url: string, attrs: Record<string, string>, parent?: HTMLElement): Promise<void> {
   return new Promise((resolve, reject) => {
     // Allow multiple instances: only skip if same src AND same instance (name or target) exists
     const existingScripts = Array.from(document.querySelectorAll(`script[src="${url}"]`));
@@ -81,7 +81,12 @@ function loadScript(url: string, attrs: Record<string, string>): Promise<void> {
       reject(new Error(`Failed to load ${url}`));
     };
 
-    document.body.appendChild(script);
+    // Append to target parent if provided to help SDK anchor correctly
+    if (parent) {
+      parent.appendChild(script);
+    } else {
+      document.body.appendChild(script);
+    }
   });
 }
 
@@ -155,6 +160,13 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2', isRetr
   
   console.log(`[D-ID] Loading Embed ${version} for target #${targetId}${isRetry ? ' (retry)' : ''}`);
   console.log('[D-ID] Current origin:', window.location.origin);
+
+  // Set debug status to loading for embed
+  window.didAgentDebug = {
+    status: 'loading',
+    version,
+    lastAttempt: new Date().toISOString(),
+  };
   
   // Domain compatibility check
   if (!isRetry) {
@@ -185,30 +197,42 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2', isRetr
       'data-target-id': targetId,
     };
 
-    await loadScript(url, attrs);
+    await loadScript(url, attrs, targetDiv);
     console.log('[D-ID] Embed script appended with attrs:', attrs);
 
     // Wait for agent initialization with extended timeout
     const initialized = await Promise.race([
       new Promise<boolean>((resolve) => {
         const checkInterval = setInterval(() => {
-          const embedAgent = targetDiv.querySelector('iframe, [data-did-agent], .d-id-agent-container');
-          if (embedAgent || targetDiv.childElementCount > 0) {
+          const embedAgentInTarget = targetDiv.querySelector('iframe, [data-did-agent], .d-id-agent-container, iframe[src*="agent.d-id.com"]');
+          const namedAgent = document.querySelector(`[data-name="${EMBED_CONFIG.name}"]`);
+          const globalContainer = document.querySelector('.d-id-agent-container');
+          if (embedAgentInTarget || namedAgent || globalContainer || targetDiv.childElementCount > 0) {
             clearInterval(checkInterval);
             resolve(true);
           }
-        }, 100);
+        }, 120);
       }),
       new Promise<boolean>((resolve) => setTimeout(() => resolve(false), EMBED_INIT_TIMEOUT)),
     ]);
 
     if (initialized) {
+      window.didAgentDebug = { status: 'initialized', version };
       console.log(`[D-ID] Embed initialized successfully in #${targetId}`);
       return true;
     } else {
       // Retry once on timeout if this isn't already a retry
       if (!isRetry) {
-        console.log('[D-ID] Embed timeout, retrying in 1.5s...');
+        console.log('[D-ID] Embed timeout, cleaning up and retrying in 1.5s...');
+        // Remove previous embed scripts for this target/name
+        const scripts = Array.from(document.querySelectorAll(`script[src="${url}"]`));
+        scripts.forEach((s) => {
+          const n = s.getAttribute('data-name');
+          const t = s.getAttribute('data-target-id');
+          if (n === EMBED_CONFIG.name || t === targetId) {
+            s.parentNode?.removeChild(s);
+          }
+        });
         await new Promise(resolve => setTimeout(resolve, 1500));
         return injectEmbed(targetId, version, true);
       }
@@ -216,6 +240,11 @@ async function injectEmbed(targetId: string, version: 'v1' | 'v2' = 'v2', isRetr
     }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    window.didAgentDebug = {
+      status: 'failed',
+      error: errorMessage,
+      version,
+    };
     console.error(`[D-ID] Embed initialization failed:`, errorMessage);
     return false;
   }

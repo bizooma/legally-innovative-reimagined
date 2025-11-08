@@ -63,7 +63,7 @@ const VideoAskWidget = () => {
 
     const waitForDID = async () => {
       console.log('[VideoAsk] Waiting for D-ID to be ready...');
-      const deadline = Date.now() + 10000; // 10 second timeout
+      const deadline = Date.now() + 25000; // 25 second timeout to match D-ID embed
       
       while (Date.now() < deadline) {
         const target = document.getElementById('did-agent-hero');
@@ -86,14 +86,25 @@ const VideoAskWidget = () => {
     };
 
     // Load after page is ready
+    const isHome = window.location.pathname === '/';
     if (document.readyState === 'complete') {
-      waitForDID();
+      if (isHome) {
+        waitForDID();
+      } else {
+        injectVideoAsk();
+      }
     } else {
-      window.addEventListener('load', waitForDID);
+      if (isHome) {
+        window.addEventListener('load', waitForDID);
+      } else {
+        window.addEventListener('load', injectVideoAsk);
+      }
     }
 
     return () => {
       // Cleanup: remove script on unmount
+      window.removeEventListener('load', waitForDID);
+      window.removeEventListener('load', injectVideoAsk);
       const script = document.querySelector('script[data-videoask="1"]');
       if (script && script.parentNode) {
         console.log('[VideoAsk] Cleaning up script');
