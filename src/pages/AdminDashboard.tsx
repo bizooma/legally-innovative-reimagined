@@ -7,6 +7,7 @@ import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { ClientDirectory } from '@/components/dashboard/ClientDirectory';
 import { AdminHeader } from '@/components/dashboard/AdminHeader';
 import { TimeTrackingSection } from '@/components/dashboard/TimeTrackingSection';
+import { TimeTracker } from '@/components/dashboard/TimeTracker';
 import { useDashboard } from '@/hooks/useDashboard';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
@@ -55,6 +56,7 @@ const AdminDashboard = () => {
                   </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent className="space-y-4">
+                  <TimeTracker clients={clients} />
                   <TimeTrackingSection clients={clients} />
                 </CollapsibleContent>
               </Collapsible>

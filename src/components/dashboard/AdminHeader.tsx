@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
 import { Client } from '@/types/database';
-import { TimeTracker } from './TimeTracker';
 
 interface AdminHeaderProps {
   onClientAdded: (client: Client) => void;
@@ -45,9 +44,6 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
           </Button>
         </div>
       </div>
-      
-      {/* Time Tracker for Admins */}
-      {isAdmin && <TimeTracker clients={clients} />}
     </div>
   );
 };
