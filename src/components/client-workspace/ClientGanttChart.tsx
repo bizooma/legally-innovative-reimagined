@@ -1,8 +1,8 @@
 
 import React, { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { format, parseISO, addDays } from 'date-fns';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
+import { format, parseISO, addDays, isBefore, startOfDay } from 'date-fns';
 import { ProjectWithDates } from '@/hooks/useClientProjectsWithDates';
 
 interface GanttItem {
@@ -24,22 +24,44 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
   campaigns = [], 
   isLoading 
 }) => {
+  // Get status color
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Completed':
+        return 'hsl(var(--chart-1))'; // Green
+      case 'In Progress':
+        return 'hsl(var(--chart-2))'; // Blue
+      case 'On Hold':
+        return 'hsl(var(--chart-3))'; // Yellow
+      case 'Not Started':
+        return 'hsl(var(--muted))'; // Gray
+      default:
+        return 'hsl(var(--muted))';
+    }
+  };
+
   // Prepare data for the Gantt chart
   const ganttData = useMemo(() => {
-    const items: GanttItem[] = [
-      ...projects.map(project => ({
-        name: project.name,
-        type: 'project' as const,
-        id: project.id,
-        start: project.start_date ? parseISO(project.start_date) : new Date(),
-        end: project.end_date ? parseISO(project.end_date) : addDays(new Date(), 30)
-      })),
+    const items: (GanttItem & { status: string; progress: number })[] = [
+      ...projects
+        .filter(project => project.start_date && project.end_date) // Only show projects with dates
+        .map(project => ({
+          name: project.name,
+          type: 'project' as const,
+          id: project.id,
+          start: parseISO(project.start_date!),
+          end: parseISO(project.end_date!),
+          status: project.status,
+          progress: project.progress
+        })),
       ...campaigns.map(campaign => ({
         name: campaign.name,
         type: 'campaign' as const,
         id: campaign.id,
         start: parseISO(campaign.start_date),
-        end: parseISO(campaign.end_date)
+        end: parseISO(campaign.end_date),
+        status: 'In Progress',
+        progress: 50
       }))
     ];
 
@@ -65,12 +87,15 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
     }, { minDate: ganttData[0].start, maxDate: ganttData[0].end });
   }, [ganttData]);
 
-  // Convert data for recharts
+  // Convert data for recharts with progress visualization
   const chartData = useMemo(() => {
     return ganttData.map((item, index) => {
       const startTime = item.start.getTime();
       const endTime = item.end.getTime();
-      const duration = endTime - startTime;
+      const totalDuration = endTime - startTime;
+      const completedDuration = (totalDuration * item.progress) / 100;
+      const remainingDuration = totalDuration - completedDuration;
+      const isOverdue = isBefore(item.end, startOfDay(new Date())) && item.status !== 'Completed';
       
       return {
         name: item.name,
@@ -78,8 +103,13 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
         id: item.id,
         index,
         start: startTime,
-        duration,
-        fill: item.type === 'project' ? '#9b87f5' : '#f97316'
+        completedDuration,
+        remainingDuration,
+        status: item.status,
+        progress: item.progress,
+        end: endTime,
+        isOverdue,
+        statusColor: getStatusColor(item.status)
       };
     });
   }, [ganttData]);
@@ -105,11 +135,13 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
         </CardHeader>
         <CardContent className="h-64 flex flex-col items-center justify-center">
           <p className="text-muted-foreground">No timeline data available</p>
-          <p className="text-sm text-muted-foreground">Create projects or campaigns to see them on the timeline</p>
+          <p className="text-sm text-muted-foreground">Add start and end dates to projects to see them on the timeline</p>
         </CardContent>
       </Card>
     );
   }
+
+  const today = new Date().getTime();
 
   const formatXAxis = (timestamp: number) => {
     return format(new Date(timestamp), 'MMM d');
@@ -122,15 +154,26 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
     
     const data = props.payload[0].payload;
     const start = new Date(data.start);
-    const end = new Date(data.start + data.duration);
+    const end = new Date(data.end);
 
     return (
       <div className="bg-popover text-popover-foreground p-3 shadow-lg rounded-lg border z-50">
         <p className="font-medium text-sm">{data.name}</p>
-        <p className="text-xs text-muted-foreground capitalize">{data.type}</p>
-        <p className="text-xs mt-1">
-          {format(start, 'MMM d, yyyy')} - {format(end, 'MMM d, yyyy')}
-        </p>
+        <p className="text-xs text-muted-foreground capitalize mb-2">{data.type}</p>
+        <div className="space-y-1">
+          <p className="text-xs">
+            <span className="font-medium">Status:</span> {data.status}
+          </p>
+          <p className="text-xs">
+            <span className="font-medium">Progress:</span> {data.progress}%
+          </p>
+          <p className="text-xs">
+            {format(start, 'MMM d, yyyy')} - {format(end, 'MMM d, yyyy')}
+          </p>
+          {data.isOverdue && (
+            <p className="text-xs text-destructive font-medium">⚠️ Overdue</p>
+          )}
+        </div>
       </div>
     );
   };
@@ -173,24 +216,67 @@ const ClientGanttChart: React.FC<ClientGanttChartProps> = ({
                 isAnimationActive={false}
                 position={{ x: 0, y: 0 }}
               />
-              <Bar 
-                dataKey="duration" 
-                stackId="a" 
-                fill="#9b87f5" 
-                radius={4}
-                isAnimationActive={false}
+              {/* Today's date indicator */}
+              <ReferenceLine 
+                x={today} 
+                stroke="hsl(var(--destructive))" 
+                strokeWidth={2}
+                strokeDasharray="3 3"
+                label={{ value: 'Today', position: 'top', fill: 'hsl(var(--destructive))' }}
               />
+              {/* Completed portion of the bar */}
+              <Bar 
+                dataKey="completedDuration" 
+                stackId="a" 
+                radius={[4, 0, 0, 4]}
+                isAnimationActive={false}
+              >
+                {chartData.map((entry, index) => (
+                  <Cell 
+                    key={`completed-${index}`} 
+                    fill={entry.isOverdue ? 'hsl(var(--destructive))' : entry.statusColor}
+                    opacity={0.9}
+                  />
+                ))}
+              </Bar>
+              {/* Remaining portion of the bar */}
+              <Bar 
+                dataKey="remainingDuration" 
+                stackId="a" 
+                radius={[0, 4, 4, 0]}
+                isAnimationActive={false}
+              >
+                {chartData.map((entry, index) => (
+                  <Cell 
+                    key={`remaining-${index}`} 
+                    fill={entry.isOverdue ? 'hsl(var(--destructive))' : entry.statusColor}
+                    opacity={0.3}
+                  />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="flex justify-center mt-4 text-sm">
-          <div className="flex items-center mr-4">
-            <div className="w-3 h-3 bg-[#9b87f5] rounded mr-1"></div>
-            <span>Projects</span>
+        <div className="flex justify-center mt-4 gap-4 text-xs flex-wrap">
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--muted))' }}></div>
+            <span>Not Started</span>
           </div>
-          <div className="flex items-center">
-            <div className="w-3 h-3 bg-[#f97316] rounded mr-1"></div>
-            <span>Campaigns</span>
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--chart-2))' }}></div>
+            <span>In Progress</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--chart-3))' }}></div>
+            <span>On Hold</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--chart-1))' }}></div>
+            <span>Completed</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--destructive))' }}></div>
+            <span>Overdue</span>
           </div>
         </div>
       </CardContent>

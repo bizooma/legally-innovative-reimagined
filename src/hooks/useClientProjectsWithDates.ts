@@ -28,21 +28,7 @@ export function useClientProjectsWithDates(clientId: string) {
           throw error;
         }
         
-        // For now, we'll use created_at as start_date and add 30 days for end_date
-        // This is temporary until we add proper date fields to the projects table
-        const projectsWithDates = (data as Project[]).map(project => {
-          const startDate = new Date(project.created_at);
-          const endDate = new Date(startDate);
-          endDate.setDate(endDate.getDate() + 30);
-          
-          return {
-            ...project,
-            start_date: startDate.toISOString(),
-            end_date: endDate.toISOString()
-          };
-        });
-        
-        setProjects(projectsWithDates);
+        setProjects(data as ProjectWithDates[]);
       } catch (error: any) {
         console.error('Error fetching projects with dates:', error);
         toast({

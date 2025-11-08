@@ -21,8 +21,8 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Project } from '@/types/database';
-import { formatDistanceToNow } from 'date-fns';
-import { KanbanSquare } from 'lucide-react';
+import { format, formatDistanceToNow } from 'date-fns';
+import { KanbanSquare, Calendar } from 'lucide-react';
 import { KanbanBoard } from './kanban/KanbanBoard';
 
 interface ProjectDetailsDialogProps {
@@ -118,6 +118,29 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
                       <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                         {project.description}
                       </p>
+                    </div>
+                  )}
+
+                  {(project.start_date || project.end_date) && (
+                    <div className="space-y-2">
+                      <span className="text-sm font-medium flex items-center gap-2">
+                        <Calendar className="h-4 w-4" />
+                        Project Timeline
+                      </span>
+                      <div className="flex gap-4 text-sm">
+                        {project.start_date && (
+                          <div>
+                            <span className="text-muted-foreground">Start:</span>
+                            <p className="font-medium">{format(new Date(project.start_date), 'MMM d, yyyy')}</p>
+                          </div>
+                        )}
+                        {project.end_date && (
+                          <div>
+                            <span className="text-muted-foreground">End:</span>
+                            <p className="font-medium">{format(new Date(project.end_date), 'MMM d, yyyy')}</p>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
                   

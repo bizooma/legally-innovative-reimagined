@@ -32,6 +32,8 @@ export interface Project {
   status: 'Not Started' | 'In Progress' | 'On Hold' | 'Completed';
   progress: number;
   description?: string | null;
+  start_date?: string | null;
+  end_date?: string | null;
   created_at: string;
   updated_at: string;
   created_by: string;
