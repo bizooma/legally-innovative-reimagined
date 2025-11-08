@@ -47,7 +47,6 @@ import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
 import ScrollToTop from "./components/ScrollToTop";
-import VideoAskWidget from "./components/integrations/VideoAskWidget";
 
 // Create a new query client
 const queryClient = new QueryClient();
@@ -145,7 +144,6 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </RouteDebug>
-          <VideoAskWidget />
         </TooltipProvider>
       </HelmetProvider>
     </BrowserRouter>

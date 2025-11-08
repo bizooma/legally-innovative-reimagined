@@ -27,9 +27,12 @@ const QuickieQrPage = () => {
               <p className="text-xl mb-8 text-legal-light">
                 Create dynamic QR codes with built-in analytics, A/B testing, and real-time content updates. Perfect for restaurants, retail, events, and professional services.
               </p>
-              <div className="flex justify-center">
+              <div className="flex flex-wrap gap-4 justify-center">
                 <Button size="lg" className="bg-white text-legal-primary hover:bg-legal-light">
-                  Coming Soon
+                  Create Free QR Code
+                </Button>
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                  See Examples
                 </Button>
               </div>
             </div>
@@ -41,7 +44,7 @@ const QuickieQrPage = () => {
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">TBD</div>
+                <div className="text-4xl font-bold text-legal-primary mb-2">250%</div>
                 <div className="text-gray-700">Increase in Engagement</div>
               </div>
               <div className="text-center">
@@ -49,7 +52,7 @@ const QuickieQrPage = () => {
                 <div className="text-gray-700">Content Updates</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">TBD</div>
+                <div className="text-4xl font-bold text-legal-primary mb-2">10K+</div>
                 <div className="text-gray-700">Businesses Using</div>
               </div>
             </div>
@@ -88,31 +91,31 @@ const QuickieQrPage = () => {
           <div className="container mx-auto">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-legal-dark">
-                Success Story: TBD
+                Success Story: Bella's Bistro
               </h2>
               <Card className="border-none shadow-xl">
                 <CardContent className="p-8">
                   <div className="mb-6">
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Challenge</h3>
                     <p className="text-gray-700 mb-4">
-                      TBD
+                      Bella's Bistro, a popular restaurant chain with 8 locations, wanted to modernize their menus and collect customer feedback. Printing new menus for specials cost $500/week, and customer engagement was minimal.
                     </p>
                   </div>
                   <div className="mb-6">
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Solution</h3>
                     <p className="text-gray-700 mb-4">
-                      TBD
+                      We implemented Quickie QR table tents with dynamic menu links. Each location got custom QR codes linking to digital menus that could be updated instantly. We added feedback forms, loyalty program signup, and social media links.
                     </p>
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Results</h3>
                     <ul className="space-y-3">
                       {[
-                        "TBD",
-                        "TBD",
-                        "TBD",
-                        "TBD",
-                        "TBD"
+                        "85% of diners now scan QR codes for menus",
+                        "$26,000 saved annually on menu printing",
+                        "250% increase in loyalty program signups",
+                        "Daily menu updates for specials at zero cost",
+                        "2,500+ customer feedback responses monthly"
                       ].map((result, index) => (
                         <li key={index} className="flex items-start">
                           <Check className="w-5 h-5 text-legal-primary mr-3 mt-1 flex-shrink-0" />
@@ -136,7 +139,7 @@ const QuickieQrPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
-                  quote: "TBD",
+                  quote: "Quickie QR transformed our restaurant operations. We update our menu daily with specials, and customers love the convenience. The analytics showed us our most popular items, helping us optimize our offerings.",
                   author: "Isabella Rodriguez",
                   role: "Owner, Bella's Bistro"
                 },

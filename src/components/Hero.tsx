@@ -4,28 +4,56 @@ import { Phone } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
 import { trackPhoneClick, trackCTAClick } from "@/utils/gtmTracking";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
-import { loadDidAgentEmbed } from "@/utils/loadDidAgent";
-
 const Hero = () => {
   useEffect(() => {
+    // Check if script already exists
+    const existingScript = document.querySelector('script[src="https://agent.d-id.com/v2/index.js"]');
+    
+    // Clear the container to ensure fresh initialization
     const container = document.getElementById('did-agent-hero');
     if (container) {
       container.innerHTML = '';
     }
+    
+    if (existingScript) {
+      console.log('✅ D-ID script already loaded, container cleared for reinitialization');
+      return () => {
+        if (container) {
+          container.innerHTML = '';
+        }
+      };
+    }
 
-    const timeoutId = window.setTimeout(() => {
-      console.log('🚀 Loading D-ID agent embed in Hero (delayed 100ms)');
-      loadDidAgentEmbed('did-agent-hero').catch(err => {
-        console.error('❌ Failed to load D-ID embed:', err);
-      });
-    }, 100);
+    // Create the script element dynamically
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = 'https://agent.d-id.com/v2/index.js';
 
+    // Required data attributes
+    script.setAttribute('data-mode', 'full');
+    script.setAttribute('data-client-key', 'Z29vZ2xlLW9hdXRoMnwxMDc0NjQ2Njc4OTg3MTA5ODM4ODA6b0ZNWUp4Xy1oV01PYzJtVFFQYkhP');
+    script.setAttribute('data-agent-id', 'v2_agt_aHkCdBDR');
+    script.setAttribute('data-name', 'did-agent');
+    script.setAttribute('data-monitor', 'true');
+    script.setAttribute('data-target-id', 'did-agent-hero');
+
+    // Debugging hooks
+    script.onload = () => {
+      console.log('✅ D-ID script loaded successfully in Hero');
+    };
+    script.onerror = error => {
+      console.error('❌ D-ID script failed to load:', error);
+    };
+    document.body.appendChild(script);
+
+    // Cleanup on unmount
     return () => {
-      clearTimeout(timeoutId);
       console.log('🧹 Cleaning up D-ID from Hero');
-      const c = document.getElementById('did-agent-hero');
-      if (c) {
-        c.innerHTML = '';
+      if (container) {
+        container.innerHTML = '';
+      }
+      if (script.parentNode) {
+        document.body.removeChild(script);
       }
     };
   }, []);
@@ -82,7 +110,7 @@ const Hero = () => {
 
           {/* Right Column - D-ID Agent */}
           <div className="relative">
-            <div id="did-agent-hero" data-testid="did-target" className="w-full h-[600px] min-h-[560px] bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl relative z-20" />
+            <div id="did-agent-hero" className="w-full h-[600px] min-h-[560px] bg-white/10 backdrop-blur-sm rounded-lg shadow-2xl relative z-10" />
           </div>
         </div>
       </div>
