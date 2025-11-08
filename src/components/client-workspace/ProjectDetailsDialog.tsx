@@ -74,7 +74,7 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
+        <DialogContent className="max-w-7xl max-h-[90vh] overflow-hidden flex flex-col">
           <DialogHeader>
             <div className="flex items-center justify-between">
               <div>
@@ -105,8 +105,10 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
               <TabsTrigger value="details">Project Details</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="kanban" className="flex-1 overflow-auto mt-4">
-              <KanbanBoard projectId={project.id} />
+            <TabsContent value="kanban" className="flex-1 overflow-hidden mt-4">
+              <div className="h-full overflow-x-auto overflow-y-hidden">
+                <KanbanBoard projectId={project.id} />
+              </div>
             </TabsContent>
             
             <TabsContent value="details" className="overflow-auto mt-4">
