@@ -16,6 +16,12 @@ interface GanttBarProps {
   onDragMove?: (clientX: number) => void;
   onDragEnd?: () => void;
   dragOffset?: number;
+  onResizeStart?: (edge: 'start' | 'end', clientX: number) => void;
+  onResizeMove?: (clientX: number) => void;
+  onResizeEnd?: () => void;
+  resizeOffset?: number;
+  isResizing?: boolean;
+  resizingEdge?: 'start' | 'end';
 }
 
 const PRIORITY_COLORS = {
@@ -37,8 +43,15 @@ export function GanttBar({
   onDragMove,
   onDragEnd,
   dragOffset = 0,
+  onResizeStart,
+  onResizeMove,
+  onResizeEnd,
+  resizeOffset = 0,
+  isResizing = false,
+  resizingEdge,
 }: GanttBarProps) {
   const [isDragging, setIsDragging] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
 
   const { statusColor, isOverdue } = useMemo(() => {
@@ -73,12 +86,13 @@ export function GanttBar({
   }, [project.status, project.end_date]);
 
   useEffect(() => {
-    if (!isTask || !taskId) return;
-
     const handleMouseMove = (e: MouseEvent) => {
-      if (isDragging) {
+      if (isDragging && isTask) {
         e.preventDefault();
         onDragMove?.(e.clientX);
+      } else if (isResizing) {
+        e.preventDefault();
+        onResizeMove?.(e.clientX);
       }
     };
 
@@ -86,13 +100,15 @@ export function GanttBar({
       if (isDragging) {
         setIsDragging(false);
         onDragEnd?.();
+      } else if (isResizing) {
+        onResizeEnd?.();
       }
     };
 
-    if (isDragging) {
+    if (isDragging || isResizing) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
-      document.body.style.cursor = 'grabbing';
+      document.body.style.cursor = isResizing ? 'ew-resize' : 'grabbing';
       document.body.style.userSelect = 'none';
     }
 
@@ -102,7 +118,7 @@ export function GanttBar({
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
     };
-  }, [isDragging, onDragMove, onDragEnd, isTask, taskId]);
+  }, [isDragging, isResizing, onDragMove, onDragEnd, onResizeMove, onResizeEnd, isTask]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (isTask && taskId && onDragStart) {
@@ -114,9 +130,15 @@ export function GanttBar({
   };
 
   const handleClick = (e: React.MouseEvent) => {
-    if (!isDragging && !isTask) {
+    if (!isDragging && !isResizing && !isTask) {
       onClick(project);
     }
+  };
+
+  const handleResizeMouseDown = (edge: 'start' | 'end') => (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onResizeStart?.(edge, e.clientX);
   };
 
   if (!position.isVisible) return null;
@@ -125,12 +147,28 @@ export function GanttBar({
   const barHeightPx = isTask ? Math.floor(rowHeight * 0.5) : Math.floor(rowHeight * 0.6);
   const marginTop = Math.floor((rowHeight - barHeightPx) / 2);
 
+  // Calculate transform based on resize edge and offset
+  let transform: string | undefined;
+  if (isDragging || dragOffset !== 0) {
+    transform = `translateX(${dragOffset}px)`;
+  } else if (isResizing && resizingEdge === 'start') {
+    transform = `translateX(${resizeOffset}px)`;
+  }
+
+  // Calculate width adjustment for resize
+  let widthAdjustment = '';
+  if (isResizing && resizingEdge === 'end') {
+    widthAdjustment = ` + ${resizeOffset}px`;
+  } else if (isResizing && resizingEdge === 'start') {
+    widthAdjustment = ` - ${resizeOffset}px`;
+  }
+
   const containerStyle = {
     left: position.left,
-    width: position.width,
+    width: widthAdjustment ? `calc(${position.width}${widthAdjustment})` : position.width,
     height: `${rowHeight}px`,
     top: 0,
-    transform: isDragging || dragOffset !== 0 ? `translateX(${dragOffset}px)` : undefined,
+    transform,
   };
 
   return (
@@ -139,11 +177,13 @@ export function GanttBar({
       className={cn(
         "absolute group transition-transform",
         isTask ? "cursor-grab active:cursor-grabbing" : "cursor-pointer",
-        isDragging && "z-50"
+        (isDragging || isResizing) && "z-50"
       )}
       style={containerStyle}
       onMouseDown={handleMouseDown}
       onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div
         className={cn(
@@ -151,7 +191,7 @@ export function GanttBar({
           !isTask && "group-hover:ring-2 group-hover:ring-primary",
           isTask ? "opacity-70 border-l-4 hover:opacity-90" : "",
           isTask && priority ? PRIORITY_COLORS[priority] : "",
-          isDragging && "opacity-60 shadow-xl ring-2 ring-primary",
+          (isDragging || isResizing) && "opacity-60 shadow-xl ring-2 ring-primary",
           statusColor
         )}
         style={{
@@ -181,6 +221,28 @@ export function GanttBar({
         )}>
           {project.name}
         </div>
+
+        {/* Resize handles - only show when not a task and when hovered or resizing */}
+        {!isTask && onResizeStart && (isHovered || isResizing) && (
+          <>
+            {/* Left resize handle */}
+            <div
+              className={cn(
+                "absolute left-0 top-0 bottom-0 w-2 cursor-ew-resize hover:bg-primary/30 transition-colors",
+                isResizing && resizingEdge === 'start' && "bg-primary/50"
+              )}
+              onMouseDown={handleResizeMouseDown('start')}
+            />
+            {/* Right resize handle */}
+            <div
+              className={cn(
+                "absolute right-0 top-0 bottom-0 w-2 cursor-ew-resize hover:bg-primary/30 transition-colors",
+                isResizing && resizingEdge === 'end' && "bg-primary/50"
+              )}
+              onMouseDown={handleResizeMouseDown('end')}
+            />
+          </>
+        )}
       </div>
     </div>
   );

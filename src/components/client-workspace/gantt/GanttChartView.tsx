@@ -10,6 +10,7 @@ import { useExpandedProjects } from './useExpandedProjects';
 import { useMultipleProjectTasks } from '@/hooks/useMultipleProjectTasks';
 import { useProjectTaskCounts } from '@/hooks/useProjectTaskCounts';
 import { useDragTaskDate } from '@/hooks/useDragTaskDate';
+import { useResizeGanttBar } from '@/hooks/useResizeGanttBar';
 import { addDays, subDays, isWithinInterval } from 'date-fns';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
@@ -43,6 +44,10 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
     queryClient.invalidateQueries({ queryKey: ['project_tasks'] });
   };
 
+  const handleProjectsUpdate = () => {
+    queryClient.invalidateQueries({ queryKey: ['projects'] });
+  };
+
   const {
     dragState,
     startDrag,
@@ -50,6 +55,14 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
     endDrag,
     getDragOffset,
   } = useDragTaskDate(dateRange, handleTasksUpdate);
+
+  const {
+    resizeState,
+    startResize,
+    updateResize,
+    endResize,
+    getResizeOffset,
+  } = useResizeGanttBar();
 
   // Filter projects within date range
   const visibleProjects = useMemo(() => {
@@ -247,6 +260,25 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
                               rowHeight={rowHeight}
                               onClick={handleProjectClick}
                               isTask={false}
+                              onResizeStart={(edge, clientX) => {
+                                startResize(
+                                  row.project!.id,
+                                  'project',
+                                  edge,
+                                  clientX,
+                                  row.project!.start_date,
+                                  row.project!.end_date
+                                );
+                              }}
+                              onResizeMove={updateResize}
+                              onResizeEnd={async () => {
+                                const containerWidth = timelineRef.current?.offsetWidth || 1000;
+                                await endResize(dateRange.start, dateRange.end, containerWidth);
+                                handleProjectsUpdate();
+                              }}
+                              resizeOffset={resizeState?.itemId === row.project!.id ? getResizeOffset() : 0}
+                              isResizing={resizeState?.itemId === row.project!.id && resizeState?.isResizing}
+                              resizingEdge={resizeState?.itemId === row.project!.id ? resizeState?.edge : undefined}
                             />
                           )}
                           
