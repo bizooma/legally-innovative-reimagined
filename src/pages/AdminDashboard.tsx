@@ -10,6 +10,8 @@ import { TimeTrackingSection } from '@/components/dashboard/TimeTrackingSection'
 import { TimeTracker } from '@/components/dashboard/TimeTracker';
 import { useDashboard } from '@/hooks/useDashboard';
 import { useTimeTracker, formatDuration } from '@/hooks/useTimeTracker';
+import { useAllProjectsWithClients } from '@/hooks/useAllProjectsWithClients';
+import { AdminGanttChartView } from '@/components/dashboard/AdminGanttChartView';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -18,7 +20,9 @@ import { Badge } from '@/components/ui/badge';
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
   const { isRunning, elapsedSeconds } = useTimeTracker();
+  const { projects: allProjects, isLoading: isLoadingProjects } = useAllProjectsWithClients();
   const [isTimeTrackingOpen, setIsTimeTrackingOpen] = useState(false);
+  const [isGanttOpen, setIsGanttOpen] = useState(true);
 
   if (isLoading && !user) {
     return (
@@ -73,8 +77,30 @@ const AdminDashboard = () => {
               </Collapsible>
             )}
 
+            {/* Master Project Timeline - Only show for admins */}
+            {isAdmin && (
+              <Collapsible 
+                open={isGanttOpen} 
+                onOpenChange={setIsGanttOpen}
+                className="mb-8"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-playfair font-bold">Master Project Timeline</h2>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      {isGanttOpen ? 'Collapse' : 'Expand'}
+                      <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isGanttOpen ? 'rotate-180' : ''}`} />
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent>
+                  <AdminGanttChartView projects={allProjects} isLoading={isLoadingProjects} />
+                </CollapsibleContent>
+              </Collapsible>
+            )}
+
             {/* Client List */}
-            <ClientDirectory 
+            <ClientDirectory
               clients={clients} 
               isLoading={isLoading}
               onClientAdded={handleAddClient}
