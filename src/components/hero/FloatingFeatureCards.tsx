@@ -16,6 +16,8 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
+const thanksgivingEmojis = ['🦃', '🍂', '🌽', '🥧'];
+
 const features = [
   { 
     icon: Brain, 
@@ -107,7 +109,11 @@ const features = [
   },
 ];
 
-export const FloatingFeatureCards = () => {
+interface FloatingFeatureCardsProps {
+  holidayMode?: boolean;
+}
+
+export const FloatingFeatureCards = ({ holidayMode = false }: FloatingFeatureCardsProps) => {
   const parallaxOffset = useParallax(0.7);
   const [selectedFeature, setSelectedFeature] = useState<number | null>(null);
   
@@ -143,7 +149,11 @@ export const FloatingFeatureCards = () => {
             {/* Content */}
             <div className="relative z-10">
               <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className="w-6 h-6 text-white" />
+                {holidayMode ? (
+                  <span className="text-2xl">{thanksgivingEmojis[index]}</span>
+                ) : (
+                  <feature.icon className="w-6 h-6 text-white" />
+                )}
               </div>
               <p className="text-white font-semibold text-sm">{feature.label}</p>
             </div>

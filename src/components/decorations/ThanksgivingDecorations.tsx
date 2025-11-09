@@ -3,6 +3,8 @@ import { FallingLeaves } from './FallingLeaves';
 import { TurkeyWalk } from './TurkeyWalk';
 import { AutumnConfetti } from './AutumnConfetti';
 import { FeastTableBanner } from './FeastTableBanner';
+import { PeekingTurkeys } from './PeekingTurkeys';
+import { HoverPumpkins } from './HoverPumpkins';
 
 interface ThanksgivingDecorationsProps {
   show: boolean;
@@ -33,6 +35,12 @@ export const ThanksgivingDecorations = ({ show }: ThanksgivingDecorationsProps) 
 
       {/* Feast table banner */}
       <FeastTableBanner />
+
+      {/* Peeking turkeys */}
+      <PeekingTurkeys />
+
+      {/* Hover pumpkins on buttons */}
+      <HoverPumpkins />
 
       {/* Confetti burst (one-time) */}
       {showConfetti && <AutumnConfetti />}

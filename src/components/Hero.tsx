@@ -88,7 +88,7 @@ const Hero = () => {
               <AnimatedParticles />
             </div>
             <div className="relative z-10 h-full flex items-center justify-center p-8">
-              <FloatingFeatureCards />
+              <FloatingFeatureCards holidayMode={holidayMode} />
             </div>
           </div>
         </div>
