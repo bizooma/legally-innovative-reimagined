@@ -1,5 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import veteranOwnedBadge from "@/assets/veteran-owned-badge.png";
+import missionTechBg from "@/assets/mission-tech-bg.jpg";
+import visionFutureBg from "@/assets/vision-future-bg.jpg";
+import americanFlagBg from "@/assets/american-flag-bg.jpg";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const About = () => {
@@ -22,35 +25,50 @@ const About = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <Card className="border-none shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-br from-white to-gray-50">
-            <CardContent className="p-6">
-              <div className="h-14 w-14 bg-legal-light rounded-full flex items-center justify-center mb-6">
+          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${missionTechBg})` }}
+            />
+            <div className="absolute inset-0 bg-black/60" />
+            <CardContent className="relative z-10 p-6">
+              <div className="h-14 w-14 bg-white rounded-full flex items-center justify-center mb-6">
                 <span className="text-legal-primary text-2xl font-bold">01</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-legal-dark">Mission Statement</h3>
-              <p className="text-gray-700">Our mission is to empower businesses with intelligent AI-driven marketing and software solutions that drive measurable growth. We bridge the gap between traditional marketing and cutting-edge AI technology to deliver exceptional results.</p>
+              <h3 className="text-xl font-bold mb-3 text-white">Mission Statement</h3>
+              <p className="text-gray-100">Our mission is to empower businesses with intelligent AI-driven marketing and software solutions that drive measurable growth. We bridge the gap between traditional marketing and cutting-edge AI technology to deliver exceptional results.</p>
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-br from-white to-gray-50">
-            <CardContent className="p-6">
-              <div className="h-14 w-14 bg-legal-light rounded-full flex items-center justify-center mb-6">
+          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${visionFutureBg})` }}
+            />
+            <div className="absolute inset-0 bg-black/60" />
+            <CardContent className="relative z-10 p-6">
+              <div className="h-14 w-14 bg-white rounded-full flex items-center justify-center mb-6">
                 <span className="text-legal-primary text-2xl font-bold">02</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-legal-dark">Vision Statement</h3>
-              <p className="text-gray-700">
+              <h3 className="text-xl font-bold mb-3 text-white">Vision Statement</h3>
+              <p className="text-gray-100">
                 Our vision is to become the leading provider of AI-powered marketing and automation solutions for law firms, nonprofits, and startups—transforming how businesses attract, engage, and convert their ideal clients through intelligent technology.
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-br from-white to-gray-50 md:col-span-2 lg:col-span-1">
-            <CardContent className="p-6">
-              <div className="h-14 w-14 bg-legal-light rounded-full flex items-center justify-center mb-6">
+          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden md:col-span-2 lg:col-span-1">
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${americanFlagBg})` }}
+            />
+            <div className="absolute inset-0 bg-black/60" />
+            <CardContent className="relative z-10 p-6">
+              <div className="h-14 w-14 bg-white rounded-full flex items-center justify-center mb-6">
                 <span className="text-legal-primary text-2xl font-bold">03</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-legal-dark">American Excellence</h3>
-              <p className="text-gray-700">
+              <h3 className="text-xl font-bold mb-3 text-white">American Excellence</h3>
+              <p className="text-gray-100">
                 As a veteran owned company, our values include dedication, integrity, accessibility, innovation, and exceptional 
                 quality to every project, with a 100% U.S.-based team committed to your success.
               </p>
