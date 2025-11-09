@@ -9,6 +9,12 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 const features = [
   { 
@@ -103,10 +109,11 @@ export const FloatingFeatureCards = () => {
   
   return (
     <>
-      <div 
-        className="grid grid-cols-2 gap-4 relative z-10 transition-transform duration-100"
-        style={{ transform: `translateY(${parallaxOffset}px)` }}
-      >
+      <TooltipProvider>
+        <div 
+          className="grid grid-cols-2 gap-4 relative z-10 transition-transform duration-100"
+          style={{ transform: `translateY(${parallaxOffset}px)` }}
+        >
         {features.map((feature, index) => (
           <button
             key={feature.label}
@@ -122,18 +129,26 @@ export const FloatingFeatureCards = () => {
             </div>
             <p className="text-white font-semibold text-sm">{feature.label}</p>
             {feature.videoUrl && (
-              <div className="absolute top-3 right-3 flex flex-col items-end gap-1">
-                <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors animate-pulse">
-                  <Play className="w-4 h-4 text-white fill-white" />
-                </div>
-                <div className="text-xs text-white/90 font-medium bg-black/30 backdrop-blur-sm px-2 py-0.5 rounded">
-                  {feature.duration}
-                </div>
-              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="absolute top-3 right-3 flex flex-col items-end gap-1">
+                    <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors animate-pulse">
+                      <Play className="w-4 h-4 text-white fill-white" />
+                    </div>
+                    <div className="text-xs text-white/90 font-medium bg-black/30 backdrop-blur-sm px-2 py-0.5 rounded">
+                      {feature.duration}
+                    </div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Watch Video</p>
+                </TooltipContent>
+              </Tooltip>
             )}
           </button>
         ))}
       </div>
+      </TooltipProvider>
 
       {selectedFeature !== null && (
         <Dialog open={selectedFeature !== null} onOpenChange={() => setSelectedFeature(null)}>
