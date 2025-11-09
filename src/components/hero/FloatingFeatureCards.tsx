@@ -17,6 +17,7 @@ const features = [
     color: 'from-purple-400 to-pink-400',
     title: 'AI-Powered Solutions',
     description: 'Leverage cutting-edge artificial intelligence to transform your business operations and customer experiences.',
+    videoUrl: 'https://www.youtube.com/embed/IV7xnUkwags',
     stats: [
       { value: '87%', label: 'Efficiency Increase' },
       { value: '3x', label: 'Faster Response Times' },
@@ -134,6 +135,19 @@ export const FloatingFeatureCards = () => {
             </DialogHeader>
 
             <div className="space-y-6 mt-6">
+              {/* Video Embed */}
+              {features[selectedFeature].videoUrl && (
+                <div className="relative w-full pt-[56.25%] rounded-lg overflow-hidden bg-black">
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src={features[selectedFeature].videoUrl}
+                    title={features[selectedFeature].title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              )}
+
               {/* Stats */}
               <div className="grid grid-cols-3 gap-4">
                 {features[selectedFeature].stats.map((stat, idx) => (
