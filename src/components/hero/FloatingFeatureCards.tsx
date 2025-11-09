@@ -25,6 +25,7 @@ const features = [
     description: 'Leverage cutting-edge artificial intelligence to transform your business operations and customer experiences.',
     videoUrl: 'https://www.youtube.com/embed/IV7xnUkwags',
     duration: '1:47',
+    thumbnail: 'https://img.youtube.com/vi/IV7xnUkwags/hqdefault.jpg',
     stats: [
       { value: '87%', label: 'Efficiency Increase' },
       { value: '3x', label: 'Faster Response Times' },
@@ -46,6 +47,7 @@ const features = [
     description: 'Tailored software solutions built specifically for your unique business needs and workflows.',
     videoUrl: 'https://www.youtube.com/embed/5L1SKshqBRs',
     duration: '1:24',
+    thumbnail: 'https://img.youtube.com/vi/5L1SKshqBRs/hqdefault.jpg',
     stats: [
       { value: '100%', label: 'Custom Built' },
       { value: '99.9%', label: 'Uptime SLA' },
@@ -67,6 +69,7 @@ const features = [
     description: 'Data-driven marketing strategies that deliver measurable results and sustainable growth.',
     videoUrl: 'https://www.youtube.com/embed/3uskySkLeJ0',
     duration: '1:08',
+    thumbnail: 'https://img.youtube.com/vi/3uskySkLeJ0/hqdefault.jpg',
     stats: [
       { value: '320%', label: 'Avg. ROI Increase' },
       { value: '5x', label: 'Lead Generation Growth' },
@@ -88,6 +91,7 @@ const features = [
     description: 'Streamline operations and eliminate repetitive tasks with intelligent automation solutions.',
     videoUrl: 'https://www.youtube.com/embed/xWkWoY5WdX0',
     duration: '1:21',
+    thumbnail: 'https://img.youtube.com/vi/xWkWoY5WdX0/hqdefault.jpg',
     stats: [
       { value: '40hrs', label: 'Saved Per Week' },
       { value: '95%', label: 'Error Reduction' },
@@ -118,20 +122,36 @@ export const FloatingFeatureCards = () => {
           <button
             key={feature.label}
             onClick={() => setSelectedFeature(index)}
-            className="bg-white/10 backdrop-blur-md rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-xl group cursor-pointer text-left w-full relative"
+            className="bg-white/10 backdrop-blur-md rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-xl group cursor-pointer text-left w-full relative overflow-hidden"
             style={{
               animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
               animationDelay: `${index * 0.2}s`,
             }}
           >
-            <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
-              <feature.icon className="w-6 h-6 text-white" />
+            {/* Thumbnail Preview on Hover */}
+            {feature.thumbnail && (
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0">
+                <img 
+                  src={feature.thumbnail} 
+                  alt={`${feature.title} preview`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+              </div>
+            )}
+            
+            {/* Content */}
+            <div className="relative z-10">
+              <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                <feature.icon className="w-6 h-6 text-white" />
+              </div>
+              <p className="text-white font-semibold text-sm">{feature.label}</p>
             </div>
-            <p className="text-white font-semibold text-sm">{feature.label}</p>
+            
             {feature.videoUrl && (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="absolute top-3 right-3 flex flex-col items-end gap-1">
+                  <div className="absolute top-3 right-3 flex flex-col items-end gap-1 z-10">
                     <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors animate-pulse">
                       <Play className="w-4 h-4 text-white fill-white" />
                     </div>
