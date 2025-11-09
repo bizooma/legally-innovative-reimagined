@@ -37,6 +37,7 @@ const features = [
     color: 'from-blue-400 to-cyan-400',
     title: 'Custom Development',
     description: 'Tailored software solutions built specifically for your unique business needs and workflows.',
+    videoUrl: 'https://www.youtube.com/embed/5L1SKshqBRs',
     stats: [
       { value: '100%', label: 'Custom Built' },
       { value: '99.9%', label: 'Uptime SLA' },
