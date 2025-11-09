@@ -57,6 +57,7 @@ const features = [
     color: 'from-green-400 to-emerald-400',
     title: 'Marketing Growth',
     description: 'Data-driven marketing strategies that deliver measurable results and sustainable growth.',
+    videoUrl: 'https://www.youtube.com/embed/3uskySkLeJ0',
     stats: [
       { value: '320%', label: 'Avg. ROI Increase' },
       { value: '5x', label: 'Lead Generation Growth' },
