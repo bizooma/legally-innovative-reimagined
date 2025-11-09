@@ -118,7 +118,7 @@ export const FloatingFeatureCards = () => {
             </div>
             <p className="text-white font-semibold text-sm">{feature.label}</p>
             {feature.videoUrl && (
-              <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
+              <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors animate-pulse">
                 <Play className="w-4 h-4 text-white fill-white" />
               </div>
             )}
