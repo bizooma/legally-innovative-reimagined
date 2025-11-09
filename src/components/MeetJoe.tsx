@@ -7,7 +7,7 @@ const MeetJoe = () => {
   return <section id="meet-joe" className="py-20 bg-gradient-to-b from-background to-secondary/20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-legal-dark">
             Meet Joseph Murphy
           </h2>
           <p className="text-xl text-muted-foreground">Marketing Technologist</p>
