@@ -3,7 +3,6 @@ import { FallingLeaves } from './FallingLeaves';
 import { TurkeyWalk } from './TurkeyWalk';
 import { AutumnConfetti } from './AutumnConfetti';
 import { FloatingPumpkins } from './FloatingPumpkins';
-import { Cornucopias } from './Cornucopias';
 import { FeastTableBanner } from './FeastTableBanner';
 
 interface ThanksgivingDecorationsProps {
@@ -35,9 +34,6 @@ export const ThanksgivingDecorations = ({ show }: ThanksgivingDecorationsProps) 
 
       {/* Floating pumpkins */}
       <FloatingPumpkins />
-
-      {/* Cornucopias */}
-      <Cornucopias />
 
       {/* Feast table banner */}
       <FeastTableBanner />
