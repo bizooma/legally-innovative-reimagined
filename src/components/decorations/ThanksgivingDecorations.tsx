@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { FallingLeaves } from './FallingLeaves';
 import { TurkeyWalk } from './TurkeyWalk';
 import { AutumnConfetti } from './AutumnConfetti';
-import { FloatingPumpkins } from './FloatingPumpkins';
 import { FeastTableBanner } from './FeastTableBanner';
 
 interface ThanksgivingDecorationsProps {
@@ -31,9 +30,6 @@ export const ThanksgivingDecorations = ({ show }: ThanksgivingDecorationsProps) 
 
       {/* Walking turkey */}
       <TurkeyWalk />
-
-      {/* Floating pumpkins */}
-      <FloatingPumpkins />
 
       {/* Feast table banner */}
       <FeastTableBanner />
