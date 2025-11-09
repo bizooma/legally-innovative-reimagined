@@ -30,6 +30,10 @@ export const HoverPumpkins = () => {
     return () => {
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
+      // Cleanup all pumpkins when component unmounts
+      document.querySelectorAll('.hover-pumpkin').forEach(pumpkin => {
+        pumpkin.remove();
+      });
     };
   }, []);
 
