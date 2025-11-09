@@ -18,6 +18,7 @@ const features = [
     title: 'AI-Powered Solutions',
     description: 'Leverage cutting-edge artificial intelligence to transform your business operations and customer experiences.',
     videoUrl: 'https://www.youtube.com/embed/IV7xnUkwags',
+    duration: '3:45',
     stats: [
       { value: '87%', label: 'Efficiency Increase' },
       { value: '3x', label: 'Faster Response Times' },
@@ -38,6 +39,7 @@ const features = [
     title: 'Custom Development',
     description: 'Tailored software solutions built specifically for your unique business needs and workflows.',
     videoUrl: 'https://www.youtube.com/embed/5L1SKshqBRs',
+    duration: '2:15',
     stats: [
       { value: '100%', label: 'Custom Built' },
       { value: '99.9%', label: 'Uptime SLA' },
@@ -58,6 +60,7 @@ const features = [
     title: 'Marketing Growth',
     description: 'Data-driven marketing strategies that deliver measurable results and sustainable growth.',
     videoUrl: 'https://www.youtube.com/embed/3uskySkLeJ0',
+    duration: '4:20',
     stats: [
       { value: '320%', label: 'Avg. ROI Increase' },
       { value: '5x', label: 'Lead Generation Growth' },
@@ -78,6 +81,7 @@ const features = [
     title: 'Business Automation',
     description: 'Streamline operations and eliminate repetitive tasks with intelligent automation solutions.',
     videoUrl: 'https://www.youtube.com/embed/xWkWoY5WdX0',
+    duration: '3:10',
     stats: [
       { value: '40hrs', label: 'Saved Per Week' },
       { value: '95%', label: 'Error Reduction' },
@@ -118,8 +122,13 @@ export const FloatingFeatureCards = () => {
             </div>
             <p className="text-white font-semibold text-sm">{feature.label}</p>
             {feature.videoUrl && (
-              <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors animate-pulse">
-                <Play className="w-4 h-4 text-white fill-white" />
+              <div className="absolute top-3 right-3 flex flex-col items-end gap-1">
+                <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors animate-pulse">
+                  <Play className="w-4 h-4 text-white fill-white" />
+                </div>
+                <div className="text-xs text-white/90 font-medium bg-black/30 backdrop-blur-sm px-2 py-0.5 rounded">
+                  {feature.duration}
+                </div>
               </div>
             )}
           </button>
