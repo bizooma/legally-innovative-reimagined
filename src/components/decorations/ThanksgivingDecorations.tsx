@@ -4,6 +4,7 @@ import { TurkeyWalk } from './TurkeyWalk';
 import { AutumnConfetti } from './AutumnConfetti';
 import { FloatingPumpkins } from './FloatingPumpkins';
 import { Cornucopias } from './Cornucopias';
+import { FeastTableBanner } from './FeastTableBanner';
 
 interface ThanksgivingDecorationsProps {
   show: boolean;
@@ -37,6 +38,9 @@ export const ThanksgivingDecorations = ({ show }: ThanksgivingDecorationsProps) 
 
       {/* Cornucopias */}
       <Cornucopias />
+
+      {/* Feast table banner */}
+      <FeastTableBanner />
 
       {/* Confetti burst (one-time) */}
       {showConfetti && <AutumnConfetti />}

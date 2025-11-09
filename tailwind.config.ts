@@ -136,6 +136,24 @@ const config = {
             opacity: "0",
           },
         },
+        "slide-up-banner": {
+          "0%": {
+            transform: "translateY(100%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+        },
+        "scroll-feast": {
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "100%": {
+            transform: "translateX(-50%)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -147,6 +165,8 @@ const config = {
         "fall-leaf": "fall-leaf 10s linear infinite",
         "turkey-walk": "turkey-walk 20s linear infinite",
         "confetti-burst": "confetti-burst 2.5s ease-out forwards",
+        "slide-up-banner": "slide-up-banner 0.8s ease-out forwards",
+        "scroll-feast": "scroll-feast 20s linear infinite",
       },
     },
   },
