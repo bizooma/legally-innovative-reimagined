@@ -7,13 +7,13 @@ export const PeekingTurkeys = () => {
   ];
 
   return (
-    <div className="fixed inset-0 pointer-events-auto z-[100]">
+    <div className="fixed inset-0 pointer-events-none z-[100]">
       {positions.map((pos, index) => {
         const { direction, ...cssProps } = pos;
         return (
           <div
             key={index}
-            className="absolute group"
+            className="absolute group pointer-events-auto"
             style={{
               ...cssProps,
               width: '80px',
