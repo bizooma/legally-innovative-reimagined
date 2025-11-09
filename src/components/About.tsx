@@ -25,7 +25,7 @@ const About = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden opacity-0 animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden opacity-0 animate-enter" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
             <div 
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${missionTechBg})` }}
@@ -40,7 +40,7 @@ const About = () => {
             </CardContent>
           </Card>
 
-          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden opacity-0 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden opacity-0 animate-enter" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
             <div 
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${visionFutureBg})` }}
@@ -57,7 +57,7 @@ const About = () => {
             </CardContent>
           </Card>
 
-          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden md:col-span-2 lg:col-span-1 opacity-0 animate-fade-in" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
+          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden md:col-span-2 lg:col-span-1 opacity-0 animate-enter" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
             <div 
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${americanFlagBg})` }}
