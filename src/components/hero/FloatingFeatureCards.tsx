@@ -18,7 +18,7 @@ const features = [
     title: 'AI-Powered Solutions',
     description: 'Leverage cutting-edge artificial intelligence to transform your business operations and customer experiences.',
     videoUrl: 'https://www.youtube.com/embed/IV7xnUkwags',
-    duration: '3:45',
+    duration: '1:47',
     stats: [
       { value: '87%', label: 'Efficiency Increase' },
       { value: '3x', label: 'Faster Response Times' },
@@ -39,7 +39,7 @@ const features = [
     title: 'Custom Development',
     description: 'Tailored software solutions built specifically for your unique business needs and workflows.',
     videoUrl: 'https://www.youtube.com/embed/5L1SKshqBRs',
-    duration: '2:15',
+    duration: '1:24',
     stats: [
       { value: '100%', label: 'Custom Built' },
       { value: '99.9%', label: 'Uptime SLA' },
@@ -60,7 +60,7 @@ const features = [
     title: 'Marketing Growth',
     description: 'Data-driven marketing strategies that deliver measurable results and sustainable growth.',
     videoUrl: 'https://www.youtube.com/embed/3uskySkLeJ0',
-    duration: '4:20',
+    duration: '1:08',
     stats: [
       { value: '320%', label: 'Avg. ROI Increase' },
       { value: '5x', label: 'Lead Generation Growth' },
@@ -81,7 +81,7 @@ const features = [
     title: 'Business Automation',
     description: 'Streamline operations and eliminate repetitive tasks with intelligent automation solutions.',
     videoUrl: 'https://www.youtube.com/embed/xWkWoY5WdX0',
-    duration: '3:10',
+    duration: '1:21',
     stats: [
       { value: '40hrs', label: 'Saved Per Week' },
       { value: '95%', label: 'Error Reduction' },
