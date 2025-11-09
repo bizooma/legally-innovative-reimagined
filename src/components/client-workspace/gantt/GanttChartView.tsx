@@ -216,7 +216,7 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
     );
   }
 
-  const hasAnyTasks = Object.keys(tasksByProject).some(pid => tasksByProject[pid].length > 0);
+  const hasAnyTasks = Object.values(taskCounts).some(count => count > 0);
 
   return (
     <Card>
