@@ -7,9 +7,19 @@ import { AnimatedParticles } from "./hero/AnimatedParticles";
 import { FloatingFeatureCards } from "./hero/FloatingFeatureCards";
 import { GradientMesh } from "./hero/GradientMesh";
 import { useScrollFade } from "@/hooks/useParallax";
+import { ThanksgivingDecorations } from "./decorations/ThanksgivingDecorations";
+import { useState, useEffect } from "react";
 
 const Hero = () => {
   const animationOpacity = useScrollFade(150, 500);
+  const [holidayMode, setHolidayMode] = useState(() => {
+    const saved = localStorage.getItem('holidayMode');
+    return saved === 'true';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('holidayMode', String(holidayMode));
+  }, [holidayMode]);
   return <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -47,7 +57,7 @@ const Hero = () => {
                   904-295-6670
                 </a>
               </div>
-              <div>
+              <div className="flex gap-3">
                 <Button 
                   className="bg-white hover:bg-legal-accent text-legal-primary hover:text-white px-8 py-6 text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl" 
                   onClick={() => {
@@ -56,6 +66,13 @@ const Hero = () => {
                   }}
                 >
                   Our Services
+                </Button>
+                <Button
+                  variant="outline"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-6 text-base font-semibold transition-all duration-300 backdrop-blur-sm"
+                  onClick={() => setHolidayMode(!holidayMode)}
+                >
+                  Holiday Fun {holidayMode ? 'Off' : 'On'} 🦃
                 </Button>
               </div>
             </div>
@@ -81,6 +98,9 @@ const Hero = () => {
       <div className="absolute top-1/4 left-10 w-2 h-2 bg-legal-accent rounded-full animate-pulse opacity-60"></div>
       <div className="absolute top-1/3 right-20 w-3 h-3 bg-white rounded-full animate-pulse opacity-40 animation-delay-1000"></div>
       <div className="absolute bottom-1/4 left-1/4 w-1 h-1 bg-legal-accent rounded-full animate-pulse opacity-80 animation-delay-2000"></div>
+
+      {/* Thanksgiving Decorations */}
+      <ThanksgivingDecorations show={holidayMode} />
     </section>;
 };
 export default Hero;

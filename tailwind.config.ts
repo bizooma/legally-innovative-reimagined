@@ -104,6 +104,38 @@ const config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-15px)" },
         },
+        "fall-leaf": {
+          "0%": {
+            transform: "translateY(0) rotate(0deg)",
+            opacity: "1",
+          },
+          "100%": {
+            transform: "translateY(100vh) rotate(360deg)",
+            opacity: "0.3",
+          },
+        },
+        "turkey-walk": {
+          "0%": {
+            transform: "translateX(-100px)",
+          },
+          "100%": {
+            transform: "translateX(100vw)",
+          },
+        },
+        "confetti-burst": {
+          "0%": {
+            transform: "translateY(0) scale(0) rotate(0deg)",
+            opacity: "1",
+          },
+          "50%": {
+            transform: "translateY(50vh) scale(1) rotate(180deg)",
+            opacity: "1",
+          },
+          "100%": {
+            transform: "translateY(100vh) scale(0.5) rotate(360deg)",
+            opacity: "0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -112,6 +144,9 @@ const config = {
         "float-slow": "float-slow 6s ease-in-out infinite",
         "float-delay": "float-delay 5s ease-in-out infinite 1s",
         "bounce-slow": "bounce-slow 3s ease-in-out infinite",
+        "fall-leaf": "fall-leaf 10s linear infinite",
+        "turkey-walk": "turkey-walk 20s linear infinite",
+        "confetti-burst": "confetti-burst 2.5s ease-out forwards",
       },
     },
   },
