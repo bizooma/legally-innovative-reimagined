@@ -25,7 +25,7 @@ const About = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden animate-fade-in" style={{ animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}>
+          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
             <div 
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${missionTechBg})` }}
@@ -40,7 +40,7 @@ const About = () => {
             </CardContent>
           </Card>
 
-          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden animate-fade-in" style={{ animationDelay: '0.3s', opacity: 0, animationFillMode: 'forwards' }}>
+          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
             <div 
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${visionFutureBg})` }}
@@ -57,7 +57,7 @@ const About = () => {
             </CardContent>
           </Card>
 
-          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden md:col-span-2 lg:col-span-1 animate-fade-in" style={{ animationDelay: '0.5s', opacity: 0, animationFillMode: 'forwards' }}>
+          <Card className="relative border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden md:col-span-2 lg:col-span-1">
             <div 
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${americanFlagBg})` }}
