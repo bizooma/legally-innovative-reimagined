@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Brain, Code, TrendingUp, Zap, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Brain, Code, TrendingUp, Zap, ArrowRight, CheckCircle2, Play } from 'lucide-react';
 import { useParallax } from '@/hooks/useParallax';
 import {
   Dialog,
@@ -107,7 +107,7 @@ export const FloatingFeatureCards = () => {
           <button
             key={feature.label}
             onClick={() => setSelectedFeature(index)}
-            className="bg-white/10 backdrop-blur-md rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-xl group cursor-pointer text-left w-full"
+            className="bg-white/10 backdrop-blur-md rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-xl group cursor-pointer text-left w-full relative"
             style={{
               animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
               animationDelay: `${index * 0.2}s`,
@@ -117,6 +117,11 @@ export const FloatingFeatureCards = () => {
               <feature.icon className="w-6 h-6 text-white" />
             </div>
             <p className="text-white font-semibold text-sm">{feature.label}</p>
+            {feature.videoUrl && (
+              <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                <Play className="w-4 h-4 text-white fill-white" />
+              </div>
+            )}
           </button>
         ))}
       </div>
