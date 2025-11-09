@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { FallingLeaves } from './FallingLeaves';
 import { TurkeyWalk } from './TurkeyWalk';
 import { AutumnConfetti } from './AutumnConfetti';
+import { FloatingPumpkins } from './FloatingPumpkins';
+import { Cornucopias } from './Cornucopias';
 
 interface ThanksgivingDecorationsProps {
   show: boolean;
@@ -29,6 +31,12 @@ export const ThanksgivingDecorations = ({ show }: ThanksgivingDecorationsProps) 
 
       {/* Walking turkey */}
       <TurkeyWalk />
+
+      {/* Floating pumpkins */}
+      <FloatingPumpkins />
+
+      {/* Cornucopias */}
+      <Cornucopias />
 
       {/* Confetti burst (one-time) */}
       {showConfetti && <AutumnConfetti />}
