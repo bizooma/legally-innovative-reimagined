@@ -76,6 +76,7 @@ const features = [
     color: 'from-yellow-400 to-orange-400',
     title: 'Business Automation',
     description: 'Streamline operations and eliminate repetitive tasks with intelligent automation solutions.',
+    videoUrl: 'https://www.youtube.com/embed/xWkWoY5WdX0',
     stats: [
       { value: '40hrs', label: 'Saved Per Week' },
       { value: '95%', label: 'Error Reduction' },
