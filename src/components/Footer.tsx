@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import footerTechBg from "@/assets/footer-tech-bg.jpg";
 import { trackEvent } from "@/utils/gtmTracking";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
+import { Facebook, Instagram, Youtube, Linkedin } from "lucide-react";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return <footer className="text-white py-12 relative overflow-hidden" style={{
@@ -32,6 +33,44 @@ Powered by Innovation.</h4>
               <p className="text-legal-light text-sm leading-relaxed">
                 We understand the unique challenges law firms face because we work exclusively in the legal space. From trust-building client intake systems to AI-powered content strategies, our services are designed to make your firm more visible, more approachable, and more efficient — without ever compromising compliance.
               </p>
+            </div>
+            <div className="flex gap-4 items-center mt-4">
+              <a 
+                href="https://facebook.com/bizooma" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-legal-light hover:text-legal-accent transition-colors" 
+                aria-label="Visit our Facebook page"
+              >
+                <Facebook size={24} />
+              </a>
+              <a 
+                href="https://instagram.com/bizooma" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-legal-light hover:text-legal-accent transition-colors"
+                aria-label="Visit our Instagram page"
+              >
+                <Instagram size={24} />
+              </a>
+              <a 
+                href="https://youtube.com/@bizooma" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-legal-light hover:text-legal-accent transition-colors"
+                aria-label="Visit our YouTube channel"
+              >
+                <Youtube size={24} />
+              </a>
+              <a 
+                href="https://linkedin.com/company/bizooma" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-legal-light hover:text-legal-accent transition-colors"
+                aria-label="Visit our LinkedIn page"
+              >
+                <Linkedin size={24} />
+              </a>
             </div>
           </div>
           
