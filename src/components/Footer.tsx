@@ -36,7 +36,7 @@ Powered by Innovation.</h4>
             </div>
             <div className="flex gap-4 items-center mt-4">
               <a 
-                href="https://facebook.com/bizooma" 
+                href="https://www.facebook.com/BizoomaLLC/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-legal-light hover:text-legal-accent transition-colors" 
