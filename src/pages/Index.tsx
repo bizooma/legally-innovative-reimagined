@@ -153,10 +153,10 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Bizooma | AI-Powered Marketing & Development Platforms</title>
-        <meta name="description" content="Transform your business with Bizooma's intelligent marketing platforms. Built with AI, analytics, and automation for law firms, nonprofits, and startups seeking measurable growth." />
-        <meta property="og:title" content="Bizooma | AI-Powered Marketing & Development Platforms" />
-        <meta property="og:description" content="Transform your business with Bizooma's intelligent marketing platforms. Built with AI, analytics, and automation for law firms, nonprofits, and startups seeking measurable growth." />
+        <title>Bizooma Digital Marketing Agency | Marketing Agency in Jacksonville, FL</title>
+        <meta name="description" content="Jacksonville's premier digital marketing agency specializing in AI-powered marketing, SEO/AEO, web development, mobile apps, and lead generation for law firms, nonprofits, and local businesses." />
+        <meta property="og:title" content="Bizooma Digital Marketing Agency | Marketing Agency in Jacksonville, FL" />
+        <meta property="og:description" content="Jacksonville's premier digital marketing agency specializing in AI-powered marketing, SEO/AEO, web development, mobile apps, and lead generation for law firms, nonprofits, and local businesses." />
         <meta property="og:image" content="https://bizooma.com/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png" />
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
