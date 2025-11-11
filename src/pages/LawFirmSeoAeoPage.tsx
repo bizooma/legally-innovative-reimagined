@@ -42,7 +42,7 @@ const LawFirmSeoAeoPage = () => {
   return (
     <>
       <Helmet>
-        <title>Law Firm SEO, AEO & Voice SEO Services | Search Engine Optimization | Bizooma</title>
+        <title>Jacksonville SEO, AEO & Voice SEO for Law Firms | Bizooma Digital Marketing Agency</title>
         <meta 
           name="description" 
           content="Professional SEO, AEO, and Voice SEO services for law firms. Improve search rankings, answer engine optimization, and voice search visibility to attract more clients." 

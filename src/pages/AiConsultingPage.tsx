@@ -42,7 +42,7 @@ const AiConsultingPage = () => {
   return (
     <>
       <Helmet>
-        <title>AI Consulting for Law Firms | Transform Your Legal Practice | Bizooma</title>
+        <title>Jacksonville AI Consulting for Law Firms | Bizooma Digital Marketing Agency</title>
         <meta 
           name="description" 
           content="Expert AI consulting services for law firms. Streamline operations, enhance client experiences, and drive innovation with strategic AI implementation tailored for legal practices." 
