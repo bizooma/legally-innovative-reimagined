@@ -54,7 +54,7 @@ Powered by Innovation.</h4>
                 <Instagram size={24} />
               </a>
               <a 
-                href="https://youtube.com/@bizooma" 
+                href="https://www.youtube.com/@bizoomallc" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-legal-light hover:text-legal-accent transition-colors"
