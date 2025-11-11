@@ -45,7 +45,7 @@ const AiConsultingPage = () => {
         <title>Jacksonville AI Consulting for Law Firms | Bizooma Digital Marketing Agency</title>
         <meta 
           name="description" 
-          content="Expert AI consulting services for law firms. Streamline operations, enhance client experiences, and drive innovation with strategic AI implementation tailored for legal practices." 
+          content="Jacksonville AI consulting for law firms. Streamline operations, enhance client experiences, and drive innovation with strategic AI implementation tailored for legal practices." 
         />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>

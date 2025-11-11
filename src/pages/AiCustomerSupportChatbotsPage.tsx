@@ -51,7 +51,7 @@ const AiCustomerSupportChatbotsPage = () => {
         <title>Jacksonville AI Customer Support Chatbots for Law Firms | Bizooma Digital Marketing Agency</title>
         <meta 
           name="description" 
-          content="Transform your law firm's client support with AI-powered chatbots. Available 24/7, handle inquiries, schedule consultations, and improve client satisfaction." 
+          content="Jacksonville AI chatbots for law firms. Transform your client support with 24/7 AI-powered chatbots that handle inquiries, schedule consultations, and improve satisfaction." 
         />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>

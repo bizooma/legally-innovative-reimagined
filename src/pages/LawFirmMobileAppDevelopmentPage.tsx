@@ -45,7 +45,7 @@ const LawFirmMobileAppDevelopmentPage = () => {
         <title>Jacksonville Mobile App Development for Law Firms | Bizooma Digital Marketing Agency</title>
         <meta 
           name="description" 
-          content="Custom mobile app development for law firms. iOS and Android apps that enhance client communication, streamline processes, and grow your legal practice." 
+          content="Jacksonville mobile app development for law firms. Custom iOS and Android apps that enhance client communication, streamline processes, and grow your legal practice." 
         />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>

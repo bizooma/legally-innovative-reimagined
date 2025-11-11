@@ -50,7 +50,7 @@ const LawFirmDigitalMarketingPage = () => {
         <title>Jacksonville Digital Marketing for Law Firms | Bizooma Digital Marketing Agency</title>
         <meta 
           name="description" 
-          content="Comprehensive digital marketing services for law firms. Increase online visibility, generate quality leads, and grow your legal practice with proven digital strategies." 
+          content="Jacksonville digital marketing for law firms. Increase online visibility, generate quality local leads, and grow your legal practice with proven digital strategies." 
         />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>

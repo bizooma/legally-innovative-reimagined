@@ -45,7 +45,7 @@ const LawFirmSeoAeoPage = () => {
         <title>Jacksonville SEO, AEO & Voice SEO for Law Firms | Bizooma Digital Marketing Agency</title>
         <meta 
           name="description" 
-          content="Professional SEO, AEO, and Voice SEO services for law firms. Improve search rankings, answer engine optimization, and voice search visibility to attract more clients." 
+          content="Jacksonville SEO, AEO, and Voice SEO services for law firms. Improve search rankings, answer engine optimization, and voice search visibility to attract more local clients." 
         />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>

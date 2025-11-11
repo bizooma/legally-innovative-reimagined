@@ -45,7 +45,7 @@ const LawFirmVoiceAssistantMarketingPage = () => {
         <title>Jacksonville Voice Assistant Marketing for Law Firms | Bizooma Digital Marketing Agency</title>
         <meta 
           name="description" 
-          content="Develop custom voice assistants for Amazon Alexa and Google Assistant to enhance your law firm's marketing reach and provide 24/7 client engagement through voice technology." 
+          content="Jacksonville voice assistant marketing for law firms. Custom Alexa and Google Assistant development to enhance your marketing reach and provide 24/7 client engagement." 
         />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>

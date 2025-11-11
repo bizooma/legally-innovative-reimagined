@@ -44,7 +44,7 @@ const LawFirmLeadGenerationPage = () => {
         <title>Jacksonville Lead Generation for Law Firms | Bizooma Digital Marketing Agency</title>
         <meta 
           name="description" 
-          content="Professional lead generation systems for law firms. Capture high-quality leads, nurture prospects, and convert potential clients with automated workflows and proven strategies." 
+          content="Jacksonville lead generation systems for law firms. Capture high-quality local leads, nurture prospects, and convert potential clients with automated workflows." 
         />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
