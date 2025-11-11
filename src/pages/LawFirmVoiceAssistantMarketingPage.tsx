@@ -18,25 +18,51 @@ const LawFirmVoiceAssistantMarketingPage = () => {
 
   const serviceSchema = {
     "@context": "https://schema.org",
-    "@type": "Service",
+    "@type": "ProfessionalService",
+    "name": "Bizooma Digital Marketing Agency - Voice Assistant Marketing",
+    "image": "https://bizooma.com/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png",
+    "url": "https://bizooma.com/law-firm-voice-assistant-marketing",
+    "telephone": "+1-904-295-6670",
+    "priceRange": "$3,000 - $10,000",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "200 N Laura St",
+      "addressLocality": "Jacksonville",
+      "addressRegion": "FL",
+      "postalCode": "32202",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "30.3322",
+      "longitude": "-81.6557"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    ],
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Jacksonville",
+        "@id": "https://en.wikipedia.org/wiki/Jacksonville,_Florida"
+      },
+      {
+        "@type": "State",
+        "name": "Florida"
+      }
+    ],
+    "description": "Custom voice assistant development for law firms in Jacksonville. Amazon Alexa and Google Assistant solutions to enhance marketing reach and provide 24/7 client engagement.",
     "serviceType": "Voice Assistant Marketing & Development",
     "provider": {
       "@type": "Organization",
-      "name": "Bizooma",
+      "name": "Bizooma Digital Marketing Agency",
       "url": "https://bizooma.com"
-    },
-    "areaServed": {
-      "@type": "Country",
-      "name": "United States"
-    },
-    "description": "Develop custom voice assistants for Amazon Alexa and Google Assistant to enhance your law firm's marketing reach and provide 24/7 client engagement through voice technology.",
-    "offers": {
-      "@type": "Offer",
-      "priceRange": "$3,000 - $10,000",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock"
-    },
-    "duration": "P6W"
+    }
   };
 
   return (

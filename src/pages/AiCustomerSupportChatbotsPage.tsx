@@ -24,25 +24,51 @@ const AiCustomerSupportChatbotsPage = () => {
 
   const serviceSchema = {
     "@context": "https://schema.org",
-    "@type": "Service",
+    "@type": "ProfessionalService",
+    "name": "Bizooma Digital Marketing Agency - AI Customer Support Chatbots",
+    "image": "https://bizooma.com/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png",
+    "url": "https://bizooma.com/ai-customer-support-chatbots",
+    "telephone": "+1-904-295-6670",
+    "priceRange": "$2,500 - $8,000",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "200 N Laura St",
+      "addressLocality": "Jacksonville",
+      "addressRegion": "FL",
+      "postalCode": "32202",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "30.3322",
+      "longitude": "-81.6557"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    ],
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Jacksonville",
+        "@id": "https://en.wikipedia.org/wiki/Jacksonville,_Florida"
+      },
+      {
+        "@type": "State",
+        "name": "Florida"
+      }
+    ],
+    "description": "AI-powered chatbots for law firms in Jacksonville. Available 24/7 to handle inquiries, schedule consultations, and improve client satisfaction.",
     "serviceType": "AI Customer Support Chatbots",
     "provider": {
       "@type": "Organization",
-      "name": "Bizooma",
+      "name": "Bizooma Digital Marketing Agency",
       "url": "https://bizooma.com"
-    },
-    "areaServed": {
-      "@type": "Country",
-      "name": "United States"
-    },
-    "description": "Transform your law firm's client support with AI-powered chatbots. Available 24/7, handle inquiries, schedule consultations, and improve client satisfaction.",
-    "offers": {
-      "@type": "Offer",
-      "priceRange": "$2,500 - $8,000",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock"
-    },
-    "duration": "P4W"
+    }
   };
 
   return (

@@ -18,25 +18,51 @@ const AiConsultingPage = () => {
 
   const serviceSchema = {
     "@context": "https://schema.org",
-    "@type": "Service",
+    "@type": "ProfessionalService",
+    "name": "Bizooma Digital Marketing Agency - AI Consulting",
+    "image": "https://bizooma.com/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png",
+    "url": "https://bizooma.com/ai-consulting-for-law-firms",
+    "telephone": "+1-904-295-6670",
+    "priceRange": "$5,000 - $25,000",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "200 N Laura St",
+      "addressLocality": "Jacksonville",
+      "addressRegion": "FL",
+      "postalCode": "32202",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "30.3322",
+      "longitude": "-81.6557"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    ],
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Jacksonville",
+        "@id": "https://en.wikipedia.org/wiki/Jacksonville,_Florida"
+      },
+      {
+        "@type": "State",
+        "name": "Florida"
+      }
+    ],
+    "description": "Expert AI consulting services for law firms in Jacksonville. Streamline operations, enhance client experiences, and drive innovation with strategic AI implementation.",
     "serviceType": "AI Consulting & Implementation",
     "provider": {
       "@type": "Organization",
-      "name": "Bizooma",
+      "name": "Bizooma Digital Marketing Agency",
       "url": "https://bizooma.com"
-    },
-    "areaServed": {
-      "@type": "Country",
-      "name": "United States"
-    },
-    "description": "Expert AI consulting services for law firms. Streamline operations, enhance client experiences, and drive innovation with strategic AI implementation tailored for legal practices.",
-    "offers": {
-      "@type": "Offer",
-      "priceRange": "$5,000 - $25,000",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock"
-    },
-    "duration": "P8W"
+    }
   };
 
   return (
