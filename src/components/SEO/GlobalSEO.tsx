@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 
 const SITE_URL = "https://bizooma.com";
-const BUSINESS_NAME = "Bizooma";
+const BUSINESS_NAME = "Bizooma Digital Marketing Agency";
 const PHONE = "+1-904-295-6670";
 const LOGO_URL = `${SITE_URL}/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png`;
 
@@ -19,7 +19,7 @@ const GlobalSEO = () => {
       width: "600",
       height: "600"
     },
-    description: "AI-powered marketing platforms and intelligent development solutions for law firms, nonprofits, and startups. Specializing in SEO, AEO, voice search optimization, chatbots, and custom web development.",
+    description: "Jacksonville's premier digital marketing agency specializing in AI-powered marketing, SEO/AEO optimization, web development, mobile apps, and lead generation for law firms, nonprofits, and local businesses.",
     address: {
       "@type": "PostalAddress",
       streetAddress: "200 N Laura St",
