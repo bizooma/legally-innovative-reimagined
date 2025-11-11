@@ -63,7 +63,7 @@ Powered by Innovation.</h4>
                 <Youtube size={24} />
               </a>
               <a 
-                href="https://linkedin.com/company/bizooma" 
+                href="https://www.linkedin.com/in/heyjoe0/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-legal-light hover:text-legal-accent transition-colors"
