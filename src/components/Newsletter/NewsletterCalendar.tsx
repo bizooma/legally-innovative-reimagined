@@ -57,7 +57,7 @@ export const NewsletterCalendar = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
           {months.map(({ month, year, name }) => (
             <Card key={`${month}-${year}`} className="border-border/50">
               <CardHeader className="pb-4">
