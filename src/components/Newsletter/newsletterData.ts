@@ -9,13 +9,6 @@ export interface NewsletterTopic {
 export const newsletterTopics: NewsletterTopic[] = [
   // October 2025
   {
-    date: "2025-10-07",
-    topic: "AI Revolution in Legal Tech",
-    description: "How artificial intelligence is transforming the legal industry and what it means for your practice.",
-    link: "#",
-    isPublished: true,
-  },
-  {
     date: "2025-10-14",
     topic: "Voice Search Optimization for Lawyers",
     description: "Strategies to optimize your law firm's online presence for voice search queries.",
