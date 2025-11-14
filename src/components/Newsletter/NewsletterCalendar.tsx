@@ -37,7 +37,7 @@ export const NewsletterCalendar = () => {
                   <div className={cn(
                     "absolute left-0 w-14 h-14 rounded-full border-4 border-background flex items-center justify-center shadow-lg transition-all duration-300",
                     isPublished 
-                      ? "bg-primary text-primary-foreground hover:bg-primary/80 hover:scale-110 cursor-pointer animate-pulse-slow" 
+                      ? "bg-primary text-primary-foreground hover:bg-primary/80 hover:scale-110 cursor-pointer" 
                       : "bg-muted text-muted-foreground"
                   )}>
                     {isPublished ? (
