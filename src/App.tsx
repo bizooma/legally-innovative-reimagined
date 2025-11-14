@@ -43,6 +43,7 @@ import SupportBotsPage from "./pages/products/SupportBotsPage";
 import SignaturePopPage from "./pages/products/SignaturePopPage";
 import BrandedBooksPage from "./pages/products/BrandedBooksPage";
 import InstallPWA from "./pages/InstallPWA";
+import RouteToResultsNewsletter from "./pages/RouteToResultsNewsletter";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -84,6 +85,9 @@ const App = () => (
               
               {/* Michael sales page */}
               <Route path="/michael" element={<MichaelSalesPage />} />
+              
+              {/* Newsletter page */}
+              <Route path="/route-to-results-newsletter" element={<RouteToResultsNewsletter />} />
               
               {/* Jacksonville attorney lead capture page */}
               <Route path="/this-is-our-jax" element={<JacksonvilleAttorneyPage />} />

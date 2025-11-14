@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "lucide-react";
 import routeToResultsLogo from "@/assets/route-to-results-logo.png";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { trackFormSubmission } from "@/utils/gtmTracking";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
-import { NewsletterCalendar } from "@/components/Newsletter/NewsletterCalendar";
 const Newsletter = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   useEffect(() => {
@@ -68,7 +70,16 @@ const Newsletter = () => {
             With the Route to Results Newsletter
           </h3>
           
-          <p className="text-lg text-gray-700 mb-8 max-w-2xl">Get exclusive insights, case studies, and updates on the latest technology trends. Join thousands of legal professionals transforming their practices with innovative solutions.</p>
+          <p className="text-lg text-gray-700 mb-6 max-w-2xl">Get exclusive insights, case studies, and updates on the latest technology trends delivered every Tuesday.</p>
+          
+          <div className="flex justify-center mb-8">
+            <Button asChild variant="outline" className="gap-2">
+              <Link to="/route-to-results-newsletter">
+                <Calendar className="h-4 w-4" />
+                View Newsletter Calendar & Topics
+              </Link>
+            </Button>
+          </div>
 
           <div id="mc_embed_shell" className="max-w-2xl mx-auto">
             <style dangerouslySetInnerHTML={{
@@ -186,11 +197,6 @@ const Newsletter = () => {
                 </div>
               </form>
             </div>
-          </div>
-
-          {/* Newsletter Calendar Section */}
-          <div className="mt-16">
-            <NewsletterCalendar />
           </div>
 
           <Dialog open={showPrivacyPolicy} onOpenChange={setShowPrivacyPolicy}>
