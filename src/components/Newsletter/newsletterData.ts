@@ -47,8 +47,8 @@ export const newsletterTopics: NewsletterTopic[] = [
   },
   {
     date: "2025-11-18",
-    topic: "Email Marketing for Lawyers",
-    description: "Build and nurture your email list to generate more leads and referrals.",
+    topic: "Mobile Apps are a Powerful Marketing Channel",
+    description: "Your app can become a powerful growth engine that keeps delivering, even when other channels slow down.",
     isPublished: false,
   },
   {
