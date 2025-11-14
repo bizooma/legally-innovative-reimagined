@@ -23,10 +23,11 @@ export const newsletterTopics: NewsletterTopic[] = [
     isPublished: true,
   },
   {
-    date: "2025-10-28",
-    topic: "Local SEO Mastery",
-    description: "Dominate local search results and attract more clients in your area.",
-    isPublished: false,
+    date: "2025-10-29",
+    topic: "AI Overview",
+    description: "How AI Is Reshaping Search",
+    link: "https://us14.campaign-archive.com/?u=621f128c71e19e8d9b92ff1e3&id=105c086b96",
+    isPublished: true,
   },
   
   // November 2025
