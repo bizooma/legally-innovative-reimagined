@@ -269,11 +269,11 @@ const RouteToResultsNewsletter = () => {
         </Dialog>
 
         {/* SoundCloud Widget */}
-        <section className="py-8 px-4 bg-white">
+        <section className="py-4 md:py-8 lg:py-12 px-2 sm:px-4 md:px-6 bg-white">
           <div className="container mx-auto max-w-4xl">
             <iframe 
               width="100%" 
-              height="166" 
+              className="h-32 sm:h-40 md:h-44 lg:h-[166px]"
               scrolling="no" 
               frameBorder="no" 
               allow="autoplay" 
