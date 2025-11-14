@@ -32,10 +32,11 @@ export const newsletterTopics: NewsletterTopic[] = [
   
   // November 2025
   {
-    date: "2025-11-04",
-    topic: "Social Media Marketing for Law Firms",
-    description: "Effective social media strategies that comply with legal ethics guidelines.",
-    isPublished: false,
+    date: "2025-11-03",
+    topic: "Exact Match Domain",
+    description: "Why Your Exact-Match Domain Deserves Its Own Landing Page",
+    link: "https://us14.campaign-archive.com/?u=621f128c71e19e8d9b92ff1e3&id=208ba7748e",
+    isPublished: true,
   },
   {
     date: "2025-11-11",
