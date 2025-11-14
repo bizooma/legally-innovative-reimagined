@@ -79,8 +79,8 @@ export const newsletterTopics: NewsletterTopic[] = [
   },
   {
     date: "2025-12-23",
-    topic: "Digital Marketing Trends 2026",
-    description: "Stay ahead of the curve with emerging trends in legal marketing.",
+    topic: "How to Use Schema Markup to Win Featured Snippets",
+    description: "The most important schema types for attorneys—FAQ, How-To, Article, Organization, Attorney—and why they matter.",
     isPublished: false,
   },
   {
