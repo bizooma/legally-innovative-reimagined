@@ -35,9 +35,9 @@ export const NewsletterCalendar = () => {
                 <div key={topic.date} className="relative pl-16">
                   {/* Timeline Dot */}
                   <div className={cn(
-                    "absolute left-0 w-14 h-14 rounded-full border-4 border-background flex items-center justify-center shadow-lg",
+                    "absolute left-0 w-14 h-14 rounded-full border-4 border-background flex items-center justify-center shadow-lg transition-all duration-300",
                     isPublished 
-                      ? "bg-primary text-primary-foreground" 
+                      ? "bg-primary text-primary-foreground hover:bg-primary/80 hover:scale-110 cursor-pointer" 
                       : "bg-muted text-muted-foreground"
                   )}>
                     {isPublished ? (
@@ -49,9 +49,9 @@ export const NewsletterCalendar = () => {
 
                   {/* Newsletter Card */}
                   <Card className={cn(
-                    "transition-all hover:shadow-xl border-2",
+                    "transition-all duration-300",
                     isPublished 
-                      ? "border-primary/20 hover:border-primary/40 bg-gradient-to-br from-background to-primary/5" 
+                      ? "border-primary/20 hover:border-primary/50 hover:shadow-2xl bg-gradient-to-br from-background to-primary/5 cursor-pointer hover:-translate-y-1" 
                       : "border-border/50 hover:border-border"
                   )}>
                     <CardHeader className="pb-4">
@@ -83,7 +83,7 @@ export const NewsletterCalendar = () => {
                       {isPublished && topic.link && (
                         <Button 
                           asChild
-                          className="w-full sm:w-auto"
+                          className="w-full sm:w-auto hover:bg-primary/80 transition-all duration-300 hover:scale-105"
                         >
                           <a 
                             href={topic.link}
