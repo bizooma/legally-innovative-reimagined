@@ -64,11 +64,11 @@ export const NewsletterCalendar = () => {
                             {topic.topic}
                           </CardTitle>
                         </div>
-                        {isPublished ? (
-                          <Badge className="bg-primary text-primary-foreground shrink-0">
-                            Published
-                          </Badge>
-                        ) : (
+                  {isPublished ? (
+                    <Badge className="bg-success text-success-foreground hover:bg-success/90 shrink-0">
+                      Published
+                    </Badge>
+                  ) : (
                           <Badge variant="secondary" className="shrink-0">
                             Upcoming
                           </Badge>
