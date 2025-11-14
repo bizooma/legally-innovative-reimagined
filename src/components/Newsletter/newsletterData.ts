@@ -67,8 +67,8 @@ export const newsletterTopics: NewsletterTopic[] = [
   },
   {
     date: "2025-12-09",
-    topic: "Video Marketing for Law Firms",
-    description: "How to use video content to build trust and attract more clients.",
+    topic: "Using Email Automation to Nurture Leads",
+    description: "Building drip campaigns, follow-up sequences, and client education workflows that improve sign-on rates.",
     isPublished: false,
   },
   {
