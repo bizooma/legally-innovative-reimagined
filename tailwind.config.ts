@@ -158,6 +158,14 @@ const config = {
             transform: "translateX(-50%)",
           },
         },
+        "pulse-slow": {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.6",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -171,6 +179,7 @@ const config = {
         "confetti-burst": "confetti-burst 2.5s ease-out forwards",
         "slide-up-banner": "slide-up-banner 0.8s ease-out forwards",
         "scroll-feast": "scroll-feast 20s linear infinite",
+        "pulse-slow": "pulse-slow 3s ease-in-out infinite",
       },
     },
   },
