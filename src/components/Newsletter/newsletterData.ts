@@ -17,9 +17,10 @@ export const newsletterTopics: NewsletterTopic[] = [
   },
   {
     date: "2025-10-21",
-    topic: "Client Retention Strategies",
-    description: "Proven techniques to keep your clients coming back and referring others.",
-    isPublished: false,
+    topic: "ChatGPT",
+    description: "Something exciting that's about to reshape how law firms use AI — and potentially make money from it",
+    link: "https://us14.campaign-archive.com/?u=621f128c71e19e8d9b92ff1e3&id=ea9f9e777f",
+    isPublished: true,
   },
   {
     date: "2025-10-28",
