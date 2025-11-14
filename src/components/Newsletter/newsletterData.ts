@@ -53,8 +53,8 @@ export const newsletterTopics: NewsletterTopic[] = [
   },
   {
     date: "2025-11-25",
-    topic: "Year-End Marketing Planning",
-    description: "Strategic planning tips to make 2026 your best year yet.",
+    topic: "How AI Is Redefining Marketing",
+    description: "How AI Is Redefining Marketing Departments—and Why Law Firms Must Adapt Now",
     isPublished: false,
   },
   
