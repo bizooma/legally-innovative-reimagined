@@ -113,96 +113,32 @@ const RouteToResultsNewsletter = () => {
             </h2>
 
             <div id="mc_embed_shell">
+              <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css" />
               <style dangerouslySetInnerHTML={{
                 __html: `
-                  #mc_embed_signup {
-                    background: #fff;
-                    clear: left;
-                    font: 14px Helvetica, Arial, sans-serif;
-                    width: 100%;
-                  }
-                  #mc_embed_signup .mc-field-group {
-                    margin-bottom: 1rem;
-                  }
-                  #mc_embed_signup .mc-field-group label {
-                    display: block;
-                    margin-bottom: 0.5rem;
-                    font-weight: 500;
-                  }
-                  #mc_embed_signup input[type="email"],
-                  #mc_embed_signup input[type="text"] {
-                    width: 100%;
-                    padding: 0.75rem;
-                    border: 1px solid #ddd;
-                    border-radius: 0.375rem;
-                    font-size: 1rem;
-                  }
-                  #mc_embed_signup input[type="submit"] {
-                    background-color: hsl(var(--primary));
-                    color: white;
-                    padding: 0.75rem 2rem;
-                    border: none;
-                    border-radius: 0.375rem;
-                    font-size: 1rem;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.3s;
-                  }
-                  #mc_embed_signup input[type="submit"]:hover {
-                    background-color: hsl(var(--primary) / 0.9);
-                  }
-                  #mc_embed_signup .asterisk {
-                    color: hsl(var(--destructive));
-                  }
-                  #mc-embedded-subscribe-form div#mce-responses {
-                    margin: 1rem 0;
-                  }
-                  #mc-embedded-subscribe-form .response {
-                    padding: 1rem;
-                    border-radius: 0.375rem;
-                    margin: 0.5rem 0;
-                  }
-                  #mce-error-response {
-                    background-color: #fee;
-                    border: 1px solid #fcc;
-                    color: #c33;
-                  }
-                  #mce-success-response {
-                    background-color: #efe;
-                    border: 1px solid #cfc;
-                    color: #3c3;
-                  }
+                  #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width: 600px;}
+                  /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+                     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
                 `
               }} />
               
               <div id="mc_embed_signup">
-                <form action="https://bizooma.us11.list-manage.com/subscribe/post?u=46ed10ada4faf85f50e67dbb6&amp;id=6e2e15aec5&amp;f_id=00fb75e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank">
+                <form action="https://bizooma.us14.list-manage.com/subscribe/post?u=621f128c71e19e8d9b92ff1e3&amp;id=7f8858c903&amp;f_id=00f8b5e5f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank">
                   <div id="mc_embed_signup_scroll">
+                    <h2>Subscribe</h2>
+                    <div className="indicates-required"><span className="asterisk">*</span> indicates required</div>
                     <div className="mc-field-group">
                       <label htmlFor="mce-EMAIL">Email Address <span className="asterisk">*</span></label>
-                      <input type="email" name="EMAIL" className="required email" id="mce-EMAIL" required />
+                      <input type="email" name="EMAIL" className="required email" id="mce-EMAIL" required value="" />
                     </div>
-                    
-                    <div className="mc-field-group">
-                      <label htmlFor="mce-FNAME">First Name </label>
-                      <input type="text" name="FNAME" className="text" id="mce-FNAME" />
-                    </div>
-                    
-                    <div className="mc-field-group">
-                      <label htmlFor="mce-LNAME">Last Name </label>
-                      <input type="text" name="LNAME" className="text" id="mce-LNAME" />
-                    </div>
-                    
-                    <div id="mce-responses" className="clear foot">
+                    <div id="mce-responses" className="clear">
                       <div className="response" id="mce-error-response" style={{ display: 'none' }}></div>
                       <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
                     </div>
-                    
                     <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
-                      <input type="text" name="b_46ed10ada4faf85f50e67dbb6_6e2e15aec5" tabIndex={-1} />
+                      <input type="text" name="b_621f128c71e19e8d9b92ff1e3_7f8858c903" tabIndex={-1} value="" />
                     </div>
-                    
-                    <div className="clear foot mt-4">
+                    <div className="clear">
                       <input type="submit" name="subscribe" id="mc-embedded-subscribe" className="button" value="Subscribe" />
                       <p className="text-sm text-gray-600 mt-4">
                         By subscribing, you agree to our{' '}
