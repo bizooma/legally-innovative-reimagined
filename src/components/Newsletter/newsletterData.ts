@@ -73,8 +73,8 @@ export const newsletterTopics: NewsletterTopic[] = [
   },
   {
     date: "2025-12-16",
-    topic: "Holiday Marketing Ideas",
-    description: "Creative marketing strategies for the holiday season and beyond.",
+    topic: "The Impact of Page Speed & Core Web Vitals",
+    description: "Why law firms lose cases due to slow sites and how to fix technical performance issues.",
     isPublished: false,
   },
   {
