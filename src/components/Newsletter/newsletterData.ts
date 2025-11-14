@@ -85,8 +85,8 @@ export const newsletterTopics: NewsletterTopic[] = [
   },
   {
     date: "2025-12-30",
-    topic: "New Year, New Strategy",
-    description: "Set your law firm up for success with a comprehensive marketing roadmap.",
+    topic: "Voice SEO & Ask Engine Optimization (AEO)",
+    description: "How voice search and answer engines like ChatGPT, Perplexity, and Alexa are changing client discovery, and how law firms can adapt their content.",
     isPublished: false,
   },
 ];
