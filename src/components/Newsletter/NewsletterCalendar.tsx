@@ -108,13 +108,13 @@ export const NewsletterCalendar = () => {
       {/* Legend */}
       <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground pt-8 border-t border-border/50">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
+          <div className="w-10 h-10 rounded-full bg-success flex items-center justify-center text-success-foreground shadow-lg">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <span className="font-medium">Published - Click to Read</span>
         </div>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground shadow-lg">
+          <div className="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center text-yellow-950 shadow-lg">
             <CalendarIcon className="w-5 h-5" />
           </div>
           <span className="font-medium">Coming Soon</span>
