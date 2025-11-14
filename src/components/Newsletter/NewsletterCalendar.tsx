@@ -69,7 +69,7 @@ export const NewsletterCalendar = () => {
                       Published
                     </Badge>
                   ) : (
-                          <Badge variant="secondary" className="shrink-0">
+                          <Badge className="bg-yellow-500 text-yellow-950 hover:bg-yellow-600 shrink-0">
                             Upcoming
                           </Badge>
                         )}
