@@ -12,7 +12,7 @@ export const newsletterTopics: NewsletterTopic[] = [
     date: "2025-10-14",
     topic: "Not getting calls? PPC not performing? This could be why.",
     description: "Strategies to optimize your law firm's online presence for voice search queries.",
-    link: "#",
+    link: "https://us14.campaign-archive.com/?u=621f128c71e19e8d9b92ff1e3&id=6445ecdbfe",
     isPublished: true,
   },
   {
