@@ -39,10 +39,11 @@ export const newsletterTopics: NewsletterTopic[] = [
     isPublished: true,
   },
   {
-    date: "2025-11-11",
-    topic: "Content Marketing That Converts",
-    description: "Create compelling legal content that attracts and converts potential clients.",
-    isPublished: false,
+    date: "2025-11-14",
+    topic: "Video Chatbots for Engagement",
+    description: "How Video Chatbots Are Changing Client Intake for Law Firms",
+    link: "https://us14.campaign-archive.com/?u=621f128c71e19e8d9b92ff1e3&id=be62fdd0a3",
+    isPublished: true,
   },
   {
     date: "2025-11-18",
