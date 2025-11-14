@@ -3,6 +3,7 @@ import routeToResultsLogo from "@/assets/route-to-results-logo.png";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { trackFormSubmission } from "@/utils/gtmTracking";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
+import { NewsletterCalendar } from "@/components/Newsletter/NewsletterCalendar";
 const Newsletter = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   useEffect(() => {
@@ -185,6 +186,11 @@ const Newsletter = () => {
                 </div>
               </form>
             </div>
+          </div>
+
+          {/* Newsletter Calendar Section */}
+          <div className="mt-16">
+            <NewsletterCalendar />
           </div>
 
           <Dialog open={showPrivacyPolicy} onOpenChange={setShowPrivacyPolicy}>
