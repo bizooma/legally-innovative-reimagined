@@ -10,7 +10,7 @@ export const newsletterTopics: NewsletterTopic[] = [
   // October 2025
   {
     date: "2025-10-14",
-    topic: "Voice Search Optimization for Lawyers",
+    topic: "Not getting calls? PPC not performing? This could be why.",
     description: "Strategies to optimize your law firm's online presence for voice search queries.",
     link: "#",
     isPublished: true,
