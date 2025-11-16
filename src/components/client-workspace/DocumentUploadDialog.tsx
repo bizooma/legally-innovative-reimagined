@@ -13,6 +13,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, Upload } from 'lucide-react';
 import { toast } from 'sonner';
+import { uploadDocument } from '@/services/documentService';
 
 interface DocumentUploadDialogProps {
   clientId: string;
@@ -66,7 +67,6 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
     setIsUploading(true);
     
     try {
-      const { uploadDocument } = await import('@/services/documentService');
       const result = await uploadDocument(clientId, file, description);
       
       if (result) {
