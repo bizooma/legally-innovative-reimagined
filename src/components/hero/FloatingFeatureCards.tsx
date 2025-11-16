@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Brain, Code, TrendingUp, Zap, ArrowRight, CheckCircle2, Play } from 'lucide-react';
-import { useParallax } from '@/hooks/useParallax';
 import {
   Dialog,
   DialogContent,
@@ -114,16 +113,12 @@ interface FloatingFeatureCardsProps {
 }
 
 export const FloatingFeatureCards = ({ holidayMode = false }: FloatingFeatureCardsProps) => {
-  const parallaxOffset = useParallax(0.7);
   const [selectedFeature, setSelectedFeature] = useState<number | null>(null);
   
   return (
     <>
       <TooltipProvider>
-        <div 
-          className="grid grid-cols-2 gap-4 relative z-10 transition-transform duration-100"
-          style={{ transform: `translateY(${parallaxOffset}px)` }}
-        >
+        <div className="grid grid-cols-2 gap-4 relative z-10">
         {features.map((feature, index) => (
           <button
             key={feature.label}
