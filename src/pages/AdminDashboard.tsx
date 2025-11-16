@@ -15,6 +15,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { CrmDashboard } from '@/components/crm/CrmDashboard';
 
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
@@ -76,6 +77,9 @@ const AdminDashboard = () => {
                 </CollapsibleContent>
               </Collapsible>
             )}
+
+            {/* CRM Pipeline - Only show for admins */}
+            {isAdmin && <CrmDashboard />}
 
             {/* Master Project Timeline - Only show for admins */}
             {isAdmin && (
