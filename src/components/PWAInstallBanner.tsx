@@ -52,6 +52,16 @@ const PWAInstallBanner = () => {
       <div className="bg-gradient-to-r from-primary via-primary to-accent shadow-2xl border-t border-primary/20">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4 flex-wrap">
+            {/* Install Button - First */}
+            <Button
+              onClick={handleInstall}
+              className="bg-white text-primary hover:bg-white/90 font-semibold shadow-lg flex-shrink-0"
+              size="sm"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Install Now
+            </Button>
+
             {/* Icon and Message */}
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <div className="hidden sm:flex w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm items-center justify-center flex-shrink-0">
@@ -67,26 +77,16 @@ const PWAInstallBanner = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex items-center gap-2">
-              <Button
-                onClick={handleInstall}
-                className="bg-white text-primary hover:bg-white/90 font-semibold shadow-lg"
-                size="sm"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Install Now
-              </Button>
-              <Button
-                onClick={handleDismiss}
-                variant="ghost"
-                size="icon"
-                className="text-white hover:bg-white/10 flex-shrink-0"
-                aria-label="Dismiss banner"
-              >
-                <X className="w-5 h-5" />
-              </Button>
-            </div>
+            {/* Close Button */}
+            <Button
+              onClick={handleDismiss}
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/10 flex-shrink-0"
+              aria-label="Dismiss banner"
+            >
+              <X className="w-5 h-5" />
+            </Button>
           </div>
         </div>
       </div>
