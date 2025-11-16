@@ -266,19 +266,59 @@ export const CrmLeadDetailDialog: React.FC<CrmLeadDetailDialogProps> = ({
                         <p className="font-medium">{lead.source}</p>
                       </div>
                     )}
-                    {lead.estimated_value && (
-                      <div className="flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm text-muted-foreground">
-                            Estimated Value
-                          </p>
-                          <p className="font-medium">
-                            ${lead.estimated_value.toLocaleString()}
-                          </p>
-                        </div>
+                    {lead.payment_type && (
+                      <div>
+                        <p className="text-sm text-muted-foreground">Payment Type</p>
+                        <p className="font-medium capitalize">
+                          {lead.payment_type === 'one_time' ? 'One Time Fee' : 'Monthly'}
+                        </p>
                       </div>
                     )}
+                  </div>
+
+                  {/* Financial Breakdown */}
+                  {(lead.estimated_value || lead.commission_value) && (
+                    <div className="mt-4 p-4 bg-muted/50 rounded-lg space-y-3">
+                      <h4 className="font-semibold text-sm flex items-center gap-2">
+                        <DollarSign className="h-4 w-4" />
+                        Financial Breakdown
+                      </h4>
+                      
+                      {lead.estimated_value && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Total Deal Value:</span>
+                          <span className="font-medium">
+                            ${lead.estimated_value.toLocaleString()}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {lead.commission_value && (
+                        <>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">My Cut (Commission):</span>
+                            <span className="font-semibold text-green-600">
+                              ${lead.commission_value.toLocaleString()}
+                            </span>
+                          </div>
+                          
+                          {lead.estimated_value && lead.commission_value < lead.estimated_value && (
+                            <div className="pt-2 border-t border-border">
+                              <div className="flex justify-between items-center text-xs">
+                                <span className="text-muted-foreground">Partnership Split:</span>
+                                <span className="text-muted-foreground">
+                                  {Math.round((lead.commission_value / lead.estimated_value) * 100)}% yours / {' '}
+                                  {Math.round(((lead.estimated_value - lead.commission_value) / lead.estimated_value) * 100)}% partner
+                                </span>
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-4 mt-4">
                     {lead.next_follow_up && (
                       <div className="flex items-center gap-2">
                         <Calendar className="h-4 w-4 text-muted-foreground" />
