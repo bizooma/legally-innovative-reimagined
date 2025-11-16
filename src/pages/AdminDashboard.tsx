@@ -16,6 +16,7 @@ import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CrmDashboard } from '@/components/crm/CrmDashboard';
+import AdminPasswordReset from '@/components/auth/AdminPasswordReset';
 
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
@@ -24,6 +25,7 @@ const AdminDashboard = () => {
   const [isTimeTrackingOpen, setIsTimeTrackingOpen] = useState(false);
   const [isGanttOpen, setIsGanttOpen] = useState(true);
   const [isClientDirectoryOpen, setIsClientDirectoryOpen] = useState(true);
+  const [isAdminManagementOpen, setIsAdminManagementOpen] = useState(false);
 
   if (isLoading && !user) {
     return (
@@ -46,6 +48,28 @@ const AdminDashboard = () => {
               clients={clients}
               isAdmin={isAdmin}
             />
+
+            {/* Admin User Management - Only show for admins */}
+            {isAdmin && (
+              <Collapsible 
+                open={isAdminManagementOpen} 
+                onOpenChange={setIsAdminManagementOpen}
+                className="mb-8"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-playfair font-bold">Admin User Management</h2>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      {isAdminManagementOpen ? 'Collapse' : 'Expand'}
+                      <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isAdminManagementOpen ? 'rotate-180' : ''}`} />
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent>
+                  <AdminPasswordReset />
+                </CollapsibleContent>
+              </Collapsible>
+            )}
 
             {/* Time Tracking Section - Only show for admins */}
             {isAdmin && (
