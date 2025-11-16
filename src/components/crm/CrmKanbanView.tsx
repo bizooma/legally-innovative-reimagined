@@ -98,7 +98,7 @@ const DraggableLeadCard: React.FC<DraggableLeadCardProps> = ({
                   ${lead.estimated_value.toLocaleString()}
                 </span>
                 {lead.payment_type === 'monthly' && (
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge variant="secondary" className="text-xs bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
                     Monthly
                   </Badge>
                 )}
