@@ -7,6 +7,7 @@ export interface Lead {
   source?: string;
   status: 'new' | 'contacted' | 'qualified' | 'proposal_sent' | 'won' | 'lost';
   estimated_value?: number;
+  payment_type?: 'monthly' | 'one_time';
   notes?: string;
   assigned_to?: string;
   created_at: string;
