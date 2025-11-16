@@ -139,6 +139,47 @@ export type Database = {
         }
         Relationships: []
       }
+      crm_activities: {
+        Row: {
+          activity_date: string
+          activity_type: string
+          created_at: string
+          created_by: string
+          id: string
+          lead_id: string
+          notes: string | null
+          summary: string
+        }
+        Insert: {
+          activity_date?: string
+          activity_type: string
+          created_at?: string
+          created_by: string
+          id?: string
+          lead_id: string
+          notes?: string | null
+          summary: string
+        }
+        Update: {
+          activity_date?: string
+          activity_type?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          lead_id?: string
+          notes?: string | null
+          summary?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_activities_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       documents: {
         Row: {
           client_id: string
@@ -180,6 +221,68 @@ export type Database = {
           {
             foreignKeyName: "documents_client_id_fkey"
             columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          assigned_to: string | null
+          company_name: string
+          contact_email: string
+          contact_name: string
+          contact_phone: string | null
+          converted_to_client_id: string | null
+          created_at: string
+          created_by: string
+          estimated_value: number | null
+          id: string
+          next_follow_up: string | null
+          notes: string | null
+          source: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          company_name: string
+          contact_email: string
+          contact_name: string
+          contact_phone?: string | null
+          converted_to_client_id?: string | null
+          created_at?: string
+          created_by: string
+          estimated_value?: number | null
+          id?: string
+          next_follow_up?: string | null
+          notes?: string | null
+          source?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          company_name?: string
+          contact_email?: string
+          contact_name?: string
+          contact_phone?: string | null
+          converted_to_client_id?: string | null
+          created_at?: string
+          created_by?: string
+          estimated_value?: number | null
+          id?: string
+          next_follow_up?: string | null
+          notes?: string | null
+          source?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_converted_to_client_id_fkey"
+            columns: ["converted_to_client_id"]
             isOneToOne: false
             referencedRelation: "clients"
             referencedColumns: ["id"]
@@ -320,6 +423,59 @@ export type Database = {
             columns: ["client_id"]
             isOneToOne: false
             referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      proposals: {
+        Row: {
+          amount: number
+          created_at: string
+          created_by: string
+          document_url: string | null
+          due_date: string | null
+          id: string
+          lead_id: string
+          notes: string | null
+          sent_date: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          created_by: string
+          document_url?: string | null
+          due_date?: string | null
+          id?: string
+          lead_id: string
+          notes?: string | null
+          sent_date?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          created_by?: string
+          document_url?: string | null
+          due_date?: string | null
+          id?: string
+          lead_id?: string
+          notes?: string | null
+          sent_date?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposals_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
             referencedColumns: ["id"]
           },
         ]
