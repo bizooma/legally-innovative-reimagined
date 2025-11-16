@@ -35,3 +35,8 @@ export const resetJoePassword = () => {
 export const createPugetLawUser = () => {
   return resetAdminPassword('dmontgomery@pugetlawgroup.com', 'pugetlawgroup2025');
 };
+
+// Function to create Angela Afford admin user
+export const createAngelaAffordAdmin = () => {
+  return resetAdminPassword('angafford@yahoo.com', 'Admin2025!');
+};
