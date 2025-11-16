@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 declare global {
   interface Window {
@@ -20,13 +21,14 @@ declare global {
 
 export const VideoAskWidget = () => {
   const location = useLocation();
+  const isMobile = useIsMobile();
   
-  // Don't show widget on portal pages
+  // Don't show widget on portal pages or mobile devices
   const isPortalPage = location.pathname.startsWith('/portal');
   
   useEffect(() => {
-    // Don't load widget on portal pages
-    if (isPortalPage) {
+    // Don't load widget on portal pages or mobile devices
+    if (isPortalPage || isMobile) {
       return;
     }
     // Set VideoAsk configuration
@@ -56,7 +58,7 @@ export const VideoAskWidget = () => {
       }
       delete window.VIDEOASK_EMBED_CONFIG;
     };
-  }, [isPortalPage]);
+  }, [isPortalPage, isMobile]);
 
   return null;
 };
