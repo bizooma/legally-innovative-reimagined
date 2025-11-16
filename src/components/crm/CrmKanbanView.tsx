@@ -93,9 +93,16 @@ const DraggableLeadCard: React.FC<DraggableLeadCardProps> = ({
           {lead.estimated_value && (
             <div className="flex items-center justify-between pt-2 border-t">
               <span className="text-xs text-muted-foreground">Value</span>
-              <span className="text-sm font-semibold text-green-600">
-                ${lead.estimated_value.toLocaleString()}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold text-green-600">
+                  ${lead.estimated_value.toLocaleString()}
+                </span>
+                {lead.payment_type === 'monthly' && (
+                  <Badge variant="secondary" className="text-xs">
+                    Monthly
+                  </Badge>
+                )}
+              </div>
             </div>
           )}
 
