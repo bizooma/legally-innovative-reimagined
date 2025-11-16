@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Lead } from '@/types/crm';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface CrmTableViewProps {
   leads: Lead[];
@@ -34,51 +35,94 @@ export const CrmTableView: React.FC<CrmTableViewProps> = ({ leads, onLeadClick }
   }
 
   return (
-    <div className="border rounded-lg">
+    <div className="border rounded-lg overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Company</TableHead>
             <TableHead>Contact</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Phone</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className="text-right">Est. Value</TableHead>
+            <TableHead>Payment Type</TableHead>
+            <TableHead className="text-right">Deal Value</TableHead>
+            <TableHead className="text-right">My Cut</TableHead>
+            <TableHead className="text-right">Split</TableHead>
             <TableHead>Next Follow-up</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {leads.map((lead) => (
-            <TableRow
-              key={lead.id}
-              className="cursor-pointer hover:bg-muted/50"
-              onClick={() => onLeadClick(lead)}
-            >
-              <TableCell className="font-medium">{lead.company_name}</TableCell>
-              <TableCell>{lead.contact_name}</TableCell>
-              <TableCell className="text-sm text-muted-foreground">
-                {lead.contact_email}
-              </TableCell>
-              <TableCell className="text-sm text-muted-foreground">
-                {lead.contact_phone || '-'}
-              </TableCell>
-              <TableCell>
-                <Badge className={statusColors[lead.status]}>
-                  {lead.status.replace('_', ' ')}
-                </Badge>
-              </TableCell>
-              <TableCell className="text-right font-semibold">
-                {lead.estimated_value
-                  ? `$${lead.estimated_value.toLocaleString()}`
-                  : '-'}
-              </TableCell>
-              <TableCell className="text-sm">
-                {lead.next_follow_up
-                  ? new Date(lead.next_follow_up).toLocaleDateString()
-                  : '-'}
-              </TableCell>
-            </TableRow>
-          ))}
+          {leads.map((lead) => {
+            const hasPartnership = lead.estimated_value && lead.commission_value && 
+              lead.commission_value < lead.estimated_value;
+            const splitPercentage = hasPartnership
+              ? Math.round((lead.commission_value! / lead.estimated_value!) * 100)
+              : null;
+
+            return (
+              <TableRow
+                key={lead.id}
+                className="cursor-pointer hover:bg-muted/50"
+                onClick={() => onLeadClick(lead)}
+              >
+                <TableCell className="font-medium">{lead.company_name}</TableCell>
+                <TableCell>{lead.contact_name}</TableCell>
+                <TableCell className="text-sm text-muted-foreground">
+                  {lead.contact_email}
+                </TableCell>
+                <TableCell>
+                  <Badge className={statusColors[lead.status]}>
+                    {lead.status.replace('_', ' ')}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  {lead.payment_type ? (
+                    <Badge variant="outline" className="text-xs">
+                      {lead.payment_type === 'one_time' ? 'One-Time' : 'Monthly'}
+                    </Badge>
+                  ) : (
+                    <span className="text-muted-foreground text-sm">-</span>
+                  )}
+                </TableCell>
+                <TableCell className="text-right text-sm text-muted-foreground">
+                  {lead.estimated_value
+                    ? `$${lead.estimated_value.toLocaleString()}`
+                    : '-'}
+                </TableCell>
+                <TableCell className="text-right font-semibold text-green-600">
+                  {lead.commission_value
+                    ? `$${lead.commission_value.toLocaleString()}`
+                    : lead.estimated_value
+                    ? `$${lead.estimated_value.toLocaleString()}`
+                    : '-'}
+                </TableCell>
+                <TableCell className="text-right text-sm">
+                  {hasPartnership ? (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Badge variant="secondary" className="text-xs cursor-help">
+                            {splitPercentage}% yours
+                          </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="text-xs">
+                            {splitPercentage}% yours / {100 - splitPercentage!}% partner
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  ) : (
+                    <span className="text-muted-foreground">-</span>
+                  )}
+                </TableCell>
+                <TableCell className="text-sm">
+                  {lead.next_follow_up
+                    ? new Date(lead.next_follow_up).toLocaleDateString()
+                    : '-'}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </div>
