@@ -8,6 +8,7 @@ import { CrmKanbanView } from './CrmKanbanView';
 import { CrmTableView } from './CrmTableView';
 import { CrmProposalsView } from './CrmProposalsView';
 import { CrmLeadDetailDialog } from './CrmLeadDetailDialog';
+import { AddLeadDialog } from './AddLeadDialog';
 import { Lead, Proposal } from '@/types/crm';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -17,6 +18,7 @@ export const CrmDashboard: React.FC = () => {
   const [selectedView, setSelectedView] = useState('kanban');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [isLeadDialogOpen, setIsLeadDialogOpen] = useState(false);
+  const [isAddLeadDialogOpen, setIsAddLeadDialogOpen] = useState(false);
 
   // Fetch leads
   const { data: leads = [], isLoading: isLoadingLeads } = useQuery({
@@ -57,8 +59,7 @@ export const CrmDashboard: React.FC = () => {
   };
 
   const handleAddLead = () => {
-    console.log('Add lead clicked');
-    // TODO: Open add lead dialog
+    setIsAddLeadDialogOpen(true);
   };
 
   if (isLoadingLeads || isLoadingProposals) {
@@ -131,6 +132,11 @@ export const CrmDashboard: React.FC = () => {
         lead={selectedLead}
         open={isLeadDialogOpen}
         onOpenChange={setIsLeadDialogOpen}
+      />
+
+      <AddLeadDialog
+        open={isAddLeadDialogOpen}
+        onOpenChange={setIsAddLeadDialogOpen}
       />
     </Collapsible>
   );
