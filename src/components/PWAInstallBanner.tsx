@@ -49,7 +49,7 @@ const PWAInstallBanner = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 animate-slide-up-banner">
-      <div className="bg-gradient-to-r from-primary via-primary to-accent shadow-2xl border-t border-primary/20">
+      <div className="bg-gradient-to-r from-black via-legal-dark to-primary shadow-2xl border-t border-primary/20">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4 flex-wrap">
             {/* Install Button - First */}
