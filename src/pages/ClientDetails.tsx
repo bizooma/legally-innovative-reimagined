@@ -33,6 +33,7 @@ const ClientDetails = () => {
               <ClientDetailsHeader 
                 clientName={client.company_name}
                 clientId={client.id}
+                clientStatus={client.status}
                 logoUrl={client.logo_url} 
                 onBack={handleBack} 
               />

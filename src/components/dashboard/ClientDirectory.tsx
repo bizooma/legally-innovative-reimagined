@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
 import { Client } from '@/types/database';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,8 @@ import { ClientStatusSelect } from './ClientStatusSelect';
 import { updateClientStatus, deleteClient } from '@/services/clientService';
 import { useToast } from '@/hooks/use-toast';
 import { DeleteClientDialog } from './DeleteClientDialog';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Briefcase } from 'lucide-react';
+import { useAllProjectsWithClients } from '@/hooks/useAllProjectsWithClients';
 
 interface ClientDirectoryProps {
   clients: Client[];
@@ -31,6 +33,18 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   const [deletingClient, setDeletingClient] = useState<{ id: string; name: string } | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const { projects } = useAllProjectsWithClients();
+
+  // Calculate project stats for each client
+  const getClientProjectStats = (clientId: string) => {
+    const clientProjects = projects.filter(p => p.client_id === clientId);
+    return {
+      total: clientProjects.length,
+      inProgress: clientProjects.filter(p => p.status === 'In Progress').length,
+      onHold: clientProjects.filter(p => p.status === 'On Hold').length,
+      completed: clientProjects.filter(p => p.status === 'Completed').length,
+    };
+  };
   
   const handleViewDetails = (clientId: string) => {
     navigate(`/portal/client/${clientId}`);
@@ -167,6 +181,35 @@ export const ClientDirectory: React.FC<ClientDirectoryProps> = ({
                     </div>
                     <p className="text-sm text-gray-500">{client.contact_name} • {client.contact_email}</p>
                     {client.contact_phone && <p className="text-sm text-gray-500">{client.contact_phone}</p>}
+                    
+                    {/* Project Summary */}
+                    {(() => {
+                      const stats = getClientProjectStats(client.id);
+                      if (stats.total === 0) return null;
+                      
+                      return (
+                        <div className="flex items-center gap-2 mt-2">
+                          <Briefcase className="h-3 w-3 text-muted-foreground" />
+                          <span className="text-xs text-muted-foreground">
+                            {stats.inProgress > 0 && (
+                              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 mr-1">
+                                {stats.inProgress} In Progress
+                              </Badge>
+                            )}
+                            {stats.onHold > 0 && (
+                              <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200 mr-1">
+                                {stats.onHold} On Hold
+                              </Badge>
+                            )}
+                            {stats.completed > 0 && (
+                              <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                                {stats.completed} Completed
+                              </Badge>
+                            )}
+                          </span>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
                 <div className="flex gap-2">
