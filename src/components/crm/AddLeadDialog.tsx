@@ -41,6 +41,7 @@ const leadFormSchema = z.object({
   contact_phone: z.string().max(50).optional().or(z.literal('')),
   source: z.string().max(100).optional().or(z.literal('')),
   estimated_value: z.string().optional().or(z.literal('')),
+  commission_value: z.string().optional().or(z.literal('')),
   payment_type: z.enum(['monthly', 'one_time']),
   notes: z.string().max(2000).optional().or(z.literal('')),
   status: z.enum(['new', 'contacted', 'qualified', 'proposal_sent']),
@@ -69,6 +70,7 @@ export const AddLeadDialog: React.FC<AddLeadDialogProps> = ({
       contact_phone: '',
       source: '',
       estimated_value: '',
+      commission_value: '',
       payment_type: 'one_time',
       notes: '',
       status: 'new',
@@ -88,6 +90,9 @@ export const AddLeadDialog: React.FC<AddLeadDialogProps> = ({
         source: values.source || null,
         estimated_value: values.estimated_value
           ? parseFloat(values.estimated_value)
+          : null,
+        commission_value: values.commission_value
+          ? parseFloat(values.commission_value)
           : null,
         payment_type: values.payment_type,
         notes: values.notes || null,
@@ -274,6 +279,26 @@ export const AddLeadDialog: React.FC<AddLeadDialogProps> = ({
                         <Input
                           type="number"
                           placeholder="50000"
+                          step="0.01"
+                          {...field}
+                          disabled={createLeadMutation.isPending}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="commission_value"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>My Cut ($)</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="25000"
                           step="0.01"
                           {...field}
                           disabled={createLeadMutation.isPending}
