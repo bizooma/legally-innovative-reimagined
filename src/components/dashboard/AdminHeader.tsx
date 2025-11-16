@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { AddClientDialog } from '@/components/portal/AddClientDialog';
 import { Client } from '@/types/database';
+import { Calendar } from 'lucide-react';
 
 interface AdminHeaderProps {
   onClientAdded: (client: Client) => void;
@@ -31,13 +32,21 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
             }
           </p>
         </div>
-        <div className="flex gap-3">
-          {isAdmin && (
-            <AddClientDialog onClientAdded={onClientAdded} />
-          )}
-          <Button 
-            variant="outline"
-            onClick={onLogout}
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => window.location.href = '/portal/project-timeline'}
+                >
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Project Timeline
+                </Button>
+                {isAdmin && (
+                  <AddClientDialog onClientAdded={onClientAdded} />
+                )}
+                <Button 
+                  variant="outline"
+                  onClick={onLogout}
             className="bg-white hover:bg-gray-100"
           >
             Logout
