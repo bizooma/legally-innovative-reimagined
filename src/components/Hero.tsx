@@ -9,8 +9,10 @@ import { GradientMesh } from "./hero/GradientMesh";
 import { useScrollFade } from "@/hooks/useParallax";
 import { ThanksgivingDecorations } from "./decorations/ThanksgivingDecorations";
 import { useState, useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
+  const isMobile = useIsMobile();
   const animationOpacity = useScrollFade(150, 500);
   const [holidayMode, setHolidayMode] = useState(() => {
     const saved = localStorage.getItem('holidayMode');
@@ -78,19 +80,21 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Column - Animated Visualization */}
-          <div 
-            className="relative h-[600px] min-h-[560px] transition-opacity duration-300"
-            style={{ opacity: animationOpacity }}
-          >
-            <div className="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden">
-              <GradientMesh />
-              <AnimatedParticles />
+          {/* Right Column - Animated Visualization - Disabled on mobile for performance */}
+          {!isMobile && (
+            <div 
+              className="relative h-[600px] min-h-[560px] transition-opacity duration-300"
+              style={{ opacity: animationOpacity }}
+            >
+              <div className="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden">
+                <GradientMesh />
+                <AnimatedParticles />
+              </div>
+              <div className="relative z-10 h-full flex items-center justify-center p-8">
+                <FloatingFeatureCards holidayMode={holidayMode} />
+              </div>
             </div>
-            <div className="relative z-10 h-full flex items-center justify-center p-8">
-              <FloatingFeatureCards holidayMode={holidayMode} />
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
