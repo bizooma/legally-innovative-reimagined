@@ -148,7 +148,7 @@ export const FloatingFeatureCards = ({ holidayMode = false }: FloatingFeatureCar
             
             {/* Content */}
             <div className="relative z-10">
-              <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
+              <div className="w-12 h-12 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
                 {holidayMode ? (
                   <span className="text-2xl">{thanksgivingEmojis[index]}</span>
                 ) : (
@@ -184,7 +184,7 @@ export const FloatingFeatureCards = ({ holidayMode = false }: FloatingFeatureCar
         <Dialog open={selectedFeature !== null} onOpenChange={() => setSelectedFeature(null)}>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${features[selectedFeature].color} flex items-center justify-center mb-4`}>
+              <div className="w-16 h-16 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center mb-4">
                 {(() => {
                   const Icon = features[selectedFeature].icon;
                   return <Icon className="w-8 h-8 text-white" />;
