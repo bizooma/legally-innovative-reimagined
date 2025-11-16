@@ -30,12 +30,14 @@ import {
   FileText,
   Plus,
   ExternalLink,
+  CheckCircle2,
 } from 'lucide-react';
 import { Lead, Proposal, CrmActivity } from '@/types/crm';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
+import { ConvertToClientDialog } from './ConvertToClientDialog';
 
 interface CrmLeadDetailDialogProps {
   lead: Lead | null;
@@ -53,6 +55,7 @@ export const CrmLeadDetailDialog: React.FC<CrmLeadDetailDialogProps> = ({
   const [activityType, setActivityType] = useState<string>('note');
   const [activitySummary, setActivitySummary] = useState('');
   const [activityNotes, setActivityNotes] = useState('');
+  const [isConvertDialogOpen, setIsConvertDialogOpen] = useState(false);
 
   // Fetch activities for this lead
   const { data: activities = [] } = useQuery({
@@ -145,6 +148,19 @@ export const CrmLeadDetailDialog: React.FC<CrmLeadDetailDialogProps> = ({
       lost: 'bg-red-500/10 text-red-500 border-red-500/20',
     };
     return colors[status] || 'bg-muted';
+  };
+
+  const handleConvertToClient = () => {
+    setIsConvertDialogOpen(true);
+  };
+
+  const handleConvertSuccess = (clientId: string) => {
+    // Optionally close the lead dialog after successful conversion
+    onOpenChange(false);
+    toast({
+      title: 'Success!',
+      description: 'You can now find this client in the Client Directory.',
+    });
   };
 
   const getProposalStatusColor = (status: string) => {
@@ -317,10 +333,28 @@ export const CrmLeadDetailDialog: React.FC<CrmLeadDetailDialogProps> = ({
                       <FileText className="h-4 w-4 mr-2" />
                       Create Proposal
                     </Button>
-                    <Button variant="outline" size="sm">
-                      <UserCheck className="h-4 w-4 mr-2" />
-                      Convert to Client
-                    </Button>
+                    {lead.status !== 'won' && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-green-500/10 hover:bg-green-500/20 text-green-700 border-green-500/20"
+                        onClick={handleConvertToClient}
+                      >
+                        <CheckCircle2 className="h-4 w-4 mr-2" />
+                        Convert to Client
+                      </Button>
+                    )}
+                    {lead.status === 'won' && lead.converted_to_client_id && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-green-500/10 text-green-700 border-green-500/20"
+                        disabled
+                      >
+                        <CheckCircle2 className="h-4 w-4 mr-2" />
+                        Converted to Client
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -492,6 +526,13 @@ export const CrmLeadDetailDialog: React.FC<CrmLeadDetailDialogProps> = ({
           </TabsContent>
         </Tabs>
       </DialogContent>
+
+      <ConvertToClientDialog
+        lead={lead}
+        open={isConvertDialogOpen}
+        onOpenChange={setIsConvertDialogOpen}
+        onSuccess={handleConvertSuccess}
+      />
     </Dialog>
   );
 };
