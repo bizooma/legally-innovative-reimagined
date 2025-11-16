@@ -20,7 +20,8 @@ export const CrmPipelineStats: React.FC<CrmPipelineStatsProps> = ({ leads, propo
       return sum + value;
     }, 0);
   
-  const pendingProposals = proposals.filter(p => p.status === 'sent').length;
+  // Count leads with 'proposal_sent' status as pending proposals
+  const pendingProposals = leads.filter(l => l.status === 'proposal_sent').length;
   
   const wonLeads = leads.filter(l => l.status === 'won').length;
   const conversionRate = totalLeads > 0 ? Math.round((wonLeads / totalLeads) * 100) : 0;
