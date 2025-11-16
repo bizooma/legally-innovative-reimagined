@@ -241,6 +241,7 @@ export type Database = {
           id: string
           next_follow_up: string | null
           notes: string | null
+          payment_type: string | null
           source: string | null
           status: string
           updated_at: string
@@ -258,6 +259,7 @@ export type Database = {
           id?: string
           next_follow_up?: string | null
           notes?: string | null
+          payment_type?: string | null
           source?: string | null
           status?: string
           updated_at?: string
@@ -275,6 +277,7 @@ export type Database = {
           id?: string
           next_follow_up?: string | null
           notes?: string | null
+          payment_type?: string | null
           source?: string | null
           status?: string
           updated_at?: string

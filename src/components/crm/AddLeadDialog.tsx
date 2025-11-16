@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -40,6 +41,7 @@ const leadFormSchema = z.object({
   contact_phone: z.string().max(50).optional().or(z.literal('')),
   source: z.string().max(100).optional().or(z.literal('')),
   estimated_value: z.string().optional().or(z.literal('')),
+  payment_type: z.enum(['monthly', 'one_time']),
   notes: z.string().max(2000).optional().or(z.literal('')),
   status: z.enum(['new', 'contacted', 'qualified', 'proposal_sent']),
 });
@@ -67,6 +69,7 @@ export const AddLeadDialog: React.FC<AddLeadDialogProps> = ({
       contact_phone: '',
       source: '',
       estimated_value: '',
+      payment_type: 'one_time',
       notes: '',
       status: 'new',
     },
@@ -86,6 +89,7 @@ export const AddLeadDialog: React.FC<AddLeadDialogProps> = ({
         estimated_value: values.estimated_value
           ? parseFloat(values.estimated_value)
           : null,
+        payment_type: values.payment_type,
         notes: values.notes || null,
         status: values.status,
         created_by: userData.user.id,
@@ -274,6 +278,38 @@ export const AddLeadDialog: React.FC<AddLeadDialogProps> = ({
                           {...field}
                           disabled={createLeadMutation.isPending}
                         />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="payment_type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Payment Type</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          className="flex gap-4"
+                          disabled={createLeadMutation.isPending}
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="monthly" id="monthly" />
+                            <Label htmlFor="monthly" className="cursor-pointer font-normal">
+                              Monthly
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="one_time" id="one_time" />
+                            <Label htmlFor="one_time" className="cursor-pointer font-normal">
+                              One Time Fee
+                            </Label>
+                          </div>
+                        </RadioGroup>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
