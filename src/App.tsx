@@ -16,6 +16,7 @@ import Portal from "./pages/Portal";
 import AdminDashboard from "./pages/AdminDashboard";
 import ClientDashboard from "./pages/ClientDashboard";
 import ClientDetails from "./pages/ClientDetails";
+import ProjectTimeline from "./pages/ProjectTimeline";
 import ClientDiagram from "./pages/ClientDiagram";
 import NotFound from "./pages/NotFound";
 import GoogleAuthCallback from "./pages/GoogleAuthCallback";
@@ -142,6 +143,7 @@ const App = () => (
               <Route path="/portal" element={<Portal />} />
               <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
+              <Route path="/portal/project-timeline" element={<ProjectTimeline />} />
               <Route path="/portal/clients/:id" element={<ClientDetails />} />
               <Route path="/portal/client/:id" element={<ClientDetails />} />
               <Route path="/portal/client/:id/diagram" element={<ClientDiagram />} />
