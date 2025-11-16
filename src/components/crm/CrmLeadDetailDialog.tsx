@@ -31,6 +31,7 @@ import {
   Plus,
   ExternalLink,
   CheckCircle2,
+  Pencil,
 } from 'lucide-react';
 import { Lead, Proposal, CrmActivity } from '@/types/crm';
 import { supabase } from '@/integrations/supabase/client';
@@ -38,6 +39,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { ConvertToClientDialog } from './ConvertToClientDialog';
+import { EditLeadDialog } from './EditLeadDialog';
 
 interface CrmLeadDetailDialogProps {
   lead: Lead | null;
@@ -56,6 +58,7 @@ export const CrmLeadDetailDialog: React.FC<CrmLeadDetailDialogProps> = ({
   const [activitySummary, setActivitySummary] = useState('');
   const [activityNotes, setActivityNotes] = useState('');
   const [isConvertDialogOpen, setIsConvertDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   // Fetch activities for this lead
   const { data: activities = [] } = useQuery({
@@ -176,18 +179,29 @@ export const CrmLeadDetailDialog: React.FC<CrmLeadDetailDialogProps> = ({
   if (!lead) return null;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh]">
-        <DialogHeader>
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-2xl font-playfair">
-              {lead.company_name}
-            </DialogTitle>
-            <Badge className={getStatusColor(lead.status)} variant="outline">
-              {lead.status.replace('_', ' ')}
-            </Badge>
-          </div>
-        </DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-4xl max-h-[90vh]">
+          <DialogHeader>
+            <div className="flex items-center justify-between">
+              <DialogTitle className="text-2xl font-playfair">
+                {lead.company_name}
+              </DialogTitle>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsEditDialogOpen(true)}
+                >
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Edit
+                </Button>
+                <Badge className={getStatusColor(lead.status)} variant="outline">
+                  {lead.status.replace('_', ' ')}
+                </Badge>
+              </div>
+            </div>
+          </DialogHeader>
 
         <Tabs defaultValue="overview" className="w-full">
           <TabsList className="grid w-full grid-cols-3">
@@ -574,5 +588,12 @@ export const CrmLeadDetailDialog: React.FC<CrmLeadDetailDialogProps> = ({
         onSuccess={handleConvertSuccess}
       />
     </Dialog>
+
+    <EditLeadDialog
+      lead={lead}
+      open={isEditDialogOpen}
+      onOpenChange={setIsEditDialogOpen}
+    />
+    </>
   );
 };
