@@ -12,9 +12,13 @@ export const CrmPipelineStats: React.FC<CrmPipelineStatsProps> = ({ leads, propo
   const totalLeads = leads.length;
   const activeLeads = leads.filter(l => !['won', 'lost'].includes(l.status)).length;
   
+  // Use commission_value if available, otherwise fall back to estimated_value
   const pipelineValue = leads
     .filter(l => !['won', 'lost'].includes(l.status))
-    .reduce((sum, lead) => sum + (lead.estimated_value || 0), 0);
+    .reduce((sum, lead) => {
+      const value = lead.commission_value ?? lead.estimated_value ?? 0;
+      return sum + value;
+    }, 0);
   
   const pendingProposals = proposals.filter(p => p.status === 'sent').length;
   
@@ -32,7 +36,7 @@ export const CrmPipelineStats: React.FC<CrmPipelineStatsProps> = ({ leads, propo
     {
       title: 'Pipeline Value',
       value: `$${pipelineValue.toLocaleString()}`,
-      description: 'Estimated revenue',
+      description: 'Your cut (commission)',
       icon: DollarSign,
       color: 'text-green-500',
     },
