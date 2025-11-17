@@ -16,12 +16,14 @@ import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CrmDashboard } from '@/components/crm/CrmDashboard';
+import { BudgetTrackingSection } from '@/components/budget/BudgetTrackingSection';
 
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
   const { isRunning, elapsedSeconds } = useTimeTracker();
   const { projects: allProjects, isLoading: isLoadingProjects } = useAllProjectsWithClients();
   const [isTimeTrackingOpen, setIsTimeTrackingOpen] = useState(false);
+  const [isBudgetOpen, setIsBudgetOpen] = useState(true);
   const [isGanttOpen, setIsGanttOpen] = useState(true);
   const [isClientDirectoryOpen, setIsClientDirectoryOpen] = useState(true);
 
@@ -74,6 +76,28 @@ const AdminDashboard = () => {
                 <CollapsibleContent className="space-y-4">
                   <TimeTracker clients={clients} />
                   <TimeTrackingSection clients={clients} />
+                </CollapsibleContent>
+              </Collapsible>
+            )}
+
+            {/* Budget Tracking Section - Only show for admins */}
+            {isAdmin && (
+              <Collapsible 
+                open={isBudgetOpen} 
+                onOpenChange={setIsBudgetOpen}
+                className="mb-8"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-playfair font-bold">Budget Tracking</h2>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      {isBudgetOpen ? 'Collapse' : 'Expand'}
+                      <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isBudgetOpen ? 'rotate-180' : ''}`} />
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent>
+                  <BudgetTrackingSection />
                 </CollapsibleContent>
               </Collapsible>
             )}
