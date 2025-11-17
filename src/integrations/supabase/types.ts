@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      budget_items: {
+        Row: {
+          billing_frequency: string
+          category: string
+          cost: number
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          next_billing_date: string
+          status: string
+          tool_name: string
+          updated_at: string
+        }
+        Insert: {
+          billing_frequency?: string
+          category?: string
+          cost: number
+          created_at?: string
+          created_by: string
+          description?: string | null
+          id?: string
+          next_billing_date: string
+          status?: string
+          tool_name: string
+          updated_at?: string
+        }
+        Update: {
+          billing_frequency?: string
+          category?: string
+          cost?: number
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          id?: string
+          next_billing_date?: string
+          status?: string
+          tool_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       client_citations: {
         Row: {
           client_id: string
