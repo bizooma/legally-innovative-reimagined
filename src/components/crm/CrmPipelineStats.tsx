@@ -74,7 +74,13 @@ export const CrmPipelineStats: React.FC<CrmPipelineStatsProps> = ({ leads, propo
               <div>
                 <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
                 <p className="text-2xl font-bold mt-2">{stat.value}</p>
-                <p className="text-xs text-muted-foreground mt-1">{stat.description}</p>
+                <p className={`text-xs mt-1 font-medium ${
+                  stat.title === 'Pipeline Value' 
+                    ? (mrr >= 20000 ? 'text-green-600' : 'text-red-600')
+                    : 'text-muted-foreground'
+                }`}>
+                  {stat.description}
+                </p>
               </div>
               <stat.icon className={`h-8 w-8 ${stat.color}`} />
             </div>
