@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react';
 import { BudgetStats } from './BudgetStats';
 import { BudgetTable } from './BudgetTable';
 import { BudgetItemDialog } from './BudgetItemDialog';
+import { BudgetComparisonChart } from './BudgetComparisonChart';
 import { useBudgetItems } from '@/hooks/useBudgetItems';
 import { BudgetItem } from '@/types/budget';
 
@@ -58,6 +59,8 @@ export const BudgetTrackingSection = () => {
       </div>
 
       <BudgetStats budgetItems={budgetItems} />
+
+      <BudgetComparisonChart />
 
       <BudgetTable
         budgetItems={budgetItems}

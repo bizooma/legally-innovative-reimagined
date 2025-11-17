@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      budget_expenses: {
+        Row: {
+          amount: number
+          budget_item_id: string
+          created_at: string
+          created_by: string
+          expense_date: string
+          id: string
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          budget_item_id: string
+          created_at?: string
+          created_by: string
+          expense_date: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          budget_item_id?: string
+          created_at?: string
+          created_by?: string
+          expense_date?: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "budget_expenses_budget_item_id_fkey"
+            columns: ["budget_item_id"]
+            isOneToOne: false
+            referencedRelation: "budget_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       budget_items: {
         Row: {
           billing_frequency: string

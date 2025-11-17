@@ -16,9 +16,26 @@ export interface BudgetItem {
   updated_at: string;
 }
 
+export interface BudgetExpense {
+  id: string;
+  budget_item_id: string;
+  amount: number;
+  expense_date: string;
+  notes?: string;
+  created_by: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface BudgetStats {
   totalMonthly: number;
   totalAnnual: number;
   activeCount: number;
   upcomingBills: number;
+}
+
+export interface BudgetComparisonData {
+  month: string;
+  budgeted: number;
+  actual: number;
 }
