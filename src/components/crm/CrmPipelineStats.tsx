@@ -20,6 +20,14 @@ export const CrmPipelineStats: React.FC<CrmPipelineStatsProps> = ({ leads, propo
       return sum + value;
     }, 0);
   
+  // Calculate MRR (Monthly Recurring Revenue) from active monthly leads
+  const mrr = leads
+    .filter(l => !['won', 'lost'].includes(l.status) && l.payment_type === 'monthly')
+    .reduce((sum, lead) => {
+      const value = lead.commission_value ?? lead.estimated_value ?? 0;
+      return sum + value;
+    }, 0);
+  
   // Count leads with 'proposal_sent' status as pending proposals
   const pendingProposals = leads.filter(l => l.status === 'proposal_sent').length;
   
@@ -37,7 +45,7 @@ export const CrmPipelineStats: React.FC<CrmPipelineStatsProps> = ({ leads, propo
     {
       title: 'Pipeline Value',
       value: `$${pipelineValue.toLocaleString()}`,
-      description: 'Your cut (commission)',
+      description: `MRR: $${mrr.toLocaleString()}/mo`,
       icon: DollarSign,
       color: 'text-green-500',
     },
