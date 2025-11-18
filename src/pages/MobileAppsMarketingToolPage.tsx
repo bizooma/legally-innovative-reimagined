@@ -9,7 +9,7 @@ const MobileAppsMarketingToolPage = () => {
       readTime="10 min read"
       author="Mobile Marketing Team"
       category="Mobile Development"
-      image="/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png"
+      image="/images/mobile-apps-marketing.jpg"
     >
       <p className="text-lg">
         In a digital landscape where algorithms shift overnight and marketing channels rise and fall in effectiveness, one tool continues to deliver consistent, long-term value: mobile apps. For law firms in particular, mobile apps offer a unique opportunity to build trust, streamline client communication, and stay top-of-mind—regardless of how well other marketing channels are performing.
