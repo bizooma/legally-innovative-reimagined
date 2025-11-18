@@ -36,6 +36,33 @@ const ArticleLayout = ({
   const currentUrl = `${siteUrl}${location.pathname}`;
   const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/og-image.png`;
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": title,
+    "description": excerpt,
+    "image": ogImage,
+    "datePublished": date,
+    "dateModified": date,
+    "author": {
+      "@type": "Person",
+      "name": author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Bizooma",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteUrl}/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png`
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": currentUrl
+    },
+    "articleSection": category
+  };
+
   return (
     <div className="min-h-screen">
       <Helmet>
@@ -59,6 +86,11 @@ const ArticleLayout = ({
         
         {/* Additional SEO */}
         <link rel="canonical" href={currentUrl} />
+        
+        {/* Structured Data - Article Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(articleSchema)}
+        </script>
       </Helmet>
       
       <Navbar />
