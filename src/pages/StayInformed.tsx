@@ -13,6 +13,17 @@ import openaiImage from "@/assets/openai-browser-legal-tech.jpg";
 const StayInformed = () => {
   const blogPosts = [
     {
+      id: 7,
+      title: "Why Mobile Apps Remain a Powerful Marketing Tool—Even When Other Channels Slow Down",
+      excerpt: "In a digital landscape where algorithms shift overnight and marketing channels rise and fall in effectiveness, one tool continues to deliver consistent, long-term value: mobile apps.",
+      date: "2025-11-18",
+      readTime: "10 min read",
+      author: "Mobile Marketing Team",
+      category: "Mobile Development",
+      image: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
+      link: "/mobile-apps-marketing-tool"
+    },
+    {
       id: 1,
       title: "The Death of Traditional SEO",
       excerpt: "How artificial intelligence and changing search behaviors are fundamentally transforming the way law firms need to approach search engine optimization.",

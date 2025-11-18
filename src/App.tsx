@@ -34,6 +34,7 @@ import LawFirmDigitalMarketingPage from "./pages/LawFirmDigitalMarketingPage";
 import GoogleBusinessProfilePage from "./pages/GoogleBusinessProfilePage";
 import WhyReviewsMatterPage from "./pages/WhyReviewsMatterPage";
 import LawFirmSeoAeoPage from "./pages/LawFirmSeoAeoPage";
+import MobileAppsMarketingToolPage from "./pages/MobileAppsMarketingToolPage";
 import LawFirmLeadGenerationPage from "./pages/LawFirmLeadGenerationPage";
 import LawFirmVoiceAssistantMarketingPage from "./pages/LawFirmVoiceAssistantMarketingPage";
 import NpoBotsPage from "./pages/products/NpoBotsPage";
@@ -138,6 +139,7 @@ const App = () => (
               <Route path="/why-reviews-matter-for-law-firms" element={<WhyReviewsMatterPage />} />
               <Route path="/openai-web-browser" element={<OpenAiWebBrowserPage />} />
               <Route path="/voice-seo-aeo-stats" element={<VoiceSeoAeoStatsPage />} />
+              <Route path="/mobile-apps-marketing-tool" element={<MobileAppsMarketingToolPage />} />
               <Route path="/diy" element={<DIY />} />
               <Route path="/install" element={<InstallPWA />} />
               <Route path="/portal" element={<Portal />} />
