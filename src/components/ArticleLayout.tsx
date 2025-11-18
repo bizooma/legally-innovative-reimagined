@@ -5,7 +5,8 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import SocialShare from "@/components/SocialShare";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, User, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 interface ArticleLayoutProps {
   title: string;
@@ -30,8 +31,36 @@ const ArticleLayout = ({
   audioEmbed,
   children
 }: ArticleLayoutProps) => {
+  const location = useLocation();
+  const siteUrl = "https://bizooma.com";
+  const currentUrl = `${siteUrl}${location.pathname}`;
+  const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/og-image.png`;
+
   return (
     <div className="min-h-screen">
+      <Helmet>
+        {/* Open Graph Meta Tags */}
+        <title>{title} | Bizooma</title>
+        <meta name="description" content={excerpt} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={excerpt} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:type" content="article" />
+        <meta property="article:published_time" content={date} />
+        <meta property="article:author" content={author} />
+        <meta property="article:section" content={category} />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={excerpt} />
+        <meta name="twitter:image" content={ogImage} />
+        
+        {/* Additional SEO */}
+        <link rel="canonical" href={currentUrl} />
+      </Helmet>
+      
       <Navbar />
       
       {/* Hero Section */}
