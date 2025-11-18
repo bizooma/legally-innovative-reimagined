@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
+import SocialShare from "@/components/SocialShare";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, User, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -58,7 +59,7 @@ const ArticleLayout = ({
             </p>
             
             {/* Article Meta */}
-            <div className="flex items-center justify-center gap-6 text-white/80">
+            <div className="flex items-center justify-center gap-6 text-white/80 mb-6">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span>{new Date(date).toLocaleDateString()}</span>
@@ -71,6 +72,11 @@ const ArticleLayout = ({
                 <User className="h-4 w-4" />
                 <span>{author}</span>
               </div>
+            </div>
+
+            {/* Social Share */}
+            <div className="flex justify-center">
+              <SocialShare title={title} />
             </div>
 
             {/* Audio Player - Optional */}
@@ -103,6 +109,11 @@ const ArticleLayout = ({
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none">
             {children}
+          </div>
+          
+          {/* Social Share - Bottom */}
+          <div className="mt-12 pt-8 border-t border-border flex justify-center">
+            <SocialShare title={title} />
           </div>
         </div>
       </section>
