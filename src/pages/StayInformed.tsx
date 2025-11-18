@@ -20,7 +20,7 @@ const StayInformed = () => {
       readTime: "10 min read",
       author: "Mobile Marketing Team",
       category: "Mobile Development",
-      image: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
+    image: "/images/mobile-apps-marketing.jpg",
       link: "/mobile-apps-marketing-tool"
     },
     {
