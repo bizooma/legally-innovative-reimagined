@@ -1,6 +1,25 @@
 import ArticleLayout from "@/components/ArticleLayout";
 
 const MobileAppsMarketingToolPage = () => {
+  const faqs = [
+    {
+      question: "Why do mobile apps outperform other marketing channels?",
+      answer: "Mobile apps give you direct ownership of the communication channel without algorithm interference. With 90%+ open rates on push notifications and permanent brand visibility on users' devices, apps deliver consistent value regardless of how other platforms perform."
+    },
+    {
+      question: "How do mobile apps build trust and authority for law firms?",
+      answer: "A branded mobile app immediately boosts credibility by demonstrating professional investment in client experience. It positions your firm as forward-thinking and tech-enabled, setting you apart from competitors using outdated methods."
+    },
+    {
+      question: "What makes mobile apps future-proof for marketing?",
+      answer: "Mobile apps are future-proof because they operate as direct, permission-based, owned channels. Unlike social media or search platforms that depend on changing algorithms and policies, your app remains a stable foundation regardless of digital ecosystem changes."
+    },
+    {
+      question: "How do mobile apps improve client communication and conversion rates?",
+      answer: "Apps streamline the intake process by enabling clients to submit documents, request consultations, and access resources directly from their phones. This reduced friction improves conversion rates and client satisfaction while increasing referrals."
+    }
+  ];
+
   return (
     <ArticleLayout
       title="Why Mobile Apps Remain a Powerful Marketing Tool—Even When Other Channels Slow Down"
@@ -10,6 +29,7 @@ const MobileAppsMarketingToolPage = () => {
       author="Mobile Marketing Team"
       category="Mobile Development"
       image="/images/mobile-apps-marketing.jpg"
+      faqs={faqs}
     >
       <p className="text-lg">
         In a digital landscape where algorithms shift overnight and marketing channels rise and fall in effectiveness, one tool continues to deliver consistent, long-term value: mobile apps. For law firms in particular, mobile apps offer a unique opportunity to build trust, streamline client communication, and stay top-of-mind—regardless of how well other marketing channels are performing.

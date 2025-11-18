@@ -8,6 +8,11 @@ import { Calendar, Clock, User, ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
 interface ArticleLayoutProps {
   title: string;
   excerpt: string;
@@ -17,6 +22,7 @@ interface ArticleLayoutProps {
   category: string;
   image?: string;
   audioEmbed?: ReactNode;
+  faqs?: FAQ[];
   children: ReactNode;
 }
 
@@ -29,6 +35,7 @@ const ArticleLayout = ({
   category,
   image,
   audioEmbed,
+  faqs,
   children
 }: ArticleLayoutProps) => {
   const location = useLocation();
@@ -63,6 +70,19 @@ const ArticleLayout = ({
     "articleSection": category
   };
 
+  const faqSchema = faqs && faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  } : null;
+
   return (
     <div className="min-h-screen">
       <Helmet>
@@ -91,6 +111,13 @@ const ArticleLayout = ({
         <script type="application/ld+json">
           {JSON.stringify(articleSchema)}
         </script>
+        
+        {/* Structured Data - FAQ Schema */}
+        {faqSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
       </Helmet>
       
       <Navbar />
