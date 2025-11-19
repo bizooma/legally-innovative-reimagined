@@ -569,6 +569,80 @@ export type Database = {
           },
         ]
       }
+      provider_status_cache: {
+        Row: {
+          created_at: string
+          id: string
+          last_checked: string
+          provider_id: string
+          status: string
+          summary: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_checked?: string
+          provider_id: string
+          status: string
+          summary: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_checked?: string
+          provider_id?: string
+          status?: string
+          summary?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provider_status_cache_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "provider_status_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      provider_status_configs: {
+        Row: {
+          check_method: string
+          created_at: string
+          display_order: number
+          icon_initials: string
+          id: string
+          is_active: boolean
+          name: string
+          slug: string
+          status_endpoint: string | null
+          updated_at: string
+        }
+        Insert: {
+          check_method?: string
+          created_at?: string
+          display_order?: number
+          icon_initials: string
+          id?: string
+          is_active?: boolean
+          name: string
+          slug: string
+          status_endpoint?: string | null
+          updated_at?: string
+        }
+        Update: {
+          check_method?: string
+          created_at?: string
+          display_order?: number
+          icon_initials?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          slug?: string
+          status_endpoint?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       social_media_posts: {
         Row: {
           client_id: string

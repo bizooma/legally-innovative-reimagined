@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CrmDashboard } from '@/components/crm/CrmDashboard';
 import { BudgetTrackingSection } from '@/components/budget/BudgetTrackingSection';
+import { ProviderStatusManager } from '@/components/admin/ProviderStatusManager';
 
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
@@ -125,6 +126,13 @@ const AdminDashboard = () => {
                   <AdminGanttChartView projects={allProjects} isLoading={isLoadingProjects} />
                 </CollapsibleContent>
               </Collapsible>
+            )}
+
+            {/* Provider Status Management - Only show for admins */}
+            {isAdmin && (
+              <div className="mb-8">
+                <ProviderStatusManager />
+              </div>
             )}
 
             {/* Client Directory */}

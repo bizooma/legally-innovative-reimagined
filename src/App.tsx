@@ -46,6 +46,8 @@ import SignaturePopPage from "./pages/products/SignaturePopPage";
 import BrandedBooksPage from "./pages/products/BrandedBooksPage";
 import InstallPWA from "./pages/InstallPWA";
 import RouteToResultsNewsletter from "./pages/RouteToResultsNewsletter";
+import StatusTicker from "./pages/StatusTicker";
+import StatusTickerEmbed from "./pages/StatusTickerEmbed";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -149,6 +151,10 @@ const App = () => (
               <Route path="/portal/clients/:id" element={<ClientDetails />} />
               <Route path="/portal/client/:id" element={<ClientDetails />} />
               <Route path="/portal/client/:id/diagram" element={<ClientDiagram />} />
+              
+              {/* Status Ticker Routes */}
+              <Route path="/status-ticker" element={<StatusTicker />} />
+              <Route path="/embed/status-ticker" element={<StatusTickerEmbed />} />
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />
