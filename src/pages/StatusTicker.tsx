@@ -81,25 +81,41 @@ const StatusTicker = () => {
           </section>
 
           {/* Status Display */}
-          <section className={`py-16 ${viewMode === 'grid' ? 'bg-black' : ''}`}>
-            {viewMode === 'ticker' ? (
-              <StatusTickerWidget />
-            ) : (
-              <div className="container mx-auto px-4">
-                {isLoading ? (
-                  <div className="text-center py-12">
-                    <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent" />
-                    <p className="mt-4 text-white/70">Loading provider status...</p>
-                  </div>
-                ) : providers && providers.length > 0 ? (
-                  <ProviderStatusGrid providers={providers} />
-                ) : (
-                  <div className="text-center py-12 text-white/70">
-                    No provider data available
-                  </div>
-                )}
-              </div>
+          <section className={`relative py-16 ${viewMode === 'grid' ? 'min-h-screen' : ''}`}>
+            {viewMode === 'grid' && (
+              <>
+                {/* Background Image */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+                  style={{ backgroundImage: "url('/images/server-room-bg.jpg')" }}
+                />
+                
+                {/* Semi-transparent Black Overlay */}
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+              </>
             )}
+            
+            {/* Content Container - positioned above background */}
+            <div className="relative z-10">
+              {viewMode === 'ticker' ? (
+                <StatusTickerWidget />
+              ) : (
+                <div className="container mx-auto px-4">
+                  {isLoading ? (
+                    <div className="text-center py-12">
+                      <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent" />
+                      <p className="mt-4 text-white/70">Loading provider status...</p>
+                    </div>
+                  ) : providers && providers.length > 0 ? (
+                    <ProviderStatusGrid providers={providers} />
+                  ) : (
+                    <div className="text-center py-12 text-white/70">
+                      No provider data available
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </section>
 
           {/* Features Section */}

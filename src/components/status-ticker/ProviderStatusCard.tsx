@@ -88,12 +88,14 @@ export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider
   return (
     <Card className={`
       group relative overflow-hidden transition-all duration-500
-      bg-white/5 backdrop-blur-xl border-2 ${statusConfig.border}
-      hover:bg-white/10 hover:shadow-2xl ${statusConfig.glow}
+      bg-white/10 backdrop-blur-2xl border-2 ${statusConfig.border}
+      hover:bg-white/15 hover:shadow-2xl ${statusConfig.glow}
       hover:scale-[1.02] hover:-translate-y-1
+      shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]
+      ring-1 ring-white/10
     `}>
-      {/* Gradient Overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${statusConfig.gradient} opacity-50`} />
+        {/* Gradient Overlay */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${statusConfig.gradient} opacity-30`} />
       
       {/* Animated Border Gradient */}
       <div className={`
@@ -172,7 +174,7 @@ export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider
           </div>
         </div>
 
-        <p className="text-sm text-white/70 mb-4 line-clamp-2">
+        <p className="text-sm text-white/80 mb-4 line-clamp-2">
           {provider.description || 'No description available'}
         </p>
 
