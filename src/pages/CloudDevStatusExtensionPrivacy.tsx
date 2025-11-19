@@ -15,7 +15,7 @@ const CloudDevStatusExtensionPrivacy = () => {
       <div className="min-h-screen bg-background">
         <Navbar />
         
-        <main className="container mx-auto px-4 py-12 max-w-4xl">
+        <main className="container mx-auto px-4 pt-32 pb-12 max-w-4xl">
           <article className="prose prose-lg dark:prose-invert max-w-none">
             <h1 className="text-4xl font-bold mb-2">Privacy Policy — Cloud & Dev Provider Status (Chrome Extension)</h1>
             
