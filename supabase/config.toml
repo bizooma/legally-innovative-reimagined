@@ -103,3 +103,6 @@ verify_jwt = false
 [functions.fetch-all-provider-status]
 verify_jwt = false
 
+[functions.fetch-provider-incidents]
+verify_jwt = false
+
