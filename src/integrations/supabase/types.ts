@@ -606,36 +606,48 @@ export type Database = {
       }
       provider_status_configs: {
         Row: {
+          brand_color: string | null
+          category: string | null
           check_method: string
           created_at: string
+          description: string | null
           display_order: number
           icon_initials: string
           id: string
           is_active: boolean
+          logo_url: string | null
           name: string
           slug: string
           status_endpoint: string | null
           updated_at: string
         }
         Insert: {
+          brand_color?: string | null
+          category?: string | null
           check_method?: string
           created_at?: string
+          description?: string | null
           display_order?: number
           icon_initials: string
           id?: string
           is_active?: boolean
+          logo_url?: string | null
           name: string
           slug: string
           status_endpoint?: string | null
           updated_at?: string
         }
         Update: {
+          brand_color?: string | null
+          category?: string | null
           check_method?: string
           created_at?: string
+          description?: string | null
           display_order?: number
           icon_initials?: string
           id?: string
           is_active?: boolean
+          logo_url?: string | null
           name?: string
           slug?: string
           status_endpoint?: string | null

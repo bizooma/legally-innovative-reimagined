@@ -14,6 +14,10 @@ interface ProviderStatusRecord {
   summary: string;
   last_checked: string;
   display_order: number;
+  logo_url: string | null;
+  description: string | null;
+  category: string;
+  brand_color: string;
 }
 
 Deno.serve(async (req) => {
@@ -82,6 +86,10 @@ Deno.serve(async (req) => {
         summary: status.summary,
         last_checked: status.last_checked,
         display_order: provider.display_order,
+        logo_url: provider.logo_url,
+        description: provider.description,
+        category: provider.category || 'cloud',
+        brand_color: provider.brand_color || '#3B82F6',
       };
     });
 
