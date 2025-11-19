@@ -4,9 +4,10 @@ import Footer from "@/components/Footer";
 import { StatusTicker as StatusTickerWidget } from "@/components/status-ticker/StatusTicker";
 import { ProviderStatusGrid } from "@/components/status-ticker/ProviderStatusGrid";
 import { useProviderStatus } from "@/hooks/useProviderStatus";
-import { Code, Grid3x3, List } from "lucide-react";
+import { Code, Grid3x3, List, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const StatusTicker = () => {
   const [viewMode, setViewMode] = useState<'ticker' | 'grid'>('ticker');
@@ -43,6 +44,12 @@ const StatusTicker = () => {
                   Real-time status monitoring for 14+ major cloud and development platforms.
                   Keep your team informed about infrastructure health at a glance.
                 </p>
+                <Link to="/incident-history">
+                  <Button variant="outline" className="gap-2">
+                    <History className="w-4 h-4" />
+                    View Incident History
+                  </Button>
+                </Link>
               </div>
             </div>
           </section>
@@ -126,11 +133,11 @@ const StatusTicker = () => {
                   
                   <div className="text-center">
                     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                      <Code className="w-6 h-6 text-primary" />
+                      <History className="w-6 h-6 text-primary" />
                     </div>
-                    <h3 className="font-semibold mb-2">Easy to Embed</h3>
+                    <h3 className="font-semibold mb-2">Incident History</h3>
                     <p className="text-sm text-muted-foreground">
-                      Add to any website with a simple script tag
+                      Track outages and maintenance windows
                     </p>
                   </div>
                 </div>

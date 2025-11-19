@@ -18,6 +18,7 @@ import { Badge } from '@/components/ui/badge';
 import { CrmDashboard } from '@/components/crm/CrmDashboard';
 import { BudgetTrackingSection } from '@/components/budget/BudgetTrackingSection';
 import { ProviderStatusManager } from '@/components/admin/ProviderStatusManager';
+import { IncidentManager } from '@/components/admin/IncidentManager';
 
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
@@ -130,8 +131,9 @@ const AdminDashboard = () => {
 
             {/* Provider Status Management - Only show for admins */}
             {isAdmin && (
-              <div className="mb-8">
+              <div className="mb-8 space-y-6">
                 <ProviderStatusManager />
+                <IncidentManager />
               </div>
             )}
 
