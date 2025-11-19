@@ -10,7 +10,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const StatusTicker = () => {
-  const [viewMode, setViewMode] = useState<'ticker' | 'grid'>('ticker');
+  const [viewMode, setViewMode] = useState<'ticker' | 'grid'>('grid');
   const { data: providers, isLoading } = useProviderStatus();
   
   const embedCode = `<script
@@ -81,7 +81,7 @@ const StatusTicker = () => {
           </section>
 
           {/* Status Display */}
-          <section className="py-8">
+          <section className={`py-16 ${viewMode === 'grid' ? 'bg-black' : ''}`}>
             {viewMode === 'ticker' ? (
               <StatusTickerWidget />
             ) : (
@@ -89,12 +89,12 @@ const StatusTicker = () => {
                 {isLoading ? (
                   <div className="text-center py-12">
                     <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent" />
-                    <p className="mt-4 text-muted-foreground">Loading provider status...</p>
+                    <p className="mt-4 text-white/70">Loading provider status...</p>
                   </div>
                 ) : providers && providers.length > 0 ? (
                   <ProviderStatusGrid providers={providers} />
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
+                  <div className="text-center py-12 text-white/70">
                     No provider data available
                   </div>
                 )}

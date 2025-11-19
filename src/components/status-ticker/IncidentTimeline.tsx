@@ -32,35 +32,35 @@ export const IncidentTimeline: React.FC<IncidentTimelineProps> = ({
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case 'critical':
-        return 'bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20';
+        return 'bg-red-500/10 text-red-400 border-red-500/30';
       case 'major':
-        return 'bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20';
+        return 'bg-orange-500/10 text-orange-400 border-orange-500/30';
       default:
-        return 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20';
+        return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
     }
   };
 
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'maintenance':
-        return 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20';
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
       case 'outage':
-        return 'bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20';
+        return 'bg-red-500/10 text-red-400 border-red-500/30';
       default:
-        return 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20';
+        return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'resolved':
-        return 'bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20';
+        return 'bg-green-500/10 text-green-400 border-green-500/30';
       case 'monitoring':
-        return 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20';
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
       case 'identified':
-        return 'bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20';
+        return 'bg-orange-500/10 text-orange-400 border-orange-500/30';
       default:
-        return 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20';
+        return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
     }
   };
 

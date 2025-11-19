@@ -15,43 +15,52 @@ interface ProviderStatusCardProps {
 export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider }) => {
   const [showIncidents, setShowIncidents] = useState(false);
   const { data: incidents, isLoading: incidentsLoading } = useProviderIncidents(provider.id, 20);
+
   const getStatusConfig = () => {
     switch (provider.status) {
       case 'operational':
         return {
           icon: CheckCircle2,
-          color: 'text-green-500',
+          color: 'text-green-400',
           bg: 'bg-green-500/10',
-          border: 'border-green-500/20',
+          border: 'border-green-500/30',
           label: 'Operational',
-          ring: 'ring-green-500/20'
+          ring: 'ring-green-500/30',
+          glow: 'shadow-green-500/20',
+          gradient: 'from-green-500/20 via-green-500/10 to-transparent'
         };
       case 'degraded':
         return {
           icon: AlertTriangle,
-          color: 'text-yellow-500',
+          color: 'text-yellow-400',
           bg: 'bg-yellow-500/10',
-          border: 'border-yellow-500/20',
+          border: 'border-yellow-500/30',
           label: 'Degraded',
-          ring: 'ring-yellow-500/20'
+          ring: 'ring-yellow-500/30',
+          glow: 'shadow-yellow-500/20',
+          gradient: 'from-yellow-500/20 via-yellow-500/10 to-transparent'
         };
       case 'major_outage':
         return {
           icon: XCircle,
-          color: 'text-red-500',
+          color: 'text-red-400',
           bg: 'bg-red-500/10',
-          border: 'border-red-500/20',
+          border: 'border-red-500/30',
           label: 'Major Outage',
-          ring: 'ring-red-500/20'
+          ring: 'ring-red-500/30',
+          glow: 'shadow-red-500/20',
+          gradient: 'from-red-500/20 via-red-500/10 to-transparent'
         };
       default:
         return {
           icon: HelpCircle,
-          color: 'text-muted-foreground',
-          bg: 'bg-muted',
-          border: 'border-border',
+          color: 'text-gray-400',
+          bg: 'bg-gray-500/10',
+          border: 'border-gray-500/30',
           label: 'Unknown',
-          ring: 'ring-border'
+          ring: 'ring-gray-500/30',
+          glow: 'shadow-gray-500/20',
+          gradient: 'from-gray-500/20 via-gray-500/10 to-transparent'
         };
     }
   };
@@ -59,61 +68,95 @@ export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider
   const getCategoryConfig = () => {
     switch (provider.category) {
       case 'cloud':
-        return { label: 'Cloud', color: 'bg-blue-500/10 text-blue-700 dark:text-blue-400' };
+        return { label: 'Cloud', color: 'bg-blue-500/10 text-blue-400 border-blue-500/30' };
       case 'deployment':
-        return { label: 'Deployment', color: 'bg-purple-500/10 text-purple-700 dark:text-purple-400' };
+        return { label: 'Deployment', color: 'bg-purple-500/10 text-purple-400 border-purple-500/30' };
       case 'version_control':
-        return { label: 'Version Control', color: 'bg-orange-500/10 text-orange-700 dark:text-orange-400' };
+        return { label: 'Version Control', color: 'bg-orange-500/10 text-orange-400 border-orange-500/30' };
       default:
-        return { label: 'Other', color: 'bg-muted text-muted-foreground' };
+        return { label: 'Other', color: 'bg-gray-500/10 text-gray-400 border-gray-500/30' };
     }
   };
 
   const statusConfig = getStatusConfig();
   const categoryConfig = getCategoryConfig();
   const StatusIcon = statusConfig.icon;
+  const isNonOperational = provider.status !== 'operational';
 
   const logoUrl = provider.logo_url || `/provider-logos/${provider.slug}.svg`;
 
   return (
-    <Card className={`group hover:shadow-lg transition-all duration-300 border-2 ${statusConfig.border} relative overflow-hidden`}>
-      {/* Animated status ring */}
-      <div 
-        className={`absolute -inset-0.5 ${statusConfig.bg} rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm ${statusConfig.ring} ring-2`}
-        aria-hidden="true"
-      />
+    <Card className={`
+      group relative overflow-hidden transition-all duration-500
+      bg-white/5 backdrop-blur-xl border-2 ${statusConfig.border}
+      hover:bg-white/10 hover:shadow-2xl ${statusConfig.glow}
+      hover:scale-[1.02] hover:-translate-y-1
+    `}>
+      {/* Gradient Overlay */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${statusConfig.gradient} opacity-50`} />
       
-      <CardContent className="relative p-6">
+      {/* Animated Border Gradient */}
+      <div className={`
+        absolute -inset-[2px] bg-gradient-to-br ${statusConfig.gradient} rounded-lg
+        opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10
+      `} />
+      
+      <CardContent className="relative p-6 z-10">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
-            {/* Provider Logo with brand color accent */}
-            <div 
-              className="w-12 h-12 rounded-lg flex items-center justify-center bg-background border-2 shadow-sm"
-              style={{ borderColor: provider.brand_color + '40' }}
-            >
-              <img 
-                src={logoUrl} 
-                alt={`${provider.name} logo`}
-                className="w-8 h-8 object-contain"
-                onError={(e) => {
-                  // Fallback to initials if logo fails to load
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  const fallback = target.nextElementSibling as HTMLElement;
-                  if (fallback) fallback.style.display = 'flex';
-                }}
-              />
+            {/* Provider Logo with Status Pulse */}
+            <div className="relative">
               <div 
-                className="w-8 h-8 hidden items-center justify-center text-xs font-bold"
-                style={{ color: provider.brand_color }}
+                className={`
+                  w-14 h-14 rounded-xl flex items-center justify-center 
+                  bg-black/40 backdrop-blur-sm border-2 shadow-lg
+                  transition-all duration-300 group-hover:scale-110
+                  ${isNonOperational ? 'border-red-500/50' : 'border-white/20'}
+                `}
+                style={{ 
+                  borderColor: isNonOperational ? undefined : provider.brand_color + '40',
+                }}
               >
-                {provider.icon_initials}
+                {/* Animated Pulse Ring for Non-Operational */}
+                {isNonOperational && (
+                  <>
+                    <div className={`
+                      absolute inset-0 rounded-xl ${statusConfig.bg} 
+                      animate-ping opacity-75
+                    `} />
+                    <div className={`
+                      absolute inset-0 rounded-xl ${statusConfig.border} border-2
+                      animate-pulse
+                    `} />
+                  </>
+                )}
+                
+                <img 
+                  src={logoUrl} 
+                  alt={`${provider.name} logo`}
+                  className={`
+                    w-9 h-9 object-contain relative z-10
+                    ${isNonOperational ? 'animate-pulse' : ''}
+                  `}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const fallback = target.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
+                />
+                <div 
+                  className="w-9 h-9 hidden items-center justify-center text-xs font-bold relative z-10"
+                  style={{ color: provider.brand_color }}
+                >
+                  {provider.icon_initials}
+                </div>
               </div>
             </div>
             
             <div>
-              <h3 className="font-semibold text-lg">{provider.name}</h3>
-              <Badge variant="outline" className={`mt-1 ${categoryConfig.color} border-0`}>
+              <h3 className="font-bold text-lg text-white">{provider.name}</h3>
+              <Badge variant="outline" className={`mt-1 ${categoryConfig.color} border`}>
                 {categoryConfig.label}
               </Badge>
             </div>
@@ -121,22 +164,25 @@ export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider
 
           {/* Animated Status Indicator */}
           <div className="relative">
-            <div className={`absolute inset-0 ${statusConfig.bg} rounded-full animate-pulse`} />
+            <div className={`
+              absolute inset-0 ${statusConfig.bg} rounded-full 
+              ${isNonOperational ? 'animate-pulse' : ''}
+            `} />
             <StatusIcon className={`w-6 h-6 ${statusConfig.color} relative z-10`} />
           </div>
         </div>
 
-        <p className="text-sm text-muted-foreground mb-3">
+        <p className="text-sm text-white/70 mb-4 line-clamp-2">
           {provider.description || 'No description available'}
         </p>
 
-        <div className="flex items-center justify-between pt-3 border-t">
+        <div className="flex items-center justify-between pt-4 border-t border-white/10">
           <div className="flex items-center gap-2">
-            <span className={`text-sm font-medium ${statusConfig.color}`}>
+            <span className={`text-sm font-semibold ${statusConfig.color}`}>
               {statusConfig.label}
             </span>
             {incidents && incidents.length > 0 && (
-              <Badge variant="outline" className="text-xs">
+              <Badge variant="outline" className="text-xs border-white/20 text-white/60">
                 {incidents.filter(i => i.status !== 'resolved').length || incidents.length} incidents
               </Badge>
             )}
@@ -144,16 +190,20 @@ export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider
           
           <Dialog open={showIncidents} onOpenChange={setShowIncidents}>
             <DialogTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-8 gap-1.5">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="h-8 gap-1.5 text-white/70 hover:text-white hover:bg-white/10"
+              >
                 <History className="w-3.5 h-3.5" />
                 <span className="text-xs">History</span>
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-black/95 backdrop-blur-xl border-white/20">
               <DialogHeader>
-                <DialogTitle className="flex items-center gap-3">
+                <DialogTitle className="flex items-center gap-3 text-white">
                   <div 
-                    className="w-10 h-10 rounded-lg flex items-center justify-center bg-background border-2 shadow-sm"
+                    className="w-10 h-10 rounded-lg flex items-center justify-center bg-white/5 border-2 shadow-sm"
                     style={{ borderColor: provider.brand_color + '40' }}
                   >
                     <img 
@@ -164,7 +214,7 @@ export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider
                   </div>
                   <div>
                     <div className="font-bold text-lg">{provider.name}</div>
-                    <div className="text-sm font-normal text-muted-foreground">
+                    <div className="text-sm font-normal text-white/60">
                       Incident History
                     </div>
                   </div>
@@ -175,7 +225,7 @@ export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider
                 {incidentsLoading ? (
                   <div className="text-center py-8">
                     <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent" />
-                    <p className="mt-4 text-sm text-muted-foreground">Loading incident history...</p>
+                    <p className="mt-4 text-sm text-white/60">Loading incident history...</p>
                   </div>
                 ) : (
                   <IncidentTimeline incidents={incidents || []} />
