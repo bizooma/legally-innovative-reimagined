@@ -99,11 +99,11 @@ const Contact = () => {
                   <div>
                     <p className="font-medium text-gray-600">Email Us</p>
                     <a 
-                      href="mailto:joe@bizooma.com" 
+                      href="mailto:support@bizooma.com" 
                       onClick={() => trackEmailClick('Contact Section')}
                       className="text-legal-dark font-semibold hover:underline"
                     >
-                      joe@bizooma.com
+                      support@bizooma.com
                     </a>
                   </div>
                 </div>
