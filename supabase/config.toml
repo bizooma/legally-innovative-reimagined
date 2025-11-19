@@ -96,3 +96,10 @@ verify_jwt = false
 
 [functions.send-contact-email]
 verify_jwt = false
+
+[functions.send-status-alert]
+verify_jwt = false
+
+[functions.fetch-all-provider-status]
+verify_jwt = false
+
