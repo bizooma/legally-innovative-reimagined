@@ -49,6 +49,7 @@ import RouteToResultsNewsletter from "./pages/RouteToResultsNewsletter";
 import StatusTicker from "./pages/StatusTicker";
 import StatusTickerEmbed from "./pages/StatusTickerEmbed";
 import IncidentHistory from "./pages/IncidentHistory";
+import CloudDevStatusExtensionPrivacy from "./pages/CloudDevStatusExtensionPrivacy";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -157,6 +158,9 @@ const App = () => (
               <Route path="/status-ticker" element={<StatusTicker />} />
               <Route path="/embed/status-ticker" element={<StatusTickerEmbed />} />
               <Route path="/incident-history" element={<IncidentHistory />} />
+              
+              {/* Privacy Policy for Chrome Extension */}
+              <Route path="/privacy/cloud-dev-status-extension" element={<CloudDevStatusExtensionPrivacy />} />
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />
