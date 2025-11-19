@@ -48,6 +48,7 @@ import InstallPWA from "./pages/InstallPWA";
 import RouteToResultsNewsletter from "./pages/RouteToResultsNewsletter";
 import StatusTicker from "./pages/StatusTicker";
 import StatusTickerEmbed from "./pages/StatusTickerEmbed";
+import IncidentHistory from "./pages/IncidentHistory";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -155,6 +156,7 @@ const App = () => (
               {/* Status Ticker Routes */}
               <Route path="/status-ticker" element={<StatusTicker />} />
               <Route path="/embed/status-ticker" element={<StatusTickerEmbed />} />
+              <Route path="/incident-history" element={<IncidentHistory />} />
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />
