@@ -2,7 +2,9 @@ import React from 'react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Badge } from '@/components/ui/badge';
 import type { ProviderStatusRecord } from '@/types/providerStatus';
-import { CheckCircle2, AlertTriangle, XCircle, HelpCircle, Clock } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, XCircle, HelpCircle, Clock, History } from 'lucide-react';
+import { useProviderIncidents } from '@/hooks/useProviderIncidents';
+import { IncidentTimeline } from './IncidentTimeline';
 
 interface ProviderStatusChipProps {
   provider: ProviderStatusRecord;
@@ -42,6 +44,7 @@ const statusConfigMap = {
 export const ProviderStatusChip = ({ provider }: ProviderStatusChipProps) => {
   const statusConfig = statusConfigMap[provider.status as keyof typeof statusConfigMap] || statusConfigMap.unknown;
   const StatusIcon = statusConfig.icon;
+  const { data: incidents, isLoading: incidentsLoading } = useProviderIncidents(provider.id, 5);
   
   const getCategoryColor = () => {
     switch (provider.category) {
@@ -190,6 +193,29 @@ export const ProviderStatusChip = ({ provider }: ProviderStatusChipProps) => {
               <Clock className="w-3.5 h-3.5" />
               <span>Last updated: {formatLastChecked(provider.last_checked)}</span>
             </div>
+          </div>
+
+          {/* Recent Incidents */}
+          <div className="pt-3 border-t">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                <History className="w-3.5 h-3.5" />
+                Recent Incidents
+              </p>
+              {incidents && incidents.length > 0 && (
+                <Badge variant="outline" className="text-xs">
+                  {incidents.filter(i => i.status !== 'resolved').length || incidents.length}
+                </Badge>
+              )}
+            </div>
+            
+            {incidentsLoading ? (
+              <div className="text-center py-4">
+                <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-primary border-r-transparent" />
+              </div>
+            ) : (
+              <IncidentTimeline incidents={incidents || []} compact />
+            )}
           </div>
         </div>
       </HoverCardContent>

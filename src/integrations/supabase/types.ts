@@ -569,6 +569,65 @@ export type Database = {
           },
         ]
       }
+      provider_incidents: {
+        Row: {
+          affected_services: string[] | null
+          created_at: string
+          description: string | null
+          duration_minutes: number | null
+          id: string
+          incident_id: string
+          incident_type: string
+          provider_id: string
+          resolved_at: string | null
+          severity: string
+          started_at: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          affected_services?: string[] | null
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          incident_id: string
+          incident_type: string
+          provider_id: string
+          resolved_at?: string | null
+          severity: string
+          started_at: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          affected_services?: string[] | null
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          incident_id?: string
+          incident_type?: string
+          provider_id?: string
+          resolved_at?: string | null
+          severity?: string
+          started_at?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provider_incidents_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "provider_status_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       provider_status_cache: {
         Row: {
           created_at: string

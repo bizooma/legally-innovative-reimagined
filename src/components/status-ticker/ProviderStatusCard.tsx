@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import type { ProviderStatusRecord } from '@/types/providerStatus';
-import { CheckCircle2, AlertTriangle, XCircle, HelpCircle } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, XCircle, HelpCircle, History } from 'lucide-react';
+import { useProviderIncidents } from '@/hooks/useProviderIncidents';
+import { IncidentTimeline } from './IncidentTimeline';
 
 interface ProviderStatusCardProps {
   provider: ProviderStatusRecord;
 }
 
 export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider }) => {
+  const [showIncidents, setShowIncidents] = useState(false);
+  const { data: incidents, isLoading: incidentsLoading } = useProviderIncidents(provider.id, 20);
   const getStatusConfig = () => {
     switch (provider.status) {
       case 'operational':
@@ -125,12 +131,58 @@ export const ProviderStatusCard: React.FC<ProviderStatusCardProps> = ({ provider
         </p>
 
         <div className="flex items-center justify-between pt-3 border-t">
-          <span className={`text-sm font-medium ${statusConfig.color}`}>
-            {statusConfig.label}
-          </span>
-          <span className="text-xs text-muted-foreground">
-            {provider.summary}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className={`text-sm font-medium ${statusConfig.color}`}>
+              {statusConfig.label}
+            </span>
+            {incidents && incidents.length > 0 && (
+              <Badge variant="outline" className="text-xs">
+                {incidents.filter(i => i.status !== 'resolved').length || incidents.length} incidents
+              </Badge>
+            )}
+          </div>
+          
+          <Dialog open={showIncidents} onOpenChange={setShowIncidents}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-8 gap-1.5">
+                <History className="w-3.5 h-3.5" />
+                <span className="text-xs">History</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-3">
+                  <div 
+                    className="w-10 h-10 rounded-lg flex items-center justify-center bg-background border-2 shadow-sm"
+                    style={{ borderColor: provider.brand_color + '40' }}
+                  >
+                    <img 
+                      src={logoUrl} 
+                      alt={`${provider.name} logo`}
+                      className="w-6 h-6 object-contain"
+                    />
+                  </div>
+                  <div>
+                    <div className="font-bold text-lg">{provider.name}</div>
+                    <div className="text-sm font-normal text-muted-foreground">
+                      Incident History
+                    </div>
+                  </div>
+                </DialogTitle>
+              </DialogHeader>
+              
+              <div className="mt-4">
+                {incidentsLoading ? (
+                  <div className="text-center py-8">
+                    <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent" />
+                    <p className="mt-4 text-sm text-muted-foreground">Loading incident history...</p>
+                  </div>
+                ) : (
+                  <IncidentTimeline incidents={incidents || []} />
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </CardContent>
     </Card>
