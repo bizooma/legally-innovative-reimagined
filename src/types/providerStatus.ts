@@ -29,6 +29,10 @@ export interface ProviderStatusRecord {
   summary: string;
   last_checked: string;
   display_order: number;
+  logo_url: string | null;
+  description: string | null;
+  category: "cloud" | "deployment" | "version_control";
+  brand_color: string;
 }
 
 export interface ProviderConfig {
@@ -42,6 +46,10 @@ export interface ProviderConfig {
   display_order: number;
   created_at: string;
   updated_at: string;
+  logo_url: string | null;
+  description: string | null;
+  category: "cloud" | "deployment" | "version_control";
+  brand_color: string;
 }
 
 export interface ProviderStatusCache {

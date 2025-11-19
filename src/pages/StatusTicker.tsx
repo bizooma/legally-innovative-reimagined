@@ -2,9 +2,16 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { StatusTicker as StatusTickerWidget } from "@/components/status-ticker/StatusTicker";
-import { Code } from "lucide-react";
+import { ProviderStatusGrid } from "@/components/status-ticker/ProviderStatusGrid";
+import { useProviderStatus } from "@/hooks/useProviderStatus";
+import { Code, Grid3x3, List } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const StatusTicker = () => {
+  const [viewMode, setViewMode] = useState<'ticker' | 'grid'>('ticker');
+  const { data: providers, isLoading } = useProviderStatus();
+  
   const embedCode = `<script
   src="${window.location.origin}/embed.js"
   data-theme="dark"
@@ -40,9 +47,52 @@ const StatusTicker = () => {
             </div>
           </section>
 
-          {/* Status Ticker Widget */}
+          {/* View Mode Toggle */}
+          <section className="py-4 border-b bg-muted/30">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center justify-center gap-2">
+                <Button
+                  variant={viewMode === 'ticker' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setViewMode('ticker')}
+                  className="gap-2"
+                >
+                  <List className="w-4 h-4" />
+                  Ticker View
+                </Button>
+                <Button
+                  variant={viewMode === 'grid' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setViewMode('grid')}
+                  className="gap-2"
+                >
+                  <Grid3x3 className="w-4 h-4" />
+                  Grid View
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          {/* Status Display */}
           <section className="py-8">
-            <StatusTickerWidget />
+            {viewMode === 'ticker' ? (
+              <StatusTickerWidget />
+            ) : (
+              <div className="container mx-auto px-4">
+                {isLoading ? (
+                  <div className="text-center py-12">
+                    <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent" />
+                    <p className="mt-4 text-muted-foreground">Loading provider status...</p>
+                  </div>
+                ) : providers && providers.length > 0 ? (
+                  <ProviderStatusGrid providers={providers} />
+                ) : (
+                  <div className="text-center py-12 text-muted-foreground">
+                    No provider data available
+                  </div>
+                )}
+              </div>
+            )}
           </section>
 
           {/* Features Section */}
