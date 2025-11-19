@@ -49,7 +49,8 @@ export const newsletterTopics: NewsletterTopic[] = [
     date: "2025-11-18",
     topic: "Mobile Apps are a Powerful Marketing Channel",
     description: "Your app can become a powerful growth engine that keeps delivering, even when other channels slow down.",
-    isPublished: false,
+    link: "https://us14.campaign-archive.com/?u=621f128c71e19e8d9b92ff1e3&id=870c602e73",
+    isPublished: true,
   },
   {
     date: "2025-11-25",
