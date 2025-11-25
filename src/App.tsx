@@ -50,6 +50,7 @@ import StatusTicker from "./pages/StatusTicker";
 import StatusTickerEmbed from "./pages/StatusTickerEmbed";
 import IncidentHistory from "./pages/IncidentHistory";
 import CloudDevStatusExtensionPrivacy from "./pages/CloudDevStatusExtensionPrivacy";
+import AIMarketingLawFirms2025 from "./pages/AIMarketingLawFirms2025";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -161,6 +162,9 @@ const App = () => (
               
               {/* Privacy Policy for Chrome Extension */}
               <Route path="/privacy/cloud-dev-status-extension" element={<CloudDevStatusExtensionPrivacy />} />
+              
+              {/* Blog Posts */}
+              <Route path="/ai-marketing-law-firms-2025" element={<AIMarketingLawFirms2025 />} />
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />

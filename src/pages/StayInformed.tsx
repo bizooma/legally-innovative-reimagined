@@ -9,9 +9,21 @@ import voiceSeoHeroImage from "@/assets/voice-seo-hero.jpg";
 import appleMapsInterfaceImage from "@/assets/apple-maps-interface.jpg";
 import appleMapsLawFirmImage from "@/assets/apple-maps-law-firm.jpg";
 import openaiImage from "@/assets/openai-browser-legal-tech.jpg";
+import aiMarketingImage from "@/assets/ai-marketing-law-firms.jpg";
 
 const StayInformed = () => {
   const blogPosts = [
+    {
+      id: 8,
+      title: "How AI Is Redefining Marketing for Law Firms in 2025",
+      excerpt: "The firms that adopt AI now will dominate the next decade. Discover how artificial intelligence is revolutionizing client acquisition, personalization, content creation, and marketing operations.",
+      date: "2025-11-19",
+      readTime: "12 min read",
+      author: "Bizooma Team",
+      category: "AI Technology",
+      image: aiMarketingImage,
+      link: "/ai-marketing-law-firms-2025"
+    },
     {
       id: 7,
       title: "Why Mobile Apps Remain a Powerful Marketing Tool—Even When Other Channels Slow Down",
