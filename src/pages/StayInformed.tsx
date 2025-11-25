@@ -17,7 +17,7 @@ const StayInformed = () => {
       id: 8,
       title: "How AI Is Redefining Marketing for Law Firms in 2025",
       excerpt: "The firms that adopt AI now will dominate the next decade. Discover how artificial intelligence is revolutionizing client acquisition, personalization, content creation, and marketing operations.",
-      date: "2025-11-19",
+      date: "2025-11-25",
       readTime: "12 min read",
       author: "Bizooma Team",
       category: "AI Technology",
