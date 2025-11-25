@@ -25,7 +25,7 @@ const AIMarketingLawFirms2025 = () => {
     <ArticleLayout
       title="How AI Is Redefining Marketing for Law Firms in 2025"
       excerpt="The firms that adopt it now will dominate the next decade."
-      date="November 19, 2025"
+      date="November 25, 2025"
       readTime="12 min read"
       author="Bizooma Team"
       category="AI & Marketing"
