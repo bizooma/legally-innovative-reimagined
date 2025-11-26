@@ -13,6 +13,7 @@ import { VoiceSeoResults } from "./VoiceSeoResults";
 import { GbpResults } from "./GbpResults";
 import { AuditScoreCard } from "./AuditScoreCard";
 import { PreAuditQuestionnaire } from "./PreAuditQuestionnaire";
+import { AuditProgressIndicator } from "./AuditProgressIndicator";
 
 interface AuditDashboardProps {
   accessCode: string;
@@ -92,6 +93,13 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
 
   const overallScore = calculateOverallScore();
   const hasResults = auditResults && auditResults.length > 0;
+
+  // Determine current progress step
+  const getCurrentStep = (): 1 | 2 | 3 => {
+    if (hasResults) return 3;
+    if (accessCodeData.questionnaire_completed) return 2;
+    return 1;
+  };
 
   const handleQuestionnaireComplete = () => {
     // Invalidate and refetch the access code data
@@ -184,6 +192,8 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
           </Button>
         </div>
       </div>
+
+      <AuditProgressIndicator currentStep={getCurrentStep()} isRunning={isRunningAudit} />
 
       {hasResults ? (
         <>
