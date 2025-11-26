@@ -109,3 +109,6 @@ verify_jwt = false
 [functions.api-provider-status]
 verify_jwt = false
 
+[functions.run-seo-audit]
+verify_jwt = false
+
