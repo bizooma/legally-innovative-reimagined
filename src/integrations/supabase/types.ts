@@ -16,6 +16,8 @@ export type Database = {
     Tables: {
       audit_access_codes: {
         Row: {
+          business_model: string | null
+          business_reach: string | null
           client_name: string
           code: string
           created_at: string
@@ -23,11 +25,17 @@ export type Database = {
           expires_at: string | null
           gbp_url: string | null
           id: string
+          industry: string | null
           is_active: boolean
+          primary_goals: string[] | null
+          questionnaire_completed: boolean | null
+          target_audience: string | null
           updated_at: string
           website_url: string
         }
         Insert: {
+          business_model?: string | null
+          business_reach?: string | null
           client_name: string
           code: string
           created_at?: string
@@ -35,11 +43,17 @@ export type Database = {
           expires_at?: string | null
           gbp_url?: string | null
           id?: string
+          industry?: string | null
           is_active?: boolean
+          primary_goals?: string[] | null
+          questionnaire_completed?: boolean | null
+          target_audience?: string | null
           updated_at?: string
           website_url: string
         }
         Update: {
+          business_model?: string | null
+          business_reach?: string | null
           client_name?: string
           code?: string
           created_at?: string
@@ -47,7 +61,11 @@ export type Database = {
           expires_at?: string | null
           gbp_url?: string | null
           id?: string
+          industry?: string | null
           is_active?: boolean
+          primary_goals?: string[] | null
+          questionnaire_completed?: boolean | null
+          target_audience?: string | null
           updated_at?: string
           website_url?: string
         }
