@@ -14,6 +14,95 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_access_codes: {
+        Row: {
+          client_name: string
+          code: string
+          created_at: string
+          created_by: string
+          expires_at: string | null
+          gbp_url: string | null
+          id: string
+          is_active: boolean
+          updated_at: string
+          website_url: string
+        }
+        Insert: {
+          client_name: string
+          code: string
+          created_at?: string
+          created_by: string
+          expires_at?: string | null
+          gbp_url?: string | null
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          website_url: string
+        }
+        Update: {
+          client_name?: string
+          code?: string
+          created_at?: string
+          created_by?: string
+          expires_at?: string | null
+          gbp_url?: string | null
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          website_url?: string
+        }
+        Relationships: []
+      }
+      audit_results: {
+        Row: {
+          access_code_id: string
+          audit_type: string
+          category: string
+          created_at: string
+          details: Json | null
+          id: string
+          item_name: string
+          recommendations: string | null
+          score: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          access_code_id: string
+          audit_type: string
+          category: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          item_name: string
+          recommendations?: string | null
+          score: number
+          status: string
+          updated_at?: string
+        }
+        Update: {
+          access_code_id?: string
+          audit_type?: string
+          category?: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          item_name?: string
+          recommendations?: string | null
+          score?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_results_access_code_id_fkey"
+            columns: ["access_code_id"]
+            isOneToOne: false
+            referencedRelation: "audit_access_codes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       budget_expenses: {
         Row: {
           amount: number

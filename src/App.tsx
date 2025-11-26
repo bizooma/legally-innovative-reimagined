@@ -51,6 +51,7 @@ import StatusTickerEmbed from "./pages/StatusTickerEmbed";
 import IncidentHistory from "./pages/IncidentHistory";
 import CloudDevStatusExtensionPrivacy from "./pages/CloudDevStatusExtensionPrivacy";
 import AIMarketingLawFirms2025 from "./pages/AIMarketingLawFirms2025";
+import SeoAuditPage from "./pages/SeoAuditPage";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -165,6 +166,9 @@ const App = () => (
               
               {/* Blog Posts */}
               <Route path="/ai-marketing-law-firms-2025" element={<AIMarketingLawFirms2025 />} />
+              
+              {/* SEO Audit Tool */}
+              <Route path="/seo-audit" element={<SeoAuditPage />} />
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />
