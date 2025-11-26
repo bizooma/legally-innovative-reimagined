@@ -54,6 +54,22 @@ serve(async (req) => {
 
     console.log('Starting audit for:', accessCode.website_url);
 
+    // Build business context string for AI prompts
+    const businessContext = `
+Business Context:
+- Reach: ${accessCode.business_reach || 'not specified'}
+- Model: ${accessCode.business_model || 'not specified'}
+- Industry: ${accessCode.industry || 'not specified'}
+- Primary Goals: ${accessCode.primary_goals?.join(', ') || 'not specified'}
+- Target Audience: ${accessCode.target_audience || 'not specified'}
+
+IMPORTANT: Only provide recommendations relevant to this business type. 
+${accessCode.business_reach === 'national' || accessCode.business_reach === 'international' 
+  ? 'This is a NATIONAL/INTERNATIONAL business - DO NOT recommend local keywords or location-specific strategies.' 
+  : accessCode.business_reach === 'local' 
+  ? 'This is a LOCAL business - focus on location-specific SEO strategies.' 
+  : ''}`;
+
     // Fetch website HTML
     let websiteHtml = '';
     let websiteError = null;
@@ -77,15 +93,15 @@ serve(async (req) => {
     const auditResults: AuditResult[] = [];
 
     // Generate Local SEO audit results
-    const localSeoResults = await analyzeLocalSeo(openaiKey!, accessCode, seoFactors, websiteError);
+    const localSeoResults = await analyzeLocalSeo(openaiKey!, accessCode, seoFactors, websiteError, businessContext);
     auditResults.push(...localSeoResults);
 
     // Generate AEO audit results
-    const aeoResults = await analyzeAeo(openaiKey!, accessCode, seoFactors, websiteError);
+    const aeoResults = await analyzeAeo(openaiKey!, accessCode, seoFactors, websiteError, businessContext);
     auditResults.push(...aeoResults);
 
     // Generate Voice SEO audit results
-    const voiceSeoResults = await analyzeVoiceSeo(openaiKey!, accessCode, seoFactors, websiteError);
+    const voiceSeoResults = await analyzeVoiceSeo(openaiKey!, accessCode, seoFactors, websiteError, businessContext);
     auditResults.push(...voiceSeoResults);
 
     // Generate GBP audit results if GBP URL is provided
@@ -159,8 +175,10 @@ function parseHtmlForSeo(html: string) {
   };
 }
 
-async function analyzeLocalSeo(openaiKey: string, accessCode: any, seoFactors: any, websiteError: string | null): Promise<AuditResult[]> {
-  const prompt = `Analyze this website for Local SEO optimization:
+async function analyzeLocalSeo(openaiKey: string, accessCode: any, seoFactors: any, websiteError: string | null, businessContext: string): Promise<AuditResult[]> {
+  const prompt = `${businessContext}
+
+Analyze this website for Local SEO optimization:
 Website: ${accessCode.website_url}
 Client: ${accessCode.client_name}
 
@@ -188,8 +206,10 @@ Format as JSON array.`;
   return results;
 }
 
-async function analyzeAeo(openaiKey: string, accessCode: any, seoFactors: any, websiteError: string | null): Promise<AuditResult[]> {
-  const prompt = `Analyze this website for AEO (Answer Engine Optimization):
+async function analyzeAeo(openaiKey: string, accessCode: any, seoFactors: any, websiteError: string | null, businessContext: string): Promise<AuditResult[]> {
+  const prompt = `${businessContext}
+
+Analyze this website for AEO (Answer Engine Optimization):
 Website: ${accessCode.website_url}
 Client: ${accessCode.client_name}
 
@@ -221,8 +241,10 @@ Format as JSON array.`;
   return results;
 }
 
-async function analyzeVoiceSeo(openaiKey: string, accessCode: any, seoFactors: any, websiteError: string | null): Promise<AuditResult[]> {
-  const prompt = `Analyze this website for Voice SEO optimization:
+async function analyzeVoiceSeo(openaiKey: string, accessCode: any, seoFactors: any, websiteError: string | null, businessContext: string): Promise<AuditResult[]> {
+  const prompt = `${businessContext}
+
+Analyze this website for Voice SEO optimization:
 Website: ${accessCode.website_url}
 Client: ${accessCode.client_name}
 

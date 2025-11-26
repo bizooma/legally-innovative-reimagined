@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +12,7 @@ import { AeoResults } from "./AeoResults";
 import { VoiceSeoResults } from "./VoiceSeoResults";
 import { GbpResults } from "./GbpResults";
 import { AuditScoreCard } from "./AuditScoreCard";
+import { PreAuditQuestionnaire } from "./PreAuditQuestionnaire";
 
 interface AuditDashboardProps {
   accessCode: string;
@@ -21,6 +22,7 @@ interface AuditDashboardProps {
 export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) => {
   const [isRunningAudit, setIsRunningAudit] = useState(false);
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const { data: accessCodeData, isLoading: isLoadingCode } = useQuery({
     queryKey: ["audit-access-code", accessCode],
@@ -90,6 +92,11 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
 
   const overallScore = calculateOverallScore();
   const hasResults = auditResults && auditResults.length > 0;
+
+  const handleQuestionnaireComplete = () => {
+    // Invalidate and refetch the access code data
+    queryClient.invalidateQueries({ queryKey: ["audit-access-code", accessCode] });
+  };
 
   const handleRunAudit = async () => {
     setIsRunningAudit(true);
@@ -207,6 +214,11 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
             </TabsContent>
           </Tabs>
         </>
+      ) : !accessCodeData.questionnaire_completed ? (
+        <PreAuditQuestionnaire 
+          accessCodeId={accessCodeData.id} 
+          onComplete={handleQuestionnaireComplete}
+        />
       ) : (
         <Card>
           <CardHeader>
