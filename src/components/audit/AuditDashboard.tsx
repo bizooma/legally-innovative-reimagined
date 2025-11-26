@@ -93,20 +93,28 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
   const handleRunAudit = async () => {
     setIsRunningAudit(true);
     try {
-      // TODO: Call edge function to run audit
       toast({
         title: "Audit Starting",
         description: "The comprehensive SEO audit is now running. This may take a few minutes.",
       });
-      
-      // Placeholder - will implement edge function call here
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast({
-        title: "Coming Soon",
-        description: "The audit engine is still being developed. Results will appear here once complete.",
+
+      const { data, error } = await supabase.functions.invoke('run-seo-audit', {
+        body: { access_code_id: accessCodeData.id },
       });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Audit Complete",
+        description: `Successfully analyzed ${data.results_count} audit items. Refresh to see results.`,
+      });
+
+      // Refresh the audit results
+      window.location.reload();
     } catch (error) {
+      console.error('Audit error:', error);
       toast({
         title: "Error",
         description: "Failed to start the audit. Please try again.",
