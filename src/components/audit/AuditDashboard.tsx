@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogOut, FileDown } from "lucide-react";
+import { LogOut, FileDown, PlayCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { LocalSeoResults } from "./LocalSeoResults";
 import { AeoResults } from "./AeoResults";
 import { VoiceSeoResults } from "./VoiceSeoResults";
@@ -16,6 +18,9 @@ interface AuditDashboardProps {
 }
 
 export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) => {
+  const [isRunningAudit, setIsRunningAudit] = useState(false);
+  const { toast } = useToast();
+
   const { data: accessCodeData, isLoading: isLoadingCode } = useQuery({
     queryKey: ["audit-access-code", accessCode],
     queryFn: async () => {
@@ -85,6 +90,33 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
   const overallScore = calculateOverallScore();
   const hasResults = auditResults && auditResults.length > 0;
 
+  const handleRunAudit = async () => {
+    setIsRunningAudit(true);
+    try {
+      // TODO: Call edge function to run audit
+      toast({
+        title: "Audit Starting",
+        description: "The comprehensive SEO audit is now running. This may take a few minutes.",
+      });
+      
+      // Placeholder - will implement edge function call here
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      toast({
+        title: "Coming Soon",
+        description: "The audit engine is still being developed. Results will appear here once complete.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to start the audit. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsRunningAudit(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-start">
@@ -96,6 +128,10 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
           )}
         </div>
         <div className="flex gap-2">
+          <Button onClick={handleRunAudit} disabled={isRunningAudit} size="sm">
+            <PlayCircle className="w-4 h-4 mr-2" />
+            {isRunningAudit ? "Running..." : hasResults ? "Re-run Audit" : "Run Audit"}
+          </Button>
           <Button variant="outline" size="sm">
             <FileDown className="w-4 h-4 mr-2" />
             Download PDF
@@ -139,11 +175,30 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle>No Audit Results Yet</CardTitle>
+            <CardTitle>Ready to Audit</CardTitle>
             <CardDescription>
-              Audit results will appear here once the analysis is complete. Please check back soon.
+              Click the button below to start the comprehensive SEO, AEO, and Voice SEO audit for this website.
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="text-sm space-y-1">
+                <p><strong>Website:</strong> {accessCodeData.website_url}</p>
+                {accessCodeData.gbp_url && (
+                  <p><strong>Google Business Profile:</strong> {accessCodeData.gbp_url}</p>
+                )}
+              </div>
+              <Button 
+                onClick={handleRunAudit} 
+                disabled={isRunningAudit} 
+                size="lg" 
+                className="w-full"
+              >
+                <PlayCircle className="w-5 h-5 mr-2" />
+                {isRunningAudit ? "Running Audit..." : "Start Audit"}
+              </Button>
+            </div>
+          </CardContent>
         </Card>
       )}
     </div>
