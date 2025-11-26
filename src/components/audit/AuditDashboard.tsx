@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogOut, FileDown, PlayCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { generateAuditPDF } from "@/utils/pdfGenerator";
 import { LocalSeoResults } from "./LocalSeoResults";
 import { AeoResults } from "./AeoResults";
 import { VoiceSeoResults } from "./VoiceSeoResults";
@@ -125,6 +126,32 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
     }
   };
 
+  const handleDownloadPDF = () => {
+    if (!auditResults || auditResults.length === 0) {
+      toast({
+        title: "No Results",
+        description: "Please run an audit first before downloading the report.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      generateAuditPDF(auditResults, accessCodeData, overallScore);
+      toast({
+        title: "PDF Downloaded",
+        description: "Your audit report has been downloaded successfully.",
+      });
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to generate PDF. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-start">
@@ -140,7 +167,7 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
             <PlayCircle className="w-4 h-4 mr-2" />
             {isRunningAudit ? "Running..." : hasResults ? "Re-run Audit" : "Run Audit"}
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={handleDownloadPDF} disabled={!hasResults}>
             <FileDown className="w-4 h-4 mr-2" />
             Download PDF
           </Button>
