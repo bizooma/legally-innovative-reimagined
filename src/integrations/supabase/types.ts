@@ -80,6 +80,7 @@ export type Database = {
           details: Json | null
           id: string
           item_name: string
+          positive_feedback: string | null
           recommendations: string | null
           score: number
           status: string
@@ -93,6 +94,7 @@ export type Database = {
           details?: Json | null
           id?: string
           item_name: string
+          positive_feedback?: string | null
           recommendations?: string | null
           score: number
           status: string
@@ -106,6 +108,7 @@ export type Database = {
           details?: Json | null
           id?: string
           item_name?: string
+          positive_feedback?: string | null
           recommendations?: string | null
           score?: number
           status?: string

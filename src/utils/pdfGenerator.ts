@@ -9,6 +9,7 @@ interface AuditResult {
   score: number;
   status: string;
   recommendations: string;
+  positive_feedback?: string | null;
   details: any;
 }
 
@@ -232,13 +233,23 @@ export const generateAuditPDF = (
       // Items table
       autoTable(doc, {
         startY: yPos,
-        head: [['Item', 'Score', 'Status', 'Recommendations']],
-        body: categoryResults.map(result => [
-          result.item_name,
-          result.score.toString(),
-          result.status.replace('_', ' ').toUpperCase(),
-          result.recommendations.substring(0, 150) + (result.recommendations.length > 150 ? '...' : ''),
-        ]),
+        head: [['Item', 'Score', 'Status', 'Feedback']],
+        body: categoryResults.map(result => {
+          let feedback = '';
+          if (result.positive_feedback && result.score >= 70) {
+            feedback = `✓ ${result.positive_feedback}`;
+          }
+          if (result.recommendations) {
+            if (feedback) feedback += '\n\n';
+            feedback += `→ ${result.recommendations}`;
+          }
+          return [
+            result.item_name,
+            result.score.toString(),
+            result.status.replace('_', ' ').toUpperCase(),
+            feedback.substring(0, 200) + (feedback.length > 200 ? '...' : ''),
+          ];
+        }),
         theme: 'striped',
         headStyles: { fillColor: [79, 70, 229], textColor: 255 },
         styles: { fontSize: 9, cellPadding: 4 },
