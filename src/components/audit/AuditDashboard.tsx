@@ -15,6 +15,7 @@ import { AuditScoreCard } from "./AuditScoreCard";
 import { PreAuditQuestionnaire } from "./PreAuditQuestionnaire";
 import { AuditProgressIndicator } from "./AuditProgressIndicator";
 import { AuditSummaryStats } from "./AuditSummaryStats";
+import { AuditScoreChart } from "./AuditScoreChart";
 
 interface AuditDashboardProps {
   accessCode: string;
@@ -201,6 +202,8 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
           <AuditScoreCard score={overallScore} grade={getGrade(overallScore)} />
           
           <AuditSummaryStats results={auditResults || []} />
+
+          <AuditScoreChart results={auditResults || []} />
 
           <Tabs defaultValue="local-seo" className="w-full">
             <TabsList className="grid w-full grid-cols-4">
