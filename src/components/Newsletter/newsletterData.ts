@@ -56,7 +56,8 @@ export const newsletterTopics: NewsletterTopic[] = [
     date: "2025-11-25",
     topic: "How AI Is Redefining Marketing",
     description: "How AI Is Redefining Marketing Departments—and Why Law Firms Must Adapt Now",
-    isPublished: false,
+    link: "https://us14.campaign-archive.com/?u=621f128c71e19e8d9b92ff1e3&id=0492e6b5c7",
+    isPublished: true,
   },
   
   // December 2025
