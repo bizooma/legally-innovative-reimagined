@@ -9,6 +9,7 @@ interface AuditResult {
   score: number;
   status: "pass" | "warning" | "fail";
   recommendations: string | null;
+  positive_feedback?: string | null;
   details: any;
 }
 
@@ -67,9 +68,14 @@ export const VoiceSeoResults = ({ results }: VoiceSeoResultsProps) => {
                             Score: {result.score}/100
                           </Badge>
                         </div>
+                        {result.positive_feedback && result.score >= 70 && (
+                          <p className="text-sm text-muted-foreground mt-2">
+                            <strong className="text-green-600">✓ What you're doing well:</strong> {result.positive_feedback}
+                          </p>
+                        )}
                         {result.recommendations && (
                           <p className="text-sm text-muted-foreground mt-2">
-                            <strong>Recommendation:</strong> {result.recommendations}
+                            <strong>→ Recommendation:</strong> {result.recommendations}
                           </p>
                         )}
                       </div>

@@ -14,6 +14,7 @@ interface AuditResult {
   score: number;
   status: string;
   recommendations: string;
+  positive_feedback?: string;
   details: Record<string, any>;
 }
 
@@ -197,9 +198,10 @@ Provide a detailed Local SEO audit with 5-8 specific findings. For each finding,
 2. Item name (specific element being evaluated)
 3. Score (0-100)
 4. Status ("excellent", "good", "needs_improvement", "critical")
-5. Detailed recommendations
+5. positive_feedback - What they're doing well (especially for scores 70+, be specific)
+6. recommendations - What could be improved (especially for scores below 80, be specific and actionable)
 
-Format as JSON array.`;
+Format as JSON array with fields: category, item_name, score, status, positive_feedback, recommendations`;
 
   const response = await callOpenAI(openaiKey, prompt);
   const results = parseAuditResponse(response, 'local_seo');
@@ -232,9 +234,10 @@ For each finding provide:
 2. Item name
 3. Score (0-100)
 4. Status ("excellent", "good", "needs_improvement", "critical")
-5. Detailed recommendations
+5. positive_feedback - What they're doing well (especially for scores 70+, be specific)
+6. recommendations - What could be improved (especially for scores below 80, be specific and actionable)
 
-Format as JSON array.`;
+Format as JSON array with fields: category, item_name, score, status, positive_feedback, recommendations`;
 
   const response = await callOpenAI(openaiKey, prompt);
   const results = parseAuditResponse(response, 'aeo');
@@ -266,9 +269,10 @@ For each finding provide:
 2. Item name
 3. Score (0-100)
 4. Status ("excellent", "good", "needs_improvement", "critical")
-5. Detailed recommendations
+5. positive_feedback - What they're doing well (especially for scores 70+, be specific)
+6. recommendations - What could be improved (especially for scores below 80, be specific and actionable)
 
-Format as JSON array.`;
+Format as JSON array with fields: category, item_name, score, status, positive_feedback, recommendations`;
 
   const response = await callOpenAI(openaiKey, prompt);
   const results = parseAuditResponse(response, 'voice_seo');
@@ -293,9 +297,10 @@ For each finding provide:
 2. Item name
 3. Score (0-100)
 4. Status ("excellent", "good", "needs_improvement", "critical")
-5. Detailed recommendations
+5. positive_feedback - What they're doing well (especially for scores 70+, be specific)
+6. recommendations - What could be improved (especially for scores below 80, be specific and actionable)
 
-Format as JSON array.`;
+Format as JSON array with fields: category, item_name, score, status, positive_feedback, recommendations`;
 
   const response = await callOpenAI(openaiKey, prompt);
   const results = parseAuditResponse(response, 'gbp');
@@ -314,7 +319,7 @@ async function callOpenAI(apiKey: string, prompt: string): Promise<string> {
       messages: [
         {
           role: 'system',
-          content: 'You are an expert SEO auditor. Provide detailed, actionable recommendations in valid JSON format. Each item in the array should have: category, item_name, score, status, and recommendations fields.',
+          content: 'You are an expert SEO auditor. Provide detailed, actionable feedback in valid JSON format. Each item in the array should have: category, item_name, score, status, positive_feedback (what they are doing well), and recommendations (what could be improved) fields.',
         },
         {
           role: 'user',
@@ -353,6 +358,7 @@ function parseAuditResponse(response: string, auditType: string): AuditResult[] 
       score: Math.min(100, Math.max(0, item.score || 50)),
       status: item.status || 'needs_improvement',
       recommendations: item.recommendations || item.recommendation || 'No specific recommendations provided.',
+      positive_feedback: item.positive_feedback || null,
       details: {
         raw_data: item,
       },
@@ -373,6 +379,7 @@ function generateFallbackResults(auditType: string): AuditResult[] {
         score: 50,
         status: 'needs_improvement',
         recommendations: 'The automated audit encountered an issue. Please review the website manually for local SEO factors.',
+        positive_feedback: null,
         details: {},
       },
     ],
@@ -384,6 +391,7 @@ function generateFallbackResults(auditType: string): AuditResult[] {
         score: 50,
         status: 'needs_improvement',
         recommendations: 'The automated audit encountered an issue. Please review the website manually for AEO factors.',
+        positive_feedback: null,
         details: {},
       },
     ],
@@ -395,6 +403,7 @@ function generateFallbackResults(auditType: string): AuditResult[] {
         score: 50,
         status: 'needs_improvement',
         recommendations: 'The automated audit encountered an issue. Please review the website manually for Voice SEO factors.',
+        positive_feedback: null,
         details: {},
       },
     ],
@@ -406,6 +415,7 @@ function generateFallbackResults(auditType: string): AuditResult[] {
         score: 50,
         status: 'needs_improvement',
         recommendations: 'The automated audit encountered an issue. Please review the GBP profile manually.',
+        positive_feedback: null,
         details: {},
       },
     ],
