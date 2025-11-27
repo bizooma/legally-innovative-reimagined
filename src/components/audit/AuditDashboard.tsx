@@ -16,6 +16,7 @@ import { PreAuditQuestionnaire } from "./PreAuditQuestionnaire";
 import { AuditProgressIndicator } from "./AuditProgressIndicator";
 import { AuditSummaryStats } from "./AuditSummaryStats";
 import { AuditScoreChart } from "./AuditScoreChart";
+import { AuditChatWindow } from "./AuditChatWindow";
 
 interface AuditDashboardProps {
   accessCode: string;
@@ -264,6 +265,9 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
           </CardContent>
         </Card>
       )}
+
+      {/* AI Chat Assistant - only show when results exist */}
+      {hasResults && <AuditChatWindow accessCodeId={accessCodeData.id} />}
     </div>
   );
 };
