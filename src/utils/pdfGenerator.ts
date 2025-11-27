@@ -217,20 +217,31 @@ export const generateAuditPDF = (
     yPos += 15;
     
     const tiers = [
-      { key: 'tier1', title: accessCodeData.action_plan.tier1?.title, color: [244, 67, 54] },
-      { key: 'tier2', title: accessCodeData.action_plan.tier2?.title, color: [255, 152, 0] },
-      { key: 'tier3', title: accessCodeData.action_plan.tier3?.title, color: [33, 150, 243] },
+      { key: 'tier1', title: accessCodeData.action_plan.tier1?.title, color: [244, 67, 54], label: 'HIGH PRIORITY' },
+      { key: 'tier2', title: accessCodeData.action_plan.tier2?.title, color: [255, 152, 0], label: 'MEDIUM PRIORITY' },
+      { key: 'tier3', title: accessCodeData.action_plan.tier3?.title, color: [33, 150, 243], label: 'LOW PRIORITY' },
     ];
     
-    tiers.forEach(({ key, title, color }) => {
+    tiers.forEach(({ key, title, color, label }) => {
       const tierData = accessCodeData.action_plan[key];
       if (!tierData) return;
       
-      // Tier header
+      // Tier header with color-coded priority badge
       doc.setFillColor(color[0], color[1], color[2]);
       doc.rect(20, yPos - 5, pageWidth - 40, 10, 'F');
+      
+      // Priority badge
+      doc.setFillColor(255, 255, 255);
+      doc.roundedRect(pageWidth - 65, yPos - 4, 40, 8, 2, 2, 'F');
+      doc.setTextColor(color[0], color[1], color[2]);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'bold');
+      doc.text(label, pageWidth - 45, yPos + 1, { align: 'center' });
+      
+      // Tier title
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
       doc.text(title || tierData.title, 25, yPos + 2);
       
       yPos += 12;
@@ -309,13 +320,14 @@ export const generateAuditPDF = (
     };
   }).filter(Boolean);
 
-  // Summary table
+  // Summary table with progress bars
   autoTable(doc, {
     startY: yPos,
-    head: [['Audit Category', 'Score', 'Total Items', 'Excellent', 'Good', 'Needs Work', 'Critical']],
+    head: [['Audit Category', 'Score', 'Progress', 'Total Items', 'Excellent', 'Good', 'Needs Work', 'Critical']],
     body: categoryData.map(cat => [
       cat!.name,
       cat!.score.toString(),
+      '', // Empty cell for progress bar
       cat!.total.toString(),
       cat!.excellent.toString(),
       cat!.good.toString(),
@@ -325,6 +337,34 @@ export const generateAuditPDF = (
     theme: 'grid',
     headStyles: { fillColor: [79, 70, 229], textColor: 255 },
     styles: { fontSize: 10, cellPadding: 5 },
+    columnStyles: {
+      2: { cellWidth: 30 }, // Progress bar column
+    },
+    didDrawCell: (data) => {
+      // Draw progress bars in the Progress column
+      if (data.column.index === 2 && data.section === 'body') {
+        const score = categoryData[data.row.index]!.score;
+        const cellX = data.cell.x;
+        const cellY = data.cell.y;
+        const cellWidth = data.cell.width;
+        const cellHeight = data.cell.height;
+        
+        // Progress bar background
+        doc.setFillColor(240, 240, 240);
+        doc.rect(cellX + 2, cellY + 3, cellWidth - 4, cellHeight - 6, 'F');
+        
+        // Progress bar fill (color based on score)
+        let color: number[];
+        if (score >= 90) color = STATUS_COLORS.excellent;
+        else if (score >= 70) color = STATUS_COLORS.good;
+        else if (score >= 50) color = STATUS_COLORS.needs_improvement;
+        else color = STATUS_COLORS.critical;
+        
+        doc.setFillColor(color[0], color[1], color[2]);
+        const barWidth = ((cellWidth - 4) * score) / 100;
+        doc.rect(cellX + 2, cellY + 3, barWidth, cellHeight - 6, 'F');
+      }
+    },
   });
 
   // ===== DETAILED RESULTS BY CATEGORY =====
