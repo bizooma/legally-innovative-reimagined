@@ -17,6 +17,9 @@ interface AccessCodeData {
   client_name: string;
   website_url: string;
   gbp_url?: string;
+  executive_summary_strengths?: string | null;
+  executive_summary_gaps?: string | null;
+  action_plan?: any;
 }
 
 const STATUS_COLORS = {
@@ -131,13 +134,153 @@ export const generateAuditPDF = (
   });
   doc.text(`Report Generated: ${reportDate}`, pageWidth / 2, yPos, { align: 'center' });
 
+  // ===== EXECUTIVE SUMMARY PAGE =====
+  if (accessCodeData.executive_summary_strengths || accessCodeData.executive_summary_gaps) {
+    doc.addPage();
+    yPos = 20;
+    
+    doc.setFontSize(18);
+    doc.setTextColor(33, 33, 33);
+    doc.text('Executive Summary', 20, yPos);
+    
+    yPos += 15;
+    
+    // What's Working section
+    if (accessCodeData.executive_summary_strengths) {
+      doc.setFontSize(14);
+      doc.setTextColor(76, 175, 80);
+      doc.text('✓ What\'s Working', 20, yPos);
+      yPos += 10;
+      
+      doc.setFontSize(10);
+      doc.setTextColor(33, 33, 33);
+      const strengths = accessCodeData.executive_summary_strengths
+        .split('\n')
+        .filter(s => s.trim().length > 0)
+        .map(s => s.replace(/^[•\-\*]\s*/, ''));
+      
+      strengths.forEach(strength => {
+        const lines = doc.splitTextToSize(strength, pageWidth - 50);
+        doc.text('• ' + lines[0], 25, yPos);
+        yPos += 6;
+        for (let i = 1; i < lines.length; i++) {
+          doc.text('  ' + lines[i], 25, yPos);
+          yPos += 6;
+        }
+        yPos += 2;
+      });
+      
+      yPos += 10;
+    }
+    
+    // What Needs Attention section
+    if (accessCodeData.executive_summary_gaps) {
+      doc.setFontSize(14);
+      doc.setTextColor(255, 152, 0);
+      doc.text('⚠ What Needs Attention', 20, yPos);
+      yPos += 10;
+      
+      doc.setFontSize(10);
+      doc.setTextColor(33, 33, 33);
+      const gaps = accessCodeData.executive_summary_gaps
+        .split('\n')
+        .filter(g => g.trim().length > 0)
+        .map(g => g.replace(/^[•\-\*]\s*/, ''));
+      
+      gaps.forEach(gap => {
+        const lines = doc.splitTextToSize(gap, pageWidth - 50);
+        doc.text('• ' + lines[0], 25, yPos);
+        yPos += 6;
+        for (let i = 1; i < lines.length; i++) {
+          doc.text('  ' + lines[i], 25, yPos);
+          yPos += 6;
+        }
+        yPos += 2;
+      });
+    }
+  }
+
+  // ===== ACTION PLAN PAGE =====
+  if (accessCodeData.action_plan) {
+    doc.addPage();
+    yPos = 20;
+    
+    doc.setFontSize(18);
+    doc.setTextColor(33, 33, 33);
+    doc.text('Prioritized Action Plan', 20, yPos);
+    
+    yPos += 10;
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text('Follow this roadmap to systematically improve your SEO performance', 20, yPos);
+    
+    yPos += 15;
+    
+    const tiers = [
+      { key: 'tier1', title: accessCodeData.action_plan.tier1?.title, color: [244, 67, 54] },
+      { key: 'tier2', title: accessCodeData.action_plan.tier2?.title, color: [255, 152, 0] },
+      { key: 'tier3', title: accessCodeData.action_plan.tier3?.title, color: [33, 150, 243] },
+    ];
+    
+    tiers.forEach(({ key, title, color }) => {
+      const tierData = accessCodeData.action_plan[key];
+      if (!tierData) return;
+      
+      // Tier header
+      doc.setFillColor(color[0], color[1], color[2]);
+      doc.rect(20, yPos - 5, pageWidth - 40, 10, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(12);
+      doc.text(title || tierData.title, 25, yPos + 2);
+      
+      yPos += 12;
+      
+      doc.setFontSize(9);
+      doc.setTextColor(100, 100, 100);
+      const descLines = doc.splitTextToSize(tierData.description, pageWidth - 50);
+      descLines.forEach((line: string) => {
+        doc.text(line, 25, yPos);
+        yPos += 5;
+      });
+      
+      yPos += 5;
+      
+      // Actions
+      tierData.actions?.forEach((action: any, index: number) => {
+        if (yPos > pageHeight - 40) {
+          doc.addPage();
+          yPos = 20;
+        }
+        
+        doc.setFontSize(10);
+        doc.setTextColor(33, 33, 33);
+        doc.text(`${index + 1}. ${action.title}`, 30, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setTextColor(60, 60, 60);
+        const actionLines = doc.splitTextToSize(action.description, pageWidth - 60);
+        actionLines.forEach((line: string) => {
+          doc.text(line, 35, yPos);
+          yPos += 5;
+        });
+        
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Impact: ${action.impact} | Effort: ${action.effort}`, 35, yPos);
+        yPos += 8;
+      });
+      
+      yPos += 5;
+    });
+  }
+
   // ===== SUMMARY PAGE =====
   doc.addPage();
   yPos = 20;
   
   doc.setFontSize(18);
   doc.setTextColor(33, 33, 33);
-  doc.text('Executive Summary', 20, yPos);
+  doc.text('Audit Scores by Category', 20, yPos);
   
   yPos += 15;
   

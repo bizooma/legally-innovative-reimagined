@@ -16,12 +16,15 @@ export type Database = {
     Tables: {
       audit_access_codes: {
         Row: {
+          action_plan: Json | null
           business_model: string | null
           business_reach: string | null
           client_name: string
           code: string
           created_at: string
           created_by: string
+          executive_summary_gaps: string | null
+          executive_summary_strengths: string | null
           expires_at: string | null
           gbp_url: string | null
           id: string
@@ -34,12 +37,15 @@ export type Database = {
           website_url: string
         }
         Insert: {
+          action_plan?: Json | null
           business_model?: string | null
           business_reach?: string | null
           client_name: string
           code: string
           created_at?: string
           created_by: string
+          executive_summary_gaps?: string | null
+          executive_summary_strengths?: string | null
           expires_at?: string | null
           gbp_url?: string | null
           id?: string
@@ -52,12 +58,15 @@ export type Database = {
           website_url: string
         }
         Update: {
+          action_plan?: Json | null
           business_model?: string | null
           business_reach?: string | null
           client_name?: string
           code?: string
           created_at?: string
           created_by?: string
+          executive_summary_gaps?: string | null
+          executive_summary_strengths?: string | null
           expires_at?: string | null
           gbp_url?: string | null
           id?: string

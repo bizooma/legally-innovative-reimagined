@@ -111,6 +111,10 @@ ${accessCode.business_reach === 'national' || accessCode.business_reach === 'int
       auditResults.push(...gbpResults);
     }
 
+    // Generate Executive Summary and Action Plan
+    const executiveSummary = await generateExecutiveSummary(openaiKey!, accessCode, auditResults, seoFactors, businessContext);
+    const actionPlan = await generateActionPlan(openaiKey!, accessCode, auditResults, seoFactors, businessContext);
+
     // Delete existing results for this access code
     await supabase
       .from('audit_results')
@@ -133,6 +137,20 @@ ${accessCode.business_reach === 'national' || accessCode.business_reach === 'int
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
+    }
+
+    // Update access code with executive summary and action plan
+    const { error: updateError } = await supabase
+      .from('audit_access_codes')
+      .update({
+        executive_summary_strengths: executiveSummary.strengths,
+        executive_summary_gaps: executiveSummary.gaps,
+        action_plan: actionPlan,
+      })
+      .eq('id', access_code_id);
+
+    if (updateError) {
+      console.error('Error updating executive summary:', updateError);
     }
 
     console.log('Audit completed successfully');
@@ -164,6 +182,44 @@ function parseHtmlForSeo(html: string) {
   
   const imgsWithoutAlt = imgMatches.filter(img => !img.includes('alt='));
   
+  // Enhanced parsing for deeper analysis
+  const bodyText = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const estimatedWordCount = bodyText.split(' ').length;
+  
+  // Check for phone number in header/footer
+  const phoneRegex = /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/;
+  const headerMatch = html.match(/<header[^>]*>([\s\S]*?)<\/header>/i);
+  const footerMatch = html.match(/<footer[^>]*>([\s\S]*?)<\/footer>/i);
+  const hasPhoneInHeader = headerMatch ? phoneRegex.test(headerMatch[1]) : false;
+  const hasPhoneInFooter = footerMatch ? phoneRegex.test(footerMatch[1]) : false;
+  
+  // Check for address visibility
+  const addressKeywords = ['address', 'location', 'street', 'city', 'zip', 'postal'];
+  const hasAddressVisible = addressKeywords.some(keyword => 
+    html.toLowerCase().includes(keyword) && 
+    (headerMatch?.[1].toLowerCase().includes(keyword) || footerMatch?.[1].toLowerCase().includes(keyword))
+  );
+  
+  // Check for content sections
+  const hasFaqSection = /faq|frequently.*asked.*questions/i.test(html);
+  const hasBlogLink = /blog|articles|news/i.test(html);
+  const hasTestimonialsSection = /testimonial|review|customer.*stor/i.test(html);
+  const hasReviewsWidget = /review.*widget|google.*review|yelp.*review/i.test(html);
+  
+  // Count service-related links
+  const navLinks = html.match(/<nav[^>]*>([\s\S]*?)<\/nav>/gi) || [];
+  const navText = navLinks.join(' ');
+  const serviceKeywords = ['service', 'repair', 'maintenance', 'installation', 'emergency'];
+  const servicePageCount = serviceKeywords.filter(keyword => 
+    new RegExp(keyword, 'i').test(navText)
+  ).length;
+  
+  // Location mentions
+  const locationKeywords = ['phoenix', 'arizona', 'az', 'scottsdale', 'tempe', 'mesa', 'chandler'];
+  const locationMentions = locationKeywords.filter(keyword => 
+    new RegExp('\\b' + keyword + '\\b', 'i').test(html)
+  ).length;
+  
   return {
     title: titleMatch ? titleMatch[1] : null,
     metaDescription: metaDescMatch ? metaDescMatch[1] : null,
@@ -173,6 +229,16 @@ function parseHtmlForSeo(html: string) {
     imgsWithoutAlt: imgsWithoutAlt.length,
     hasSchema: schemaMatches.length > 0,
     schemaCount: schemaMatches.length,
+    estimatedWordCount,
+    hasPhoneInHeader,
+    hasPhoneInFooter,
+    hasAddressVisible,
+    hasFaqSection,
+    hasBlogLink,
+    hasTestimonialsSection,
+    hasReviewsWidget,
+    servicePageCount,
+    locationMentions,
   };
 }
 
@@ -367,6 +433,167 @@ function parseAuditResponse(response: string, auditType: string): AuditResult[] 
     console.error('Error parsing audit response:', error);
     return generateFallbackResults(auditType);
   }
+}
+
+async function generateExecutiveSummary(
+  openaiKey: string, 
+  accessCode: any, 
+  auditResults: AuditResult[],
+  seoFactors: any,
+  businessContext: string
+): Promise<{ strengths: string; gaps: string }> {
+  const overallScore = Math.round(auditResults.reduce((sum, r) => sum + r.score, 0) / auditResults.length);
+  
+  const prompt = `${businessContext}
+
+Based on this comprehensive SEO audit, create an executive summary:
+
+Overall Score: ${overallScore}/100
+Website: ${accessCode.website_url}
+Total Audit Items: ${auditResults.length}
+
+Key Findings:
+${auditResults.slice(0, 10).map(r => `- ${r.item_name}: ${r.score}/100 (${r.status})`).join('\n')}
+
+SEO Technical Factors:
+- Content: ${seoFactors.estimatedWordCount} words
+- NAP Visibility: Phone in header: ${seoFactors.hasPhoneInHeader}, footer: ${seoFactors.hasPhoneInFooter}
+- FAQ Section: ${seoFactors.hasFaqSection}
+- Blog/Content: ${seoFactors.hasBlogLink}
+- Reviews/Testimonials: ${seoFactors.hasTestimonialsSection}
+
+Provide TWO sections in JSON format:
+1. "strengths" - 3-5 bullet points of what the website is doing well (be specific, mention actual elements found)
+2. "gaps" - 3-5 bullet points of critical areas needing attention (be specific about what's missing)
+
+Each bullet point should be 1-2 sentences maximum. Focus on strategic insights, not just listing scores.
+
+Format: { "strengths": "• Point 1\n• Point 2\n• Point 3", "gaps": "• Gap 1\n• Gap 2\n• Gap 3" }`;
+
+  try {
+    const response = await callOpenAI(openaiKey, prompt);
+    const jsonMatch = response.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      const parsed = JSON.parse(jsonMatch[0]);
+      return {
+        strengths: parsed.strengths || "• Website is live and accessible to search engines",
+        gaps: parsed.gaps || "• Limited content and optimization opportunities identified"
+      };
+    }
+  } catch (error) {
+    console.error('Error generating executive summary:', error);
+  }
+
+  return {
+    strengths: "• Website is live and accessible to search engines\n• Basic SEO structure is in place",
+    gaps: "• Several optimization opportunities identified\n• Content and technical improvements needed"
+  };
+}
+
+async function generateActionPlan(
+  openaiKey: string,
+  accessCode: any,
+  auditResults: AuditResult[],
+  seoFactors: any,
+  businessContext: string
+): Promise<any> {
+  const criticalItems = auditResults.filter(r => r.status === 'critical' || r.score < 60);
+  const improvementItems = auditResults.filter(r => r.status === 'needs_improvement' && r.score >= 60);
+  
+  const prompt = `${businessContext}
+
+Create a tiered action plan based on this SEO audit:
+
+Critical Issues (${criticalItems.length}):
+${criticalItems.slice(0, 5).map(r => `- ${r.item_name}: ${r.recommendations}`).join('\n')}
+
+Improvement Opportunities (${improvementItems.length}):
+${improvementItems.slice(0, 5).map(r => `- ${r.item_name}: ${r.recommendations}`).join('\n')}
+
+Technical Context:
+- Content depth: ${seoFactors.estimatedWordCount} words
+- Schema markup: ${seoFactors.hasSchema ? 'Present' : 'Missing'}
+- FAQ section: ${seoFactors.hasFaqSection ? 'Yes' : 'No'}
+- Blog/content hub: ${seoFactors.hasBlogLink ? 'Yes' : 'No'}
+
+Create a 3-tiered action plan in JSON format:
+
+{
+  "tier1": {
+    "title": "Foundation (Do First)",
+    "description": "Critical fixes that must be done immediately",
+    "actions": [
+      {
+        "title": "Action title",
+        "description": "What to do and why",
+        "impact": "High/Medium/Low",
+        "effort": "High/Medium/Low"
+      }
+    ]
+  },
+  "tier2": {
+    "title": "Growth (Do Next)",
+    "description": "Important improvements for competitive advantage",
+    "actions": [...]
+  },
+  "tier3": {
+    "title": "Advanced (Do Later)",
+    "description": "Nice-to-have optimizations",
+    "actions": [...]
+  }
+}
+
+Each tier should have 2-4 specific, actionable items. Be concrete and specific to this business.`;
+
+  try {
+    const response = await callOpenAI(openaiKey, prompt);
+    const jsonMatch = response.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+  } catch (error) {
+    console.error('Error generating action plan:', error);
+  }
+
+  // Fallback action plan
+  return {
+    tier1: {
+      title: "Foundation (Do First)",
+      description: "Critical fixes that must be done immediately",
+      actions: [
+        {
+          title: "Fix Critical SEO Issues",
+          description: "Address high-priority items identified in the audit",
+          impact: "High",
+          effort: "Medium"
+        }
+      ]
+    },
+    tier2: {
+      title: "Growth (Do Next)",
+      description: "Important improvements for competitive advantage",
+      actions: [
+        {
+          title: "Enhance Content Strategy",
+          description: "Develop comprehensive content covering services and FAQs",
+          impact: "High",
+          effort: "High"
+        }
+      ]
+    },
+    tier3: {
+      title: "Advanced (Do Later)",
+      description: "Nice-to-have optimizations",
+      actions: [
+        {
+          title: "Advanced Schema Implementation",
+          description: "Add rich snippets and advanced structured data",
+          impact: "Medium",
+          effort: "Medium"
+        }
+      ]
+    }
+  };
 }
 
 function generateFallbackResults(auditType: string): AuditResult[] {
