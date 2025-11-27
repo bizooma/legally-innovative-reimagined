@@ -17,6 +17,8 @@ import { AuditProgressIndicator } from "./AuditProgressIndicator";
 import { AuditSummaryStats } from "./AuditSummaryStats";
 import { AuditScoreChart } from "./AuditScoreChart";
 import { AuditChatWindow } from "./AuditChatWindow";
+import { AuditExecutiveSummary } from "./AuditExecutiveSummary";
+import { AuditActionPlan } from "./AuditActionPlan";
 
 interface AuditDashboardProps {
   accessCode: string;
@@ -201,6 +203,13 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
       {hasResults ? (
         <>
           <AuditScoreCard score={overallScore} grade={getGrade(overallScore)} />
+          
+          <AuditExecutiveSummary 
+            strengths={accessCodeData.executive_summary_strengths}
+            gaps={accessCodeData.executive_summary_gaps}
+          />
+
+          <AuditActionPlan actionPlan={accessCodeData.action_plan} />
           
           <AuditSummaryStats results={auditResults || []} />
 
