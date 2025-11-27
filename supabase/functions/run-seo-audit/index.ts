@@ -444,31 +444,68 @@ async function generateExecutiveSummary(
 ): Promise<{ strengths: string; gaps: string }> {
   const overallScore = Math.round(auditResults.reduce((sum, r) => sum + r.score, 0) / auditResults.length);
   
-  const prompt = `${businessContext}
+  // Group results by audit type for comprehensive coverage
+  const auditsByType: Record<string, AuditResult[]> = {};
+  auditResults.forEach(r => {
+    if (!auditsByType[r.audit_type]) auditsByType[r.audit_type] = [];
+    auditsByType[r.audit_type].push(r);
+  });
 
-Based on this comprehensive SEO audit, create an executive summary:
+  const typeScores = Object.entries(auditsByType).map(([type, results]) => {
+    const avgScore = Math.round(results.reduce((sum, r) => sum + r.score, 0) / results.length);
+    return `${type}: ${avgScore}/100 (${results.length} items)`;
+  }).join('\n');
 
-Overall Score: ${overallScore}/100
+  const prompt = `You are an expert SEO consultant creating an executive summary that must be comprehensive enough for clients to understand their COMPLETE audit by reading ONLY this section.
+
+${businessContext}
+
+AUDIT OVERVIEW:
 Website: ${accessCode.website_url}
-Total Audit Items: ${auditResults.length}
+Overall Score: ${overallScore}/100
+Total Items Audited: ${auditResults.length}
 
-Key Findings:
-${auditResults.slice(0, 10).map(r => `- ${r.item_name}: ${r.score}/100 (${r.status})`).join('\n')}
+SCORES BY AUDIT TYPE:
+${typeScores}
 
-SEO Technical Factors:
-- Content: ${seoFactors.estimatedWordCount} words
-- NAP Visibility: Phone in header: ${seoFactors.hasPhoneInHeader}, footer: ${seoFactors.hasPhoneInFooter}
-- FAQ Section: ${seoFactors.hasFaqSection}
-- Blog/Content: ${seoFactors.hasBlogLink}
-- Reviews/Testimonials: ${seoFactors.hasTestimonialsSection}
+DETAILED FINDINGS BY CATEGORY:
+${Object.entries(auditsByType).map(([type, results]) => `
+${type.toUpperCase()}:
+${results.slice(0, 5).map(r => `  - ${r.item_name}: ${r.score}/100 (${r.status})${r.positive_feedback ? ' - ' + r.positive_feedback.substring(0, 80) : ''}`).join('\n')}
+`).join('\n')}
 
-Provide TWO sections in JSON format:
-1. "strengths" - 3-5 bullet points of what the website is doing well (be specific, mention actual elements found)
-2. "gaps" - 3-5 bullet points of critical areas needing attention (be specific about what's missing)
+TECHNICAL SEO FACTORS ANALYZED:
+- Content Depth: ~${seoFactors.estimatedWordCount} words
+- Title Tag: ${seoFactors.title ? 'Present' : 'Missing'}
+- Meta Description: ${seoFactors.metaDescription ? 'Present (' + seoFactors.metaDescription.length + ' chars)' : 'Missing'}
+- H1 Headings: ${seoFactors.h1Count} found
+- Schema Markup: ${seoFactors.hasSchema ? 'Implemented' : 'Not Found'}
+- NAP Visibility: Phone in Header (${seoFactors.hasPhoneInHeader ? 'Yes' : 'No'}), Phone in Footer (${seoFactors.hasPhoneInFooter ? 'Yes' : 'No'}), Address Visible (${seoFactors.hasAddressVisible ? 'Yes' : 'No'})
+- FAQ Section: ${seoFactors.hasFaqSection ? 'Present' : 'Missing'}
+- Blog/Content Hub: ${seoFactors.hasBlogLink ? 'Active' : 'Not Found'}
+- Social Proof: Testimonials (${seoFactors.hasTestimonialsSection ? 'Yes' : 'No'}), Reviews Widget (${seoFactors.hasReviewsWidget ? 'Yes' : 'No'})
+- Service Pages: ${seoFactors.servicePageCount} identified
+- Location Mentions: ${seoFactors.locationMentions} found
 
-Each bullet point should be 1-2 sentences maximum. Focus on strategic insights, not just listing scores.
+CRITICAL INSTRUCTIONS:
+Create an executive summary that covers ALL FOUR audit areas: Local SEO, AEO (Answer Engine Optimization), Voice SEO, and Google Business Profile.
 
-Format: { "strengths": "• Point 1\n• Point 2\n• Point 3", "gaps": "• Gap 1\n• Gap 2\n• Gap 3" }`;
+Provide TWO sections:
+1. "strengths" - 6-8 bullet points highlighting what's working well across all four areas
+2. "gaps" - 6-8 bullet points identifying critical improvements needed across all four areas
+
+REQUIREMENTS FOR EACH BULLET POINT:
+- Be specific and include actual metrics/findings (not generic)
+- Cover at least 1-2 points from EACH of the four audit types
+- Make each point actionable and informative (2-3 sentences if needed)
+- Use consultant-level language with strategic insights
+- Include specific technical details where relevant
+
+EXAMPLE QUALITY:
+✓ Good: "Local SEO foundation is strong with consistent NAP information across the website and ${seoFactors.hasSchema ? 'proper schema markup implementation' : '15+ verified citations'}, though ${seoFactors.locationMentions} location mentions suggest room for more geo-targeted content."
+✗ Bad: "Website has good local SEO"
+
+Format: { "strengths": "• Point 1\n• Point 2\n• Point 3\n• Point 4\n• Point 5\n• Point 6", "gaps": "• Gap 1\n• Gap 2\n• Gap 3\n• Gap 4\n• Gap 5\n• Gap 6" }`;
 
   try {
     const response = await callOpenAI(openaiKey, prompt);
