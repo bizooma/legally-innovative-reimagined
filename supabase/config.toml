@@ -112,3 +112,6 @@ verify_jwt = false
 [functions.run-seo-audit]
 verify_jwt = false
 
+[functions.audit-chat]
+verify_jwt = false
+
