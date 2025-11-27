@@ -230,6 +230,9 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
               <GbpResults results={auditResults?.filter(r => r.audit_type === "gbp") || []} />
             </TabsContent>
           </Tabs>
+
+          {/* AI Chat Assistant */}
+          <AuditChatWindow accessCodeId={accessCodeData.id} />
         </>
       ) : !accessCodeData.questionnaire_completed ? (
         <PreAuditQuestionnaire 
@@ -265,9 +268,6 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
           </CardContent>
         </Card>
       )}
-
-      {/* AI Chat Assistant - only show when results exist */}
-      {hasResults && <AuditChatWindow accessCodeId={accessCodeData.id} />}
     </div>
   );
 };
