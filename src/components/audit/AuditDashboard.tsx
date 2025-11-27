@@ -191,7 +191,7 @@ export const AuditDashboard = ({ accessCode, onLogout }: AuditDashboardProps) =>
           </Button>
           <Button variant="outline" size="sm" onClick={onLogout}>
             <LogOut className="w-4 h-4 mr-2" />
-            Logout
+            New Audit
           </Button>
         </div>
       </div>
