@@ -8,7 +8,7 @@ import {
   FileText, BookOpen, Grid, BarChart, Users, Target, Lightbulb, 
   Share2, DollarSign, TrendingUp, Calendar, CheckCircle, AlertCircle, 
   Sparkles, AlertTriangle, Megaphone, Search, MousePointerClick, Star,
-  BookMarked, Trophy
+  BookMarked, Trophy, Palette, ImageIcon, Type, Award, Building2, Globe
 } from "lucide-react";
 
 interface ClientMarketingPlanProps {
@@ -23,6 +23,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     { id: "swot", label: "SWOT", icon: Grid },
     { id: "market-analysis", label: "Market", icon: BarChart },
     { id: "objectives", label: "Objectives", icon: Target },
+    { id: "brand-guidelines", label: "Brand", icon: Palette },
     { id: "budget", label: "Budget", icon: DollarSign },
     { id: "timeline", label: "Timeline", icon: Calendar },
   ];
@@ -574,6 +575,374 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               <Badge variant="secondary" className="text-sm py-2 px-3">YouTube</Badge>
               <Badge variant="secondary" className="text-sm py-2 px-3">Email Marketing</Badge>
             </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Brand Guidelines */}
+        <AccordionItem value="brand-guidelines" id="brand-guidelines" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-2">
+              <Palette className="h-5 w-5 text-primary" />
+              <span className="text-xl font-semibold">9. Brand Guidelines</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4 space-y-8">
+            <p className="text-muted-foreground">
+              Comprehensive brand guidelines ensure consistent visual identity across all marketing materials and touchpoints for both brands.
+            </p>
+
+            {/* Puget Law Group Brand */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 border-b border-border pb-3">
+                <Building2 className="h-6 w-6 text-primary" />
+                <h3 className="text-2xl font-bold">Puget Law Group</h3>
+              </div>
+
+              {/* PLG Logo Guidelines */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <ImageIcon className="h-5 w-5" />
+                    Logo Usage
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Badge variant="secondary">Primary Logo</Badge>
+                      <div className="bg-muted p-6 rounded-lg flex items-center justify-center min-h-[120px]">
+                        <span className="text-2xl font-bold text-foreground">PLG</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Use on light backgrounds</p>
+                    </div>
+                    <div className="space-y-2">
+                      <Badge variant="secondary">Reverse Logo</Badge>
+                      <div className="bg-foreground p-6 rounded-lg flex items-center justify-center min-h-[120px]">
+                        <span className="text-2xl font-bold text-background">PLG</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Use on dark backgrounds</p>
+                    </div>
+                  </div>
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+                    <h4 className="font-semibold flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      Logo Guidelines
+                    </h4>
+                    <ul className="text-sm space-y-1 ml-6 text-muted-foreground">
+                      <li>• Maintain clear space equal to the height of "P" around logo</li>
+                      <li>• Minimum size: 100px width for digital, 1" for print</li>
+                      <li>• Do not stretch, skew, or rotate the logo</li>
+                      <li>• Do not change logo colors outside approved palette</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* PLG Color Palette */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Palette className="h-5 w-5" />
+                    Color Palette
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="space-y-2">
+                      <div className="h-24 rounded-lg bg-[hsl(217,40%,15%)] border border-border"></div>
+                      <div className="text-sm">
+                        <p className="font-semibold">Navy Blue</p>
+                        <p className="text-xs text-muted-foreground">#1a2332</p>
+                        <p className="text-xs text-muted-foreground">Primary</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-24 rounded-lg bg-[hsl(42,44%58%)] border border-border"></div>
+                      <div className="text-sm">
+                        <p className="font-semibold">Gold</p>
+                        <p className="text-xs text-muted-foreground">#c9a961</p>
+                        <p className="text-xs text-muted-foreground">Accent</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-24 rounded-lg bg-[hsl(0,0%,100%)] border border-border"></div>
+                      <div className="text-sm">
+                        <p className="font-semibold">White</p>
+                        <p className="text-xs text-muted-foreground">#ffffff</p>
+                        <p className="text-xs text-muted-foreground">Background</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-24 rounded-lg bg-[hsl(214,14%,37%)] border border-border"></div>
+                      <div className="text-sm">
+                        <p className="font-semibold">Slate Gray</p>
+                        <p className="text-xs text-muted-foreground">#4a5568</p>
+                        <p className="text-xs text-muted-foreground">Secondary</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* PLG Typography */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Type className="h-5 w-5" />
+                    Typography
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-3">
+                    <div className="border-b border-border pb-2">
+                      <Badge variant="secondary" className="mb-2">Headings</Badge>
+                      <p className="text-3xl font-bold" style={{ fontFamily: 'Georgia, serif' }}>
+                        Georgia Bold
+                      </p>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Professional, authoritative, traditional legal aesthetic
+                      </p>
+                    </div>
+                    <div className="border-b border-border pb-2">
+                      <Badge variant="secondary" className="mb-2">Body Text</Badge>
+                      <p className="text-base" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        System Sans-Serif Regular
+                      </p>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Clean, readable, accessible for all content
+                      </p>
+                    </div>
+                    <div className="bg-muted/50 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2">Typography Usage</h4>
+                      <ul className="text-sm space-y-1 text-muted-foreground">
+                        <li>• Headlines: Georgia Bold, 32-48pt</li>
+                        <li>• Subheadings: Georgia Bold, 24-28pt</li>
+                        <li>• Body: Sans-serif Regular, 16-18pt</li>
+                        <li>• Line height: 1.5-1.7 for body text</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Win With Casey Brand */}
+            <div className="space-y-6 pt-8 border-t-2 border-border">
+              <div className="flex items-center gap-3 border-b border-border pb-3">
+                <Award className="h-6 w-6 text-primary" />
+                <h3 className="text-2xl font-bold">Win With Casey</h3>
+              </div>
+
+              {/* WWC Logo Guidelines */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <ImageIcon className="h-5 w-5" />
+                    Logo Usage
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Badge variant="secondary">Primary Logo</Badge>
+                      <div className="bg-gradient-to-br from-[hsl(0,79%,55%)] to-[hsl(0,68%,38%)] p-6 rounded-lg flex items-center justify-center min-h-[120px]">
+                        <span className="text-2xl font-bold text-white">WWC</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Use on light backgrounds</p>
+                    </div>
+                    <div className="space-y-2">
+                      <Badge variant="secondary">Alternate Logo</Badge>
+                      <div className="bg-[hsl(222,47%,11%)] p-6 rounded-lg flex items-center justify-center min-h-[120px]">
+                        <span className="text-2xl font-bold text-white">WWC</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Use on dark backgrounds</p>
+                    </div>
+                  </div>
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+                    <h4 className="font-semibold flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      Logo Guidelines
+                    </h4>
+                    <ul className="text-sm space-y-1 ml-6 text-muted-foreground">
+                      <li>• Bold, aggressive presentation reflecting fighting spirit</li>
+                      <li>• Minimum size: 120px width for digital, 1.25" for print</li>
+                      <li>• Athletic, energetic feel in all applications</li>
+                      <li>• Can be used with or without tagline "Fighting for You"</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* WWC Color Palette */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Palette className="h-5 w-5" />
+                    Color Palette
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="space-y-2">
+                      <div className="h-24 rounded-lg bg-[hsl(0,79%,55%)] border border-border"></div>
+                      <div className="text-sm">
+                        <p className="font-semibold">Victory Red</p>
+                        <p className="text-xs text-muted-foreground">#dc2626</p>
+                        <p className="text-xs text-muted-foreground">Primary</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-24 rounded-lg bg-[hsl(222,47%,11%)] border border-border"></div>
+                      <div className="text-sm">
+                        <p className="font-semibold">Champion Black</p>
+                        <p className="text-xs text-muted-foreground">#0f172a</p>
+                        <p className="text-xs text-muted-foreground">Secondary</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-24 rounded-lg bg-[hsl(38,93%,50%)] border border-border"></div>
+                      <div className="text-sm">
+                        <p className="font-semibold">Achievement Gold</p>
+                        <p className="text-xs text-muted-foreground">#f59e0b</p>
+                        <p className="text-xs text-muted-foreground">Accent</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-24 rounded-lg bg-[hsl(0,0%,100%)] border border-border"></div>
+                      <div className="text-sm">
+                        <p className="font-semibold">White</p>
+                        <p className="text-xs text-muted-foreground">#ffffff</p>
+                        <p className="text-xs text-muted-foreground">Background</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* WWC Typography */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Type className="h-5 w-5" />
+                    Typography
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-3">
+                    <div className="border-b border-border pb-2">
+                      <Badge variant="secondary" className="mb-2">Headings</Badge>
+                      <p className="text-3xl font-bold" style={{ fontFamily: 'Impact, "Arial Black", sans-serif' }}>
+                        Impact Bold
+                      </p>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Strong, athletic, commanding attention
+                      </p>
+                    </div>
+                    <div className="border-b border-border pb-2">
+                      <Badge variant="secondary" className="mb-2">Body Text</Badge>
+                      <p className="text-base font-semibold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        System Sans-Serif SemiBold
+                      </p>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Confident, direct, action-oriented
+                      </p>
+                    </div>
+                    <div className="bg-muted/50 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2">Typography Usage</h4>
+                      <ul className="text-sm space-y-1 text-muted-foreground">
+                        <li>• Headlines: Impact Bold, 36-56pt, all caps for emphasis</li>
+                        <li>• Subheadings: Sans-serif Bold, 24-32pt</li>
+                        <li>• Body: Sans-serif SemiBold, 16-18pt</li>
+                        <li>• Shorter line length for impact, 1.4-1.6 line height</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Domain Strategy */}
+              <Card className="border-primary/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Globe className="h-5 w-5" />
+                    Multi-Domain Brand Architecture
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {[
+                      { 
+                        domain: "winwithcasey.com", 
+                        purpose: "Primary conversion site",
+                        color: "bg-[hsl(0,79%,55%)]"
+                      },
+                      { 
+                        domain: "caseyfights.com", 
+                        purpose: "Results & case studies",
+                        color: "bg-[hsl(222,47%,11%)]"
+                      },
+                      { 
+                        domain: "caseyatbat.com", 
+                        purpose: "Educational content",
+                        color: "bg-[hsl(38,93%,50%)]"
+                      },
+                      { 
+                        domain: "caseyarbenz.com", 
+                        purpose: "Professional authority",
+                        color: "bg-[hsl(214,14%,37%)]"
+                      },
+                    ].map((domain) => (
+                      <div key={domain.domain} className="border border-border rounded-lg p-4 space-y-2">
+                        <div className={`${domain.color} text-white px-3 py-1 rounded text-sm font-semibold inline-block`}>
+                          {domain.domain}
+                        </div>
+                        <p className="text-sm text-muted-foreground">{domain.purpose}</p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Brand Differentiation Summary */}
+            <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5" />
+                  Brand Differentiation Strategy
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <h4 className="font-semibold flex items-center gap-2">
+                      <Building2 className="h-4 w-4" />
+                      Puget Law Group
+                    </h4>
+                    <ul className="text-sm space-y-1 text-muted-foreground">
+                      <li>• Traditional, authoritative, professional</li>
+                      <li>• Emphasizes team expertise and former prosecutors</li>
+                      <li>• Criminal defense focus with established reputation</li>
+                      <li>• Conservative color palette (navy, gold, slate)</li>
+                      <li>• Serif typography for trust and tradition</li>
+                    </ul>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold flex items-center gap-2">
+                      <Award className="h-4 w-4" />
+                      Win With Casey
+                    </h4>
+                    <ul className="text-sm space-y-1 text-muted-foreground">
+                      <li>• Bold, athletic, aggressive advocacy</li>
+                      <li>• Personal brand centered on Casey Arbenz</li>
+                      <li>• Personal injury focus with fighting spirit</li>
+                      <li>• Energetic color palette (red, black, gold)</li>
+                      <li>• Impact typography for strength and action</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
