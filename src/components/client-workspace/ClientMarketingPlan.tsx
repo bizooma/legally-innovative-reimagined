@@ -110,7 +110,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
   const timelinePhases = [
     {
       phase: "Months 1-3: Foundation and Setup",
-      color: "bg-blue-500/10 border-blue-500/20",
+      color: "bg-primary/5 border-primary/20",
       activities: [
         "Conduct comprehensive website audit for technical SEO issues",
         "Optimize Google Business Profile with updated info and photos",
@@ -122,7 +122,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     },
     {
       phase: "Months 4-6: Content Development and SEO Expansion",
-      color: "bg-green-500/10 border-green-500/20",
+      color: "bg-primary/10 border-primary/30",
       activities: [
         "Produce comprehensive legal guides as lead magnets",
         "Establish regular blog publishing schedule (2+ posts/week)",
@@ -134,7 +134,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     },
     {
       phase: "Months 7-9: Optimization and Expansion",
-      color: "bg-amber-500/10 border-amber-500/20",
+      color: "bg-[hsl(0,37%,15%)]/5 border-[hsl(0,37%,15%)]/20",
       activities: [
         "Analyze and optimize PPC campaigns based on performance data",
         "Launch retargeting campaigns for non-converting visitors",
@@ -145,7 +145,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     },
     {
       phase: "Months 10-12: Scaling and Refinement",
-      color: "bg-purple-500/10 border-purple-500/20",
+      color: "bg-[hsl(0,37%,15%)]/10 border-[hsl(0,37%,15%)]/30",
       activities: [
         "Scale successful initiatives and allocate resources to high-performing content",
         "Enhance presence on legal directories (Avvo, Justia, Super Lawyers)",
@@ -196,7 +196,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
             <p className="text-lg leading-relaxed">
               This marketing plan provides a comprehensive strategy for Puget Law Group to expand its market leadership in the Seattle criminal defense sector. The plan is based on an in-depth analysis of the firm's current position, the competitive landscape, and the regional market dynamics. Key recommendations include leveraging Puget Law Group's unique strengths—notably its team of former prosecutors and exceptional online reputation—to dominate the high-value DUI and serious criminal defense markets.
             </p>
-            <div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20">
+            <div className="p-4 rounded-lg bg-gradient-to-r from-primary/10 to-[hsl(0,37%,15%)]/10 border border-primary/20">
               <div className="flex items-center gap-2 mb-2">
                 <Trophy className="h-5 w-5 text-primary" />
                 <h4 className="font-semibold text-primary">Win With Casey Initiative</h4>
@@ -206,16 +206,16 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               </p>
             </div>
             <div className="grid md:grid-cols-2 gap-4 mt-6">
-              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
-                <h4 className="font-semibold text-green-700 dark:text-green-400 mb-2">Key Strengths</h4>
+              <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
+                <h4 className="font-semibold text-primary mb-2">Key Strengths</h4>
                 <ul className="space-y-1 text-sm">
                   <li>• 9 former prosecutors on staff</li>
                   <li>• 5.0 rating with 500+ reviews</li>
                   <li>• 150+ years combined experience</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-2">Strategic Focus</h4>
+              <div className="p-4 rounded-lg bg-foreground/5 border border-foreground/20">
+                <h4 className="font-semibold text-foreground mb-2">Strategic Focus</h4>
                 <ul className="space-y-1 text-sm">
                   <li>• Dominate DUI defense market</li>
                   <li>• Launch Win With Casey personal injury brand</li>
@@ -235,9 +235,9 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         </h2>
         <div className="grid md:grid-cols-2 gap-4">
           {/* Strengths */}
-          <Card className="border-green-500/30 bg-green-500/5">
+          <Card className="border-primary/30 bg-primary/5">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-green-700 dark:text-green-400">
+              <CardTitle className="flex items-center gap-2 text-primary">
                 <CheckCircle className="h-5 w-5" />
                 Strengths
               </CardTitle>
@@ -246,7 +246,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               <ul className="space-y-2">
                 {swotData.strengths.map((item, idx) => (
                   <li key={idx} className="text-sm flex gap-2">
-                    <span className="text-green-600 dark:text-green-400 mt-0.5">•</span>
+                    <span className="text-primary mt-0.5">•</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -255,9 +255,9 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </Card>
 
           {/* Weaknesses */}
-          <Card className="border-orange-500/30 bg-orange-500/5">
+          <Card className="border-[hsl(0,37%,15%)]/30 bg-[hsl(0,37%,15%)]/5">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-orange-700 dark:text-orange-400">
+              <CardTitle className="flex items-center gap-2" style={{ color: "hsl(0,37%,15%)" }}>
                 <AlertCircle className="h-5 w-5" />
                 Weaknesses
               </CardTitle>
@@ -266,7 +266,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               <ul className="space-y-2">
                 {swotData.weaknesses.map((item, idx) => (
                   <li key={idx} className="text-sm flex gap-2">
-                    <span className="text-orange-600 dark:text-orange-400 mt-0.5">•</span>
+                    <span className="mt-0.5" style={{ color: "hsl(0,37%,15%)" }}>•</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -275,9 +275,9 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </Card>
 
           {/* Opportunities */}
-          <Card className="border-blue-500/30 bg-blue-500/5">
+          <Card className="border-primary/20 bg-primary/10">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
+              <CardTitle className="flex items-center gap-2 text-primary">
                 <Sparkles className="h-5 w-5" />
                 Opportunities
               </CardTitle>
@@ -286,7 +286,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               <ul className="space-y-2">
                 {swotData.opportunities.map((item, idx) => (
                   <li key={idx} className="text-sm flex gap-2">
-                    <span className="text-blue-600 dark:text-blue-400 mt-0.5">•</span>
+                    <span className="text-primary mt-0.5">•</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -295,9 +295,9 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </Card>
 
           {/* Threats */}
-          <Card className="border-red-500/30 bg-red-500/5">
+          <Card className="border-destructive/30 bg-destructive/5">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-red-700 dark:text-red-400">
+              <CardTitle className="flex items-center gap-2 text-destructive">
                 <AlertTriangle className="h-5 w-5" />
                 Threats
               </CardTitle>
@@ -306,7 +306,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               <ul className="space-y-2">
                 {swotData.threats.map((item, idx) => (
                   <li key={idx} className="text-sm flex gap-2">
-                    <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                    <span className="text-destructive mt-0.5">•</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -461,7 +461,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
             <div>
               <h4 className="font-semibold mb-3">7.1 Dual-Brand Content Strategy</h4>
               <div className="grid md:grid-cols-2 gap-4">
-                <Card className="border-green-500/20">
+                <Card className="border-primary/20">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-base">
                       <Megaphone className="h-4 w-4" />
@@ -475,7 +475,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                     <p>• Client testimonials and case results</p>
                   </CardContent>
                 </Card>
-                <Card className="border-blue-500/20">
+                <Card className="border-foreground/20">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-base">
                       <Trophy className="h-4 w-4" />
@@ -625,7 +625,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                   </div>
                   <div className="bg-muted/50 p-4 rounded-lg space-y-2">
                     <h4 className="font-semibold flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <CheckCircle className="h-4 w-4 text-primary" />
                       Logo Guidelines
                     </h4>
                     <ul className="text-sm space-y-1 ml-6 text-muted-foreground">
@@ -760,7 +760,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                   </div>
                   <div className="bg-muted/50 p-4 rounded-lg space-y-2">
                     <h4 className="font-semibold flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <CheckCircle className="h-4 w-4 text-primary" />
                       Logo Guidelines
                     </h4>
                     <ul className="text-sm space-y-1 ml-6 text-muted-foreground">
@@ -1136,7 +1136,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
       </div>
 
       {/* Appendix C: Win With Casey Initiative */}
-      <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
+      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Trophy className="h-6 w-6 text-primary" />
