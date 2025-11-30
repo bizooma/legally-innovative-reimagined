@@ -7,6 +7,7 @@ import ClientDocuments from "./ClientDocuments";
 import ClientCommunication from "./ClientCommunication";
 import ClientCampaigns from "./ClientCampaigns";
 import ClientSocialPosts from "./ClientSocialPosts";
+import ClientMarketingPlan from "./ClientMarketingPlan";
 import { Client } from "@/types/database";
 
 interface ClientDetailsTabsProps {
@@ -70,6 +71,12 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
             Documents
           </TabsTrigger>
           <TabsTrigger
+            value="marketing-plan"
+            className="rounded-none border-b-2 border-transparent px-4 py-3 font-medium text-muted-foreground hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground"
+          >
+            Marketing Plan
+          </TabsTrigger>
+          <TabsTrigger
             value="communication"
             className="rounded-none border-b-2 border-transparent px-4 py-3 font-medium text-muted-foreground hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground"
           >
@@ -91,6 +98,9 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
       </TabsContent>
       <TabsContent value="documents" className="py-6">
         <ClientDocuments clientId={client.id} />
+      </TabsContent>
+      <TabsContent value="marketing-plan" className="py-6">
+        <ClientMarketingPlan client={client} />
       </TabsContent>
     </Tabs>
   );
