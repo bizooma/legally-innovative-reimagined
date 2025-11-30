@@ -7,7 +7,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { 
   FileText, BookOpen, Grid, BarChart, Users, Target, Lightbulb, 
   Share2, DollarSign, TrendingUp, Calendar, CheckCircle, AlertCircle, 
-  Sparkles, AlertTriangle, Megaphone, Search, MousePointerClick, Star
+  Sparkles, AlertTriangle, Megaphone, Search, MousePointerClick, Star,
+  BookMarked, Trophy
 } from "lucide-react";
 
 interface ClientMarketingPlanProps {
@@ -43,16 +44,16 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
       "Broad Service Area: Covers the entire Puget Sound region, providing a large client base"
     ],
     weaknesses: [
-      "Secondary Practice Area Dilution: Personal injury practice may dilute the core criminal defense brand",
+      "Brand Dilution Risk (Mitigated): Without a separate brand, the personal injury practice could dilute the core criminal defense focus. The Win With Casey initiative mitigates this.",
       "Limited Brand Recognition Beyond Seattle: Brand awareness is concentrated in the immediate Puget Sound area",
-      "Dependence on a Few Key Attorneys: Brand is heavily tied to a few key partners",
+      "Dependence on Key Attorneys: The firm's brand is tied to key partners, and the Win With Casey brand is entirely dependent on Casey Arbenz",
       "Lack of a Formal Referral Program: No structured program to incentivize referrals from past clients"
     ],
     opportunities: [
-      "Dominating the DUI Market: Opportunity to become the undisputed leader in Washington DUI defense",
+      "Capture Personal Injury Market: The Win With Casey initiative provides a significant opportunity to capture a large share of the personal injury market",
       "Content Marketing Leadership: Opportunity to become the leading source of criminal defense information",
       "Geographic Expansion: Potential to expand into other major Washington cities",
-      "Targeting High-Value Niches: Focus on federal crimes, white-collar defense, and complex felonies",
+      "Cross-Promotional Synergy: Promote personal injury services to criminal defense clients and vice-versa, creating a powerful referral engine between the two brands",
       "Leveraging Technology: Further use of AI and automation for client intake and marketing"
     ],
     threats: [
@@ -68,12 +69,15 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     { title: "Increase qualified leads", target: "50 leads/month", progress: 65 },
     { title: "Top-3 rankings", target: "10 high-value keywords", progress: 40 },
     { title: "Grow website traffic", target: "40% increase", progress: 55 },
-    { title: "Boost brand authority", target: "50% branded search increase", progress: 30 }
+    { title: "Boost brand authority", target: "50% branded search increase", progress: 30 },
+    { title: "Win With Casey launch", target: "First-page rankings for 5 PI keywords", progress: 20 }
   ];
 
   const budgetItems = [
-    { category: "SEO & Content Marketing", monthly: "$5,000", annual: "$60,000", description: "Content creation, link building" },
-    { category: "Paid Advertising (PPC)", monthly: "$7,000", annual: "$84,000", description: "Google Ads, Local Services Ads" },
+    { category: "PLG SEO & Content", monthly: "$3,000", annual: "$36,000", description: "Content creation, link building" },
+    { category: "Win With Casey SEO & Content", monthly: "$4,000", annual: "$48,000", description: "Multi-domain content strategy" },
+    { category: "PLG PPC", monthly: "$4,000", annual: "$48,000", description: "Google Ads, Local Services Ads" },
+    { category: "Win With Casey PPC", monthly: "$5,000", annual: "$60,000", description: "Personal injury ad campaigns" },
     { category: "Website & Tech Stack", monthly: "$1,000", annual: "$12,000", description: "Hosting, plugins, analytics" },
     { category: "Video Production", monthly: "$2,000", annual: "$24,000", description: "Quarterly video shoots" }
   ];
@@ -85,7 +89,8 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     { name: "Search Engine Rankings", description: "The firm's position on Google for target keywords" },
     { name: "Organic Traffic", description: "The number of visitors from organic search results" },
     { name: "Branded Search Volume", description: "Number of people searching for 'Puget Law Group'" },
-    { name: "Client Acquisition Cost (CAC)", description: "Total marketing cost to acquire a new client" }
+    { name: "Client Acquisition Cost (CAC)", description: "Total marketing cost to acquire a new client, tracked separately for PLG and Win With Casey" },
+    { name: "Win With Casey Launch Metrics", description: "Track domain authority, keyword rankings, and lead generation for the four new personal injury domains" }
   ];
 
   const competitors = [
@@ -109,8 +114,9 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         "Conduct comprehensive website audit for technical SEO issues",
         "Optimize Google Business Profile with updated info and photos",
         "Complete keyword research for highest-value search terms",
-        "Develop 6-month content calendar",
-        "Launch initial PPC campaigns for high-priority keywords"
+        "Develop 6-month content calendar for both PLG and Win With Casey",
+        "Launch initial PPC campaigns for high-priority keywords",
+        "Domain acquisition and hosting setup for Win With Casey domains"
       ]
     },
     {
@@ -120,8 +126,9 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         "Produce comprehensive legal guides as lead magnets",
         "Establish regular blog publishing schedule (2+ posts/week)",
         "Create first round of professional video content",
-        "Initiate link-building campaigns for high-authority backlinks",
-        "Optimize social media profiles and establish posting schedule"
+        "Launch winwithcasey.com and develop core service pages",
+        "Implement cross-domain linking strategy for Win With Casey ecosystem",
+        "Initial PPC campaigns for personal injury keywords"
       ]
     },
     {
@@ -130,9 +137,9 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
       activities: [
         "Analyze and optimize PPC campaigns based on performance data",
         "Launch retargeting campaigns for non-converting visitors",
-        "Produce additional video content including client testimonials",
-        "Expand content strategy to include guest posting",
-        "Develop email marketing campaigns for lead nurturing"
+        "Launch caseyfights.com, caseyatbat.com, and caseyarbenz.com",
+        "Voice search optimization across all Win With Casey domains",
+        "Expand content strategy to include guest posting"
       ]
     },
     {
@@ -142,7 +149,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         "Scale successful initiatives and allocate resources to high-performing content",
         "Enhance presence on legal directories (Avvo, Justia, Super Lawyers)",
         "Develop and launch formal client referral program",
-        "Generate comprehensive performance reports",
+        "Comprehensive performance analysis of Win With Casey initiative",
         "Update marketing plan based on year-long insights"
       ]
     }
@@ -186,8 +193,17 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-lg leading-relaxed">
-              This marketing plan provides a comprehensive strategy for Puget Law Group to expand its market leadership in the Seattle criminal defense sector. The plan is based on an in-depth analysis of the firm's current position, the competitive landscape, and the regional market dynamics.
+              This marketing plan provides a comprehensive strategy for Puget Law Group to expand its market leadership in the Seattle criminal defense sector. The plan is based on an in-depth analysis of the firm's current position, the competitive landscape, and the regional market dynamics. Key recommendations include leveraging Puget Law Group's unique strengths—notably its team of former prosecutors and exceptional online reputation—to dominate the high-value DUI and serious criminal defense markets.
             </p>
+            <div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20">
+              <div className="flex items-center gap-2 mb-2">
+                <Trophy className="h-5 w-5 text-primary" />
+                <h4 className="font-semibold text-primary">Win With Casey Initiative</h4>
+              </div>
+              <p className="text-sm">
+                A key pillar of this strategy is the launch of the <strong>Win With Casey</strong> vanity brand, a sophisticated, multi-domain initiative designed to capture the personal injury market by leveraging the personal brand of Managing Partner Casey Arbenz. This dual-brand approach allows Puget Law Group to maintain its dominance in criminal defense while aggressively pursuing growth in the personal injury sector.
+              </p>
+            </div>
             <div className="grid md:grid-cols-2 gap-4 mt-6">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h4 className="font-semibold text-green-700 dark:text-green-400 mb-2">Key Strengths</h4>
@@ -201,8 +217,8 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                 <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-2">Strategic Focus</h4>
                 <ul className="space-y-1 text-sm">
                   <li>• Dominate DUI defense market</li>
-                  <li>• Advanced SEO & content marketing</li>
-                  <li>• Target high-value clients</li>
+                  <li>• Launch Win With Casey personal injury brand</li>
+                  <li>• Multi-channel digital marketing approach</li>
                 </ul>
               </div>
             </div>
@@ -306,15 +322,18 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-primary" />
-              <span className="text-xl font-semibold">1. Introduction</span>
+              <span className="text-xl font-semibold">2. Introduction</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="pt-4 space-y-4">
             <p>
               Puget Law Group (PLG) has established itself as a premier criminal defense firm in the Puget Sound region, with a strong focus on DUI and serious criminal cases. With over 150 years of combined experience and a team that includes nine former prosecutors, the firm possesses a significant competitive advantage.
             </p>
+            <p>
+              This marketing plan aims to build upon this strong foundation by implementing a <strong>dual-brand strategy</strong>. The primary Puget Law Group brand will continue to solidify its position as the top criminal defense firm, while the new Win With Casey vanity brand will be launched to specifically target and capture the personal injury market.
+            </p>
             <div className="bg-muted p-4 rounded-lg">
-              <h4 className="font-semibold mb-2">Strategic Objectives:</h4>
+              <h4 className="font-semibold mb-2">Integrated Strategic Objectives:</h4>
               <ul className="space-y-1 text-sm">
                 <li>• Solidify PLG's position as the top criminal defense firm in the Seattle metropolitan area</li>
                 <li>• Increase market share in the lucrative DUI and serious felony defense sectors</li>
@@ -330,7 +349,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center gap-2">
               <BarChart className="h-5 w-5 text-primary" />
-              <span className="text-xl font-semibold">2. Market Analysis</span>
+              <span className="text-xl font-semibold">4. Market Analysis</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="pt-4 space-y-4">
@@ -338,7 +357,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               <div>
                 <h4 className="font-semibold mb-2">Market Size and Growth</h4>
                 <p className="text-sm">
-                  The global legal services market was valued at over $1 trillion in 2024. The U.S. market accounts for approximately $292 billion. The Seattle legal market is experiencing rapid growth, driven by the city's booming technology sector and status as a hub for global commerce.
+                  The global legal services market was valued at over $1 trillion in 2024 and is projected to grow steadily. The U.S. market accounts for approximately $292 billion. The Seattle legal market is experiencing rapid growth, driven by the city's booming technology sector and status as a hub for global commerce, with starting salaries for new associates exceeding $200,000.
                 </p>
               </div>
               <div>
@@ -365,41 +384,66 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-primary" />
-              <span className="text-xl font-semibold">3. Target Audience</span>
+              <span className="text-xl font-semibold">5. Target Audience</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="pt-4">
-            <div className="grid md:grid-cols-3 gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Segment A: High-Stakes Defendant</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 text-sm">
-                  <p><strong>Ages:</strong> 30-60</p>
-                  <p><strong>Profile:</strong> Established professionals, business owners</p>
-                  <p><strong>Needs:</strong> Experienced legal team for complex challenges</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Segment B: DUI Defendant</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 text-sm">
-                  <p><strong>Ages:</strong> 21-45 (concentrate 21-35)</p>
-                  <p><strong>Profile:</strong> First-time offenders, employed</p>
-                  <p><strong>Needs:</strong> DUI expertise, clear guidance</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Segment C: Families of Juveniles</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 text-sm">
-                  <p><strong>Profile:</strong> Parents/guardians</p>
-                  <p><strong>Location:</strong> Suburban areas</p>
-                  <p><strong>Needs:</strong> Compassionate juvenile defense</p>
-                </CardContent>
-              </Card>
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold mb-3">Primary Target Audience</h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base">Segment A: High-Stakes Defendant</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2 text-sm">
+                      <p><strong>Ages:</strong> 30-60</p>
+                      <p><strong>Profile:</strong> Established professionals, business owners</p>
+                      <p><strong>Needs:</strong> Experienced legal team for complex challenges, serious felonies, white-collar crimes</p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base">Segment B: DUI Defendant</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2 text-sm">
+                      <p><strong>Ages:</strong> 21-45 (concentrate 21-35)</p>
+                      <p><strong>Profile:</strong> First-time offenders, employed, 3:1 male ratio</p>
+                      <p><strong>Needs:</strong> Deep DUI expertise, clear guidance through the process</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-3">Win With Casey Target Audience (Personal Injury)</h4>
+                <Card className="border-primary/20">
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <Trophy className="h-4 w-4 text-primary" />
+                      Segment C: The Injured Individual
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2 text-sm">
+                    <p><strong>Demographics:</strong> All ages, genders, and backgrounds</p>
+                    <p><strong>Profile:</strong> Individuals who have suffered injuries in car accidents, truck accidents, workplace incidents, or other situations caused by negligence</p>
+                    <p><strong>Psychographics:</strong> In physical and emotional distress, often facing financial hardship due to medical bills and lost wages</p>
+                    <p><strong>Needs:</strong> An experienced personal injury attorney who can navigate the complexities of insurance claims and litigation. A firm that handles all aspects, allowing them to focus on recovery</p>
+                  </CardContent>
+                </Card>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-3">Secondary Target Audience</h4>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base">Segment D: Families of Juveniles</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2 text-sm">
+                    <p><strong>Profile:</strong> Parents/guardians of individuals under 18 facing criminal charges</p>
+                    <p><strong>Location:</strong> Typically middle-to-upper class, suburban areas</p>
+                    <p><strong>Needs:</strong> Compassionate yet aggressive juvenile defense</p>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </AccordionContent>
         </AccordionItem>
@@ -409,42 +453,82 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center gap-2">
               <Lightbulb className="h-5 w-5 text-primary" />
-              <span className="text-xl font-semibold">4. Marketing Strategies</span>
+              <span className="text-xl font-semibold">7. Marketing Strategies</span>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="pt-4 space-y-4">
+          <AccordionContent className="pt-4 space-y-6">
+            <div>
+              <h4 className="font-semibold mb-3">7.1 Dual-Brand Content Strategy</h4>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card className="border-green-500/20">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-base">
+                      <Megaphone className="h-4 w-4" />
+                      Puget Law Group (Criminal Defense)
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-sm space-y-2">
+                    <p>• In-depth legal guides as lead magnets</p>
+                    <p>• Professional video content featuring attorneys</p>
+                    <p>• Regular blog posts on criminal justice topics</p>
+                    <p>• Client testimonials and case results</p>
+                  </CardContent>
+                </Card>
+                <Card className="border-blue-500/20">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-base">
+                      <Trophy className="h-4 w-4" />
+                      Win With Casey (Personal Injury)
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-sm space-y-2">
+                    <p>• winwithcasey.com: Conversion-focused content</p>
+                    <p>• caseyfights.com: Results-focused case studies</p>
+                    <p>• caseyatbat.com: Educational content with sports metaphors</p>
+                    <p>• caseyarbenz.com: Authority-building professional content</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-3">7.2 SEO and Digital Ecosystem</h4>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card className="border-primary/20">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-base">
+                      <Search className="h-4 w-4" />
+                      Puget Law Group SEO
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-sm space-y-2">
+                    <p>• On-page optimization for criminal defense keywords</p>
+                    <p>• Local SEO & Google Business Profile enhancement</p>
+                    <p>• Strategic link-building from legal associations</p>
+                  </CardContent>
+                </Card>
+                <Card className="border-primary/20">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-base">
+                      <Trophy className="h-4 w-4" />
+                      Win With Casey Multi-Domain SEO
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-sm space-y-2">
+                    <p>• Cross-domain linking for authority</p>
+                    <p>• Voice search and AEO optimization</p>
+                    <p>• Comprehensive schema markup across all domains</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-4">
               <Card className="border-primary/20">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-base">
-                    <Megaphone className="h-4 w-4" />
-                    Content Marketing
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm space-y-2">
-                  <p>• In-depth legal guides as lead magnets</p>
-                  <p>• Professional video content series</p>
-                  <p>• Regular blog posts on timely topics</p>
-                </CardContent>
-              </Card>
-              <Card className="border-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-base">
-                    <Search className="h-4 w-4" />
-                    SEO Optimization
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm space-y-2">
-                  <p>• On-page optimization for target keywords</p>
-                  <p>• Local SEO & Google Business Profile</p>
-                  <p>• Strategic link-building campaigns</p>
-                </CardContent>
-              </Card>
-              <Card className="border-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-base">
                     <MousePointerClick className="h-4 w-4" />
-                    Paid Advertising
+                    Paid Advertising (PPC)
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-sm space-y-2">
@@ -475,7 +559,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center gap-2">
               <Share2 className="h-5 w-5 text-primary" />
-              <span className="text-xl font-semibold">5. Marketing Channels</span>
+              <span className="text-xl font-semibold">8. Marketing Channels</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="pt-4">
@@ -500,7 +584,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Target className="h-6 w-6 text-primary" />
-              <CardTitle className="text-2xl">Marketing Objectives</CardTitle>
+              <CardTitle className="text-2xl">6. Marketing Objectives</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -524,7 +608,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           <CardHeader>
             <div className="flex items-center gap-2">
               <DollarSign className="h-6 w-6 text-primary" />
-              <CardTitle className="text-2xl">Marketing Budget</CardTitle>
+              <CardTitle className="text-2xl">9. Marketing Budget</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
@@ -549,8 +633,8 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                 <TableRow className="font-bold bg-muted/50">
                   <TableCell>Total</TableCell>
                   <TableCell></TableCell>
-                  <TableCell className="text-right">$15,000</TableCell>
-                  <TableCell className="text-right">$180,000</TableCell>
+                  <TableCell className="text-right">$17,000</TableCell>
+                  <TableCell className="text-right">$204,000</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -563,7 +647,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <TrendingUp className="h-6 w-6 text-primary" />
-            <CardTitle className="text-2xl">Key Performance Indicators</CardTitle>
+            <CardTitle className="text-2xl">10. Key Performance Indicators</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
@@ -581,7 +665,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
       {/* Conclusion */}
       <Card className="border-primary/20 bg-primary/5">
         <CardHeader>
-          <CardTitle className="text-2xl">Conclusion</CardTitle>
+          <CardTitle className="text-2xl">11. Conclusion</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>
@@ -593,10 +677,24 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         </CardContent>
       </Card>
 
+      {/* References */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <BookMarked className="h-6 w-6 text-primary" />
+            <CardTitle className="text-xl">References</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm">
+          <p>[1] Precedence Research. (2025). "US Legal Services Market Size and Forecast 2025 to 2034." Retrieved from https://www.precedenceresearch.com/us-legal-services-market</p>
+          <p>[2] Seattle Business Journal. (2025). "Seattle law firms boost starting salaries amid competition." Retrieved from https://www.bizjournals.com/seattle/news/2025/08/24/entry-level-lawyers-salaries-on-the-rise.html</p>
+        </CardContent>
+      </Card>
+
       {/* Appendix: Competitor Analysis */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Appendix A: Competitor Analysis</CardTitle>
+          <CardTitle className="text-xl">Appendix A: Detailed Competitor Analysis</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -632,8 +730,10 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
             <ul className="text-sm space-y-1">
               <li>• Most competitors are solo practitioners or small firms (1-3 attorneys)</li>
               <li>• PLG's 11-attorney team and 9 former prosecutors is a major differentiator</li>
-              <li>• 5.0 rating with 500+ reviews surpasses most competitors</li>
-              <li>• Opportunity to capture market share through superior digital marketing</li>
+              <li>• Former prosecutor experience is common, but PLG's team of 9 far exceeds any competitor</li>
+              <li>• 5.0 rating with 500+ reviews surpasses most competitors, providing powerful social proof</li>
+              <li>• Many smaller firms lack sophisticated digital marketing strategies</li>
+              <li>• Opportunity to capture market share through superior SEO, content marketing, and PPC</li>
             </ul>
           </div>
         </CardContent>
@@ -665,6 +765,115 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Appendix C: Win With Casey Initiative */}
+      <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Trophy className="h-6 w-6 text-primary" />
+            <CardTitle className="text-xl">Appendix C: Win With Casey Initiative</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div>
+            <h4 className="font-semibold mb-2">Overview</h4>
+            <p className="text-sm">
+              The Win With Casey initiative represents a strategic expansion of Puget Law Group's service offerings into the personal injury market. By creating a separate vanity brand centered on Managing Partner Casey Arbenz, the firm can pursue aggressive growth in personal injury while maintaining its strong brand identity in criminal defense.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-3">Multi-Domain Architecture</h4>
+            <div className="grid md:grid-cols-2 gap-3">
+              <div className="p-3 bg-background border rounded-lg">
+                <p className="font-medium text-sm mb-1">winwithcasey.com</p>
+                <p className="text-xs text-muted-foreground">Primary conversion-focused domain with clear calls to action</p>
+              </div>
+              <div className="p-3 bg-background border rounded-lg">
+                <p className="font-medium text-sm mb-1">caseyfights.com</p>
+                <p className="text-xs text-muted-foreground">Results-focused content showcasing case studies and settlements</p>
+              </div>
+              <div className="p-3 bg-background border rounded-lg">
+                <p className="font-medium text-sm mb-1">caseyatbat.com</p>
+                <p className="text-xs text-muted-foreground">Educational content using sports metaphors for accessibility</p>
+              </div>
+              <div className="p-3 bg-background border rounded-lg">
+                <p className="font-medium text-sm mb-1">caseyarbenz.com</p>
+                <p className="text-xs text-muted-foreground">Professional authority site highlighting credentials and expertise</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-2">Strategic Rationale</h4>
+            <ul className="space-y-2 text-sm">
+              <li className="flex gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Criminal defense and personal injury markets have fundamentally different client personas and search behaviors</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Focused, specialized content performs better in search engine rankings than mixed practice area sites</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Casey Arbenz's personal brand (SuperLawyer, Ironman competitor, former prosecutor) resonates powerfully in personal injury</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Cross-promotional opportunities between criminal defense and personal injury create powerful referral engine</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-2">Voice Search & Answer Engine Optimization</h4>
+            <p className="text-sm mb-2">
+              The Win With Casey content strategy is specifically designed to capture traffic from voice searches and AI-powered answer engines through:
+            </p>
+            <ul className="space-y-1 text-sm">
+              <li className="flex gap-2">
+                <span className="text-primary">•</span>
+                <span>Long-tail, conversational keywords (e.g., "how much compensation can I get for a car accident in Washington?")</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-primary">•</span>
+                <span>Direct, concise answers at the beginning of pages that AI systems can easily extract</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-primary">•</span>
+                <span>Comprehensive FAQ sections aligned with question-and-answer format for voice assistants</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-primary">•</span>
+                <span>Schema markup implementation across all domains for AI comprehension</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-2">Success Metrics</h4>
+            <div className="grid md:grid-cols-2 gap-3 text-sm">
+              <div className="p-3 bg-background border rounded-lg">
+                <p className="font-medium mb-1">Domain Authority</p>
+                <p className="text-xs text-muted-foreground">Target: DA 30+ within 12 months for all four domains</p>
+              </div>
+              <div className="p-3 bg-background border rounded-lg">
+                <p className="font-medium mb-1">Keyword Rankings</p>
+                <p className="text-xs text-muted-foreground">First-page for 5 high-value PI keywords in 12 months</p>
+              </div>
+              <div className="p-3 bg-background border rounded-lg">
+                <p className="font-medium mb-1">Organic Traffic</p>
+                <p className="text-xs text-muted-foreground">1,000+ monthly organic visitors across all domains</p>
+              </div>
+              <div className="p-3 bg-background border rounded-lg">
+                <p className="font-medium mb-1">Lead Generation</p>
+                <p className="text-xs text-muted-foreground">20+ qualified PI leads per month within 12 months</p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
