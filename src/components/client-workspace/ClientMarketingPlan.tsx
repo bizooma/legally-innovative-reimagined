@@ -449,6 +449,28 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </AccordionContent>
         </AccordionItem>
 
+        {/* Marketing Objectives */}
+        <AccordionItem value="objectives" id="objectives" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-2">
+              <Target className="h-5 w-5 text-primary" />
+              <span className="text-xl font-semibold">6. Marketing Objectives</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4 space-y-6">
+            {objectives.map((obj, idx) => (
+              <div key={idx} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">{obj.title}</span>
+                  <Badge variant="outline">{obj.target}</Badge>
+                </div>
+                <Progress value={obj.progress} className="h-2" />
+                <p className="text-xs text-muted-foreground">Progress: {obj.progress}%</p>
+              </div>
+            ))}
+          </AccordionContent>
+        </AccordionItem>
+
         {/* Marketing Strategies */}
         <AccordionItem value="strategies" className="border rounded-lg px-4">
           <AccordionTrigger className="hover:no-underline">
@@ -946,30 +968,6 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
-      {/* Marketing Objectives */}
-      <div id="objectives">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Target className="h-6 w-6 text-primary" />
-              <CardTitle className="text-2xl">6. Marketing Objectives</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {objectives.map((obj, idx) => (
-              <div key={idx} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">{obj.title}</span>
-                  <Badge variant="outline">{obj.target}</Badge>
-                </div>
-                <Progress value={obj.progress} className="h-2" />
-                <p className="text-xs text-muted-foreground">Progress: {obj.progress}%</p>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Budget */}
       <div id="budget">
