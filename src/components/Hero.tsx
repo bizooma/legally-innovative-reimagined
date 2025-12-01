@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Phone } from "lucide-react";
+import { Phone, Music, VolumeX } from "lucide-react";
 import techBg from "@/assets/hero-tech-bg.jpg";
 import { trackPhoneClick, trackCTAClick } from "@/utils/gtmTracking";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
@@ -8,7 +8,7 @@ import { FloatingFeatureCards } from "./hero/FloatingFeatureCards";
 import { GradientMesh } from "./hero/GradientMesh";
 import { useScrollFade } from "@/hooks/useParallax";
 import { ChristmasDecorations } from "./decorations/ChristmasDecorations";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
@@ -18,10 +18,32 @@ const Hero = () => {
     const saved = localStorage.getItem('holidayMode');
     return saved === 'true';
   });
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     localStorage.setItem('holidayMode', String(holidayMode));
-  }, [holidayMode]);
+    // Stop music if holiday mode is turned off
+    if (!holidayMode && musicPlaying) {
+      setMusicPlaying(false);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    }
+  }, [holidayMode, musicPlaying]);
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (musicPlaying) {
+        audioRef.current.pause();
+        setMusicPlaying(false);
+      } else {
+        audioRef.current.play();
+        setMusicPlaying(true);
+      }
+    }
+  };
   return <section id="home" className="relative flex items-center justify-center pt-20 pb-12 section-padding overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -76,6 +98,17 @@ const Hero = () => {
                 >
                   Holiday Fun {holidayMode ? 'Off' : 'On'} 🎄
                 </Button>
+                {holidayMode && (
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="bg-white/10 hover:bg-white/20 text-white border-white/30 h-[48px] w-[48px] transition-all duration-300 backdrop-blur-sm"
+                    onClick={toggleMusic}
+                    title={musicPlaying ? 'Pause Music' : 'Play Christmas Music'}
+                  >
+                    {musicPlaying ? <VolumeX className="h-5 w-5" /> : <Music className="h-5 w-5" />}
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -105,6 +138,13 @@ const Hero = () => {
 
       {/* Christmas Decorations */}
       <ChristmasDecorations show={holidayMode} />
+
+      {/* Christmas Background Music */}
+      <audio 
+        ref={audioRef} 
+        loop 
+        src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_53ce5b35c2.mp3?filename=we-wish-you-a-merry-christmas-christmas-carol-opera-choir-96183.mp3"
+      />
     </section>;
 };
 export default Hero;
