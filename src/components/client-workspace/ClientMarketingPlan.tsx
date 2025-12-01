@@ -8,7 +8,7 @@ import {
   FileText, BookOpen, Grid, BarChart, Users, Target, Lightbulb, 
   Share2, DollarSign, TrendingUp, Calendar, CheckCircle, AlertCircle, 
   Sparkles, AlertTriangle, Megaphone, Search, MousePointerClick, Star,
-  BookMarked, Trophy, Palette, ImageIcon, Type, Award, Building2, Globe
+  BookMarked, Trophy, Palette, ImageIcon, Type, Award, Building2, Globe, X
 } from "lucide-react";
 
 interface ClientMarketingPlanProps {
@@ -1058,50 +1058,283 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         </CardContent>
       </Card>
 
-      {/* Appendix: Competitor Analysis */}
+      {/* Appendix: Competitor Comparison Matrix */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Appendix A: Detailed Competitor Analysis</CardTitle>
+          <CardTitle className="text-xl">Appendix A: Competitive Comparison Matrix</CardTitle>
+          <p className="text-sm text-muted-foreground mt-2">Side-by-side analysis of key competitive metrics</p>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Firm Name</TableHead>
-                  <TableHead>Years</TableHead>
-                  <TableHead>Size</TableHead>
-                  <TableHead>Focus Areas</TableHead>
-                  <TableHead>USP</TableHead>
-                  <TableHead>Rating</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {competitors.map((comp, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell className="font-medium">{comp.firm}</TableCell>
-                    <TableCell>{comp.years}</TableCell>
-                    <TableCell>{comp.size}</TableCell>
-                    <TableCell className="text-sm">{comp.focus}</TableCell>
-                    <TableCell className="text-sm max-w-xs">{comp.usp}</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">{comp.rating}</Badge>
+          <div className="space-y-8">
+            {/* Comparison Matrix */}
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[200px] font-semibold">Key Metrics</TableHead>
+                    <TableHead className="text-center font-semibold bg-primary/5">
+                      <div className="flex flex-col items-center">
+                        <span className="text-primary">Puget Law Group</span>
+                        <span className="text-xs text-muted-foreground font-normal">(Our Firm)</span>
+                      </div>
+                    </TableHead>
+                    <TableHead className="text-center">Kevin Trombold</TableHead>
+                    <TableHead className="text-center">Milios Defense</TableHead>
+                    <TableHead className="text-center">Colburn Law</TableHead>
+                    <TableHead className="text-center">Stritmatter Kessler</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium">Online Reviews Rating</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <div className="flex flex-col items-center">
+                        <span className="font-semibold text-primary">4.9/5</span>
+                        <span className="text-xs text-muted-foreground">(120+ reviews)</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-center">4.7/5</TableCell>
+                    <TableCell className="text-center">4.6/5</TableCell>
+                    <TableCell className="text-center">4.8/5</TableCell>
+                    <TableCell className="text-center">4.5/5</TableCell>
+                  </TableRow>
+                  
+                  <TableRow>
+                    <TableCell className="font-medium">SEO Performance</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">Strong</Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="outline">Very Strong</Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="outline">Strong</Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="outline">Very Strong</Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="outline">Strong</Badge>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="mt-4 p-4 bg-muted rounded-lg">
-            <h4 className="font-semibold mb-2">Key Competitive Insights</h4>
-            <ul className="text-sm space-y-1">
-              <li>• Most competitors are solo practitioners or small firms (1-3 attorneys)</li>
-              <li>• PLG's 11-attorney team and 9 former prosecutors is a major differentiator</li>
-              <li>• Former prosecutor experience is common, but PLG's team of 9 far exceeds any competitor</li>
-              <li>• 5.0 rating with 500+ reviews surpasses most competitors, providing powerful social proof</li>
-              <li>• Many smaller firms lack sophisticated digital marketing strategies</li>
-              <li>• Opportunity to capture market share through superior SEO, content marketing, and PPC</li>
-            </ul>
+                  
+                  <TableRow>
+                    <TableCell className="font-medium">Content Marketing</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <CheckCircle className="h-5 w-5 text-primary mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/40 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/60 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/60 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/40 mx-auto" />
+                    </TableCell>
+                  </TableRow>
+                  
+                  <TableRow>
+                    <TableCell className="font-medium">Voice Search Optimized</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <CheckCircle className="h-5 w-5 text-primary mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/40 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                  </TableRow>
+                  
+                  <TableRow>
+                    <TableCell className="font-medium">Social Media Presence</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">Active</Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="outline">Moderate</Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="outline">Active</Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="outline">Very Active</Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="outline">Moderate</Badge>
+                    </TableCell>
+                  </TableRow>
+                  
+                  <TableRow>
+                    <TableCell className="font-medium">Dual Practice Areas</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <CheckCircle className="h-5 w-5 text-primary mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                  </TableRow>
+                  
+                  <TableRow>
+                    <TableCell className="font-medium">Former Prosecutor</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <CheckCircle className="h-5 w-5 text-primary mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/40 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                  </TableRow>
+                  
+                  <TableRow>
+                    <TableCell className="font-medium">SuperLawyer Status</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <CheckCircle className="h-5 w-5 text-primary mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/40 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/40 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/40 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/40 mx-auto" />
+                    </TableCell>
+                  </TableRow>
+                  
+                  <TableRow>
+                    <TableCell className="font-medium">Multi-Domain Strategy</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle className="h-5 w-5 text-primary" />
+                        <span className="text-xs text-muted-foreground mt-1">(4 domains)</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                  </TableRow>
+                  
+                  <TableRow>
+                    <TableCell className="font-medium">Personal Brand Integration</TableCell>
+                    <TableCell className="text-center bg-primary/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle className="h-5 w-5 text-primary" />
+                        <span className="text-xs text-muted-foreground mt-1">(Win With Casey)</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/40 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <CheckCircle className="h-5 w-5 text-foreground/60 mx-auto" />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Key Competitive Insights */}
+            <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
+              <h4 className="font-semibold mb-3 flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-primary" />
+                Key Competitive Insights
+              </h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span><strong>Unique Position:</strong> Only major firm serving both criminal defense and personal injury with dedicated brand strategies</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span><strong>Content Leadership:</strong> Four-domain strategy creates multiple touchpoints and SEO advantages competitors lack</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span><strong>Personal Brand Edge:</strong> Casey Arbenz's Ironman achievements and SuperLawyer status create compelling narrative</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span><strong>Technology Gap:</strong> Most competitors lag in voice search optimization and answer engine presence</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Direct Competitors Detail */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold mb-3">Criminal Defense Competitors</h4>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span><strong>Kevin Trombold:</strong> Established criminal defense with strong online presence</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span><strong>Milios Defense:</strong> Well-known Seattle firm with substantial digital marketing</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold mb-3">Personal Injury Competitors</h4>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span><strong>Colburn Law:</strong> Aggressive personal injury marketing with strong brand recognition</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span><strong>Stritmatter Kessler:</strong> Large firm with comprehensive digital presence</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
