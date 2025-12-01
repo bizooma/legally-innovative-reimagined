@@ -243,131 +243,149 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header with Download Button */}
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h1 className="text-3xl font-bold">{marketingPlan.title}</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Last updated: {new Date(marketingPlan.updated_at).toLocaleDateString()}
-          </p>
-        </div>
-        <Button 
-          onClick={handleDownloadPdf}
-          className="gap-2"
-          size="lg"
-        >
-          <Download className="h-4 w-4" />
-          Download PDF
-        </Button>
-      </div>
-
-      {/* Section Navigation */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b p-4">
-        <div className="flex flex-wrap gap-2">
-          {sections.map((section) => {
-            const Icon = section.icon;
-            return (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
-                  activeSection === section.id
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted hover:bg-muted/80"
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                <span className="text-sm font-medium">{section.label}</span>
-              </button>
-            );
-          })}
+    <div className="space-y-8 bg-background">
+      {/* Professional Header */}
+      <div className="border-b bg-card">
+        <div className="px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-semibold tracking-tight text-foreground mb-1">
+                {marketingPlan.title}
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Last updated: {new Date(marketingPlan.updated_at).toLocaleDateString()}
+              </p>
+            </div>
+            <Button 
+              onClick={handleDownloadPdf}
+              variant="outline"
+              className="gap-2 h-10"
+            >
+              <Download className="h-4 w-4" />
+              Export PDF
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* AI Marketing Strategist Chat */}
-      <MarketingAIChat clientId={client.id} />
-
-      {/* Executive Summary */}
-      <div id="executive-summary">
-        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <FileText className="h-6 w-6 text-primary" />
-              </div>
-              <CardTitle className="text-2xl">Executive Summary</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-lg leading-relaxed">
-              {marketingPlan.executive_summary.strengths}
-            </p>
-            {marketingPlan.executive_summary.gaps && (
-              <div className="p-4 rounded-lg bg-gradient-to-r from-primary/10 to-[hsl(0,37%,15%)]/10 border border-primary/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <AlertCircle className="h-5 w-5 text-primary" />
-                  <h4 className="font-semibold text-primary">Areas for Improvement</h4>
-                </div>
-                <p className="text-sm">
-                  {marketingPlan.executive_summary.gaps}
-                </p>
-              </div>
-            )}
-            <div className="grid md:grid-cols-2 gap-4 mt-6">
-              {marketingPlan.target_audiences && marketingPlan.target_audiences.length > 0 && (
-                <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
-                  <h4 className="font-semibold text-primary mb-2">Target Audiences</h4>
-                  <ul className="space-y-1 text-sm">
-                    {marketingPlan.target_audiences.slice(0, 3).map((audience, idx) => (
-                      <li key={idx}>• {audience.name}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {marketingPlan.marketing_objectives && marketingPlan.marketing_objectives.length > 0 && (
-                <div className="p-4 rounded-lg bg-foreground/5 border border-foreground/20">
-                  <h4 className="font-semibold text-foreground mb-2">Key Objectives</h4>
-                  <ul className="space-y-1 text-sm">
-                    {marketingPlan.marketing_objectives.slice(0, 3).map((obj, idx) => (
-                      <li key={idx}>• {obj.objective}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+      {/* Clean Section Navigation */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b">
+        <div className="px-8 py-3">
+          <div className="flex gap-1 overflow-x-auto">
+            {sections.map((section) => {
+              const Icon = section.icon;
+              return (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={`flex items-center gap-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                    activeSection === section.id
+                      ? "border-primary text-primary"
+                      : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  {section.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
-      {/* KPI Dashboard */}
-      <div id="kpi-dashboard" className="my-8">
-        <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-          <BarChart className="h-6 w-6 text-primary" />
-          Key Performance Indicators Dashboard
-          {kpisLoading && <span className="text-sm text-muted-foreground">(Loading...)</span>}
-        </h2>
-        
-        {/* Live Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          {/* Monthly Leads */}
-          {(() => {
-            const metric = getMetricByName('monthly_leads');
-            const value = metric?.metric_value || 42;
-            const target = metric?.target_value || 50;
-            const progress = calculateProgress(value, target);
-            const changePct = metric?.metadata?.change_pct || 15;
-            return (
-              <Card className="border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <Users className="h-5 w-5 text-primary" />
-                    <Badge variant="secondary" className={changePct >= 0 ? "bg-primary/20 text-primary" : "bg-destructive/20 text-destructive"}>
-                      {changePct >= 0 ? '+' : ''}{changePct}%
-                    </Badge>
+      <div className="px-8 space-y-8">
+
+        {/* AI Marketing Strategist Chat */}
+        <MarketingAIChat clientId={client.id} />
+
+        {/* Executive Summary */}
+        <div id="executive-summary">
+          <Card className="border">
+            <CardHeader className="border-b bg-muted/20">
+              <div className="flex items-center gap-3">
+                <FileText className="h-5 w-5 text-foreground" />
+                <CardTitle className="text-xl font-semibold">Executive Summary</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6 space-y-6">
+              <p className="text-base leading-relaxed text-foreground">
+                {marketingPlan.executive_summary.strengths}
+              </p>
+              {marketingPlan.executive_summary.gaps && (
+                <div className="p-5 border-l-4 border-primary bg-muted/30">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2">Areas for Improvement</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {marketingPlan.executive_summary.gaps}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-3xl font-bold text-primary">{value}</div>
-                  <div className="text-sm text-muted-foreground mt-1">Monthly Leads</div>
+                </div>
+              )}
+              <div className="grid md:grid-cols-2 gap-6 mt-8">
+                {marketingPlan.target_audiences && marketingPlan.target_audiences.length > 0 && (
+                  <div className="p-5 border bg-card">
+                    <h4 className="font-semibold text-foreground mb-3 text-sm uppercase tracking-wide">Target Audiences</h4>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      {marketingPlan.target_audiences.slice(0, 3).map((audience, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-primary mt-1">•</span>
+                          <span>{audience.name}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {marketingPlan.marketing_objectives && marketingPlan.marketing_objectives.length > 0 && (
+                  <div className="p-5 border bg-card">
+                    <h4 className="font-semibold text-foreground mb-3 text-sm uppercase tracking-wide">Key Objectives</h4>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      {marketingPlan.marketing_objectives.slice(0, 3).map((obj, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-primary mt-1">•</span>
+                          <span>{obj.objective}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* KPI Dashboard */}
+        <div id="kpi-dashboard">
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
+              <BarChart className="h-5 w-5" />
+              Key Performance Indicators
+              {kpisLoading && <span className="text-sm text-muted-foreground font-normal">(Loading...)</span>}
+            </h2>
+          </div>
+          
+          {/* Live Metrics Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {/* Monthly Leads */}
+            {(() => {
+              const metric = getMetricByName('monthly_leads');
+              const value = metric?.metric_value || 42;
+              const target = metric?.target_value || 50;
+              const progress = calculateProgress(value, target);
+              const changePct = metric?.metadata?.change_pct || 15;
+              return (
+                <Card className="border">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <Users className="h-5 w-5 text-muted-foreground" />
+                      <Badge variant="outline" className={changePct >= 0 ? "border-success text-success" : "border-destructive text-destructive"}>
+                        {changePct >= 0 ? '+' : ''}{changePct}%
+                      </Badge>
+                    </div>
+                    <div className="text-3xl font-bold text-foreground mb-1">{value}</div>
+                    <div className="text-sm text-muted-foreground">Monthly Leads</div>
                   <div className="text-xs text-muted-foreground">Target: {target}</div>
                   <Progress value={progress} className="mt-2 h-1.5" />
                 </CardContent>
@@ -383,18 +401,18 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
             const progress = calculateProgress(value, target);
             const changePct = metric?.metadata?.change_pct || 8;
             return (
-              <Card className="border-primary/20 bg-gradient-to-br from-foreground/5 to-foreground/10">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <TrendingUp className="h-5 w-5" />
-                    <Badge variant="secondary" className={changePct >= 0 ? "bg-foreground/20" : "bg-destructive/20 text-destructive"}>
+              <Card className="border">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <TrendingUp className="h-5 w-5 text-muted-foreground" />
+                    <Badge variant="outline" className={changePct >= 0 ? "border-success text-success" : "border-destructive text-destructive"}>
                       {changePct >= 0 ? '+' : ''}{changePct}%
                     </Badge>
                   </div>
-                  <div className="text-3xl font-bold">{value}%</div>
-                  <div className="text-sm text-muted-foreground mt-1">Conversion Rate</div>
+                  <div className="text-3xl font-bold text-foreground mb-1">{value}%</div>
+                  <div className="text-sm text-muted-foreground">Conversion Rate</div>
                   <div className="text-xs text-muted-foreground">Target: {target}%</div>
-                  <Progress value={progress} className="mt-2 h-1.5" />
+                  <Progress value={progress} className="mt-3 h-1.5" />
                 </CardContent>
               </Card>
             );
@@ -408,18 +426,18 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
             const progress = calculateProgress(value, target);
             const changePct = metric?.metadata?.change_pct || 32;
             return (
-              <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <Search className="h-5 w-5 text-primary" />
-                    <Badge variant="secondary" className={changePct >= 0 ? "bg-primary/20 text-primary" : "bg-destructive/20 text-destructive"}>
+              <Card className="border">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <Search className="h-5 w-5 text-muted-foreground" />
+                    <Badge variant="outline" className={changePct >= 0 ? "border-success text-success" : "border-destructive text-destructive"}>
                       {changePct >= 0 ? '+' : ''}{changePct}%
                     </Badge>
                   </div>
-                  <div className="text-3xl font-bold text-primary">{value.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground mt-1">Monthly Visitors</div>
+                  <div className="text-3xl font-bold text-foreground mb-1">{value.toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground">Monthly Visitors</div>
                   <div className="text-xs text-muted-foreground">Target: {target.toLocaleString()}</div>
-                  <Progress value={progress} className="mt-2 h-1.5" />
+                  <Progress value={progress} className="mt-3 h-1.5" />
                 </CardContent>
               </Card>
             );
@@ -430,21 +448,21 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
             const metric = getMetricByName('cost_per_lead');
             const value = metric?.metric_value || 185;
             const target = metric?.target_value || 150;
-            const progress = calculateProgress(target, value); // Inverted for cost (lower is better)
+            const progress = calculateProgress(target, value);
             const changePct = metric?.metadata?.change_pct || -5;
             return (
-              <Card className="border-primary/20 bg-gradient-to-br from-foreground/5 to-foreground/10">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <DollarSign className="h-5 w-5" />
-                    <Badge variant="secondary" className={changePct <= 0 ? "bg-primary/20 text-primary" : "bg-destructive/20 text-destructive"}>
+              <Card className="border">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <DollarSign className="h-5 w-5 text-muted-foreground" />
+                    <Badge variant="outline" className={changePct <= 0 ? "border-success text-success" : "border-destructive text-destructive"}>
                       {changePct >= 0 ? '+' : ''}{changePct}%
                     </Badge>
                   </div>
-                  <div className="text-3xl font-bold">${value}</div>
-                  <div className="text-sm text-muted-foreground mt-1">Cost Per Lead</div>
+                  <div className="text-3xl font-bold text-foreground mb-1">${value}</div>
+                  <div className="text-sm text-muted-foreground">Cost Per Lead</div>
                   <div className="text-xs text-muted-foreground">Target: ${target}</div>
-                  <Progress value={progress} className="mt-2 h-1.5" />
+                  <Progress value={progress} className="mt-3 h-1.5" />
                 </CardContent>
               </Card>
             );
@@ -452,12 +470,12 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         </div>
 
         {/* Goal Trackers */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Puget Law Group Goals */}
-          <Card className="border-primary/20">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Building2 className="h-5 w-5 text-primary" />
+          <Card className="border">
+            <CardHeader className="border-b bg-muted/20">
+              <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+                <Building2 className="h-5 w-5" />
                 Puget Law Group - Goal Progress
               </CardTitle>
             </CardHeader>
@@ -517,9 +535,9 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </Card>
 
           {/* Win With Casey Goals */}
-          <Card className="border-foreground/20">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+          <Card className="border">
+            <CardHeader className="border-b bg-muted/20">
+              <CardTitle className="flex items-center gap-2 text-lg font-semibold">
                 <Trophy className="h-5 w-5" />
                 Win With Casey - Launch Metrics
               </CardTitle>
@@ -581,20 +599,20 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         </div>
 
         {/* Performance Indicators */}
-        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5 text-primary" />
+        <Card className="border">
+          <CardHeader className="border-b bg-muted/20">
+            <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+              <Target className="h-5 w-5" />
               Performance Summary - Current vs Target
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Traffic Performance */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="p-2 rounded-lg bg-primary/10">
-                    <TrendingUp className="h-4 w-4 text-primary" />
+                  <div className="p-2 border bg-muted/30">
+                    <TrendingUp className="h-4 w-4 text-foreground" />
                   </div>
                   <h4 className="font-semibold">Traffic Growth</h4>
                 </div>
@@ -825,46 +843,46 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
       {/* Accordion Sections */}
       <Accordion type="multiple" defaultValue={["introduction", "market-analysis"]} className="space-y-4">
         {/* Introduction */}
-        <AccordionItem value="introduction" className="border rounded-lg px-4">
-          <AccordionTrigger className="hover:no-underline">
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-primary" />
-              <span className="text-xl font-semibold">2. Introduction</span>
+        <AccordionItem value="introduction" className="border bg-card">
+          <AccordionTrigger className="hover:no-underline px-6">
+            <div className="flex items-center gap-3">
+              <BookOpen className="h-5 w-5 text-foreground" />
+              <span className="text-lg font-semibold">2. Introduction</span>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="pt-4 space-y-4">
-            <p>
+          <AccordionContent className="px-6 pb-6 pt-2 space-y-4 text-muted-foreground">
+            <p className="leading-relaxed">
               Puget Law Group (PLG) has established itself as a premier criminal defense firm in the Puget Sound region, with a strong focus on DUI and serious criminal cases. With over 150 years of combined experience and a team that includes nine former prosecutors, the firm possesses a significant competitive advantage.
             </p>
-            <p>
+            <p className="leading-relaxed">
               This marketing plan aims to build upon this strong foundation by implementing a <strong>dual-brand strategy</strong>. The primary Puget Law Group brand will continue to solidify its position as the top criminal defense firm, while the new Win With Casey vanity brand will be launched to specifically target and capture the personal injury market.
             </p>
-            <div className="bg-muted p-4 rounded-lg">
-              <h4 className="font-semibold mb-2">Integrated Strategic Objectives:</h4>
-              <ul className="space-y-1 text-sm">
-                <li>• Solidify PLG's position as the top criminal defense firm in the Seattle metropolitan area</li>
-                <li>• Increase market share in the lucrative DUI and serious felony defense sectors</li>
-                <li>• Enhance brand recognition and authority throughout Washington State</li>
-                <li>• Drive consistent, high-quality lead generation to support growth objectives</li>
+            <div className="bg-muted/30 p-5 border-l-4 border-l-primary mt-4">
+              <h4 className="font-semibold mb-3 text-foreground">Integrated Strategic Objectives:</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><span>Solidify PLG's position as the top criminal defense firm in the Seattle metropolitan area</span></li>
+                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><span>Increase market share in the lucrative DUI and serious felony defense sectors</span></li>
+                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><span>Enhance brand recognition and authority throughout Washington State</span></li>
+                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><span>Drive consistent, high-quality lead generation to support growth objectives</span></li>
               </ul>
             </div>
           </AccordionContent>
         </AccordionItem>
 
         {/* Market Analysis */}
-        <AccordionItem value="market-analysis" id="market-analysis" className="border rounded-lg px-4">
-          <AccordionTrigger className="hover:no-underline">
-            <div className="flex items-center gap-2">
-              <BarChart className="h-5 w-5 text-primary" />
-              <span className="text-xl font-semibold">4. Market Analysis</span>
+        <AccordionItem value="market-analysis" id="market-analysis" className="border bg-card">
+          <AccordionTrigger className="hover:no-underline px-6">
+            <div className="flex items-center gap-3">
+              <BarChart className="h-5 w-5 text-foreground" />
+              <span className="text-lg font-semibold">4. Market Analysis</span>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="pt-4 space-y-6">
+          <AccordionContent className="px-6 pb-6 pt-2 space-y-6">
             {/* Market Share Distribution Chart */}
-            <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Target className="h-5 w-5 text-primary" />
+            <Card className="border">
+              <CardHeader className="border-b bg-muted/20">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Target className="h-5 w-5" />
                   Market Share Distribution
                 </CardTitle>
               </CardHeader>
@@ -904,63 +922,65 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
             </Card>
 
             {/* Client Acquisition Trends Chart */}
-            <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-primary" />
+            <Card className="border">
+              <CardHeader className="border-b bg-muted/20">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <TrendingUp className="h-5 w-5" />
                   Client Acquisition Trends (12-Month Projection)
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-6">
                 <ResponsiveContainer width="100%" height={350}>
                   <LineChart data={acquisitionTrendsData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
                     <XAxis 
                       dataKey="month" 
-                      stroke="hsl(var(--foreground))"
-                      tick={{ fill: "hsl(var(--foreground))" }}
+                      stroke="hsl(var(--muted-foreground))"
+                      tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
                     />
                     <YAxis 
-                      stroke="hsl(var(--foreground))"
-                      tick={{ fill: "hsl(var(--foreground))" }}
+                      stroke="hsl(var(--muted-foreground))"
+                      tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
                     />
                     <Tooltip 
                       contentStyle={{ 
-                        backgroundColor: "hsl(var(--background))",
+                        backgroundColor: "hsl(var(--card))",
                         border: "1px solid hsl(var(--border))",
-                        borderRadius: "var(--radius)"
+                        borderRadius: "var(--radius)",
+                        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)"
                       }}
                     />
-                    <Legend />
+                    <Legend wrapperStyle={{ fontSize: 14 }} />
                     <Line 
                       type="monotone" 
                       dataKey="criminalDefense" 
                       stroke="hsl(var(--primary))" 
                       strokeWidth={2}
                       name="Criminal Defense"
-                      dot={{ fill: "hsl(var(--primary))" }}
+                      dot={{ fill: "hsl(var(--primary))", r: 4 }}
                     />
                     <Line 
                       type="monotone" 
                       dataKey="personalInjury" 
-                      stroke="hsl(0,37%,15%)" 
+                      stroke="hsl(var(--foreground))" 
                       strokeWidth={2}
                       name="Personal Injury"
-                      dot={{ fill: "hsl(0,37%,15%)" }}
+                      dot={{ fill: "hsl(var(--foreground))", r: 4 }}
+                      opacity={0.7}
                     />
                     <Line 
                       type="monotone" 
                       dataKey="total" 
-                      stroke="hsl(var(--foreground))" 
-                      strokeWidth={3}
+                      stroke="hsl(var(--muted-foreground))" 
+                      strokeWidth={2}
                       name="Total Clients"
-                      dot={{ fill: "hsl(var(--foreground))" }}
+                      dot={{ fill: "hsl(var(--muted-foreground))", r: 4 }}
                       strokeDasharray="5 5"
                     />
                   </LineChart>
                 </ResponsiveContainer>
-                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
-                  <p className="text-sm text-muted-foreground">
+                <div className="mt-6 p-5 bg-muted/30 border-l-4 border-l-primary">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Growth Trajectory:</strong> Projected 400% growth in personal injury clients over 12 months through Win With Casey brand launch, while maintaining steady 192% growth in criminal defense practice.
                   </p>
                 </div>
@@ -1584,100 +1604,101 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
 
       {/* Budget */}
       <div id="budget">
-        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5 mb-6">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-primary" />
+        <Card className="border mb-8">
+          <CardHeader className="border-b bg-muted/20">
+            <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+              <DollarSign className="h-5 w-5" />
               Budget Allocation by Category
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6">
             <ResponsiveContainer width="100%" height={400}>
               <RechartsBarChart data={budgetAllocationData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
                 <XAxis 
                   dataKey="category" 
-                  stroke="hsl(var(--foreground))"
-                  tick={{ fill: "hsl(var(--foreground))" }}
+                  stroke="hsl(var(--muted-foreground))"
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
                   angle={-45}
                   textAnchor="end"
                   height={100}
                 />
                 <YAxis 
-                  stroke="hsl(var(--foreground))"
-                  tick={{ fill: "hsl(var(--foreground))" }}
+                  stroke="hsl(var(--muted-foreground))"
+                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
                   tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                 />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: "hsl(var(--background))",
+                    backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border))",
-                    borderRadius: "var(--radius)"
+                    borderRadius: "var(--radius)",
+                    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)"
                   }}
                   formatter={(value: number) => `$${value.toLocaleString()}`}
                 />
-                <Legend />
+                <Legend wrapperStyle={{ fontSize: 14 }} />
                 <Bar dataKey="plg" fill="hsl(var(--primary))" name="Puget Law Group" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="winWithCasey" fill="hsl(0,37%,15%)" name="Win With Casey" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="winWithCasey" fill="hsl(var(--foreground))" opacity={0.7} name="Win With Casey" radius={[4, 4, 0, 0]} />
               </RechartsBarChart>
             </ResponsiveContainer>
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
               {marketingPlan.budget.plg_allocation && (
-                <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
-                  <div className="text-2xl font-bold text-primary">${marketingPlan.budget.plg_allocation.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground mt-1">Puget Law Group</div>
-                  <div className="text-xs text-muted-foreground">
+                <div className="p-5 border bg-card">
+                  <div className="text-2xl font-bold text-foreground">${marketingPlan.budget.plg_allocation.toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground mt-2">Puget Law Group</div>
+                  <div className="text-xs text-muted-foreground mt-1">
                     {marketingPlan.budget.total ? Math.round((marketingPlan.budget.plg_allocation / marketingPlan.budget.total) * 100) : 0}% of total budget
                   </div>
                 </div>
               )}
               {marketingPlan.budget.wwc_allocation && (
-                <div className="p-4 bg-foreground/5 border border-foreground/20 rounded-lg">
-                  <div className="text-2xl font-bold">${marketingPlan.budget.wwc_allocation.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground mt-1">Win With Casey</div>
-                  <div className="text-xs text-muted-foreground">
+                <div className="p-5 border bg-card">
+                  <div className="text-2xl font-bold text-foreground">${marketingPlan.budget.wwc_allocation.toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground mt-2">Win With Casey</div>
+                  <div className="text-xs text-muted-foreground mt-1">
                     {marketingPlan.budget.total ? Math.round((marketingPlan.budget.wwc_allocation / marketingPlan.budget.total) * 100) : 0}% of total budget
                   </div>
                 </div>
               )}
               {marketingPlan.budget.total && (
-                <div className="p-4 bg-gradient-to-br from-primary/10 to-foreground/10 border border-primary/20 rounded-lg">
-                  <div className="text-2xl font-bold">${marketingPlan.budget.total.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground mt-1">Total Investment</div>
-                  <div className="text-xs text-muted-foreground">Annual marketing spend</div>
+                <div className="p-5 border bg-muted/30">
+                  <div className="text-2xl font-bold text-foreground">${marketingPlan.budget.total.toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground mt-2">Total Investment</div>
+                  <div className="text-xs text-muted-foreground mt-1">Annual marketing spend</div>
                 </div>
               )}
             </div>
           </CardContent>
         </Card>
         
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <DollarSign className="h-6 w-6 text-primary" />
-              <CardTitle className="text-2xl">Detailed Budget Breakdown</CardTitle>
+        <Card className="border">
+          <CardHeader className="border-b bg-muted/20">
+            <div className="flex items-center gap-3">
+              <DollarSign className="h-5 w-5" />
+              <CardTitle className="text-lg font-semibold">Detailed Budget Breakdown</CardTitle>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead className="text-right">Monthly</TableHead>
-                  <TableHead className="text-right">Annual</TableHead>
+                <TableRow className="bg-muted/20">
+                  <TableHead className="font-semibold">Category</TableHead>
+                  <TableHead className="font-semibold">Description</TableHead>
+                  <TableHead className="text-right font-semibold">Monthly</TableHead>
+                  <TableHead className="text-right font-semibold">Annual</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {budgetItems.map((item, idx) => (
-                  <TableRow key={idx}>
+                  <TableRow key={idx} className="hover:bg-muted/30">
                     <TableCell className="font-medium">{item.category}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">{item.description}</TableCell>
                     <TableCell className="text-right">{item.monthly}</TableCell>
                     <TableCell className="text-right">{item.annual}</TableCell>
                   </TableRow>
                 ))}
-                <TableRow className="font-bold bg-muted/50">
+                <TableRow className="font-bold bg-muted border-t-2">
                   <TableCell>Total</TableCell>
                   <TableCell></TableCell>
                   <TableCell className="text-right">$17,000</TableCell>
@@ -1690,19 +1711,19 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
       </div>
 
       {/* KPIs */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-6 w-6 text-primary" />
-            <CardTitle className="text-2xl">10. Key Performance Indicators</CardTitle>
+      <Card className="border">
+        <CardHeader className="border-b bg-muted/20">
+          <div className="flex items-center gap-3">
+            <TrendingUp className="h-5 w-5" />
+            <CardTitle className="text-lg font-semibold">10. Key Performance Indicators</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6">
           <div className="grid md:grid-cols-2 gap-4">
             {kpiDefinitions.map((kpi, idx) => (
-              <div key={idx} className="p-4 border rounded-lg">
-                <h4 className="font-semibold mb-1">{kpi.name}</h4>
-                <p className="text-sm text-muted-foreground">{kpi.description}</p>
+              <div key={idx} className="p-5 border bg-card hover:border-primary/50 transition-colors">
+                <h4 className="font-semibold mb-2 text-foreground">{kpi.name}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{kpi.description}</p>
               </div>
             ))}
           </div>
@@ -1710,26 +1731,26 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
       </Card>
 
       {/* Conclusion */}
-      <Card className="border-primary/20 bg-primary/5">
+      <Card className="border-l-4 border-l-primary bg-muted/20">
         <CardHeader>
-          <CardTitle className="text-2xl">11. Conclusion</CardTitle>
+          <CardTitle className="text-lg font-semibold">11. Conclusion</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <p>
+        <CardContent className="space-y-4 text-muted-foreground">
+          <p className="leading-relaxed">
             Puget Law Group is in a strong position to dominate the Seattle criminal defense market. By leveraging its unique strengths and implementing the data-driven marketing strategies outlined in this plan, the firm can achieve its growth objectives and solidify its reputation as the premier criminal defense firm in the Puget Sound region.
           </p>
-          <p>
+          <p className="leading-relaxed">
             This plan provides a clear roadmap for success, but it requires a commitment to execution and a willingness to adapt to the ever-changing digital landscape. With a focus on providing exceptional legal representation and a superior client experience, Puget Law Group is well-positioned for a future of continued growth and success.
           </p>
         </CardContent>
       </Card>
 
       {/* References */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <BookMarked className="h-6 w-6 text-primary" />
-            <CardTitle className="text-xl">References</CardTitle>
+      <Card className="border">
+        <CardHeader className="border-b bg-muted/20">
+          <div className="flex items-center gap-3">
+            <BookMarked className="h-5 w-5" />
+            <CardTitle className="text-lg font-semibold">References</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
@@ -2021,14 +2042,14 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
 
       {/* Appendix: Implementation Timeline */}
       <div id="timeline">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Calendar className="h-6 w-6 text-primary" />
-              <CardTitle className="text-xl">Appendix B: Implementation Timeline</CardTitle>
+        <Card className="border">
+          <CardHeader className="border-b bg-muted/20">
+            <div className="flex items-center gap-3">
+              <Calendar className="h-5 w-5" />
+              <CardTitle className="text-lg font-semibold">Appendix B: Implementation Timeline</CardTitle>
             </div>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="p-6 space-y-6">
             {timelinePhases.map((phase, idx) => (
               <div key={idx} className={`p-4 border rounded-lg ${phase.color}`}>
                 <h4 className="font-semibold mb-3">{phase.phase}</h4>
@@ -2047,56 +2068,56 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
       </div>
 
       {/* Appendix C: Win With Casey Initiative */}
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Trophy className="h-6 w-6 text-primary" />
-            <CardTitle className="text-xl">Appendix C: Win With Casey Initiative</CardTitle>
+      <Card className="border">
+        <CardHeader className="border-b bg-muted/20">
+          <div className="flex items-center gap-3">
+            <Trophy className="h-5 w-5" />
+            <CardTitle className="text-lg font-semibold">Appendix C: Win With Casey Initiative</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="p-6 space-y-6">
           <div>
-            <h4 className="font-semibold mb-2">Overview</h4>
-            <p className="text-sm">
+            <h4 className="font-semibold mb-3 text-foreground">Overview</h4>
+            <p className="text-sm text-muted-foreground leading-relaxed">
               The Win With Casey initiative represents a strategic expansion of Puget Law Group's service offerings into the personal injury market. By creating a separate vanity brand centered on Managing Partner Casey Arbenz, the firm can pursue aggressive growth in personal injury while maintaining its strong brand identity in criminal defense.
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-3">Multi-Domain Architecture</h4>
-            <div className="grid md:grid-cols-2 gap-3">
-              <div className="p-3 bg-background border rounded-lg">
-                <p className="font-medium text-sm mb-1">winwithcasey.com</p>
+            <h4 className="font-semibold mb-4 text-foreground">Multi-Domain Architecture</h4>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 border bg-card hover:border-primary/50 transition-colors">
+                <p className="font-medium text-sm mb-2 text-foreground">winwithcasey.com</p>
                 <p className="text-xs text-muted-foreground">Primary conversion-focused domain with clear calls to action</p>
               </div>
-              <div className="p-3 bg-background border rounded-lg">
-                <p className="font-medium text-sm mb-1">caseyfights.com</p>
+              <div className="p-4 border bg-card hover:border-primary/50 transition-colors">
+                <p className="font-medium text-sm mb-2 text-foreground">caseyfights.com</p>
                 <p className="text-xs text-muted-foreground">Results-focused content showcasing case studies and settlements</p>
               </div>
-              <div className="p-3 bg-background border rounded-lg">
-                <p className="font-medium text-sm mb-1">caseyatbat.com</p>
+              <div className="p-4 border bg-card hover:border-primary/50 transition-colors">
+                <p className="font-medium text-sm mb-2 text-foreground">caseyatbat.com</p>
                 <p className="text-xs text-muted-foreground">Educational content using sports metaphors for accessibility</p>
               </div>
-              <div className="p-3 bg-background border rounded-lg">
-                <p className="font-medium text-sm mb-1">caseyarbenz.com</p>
+              <div className="p-4 border bg-card hover:border-primary/50 transition-colors">
+                <p className="font-medium text-sm mb-2 text-foreground">caseyarbenz.com</p>
                 <p className="text-xs text-muted-foreground">Professional authority site highlighting credentials and expertise</p>
               </div>
             </div>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-2">Strategic Rationale</h4>
-            <ul className="space-y-2 text-sm">
-              <li className="flex gap-2">
-                <span className="text-primary mt-0.5">•</span>
+            <h4 className="font-semibold mb-3 text-foreground">Strategic Rationale</h4>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li className="flex gap-3 items-start">
+                <span className="text-primary mt-1 flex-shrink-0">•</span>
                 <span>Criminal defense and personal injury markets have fundamentally different client personas and search behaviors</span>
               </li>
-              <li className="flex gap-2">
-                <span className="text-primary mt-0.5">•</span>
+              <li className="flex gap-3 items-start">
+                <span className="text-primary mt-1 flex-shrink-0">•</span>
                 <span>Focused, specialized content performs better in search engine rankings than mixed practice area sites</span>
               </li>
-              <li className="flex gap-2">
-                <span className="text-primary mt-0.5">•</span>
+              <li className="flex gap-3 items-start">
+                <span className="text-primary mt-1 flex-shrink-0">•</span>
                 <span>Casey Arbenz's personal brand (SuperLawyer, Ironman competitor, former prosecutor) resonates powerfully in personal injury</span>
               </li>
               <li className="flex gap-2">
@@ -2154,6 +2175,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
