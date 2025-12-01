@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useMarketingKPIs } from "@/hooks/useMarketingKPIs";
+import { MarketingAIChat } from "./MarketingAIChat";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -230,6 +231,9 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           })}
         </div>
       </div>
+
+      {/* AI Marketing Strategist Chat */}
+      <MarketingAIChat clientId={client.id} />
 
       {/* Executive Summary */}
       <div id="executive-summary">

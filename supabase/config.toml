@@ -115,3 +115,7 @@ verify_jwt = false
 [functions.audit-chat]
 verify_jwt = false
 
+[functions.marketing-ai-chat]
+verify_jwt = true
+
+
