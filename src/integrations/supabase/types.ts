@@ -497,6 +497,59 @@ export type Database = {
           },
         ]
       }
+      marketing_kpis: {
+        Row: {
+          category: string
+          client_id: string
+          created_at: string | null
+          id: string
+          metadata: Json | null
+          metric_name: string
+          metric_unit: string | null
+          metric_value: number
+          period_end: string
+          period_start: string
+          target_value: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          client_id: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          metric_name: string
+          metric_unit?: string | null
+          metric_value: number
+          period_end: string
+          period_start: string
+          target_value?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          client_id?: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          metric_name?: string
+          metric_unit?: string | null
+          metric_value?: number
+          period_end?: string
+          period_start?: string
+          target_value?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketing_kpis_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       newsletter_subscriptions: {
         Row: {
           email: string
