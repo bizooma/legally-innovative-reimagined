@@ -8,12 +8,12 @@ interface ConfettiPiece {
   rotation: number;
 }
 
-export const AutumnConfetti = () => {
+export const ChristmasConfetti = () => {
   const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    const emojis = ['🍁', '🍂', '🦃', '🌽', '🥧'];
+    const emojis = ['🎄', '❄️', '🎅', '⭐', '🎁', '🔔'];
     const pieces = Array.from({ length: 40 }, (_, i) => ({
       id: i,
       emoji: emojis[Math.floor(Math.random() * emojis.length)],

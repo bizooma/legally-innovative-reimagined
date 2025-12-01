@@ -7,7 +7,7 @@ import { AnimatedParticles } from "./hero/AnimatedParticles";
 import { FloatingFeatureCards } from "./hero/FloatingFeatureCards";
 import { GradientMesh } from "./hero/GradientMesh";
 import { useScrollFade } from "@/hooks/useParallax";
-import { ThanksgivingDecorations } from "./decorations/ThanksgivingDecorations";
+import { ChristmasDecorations } from "./decorations/ChristmasDecorations";
 import { useState, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -74,7 +74,7 @@ const Hero = () => {
                   className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-6 text-base font-semibold transition-all duration-300 backdrop-blur-sm"
                   onClick={() => setHolidayMode(!holidayMode)}
                 >
-                  Holiday Fun {holidayMode ? 'Off' : 'On'} 🦃
+                  Holiday Fun {holidayMode ? 'Off' : 'On'} 🎄
                 </Button>
               </div>
             </div>
@@ -103,8 +103,8 @@ const Hero = () => {
       <div className="absolute top-1/3 right-20 w-3 h-3 bg-white rounded-full animate-pulse opacity-40 animation-delay-1000"></div>
       <div className="absolute bottom-1/4 left-1/4 w-1 h-1 bg-legal-accent rounded-full animate-pulse opacity-80 animation-delay-2000"></div>
 
-      {/* Thanksgiving Decorations */}
-      <ThanksgivingDecorations show={holidayMode} />
+      {/* Christmas Decorations */}
+      <ChristmasDecorations show={holidayMode} />
     </section>;
 };
 export default Hero;
