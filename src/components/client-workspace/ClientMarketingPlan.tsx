@@ -13,7 +13,7 @@ import {
   FileText, BookOpen, Grid, BarChart, Users, Target, Lightbulb, 
   Share2, DollarSign, TrendingUp, Calendar, CheckCircle, AlertCircle, 
   Sparkles, AlertTriangle, Megaphone, Search, MousePointerClick, Star,
-  BookMarked, Trophy, Palette, ImageIcon, Type, Award, Building2, Globe, X, Download
+  BookMarked, Trophy, Palette, ImageIcon, Type, Award, Building2, Globe, X, Download, Presentation
 } from "lucide-react";
 import { generateMarketingPlanPdf } from "@/utils/marketingPlanPdfExport";
 import { toast } from "sonner";
@@ -24,6 +24,7 @@ interface ClientMarketingPlanProps {
 
 const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
   const [activeSection, setActiveSection] = useState<string>("executive-summary");
+  const [isPresentationMode, setIsPresentationMode] = useState(false);
   
   // Fetch real-time KPI data from Supabase
   const { 
@@ -243,7 +244,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
   };
 
   return (
-    <div className="space-y-8 bg-background">
+    <div className={`${isPresentationMode ? 'fixed inset-0 z-50 bg-background overflow-y-auto' : 'space-y-8 bg-background'}`}>
       {/* Professional Header */}
       <div className="border-b bg-card">
         <div className="px-8 py-6">
@@ -256,49 +257,71 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                 Last updated: {new Date(marketingPlan.updated_at).toLocaleDateString()}
               </p>
             </div>
-            <Button 
-              onClick={handleDownloadPdf}
-              variant="outline"
-              className="gap-2 h-10"
-            >
-              <Download className="h-4 w-4" />
-              Export PDF
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button 
+                onClick={() => setIsPresentationMode(!isPresentationMode)}
+                variant={isPresentationMode ? "default" : "outline"}
+                className="gap-2 h-10"
+              >
+                {isPresentationMode ? (
+                  <>
+                    <X className="h-4 w-4" />
+                    Exit
+                  </>
+                ) : (
+                  <>
+                    <Presentation className="h-4 w-4" />
+                    Present
+                  </>
+                )}
+              </Button>
+              <Button 
+                onClick={handleDownloadPdf}
+                variant="outline"
+                className="gap-2 h-10"
+              >
+                <Download className="h-4 w-4" />
+                Export PDF
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Clean Section Navigation */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b">
-        <div className="px-8 py-3">
-          <div className="flex gap-1 overflow-x-auto">
-            {sections.map((section) => {
-              const Icon = section.icon;
-              return (
-                <button
-                  key={section.id}
-                  onClick={() => scrollToSection(section.id)}
-                  className={`flex items-center gap-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
-                    activeSection === section.id
-                      ? "border-primary text-primary"
-                      : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-                  }`}
-                >
-                  <Icon className="h-4 w-4" />
-                  {section.label}
-                </button>
-              );
-            })}
+      {!isPresentationMode && (
+        <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b">
+          <div className="px-8 py-3">
+            <div className="flex gap-1 overflow-x-auto">
+              {sections.map((section) => {
+                const Icon = section.icon;
+                return (
+                  <button
+                    key={section.id}
+                    onClick={() => scrollToSection(section.id)}
+                    className={`flex items-center gap-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                      activeSection === section.id
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {section.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="px-8 space-y-8">
 
         {/* AI Marketing Strategist Chat */}
-        <MarketingAIChat clientId={client.id} />
+        {!isPresentationMode && <MarketingAIChat clientId={client.id} />}
 
         {/* Executive Summary */}
+        {(isPresentationMode || activeSection === "executive-summary") && (
         <div id="executive-summary">
           <Card className="border">
             <CardHeader className="border-b bg-muted/20">
@@ -355,8 +378,10 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
             </CardContent>
           </Card>
         </div>
+        )}
 
         {/* KPI Dashboard */}
+        {!isPresentationMode && activeSection === "kpi-dashboard" && (
         <div id="kpi-dashboard">
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
@@ -750,8 +775,10 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </CardContent>
         </Card>
       </div>
+      )}
 
       {/* SWOT Analysis */}
+      {(isPresentationMode || activeSection === "swot") && (
       <div id="swot">
         <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
           <Grid className="h-6 w-6 text-primary" />
@@ -839,9 +866,11 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </Card>
         </div>
       </div>
+      )}
 
       {/* Accordion Sections */}
-      <Accordion type="multiple" defaultValue={["introduction", "market-analysis"]} className="space-y-4">
+      {(isPresentationMode || ["market-analysis", "objectives", "brand-guidelines"].includes(activeSection)) && (
+      <Accordion type="multiple" defaultValue={isPresentationMode ? ["introduction", "market-analysis", "objectives", "brand-guidelines"] : ["introduction", "market-analysis"]} className="space-y-4">
         {/* Introduction */}
         <AccordionItem value="introduction" className="border bg-card">
           <AccordionTrigger className="hover:no-underline px-6">
@@ -1601,8 +1630,10 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+      )}
 
       {/* Budget */}
+      {(isPresentationMode || activeSection === "budget") && (
       <div id="budget">
         <Card className="border mb-8">
           <CardHeader className="border-b bg-muted/20">
@@ -1709,7 +1740,11 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </CardContent>
         </Card>
       </div>
+      )}
 
+      {/* KPIs, Conclusion, References, and Appendices */}
+      {(isPresentationMode || activeSection === "timeline") && (
+      <>
       {/* KPIs */}
       <Card className="border">
         <CardHeader className="border-b bg-muted/20">
@@ -2175,6 +2210,8 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </div>
         </CardContent>
       </Card>
+      </>
+      )}
       </div>
     </div>
   );
