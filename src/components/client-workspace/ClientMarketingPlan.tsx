@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useMarketingKPIs } from "@/hooks/useMarketingKPIs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -18,6 +19,18 @@ interface ClientMarketingPlanProps {
 
 const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
   const [activeSection, setActiveSection] = useState<string>("executive-summary");
+  
+  // Fetch real-time KPI data from Supabase
+  const { 
+    kpis, 
+    isLoading: kpisLoading, 
+    getMetricByName, 
+    getMetricsByBrand,
+    calculateProgress 
+  } = useMarketingKPIs({ 
+    clientId: client.id, 
+    autoRefresh: true 
+  });
 
   const sections = [
     { id: "executive-summary", label: "Summary", icon: FileText },
@@ -85,7 +98,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     { category: "Video Production", monthly: "$2,000", annual: "$24,000", description: "Quarterly video shoots" }
   ];
 
-  const kpis = [
+  const kpiDefinitions = [
     { name: "Leads", description: "Total number of qualified leads generated per month" },
     { name: "Cost Per Lead (CPL)", description: "The average cost to acquire a new lead" },
     { name: "Conversion Rate", description: "The percentage of website visitors who contact the firm" },
@@ -269,65 +282,110 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
           <BarChart className="h-6 w-6 text-primary" />
           Key Performance Indicators Dashboard
+          {kpisLoading && <span className="text-sm text-muted-foreground">(Loading...)</span>}
         </h2>
         
         {/* Live Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {/* Monthly Leads */}
-          <Card className="border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between mb-2">
-                <Users className="h-5 w-5 text-primary" />
-                <Badge variant="secondary" className="bg-primary/20 text-primary">+15%</Badge>
-              </div>
-              <div className="text-3xl font-bold text-primary">42</div>
-              <div className="text-sm text-muted-foreground mt-1">Monthly Leads</div>
-              <div className="text-xs text-muted-foreground">Target: 50</div>
-              <Progress value={84} className="mt-2 h-1.5" />
-            </CardContent>
-          </Card>
+          {(() => {
+            const metric = getMetricByName('monthly_leads');
+            const value = metric?.metric_value || 42;
+            const target = metric?.target_value || 50;
+            const progress = calculateProgress(value, target);
+            const changePct = metric?.metadata?.change_pct || 15;
+            return (
+              <Card className="border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <Users className="h-5 w-5 text-primary" />
+                    <Badge variant="secondary" className={changePct >= 0 ? "bg-primary/20 text-primary" : "bg-destructive/20 text-destructive"}>
+                      {changePct >= 0 ? '+' : ''}{changePct}%
+                    </Badge>
+                  </div>
+                  <div className="text-3xl font-bold text-primary">{value}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Monthly Leads</div>
+                  <div className="text-xs text-muted-foreground">Target: {target}</div>
+                  <Progress value={progress} className="mt-2 h-1.5" />
+                </CardContent>
+              </Card>
+            );
+          })()}
 
           {/* Conversion Rate */}
-          <Card className="border-primary/20 bg-gradient-to-br from-foreground/5 to-foreground/10">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between mb-2">
-                <TrendingUp className="h-5 w-5" />
-                <Badge variant="secondary" className="bg-foreground/20">+8%</Badge>
-              </div>
-              <div className="text-3xl font-bold">4.2%</div>
-              <div className="text-sm text-muted-foreground mt-1">Conversion Rate</div>
-              <div className="text-xs text-muted-foreground">Target: 5.0%</div>
-              <Progress value={84} className="mt-2 h-1.5" />
-            </CardContent>
-          </Card>
+          {(() => {
+            const metric = getMetricByName('conversion_rate');
+            const value = metric?.metric_value || 4.2;
+            const target = metric?.target_value || 5.0;
+            const progress = calculateProgress(value, target);
+            const changePct = metric?.metadata?.change_pct || 8;
+            return (
+              <Card className="border-primary/20 bg-gradient-to-br from-foreground/5 to-foreground/10">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <TrendingUp className="h-5 w-5" />
+                    <Badge variant="secondary" className={changePct >= 0 ? "bg-foreground/20" : "bg-destructive/20 text-destructive"}>
+                      {changePct >= 0 ? '+' : ''}{changePct}%
+                    </Badge>
+                  </div>
+                  <div className="text-3xl font-bold">{value}%</div>
+                  <div className="text-sm text-muted-foreground mt-1">Conversion Rate</div>
+                  <div className="text-xs text-muted-foreground">Target: {target}%</div>
+                  <Progress value={progress} className="mt-2 h-1.5" />
+                </CardContent>
+              </Card>
+            );
+          })()}
 
           {/* Organic Traffic */}
-          <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between mb-2">
-                <Search className="h-5 w-5 text-primary" />
-                <Badge variant="secondary" className="bg-primary/20 text-primary">+32%</Badge>
-              </div>
-              <div className="text-3xl font-bold text-primary">8,420</div>
-              <div className="text-sm text-muted-foreground mt-1">Monthly Visitors</div>
-              <div className="text-xs text-muted-foreground">Target: 12,000</div>
-              <Progress value={70} className="mt-2 h-1.5" />
-            </CardContent>
-          </Card>
+          {(() => {
+            const metric = getMetricByName('organic_traffic');
+            const value = metric?.metric_value || 8420;
+            const target = metric?.target_value || 12000;
+            const progress = calculateProgress(value, target);
+            const changePct = metric?.metadata?.change_pct || 32;
+            return (
+              <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <Search className="h-5 w-5 text-primary" />
+                    <Badge variant="secondary" className={changePct >= 0 ? "bg-primary/20 text-primary" : "bg-destructive/20 text-destructive"}>
+                      {changePct >= 0 ? '+' : ''}{changePct}%
+                    </Badge>
+                  </div>
+                  <div className="text-3xl font-bold text-primary">{value.toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Monthly Visitors</div>
+                  <div className="text-xs text-muted-foreground">Target: {target.toLocaleString()}</div>
+                  <Progress value={progress} className="mt-2 h-1.5" />
+                </CardContent>
+              </Card>
+            );
+          })()}
 
           {/* Cost Per Lead */}
-          <Card className="border-primary/20 bg-gradient-to-br from-foreground/5 to-foreground/10">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between mb-2">
-                <DollarSign className="h-5 w-5" />
-                <Badge variant="secondary" className="bg-destructive/20 text-destructive">-5%</Badge>
-              </div>
-              <div className="text-3xl font-bold">$185</div>
-              <div className="text-sm text-muted-foreground mt-1">Cost Per Lead</div>
-              <div className="text-xs text-muted-foreground">Target: $150</div>
-              <Progress value={81} className="mt-2 h-1.5" />
-            </CardContent>
-          </Card>
+          {(() => {
+            const metric = getMetricByName('cost_per_lead');
+            const value = metric?.metric_value || 185;
+            const target = metric?.target_value || 150;
+            const progress = calculateProgress(target, value); // Inverted for cost (lower is better)
+            const changePct = metric?.metadata?.change_pct || -5;
+            return (
+              <Card className="border-primary/20 bg-gradient-to-br from-foreground/5 to-foreground/10">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <DollarSign className="h-5 w-5" />
+                    <Badge variant="secondary" className={changePct <= 0 ? "bg-primary/20 text-primary" : "bg-destructive/20 text-destructive"}>
+                      {changePct >= 0 ? '+' : ''}{changePct}%
+                    </Badge>
+                  </div>
+                  <div className="text-3xl font-bold">${value}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Cost Per Lead</div>
+                  <div className="text-xs text-muted-foreground">Target: ${target}</div>
+                  <Progress value={progress} className="mt-2 h-1.5" />
+                </CardContent>
+              </Card>
+            );
+          })()}
         </div>
 
         {/* Goal Trackers */}
@@ -341,12 +399,44 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {[
-                { goal: "Top 3 Rankings", current: 4, target: 10, unit: "keywords", progress: 40 },
-                { goal: "Google Rating", current: 4.8, target: 5.0, unit: "stars", progress: 96 },
-                { goal: "Monthly Reviews", current: 28, target: 40, unit: "reviews", progress: 70 },
-                { goal: "Branded Searches", current: 1850, target: 3000, unit: "searches", progress: 62 },
-              ].map((item, idx) => (
+              {(() => {
+                const plgKpis = getMetricsByBrand('plg');
+                const top3 = getMetricByName('plg_top3_rankings');
+                const rating = getMetricByName('google_rating');
+                const reviews = getMetricByName('monthly_reviews');
+                const searches = getMetricByName('branded_searches');
+                
+                return [
+                  { 
+                    goal: "Top 3 Rankings", 
+                    current: top3?.metric_value || 4, 
+                    target: top3?.target_value || 10, 
+                    unit: "keywords", 
+                    progress: calculateProgress(top3?.metric_value || 4, top3?.target_value || 10) 
+                  },
+                  { 
+                    goal: "Google Rating", 
+                    current: rating?.metric_value || 4.8, 
+                    target: rating?.target_value || 5.0, 
+                    unit: "stars", 
+                    progress: calculateProgress(rating?.metric_value || 4.8, rating?.target_value || 5.0) 
+                  },
+                  { 
+                    goal: "Monthly Reviews", 
+                    current: reviews?.metric_value || 28, 
+                    target: reviews?.target_value || 40, 
+                    unit: "reviews", 
+                    progress: calculateProgress(reviews?.metric_value || 28, reviews?.target_value || 40) 
+                  },
+                  { 
+                    goal: "Branded Searches", 
+                    current: searches?.metric_value || 1850, 
+                    target: searches?.target_value || 3000, 
+                    unit: "searches", 
+                    progress: calculateProgress(searches?.metric_value || 1850, searches?.target_value || 3000) 
+                  },
+                ];
+              })().map((item, idx) => (
                 <div key={idx} className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium">{item.goal}</span>
@@ -372,12 +462,44 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {[
-                { goal: "Domain Authority", current: 12, target: 30, unit: "DA", progress: 40 },
-                { goal: "PI Keyword Rankings", current: 2, target: 5, unit: "top 10", progress: 40 },
-                { goal: "Monthly PI Leads", current: 8, target: 25, unit: "leads", progress: 32 },
-                { goal: "Content Published", current: 24, target: 50, unit: "articles", progress: 48 },
-              ].map((item, idx) => (
+              {(() => {
+                const wwcKpis = getMetricsByBrand('wwc');
+                const domainAuth = getMetricByName('wwc_domain_authority');
+                const keywords = getMetricByName('wwc_keyword_rankings');
+                const leads = getMetricByName('wwc_monthly_leads');
+                const content = getMetricByName('wwc_content_published');
+                
+                return [
+                  { 
+                    goal: "Domain Authority", 
+                    current: domainAuth?.metric_value || 12, 
+                    target: domainAuth?.target_value || 30, 
+                    unit: "DA", 
+                    progress: calculateProgress(domainAuth?.metric_value || 12, domainAuth?.target_value || 30) 
+                  },
+                  { 
+                    goal: "PI Keyword Rankings", 
+                    current: keywords?.metric_value || 2, 
+                    target: keywords?.target_value || 5, 
+                    unit: "top 10", 
+                    progress: calculateProgress(keywords?.metric_value || 2, keywords?.target_value || 5) 
+                  },
+                  { 
+                    goal: "Monthly PI Leads", 
+                    current: leads?.metric_value || 8, 
+                    target: leads?.target_value || 25, 
+                    unit: "leads", 
+                    progress: calculateProgress(leads?.metric_value || 8, leads?.target_value || 25) 
+                  },
+                  { 
+                    goal: "Content Published", 
+                    current: content?.metric_value || 24, 
+                    target: content?.target_value || 50, 
+                    unit: "articles", 
+                    progress: calculateProgress(content?.metric_value || 24, content?.target_value || 50) 
+                  },
+                ];
+              })().map((item, idx) => (
                 <div key={idx} className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium">{item.goal}</span>
@@ -414,19 +536,30 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                   <h4 className="font-semibold">Traffic Growth</h4>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Current</span>
-                    <span className="font-semibold">8,420/month</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Target</span>
-                    <span className="font-semibold">12,000/month</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Gap</span>
-                    <span className="font-semibold text-primary">+3,580 needed</span>
-                  </div>
-                  <Progress value={70} className="mt-2" />
+                  {(() => {
+                    const metric = getMetricByName('organic_traffic');
+                    const current = metric?.metric_value || 8420;
+                    const target = metric?.target_value || 12000;
+                    const gap = target - current;
+                    const progress = calculateProgress(current, target);
+                    return (
+                      <>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Current</span>
+                          <span className="font-semibold">{current.toLocaleString()}/month</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Target</span>
+                          <span className="font-semibold">{target.toLocaleString()}/month</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Gap</span>
+                          <span className="font-semibold text-primary">+{gap.toLocaleString()} needed</span>
+                        </div>
+                        <Progress value={progress} className="mt-2" />
+                      </>
+                    );
+                  })()}
                 </div>
               </div>
 
@@ -439,19 +572,30 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                   <h4 className="font-semibold">Lead Generation</h4>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Current</span>
-                    <span className="font-semibold">42/month</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Target</span>
-                    <span className="font-semibold">50/month</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Gap</span>
-                    <span className="font-semibold text-primary">+8 needed</span>
-                  </div>
-                  <Progress value={84} className="mt-2" />
+                  {(() => {
+                    const metric = getMetricByName('monthly_leads');
+                    const current = metric?.metric_value || 42;
+                    const target = metric?.target_value || 50;
+                    const gap = target - current;
+                    const progress = calculateProgress(current, target);
+                    return (
+                      <>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Current</span>
+                          <span className="font-semibold">{current}/month</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Target</span>
+                          <span className="font-semibold">{target}/month</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Gap</span>
+                          <span className="font-semibold text-primary">+{gap} needed</span>
+                        </div>
+                        <Progress value={progress} className="mt-2" />
+                      </>
+                    );
+                  })()}
                 </div>
               </div>
 
@@ -464,41 +608,63 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                   <h4 className="font-semibold">Brand Authority</h4>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Current</span>
-                    <span className="font-semibold">1,850 searches</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Target</span>
-                    <span className="font-semibold">3,000 searches</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Gap</span>
-                    <span className="font-semibold text-primary">+1,150 needed</span>
-                  </div>
-                  <Progress value={62} className="mt-2" />
+                  {(() => {
+                    const metric = getMetricByName('branded_searches');
+                    const current = metric?.metric_value || 1850;
+                    const target = metric?.target_value || 3000;
+                    const gap = target - current;
+                    const progress = calculateProgress(current, target);
+                    return (
+                      <>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Current</span>
+                          <span className="font-semibold">{current.toLocaleString()} searches</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Target</span>
+                          <span className="font-semibold">{target.toLocaleString()} searches</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Gap</span>
+                          <span className="font-semibold text-primary">+{gap.toLocaleString()} needed</span>
+                        </div>
+                        <Progress value={progress} className="mt-2" />
+                      </>
+                    );
+                  })()}
                 </div>
               </div>
             </div>
 
             {/* Quick Stats Row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-border">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">92%</div>
-                <div className="text-xs text-muted-foreground mt-1">On-Page SEO Score</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold">3.2s</div>
-                <div className="text-xs text-muted-foreground mt-1">Avg. Load Time</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">500+</div>
-                <div className="text-xs text-muted-foreground mt-1">Total Reviews</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold">4.8/5.0</div>
-                <div className="text-xs text-muted-foreground mt-1">Avg. Rating</div>
-              </div>
+              {(() => {
+                const seoScore = getMetricByName('seo_score');
+                const loadTime = getMetricByName('page_load_time');
+                const reviews = getMetricByName('monthly_reviews');
+                const rating = getMetricByName('google_rating');
+                
+                return (
+                  <>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">{seoScore?.metric_value || 92}%</div>
+                      <div className="text-xs text-muted-foreground mt-1">On-Page SEO Score</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold">{loadTime?.metric_value || 3.2}s</div>
+                      <div className="text-xs text-muted-foreground mt-1">Avg. Load Time</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">500+</div>
+                      <div className="text-xs text-muted-foreground mt-1">Total Reviews</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold">{rating?.metric_value || 4.8}/5.0</div>
+                      <div className="text-xs text-muted-foreground mt-1">Avg. Rating</div>
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </CardContent>
         </Card>
@@ -1460,7 +1626,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
-            {kpis.map((kpi, idx) => (
+            {kpiDefinitions.map((kpi, idx) => (
               <div key={idx} className="p-4 border rounded-lg">
                 <h4 className="font-semibold mb-1">{kpi.name}</h4>
                 <p className="text-sm text-muted-foreground">{kpi.description}</p>
