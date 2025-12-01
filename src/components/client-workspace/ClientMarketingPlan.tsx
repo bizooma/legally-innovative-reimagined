@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart as RechartsBarChart, Bar } from "recharts";
 import { 
   FileText, BookOpen, Grid, BarChart, Users, Target, Lightbulb, 
   Share2, DollarSign, TrendingUp, Calendar, CheckCircle, AlertCircle, 
@@ -105,6 +106,41 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     { firm: "Quietus Law Group", years: "1", size: "1-2", focus: "Family Law, DUI", usp: "LGBTQIA+ Ally, transparent fees", rating: "5.0/5.0" },
     { firm: "Ashbach Law Offices", years: "17", size: "Small", focus: "DUI/DWI, Domestic Violence", usp: "55% DV specialization", rating: "4.5/5.0" },
     { firm: "Blair & Kim", years: "20", size: "3", focus: "Criminal Defense, DUI, DV", usp: "Former prosecutor, Judge Pro-Tempore", rating: "4.8/5.0" }
+  ];
+
+  // Market share data
+  const marketShareData = [
+    { name: "Puget Law Group", value: 18, color: "hsl(var(--primary))" },
+    { name: "Competitor A", value: 25, color: "hsl(0,37%,25%)" },
+    { name: "Competitor B", value: 22, color: "hsl(0,37%,35%)" },
+    { name: "Competitor C", value: 15, color: "hsl(0,37%,45%)" },
+    { name: "Other Firms", value: 20, color: "hsl(var(--muted))" },
+  ];
+
+  // Client acquisition trends data
+  const acquisitionTrendsData = [
+    { month: "Jan", criminalDefense: 12, personalInjury: 5, total: 17 },
+    { month: "Feb", criminalDefense: 15, personalInjury: 7, total: 22 },
+    { month: "Mar", criminalDefense: 18, personalInjury: 10, total: 28 },
+    { month: "Apr", criminalDefense: 20, personalInjury: 14, total: 34 },
+    { month: "May", criminalDefense: 22, personalInjury: 18, total: 40 },
+    { month: "Jun", criminalDefense: 25, personalInjury: 22, total: 47 },
+    { month: "Jul", criminalDefense: 27, personalInjury: 26, total: 53 },
+    { month: "Aug", criminalDefense: 28, personalInjury: 30, total: 58 },
+    { month: "Sep", criminalDefense: 30, personalInjury: 35, total: 65 },
+    { month: "Oct", criminalDefense: 32, personalInjury: 40, total: 72 },
+    { month: "Nov", criminalDefense: 33, personalInjury: 45, total: 78 },
+    { month: "Dec", criminalDefense: 35, personalInjury: 50, total: 85 },
+  ];
+
+  // Budget allocation data
+  const budgetAllocationData = [
+    { category: "Website & SEO", plg: 48000, winWithCasey: 42000, total: 90000 },
+    { category: "Content Marketing", plg: 18000, winWithCasey: 24000, total: 42000 },
+    { category: "Paid Advertising", plg: 12000, winWithCasey: 18000, total: 30000 },
+    { category: "Social Media", plg: 9000, winWithCasey: 12000, total: 21000 },
+    { category: "Email Marketing", plg: 4800, winWithCasey: 7200, total: 12000 },
+    { category: "Analytics & Tools", plg: 4200, winWithCasey: 4800, total: 9000 },
   ];
 
   const timelinePhases = [
@@ -353,7 +389,114 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               <span className="text-xl font-semibold">4. Market Analysis</span>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="pt-4 space-y-4">
+          <AccordionContent className="pt-4 space-y-6">
+            {/* Market Share Distribution Chart */}
+            <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Target className="h-5 w-5 text-primary" />
+                  Market Share Distribution
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={marketShareData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, value }) => `${name}: ${value}%`}
+                      outerRadius={100}
+                      fill="hsl(var(--primary))"
+                      dataKey="value"
+                    >
+                      {marketShareData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: "hsl(var(--background))",
+                        border: "1px solid hsl(var(--border))",
+                        borderRadius: "var(--radius)"
+                      }}
+                      formatter={(value: number) => `${value}%`}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                  <p className="text-sm text-muted-foreground">
+                    <strong className="text-foreground">Strategic Position:</strong> Puget Law Group currently holds 18% market share with significant growth opportunity. The dual-brand strategy targets expanding into personal injury market while maintaining criminal defense dominance.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Client Acquisition Trends Chart */}
+            <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-primary" />
+                  Client Acquisition Trends (12-Month Projection)
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={350}>
+                  <LineChart data={acquisitionTrendsData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis 
+                      dataKey="month" 
+                      stroke="hsl(var(--foreground))"
+                      tick={{ fill: "hsl(var(--foreground))" }}
+                    />
+                    <YAxis 
+                      stroke="hsl(var(--foreground))"
+                      tick={{ fill: "hsl(var(--foreground))" }}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: "hsl(var(--background))",
+                        border: "1px solid hsl(var(--border))",
+                        borderRadius: "var(--radius)"
+                      }}
+                    />
+                    <Legend />
+                    <Line 
+                      type="monotone" 
+                      dataKey="criminalDefense" 
+                      stroke="hsl(var(--primary))" 
+                      strokeWidth={2}
+                      name="Criminal Defense"
+                      dot={{ fill: "hsl(var(--primary))" }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="personalInjury" 
+                      stroke="hsl(0,37%,15%)" 
+                      strokeWidth={2}
+                      name="Personal Injury"
+                      dot={{ fill: "hsl(0,37%,15%)" }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="total" 
+                      stroke="hsl(var(--foreground))" 
+                      strokeWidth={3}
+                      name="Total Clients"
+                      dot={{ fill: "hsl(var(--foreground))" }}
+                      strokeDasharray="5 5"
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                  <p className="text-sm text-muted-foreground">
+                    <strong className="text-foreground">Growth Trajectory:</strong> Projected 400% growth in personal injury clients over 12 months through Win With Casey brand launch, while maintaining steady 192% growth in criminal defense practice.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold mb-2">Market Size and Growth</h4>
@@ -971,11 +1114,68 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
 
       {/* Budget */}
       <div id="budget">
+        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5 mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <DollarSign className="h-5 w-5 text-primary" />
+              Budget Allocation by Category
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={400}>
+              <RechartsBarChart data={budgetAllocationData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis 
+                  dataKey="category" 
+                  stroke="hsl(var(--foreground))"
+                  tick={{ fill: "hsl(var(--foreground))" }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={100}
+                />
+                <YAxis 
+                  stroke="hsl(var(--foreground))"
+                  tick={{ fill: "hsl(var(--foreground))" }}
+                  tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: "hsl(var(--background))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "var(--radius)"
+                  }}
+                  formatter={(value: number) => `$${value.toLocaleString()}`}
+                />
+                <Legend />
+                <Bar dataKey="plg" fill="hsl(var(--primary))" name="Puget Law Group" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="winWithCasey" fill="hsl(0,37%,15%)" name="Win With Casey" radius={[4, 4, 0, 0]} />
+              </RechartsBarChart>
+            </ResponsiveContainer>
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                <div className="text-2xl font-bold text-primary">$96,000</div>
+                <div className="text-sm text-muted-foreground mt-1">Puget Law Group</div>
+                <div className="text-xs text-muted-foreground">47% of total budget</div>
+              </div>
+              <div className="p-4 bg-foreground/5 border border-foreground/20 rounded-lg">
+                <div className="text-2xl font-bold">$108,000</div>
+                <div className="text-sm text-muted-foreground mt-1">Win With Casey</div>
+                <div className="text-xs text-muted-foreground">53% of total budget</div>
+              </div>
+              <div className="p-4 bg-gradient-to-br from-primary/10 to-foreground/10 border border-primary/20 rounded-lg">
+                <div className="text-2xl font-bold">$204,000</div>
+                <div className="text-sm text-muted-foreground mt-1">Total Investment</div>
+                <div className="text-xs text-muted-foreground">Annual marketing spend</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
               <DollarSign className="h-6 w-6 text-primary" />
-              <CardTitle className="text-2xl">9. Marketing Budget</CardTitle>
+              <CardTitle className="text-2xl">Detailed Budget Breakdown</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
