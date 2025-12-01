@@ -15,7 +15,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-const thanksgivingEmojis = ['🦃', '🍂', '🌽', '🥧'];
+const christmasEmojis = ['🎄', '🎅', '⭐', '🎁'];
 
 const features = [
   { 
@@ -145,7 +145,7 @@ export const FloatingFeatureCards = ({ holidayMode = false }: FloatingFeatureCar
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
                 {holidayMode ? (
-                  <span className="text-2xl">{thanksgivingEmojis[index]}</span>
+                  <span className="text-2xl">{christmasEmojis[index]}</span>
                 ) : (
                   <feature.icon className="w-6 h-6 text-white" />
                 )}

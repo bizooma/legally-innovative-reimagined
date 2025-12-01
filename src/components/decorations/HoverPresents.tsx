@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const HoverPumpkins = () => {
+export const HoverPresents = () => {
   const [hoveredButtons, setHoveredButtons] = useState<Set<Element>>(new Set());
 
   useEffect(() => {
@@ -30,30 +30,30 @@ export const HoverPumpkins = () => {
     return () => {
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
-      // Cleanup all pumpkins when component unmounts
-      document.querySelectorAll('.hover-pumpkin').forEach(pumpkin => {
-        pumpkin.remove();
+      // Cleanup all presents when component unmounts
+      document.querySelectorAll('.hover-present').forEach(present => {
+        present.remove();
       });
     };
   }, []);
 
   useEffect(() => {
     hoveredButtons.forEach(button => {
-      if (!button.querySelector('.hover-pumpkin')) {
-        const pumpkin = document.createElement('span');
-        pumpkin.className = 'hover-pumpkin absolute -top-8 left-1/2 -translate-x-1/2 text-3xl animate-bounce-slow pointer-events-none z-50';
-        pumpkin.innerHTML = '🎃';
+      if (!button.querySelector('.hover-present')) {
+        const present = document.createElement('span');
+        present.className = 'hover-present absolute -top-8 left-1/2 -translate-x-1/2 text-3xl animate-bounce-slow pointer-events-none z-50';
+        present.innerHTML = '🎁';
         const htmlButton = button as HTMLElement;
         htmlButton.style.position = 'relative';
-        button.appendChild(pumpkin);
+        button.appendChild(present);
       }
     });
 
-    // Cleanup pumpkins that are no longer hovered
-    document.querySelectorAll('.hover-pumpkin').forEach(pumpkin => {
-      const button = pumpkin.parentElement;
+    // Cleanup presents that are no longer hovered
+    document.querySelectorAll('.hover-present').forEach(present => {
+      const button = present.parentElement;
       if (button && !hoveredButtons.has(button)) {
-        pumpkin.remove();
+        present.remove();
       }
     });
   }, [hoveredButtons]);
