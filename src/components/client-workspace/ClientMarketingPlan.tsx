@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { useMarketingKPIs } from "@/hooks/useMarketingKPIs";
 import { useMarketingPlan } from "@/hooks/useMarketingPlan";
 import { MarketingAIChat } from "./MarketingAIChat";
@@ -12,8 +13,10 @@ import {
   FileText, BookOpen, Grid, BarChart, Users, Target, Lightbulb, 
   Share2, DollarSign, TrendingUp, Calendar, CheckCircle, AlertCircle, 
   Sparkles, AlertTriangle, Megaphone, Search, MousePointerClick, Star,
-  BookMarked, Trophy, Palette, ImageIcon, Type, Award, Building2, Globe, X
+  BookMarked, Trophy, Palette, ImageIcon, Type, Award, Building2, Globe, X, Download
 } from "lucide-react";
+import { generateMarketingPlanPdf } from "@/utils/marketingPlanPdfExport";
+import { toast } from "sonner";
 
 interface ClientMarketingPlanProps {
   client: any;
@@ -222,8 +225,43 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     }
   ];
 
+  const handleDownloadPdf = () => {
+    try {
+      toast.loading('Generating PDF...');
+      generateMarketingPlanPdf({
+        marketingPlan,
+        clientName: client.company_name,
+        kpis
+      });
+      toast.dismiss();
+      toast.success('Marketing plan PDF downloaded successfully!');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      toast.dismiss();
+      toast.error('Failed to generate PDF. Please try again.');
+    }
+  };
+
   return (
     <div className="space-y-6">
+      {/* Header with Download Button */}
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h1 className="text-3xl font-bold">{marketingPlan.title}</h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Last updated: {new Date(marketingPlan.updated_at).toLocaleDateString()}
+          </p>
+        </div>
+        <Button 
+          onClick={handleDownloadPdf}
+          className="gap-2"
+          size="lg"
+        >
+          <Download className="h-4 w-4" />
+          Download PDF
+        </Button>
+      </div>
+
       {/* Section Navigation */}
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b p-4">
         <div className="flex flex-wrap gap-2">
