@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useMarketingKPIs } from "@/hooks/useMarketingKPIs";
+import { useMarketingPlan } from "@/hooks/useMarketingPlan";
 import { MarketingAIChat } from "./MarketingAIChat";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
@@ -19,9 +20,6 @@ interface ClientMarketingPlanProps {
 }
 
 const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
-  // Only show marketing plan for Puget Law Group
-  const isPugetLawGroup = client.company_name === "Puget Law Group";
-  
   const [activeSection, setActiveSection] = useState<string>("executive-summary");
   
   // Fetch real-time KPI data from Supabase
@@ -36,8 +34,27 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     autoRefresh: true 
   });
 
-  // If not Puget Law Group, show placeholder
-  if (!isPugetLawGroup) {
+  // Fetch marketing plan from database
+  const { marketingPlan, isLoading: planLoading, hasMarketingPlan } = useMarketingPlan({ 
+    clientId: client.id 
+  });
+
+  // Show loading state
+  if (planLoading || kpisLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Card className="max-w-md">
+          <CardContent className="pt-6 text-center">
+            <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4" />
+            <p className="text-sm text-muted-foreground">Loading marketing plan...</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // If no marketing plan exists for this client, show placeholder
+  if (!hasMarketingPlan || !marketingPlan) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <Card className="max-w-md">
@@ -72,34 +89,12 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     }
   };
 
+  // Use marketing plan data from database
   const swotData = {
-    strengths: [
-      "Exceptional Team of Former Prosecutors: Unmatched insight into prosecution strategies",
-      "Outstanding Online Reputation: 5.0 Google rating with 500+ reviews provides immense social proof",
-      "Proven Track Record: High win rate and numerous successful case results build client trust",
-      "Strong Website and Digital Presence: Modern website and solid SEO foundation",
-      "Broad Service Area: Covers the entire Puget Sound region, providing a large client base"
-    ],
-    weaknesses: [
-      "Brand Dilution Risk (Mitigated): Without a separate brand, the personal injury practice could dilute the core criminal defense focus. The Win With Casey initiative mitigates this.",
-      "Limited Brand Recognition Beyond Seattle: Brand awareness is concentrated in the immediate Puget Sound area",
-      "Dependence on Key Attorneys: The firm's brand is tied to key partners, and the Win With Casey brand is entirely dependent on Casey Arbenz",
-      "Lack of a Formal Referral Program: No structured program to incentivize referrals from past clients"
-    ],
-    opportunities: [
-      "Capture Personal Injury Market: The Win With Casey initiative provides a significant opportunity to capture a large share of the personal injury market",
-      "Content Marketing Leadership: Opportunity to become the leading source of criminal defense information",
-      "Geographic Expansion: Potential to expand into other major Washington cities",
-      "Cross-Promotional Synergy: Promote personal injury services to criminal defense clients and vice-versa, creating a powerful referral engine between the two brands",
-      "Leveraging Technology: Further use of AI and automation for client intake and marketing"
-    ],
-    threats: [
-      "Intense Market Competition: Highly fragmented and competitive Seattle legal market",
-      "New Market Entrants: High-growth Seattle market attracts new and established law firms",
-      "Changes in Legal Advertising Rules: Potential for stricter regulations on digital marketing",
-      "Economic Downturn: A recession could impact clients' ability to afford premium legal services",
-      "Negative Public Perception of Lawyers: General distrust of the legal profession can be a hurdle"
-    ]
+    strengths: marketingPlan.swot_analysis.strengths || [],
+    weaknesses: marketingPlan.swot_analysis.weaknesses || [],
+    opportunities: marketingPlan.swot_analysis.opportunities || [],
+    threats: marketingPlan.swot_analysis.threats || []
   };
 
   const objectives = [
@@ -268,34 +263,40 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-lg leading-relaxed">
-              This marketing plan provides a comprehensive strategy for Puget Law Group to expand its market leadership in the Seattle criminal defense sector. The plan is based on an in-depth analysis of the firm's current position, the competitive landscape, and the regional market dynamics. Key recommendations include leveraging Puget Law Group's unique strengths—notably its team of former prosecutors and exceptional online reputation—to dominate the high-value DUI and serious criminal defense markets.
+              {marketingPlan.executive_summary.strengths}
             </p>
-            <div className="p-4 rounded-lg bg-gradient-to-r from-primary/10 to-[hsl(0,37%,15%)]/10 border border-primary/20">
-              <div className="flex items-center gap-2 mb-2">
-                <Trophy className="h-5 w-5 text-primary" />
-                <h4 className="font-semibold text-primary">Win With Casey Initiative</h4>
+            {marketingPlan.executive_summary.gaps && (
+              <div className="p-4 rounded-lg bg-gradient-to-r from-primary/10 to-[hsl(0,37%,15%)]/10 border border-primary/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertCircle className="h-5 w-5 text-primary" />
+                  <h4 className="font-semibold text-primary">Areas for Improvement</h4>
+                </div>
+                <p className="text-sm">
+                  {marketingPlan.executive_summary.gaps}
+                </p>
               </div>
-              <p className="text-sm">
-                A key pillar of this strategy is the launch of the <strong>Win With Casey</strong> vanity brand, a sophisticated, multi-domain initiative designed to capture the personal injury market by leveraging the personal brand of Managing Partner Casey Arbenz. This dual-brand approach allows Puget Law Group to maintain its dominance in criminal defense while aggressively pursuing growth in the personal injury sector.
-              </p>
-            </div>
+            )}
             <div className="grid md:grid-cols-2 gap-4 mt-6">
-              <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
-                <h4 className="font-semibold text-primary mb-2">Key Strengths</h4>
-                <ul className="space-y-1 text-sm">
-                  <li>• 9 former prosecutors on staff</li>
-                  <li>• 5.0 rating with 500+ reviews</li>
-                  <li>• 150+ years combined experience</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-foreground/5 border border-foreground/20">
-                <h4 className="font-semibold text-foreground mb-2">Strategic Focus</h4>
-                <ul className="space-y-1 text-sm">
-                  <li>• Dominate DUI defense market</li>
-                  <li>• Launch Win With Casey personal injury brand</li>
-                  <li>• Multi-channel digital marketing approach</li>
-                </ul>
-              </div>
+              {marketingPlan.target_audiences && marketingPlan.target_audiences.length > 0 && (
+                <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
+                  <h4 className="font-semibold text-primary mb-2">Target Audiences</h4>
+                  <ul className="space-y-1 text-sm">
+                    {marketingPlan.target_audiences.slice(0, 3).map((audience, idx) => (
+                      <li key={idx}>• {audience.name}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {marketingPlan.marketing_objectives && marketingPlan.marketing_objectives.length > 0 && (
+                <div className="p-4 rounded-lg bg-foreground/5 border border-foreground/20">
+                  <h4 className="font-semibold text-foreground mb-2">Key Objectives</h4>
+                  <ul className="space-y-1 text-sm">
+                    {marketingPlan.marketing_objectives.slice(0, 3).map((obj, idx) => (
+                      <li key={idx}>• {obj.objective}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -1583,21 +1584,31 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               </RechartsBarChart>
             </ResponsiveContainer>
             <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
-                <div className="text-2xl font-bold text-primary">$96,000</div>
-                <div className="text-sm text-muted-foreground mt-1">Puget Law Group</div>
-                <div className="text-xs text-muted-foreground">47% of total budget</div>
-              </div>
-              <div className="p-4 bg-foreground/5 border border-foreground/20 rounded-lg">
-                <div className="text-2xl font-bold">$108,000</div>
-                <div className="text-sm text-muted-foreground mt-1">Win With Casey</div>
-                <div className="text-xs text-muted-foreground">53% of total budget</div>
-              </div>
-              <div className="p-4 bg-gradient-to-br from-primary/10 to-foreground/10 border border-primary/20 rounded-lg">
-                <div className="text-2xl font-bold">$204,000</div>
-                <div className="text-sm text-muted-foreground mt-1">Total Investment</div>
-                <div className="text-xs text-muted-foreground">Annual marketing spend</div>
-              </div>
+              {marketingPlan.budget.plg_allocation && (
+                <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                  <div className="text-2xl font-bold text-primary">${marketingPlan.budget.plg_allocation.toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Puget Law Group</div>
+                  <div className="text-xs text-muted-foreground">
+                    {marketingPlan.budget.total ? Math.round((marketingPlan.budget.plg_allocation / marketingPlan.budget.total) * 100) : 0}% of total budget
+                  </div>
+                </div>
+              )}
+              {marketingPlan.budget.wwc_allocation && (
+                <div className="p-4 bg-foreground/5 border border-foreground/20 rounded-lg">
+                  <div className="text-2xl font-bold">${marketingPlan.budget.wwc_allocation.toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Win With Casey</div>
+                  <div className="text-xs text-muted-foreground">
+                    {marketingPlan.budget.total ? Math.round((marketingPlan.budget.wwc_allocation / marketingPlan.budget.total) * 100) : 0}% of total budget
+                  </div>
+                </div>
+              )}
+              {marketingPlan.budget.total && (
+                <div className="p-4 bg-gradient-to-br from-primary/10 to-foreground/10 border border-primary/20 rounded-lg">
+                  <div className="text-2xl font-bold">${marketingPlan.budget.total.toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Total Investment</div>
+                  <div className="text-xs text-muted-foreground">Annual marketing spend</div>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

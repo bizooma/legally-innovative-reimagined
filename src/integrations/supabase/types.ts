@@ -550,6 +550,71 @@ export type Database = {
           },
         ]
       }
+      marketing_plans: {
+        Row: {
+          budget: Json | null
+          client_id: string
+          competitor_analysis: Json | null
+          created_at: string
+          executive_summary: Json | null
+          id: string
+          implementation_timeline: Json | null
+          kpi_framework: Json | null
+          market_analysis: Json | null
+          marketing_objectives: Json | null
+          metadata: Json | null
+          strategies: Json | null
+          swot_analysis: Json | null
+          target_audiences: Json | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          budget?: Json | null
+          client_id: string
+          competitor_analysis?: Json | null
+          created_at?: string
+          executive_summary?: Json | null
+          id?: string
+          implementation_timeline?: Json | null
+          kpi_framework?: Json | null
+          market_analysis?: Json | null
+          marketing_objectives?: Json | null
+          metadata?: Json | null
+          strategies?: Json | null
+          swot_analysis?: Json | null
+          target_audiences?: Json | null
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          budget?: Json | null
+          client_id?: string
+          competitor_analysis?: Json | null
+          created_at?: string
+          executive_summary?: Json | null
+          id?: string
+          implementation_timeline?: Json | null
+          kpi_framework?: Json | null
+          market_analysis?: Json | null
+          marketing_objectives?: Json | null
+          metadata?: Json | null
+          strategies?: Json | null
+          swot_analysis?: Json | null
+          target_audiences?: Json | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketing_plans_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: true
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       newsletter_subscriptions: {
         Row: {
           email: string
