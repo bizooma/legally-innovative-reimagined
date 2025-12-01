@@ -21,6 +21,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
 
   const sections = [
     { id: "executive-summary", label: "Summary", icon: FileText },
+    { id: "kpi-dashboard", label: "KPIs", icon: BarChart },
     { id: "swot", label: "SWOT", icon: Grid },
     { id: "market-analysis", label: "Market", icon: BarChart },
     { id: "objectives", label: "Objectives", icon: Target },
@@ -257,6 +258,246 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                   <li>• Launch Win With Casey personal injury brand</li>
                   <li>• Multi-channel digital marketing approach</li>
                 </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* KPI Dashboard */}
+      <div id="kpi-dashboard" className="my-8">
+        <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+          <BarChart className="h-6 w-6 text-primary" />
+          Key Performance Indicators Dashboard
+        </h2>
+        
+        {/* Live Metrics Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          {/* Monthly Leads */}
+          <Card className="border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between mb-2">
+                <Users className="h-5 w-5 text-primary" />
+                <Badge variant="secondary" className="bg-primary/20 text-primary">+15%</Badge>
+              </div>
+              <div className="text-3xl font-bold text-primary">42</div>
+              <div className="text-sm text-muted-foreground mt-1">Monthly Leads</div>
+              <div className="text-xs text-muted-foreground">Target: 50</div>
+              <Progress value={84} className="mt-2 h-1.5" />
+            </CardContent>
+          </Card>
+
+          {/* Conversion Rate */}
+          <Card className="border-primary/20 bg-gradient-to-br from-foreground/5 to-foreground/10">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between mb-2">
+                <TrendingUp className="h-5 w-5" />
+                <Badge variant="secondary" className="bg-foreground/20">+8%</Badge>
+              </div>
+              <div className="text-3xl font-bold">4.2%</div>
+              <div className="text-sm text-muted-foreground mt-1">Conversion Rate</div>
+              <div className="text-xs text-muted-foreground">Target: 5.0%</div>
+              <Progress value={84} className="mt-2 h-1.5" />
+            </CardContent>
+          </Card>
+
+          {/* Organic Traffic */}
+          <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between mb-2">
+                <Search className="h-5 w-5 text-primary" />
+                <Badge variant="secondary" className="bg-primary/20 text-primary">+32%</Badge>
+              </div>
+              <div className="text-3xl font-bold text-primary">8,420</div>
+              <div className="text-sm text-muted-foreground mt-1">Monthly Visitors</div>
+              <div className="text-xs text-muted-foreground">Target: 12,000</div>
+              <Progress value={70} className="mt-2 h-1.5" />
+            </CardContent>
+          </Card>
+
+          {/* Cost Per Lead */}
+          <Card className="border-primary/20 bg-gradient-to-br from-foreground/5 to-foreground/10">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between mb-2">
+                <DollarSign className="h-5 w-5" />
+                <Badge variant="secondary" className="bg-destructive/20 text-destructive">-5%</Badge>
+              </div>
+              <div className="text-3xl font-bold">$185</div>
+              <div className="text-sm text-muted-foreground mt-1">Cost Per Lead</div>
+              <div className="text-xs text-muted-foreground">Target: $150</div>
+              <Progress value={81} className="mt-2 h-1.5" />
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Goal Trackers */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {/* Puget Law Group Goals */}
+          <Card className="border-primary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Building2 className="h-5 w-5 text-primary" />
+                Puget Law Group - Goal Progress
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {[
+                { goal: "Top 3 Rankings", current: 4, target: 10, unit: "keywords", progress: 40 },
+                { goal: "Google Rating", current: 4.8, target: 5.0, unit: "stars", progress: 96 },
+                { goal: "Monthly Reviews", current: 28, target: 40, unit: "reviews", progress: 70 },
+                { goal: "Branded Searches", current: 1850, target: 3000, unit: "searches", progress: 62 },
+              ].map((item, idx) => (
+                <div key={idx} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium">{item.goal}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {item.current} / {item.target} {item.unit}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Progress value={item.progress} className="h-2 flex-1" />
+                    <span className="text-xs font-medium text-primary">{item.progress}%</span>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Win With Casey Goals */}
+          <Card className="border-foreground/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Trophy className="h-5 w-5" />
+                Win With Casey - Launch Metrics
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {[
+                { goal: "Domain Authority", current: 12, target: 30, unit: "DA", progress: 40 },
+                { goal: "PI Keyword Rankings", current: 2, target: 5, unit: "top 10", progress: 40 },
+                { goal: "Monthly PI Leads", current: 8, target: 25, unit: "leads", progress: 32 },
+                { goal: "Content Published", current: 24, target: 50, unit: "articles", progress: 48 },
+              ].map((item, idx) => (
+                <div key={idx} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium">{item.goal}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {item.current} / {item.target} {item.unit}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Progress value={item.progress} className="h-2 flex-1" />
+                    <span className="text-xs font-medium">{item.progress}%</span>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Performance Indicators */}
+        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-[hsl(0,37%,15%)]/5">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Target className="h-5 w-5 text-primary" />
+              Performance Summary - Current vs Target
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Traffic Performance */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    <TrendingUp className="h-4 w-4 text-primary" />
+                  </div>
+                  <h4 className="font-semibold">Traffic Growth</h4>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Current</span>
+                    <span className="font-semibold">8,420/month</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Target</span>
+                    <span className="font-semibold">12,000/month</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Gap</span>
+                    <span className="font-semibold text-primary">+3,580 needed</span>
+                  </div>
+                  <Progress value={70} className="mt-2" />
+                </div>
+              </div>
+
+              {/* Lead Generation */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="p-2 rounded-lg bg-foreground/10">
+                    <Users className="h-4 w-4" />
+                  </div>
+                  <h4 className="font-semibold">Lead Generation</h4>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Current</span>
+                    <span className="font-semibold">42/month</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Target</span>
+                    <span className="font-semibold">50/month</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Gap</span>
+                    <span className="font-semibold text-primary">+8 needed</span>
+                  </div>
+                  <Progress value={84} className="mt-2" />
+                </div>
+              </div>
+
+              {/* Brand Authority */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    <Star className="h-4 w-4 text-primary" />
+                  </div>
+                  <h4 className="font-semibold">Brand Authority</h4>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Current</span>
+                    <span className="font-semibold">1,850 searches</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Target</span>
+                    <span className="font-semibold">3,000 searches</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Gap</span>
+                    <span className="font-semibold text-primary">+1,150 needed</span>
+                  </div>
+                  <Progress value={62} className="mt-2" />
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Stats Row */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-border">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">92%</div>
+                <div className="text-xs text-muted-foreground mt-1">On-Page SEO Score</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold">3.2s</div>
+                <div className="text-xs text-muted-foreground mt-1">Avg. Load Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">500+</div>
+                <div className="text-xs text-muted-foreground mt-1">Total Reviews</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold">4.8/5.0</div>
+                <div className="text-xs text-muted-foreground mt-1">Avg. Rating</div>
               </div>
             </div>
           </CardContent>
