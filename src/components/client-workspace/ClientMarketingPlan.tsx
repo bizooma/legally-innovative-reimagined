@@ -19,6 +19,9 @@ interface ClientMarketingPlanProps {
 }
 
 const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
+  // Only show marketing plan for Puget Law Group
+  const isPugetLawGroup = client.company_name === "Puget Law Group";
+  
   const [activeSection, setActiveSection] = useState<string>("executive-summary");
   
   // Fetch real-time KPI data from Supabase
@@ -32,6 +35,23 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     clientId: client.id, 
     autoRefresh: true 
   });
+
+  // If not Puget Law Group, show placeholder
+  if (!isPugetLawGroup) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Card className="max-w-md">
+          <CardContent className="pt-6 text-center">
+            <Megaphone className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+            <h3 className="text-lg font-semibold mb-2">Marketing Plan Not Available</h3>
+            <p className="text-sm text-muted-foreground">
+              This client does not have a marketing plan configured yet.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const sections = [
     { id: "executive-summary", label: "Summary", icon: FileText },
