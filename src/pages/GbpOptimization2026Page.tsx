@@ -115,12 +115,6 @@ const GbpOptimization2026Page = () => {
             <strong>However</strong>, you <em>should</em> reinforce your firm's identity by aligning: GBP Name, Website <strong>Title Tag</strong>, Website <strong>H1</strong>, and GBP Description.
           </p>
 
-          <div className="bg-green-50 border-l-4 border-green-500 p-4 my-4">
-            <p className="font-semibold text-green-800">Example for 2026 (Correct):</p>
-            <p className="text-gray-700 mt-2"><strong>GBP Name:</strong> Dayes Law Firm</p>
-            <p className="text-gray-700"><strong>Homepage Title Tag:</strong> <em>Dayes Law Firm – Tax Controversy, Estate Planning & Probate Attorneys in Phoenix, AZ</em></p>
-          </div>
-
           <p className="text-lg leading-relaxed text-gray-700">
             This alignment is one of the most powerful GBP ranking boosters for law firms—especially in competitive markets.
           </p>
