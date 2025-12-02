@@ -14,6 +14,17 @@ import aiMarketingImage from "@/assets/ai-marketing-law-firms.jpg";
 const StayInformed = () => {
   const blogPosts = [
     {
+      id: 9,
+      title: "Google Business Profile Optimization for Law Firms in 2026: The Complete Guide",
+      excerpt: "GBP optimization is no longer just about filling out fields. Google now evaluates how your GBP interacts with your website, entity authority, reviews, and brand consistency. Learn how to dominate local and national search.",
+      date: "2025-12-02",
+      readTime: "25 min read",
+      author: "Legal Marketing Strategy Team",
+      category: "Local SEO",
+      image: appleMapsLawFirmImage,
+      link: "/gbp-optimization-2026"
+    },
+    {
       id: 8,
       title: "How AI Is Redefining Marketing for Law Firms in 2025",
       excerpt: "The firms that adopt AI now will dominate the next decade. Discover how artificial intelligence is revolutionizing client acquisition, personalization, content creation, and marketing operations.",
