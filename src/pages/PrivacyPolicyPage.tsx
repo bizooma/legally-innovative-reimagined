@@ -26,10 +26,10 @@ const PrivacyPolicyPage = () => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
               <p>
-                Welcome to Bizooma.com. We understand that privacy is critically important. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our services, interact with our platforms, or engage with our AI-powered marketing and development solutions.
+                Welcome to Bizooma.com. We understand that privacy is critically important. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our mobile applications, use our services, interact with our platforms, or engage with our AI-powered marketing and development solutions.
               </p>
               <p>
-                Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site or use our services.
+                Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site, mobile applications, or use our services.
               </p>
             </section>
 
@@ -244,6 +244,51 @@ const PrivacyPolicyPage = () => {
                 <li>Usage data from the skill is collected to improve functionality and content.</li>
                 <li>Account linking features, if used, will be subject to both this policy and Amazon's policies.</li>
               </ul>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">Mobile Application Privacy Information</h2>
+              <p>
+                When using our mobile applications (including Progressive Web Apps installed on your device):
+              </p>
+              
+              <h3 className="text-xl font-medium mt-4">Information We Collect Through Mobile Apps</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Device Information:</strong> We may collect information about your mobile device, including device type, operating system version, unique device identifiers, and mobile network information.</li>
+                <li><strong>Usage Data:</strong> We collect information about how you interact with our mobile applications, including features used, time spent, and navigation patterns.</li>
+                <li><strong>Location Data:</strong> With your consent, we may collect precise or approximate location information from your device to provide location-based services or improve our offerings.</li>
+                <li><strong>Push Notification Tokens:</strong> If you opt-in to receive push notifications, we collect device tokens to deliver notifications to your device.</li>
+                <li><strong>Camera and Photo Library:</strong> If you grant permission, we may access your camera or photo library to enable features such as document uploads or profile photos.</li>
+                <li><strong>Local Storage:</strong> Our apps may store data locally on your device to improve performance and enable offline functionality.</li>
+              </ul>
+              
+              <h3 className="text-xl font-medium mt-4">How We Use Mobile App Data</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>To provide and maintain app functionality</li>
+                <li>To personalize your experience within the app</li>
+                <li>To send push notifications (with your consent)</li>
+                <li>To analyze app performance and improve user experience</li>
+                <li>To troubleshoot issues and provide customer support</li>
+                <li>To ensure app security and prevent fraud</li>
+              </ul>
+              
+              <h3 className="text-xl font-medium mt-4">Third-Party Services in Mobile Apps</h3>
+              <p>
+                Our mobile applications may integrate with third-party services such as analytics providers, crash reporting tools, and advertising networks. These third parties may collect information about your use of our apps in accordance with their own privacy policies. We encourage you to review their privacy practices.
+              </p>
+              
+              <h3 className="text-xl font-medium mt-4">Your Mobile App Privacy Choices</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Push Notifications:</strong> You can opt out of push notifications through your device settings at any time.</li>
+                <li><strong>Location Services:</strong> You can disable location access through your device settings.</li>
+                <li><strong>App Permissions:</strong> You can manage app permissions (camera, photos, etc.) through your device's privacy settings.</li>
+                <li><strong>Uninstall:</strong> You can stop all data collection by uninstalling our mobile applications from your device.</li>
+              </ul>
+              
+              <h3 className="text-xl font-medium mt-4">App Store Compliance</h3>
+              <p>
+                Our mobile applications comply with the privacy requirements of the Apple App Store and Google Play Store. Additional privacy disclosures may be available on the respective app store listing pages.
+              </p>
             </section>
 
             <section className="mb-8">
