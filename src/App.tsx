@@ -52,6 +52,7 @@ import IncidentHistory from "./pages/IncidentHistory";
 import CloudDevStatusExtensionPrivacy from "./pages/CloudDevStatusExtensionPrivacy";
 import AIMarketingLawFirms2025 from "./pages/AIMarketingLawFirms2025";
 import GbpOptimization2026Page from "./pages/GbpOptimization2026Page";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import SeoAuditPage from "./pages/SeoAuditPage";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
@@ -168,6 +169,9 @@ const App = () => (
               {/* Blog Posts */}
               <Route path="/ai-marketing-law-firms-2025" element={<AIMarketingLawFirms2025 />} />
               <Route path="/gbp-optimization-2026" element={<GbpOptimization2026Page />} />
+              
+              {/* Privacy Policy */}
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
               
               {/* SEO Audit Tool */}
               <Route path="/seo-audit" element={<SeoAuditPage />} />

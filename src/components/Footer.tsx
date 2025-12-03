@@ -1,5 +1,3 @@
-
-import PrivacyPolicyModal from "./PrivacyPolicyModal";
 import TermsOfServiceModal from "./TermsOfServiceModal";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -95,7 +93,9 @@ Powered by Innovation.</h4>
                 </Link>
               </li>
               <li>
-                <PrivacyPolicyModal triggerClassName="text-legal-light hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
+                <Link to="/privacy-policy" className="text-legal-light hover:text-legal-accent transition-colors">
+                  Privacy Policy
+                </Link>
               </li>
               <li>
                 <TermsOfServiceModal triggerClassName="text-legal-light hover:text-legal-accent transition-colors p-0 h-auto font-normal text-base justify-start" />
