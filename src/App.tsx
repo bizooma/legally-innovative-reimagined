@@ -54,6 +54,7 @@ import AIMarketingLawFirms2025 from "./pages/AIMarketingLawFirms2025";
 import GbpOptimization2026Page from "./pages/GbpOptimization2026Page";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import SeoAuditPage from "./pages/SeoAuditPage";
+import JaxBarAssociationResourcesPage from "./pages/JaxBarAssociationResourcesPage";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -175,6 +176,9 @@ const App = () => (
               
               {/* SEO Audit Tool */}
               <Route path="/seo-audit" element={<SeoAuditPage />} />
+              
+              {/* Jacksonville Bar Association CLE Resources */}
+              <Route path="/jax-bar-association" element={<JaxBarAssociationResourcesPage />} />
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />
