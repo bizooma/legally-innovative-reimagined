@@ -20,7 +20,7 @@ const PrivacyPolicyPage = () => {
             <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
             
             <p className="text-muted-foreground mb-8">
-              <strong>Last Updated:</strong> May 3, 2025
+              <strong>Last Updated:</strong> December 4, 2025
             </p>
 
             <section className="mb-8">
