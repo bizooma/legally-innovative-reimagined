@@ -3,7 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useMarketingKPIs } from "@/hooks/useMarketingKPIs";
 import { useMarketingPlan } from "@/hooks/useMarketingPlan";
+import { useAdminStatus } from "@/hooks/staff/useAdminStatus";
 import { MarketingAIChat } from "./MarketingAIChat";
+import { BudgetBreakdownEditor, BudgetLineItem } from "./BudgetBreakdownEditor";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -39,9 +41,12 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
   });
 
   // Fetch marketing plan from database
-  const { marketingPlan, isLoading: planLoading, hasMarketingPlan } = useMarketingPlan({ 
+  const { marketingPlan, isLoading: planLoading, hasMarketingPlan, updateBudgetBreakdown } = useMarketingPlan({ 
     clientId: client.id 
   });
+
+  // Check admin status for editing capabilities
+  const { isAdmin } = useAdminStatus();
 
   // Show loading state
   if (planLoading || kpisLoading) {
@@ -109,14 +114,24 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
     { title: "Win With Casey launch", target: "First-page rankings for 5 PI keywords", progress: 20 }
   ];
 
-  const budgetItems = [
-    { category: "PLG SEO & Content", monthly: "$3,000", annual: "$36,000", description: "Content creation, link building" },
-    { category: "Win With Casey SEO & Content", monthly: "$4,000", annual: "$48,000", description: "Multi-domain content strategy" },
-    { category: "PLG PPC", monthly: "$4,000", annual: "$48,000", description: "Google Ads, Local Services Ads" },
-    { category: "Win With Casey PPC", monthly: "$5,000", annual: "$60,000", description: "Personal injury ad campaigns" },
-    { category: "Website & Tech Stack", monthly: "$1,000", annual: "$12,000", description: "Hosting, plugins, analytics" },
-    { category: "Video Production", monthly: "$2,000", annual: "$24,000", description: "Quarterly video shoots" }
+  // Default budget items used when no saved data exists
+  const defaultBudgetItems: BudgetLineItem[] = [
+    { category: "PLG SEO & Content", monthly: 3000, annual: 36000, description: "Content creation, link building" },
+    { category: "Win With Casey SEO & Content", monthly: 4000, annual: 48000, description: "Multi-domain content strategy" },
+    { category: "PLG PPC", monthly: 4000, annual: 48000, description: "Google Ads, Local Services Ads" },
+    { category: "Win With Casey PPC", monthly: 5000, annual: 60000, description: "Personal injury ad campaigns" },
+    { category: "Website & Tech Stack", monthly: 1000, annual: 12000, description: "Hosting, plugins, analytics" },
+    { category: "Video Production", monthly: 2000, annual: 24000, description: "Quarterly video shoots" }
   ];
+
+  // Use saved budget breakdown from database, or fall back to defaults
+  const budgetBreakdownItems: BudgetLineItem[] = marketingPlan?.budget_breakdown?.length 
+    ? marketingPlan.budget_breakdown 
+    : defaultBudgetItems;
+
+  const handleSaveBudgetBreakdown = async (items: BudgetLineItem[]) => {
+    await updateBudgetBreakdown.mutateAsync(items);
+  };
 
   const kpiDefinitions = [
     { name: "Leads", description: "Total number of qualified leads generated per month" },
@@ -1693,23 +1708,12 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
               <CardTitle className="text-lg font-semibold">Detailed Budget Breakdown</CardTitle>
             </div>
           </CardHeader>
-          <CardContent className="p-0">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted/20">
-                  <TableHead className="font-semibold">Category</TableHead>
-                  <TableHead className="font-semibold">Description</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {budgetItems.map((item, idx) => (
-                  <TableRow key={idx} className="hover:bg-muted/30">
-                    <TableCell className="font-medium">{item.category}</TableCell>
-                    <TableCell className="text-sm text-muted-foreground">{item.description}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+          <CardContent className="p-4">
+            <BudgetBreakdownEditor
+              items={budgetBreakdownItems}
+              onSave={handleSaveBudgetBreakdown}
+              isAdmin={isAdmin}
+            />
           </CardContent>
         </Card>
       </div>
