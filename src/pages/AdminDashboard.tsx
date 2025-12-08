@@ -20,6 +20,7 @@ import { BudgetTrackingSection } from '@/components/budget/BudgetTrackingSection
 import { ProviderStatusManager } from '@/components/admin/ProviderStatusManager';
 import { IncidentManager } from '@/components/admin/IncidentManager';
 import { AuditCodeManager } from '@/components/admin/AuditCodeManager';
+import AdminPasswordReset from '@/components/auth/AdminPasswordReset';
 
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
@@ -142,6 +143,14 @@ const AdminDashboard = () => {
             {isAdmin && (
               <div className="mb-8">
                 <AuditCodeManager />
+              </div>
+            )}
+
+            {/* Admin Password Management - Only show for admins */}
+            {isAdmin && (
+              <div className="mb-8">
+                <h2 className="text-2xl font-playfair font-bold mb-6">Password Management</h2>
+                <AdminPasswordReset />
               </div>
             )}
 
