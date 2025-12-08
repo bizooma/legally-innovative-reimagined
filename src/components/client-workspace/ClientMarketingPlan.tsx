@@ -1673,32 +1673,15 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                 <Bar dataKey="winWithCasey" fill="hsl(var(--foreground))" opacity={0.7} name="Win With Casey" radius={[4, 4, 0, 0]} />
               </RechartsBarChart>
             </ResponsiveContainer>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              {marketingPlan.budget.plg_allocation && (
-                <div className="p-5 border bg-card">
-                  <div className="text-2xl font-bold text-foreground">${marketingPlan.budget.plg_allocation.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground mt-2">Puget Law Group</div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {marketingPlan.budget.total ? Math.round((marketingPlan.budget.plg_allocation / marketingPlan.budget.total) * 100) : 0}% of total budget
-                  </div>
-                </div>
-              )}
-              {marketingPlan.budget.wwc_allocation && (
-                <div className="p-5 border bg-card">
-                  <div className="text-2xl font-bold text-foreground">${marketingPlan.budget.wwc_allocation.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground mt-2">Win With Casey</div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {marketingPlan.budget.total ? Math.round((marketingPlan.budget.wwc_allocation / marketingPlan.budget.total) * 100) : 0}% of total budget
-                  </div>
-                </div>
-              )}
-              {marketingPlan.budget.total && (
-                <div className="p-5 border bg-muted/30">
-                  <div className="text-2xl font-bold text-foreground">${marketingPlan.budget.total.toLocaleString()}</div>
-                  <div className="text-sm text-muted-foreground mt-2">Total Investment</div>
-                  <div className="text-xs text-muted-foreground mt-1">Annual marketing spend</div>
-                </div>
-              )}
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-5 border bg-card">
+                <div className="text-lg font-bold text-foreground">Puget Law Group</div>
+                <div className="text-sm text-muted-foreground mt-2">Criminal defense marketing allocation</div>
+              </div>
+              <div className="p-5 border bg-card">
+                <div className="text-lg font-bold text-foreground">Win With Casey</div>
+                <div className="text-sm text-muted-foreground mt-2">Personal injury marketing allocation</div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -1716,8 +1699,6 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                 <TableRow className="bg-muted/20">
                   <TableHead className="font-semibold">Category</TableHead>
                   <TableHead className="font-semibold">Description</TableHead>
-                  <TableHead className="text-right font-semibold">Monthly</TableHead>
-                  <TableHead className="text-right font-semibold">Annual</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -1725,16 +1706,8 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
                   <TableRow key={idx} className="hover:bg-muted/30">
                     <TableCell className="font-medium">{item.category}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">{item.description}</TableCell>
-                    <TableCell className="text-right">{item.monthly}</TableCell>
-                    <TableCell className="text-right">{item.annual}</TableCell>
                   </TableRow>
                 ))}
-                <TableRow className="font-bold bg-muted border-t-2">
-                  <TableCell>Total</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell className="text-right">$17,000</TableCell>
-                  <TableCell className="text-right">$204,000</TableCell>
-                </TableRow>
               </TableBody>
             </Table>
           </CardContent>
