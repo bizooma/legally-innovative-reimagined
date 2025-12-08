@@ -553,6 +553,7 @@ export type Database = {
       marketing_plans: {
         Row: {
           budget: Json | null
+          budget_breakdown: Json | null
           client_id: string
           competitor_analysis: Json | null
           created_at: string
@@ -571,6 +572,7 @@ export type Database = {
         }
         Insert: {
           budget?: Json | null
+          budget_breakdown?: Json | null
           client_id: string
           competitor_analysis?: Json | null
           created_at?: string
@@ -589,6 +591,7 @@ export type Database = {
         }
         Update: {
           budget?: Json | null
+          budget_breakdown?: Json | null
           client_id?: string
           competitor_analysis?: Json | null
           created_at?: string

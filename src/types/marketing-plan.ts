@@ -36,6 +36,13 @@ export interface MarketingPlanStrategies {
   [key: string]: any;
 }
 
+export interface MarketingPlanBudgetLineItem {
+  category: string;
+  monthly: number;
+  annual: number;
+  description: string;
+}
+
 export interface MarketingPlanBudget {
   total?: number;
   plg_allocation?: number;
@@ -63,6 +70,7 @@ export interface MarketingPlan {
   marketing_objectives: MarketingPlanObjective[];
   strategies: MarketingPlanStrategies;
   budget: MarketingPlanBudget;
+  budget_breakdown?: MarketingPlanBudgetLineItem[];
   kpi_framework: MarketingPlanKPIFramework;
   competitor_analysis?: any[];
   implementation_timeline?: any[];
