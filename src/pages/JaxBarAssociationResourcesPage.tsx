@@ -165,7 +165,7 @@ const JaxBarAssociationResourcesPage = () => {
                 <Button 
                   size="lg" 
                   className="bg-legal-primary hover:bg-legal-primary/90"
-                  onClick={() => window.open('https://calendly.com/bizooma', '_blank')}
+                  onClick={() => window.open('https://calendly.com/joe-bizooma/30min', '_blank')}
                 >
                   <Calendar className="mr-2 h-5 w-5" />
                   Schedule a Consultation
