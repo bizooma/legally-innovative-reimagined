@@ -4,9 +4,11 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { FileText, BookOpen, MapPin, Mic, Calendar, Download, Presentation, PhoneOff, Clock, TrendingDown, Users, DollarSign, MousePointer } from "lucide-react";
+import { FileText, BookOpen, MapPin, Mic, Calendar, Download, Presentation, PhoneOff, Clock, TrendingDown, Users, DollarSign, MousePointer, Printer } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const JaxBarAssociationResourcesPage = () => {
+  const navigate = useNavigate();
   const availableResources = [
     {
       title: "CLE Presentation Slides",
@@ -312,6 +314,19 @@ const JaxBarAssociationResourcesPage = () => {
                   </CardContent>
                 </Card>
               </div>
+            </div>
+
+            {/* Printable Infographic CTA */}
+            <div className="mt-12 text-center">
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="border-white/30 text-white hover:bg-white/10"
+                onClick={() => navigate('/jax-bar-association/infographic')}
+              >
+                <Printer className="mr-2 h-5 w-5" />
+                View Printable Infographic
+              </Button>
             </div>
           </div>
         </section>
