@@ -161,24 +161,14 @@ const JaxBarAssociationResourcesPage = () => {
                 If you'd like to discuss how Bizooma can help your law firm develop a comprehensive 
                 digital marketing strategy, we'd love to connect with you.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  size="lg" 
-                  className="bg-legal-primary hover:bg-legal-primary/90"
-                  onClick={() => window.open('https://calendly.com/joe-bizooma/30min', '_blank')}
-                >
-                  <Calendar className="mr-2 h-5 w-5" />
-                  Schedule a Consultation
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  onClick={() => window.location.href = 'mailto:info@bizooma.com'}
-                >
-                  <Mail className="mr-2 h-5 w-5" />
-                  Contact Us
-                </Button>
-              </div>
+              <Button 
+                size="lg" 
+                className="bg-legal-primary hover:bg-legal-primary/90"
+                onClick={() => window.open('https://calendly.com/joe-bizooma/30min', '_blank')}
+              >
+                <Calendar className="mr-2 h-5 w-5" />
+                Schedule a Consultation
+              </Button>
             </div>
           </div>
         </section>
