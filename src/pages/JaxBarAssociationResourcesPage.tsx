@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { FileText, BookOpen, MapPin, Mic, Calendar, Mail, Download, Presentation } from "lucide-react";
+import { FileText, BookOpen, MapPin, Mic, Calendar, Download, Presentation, PhoneOff, Clock, TrendingDown, Users, DollarSign, MousePointer } from "lucide-react";
 
 const JaxBarAssociationResourcesPage = () => {
   const availableResources = [
@@ -146,6 +146,172 @@ const JaxBarAssociationResourcesPage = () => {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Key Statistics Section */}
+        <section className="py-16 md:py-20 bg-legal-dark text-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">
+                Key Statistics on Business Loss
+              </h2>
+              <p className="text-white/70 max-w-2xl mx-auto">
+                Understanding the cost of missed opportunities in the legal industry
+              </p>
+            </div>
+
+            {/* Unanswered Calls Crisis */}
+            <div className="mb-12">
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 justify-center">
+                <PhoneOff className="h-5 w-5 text-red-400" />
+                Unanswered Calls Crisis
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-red-400 mb-2">35%</p>
+                    <p className="text-white/80 text-sm">of calls go unanswered during business hours</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-red-400 mb-2">$109B</p>
+                    <p className="text-white/80 text-sm">lost annually across the legal industry</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-red-400 mb-2">28%</p>
+                    <p className="text-white/80 text-sm">missed call rate (2nd highest of any industry)</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-red-400 mb-2">195M</p>
+                    <p className="text-white/80 text-sm">calls go unanswered each year</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Client Behavior */}
+            <div className="mb-12">
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 justify-center">
+                <Users className="h-5 w-5 text-amber-400" />
+                Client Behavior
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-amber-400 mb-2">78%</p>
+                    <p className="text-white/80 text-sm">hire the first firm that responds</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-amber-400 mb-2">72%</p>
+                    <p className="text-white/80 text-sm">move on if no response within 24 hours</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-amber-400 mb-2">80%</p>
+                    <p className="text-white/80 text-sm">hang up when they reach voicemail</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-amber-400 mb-2">65%</p>
+                    <p className="text-white/80 text-sm">contact 2-5 firms before choosing</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Online Lead Response */}
+            <div className="mb-12">
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 justify-center">
+                <Clock className="h-5 w-5 text-blue-400" />
+                Online Lead Response
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-blue-400 mb-2">26%</p>
+                    <p className="text-white/80 text-sm">of law firms never respond to online leads</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-blue-400 mb-2">39%</p>
+                    <p className="text-white/80 text-sm">take 2+ hours to respond or never respond</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-green-400 mb-2">7x</p>
+                    <p className="text-white/80 text-sm">more likely to convert when responding within 1 hour</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Revenue Impact */}
+            <div className="mb-12">
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 justify-center">
+                <DollarSign className="h-5 w-5 text-green-400" />
+                Revenue Impact Example (Personal Injury Firm)
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-green-400 mb-2">$7.2M</p>
+                    <p className="text-white/80 text-sm">potential annual revenue loss (28% missed calls)</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-green-400 mb-2">$1.79M</p>
+                    <p className="text-white/80 text-sm">conservative estimate lost per year</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-green-400 mb-2">$649</p>
+                    <p className="text-white/80 text-sm">average cost per lead (wasted when unanswered)</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Conversion Impact */}
+            <div>
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 justify-center">
+                <MousePointer className="h-5 w-5 text-purple-400" />
+                Conversion Impact
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-purple-400 mb-2">2.1%</p>
+                    <p className="text-white/80 text-sm">average law firm website conversion rate</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-purple-400 mb-2">98/100</p>
+                    <p className="text-white/80 text-sm">visitors leave without taking action</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/10 border-white/20 text-center">
+                  <CardContent className="pt-6">
+                    <p className="text-4xl font-bold text-purple-400 mb-2">14%</p>
+                    <p className="text-white/80 text-sm">of prospects attend consultations before retaining</p>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </section>
