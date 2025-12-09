@@ -319,9 +319,8 @@ const JaxBarAssociationResourcesPage = () => {
             {/* Printable Infographic CTA */}
             <div className="mt-12 text-center">
               <Button 
-                variant="outline" 
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10"
+                className="bg-white/10 border border-white/30 text-white hover:bg-white/20"
                 onClick={() => navigate('/jax-bar-association/infographic')}
               >
                 <Printer className="mr-2 h-5 w-5" />
