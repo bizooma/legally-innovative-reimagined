@@ -87,7 +87,8 @@ export const newsletterTopics: NewsletterTopic[] = [
     date: "2025-12-23",
     topic: "How to Use Schema Markup to Win Featured Snippets",
     description: "The most important schema types for attorneys—FAQ, How-To, Article, Organization, Attorney—and why they matter.",
-    isPublished: false,
+    link: "https://us14.campaign-archive.com/?u=621f128c71e19e8d9b92ff1e3&id=707ab84a8a",
+    isPublished: true,
   },
   {
     date: "2025-12-30",
