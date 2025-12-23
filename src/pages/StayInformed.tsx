@@ -14,6 +14,17 @@ import aiMarketingImage from "@/assets/ai-marketing-law-firms.jpg";
 const StayInformed = () => {
   const blogPosts = [
     {
+      id: 10,
+      title: "How to Use Schema Markup to Win Featured Snippets: A Guide for Attorneys",
+      excerpt: "Learn how to leverage the five essential schema types—FAQ, HowTo, Article, Organization, and Attorney—to capture position zero and dominate search results for your law firm.",
+      date: "2025-12-23",
+      readTime: "12 min read",
+      author: "SEO Strategy Team",
+      category: "SEO",
+      image: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
+      link: "/schema-markup-featured-snippets"
+    },
+    {
       id: 9,
       title: "Google Business Profile Optimization for Law Firms in 2026: The Complete Guide",
       excerpt: "GBP optimization is no longer just about filling out fields. Google now evaluates how your GBP interacts with your website, entity authority, reviews, and brand consistency. Learn how to dominate local and national search.",
