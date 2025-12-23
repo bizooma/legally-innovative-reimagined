@@ -10,6 +10,7 @@ import appleMapsInterfaceImage from "@/assets/apple-maps-interface.jpg";
 import appleMapsLawFirmImage from "@/assets/apple-maps-law-firm.jpg";
 import openaiImage from "@/assets/openai-browser-legal-tech.jpg";
 import aiMarketingImage from "@/assets/ai-marketing-law-firms.jpg";
+import schemaMarkupHeroImage from "@/assets/schema-markup-hero.jpg";
 
 const StayInformed = () => {
   const blogPosts = [
@@ -21,7 +22,7 @@ const StayInformed = () => {
       readTime: "12 min read",
       author: "SEO Strategy Team",
       category: "SEO",
-      image: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
+      image: schemaMarkupHeroImage,
       link: "/schema-markup-featured-snippets"
     },
     {
