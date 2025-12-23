@@ -65,7 +65,8 @@ export const newsletterTopics: NewsletterTopic[] = [
     date: "2025-12-02",
     topic: "Google Business Profile Optimization",
     description: "Maximize your visibility on Google Maps and local search results.",
-    isPublished: false,
+    link: "https://us14.campaign-archive.com/?u=621f128c71e19e8d9b92ff1e3&id=534a2b38aa",
+    isPublished: true,
   },
   {
     date: "2025-12-09",
