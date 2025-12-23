@@ -4,6 +4,7 @@ export interface NewsletterTopic {
   description: string;
   link?: string; // URL for published newsletters
   isPublished: boolean;
+  isCancelled?: boolean;
 }
 
 export const newsletterTopics: NewsletterTopic[] = [
@@ -73,12 +74,14 @@ export const newsletterTopics: NewsletterTopic[] = [
     topic: "Using Email Automation to Nurture Leads",
     description: "Building drip campaigns, follow-up sequences, and client education workflows that improve sign-on rates.",
     isPublished: false,
+    isCancelled: true,
   },
   {
     date: "2025-12-16",
     topic: "The Impact of Page Speed & Core Web Vitals",
     description: "Why law firms lose cases due to slow sites and how to fix technical performance issues.",
     isPublished: false,
+    isCancelled: true,
   },
   {
     date: "2025-12-23",

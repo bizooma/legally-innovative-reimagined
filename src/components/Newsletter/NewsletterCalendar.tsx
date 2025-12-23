@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { newsletterTopics } from "./newsletterData";
 import { format, parseISO } from "date-fns";
 import { cn } from "@/lib/utils";
-import { ExternalLink, Calendar as CalendarIcon, CheckCircle2 } from "lucide-react";
+import { ExternalLink, Calendar as CalendarIcon, CheckCircle2, XCircle } from "lucide-react";
 
 export const NewsletterCalendar = () => {
   return (
@@ -30,6 +30,7 @@ export const NewsletterCalendar = () => {
             {newsletterTopics.map((topic, index) => {
               const date = parseISO(topic.date);
               const isPublished = topic.isPublished;
+              const isCancelled = topic.isCancelled;
               
               return (
                 <div key={topic.date} className="relative pl-16">
@@ -38,10 +39,14 @@ export const NewsletterCalendar = () => {
                     "absolute left-0 w-14 h-14 rounded-full border-4 border-background flex items-center justify-center shadow-lg transition-all duration-300",
                     isPublished 
                       ? "bg-primary text-primary-foreground hover:bg-primary/80 hover:scale-110 cursor-pointer" 
-                      : "bg-muted text-muted-foreground"
+                      : isCancelled
+                        ? "bg-destructive text-destructive-foreground"
+                        : "bg-muted text-muted-foreground"
                   )}>
                     {isPublished ? (
                       <CheckCircle2 className="w-6 h-6" />
+                    ) : isCancelled ? (
+                      <XCircle className="w-6 h-6" />
                     ) : (
                       <CalendarIcon className="w-6 h-6" />
                     )}
@@ -52,7 +57,9 @@ export const NewsletterCalendar = () => {
                     "transition-all duration-300",
                     isPublished 
                       ? "border-primary/20 hover:border-primary/50 hover:shadow-2xl bg-gradient-to-br from-background to-primary/5 cursor-pointer hover:-translate-y-1" 
-                      : "border-border/50 hover:border-border"
+                      : isCancelled
+                        ? "border-destructive/20 bg-gradient-to-br from-background to-destructive/5 opacity-75"
+                        : "border-border/50 hover:border-border"
                   )}>
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between gap-4 mb-2">
@@ -60,7 +67,7 @@ export const NewsletterCalendar = () => {
                           <div className="text-sm font-medium text-muted-foreground">
                             {format(date, "EEEE, MMMM d, yyyy")}
                           </div>
-                          <CardTitle className="text-xl leading-tight">
+                          <CardTitle className={cn("text-xl leading-tight", isCancelled && "line-through opacity-60")}>
                             {topic.topic}
                           </CardTitle>
                         </div>
@@ -68,7 +75,11 @@ export const NewsletterCalendar = () => {
                     <Badge className="bg-success text-success-foreground hover:bg-success/90 shrink-0">
                       Published
                     </Badge>
-                  ) : (
+                  ) : isCancelled ? (
+                    <Badge className="bg-destructive text-destructive-foreground hover:bg-destructive/90 shrink-0">
+                      Cancelled
+                    </Badge>
+                        ) : (
                           <Badge className="bg-yellow-500 text-yellow-950 hover:bg-yellow-600 shrink-0">
                             Upcoming
                           </Badge>
