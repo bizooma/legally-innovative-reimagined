@@ -24,8 +24,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { toast } from "@/hooks/use-toast";
-import { Headphones, Send, CheckCircle } from "lucide-react";
+import { Headphones, Send, CheckCircle, HelpCircle } from "lucide-react";
 
 const supportSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100),
@@ -50,6 +56,41 @@ const products = [
   { value: "digital-marketing", label: "Digital Marketing Services" },
   { value: "seo-aeo", label: "SEO/AEO Services" },
   { value: "other", label: "Other / General Inquiry" },
+];
+
+const faqs = [
+  {
+    question: "How long does it take to get a response?",
+    answer: "We typically respond to all support requests within 24-48 business hours. For urgent matters, please email us directly at support@bizooma.com with 'URGENT' in the subject line.",
+  },
+  {
+    question: "How do I reset my password or access my account?",
+    answer: "You can reset your password by clicking the 'Forgot Password' link on the login page of the respective product. If you're still having trouble, submit a support request and we'll help you regain access.",
+  },
+  {
+    question: "Can I request a feature or suggest an improvement?",
+    answer: "Absolutely! We love hearing from our users. Use the support form above and select the relevant product, then describe your feature request or suggestion in detail. Our product team reviews all feedback.",
+  },
+  {
+    question: "Do you offer refunds?",
+    answer: "Refund policies vary by product and service. Please refer to your service agreement or contact our support team for specific refund inquiries related to your purchase.",
+  },
+  {
+    question: "How do I cancel or modify my subscription?",
+    answer: "You can manage your subscription settings directly in your account dashboard for most products. If you need assistance, submit a support request and our team will help you with any changes.",
+  },
+  {
+    question: "Where can I find documentation or tutorials?",
+    answer: "Each product has its own documentation and tutorial resources. Check the 'Help' or 'Resources' section within the product interface, or contact support for specific guidance.",
+  },
+  {
+    question: "Is my data secure with Bizooma products?",
+    answer: "Yes, we take data security seriously. All our products use industry-standard encryption and security practices. For more details, please review our Privacy Policy.",
+  },
+  {
+    question: "How do I report a bug or technical issue?",
+    answer: "Use the support form above and provide as much detail as possible, including steps to reproduce the issue, screenshots if available, and the browser/device you're using. This helps us resolve issues faster.",
+  },
 ];
 
 const SupportPage = () => {
@@ -260,6 +301,32 @@ const SupportPage = () => {
                 support@bizooma.com
               </a>
             </p>
+          </div>
+
+          {/* FAQ Section */}
+          <div className="mt-16">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-3">
+                <HelpCircle className="w-6 h-6 text-primary" />
+              </div>
+              <h2 className="text-2xl font-bold mb-2">Frequently Asked Questions</h2>
+              <p className="text-muted-foreground">
+                Find quick answers to common questions
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-left">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </main>
 
