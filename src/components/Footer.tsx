@@ -93,6 +93,11 @@ Powered by Innovation.</h4>
                 </Link>
               </li>
               <li>
+                <Link to="/support" className="text-legal-light hover:text-legal-accent transition-colors">
+                  Support
+                </Link>
+              </li>
+              <li>
                 <Link to="/privacy-policy" className="text-legal-light hover:text-legal-accent transition-colors">
                   Privacy Policy
                 </Link>
