@@ -57,6 +57,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import SeoAuditPage from "./pages/SeoAuditPage";
 import JaxBarAssociationResourcesPage from "./pages/JaxBarAssociationResourcesPage";
 import JaxBarInfographicPage from "./pages/JaxBarInfographicPage";
+import SupportPage from "./pages/SupportPage";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -183,6 +184,9 @@ const App = () => (
               {/* Jacksonville Bar Association CLE Resources */}
               <Route path="/jax-bar-association" element={<JaxBarAssociationResourcesPage />} />
               <Route path="/jax-bar-association/infographic" element={<JaxBarInfographicPage />} />
+              
+              {/* Support */}
+              <Route path="/support" element={<SupportPage />} />
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />
