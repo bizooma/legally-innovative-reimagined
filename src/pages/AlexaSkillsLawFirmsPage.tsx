@@ -169,18 +169,6 @@ const AlexaSkillsLawFirmsPage = () => {
         User reviews and ratings within the Alexa Skills marketplace serve as both feedback mechanisms and marketing assets. Encourage satisfied users to leave reviews, and actively respond to feedback to improve your skill over time.
       </p>
 
-      <h2 className="text-3xl font-bold mt-12 mb-6">Getting Started</h2>
-
-      <p className="text-lg mb-6">
-        Developing an Alexa skill doesn't require your firm to become a tech company. Amazon provides extensive documentation and development tools, and numerous agencies specialize in creating skills for professional services firms. The investment is often comparable to developing a mobile app but with potentially broader reach.
-      </p>
-
-      <div className="bg-primary/10 border-l-4 border-primary p-6 my-8 rounded-r-lg">
-        <p className="text-lg font-medium">
-          <strong>Start by identifying your target audience's most pressing questions and pain points.</strong> What information do prospective clients always ask during initial consultations? What questions does your intake staff field repeatedly? These insights should drive your skill's core functionality.
-        </p>
-      </div>
-
       <h2 className="text-3xl font-bold mt-12 mb-6">The Competitive Advantage</h2>
 
       <p className="text-lg mb-6">
