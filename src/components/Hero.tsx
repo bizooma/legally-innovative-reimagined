@@ -91,6 +91,7 @@ const Hero = () => {
                 >
                   Our Services
                 </Button>
+                {/* Holiday Fun Button - Hidden for now, keeping code for future use
                 <Button
                   variant="outline"
                   className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-6 text-base font-semibold transition-all duration-300 backdrop-blur-sm"
@@ -109,6 +110,7 @@ const Hero = () => {
                     {musicPlaying ? <VolumeX className="h-5 w-5" /> : <Music className="h-5 w-5" />}
                   </Button>
                 )}
+                */}
               </div>
             </div>
           </div>
