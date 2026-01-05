@@ -15,6 +15,17 @@ import schemaMarkupHeroImage from "@/assets/schema-markup-hero.jpg";
 const StayInformed = () => {
   const blogPosts = [
     {
+      id: 11,
+      title: "How Law Firms Can Leverage Amazon Alexa Skills for Modern Marketing",
+      excerpt: "With over 100 million Alexa-enabled devices in U.S. homes, developing an Amazon Alexa skill could be the competitive advantage your law firm needs.",
+      date: "January 5, 2026",
+      readTime: "10 min read",
+      author: "Voice Technology Team",
+      category: "Voice Marketing",
+      image: voiceSeoHeroImage,
+      link: "/alexa-skills-law-firms"
+    },
+    {
       id: 10,
       title: "How to Use Schema Markup to Win Featured Snippets: A Guide for Attorneys",
       excerpt: "Learn how to leverage the five essential schema types—FAQ, HowTo, Article, Organization, and Attorney—to capture position zero and dominate search results for your law firm.",
@@ -126,7 +137,7 @@ const StayInformed = () => {
     }
   ];
 
-  const categories = ["All", "AI Technology", "Digital Marketing", "SEO", "Web Development", "Mobile Development", "Security"];
+  const categories = ["All", "AI Technology", "Digital Marketing", "SEO", "Voice Marketing", "Web Development", "Mobile Development", "Security"];
 
   return (
     <div className="min-h-screen">

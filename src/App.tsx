@@ -53,6 +53,7 @@ import CloudDevStatusExtensionPrivacy from "./pages/CloudDevStatusExtensionPriva
 import AIMarketingLawFirms2025 from "./pages/AIMarketingLawFirms2025";
 import GbpOptimization2026Page from "./pages/GbpOptimization2026Page";
 import SchemaMarkupFeaturedSnippetsPage from "./pages/SchemaMarkupFeaturedSnippetsPage";
+import AlexaSkillsLawFirmsPage from "./pages/AlexaSkillsLawFirmsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import SeoAuditPage from "./pages/SeoAuditPage";
 import JaxBarAssociationResourcesPage from "./pages/JaxBarAssociationResourcesPage";
@@ -174,6 +175,7 @@ const App = () => (
               <Route path="/ai-marketing-law-firms-2025" element={<AIMarketingLawFirms2025 />} />
               <Route path="/gbp-optimization-2026" element={<GbpOptimization2026Page />} />
               <Route path="/schema-markup-featured-snippets" element={<SchemaMarkupFeaturedSnippetsPage />} />
+              <Route path="/alexa-skills-law-firms" element={<AlexaSkillsLawFirmsPage />} />
               
               {/* Privacy Policy */}
               <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
