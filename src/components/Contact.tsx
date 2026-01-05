@@ -137,6 +137,7 @@ const Contact = () => {
                       200 N Laura St<br />
                       Jacksonville, FL 32202
                     </p>
+                    <p className="text-sm text-gray-500 mt-1">By Appointment Only</p>
                   </div>
                 </div>
               </div>
