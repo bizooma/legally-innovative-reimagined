@@ -182,9 +182,9 @@ const Index = () => {
         titleAccentColor="text-sky-300"
         logo={causeioLogo}
       />
-      {/* Transition gradient between Non-Profits section and Map */}
-      <div className="h-32 bg-gradient-to-b from-black/90 via-black/50 to-transparent"></div>
-      <GoogleMap />
+      {/* GoogleMap component removed - maps are now integrated in Contact section */}
+      {/* <div className="h-32 bg-gradient-to-b from-black/90 via-black/50 to-transparent"></div>
+      <GoogleMap /> */}
       <Footer />
       <MobileFooterNav />
       </div>
