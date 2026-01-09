@@ -10,9 +10,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Contact = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,24 +18,17 @@ const Contact = () => {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {
-      name,
-      value
-    } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const {
-        data,
-        error
-      } = await supabase.functions.invoke('send-contact-email', {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
         body: {
           name: formData.name,
           email: formData.email,
@@ -77,182 +68,76 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
-  return <section id="contact" ref={sectionRef} className="section-padding bg-gradient-to-br from-legal-light/50 via-white to-white">
+
+  return (
+    <section id="contact" ref={sectionRef} className="section-padding bg-gradient-to-br from-legal-light/50 via-white to-white">
       <div className="container mx-auto">
+        {/* Section Header */}
         <div className="text-left max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-legal-dark">
             Get In <span className="highlight-text">Touch</span>
           </h2>
-          <p className="text-lg text-gray-700">Ready to transform your business? Contact us today to discuss how we can help you embrace innovation and prepare for the future of business marketing and growth!</p>
+          <p className="text-lg text-gray-700">
+            Ready to transform your business? Contact us today to discuss how we can help you embrace innovation and prepare for the future of business marketing and growth!
+          </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12">
-          <div className="lg:w-2/5">
-            <div className="bg-white rounded-lg p-8 shadow-lg h-full">
-              <h3 className="text-2xl font-bold mb-6 text-legal-dark">Contact Information</h3>
+        {/* Main Grid: Contact Info + Form */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          {/* Left Column: Contact Info */}
+          <div className="bg-white rounded-lg p-8 shadow-lg">
+            <h3 className="text-2xl font-bold mb-6 text-legal-dark">Contact Information</h3>
+            
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="bg-legal-light p-3 rounded-full">
+                  <Mail className="h-6 w-6 text-legal-primary" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-600">Email Us</p>
+                  <a 
+                    href="mailto:support@bizooma.com" 
+                    onClick={() => trackEmailClick('Contact Section')}
+                    className="text-legal-dark font-semibold hover:underline"
+                  >
+                    support@bizooma.com
+                  </a>
+                </div>
+              </div>
               
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="bg-legal-light p-3 rounded-full">
-                    <Mail className="h-6 w-6 text-legal-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-600">Email Us</p>
+              <div className="flex items-start gap-4">
+                <div className="bg-legal-light p-3 rounded-full">
+                  <Phone className="h-6 w-6 text-legal-primary" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-600">Call Us</p>
+                  <p className="text-legal-dark font-semibold">
+                    AI Receptionist<br />
                     <a 
-                      href="mailto:support@bizooma.com" 
-                      onClick={() => trackEmailClick('Contact Section')}
-                      className="text-legal-dark font-semibold hover:underline"
+                      href="tel:8452046343" 
+                      onClick={() => trackPhoneClick('845-204-6343', 'Contact Section')}
+                      className="hover:underline"
                     >
-                      support@bizooma.com
+                      845-204-6343
                     </a>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="bg-legal-light p-3 rounded-full">
-                    <Phone className="h-6 w-6 text-legal-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-600">Call Us</p>
-                    <p className="text-legal-dark font-semibold">
-                      AI Receptionist<br />
-                      <a 
-                        href="tel:8452046343" 
-                        onClick={() => trackPhoneClick('845-204-6343', 'Contact Section')}
-                        className="hover:underline"
-                      >
-                        845-204-6343
-                      </a>
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="bg-legal-light p-3 rounded-full">
-                    <MapPin className="h-6 w-6 text-legal-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-600">Visit Us</p>
-                    <p className="text-legal-dark font-semibold">
-                      200 N Laura St<br />
-                      Jacksonville, FL 32202
-                    </p>
-                    <p className="text-sm text-gray-500 mt-1">By Appointment Only</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 pt-8 border-t border-gray-200">
-                <h4 className="text-xl font-bold mb-4 text-legal-dark">At Bizooma:</h4>
-                <p className="text-gray-700 leading-relaxed">
-                  Our platforms are more than just tools—they're growth engines. Each system is tailored to your brand, powered by data, and designed to deliver measurable ROI. With AI-first development and automation-driven marketing, we help you streamline operations, cut costs, and achieve smarter, faster growth.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Office Locations with Maps */}
-          <div className="lg:col-span-2 mt-12">
-            <h3 className="text-2xl font-bold mb-8 text-legal-dark text-center">
-              Our <span className="highlight-text">Locations</span>
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Jacksonville Office */}
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3446.3896825285567!2d-81.6572376!3d30.3271693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e5b716e3a0f2c3%3A0x9e5b59f56b7c7c4b!2s200%20N%20Laura%20St%2C%20Jacksonville%2C%20FL%2032202!5e0!3m2!1sen!2sus!4v1699900000000!5m2!1sen!2sus" 
-                  width="100%" 
-                  height="250" 
-                  style={{ border: 0 }} 
-                  allowFullScreen 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Jacksonville Office Location"
-                />
-                <div className="p-6">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="h-5 w-5 text-legal-primary mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-bold text-legal-dark">Jacksonville, FL</h4>
-                      <p className="text-gray-600">200 N Laura St<br />Jacksonville, FL 32202</p>
-                      <p className="text-sm text-gray-500 mt-1">By Appointment Only</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Amarillo Office */}
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.9971159263355!2d-101.8388806!3d35.2065408!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87014efebbd00001%3A0x6d22297156b25a93!2s600%20S%20Tyler%20St%20suite%202100%2C%20Amarillo%2C%20TX%2079101!5e0!3m2!1sen!2sus!4v1767917279697!5m2!1sen!2sus" 
-                  width="100%" 
-                  height="250" 
-                  style={{ border: 0 }} 
-                  allowFullScreen 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Amarillo Office Location"
-                />
-                <div className="p-6">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="h-5 w-5 text-legal-primary mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-bold text-legal-dark">Amarillo, TX</h4>
-                      <p className="text-gray-600">600 S Tyler St, Suite 2100<br />Amarillo, TX 79101</p>
-                      <p className="text-sm text-gray-500 mt-1">By Appointment Only</p>
-                    </div>
-                  </div>
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
-          
-          <div className="lg:w-3/5">
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg p-8 shadow-lg">
-              
-              <h3 className="text-2xl font-bold mb-6 text-legal-dark">Send us a Message</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
-                    Your Name
-                  </label>
-                  <Input id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full" placeholder="John Doe" />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
-                    Email Address
-                  </label>
-                  <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required className="w-full" placeholder="john@example.com" />
-                </div>
-              </div>
-              
-              <div className="mb-6">
-                <label htmlFor="company" className="block mb-2 text-sm font-medium text-gray-700">
-                  Company/Organization
-                </label>
-                <Input id="company" name="company" value={formData.company} onChange={handleChange} className="w-full" placeholder="Your company name" />
-              </div>
-              
-              <div className="mb-6">
-                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-700">
-                  Message
-                </label>
-                <Textarea id="message" name="message" value={formData.message} onChange={handleChange} required className="w-full min-h-[150px]" placeholder="Tell us how we can help you..." />
-              </div>
-              
-              <Button type="submit" className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </Button>
-            </form>
 
-            {/* Schedule Meeting Button */}
-            <div className="mt-12 text-center">
-              <h3 className="text-2xl font-bold mb-6 text-legal-dark">
-                Or Schedule a <span className="highlight-text">Meeting</span>
-              </h3>
-              <Button asChild className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 text-lg">
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <h4 className="text-xl font-bold mb-4 text-legal-dark">At Bizooma:</h4>
+              <p className="text-gray-700 leading-relaxed">
+                Our platforms are more than just tools—they're growth engines. Each system is tailored to your brand, powered by data, and designed to deliver measurable ROI. With AI-first development and automation-driven marketing, we help you streamline operations, cut costs, and achieve smarter, faster growth.
+              </p>
+            </div>
+
+            {/* Schedule Meeting CTA */}
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <h4 className="text-lg font-bold mb-4 text-legal-dark">
+                Prefer to <span className="highlight-text">Schedule a Meeting?</span>
+              </h4>
+              <Button asChild className="bg-legal-primary hover:bg-legal-secondary text-white px-6 py-5">
                 <a 
                   href="https://tidycal.com/bizooma/30-minute-meeting" 
                   target="_blank" 
@@ -264,8 +149,155 @@ const Contact = () => {
               </Button>
             </div>
           </div>
+
+          {/* Right Column: Contact Form */}
+          <div className="bg-white rounded-lg p-8 shadow-lg">
+            <h3 className="text-2xl font-bold mb-6 text-legal-dark">Send us a Message</h3>
+            
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
+                    Your Name
+                  </label>
+                  <Input 
+                    id="name" 
+                    name="name" 
+                    value={formData.name} 
+                    onChange={handleChange} 
+                    required 
+                    className="w-full" 
+                    placeholder="John Doe" 
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
+                    Email Address
+                  </label>
+                  <Input 
+                    id="email" 
+                    name="email" 
+                    type="email" 
+                    value={formData.email} 
+                    onChange={handleChange} 
+                    required 
+                    className="w-full" 
+                    placeholder="john@example.com" 
+                  />
+                </div>
+              </div>
+              
+              <div className="mb-6">
+                <label htmlFor="company" className="block mb-2 text-sm font-medium text-gray-700">
+                  Company/Organization
+                </label>
+                <Input 
+                  id="company" 
+                  name="company" 
+                  value={formData.company} 
+                  onChange={handleChange} 
+                  className="w-full" 
+                  placeholder="Your company name" 
+                />
+              </div>
+              
+              <div className="mb-6">
+                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-700">
+                  Message
+                </label>
+                <Textarea 
+                  id="message" 
+                  name="message" 
+                  value={formData.message} 
+                  onChange={handleChange} 
+                  required 
+                  className="w-full min-h-[150px]" 
+                  placeholder="Tell us how we can help you..." 
+                />
+              </div>
+              
+              <Button 
+                type="submit" 
+                className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 w-full md:w-auto" 
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
+            </form>
+          </div>
+        </div>
+
+        {/* Office Locations Section */}
+        <div className="mt-8">
+          <h3 className="text-2xl md:text-3xl font-bold mb-10 text-legal-dark text-center">
+            Our <span className="highlight-text">Locations</span>
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Jacksonville Office */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3443.794538479383!2d-81.6591862!3d30.3283615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e5b7ba8c79c7b7%3A0x29d0d337ce7701c4!2sBizooma%20Digital%20Marketing%20Agency!5e0!3m2!1sen!2sus!4v1758758710528!5m2!1sen!2sus" 
+                width="100%" 
+                height="280" 
+                style={{ border: 0 }} 
+                allowFullScreen 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Jacksonville Office Location"
+                className="w-full"
+              />
+              <div className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-legal-light p-2 rounded-full flex-shrink-0">
+                    <MapPin className="h-5 w-5 text-legal-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg text-legal-dark">Jacksonville, FL</h4>
+                    <p className="text-gray-600 mt-1">
+                      200 N Laura St<br />
+                      Jacksonville, FL 32202
+                    </p>
+                    <p className="text-sm text-legal-primary font-medium mt-2">By Appointment Only</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Amarillo Office */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.9971159263355!2d-101.8388806!3d35.2065408!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87014efebbd00001%3A0x6d22297156b25a93!2s600%20S%20Tyler%20St%20suite%202100%2C%20Amarillo%2C%20TX%2079101!5e0!3m2!1sen!2sus!4v1767917279697!5m2!1sen!2sus" 
+                width="100%" 
+                height="280" 
+                style={{ border: 0 }} 
+                allowFullScreen 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Amarillo Office Location"
+                className="w-full"
+              />
+              <div className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-legal-light p-2 rounded-full flex-shrink-0">
+                    <MapPin className="h-5 w-5 text-legal-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg text-legal-dark">Amarillo, TX</h4>
+                    <p className="text-gray-600 mt-1">
+                      600 S Tyler St, Suite 2100<br />
+                      Amarillo, TX 79101
+                    </p>
+                    <p className="text-sm text-legal-primary font-medium mt-2">By Appointment Only</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default Contact;
