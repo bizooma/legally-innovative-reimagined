@@ -29,7 +29,7 @@ const ProposalValueProp = () => {
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-black/90 to-legal-dark">
+    <section className="py-20 px-4 bg-gradient-to-b from-pink-100/50 to-pink-50">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
@@ -37,10 +37,10 @@ const ProposalValueProp = () => {
             <Rocket className="w-4 h-4 text-legal-primary" />
             <span className="text-sm text-legal-primary font-medium">Combined Value</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             A Complete Digital Growth Strategy
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             These two services work together to create a powerful ecosystem—driving traffic through Google Ads 
             and converting that traffic through intelligent chatbot engagement.
           </p>
@@ -49,7 +49,7 @@ const ProposalValueProp = () => {
         {/* Timeline */}
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           {timeline.map((phase, index) => (
-            <Card key={index} className="bg-white/5 border-white/10 relative overflow-hidden">
+            <Card key={index} className="bg-white/80 border-gray-200 relative overflow-hidden shadow-sm">
               <CardContent className="p-6">
                 {/* Phase indicator */}
                 <div className="flex items-center gap-3 mb-4">
@@ -59,12 +59,12 @@ const ProposalValueProp = () => {
                   <span className="text-legal-primary font-medium">{phase.phase}</span>
                 </div>
                 
-                <h3 className="text-xl font-semibold text-white mb-4">{phase.title}</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">{phase.title}</h3>
                 
                 <ul className="space-y-2">
                   {phase.tasks.map((task, taskIndex) => (
-                    <li key={taskIndex} className="flex items-start gap-2 text-gray-400">
-                      <CheckCircle2 className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
+                    <li key={taskIndex} className="flex items-start gap-2 text-gray-600">
+                      <CheckCircle2 className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                       <span className="text-sm">{task}</span>
                     </li>
                   ))}
@@ -80,18 +80,18 @@ const ProposalValueProp = () => {
         </div>
 
         {/* Expected outcomes */}
-        <Card className="bg-gradient-to-r from-legal-primary/10 to-sky-500/10 border-legal-primary/20">
+        <Card className="bg-gradient-to-r from-legal-primary/10 to-sky-100 border-legal-primary/20 shadow-sm">
           <CardContent className="p-8">
             <div className="flex items-center gap-3 mb-6">
               <TrendingUp className="w-8 h-8 text-legal-primary" />
-              <h3 className="text-xl font-semibold text-white">Expected Outcomes</h3>
+              <h3 className="text-xl font-semibold text-gray-800">Expected Outcomes</h3>
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {outcomes.map((outcome, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300">{outcome}</span>
+                  <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-700">{outcome}</span>
                 </div>
               ))}
             </div>

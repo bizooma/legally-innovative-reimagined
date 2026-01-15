@@ -14,7 +14,7 @@ const PhillipsProposalPage = () => {
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       
-      <div className="min-h-screen bg-legal-dark">
+      <div className="min-h-screen bg-pink-50">
         <ProposalHero 
           clientName="Phillips Foundation"
           subtitle="A Strategic Partnership for Digital Growth & Community Impact"

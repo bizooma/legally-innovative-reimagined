@@ -33,7 +33,7 @@ const VideoChatbotSection = () => {
   ];
 
   return (
-    <section className="py-20 px-4 bg-black/90">
+    <section className="py-20 px-4 bg-pink-100/50">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
@@ -41,17 +41,17 @@ const VideoChatbotSection = () => {
             <Video className="w-4 h-4 text-sky-400" />
             <span className="text-sm text-sky-400 font-medium">Service 2</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Video Chatbot for Your Website
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Transform your website into an interactive experience with an AI-powered video chatbot that engages visitors with personalized video responses.
           </p>
         </div>
 
         {/* Video preview mockup */}
         <div className="relative max-w-4xl mx-auto mb-16">
-          <Card className="bg-gradient-to-br from-sky-500/10 to-blue-500/10 border-sky-500/20 overflow-hidden">
+          <Card className="bg-gradient-to-br from-sky-100 to-blue-100 border-sky-200 overflow-hidden shadow-sm">
             <CardContent className="p-8 md:p-12">
               <div className="flex flex-col md:flex-row items-center gap-8">
                 {/* Video avatar placeholder */}
@@ -65,11 +65,11 @@ const VideoChatbotSection = () => {
                 
                 {/* Description */}
                 <div className="text-center md:text-left">
-                  <h3 className="text-2xl font-bold text-white mb-3">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-3">
                     Your Foundation's Digital Ambassador
                   </h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    Imagine a friendly face greeting every visitor to your website, ready to answer questions 
+                  <p className="text-gray-600 leading-relaxed">
+                    Imagine a friendly face greeting every visitor to your website, ready to answer questions
                     about your programs, guide them to donation pages, or connect them with volunteer opportunities—
                     all through natural, conversational video responses.
                   </p>
@@ -82,15 +82,15 @@ const VideoChatbotSection = () => {
         {/* Features grid */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
+            <Card key={index} className="bg-white/80 border-gray-200 backdrop-blur-sm hover:bg-white transition-colors shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-sky-500/10 border border-sky-500/20">
-                    <feature.icon className="w-6 h-6 text-sky-400" />
+                  <div className="p-3 rounded-lg bg-sky-100 border border-sky-200">
+                    <feature.icon className="w-6 h-6 text-sky-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
-                    <p className="text-gray-400">{feature.description}</p>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">{feature.title}</h3>
+                    <p className="text-gray-600">{feature.description}</p>
                   </div>
                 </div>
               </CardContent>
@@ -101,10 +101,10 @@ const VideoChatbotSection = () => {
         {/* Benefits row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {benefits.map((benefit, index) => (
-            <Card key={index} className="bg-white/5 border-white/10">
+            <Card key={index} className="bg-white/80 border-gray-200 shadow-sm">
               <CardContent className="p-4 text-center">
-                <benefit.icon className="w-8 h-8 text-sky-400 mx-auto mb-2" />
-                <span className="text-sm text-gray-300">{benefit.label}</span>
+                <benefit.icon className="w-8 h-8 text-sky-600 mx-auto mb-2" />
+                <span className="text-sm text-gray-700">{benefit.label}</span>
               </CardContent>
             </Card>
           ))}
