@@ -19,6 +19,7 @@ import ClientDetails from "./pages/ClientDetails";
 import ProjectTimeline from "./pages/ProjectTimeline";
 import ClientDiagram from "./pages/ClientDiagram";
 import NotFound from "./pages/NotFound";
+import PhillipsProposalPage from "./pages/proposals/PhillipsProposalPage";
 import GoogleAuthCallback from "./pages/GoogleAuthCallback";
 import StaffLogin from "./pages/StaffLogin";
 import StaffDashboard from "./pages/StaffDashboard";
@@ -100,6 +101,9 @@ const App = () => (
               
               {/* Michael sales page */}
               <Route path="/michael" element={<MichaelSalesPage />} />
+              
+              {/* Proposal pages */}
+              <Route path="/proposals/phillips" element={<PhillipsProposalPage />} />
               
               {/* Newsletter page */}
               <Route path="/route-to-results-newsletter" element={<RouteToResultsNewsletter />} />
