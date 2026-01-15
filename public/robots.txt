@@ -19,6 +19,8 @@ Disallow: /staff*
 Disallow: /admin
 Disallow: /admin*
 Disallow: /this-is-our-jax
+Disallow: /proposals/
+Disallow: /proposals/*
 Allow: /
 
 Sitemap: https://bizooma.com/sitemap.xml
