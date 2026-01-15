@@ -9,21 +9,21 @@ const ProposalHero = ({ clientName, subtitle }: ProposalHeroProps) => {
   return (
     <section className="relative py-24 px-4 overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-legal-dark via-legal-primary/20 to-legal-dark" />
+      <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-pink-50 to-rose-100" />
       
       {/* Decorative elements */}
       <div className="absolute top-20 right-10 w-72 h-72 bg-legal-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 left-10 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-10 left-10 w-96 h-96 bg-rose-200/30 rounded-full blur-3xl" />
       
       <div className="relative max-w-5xl mx-auto text-center">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-legal-primary/20 border border-legal-primary/30 mb-8">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-legal-primary/10 border border-legal-primary/30 mb-8">
           <Sparkles className="w-4 h-4 text-legal-primary" />
           <span className="text-sm text-legal-primary font-medium">Exclusive Proposal</span>
         </div>
         
         {/* Main heading */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4">
           Prepared For
         </h1>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-legal-primary mb-6">
@@ -31,14 +31,14 @@ const ProposalHero = ({ clientName, subtitle }: ProposalHeroProps) => {
         </h2>
         
         {subtitle && (
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
             {subtitle}
           </p>
         )}
         
         {/* Intro text */}
         <div className="max-w-3xl mx-auto">
-          <p className="text-lg text-gray-400 leading-relaxed">
+          <p className="text-lg text-gray-500 leading-relaxed">
             At Bizooma, we specialize in helping nonprofit organizations amplify their digital presence 
             and engage supporters more effectively. This proposal outlines two powerful solutions 
             designed specifically for your foundation's needs.
