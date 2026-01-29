@@ -129,15 +129,15 @@ export const FloatingFeatureCards = ({ holidayMode = false }: FloatingFeatureCar
               animationDelay: `${index * 0.2}s`,
             }}
           >
-            {/* Thumbnail Preview on Hover */}
+            {/* Thumbnail Preview - Always visible */}
             {feature.thumbnail && (
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0">
+              <div className="absolute inset-0 transition-opacity duration-300 z-0">
                 <img 
                   src={feature.thumbnail} 
                   alt={`${feature.title} preview`}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 group-hover:from-black/80 group-hover:via-black/40 group-hover:to-transparent transition-all duration-300" />
               </div>
             )}
             
