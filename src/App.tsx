@@ -45,6 +45,7 @@ import LeadScraperCrmPage from "./pages/products/LeadScraperCrmPage";
 import SupportBotsPage from "./pages/products/SupportBotsPage";
 import SignaturePopPage from "./pages/products/SignaturePopPage";
 import BrandedBooksPage from "./pages/products/BrandedBooksPage";
+import MvpSoftLaunchPage from "./pages/products/MvpSoftLaunchPage";
 import InstallPWA from "./pages/InstallPWA";
 import RouteToResultsNewsletter from "./pages/RouteToResultsNewsletter";
 import StatusTicker from "./pages/StatusTicker";
@@ -147,6 +148,7 @@ const App = () => (
           <Route path="/products/support-bots" element={<SupportBotsPage />} />
           <Route path="/products/signature-pop" element={<SignaturePopPage />} />
           <Route path="/products/branded-books" element={<BrandedBooksPage />} />
+              <Route path="/products/mvp-soft-launch" element={<MvpSoftLaunchPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />
