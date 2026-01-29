@@ -23,7 +23,7 @@ export const serviceLinks = [
 export const productLinks = [
   { name: "NPO Bots", path: "/products/npo-bots", description: "AI-Powered Nonprofit Engagement" },
   { name: "AEO Analyzer", path: "/products/aeo-analyzer", description: "Legal Analytics Dashboard" },
-  { name: "Quickie QR", path: "/products/quickie-qr", description: "Smart QR Code Marketing" },
+  { name: "MVP Soft Launch", path: "/products/mvp-soft-launch", description: "Launch Platform Directory" },
   { name: "Lead Scraper CRM", path: "/products/lead-scraper-crm", description: "Automated Lead Generation" },
   { name: "Support Bots", path: "/products/support-bots", description: "AI Customer Support" },
   { name: "Signature Pop", path: "/products/signature-pop", description: "Email Signature Marketing" },
