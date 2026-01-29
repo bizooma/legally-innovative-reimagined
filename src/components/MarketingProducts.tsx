@@ -5,6 +5,7 @@ import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
 import underConstructionImg from "@/assets/under-construction.webp";
 import aeoAnalyzerImg from "@/assets/aeo-analyzer-screenshot.png";
 import npobotsImg from "@/assets/npobots-screenshot.png";
+import mvpSoftlaunchImg from "@/assets/mvp-softlaunch-screenshot.png";
 import { useEffect, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -69,17 +70,17 @@ const MarketingProducts = () => {
       link: "/products/aeo-analyzer"
     },
     {
-      title: "Quickie QR",
-      subtitle: "Smart QR Code Marketing",
-      description: "Create dynamic QR codes with built-in analytics, A/B testing, and real-time content updates. Perfect for restaurants, retail, and professional services.",
-      badges: ["QR Marketing", "Analytics", "Mobile"],
+      title: "MVP Soft Launch",
+      subtitle: "Launch Platform Directory",
+      description: "Discover 200+ platforms to list, launch, and promote your SaaS, mobile app, or software. Find the perfect launch sites for your target audience and ship faster.",
+      badges: ["Launch Strategy", "SaaS", "Startup"],
       keyResults: [
-        "250% ↑ Engagement",
-        "Real-Time Updates",
-        "10K+ Businesses"
+        "200+ Platforms",
+        "Faster Time-to-Market",
+        "Targeted Visibility"
       ],
-      image: underConstructionImg,
-      link: "/products/quickie-qr"
+      image: mvpSoftlaunchImg,
+      link: "/products/mvp-soft-launch"
     },
     {
       title: "Lead Scraper CRM",
