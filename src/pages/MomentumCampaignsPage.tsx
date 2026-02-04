@@ -19,6 +19,7 @@ import audienceLocalCommunity from "@/assets/audience-local-community.jpg";
 import audienceLongTermGrowth from "@/assets/audience-long-term-growth.jpg";
 import seahawksCampaignImage from "@/assets/seahawks-campaign.png";
 import momentumHeroBg from "@/assets/momentum-hero-bg.png";
+import findingMomentBg from "@/assets/finding-moment-bg.mp4";
 
 const MomentumCampaignsPage = () => {
   const scrollToCaseStudy = () => {
@@ -142,17 +143,27 @@ const MomentumCampaignsPage = () => {
       </section>
 
       {/* Finding the Moment Section */}
-      <section className="section-padding bg-white">
-        <div className="container mx-auto px-4">
+      <section className="section-padding relative overflow-hidden">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src={findingMomentBg} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-legal-dark/70"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-playfair text-3xl md:text-4xl font-bold text-legal-dark mb-8 text-center">
+            <h2 className="font-playfair text-3xl md:text-4xl font-bold text-white mb-8 text-center">
               Finding the Moment
             </h2>
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+            <div className="space-y-6 text-lg text-white/90 leading-relaxed">
               <p>
                 At Bizooma, we actively monitor platforms like Google Trends, social conversations, and local cultural signals to identify moments that naturally intersect with our clients' audiences.
               </p>
-              <p className="text-gray-600">
+              <p className="text-white/70">
                 Sometimes it's subtle.<br />
                 Sometimes it's obvious.
               </p>
@@ -160,13 +171,13 @@ const MomentumCampaignsPage = () => {
                 The Seahawks Super Bowl campaign was one of those moments — a city-wide emotional event that didn't need to be manufactured. It needed to be respected and leveraged correctly.
               </p>
             </div>
-            <div className="mt-10 p-6 bg-legal-light/50 rounded-lg text-center">
-              <p className="text-lg text-legal-dark mb-4">
+            <div className="mt-10 p-6 bg-white/10 backdrop-blur-sm rounded-lg text-center border border-white/20">
+              <p className="text-lg text-white mb-4">
                 Want to see a momentum campaign in action? Check out a campaign that's currently running.
               </p>
               <Button 
                 size="lg"
-                className="bg-legal-primary text-white hover:bg-legal-dark transition-all duration-300"
+                className="bg-white text-legal-primary hover:bg-legal-light hover:text-legal-dark transition-all duration-300"
                 onClick={() => window.open('https://seahawksorpatriots.com', '_blank')}
               >
                 View Live Campaign
