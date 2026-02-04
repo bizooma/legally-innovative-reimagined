@@ -61,6 +61,7 @@ import SeoAuditPage from "./pages/SeoAuditPage";
 import JaxBarAssociationResourcesPage from "./pages/JaxBarAssociationResourcesPage";
 import JaxBarInfographicPage from "./pages/JaxBarInfographicPage";
 import SupportPage from "./pages/SupportPage";
+import MomentumCampaignsPage from "./pages/MomentumCampaignsPage";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -196,7 +197,11 @@ const App = () => (
               {/* Support */}
               <Route path="/support" element={<SupportPage />} />
               
+              {/* Momentum Campaigns */}
+              <Route path="/momentum-campaigns" element={<MomentumCampaignsPage />} />
+              
               {/* 404 page for truly non-existent routes */}
+              <Route path="*" element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </RouteDebug>
