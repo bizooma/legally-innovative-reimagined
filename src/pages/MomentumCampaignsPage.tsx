@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import VanityUrlsSection from "@/components/momentum/VanityUrlsSection";
 import { 
   Users, 
   Heart, 
@@ -162,6 +163,9 @@ const MomentumCampaignsPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Vanity URLs Section */}
+      <VanityUrlsSection />
 
       {/* Case Studies Section */}
       <section id="case-studies" className="section-padding bg-gray-50 scroll-mt-20">
