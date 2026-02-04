@@ -160,6 +160,18 @@ const MomentumCampaignsPage = () => {
                 The Seahawks Super Bowl campaign was one of those moments — a city-wide emotional event that didn't need to be manufactured. It needed to be respected and leveraged correctly.
               </p>
             </div>
+            <div className="mt-10 p-6 bg-legal-light/50 rounded-lg text-center">
+              <p className="text-lg text-legal-dark mb-4">
+                Want to see a momentum campaign in action? Check out a campaign that's currently running.
+              </p>
+              <Button 
+                size="lg"
+                className="bg-legal-primary text-white hover:bg-legal-dark transition-all duration-300"
+                onClick={() => window.open('https://seahawksorpatriots.com', '_blank')}
+              >
+                View Live Campaign
+              </Button>
+            </div>
           </div>
         </div>
       </section>
