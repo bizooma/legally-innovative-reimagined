@@ -134,7 +134,7 @@ const MomentumCampaignsPage = () => {
                 </Card>
               ))}
             </div>
-            <p className="text-center text-xl text-gray-600 italic max-w-2xl mx-auto">
+            <p className="text-center text-xl text-gray-600 italic max-w-3xl mx-auto whitespace-nowrap">
               "People don't remember ads — they remember how a brand made them feel."
             </p>
           </div>
