@@ -65,9 +65,12 @@ const MomentumCampaignsPage = () => {
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5"></div>
         <div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
+            <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in">
               Momentum Campaigns
             </h1>
+            <p className="text-2xl md:text-3xl font-medium mb-6 text-white">
+              Stay Top Of Mind — When People Need You
+            </p>
             <p className="text-xl md:text-2xl font-light mb-6 text-white/90">
               These campaigns strengthen recall, trust, and referrals.
             </p>
