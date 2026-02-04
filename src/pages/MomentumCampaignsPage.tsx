@@ -17,6 +17,7 @@ import {
   TrendingUp
 } from "lucide-react";
 import seahawksCampaignImage from "@/assets/seahawks-campaign.png";
+import momentumHeroBg from "@/assets/momentum-hero-bg.png";
 
 const MomentumCampaignsPage = () => {
   const scrollToCaseStudy = () => {
@@ -62,8 +63,13 @@ const MomentumCampaignsPage = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center bg-gradient-to-br from-legal-primary to-legal-dark text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5"></div>
+      <section className="relative min-h-[80vh] flex items-center text-white overflow-hidden">
+        <img 
+          src={momentumHeroBg} 
+          alt="" 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-legal-dark/80 via-legal-primary/70 to-legal-dark/80"></div>
         <div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in">
