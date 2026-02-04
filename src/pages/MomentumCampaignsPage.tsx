@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { 
-  TrendingUp, 
   Users, 
   Heart, 
   Target, 
@@ -14,8 +13,10 @@ import {
   Building2,
   Briefcase,
   MapPin,
-  Zap
+  Zap,
+  TrendingUp
 } from "lucide-react";
+import seahawksCampaignImage from "@/assets/seahawks-campaign.png";
 
 const MomentumCampaignsPage = () => {
   const scrollToCaseStudy = () => {
@@ -174,13 +175,14 @@ const MomentumCampaignsPage = () => {
             
             <Card className="bg-white border-legal-primary/20 overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="md:flex">
-                <div className="md:w-1/3 bg-gradient-to-br from-legal-primary to-legal-dark p-8 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <TrendingUp className="h-16 w-16 mx-auto mb-4 opacity-90" />
-                    <p className="font-playfair text-xl font-semibold">Case Study</p>
-                  </div>
+                <div className="md:w-1/2 relative overflow-hidden">
+                  <img 
+                    src={seahawksCampaignImage} 
+                    alt="Seattle Seahawks Super Bowl Campaign - Vote for your team" 
+                    className="w-full h-full object-cover object-top min-h-[300px]"
+                  />
                 </div>
-                <CardContent className="md:w-2/3 p-8">
+                <CardContent className="md:w-1/2 p-8">
                   <h3 className="font-playfair text-2xl font-bold text-legal-dark mb-4">
                     Seattle Seahawks Super Bowl Momentum Campaign
                   </h3>
