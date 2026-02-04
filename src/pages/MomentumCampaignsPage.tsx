@@ -5,13 +5,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VanityUrlsSection from "@/components/momentum/VanityUrlsSection";
 import { 
-  Users, 
-  Heart, 
-  Target, 
-  Share2, 
   CheckCircle,
-  ArrowDown,
-  TrendingUp
+  ArrowDown
 } from "lucide-react";
 import audienceLawFirms from "@/assets/audience-law-firms.jpg";
 import audienceProfessionalServices from "@/assets/audience-professional-services.jpg";
@@ -20,6 +15,11 @@ import audienceLongTermGrowth from "@/assets/audience-long-term-growth.jpg";
 import seahawksCampaignImage from "@/assets/seahawks-campaign.png";
 import momentumHeroBg from "@/assets/momentum-hero-bg.png";
 import findingMomentBg from "@/assets/finding-moment-bg.mp4";
+import benefitTrust from "@/assets/benefit-trust.jpg";
+import benefitTopOfMind from "@/assets/benefit-topofmind.jpg";
+import benefitConnection from "@/assets/benefit-connection.jpg";
+import benefitReferrals from "@/assets/benefit-referrals.jpg";
+import benefitShareable from "@/assets/benefit-shareable.jpg";
 
 const MomentumCampaignsPage = () => {
   const scrollToCaseStudy = () => {
@@ -37,11 +37,11 @@ const MomentumCampaignsPage = () => {
   };
 
   const benefits = [
-    { icon: Heart, text: "Builds trust without selling" },
-    { icon: Target, text: "Keeps your brand top-of-mind" },
-    { icon: Users, text: "Strengthens emotional connection" },
-    { icon: TrendingUp, text: "Activates former clients and referral sources" },
-    { icon: Share2, text: "Creates shareable, human content" },
+    { image: benefitTrust, text: "Builds trust without selling" },
+    { image: benefitTopOfMind, text: "Keeps your brand top-of-mind" },
+    { image: benefitConnection, text: "Strengthens emotional connection" },
+    { image: benefitReferrals, text: "Activates former clients and referral sources" },
+    { image: benefitShareable, text: "Creates shareable, human content" },
   ];
 
   const targetAudience = [
@@ -127,8 +127,12 @@ const MomentumCampaignsPage = () => {
                   className="bg-white border-legal-primary/10 hover:border-legal-primary/30 hover:shadow-lg transition-all duration-300"
                 >
                   <CardContent className="p-6 flex items-start gap-4">
-                    <div className="p-3 bg-legal-light rounded-lg shrink-0">
-                      <benefit.icon className="h-6 w-6 text-legal-primary" />
+                    <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0">
+                      <img 
+                        src={benefit.image} 
+                        alt={benefit.text}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <p className="text-gray-700 font-medium">{benefit.text}</p>
                   </CardContent>
