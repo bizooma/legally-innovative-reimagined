@@ -69,7 +69,7 @@ const MomentumCampaignsPage = () => {
               Momentum Campaigns
             </h1>
             <p className="text-xl md:text-2xl font-light mb-6 text-white/90">
-              Turn cultural moments into trust, recall, and referrals.
+              These campaigns strengthen recall, trust, and referrals.
             </p>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
               Not every campaign is about immediate leads.<br />
