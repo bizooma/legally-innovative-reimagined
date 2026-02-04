@@ -2,22 +2,22 @@ import { Card, CardContent } from "@/components/ui/card";
 import { 
   Link, 
   ArrowRight, 
-  Mail, 
-  BarChart3, 
-  FileText, 
-  Handshake, 
-  Clock,
   Home,
   Target
 } from "lucide-react";
+import vanityTiming from "@/assets/vanity-timing.jpg";
+import vanityEmail from "@/assets/vanity-email.jpg";
+import vanityAnalytics from "@/assets/vanity-analytics.jpg";
+import vanityShareable from "@/assets/vanity-shareable.jpg";
+import vanityGoodwill from "@/assets/vanity-goodwill.jpg";
 
 const VanityUrlsSection = () => {
   const benefits = [
-    { icon: Clock, text: "Match messaging to the moment" },
-    { icon: Mail, text: "Capture engagement or emails" },
-    { icon: BarChart3, text: "Track campaign-specific traffic" },
-    { icon: FileText, text: "Create shareable, campaign-native content" },
-    { icon: Handshake, text: "Preserve goodwill without selling" },
+    { image: vanityTiming, text: "Match messaging to the moment" },
+    { image: vanityEmail, text: "Capture engagement or emails" },
+    { image: vanityAnalytics, text: "Track campaign-specific traffic" },
+    { image: vanityShareable, text: "Create shareable, campaign-native content" },
+    { image: vanityGoodwill, text: "Preserve goodwill without selling" },
   ];
 
   const vanityUrlExamples = [
@@ -107,8 +107,12 @@ const VanityUrlsSection = () => {
                   key={index}
                   className="flex items-center gap-3 p-4 bg-white rounded-lg border border-legal-primary/10 hover:border-legal-primary/30 hover:shadow-md transition-all duration-300"
                 >
-                  <div className="p-2 bg-legal-light rounded-lg shrink-0">
-                    <benefit.icon className="h-5 w-5 text-legal-primary" />
+                  <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0">
+                    <img 
+                      src={benefit.image} 
+                      alt={benefit.text}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <p className="text-gray-700 font-medium">{benefit.text}</p>
                 </div>
