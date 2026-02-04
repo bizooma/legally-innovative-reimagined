@@ -104,17 +104,9 @@ const MomentumCampaignsPage = () => {
             <h2 className="font-playfair text-3xl md:text-4xl font-bold text-legal-dark mb-8 text-center">
               What Is a Momentum Campaign?
             </h2>
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-              <p>
-                Momentum campaigns are short-term, culturally relevant digital campaigns designed to align your brand with moments your audience already feels emotionally connected to — sports, community events, seasonal trends, or shared experiences.
-              </p>
-              <div className="bg-legal-light/50 border-l-4 border-legal-primary p-6 rounded-r-lg">
-                <p className="font-medium text-legal-dark">
-                  They are not sales campaigns.<br />
-                  <span className="text-legal-primary">They are brand acceleration campaigns.</span>
-                </p>
-              </div>
-            </div>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              The best marketing doesn't try to force action — it builds trust, recall, and referrals by aligning with moments people already care about. Momentum campaigns are designed to do exactly that. Instead of interrupting your audience, they meet them in culturally relevant moments and associate your brand with positive emotion, community, and shared experience. Over time, this leads to stronger brand recall, more word-of-mouth referrals, and higher trust when someone eventually needs your services.
+            </p>
           </div>
         </div>
       </section>
