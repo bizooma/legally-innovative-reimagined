@@ -11,12 +11,12 @@ import {
   Share2, 
   CheckCircle,
   ArrowDown,
-  Building2,
-  Briefcase,
-  MapPin,
-  Zap,
   TrendingUp
 } from "lucide-react";
+import audienceLawFirms from "@/assets/audience-law-firms.jpg";
+import audienceProfessionalServices from "@/assets/audience-professional-services.jpg";
+import audienceLocalCommunity from "@/assets/audience-local-community.jpg";
+import audienceLongTermGrowth from "@/assets/audience-long-term-growth.jpg";
 import seahawksCampaignImage from "@/assets/seahawks-campaign.png";
 import momentumHeroBg from "@/assets/momentum-hero-bg.png";
 
@@ -44,10 +44,10 @@ const MomentumCampaignsPage = () => {
   ];
 
   const targetAudience = [
-    { icon: Briefcase, text: "Law firms" },
-    { icon: Building2, text: "Professional service firms" },
-    { icon: MapPin, text: "Brands with strong local or community ties" },
-    { icon: Zap, text: "Businesses that value long-term growth over short-term clicks" },
+    { image: audienceLawFirms, text: "Law firms" },
+    { image: audienceProfessionalServices, text: "Professional service firms" },
+    { image: audienceLocalCommunity, text: "Brands with strong local or community ties" },
+    { image: audienceLongTermGrowth, text: "Businesses that value long-term growth over short-term clicks" },
   ];
 
   return (
@@ -233,8 +233,12 @@ const MomentumCampaignsPage = () => {
                   key={index}
                   className="flex items-center gap-4 p-6 bg-gray-50 rounded-lg hover:bg-legal-light/30 transition-colors duration-300"
                 >
-                  <div className="p-3 bg-legal-primary/10 rounded-lg">
-                    <item.icon className="h-6 w-6 text-legal-primary" />
+                  <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0">
+                    <img 
+                      src={item.image} 
+                      alt={item.text}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <p className="text-lg text-gray-700 font-medium">{item.text}</p>
                 </div>
