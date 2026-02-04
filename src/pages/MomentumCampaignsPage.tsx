@@ -247,9 +247,12 @@ const MomentumCampaignsPage = () => {
             <h2 className="font-playfair text-3xl md:text-4xl font-bold mb-6">
               Momentum Is a Strategy — Not a Gimmick
             </h2>
-            <p className="text-xl text-white/90 mb-10 leading-relaxed">
+            <p className="text-xl text-white/90 mb-6 leading-relaxed">
               The best brands don't chase attention.<br />
               They show up when it matters.
+            </p>
+            <p className="text-lg text-white/80 mb-10 leading-relaxed max-w-2xl mx-auto">
+              One of the ways we identify momentum opportunities is by actively watching Google Trends and cultural signals tied to our clients' audiences. Sometimes the opportunity is subtle. Sometimes — like the Super Bowl — it's obvious. The key isn't inventing attention; it's recognizing moments that already have it and showing up in a way that feels authentic, timely, and human.
             </p>
             <Button 
               size="lg"
