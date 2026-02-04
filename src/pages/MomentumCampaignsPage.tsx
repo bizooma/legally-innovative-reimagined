@@ -179,7 +179,7 @@ const MomentumCampaignsPage = () => {
                   <img 
                     src={seahawksCampaignImage} 
                     alt="Seattle Seahawks Super Bowl Campaign - Vote for your team" 
-                    className="w-full h-full object-cover object-top min-h-[300px]"
+                    className="w-full h-full object-cover object-[center_35%] min-h-[300px]"
                   />
                 </div>
                 <CardContent className="md:w-1/2 p-8">
