@@ -89,7 +89,7 @@ const MarketingProducts = () => {
       description: "Visualize your entire online presence in one beautiful, interactive flowchart. Connect your websites, social media, and digital properties like never before.",
       badges: ["Visualization", "Digital Mapping", "SaaS"],
       keyResults: [
-        "2,500+ Creators",
+        "Lifetime Deals Available",
         "Unified Digital View",
         "Interactive Flowcharts"
       ],
