@@ -6,6 +6,7 @@ import underConstructionImg from "@/assets/under-construction.webp";
 import aeoAnalyzerImg from "@/assets/aeo-analyzer-screenshot.png";
 import npobotsImg from "@/assets/npobots-screenshot.png";
 import mvpSoftlaunchImg from "@/assets/mvp-softlaunch-screenshot.png";
+import mapprrImg from "@/assets/mapprr-screenshot.png";
 import { useEffect, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -83,17 +84,17 @@ const MarketingProducts = () => {
       link: "/products/mvp-soft-launch"
     },
     {
-      title: "Lead Scraper CRM",
-      subtitle: "Automated Lead Generation",
-      description: "Automatically find, verify, and manage quality leads with AI-powered scraping. Built-in CRM with email automation and enrichment.",
-      badges: ["Lead Gen", "CRM", "Automation"],
+      title: "Mapprr",
+      subtitle: "Digital Presence Mapping",
+      description: "Visualize your entire online presence in one beautiful, interactive flowchart. Connect your websites, social media, and digital properties like never before.",
+      badges: ["Visualization", "Digital Mapping", "SaaS"],
       keyResults: [
-        "500+ Leads Daily",
-        "95% Email Accuracy",
-        "10x Pipeline Growth"
+        "2,500+ Creators",
+        "Unified Digital View",
+        "Interactive Flowcharts"
       ],
-      image: underConstructionImg,
-      link: "/products/lead-scraper-crm"
+      image: mapprrImg,
+      link: "/products/mapprr"
     },
     {
       title: "Support Bots",
