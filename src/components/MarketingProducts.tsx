@@ -94,7 +94,8 @@ const MarketingProducts = () => {
         "Interactive Flowcharts"
       ],
       image: mapprrImg,
-      link: "/products/mapprr"
+      link: "https://mapprr.com",
+      isExternal: true
     },
     {
       title: "Support Bots",
@@ -211,6 +212,7 @@ const MarketingProducts = () => {
 
                 <a 
                   href={product.link || "#contact"}
+                  {...(product.isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="inline-flex items-center text-white font-semibold hover:text-legal-accent transition-colors group"
                 >
                   {product.link ? "Learn More" : "View Case Study"}
