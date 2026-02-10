@@ -1,98 +1,47 @@
 
 
-# Plan: Add Vanity URLs Section to Momentum Campaigns Page
+# JaxReferrals Proposal Page
 
 ## Overview
-Add a new, visually distinct section about Vanity URLs between the "Finding the Moment" section and the "Case Studies" section. This section will explain how vanity URLs work as campaign destinations rather than simple redirects.
+Create a new proposal page at `/proposals/jaxreferrals` for the JaxReferrals client, focused on website updates. The page will follow the existing proposal template pattern but with a custom "Website Updates" service section instead of Google Grants and Video Chatbot sections.
 
-## Section Location
-The new section will be inserted after **"Finding the Moment"** (line 164) and before **"Case Studies"** (line 166), maintaining the alternating background pattern.
+## What Will Be Built
 
----
+### 1. New Service Section Component
+A new `WebsiteUpdatesSection` component tailored to website update services, including:
+- Service cards covering items like design refresh, performance optimization, SEO improvements, and content updates
+- Stats row highlighting key metrics (e.g., page speed improvements, mobile responsiveness)
+- Benefits callout explaining why website updates matter for referral networks
 
-## Section Structure
+### 2. Custom Value Prop Section
+A `JaxReferralsValueProp` component with a timeline and outcomes specific to website work:
+- **Week 1-2**: Discovery and audit
+- **Week 3-4**: Design and development
+- **Month 2+**: Launch, testing, and ongoing support
+- Outcomes focused on referral growth, user experience, and conversion
 
-### 1. Main Container
-- Background: Soft gradient from `legal-light` to white (`bg-gradient-to-br from-legal-light via-white to-legal-light/50`)
-- Standard section padding using `section-padding` class
-- Maximum width container for consistent layout
+### 3. Proposal Page
+A new page at `src/pages/proposals/JaxReferralsProposalPage.tsx` composing:
+- `ProposalLayout` (client name: "JaxReferrals")
+- `ProposalHero` (subtitle: "Version 2")
+- `WebsiteUpdatesSection` (new component)
+- `JaxReferralsValueProp` (new component)
+- `ProposalDownloadCTA` (placeholder filename `jaxreferrals-proposal.pdf` for later upload)
 
-### 2. Section Headline
-**"Vanity URLs: Turning Moments into Destinations"**
-- Playfair Display font (heading style consistent with other sections)
-- Centered above the two-column layout
+### 4. Route Registration
+Add route `/proposals/jaxreferrals` in `App.tsx` pointing to the new page.
 
-### 3. Two-Column Layout (Desktop)
-Uses `grid grid-cols-1 lg:grid-cols-2 gap-12` for responsive design.
+## Files to Create
+- `src/components/proposals/WebsiteUpdatesSection.tsx`
+- `src/components/proposals/JaxReferralsValueProp.tsx`
+- `src/pages/proposals/JaxReferralsProposalPage.tsx`
 
-#### Left Column - Copy
-Three styled paragraphs:
-1. Opening statement about underutilized vanity URLs
-2. Explanation of how Momentum Campaigns use them differently
-3. Real-time messaging benefit
+## Files to Modify
+- `src/App.tsx` — add import and route
 
-#### Right Column - Visual Comparison Graphic
-A comparison diagram showing:
-- **"Redirect" path**: Arrow pointing to "Homepage (generic)" with muted/gray styling
-- **"Momentum URL" path**: Arrow pointing to "Campaign-Specific Page" with accent styling
-
-Below the diagram, display example vanity URLs as styled badges/tags:
-- SeahawksOrPatriots.com
-- SeahawksWin.com
-- ForThe12s.com
-
----
-
-### 4. "Beyond the Redirect" Subsection
-- Subheading with legal-dark text
-- Icon-enhanced bullet list with five benefits:
-  - Match messaging to the moment
-  - Capture engagement or emails
-  - Track campaign-specific traffic
-  - Create shareable, campaign-native content
-  - Preserve goodwill without selling
-- Supporting copy paragraph below bullets
-
----
-
-### 5. "Vanity URLs in Action" Subsection
-- Subheading centered
-- Three mini-cards in a responsive grid (`grid-cols-1 md:grid-cols-3`)
-
-Each card includes:
-- URL as the card title (styled in legal-primary color)
-- Brief description below
-
-Cards:
-1. **SeahawksOrPatriots.com** - "Pre-game engagement & voting"
-2. **SeahawksWin.com** - "Post-win celebration & momentum"
-3. **ForThe12s.com** - "Loyalty and community support"
-
----
-
-## Technical Details
-
-### New Lucide Icons to Import
-- `Link` - for vanity URL representation
-- `ArrowRight` - for the comparison graphic flow
-- `Mail` - for email capture bullet
-- `BarChart3` - for tracking bullet
-- `FileText` - for shareable content bullet
-- `Handshake` - for goodwill bullet
-- `Clock` - for real-time/moment matching
-
-### Component Structure
-All content will be added directly to `MomentumCampaignsPage.tsx` as a new section, following the existing pattern of inline JSX with Tailwind styling.
-
-### Styling Approach
-- Cards will use the existing `Card` and `CardContent` components
-- Bullets will use icon + text flex layouts similar to existing benefit lists
-- The comparison graphic will be built with styled divs, icons, and arrows
-- Example URLs displayed as inline-block elements with monospace-style font and subtle backgrounds
-
-### File Changes
-Only one file will be modified:
-- `src/pages/MomentumCampaignsPage.tsx`
-  - Add new icon imports
-  - Insert new section JSX (~100-120 lines)
-
+## Technical Notes
+- Follows the same pink background design system and component patterns as the Phillips proposal
+- Hero intro text will be customized for a website updates context rather than nonprofit messaging
+- The `ProposalDownloadCTA` will use bucket `"proposals"` and filename `"jaxreferrals-proposal.pdf"` as a placeholder until you upload the actual PDF
+- Page will have `noindex/nofollow` meta tags automatically via `ProposalLayout`
+- Already blocked by existing `robots.txt` rules for `/proposals/`
