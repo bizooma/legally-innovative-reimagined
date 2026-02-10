@@ -20,6 +20,7 @@ import ProjectTimeline from "./pages/ProjectTimeline";
 import ClientDiagram from "./pages/ClientDiagram";
 import NotFound from "./pages/NotFound";
 import PhillipsProposalPage from "./pages/proposals/PhillipsProposalPage";
+import JaxReferralsProposalPage from "./pages/proposals/JaxReferralsProposalPage";
 import GoogleAuthCallback from "./pages/GoogleAuthCallback";
 import StaffLogin from "./pages/StaffLogin";
 import StaffDashboard from "./pages/StaffDashboard";
@@ -106,6 +107,7 @@ const App = () => (
               
               {/* Proposal pages */}
               <Route path="/proposals/phillips" element={<PhillipsProposalPage />} />
+              <Route path="/proposals/jaxreferrals" element={<JaxReferralsProposalPage />} />
               
               {/* Newsletter page */}
               <Route path="/route-to-results-newsletter" element={<RouteToResultsNewsletter />} />
