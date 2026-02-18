@@ -11,9 +11,21 @@ import appleMapsLawFirmImage from "@/assets/apple-maps-law-firm.jpg";
 import openaiImage from "@/assets/openai-browser-legal-tech.jpg";
 import aiMarketingImage from "@/assets/ai-marketing-law-firms.jpg";
 import schemaMarkupHeroImage from "@/assets/schema-markup-hero.jpg";
+import websiteConversionImage from "@/assets/website-conversion-law-firms.jpg";
 
 const StayInformed = () => {
   const blogPosts = [
+    {
+      id: 12,
+      title: "Before You Increase Your Marketing Budget, Fix Your Website",
+      excerpt: "Traffic without conversion is just expensive vanity. Learn why your law firm's website might be the real reason your marketing isn't working.",
+      date: "February 18, 2026",
+      readTime: "10 min read",
+      author: "Bizooma Team",
+      category: "Digital Marketing",
+      image: websiteConversionImage,
+      link: "/website-conversion-law-firms"
+    },
     {
       id: 11,
       title: "How Law Firms Can Leverage Amazon Alexa Skills for Modern Marketing",
