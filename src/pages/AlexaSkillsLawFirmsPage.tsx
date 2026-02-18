@@ -26,7 +26,7 @@ const AlexaSkillsLawFirmsPage = () => {
       title="How Law Firms Can Leverage Amazon Alexa Skills for Modern Marketing"
       excerpt="With over 100 million Alexa-enabled devices in U.S. homes, developing an Amazon Alexa skill could be the competitive advantage your law firm needs."
       date="January 5, 2026"
-      readTime="10 min read"
+      
       author="Voice Technology Team"
       category="Voice Marketing"
       image={voiceSeoHeroImage}

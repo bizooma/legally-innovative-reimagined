@@ -35,7 +35,7 @@ const GoogleBusinessProfilePage = () => {
       title="Why Google Business Profiles and NAP Consistency Are Critical for Legal Practices: The 3-Pack Advantage"
       excerpt="Discover how Google's Local Pack dominates 93% of local searches and why NAP consistency is essential for legal practice visibility and client acquisition."
       date="2025-01-15"
-      readTime="18 min read"
+      
       author="Legal Marketing Research Team"
       category="Local SEO"
       image={appleMapsLawFirmImage}

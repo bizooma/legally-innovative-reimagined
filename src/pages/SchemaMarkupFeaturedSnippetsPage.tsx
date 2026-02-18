@@ -146,7 +146,7 @@ const SchemaMarkupFeaturedSnippetsPage = () => {
       title="How to Use Schema Markup to Win Featured Snippets: A Guide for Attorneys"
       excerpt="Learn how to leverage the five essential schema types—FAQ, HowTo, Article, Organization, and Attorney—to capture position zero and dominate search results for your law firm."
       date="December 23, 2025"
-      readTime="12 min read"
+      
       author="SEO Strategy Team"
       category="SEO"
       image={schemaHeroImage}
