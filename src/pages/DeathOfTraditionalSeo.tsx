@@ -6,7 +6,7 @@ const DeathOfTraditionalSeo = () => {
       title="The Death of Traditional SEO"
       excerpt="How artificial intelligence and changing search behaviors are fundamentally transforming the way law firms need to approach search engine optimization."
       date="2025-07-15"
-      readTime="8 min read"
+      
       author="SEO Strategy Team"
       category="SEO"
       image="/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png"

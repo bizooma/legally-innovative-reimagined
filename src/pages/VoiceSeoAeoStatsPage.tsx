@@ -7,7 +7,7 @@ const VoiceSeoAeoStatsPage = () => {
       title="Voice SEO and Answer Engine Optimization: Critical Statistics for Law Firms"
       excerpt="Comprehensive statistics demonstrating why law firms must adapt their digital marketing strategies to include voice SEO and answer engine optimization"
       date="2025-06-20"
-      readTime="15 min read"
+      
       author="Digital Marketing Research Team"
       category="SEO"
       image={voiceSeoHeroImage}

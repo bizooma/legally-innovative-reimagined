@@ -7,7 +7,7 @@ const WhyReviewsMatterPage = () => {
       title="Why Reviews Matter for Law Firms"
       excerpt="The 2025 Review Landscape: Understanding how online reviews have become the primary gateway between potential clients and legal services."
       date="2025-01-15"
-      readTime="12 min read"
+      
       author="Legal Marketing Team"
       category="Digital Marketing"
       image={openaiImage}

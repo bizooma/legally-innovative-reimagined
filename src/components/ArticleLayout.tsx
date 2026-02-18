@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import SocialShare from "@/components/SocialShare";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, User, ArrowLeft } from "lucide-react";
+import { Calendar, User, ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
@@ -17,7 +17,7 @@ interface ArticleLayoutProps {
   title: string;
   excerpt: string;
   date: string;
-  readTime: string;
+  
   author: string;
   category: string;
   image?: string;
@@ -30,7 +30,7 @@ const ArticleLayout = ({
   title,
   excerpt,
   date,
-  readTime,
+  
   author,
   category,
   image,
@@ -151,10 +151,6 @@ const ArticleLayout = ({
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span>{new Date(date).toLocaleDateString()}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>{readTime}</span>
               </div>
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />

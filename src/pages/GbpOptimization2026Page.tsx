@@ -30,7 +30,7 @@ const GbpOptimization2026Page = () => {
       title="Google Business Profile Optimization for Law Firms in 2026: The Complete Guide"
       excerpt="The comprehensive guide to dominating local and national search through strategic GBP optimization, website alignment, and entity-based ranking strategies."
       date="2025-12-02"
-      readTime="25 min read"
+      
       author="Legal Marketing Strategy Team"
       category="Local SEO"
       image={appleMapsLawFirmImage}

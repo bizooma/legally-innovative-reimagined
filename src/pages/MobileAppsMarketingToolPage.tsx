@@ -25,7 +25,7 @@ const MobileAppsMarketingToolPage = () => {
       title="Why Mobile Apps Remain a Powerful Marketing Tool—Even When Other Channels Slow Down"
       excerpt="In a digital landscape where algorithms shift overnight and marketing channels rise and fall in effectiveness, one tool continues to deliver consistent, long-term value: mobile apps."
       date="2025-11-18"
-      readTime="10 min read"
+      
       author="Mobile Marketing Team"
       category="Mobile Development"
       image="/images/mobile-apps-marketing.jpg"

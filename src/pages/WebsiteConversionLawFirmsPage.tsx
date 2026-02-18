@@ -26,7 +26,7 @@ const WebsiteConversionLawFirmsPage = () => {
       title="Before You Increase Your Marketing Budget, Fix Your Website"
       excerpt="Traffic without conversion is just expensive vanity. Learn why your law firm's website might be the real reason your marketing isn't working."
       date="February 18, 2026"
-      readTime="10 min read"
+      
       author="Bizooma Team"
       category="Digital Marketing"
       image={websiteConversionImage}

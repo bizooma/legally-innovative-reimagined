@@ -7,7 +7,7 @@ const AppleMapsMarketingPage = () => {
       title="Why Your Law Firm Can't Afford to Ignore Apple Maps in 2025: The Hidden Marketing Goldmine"
       excerpt="Discover why Apple Maps is essential for law firm marketing in 2025. With 110 million users and premium clientele, learn how to claim your listing and attract high-value legal clients."
       date="2025-01-17"
-      readTime="15 min read"
+      
       author="Bizooma Team"
       category="Local Marketing"
       image={appleMapsInterfaceImage}
