@@ -6,6 +6,7 @@ import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2 } from "lucide-reac
 import { Link } from "react-router-dom";
 import immigrationLawApp from "@/assets/immigration-law-app.png";
 import rokuDemo from "@/assets/roku-demo.png";
+import alexaSkill from "@/assets/alexa-skill.png";
 
 const Services = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
@@ -73,9 +74,10 @@ const Services = () => {
       ],
       examples: "Helped professional services firms become discoverable through voice search, driving new client inquiries.",
       icon: <Volume2 className="h-8 w-8" />,
-      bgImage: "/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png",
+      bgImage: alexaSkill,
       link: "/law-firm-voice-assistant-marketing",
       accentColor: "from-orange-500 to-red-600",
+      noOverlay: true,
     },
   ];
 
