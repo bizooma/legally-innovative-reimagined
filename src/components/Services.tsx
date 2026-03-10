@@ -5,6 +5,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import immigrationLawApp from "@/assets/immigration-law-app.png";
+import rokuDemo from "@/assets/roku-demo.png";
 
 const Services = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
@@ -21,9 +22,10 @@ const Services = () => {
       ],
       examples: "Built branded Roku channels for media companies and professional services firms to deliver on-demand video content to thousands of viewers.",
       icon: <Bot className="h-8 w-8" />,
-      bgImage: "https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=1932&auto=format&fit=crop",
+      bgImage: rokuDemo,
       link: "/ai-consulting-for-law-firms",
       accentColor: "from-blue-600 to-indigo-700",
+      noOverlay: true,
     },
     {
       title: "Mobile App Development",
