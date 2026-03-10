@@ -97,7 +97,7 @@ const App = () => (
           <GlobalSEO />
           <CanonicalMeta />
           <ScrollToTop />
-          <VideoAskWidget />
+          <SmartChatbot />
           <RouteDebug>
             <Routes>
               {/* Donut page with highest priority */}
