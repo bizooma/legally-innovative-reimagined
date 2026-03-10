@@ -336,7 +336,7 @@ export function SmartChatbot() {
           )}
 
           {/* Input — floating bar */}
-          <div className="px-4 py-3 border-t border-border">
+          <div className={cn("px-4 py-3 border-t border-border", isMobile && "pb-[calc(0.75rem+env(safe-area-inset-bottom))]")}>
             <form onSubmit={handleSubmit}>
               <div className="flex items-center gap-2">
                 <input
