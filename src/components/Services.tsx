@@ -59,9 +59,10 @@ const Services = () => {
       ],
       examples: "Deployed for law firms handling 80%+ of routine inquiries and booking consultations automatically.",
       icon: <MessageSquare className="h-8 w-8" />,
-      bgImage: "/lovable-uploads/a88cbdbd-0e22-4907-afe1-0622b2c876ab.png",
+      bgImage: chatbotExamples,
       link: "/ai-customer-support-chatbots",
       accentColor: "from-violet-600 to-purple-700",
+      noOverlay: true,
     },
     {
       title: "Voice Assistant Marketing",
