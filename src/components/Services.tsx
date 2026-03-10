@@ -37,7 +37,7 @@ const Services = () => {
       ],
       examples: "Built health trackers, client portals, and engagement apps for organizations of all sizes.",
       icon: <Smartphone className="h-8 w-8" />,
-      bgImage: new URL("@/assets/immigration-law-app.png", import.meta.url).href,
+      bgImage: immigrationLawApp,
       link: "/law-firm-mobile-app-development",
       accentColor: "from-emerald-600 to-teal-700",
     },
