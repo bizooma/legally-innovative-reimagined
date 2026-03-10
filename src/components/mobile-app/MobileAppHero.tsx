@@ -1,6 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Smartphone, Users, Zap } from "lucide-react";
+import appDemo from "@/assets/app-demo.png";
 
 const MobileAppHero = () => {
   return (
