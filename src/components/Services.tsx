@@ -92,7 +92,7 @@ const Services = () => {
             Our <span className="highlight-text">Services</span>
           </h2>
           <p className="text-lg text-gray-700">
-            We offer a focused suite of AI-powered services that help companies build intelligent systems, automate workflows, and connect with customers in new ways. Here's what we do best.
+            From custom Roku channels and mobile apps to AI-powered chatbots and voice assistant marketing, we help businesses reach audiences on the platforms that matter most — connected TVs, smartphones, websites, and smart speakers.
           </p>
         </div>
 
