@@ -35,7 +35,7 @@ const Services = () => {
         "App Store & Play Store deployment",
         "Push notifications & real-time features",
       ],
-      examples: "Built health trackers, client portals, and engagement apps for organizations of all sizes.",
+      examples: "Two ways to pay: 1/2 up front, 1/2 upon delivery of quoted fee, or $1,000/month until quoted fee is paid in full.",
       icon: <Smartphone className="h-8 w-8" />,
       bgImage: immigrationLawApp,
       link: "/law-firm-mobile-app-development",
@@ -145,7 +145,7 @@ const Services = () => {
 
                     <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-100">
                       <p className="text-sm text-gray-600">
-                        <span className="font-semibold text-legal-dark">Real-world example: </span>
+                        <span className="font-semibold text-legal-dark">{service.noOverlay ? "Payment options: " : "Real-world example: "}</span>
                         {service.examples}
                       </p>
                     </div>
