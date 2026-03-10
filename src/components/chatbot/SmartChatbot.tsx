@@ -266,7 +266,7 @@ export function SmartChatbot() {
             <div className="flex items-center gap-1">
               {messages.length > 0 && (
                 <button
-                  onClick={() => { setMessages([]); setWelcomeDone(false); }}
+                  onClick={() => setShowNewChatConfirm(true)}
                   className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
                   aria-label="New chat"
                   title="New chat"
