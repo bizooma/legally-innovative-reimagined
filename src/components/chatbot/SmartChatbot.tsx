@@ -277,12 +277,13 @@ export function SmartChatbot() {
                 onClick={handleClose}
                 className="p-1.5 rounded-lg hover:bg-muted transition-colors"
               >
-              {isMobile ? (
-                <ChevronDown className="h-4 w-4 text-muted-foreground" />
-              ) : (
-                <X className="h-4 w-4 text-muted-foreground" />
-              )}
-            </button>
+                {isMobile ? (
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <X className="h-4 w-4 text-muted-foreground" />
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Messages feed */}
