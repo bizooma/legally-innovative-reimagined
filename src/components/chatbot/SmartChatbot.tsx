@@ -250,11 +250,11 @@ export function SmartChatbot() {
       {isOpen && (
         <div
           className={cn(
-            "fixed z-50 flex flex-col bg-background/95 backdrop-blur-xl border border-border shadow-2xl transition-all duration-300",
+            "fixed flex flex-col bg-background/95 backdrop-blur-xl border border-border shadow-2xl transition-all duration-300",
             isClosing ? "chatbot-slide-down" : "chatbot-slide-up",
             isMobile
-              ? "inset-0"
-              : "bottom-24 right-4 w-[460px] h-[680px] max-h-[85vh] rounded-2xl"
+              ? "inset-0 z-[60]"
+              : "bottom-24 right-4 w-[460px] h-[680px] max-h-[85vh] rounded-2xl z-50"
           )}
         >
           {/* Header — minimal */}
