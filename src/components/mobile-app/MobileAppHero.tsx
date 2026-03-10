@@ -1,12 +1,12 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Smartphone, Users, Zap } from "lucide-react";
+import appDemo from "@/assets/app-demo.png";
 
 const MobileAppHero = () => {
   return (
     <section className="relative bg-gradient-to-br from-legal-primary via-legal-secondary to-legal-dark text-white py-20 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-black/20" />
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?q=80&w=1932&auto=format&fit=crop')] bg-cover bg-center opacity-10" />
+      <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: `url(${appDemo})` }} />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
