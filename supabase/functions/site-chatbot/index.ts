@@ -57,7 +57,7 @@ When comparing services, listing service options, or when the user asks "what do
     "title": "Service Name",
     "description": "One-sentence description",
     "highlights": ["Key feature 1", "Key feature 2", "Key feature 3"],
-    "price": "Starting at $X/mo",
+    "price": "Contact for quote",
     "link": "/page-link",
     "icon": "🤖"
   }
