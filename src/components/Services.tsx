@@ -10,18 +10,18 @@ const Services = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
   const services = [
     {
-      title: "AI Consulting",
-      subtitle: "Strategy · Implementation · Optimization",
-      description: "We help companies leverage artificial intelligence to streamline operations, enhance customer experiences, and drive innovation through strategic planning and implementation.",
+      title: "Custom Roku Channel Development",
+      subtitle: "Design · Development · Publishing",
+      description: "We build custom Roku channels that help businesses stream content, engage audiences, and expand their brand reach on one of the largest connected TV platforms.",
       highlights: [
-        "AI readiness assessments & roadmaps",
-        "Custom model selection & integration",
-        "Process automation & workflow optimization",
-        "Ongoing performance tuning & support",
+        "Custom channel design & branding",
+        "Content management & streaming setup",
+        "Roku Channel Store publishing",
+        "Analytics integration & performance tracking",
       ],
-      examples: "Used by law firms, startups, and nonprofits to automate intake, research, and client communication.",
+      examples: "Built branded Roku channels for media companies and professional services firms to deliver on-demand video content to thousands of viewers.",
       icon: <Bot className="h-8 w-8" />,
-      bgImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1932&auto=format&fit=crop",
+      bgImage: "https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=1932&auto=format&fit=crop",
       link: "/ai-consulting-for-law-firms",
       accentColor: "from-blue-600 to-indigo-700",
     },
