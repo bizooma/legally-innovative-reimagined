@@ -26,7 +26,8 @@ export function TypingWelcome({
       }
     }, 22);
     return () => clearInterval(id);
-  }, [onComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="space-y-3 animate-fade-in">
