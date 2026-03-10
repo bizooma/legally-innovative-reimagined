@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import bizMascot from "@/assets/biz-mascot.png";
 import { MessageSquare, X, Send, ChevronDown, Square } from "lucide-react";
 import { usePageContext } from "@/hooks/usePageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
