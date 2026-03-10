@@ -260,8 +260,8 @@ export function SmartChatbot() {
         >
           {/* Header — minimal */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-            <div className="flex items-center gap-1.5">
-              <span className="text-base chatbot-shimmer-text">✦</span>
+            <div className="flex items-center gap-2">
+              <img src={bizMascot} alt="Biz" className="w-8 h-8 object-contain" />
               <h3 className="text-sm font-semibold text-foreground tracking-tight">Biz</h3>
             </div>
             <button
