@@ -127,6 +127,7 @@ const App = () => (
               
               {/* Law Firm Mobile App Development page */}
               <Route path="/law-firm-mobile-app-development" element={<LawFirmMobileAppDevelopmentPage />} />
+              <Route path="/mobile-app-development" element={<Navigate to="/law-firm-mobile-app-development" replace />} />
               
               {/* Law Firm Digital Marketing page */}
               <Route path="/law-firm-digital-marketing" element={<LawFirmDigitalMarketingPage />} />
