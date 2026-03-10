@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import immigrationLawApp from "@/assets/immigration-law-app.png";
 import rokuDemo from "@/assets/roku-demo.png";
 import alexaSkill from "@/assets/alexa-skill.png";
+import chatbotExamples from "@/assets/chatbot-examples.png";
 
 const Services = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
