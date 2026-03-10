@@ -35,7 +35,7 @@ const Services = () => {
         "App Store & Play Store deployment",
         "Push notifications & real-time features",
       ],
-      examples: "Built health trackers, client portals, and engagement apps for organizations of all sizes.",
+      examples: "Two ways to pay: 1/2 up front, 1/2 upon delivery of quoted fee, or $1,000/month until quoted fee is paid in full.",
       icon: <Smartphone className="h-8 w-8" />,
       bgImage: immigrationLawApp,
       link: "/law-firm-mobile-app-development",
