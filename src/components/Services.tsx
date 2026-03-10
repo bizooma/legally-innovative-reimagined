@@ -20,7 +20,7 @@ const Services = () => {
         "Roku Channel Store publishing",
         "Analytics integration & performance tracking",
       ],
-      examples: "Built branded Roku channels for media companies and professional services firms to deliver on-demand video content to thousands of viewers.",
+      examples: "Roku surpassed 90 million streaming households globally in the first week of 2025, with a significant concentration in the U.S. where they serve over half of all broadband homes. By late 2025, the platform continued to grow, maintaining its position as the #1 TV streaming platform in North America.",
       icon: <Bot className="h-8 w-8" />,
       bgImage: rokuDemo,
       link: "/ai-consulting-for-law-firms",
