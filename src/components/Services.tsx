@@ -41,6 +41,7 @@ const Services = () => {
       link: "/law-firm-mobile-app-development",
       accentColor: "from-emerald-600 to-teal-700",
       noOverlay: true,
+    },
     {
       title: "Custom AI Chatbot",
       subtitle: "24/7 Support · Lead Capture · Knowledge Base",
