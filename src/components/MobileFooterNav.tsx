@@ -1,9 +1,19 @@
+import { useState, useEffect } from "react";
 import { Home, Briefcase, Package, Newspaper, Mail } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const MobileFooterNav = () => {
   const location = useLocation();
+  const [chatbotOpen, setChatbotOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      setChatbotOpen((e as CustomEvent).detail.open);
+    };
+    window.addEventListener('chatbot-state', handler);
+    return () => window.removeEventListener('chatbot-state', handler);
+  }, []);
   
   const navItems = [
     { name: "Home", icon: Home, path: "/" },
@@ -20,6 +30,8 @@ const MobileFooterNav = () => {
     }
     return location.pathname === path;
   };
+
+  if (chatbotOpen) return null;
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
