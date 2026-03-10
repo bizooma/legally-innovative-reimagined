@@ -112,6 +112,7 @@ async function streamChat({
 
 export function SmartChatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showNewChatConfirm, setShowNewChatConfirm] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -265,7 +266,7 @@ export function SmartChatbot() {
             <div className="flex items-center gap-1">
               {messages.length > 0 && (
                 <button
-                  onClick={() => { setMessages([]); setWelcomeDone(false); }}
+                  onClick={() => setShowNewChatConfirm(true)}
                   className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
                   aria-label="New chat"
                   title="New chat"
@@ -305,6 +306,34 @@ export function SmartChatbot() {
             )}
             <div ref={messagesEndRef} />
           </div>
+
+          {/* New chat confirmation */}
+          {showNewChatConfirm && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80 backdrop-blur-sm rounded-2xl">
+              <div className="bg-card border border-border rounded-xl p-5 mx-6 shadow-lg text-center space-y-3">
+                <p className="text-sm font-medium text-foreground">Start a new conversation?</p>
+                <p className="text-xs text-muted-foreground">Your current chat history will be cleared.</p>
+                <div className="flex gap-2 justify-center">
+                  <button
+                    onClick={() => setShowNewChatConfirm(false)}
+                    className="px-4 py-2 text-xs rounded-lg border border-input bg-background hover:bg-muted transition-colors text-foreground"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMessages([]);
+                      setWelcomeDone(false);
+                      setShowNewChatConfirm(false);
+                    }}
+                    className="px-4 py-2 text-xs rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                  >
+                    New Chat
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Input — floating bar */}
           <div className="px-4 py-3 border-t border-border">
