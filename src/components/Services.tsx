@@ -50,7 +50,7 @@ const Services = () => {
     {
       title: "Custom AI Chatbot",
       subtitle: "24/7 Support · Lead Capture · Knowledge Base",
-      description: "Develop intelligent, personalized AI chatbots that engage your customers, answer queries, and provide assistance around the clock — enhancing customer service while reducing operational costs.",
+      description: "Most businesses approach chatbots the wrong way. They install a prebuilt bot, plug in a few canned responses, and expect it to meaningfully support their operations. But a chatbot is only as effective as the strategy behind it. Every organization has different goals, workflows, customer questions, and conversion paths.",
       highlights: [
         "Trained on your content & knowledge base",
         "Multi-channel deployment (web, SMS, social)",
