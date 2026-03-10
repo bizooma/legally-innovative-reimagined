@@ -1,47 +1,78 @@
 
 
-# JaxReferrals Proposal Page
+# Innovative Multi-Modal, Context-Aware Chatbot
 
-## Overview
-Create a new proposal page at `/proposals/jaxreferrals` for the JaxReferrals client, focused on website updates. The page will follow the existing proposal template pattern but with a custom "Website Updates" service section instead of Google Grants and Video Chatbot sections.
+## Concept
 
-## What Will Be Built
+A floating chatbot that lives on every page of the site and does two things no typical chatbot does:
 
-### 1. New Service Section Component
-A new `WebsiteUpdatesSection` component tailored to website update services, including:
-- Service cards covering items like design refresh, performance optimization, SEO improvements, and content updates
-- Stats row highlighting key metrics (e.g., page speed improvements, mobile responsiveness)
-- Benefits callout explaining why website updates matter for referral networks
+1. **Context Awareness** -- It detects which section/page the visitor is viewing and proactively offers relevant help via a subtle notification bubble (e.g., on the AI Chatbot service card it says "Want to see a live chatbot demo? Ask me!")
+2. **Multi-Modal Responses** -- Beyond plain text, the bot renders rich inline content: interactive service comparisons, mini capability demos, quick-qualification forms, and direct calendar booking links
 
-### 2. Custom Value Prop Section
-A `JaxReferralsValueProp` component with a timeline and outcomes specific to website work:
-- **Week 1-2**: Discovery and audit
-- **Week 3-4**: Design and development
-- **Month 2+**: Launch, testing, and ongoing support
-- Outcomes focused on referral growth, user experience, and conversion
+This serves as a live portfolio piece: visitors experience the exact kind of intelligent chatbot you build for clients.
 
-### 3. Proposal Page
-A new page at `src/pages/proposals/JaxReferralsProposalPage.tsx` composing:
-- `ProposalLayout` (client name: "JaxReferrals")
-- `ProposalHero` (subtitle: "Version 2")
-- `WebsiteUpdatesSection` (new component)
-- `JaxReferralsValueProp` (new component)
-- `ProposalDownloadCTA` (placeholder filename `jaxreferrals-proposal.pdf` for later upload)
+## Architecture
 
-### 4. Route Registration
-Add route `/proposals/jaxreferrals` in `App.tsx` pointing to the new page.
+```text
+┌─────────────────────────────────────┐
+│  SmartChatbot (floating widget)     │
+│  ├─ Context Observer (IntersectionObserver) │
+│  ├─ Chat UI with markdown + rich cards      │
+│  └─ Proactive suggestion bubble             │
+└───────────┬─────────────────────────┘
+            │ POST /functions/v1/site-chatbot
+            ▼
+┌─────────────────────────────────────┐
+│  Edge Function: site-chatbot        │
+│  - System prompt with full service  │
+│    knowledge + current page context │
+│  - Lovable AI Gateway (streaming)   │
+│  - Tool calling for structured      │
+│    responses (service cards, CTAs)  │
+└─────────────────────────────────────┘
+```
 
-## Files to Create
-- `src/components/proposals/WebsiteUpdatesSection.tsx`
-- `src/components/proposals/JaxReferralsValueProp.tsx`
-- `src/pages/proposals/JaxReferralsProposalPage.tsx`
+## Key Features
 
-## Files to Modify
-- `src/App.tsx` — add import and route
+**Context-Aware Proactive Prompts:**
+- Uses IntersectionObserver to track which section is in view (Hero, Services, Contact, etc.)
+- Sends page context to the AI so responses are relevant
+- Shows a subtle animated bubble with contextual suggestions (e.g., "Curious about AI chatbots? I can show you a live demo")
 
-## Technical Notes
-- Follows the same pink background design system and component patterns as the Phillips proposal
-- Hero intro text will be customized for a website updates context rather than nonprofit messaging
-- The `ProposalDownloadCTA` will use bucket `"proposals"` and filename `"jaxreferrals-proposal.pdf"` as a placeholder until you upload the actual PDF
-- Page will have `noindex/nofollow` meta tags automatically via `ProposalLayout`
-- Already blocked by existing `robots.txt` rules for `/proposals/`
+**Multi-Modal Rich Responses:**
+- Markdown rendering for all AI responses (react-markdown)
+- AI can return structured "tool call" responses that render as:
+  - **Service comparison cards** -- side-by-side feature grids
+  - **Quick quote estimator** -- interactive form that scopes a project
+  - **Live capability demos** -- e.g., "Watch me analyze your website" (triggers the existing SEO audit flow)
+  - **Calendar booking CTA** -- embedded scheduling link
+- Regular text answers for general questions
+
+**Chatbot UI:**
+- Floating button (bottom-right corner) with pulse animation
+- Expandable chat panel with glass-morphism design
+- Typing indicator with animated dots
+- Suggested prompts that change based on current page context
+- Mobile-responsive (full-width sheet on mobile)
+
+## Implementation Steps
+
+1. **Create edge function `site-chatbot`** -- Lovable AI Gateway with streaming, system prompt containing full service catalog, accepts `currentSection` context parameter, uses tool calling for structured card responses
+2. **Build `SmartChatbot` component** -- Floating widget with chat UI, markdown rendering, rich card rendering for tool-call responses
+3. **Add `usePageContext` hook** -- IntersectionObserver-based hook that tracks which section is currently visible and provides contextual suggested prompts
+4. **Add proactive suggestion system** -- After a few seconds on a section, show a subtle bubble with a context-specific prompt
+5. **Register in config.toml** and mount component in the main layout
+6. **Install `react-markdown`** for AI response rendering
+
+## System Prompt Strategy
+
+The AI will be prompted as "Biz" -- Bizooma's AI assistant -- with deep knowledge of all four services, pricing ranges, case studies, and the ability to qualify leads. It will receive the visitor's current page section as context to tailor responses.
+
+## Tech Details
+
+- **Model:** google/gemini-3-flash-preview (fast, capable)
+- **Streaming:** SSE token-by-token via Lovable AI Gateway
+- **Auth:** Public (verify_jwt = false) -- this is a public-facing chatbot
+- **Rich responses:** Tool calling with structured output for service cards, CTAs, and demos
+- **Dependencies to add:** react-markdown, remark-gfm
+
