@@ -226,6 +226,7 @@ export function SmartChatbot() {
       {/* Proactive bubble */}
       {showProactive && !isOpen && (
         <div
+          key={proactivePrompt}
           className="fixed bottom-24 right-4 z-50 max-w-xs animate-in slide-in-from-right-5 fade-in duration-500 cursor-pointer"
           onClick={handleOpen}
         >
