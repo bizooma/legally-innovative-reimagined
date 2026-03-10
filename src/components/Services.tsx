@@ -40,6 +40,7 @@ const Services = () => {
       bgImage: immigrationLawApp,
       link: "/law-firm-mobile-app-development",
       accentColor: "from-emerald-600 to-teal-700",
+      noOverlay: true,
     },
     {
       title: "Custom AI Chatbot",
@@ -100,20 +101,28 @@ const Services = () => {
                   {/* Image Side */}
                   <div className="relative lg:w-2/5 min-h-[240px] lg:min-h-[360px] overflow-hidden">
                     <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${service.bgImage})` }}
+                      className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-transform duration-700 group-hover:scale-105"
+                      style={{
+                        backgroundImage: `url(${service.bgImage})`,
+                        ...(service.noOverlay ? { backgroundColor: '#f0f0f0' } : {}),
+                        backgroundSize: service.noOverlay ? 'contain' : 'cover',
+                      }}
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-br ${service.accentColor} opacity-70`} />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center text-white">
-                        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm mb-4">
-                          {service.icon}
+                    {!service.noOverlay && (
+                      <>
+                        <div className={`absolute inset-0 bg-gradient-to-br ${service.accentColor} opacity-70`} />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center text-white">
+                            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm mb-4">
+                              {service.icon}
+                            </div>
+                            <p className="text-sm font-medium tracking-wider uppercase opacity-90">
+                              {service.subtitle}
+                            </p>
+                          </div>
                         </div>
-                        <p className="text-sm font-medium tracking-wider uppercase opacity-90">
-                          {service.subtitle}
-                        </p>
-                      </div>
-                    </div>
+                      </>
+                    )}
                   </div>
 
                   {/* Content Side */}
