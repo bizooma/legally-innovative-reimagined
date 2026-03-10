@@ -378,7 +378,7 @@ export function SmartChatbot() {
       {!isOpen && (
         <button
           onClick={handleOpen}
-          className="fixed bottom-4 right-4 z-50 w-16 h-16 hover:scale-110 transition-all duration-300 drop-shadow-lg hover:drop-shadow-xl"
+          className="fixed bottom-4 right-4 z-50 w-20 h-20 hover:scale-110 transition-all duration-300 drop-shadow-lg hover:drop-shadow-xl"
           aria-label="Open chat"
         >
           <img src={bizMascot} alt="Chat with Biz" className="w-full h-full object-contain" />
