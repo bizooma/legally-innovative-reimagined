@@ -216,6 +216,69 @@ export type Database = {
         }
         Relationships: []
       }
+      chatbot_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          message_count: number
+          messages: Json
+          session_id: string
+          updated_at: string
+          visitor_section: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_count?: number
+          messages?: Json
+          session_id: string
+          updated_at?: string
+          visitor_section?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_count?: number
+          messages?: Json
+          session_id?: string
+          updated_at?: string
+          visitor_section?: string | null
+        }
+        Relationships: []
+      }
+      chatbot_training_entries: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          created_by: string
+          id: string
+          is_active: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          content: string
+          created_at?: string
+          created_by: string
+          id?: string
+          is_active?: boolean
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_active?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       client_citations: {
         Row: {
           client_id: string

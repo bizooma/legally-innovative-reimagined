@@ -21,6 +21,9 @@ import { ProviderStatusManager } from '@/components/admin/ProviderStatusManager'
 import { IncidentManager } from '@/components/admin/IncidentManager';
 import { AuditCodeManager } from '@/components/admin/AuditCodeManager';
 import AdminPasswordReset from '@/components/auth/AdminPasswordReset';
+import { ChatbotConversations } from '@/components/dashboard/ChatbotConversations';
+import { ChatbotTrainingManager } from '@/components/dashboard/ChatbotTrainingManager';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
@@ -152,6 +155,34 @@ const AdminDashboard = () => {
                 <h2 className="text-2xl font-playfair font-bold mb-6">Password Management</h2>
                 <AdminPasswordReset />
               </div>
+            )}
+
+            {/* Chatbot Management - Only show for admins */}
+            {isAdmin && (
+              <Collapsible className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-playfair font-bold">Chatbot Management</h2>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent>
+                  <Tabs defaultValue="conversations">
+                    <TabsList>
+                      <TabsTrigger value="conversations">Conversation History</TabsTrigger>
+                      <TabsTrigger value="training">Training & Knowledge</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="conversations">
+                      <ChatbotConversations />
+                    </TabsContent>
+                    <TabsContent value="training">
+                      <ChatbotTrainingManager />
+                    </TabsContent>
+                  </Tabs>
+                </CollapsibleContent>
+              </Collapsible>
             )}
 
             {/* Client Directory */}
