@@ -136,7 +136,7 @@ const Hero = () => {
       {/* Service Navigation Buttons */}
       <div className="absolute bottom-0 left-0 right-0 z-20 flex">
         {[
-          { label: "AI Consulting", id: "service-ai-consulting" },
+          { label: "Custom Roku Development", id: "service-custom-roku-channel-development" },
           { label: "Mobile App Development", id: "service-mobile-app-development" },
           { label: "Custom AI Chatbots", id: "service-custom-ai-chatbot" },
           { label: "Voice Assisted Marketing", id: "service-voice-assistant-marketing" },
