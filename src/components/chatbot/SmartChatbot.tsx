@@ -4,6 +4,7 @@ import { usePageContext } from "@/hooks/usePageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
+import { TypingWelcome } from "./TypingWelcome";
 import { useLocation } from "react-router-dom";
 
 type Msg = { role: "user" | "assistant"; content: string };
