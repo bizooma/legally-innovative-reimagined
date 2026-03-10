@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 interface SectionConfig {
   id: string;
@@ -107,52 +107,74 @@ const DEFAULT_PROMPTS = [
 ];
 
 export function usePageContext() {
-  const [currentSection, setCurrentSection] = useState<string>("hero");
+  const [currentSection, setCurrentSection] = useState<string>("home");
   const [proactivePrompt, setProactivePrompt] = useState<string | null>(null);
   const [suggestedPrompts, setSuggestedPrompts] = useState<string[]>(DEFAULT_PROMPTS);
-  const [hasShownProactive, setHasShownProactive] = useState<Set<string>>(new Set());
 
-  const updateSection = useCallback(
-    (sectionId: string) => {
-      setCurrentSection(sectionId);
-      const config = SECTION_CONFIGS.find((s) => s.id === sectionId);
-      if (config) {
-        setSuggestedPrompts(config.suggestedPrompts);
-        // Show proactive prompt only once per section
-        if (!hasShownProactive.has(sectionId)) {
-          const timer = setTimeout(() => {
-            setProactivePrompt(config.proactivePrompt);
-            setHasShownProactive((prev) => new Set(prev).add(sectionId));
-          }, 3000);
-          return () => clearTimeout(timer);
-        }
+  // Refs for mutable tracking data — keeps observer stable
+  const hasShownProactiveRef = useRef<Set<string>>(new Set());
+  const ratiosRef = useRef<Map<string, number>>(new Map());
+  const proactiveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const currentSectionRef = useRef<string>("home");
+
+  const dismissProactive = useCallback(() => {
+    setProactivePrompt(null);
+  }, []);
+
+  // Stable observer callback — no state dependencies
+  const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
+    // Update ratios for all entries in this batch
+    entries.forEach((entry) => {
+      ratiosRef.current.set(entry.target.id, entry.intersectionRatio);
+    });
+
+    // Find section with highest visibility
+    let maxRatio = 0;
+    let bestSection = "";
+    ratiosRef.current.forEach((ratio, id) => {
+      if (ratio > maxRatio) {
+        maxRatio = ratio;
+        bestSection = id;
       }
-    },
-    [hasShownProactive]
-  );
+    });
+
+    if (!bestSection || maxRatio < 0.1) return;
+    if (bestSection === currentSectionRef.current) return;
+
+    // Section changed
+    currentSectionRef.current = bestSection;
+    setCurrentSection(bestSection);
+
+    const config = SECTION_CONFIGS.find((s) => s.id === bestSection);
+    if (config) {
+      setSuggestedPrompts(config.suggestedPrompts);
+
+      // Clear any pending proactive timer
+      if (proactiveTimerRef.current) {
+        clearTimeout(proactiveTimerRef.current);
+        proactiveTimerRef.current = null;
+      }
+
+      // Show proactive prompt only once per section
+      if (!hasShownProactiveRef.current.has(bestSection)) {
+        proactiveTimerRef.current = setTimeout(() => {
+          setProactivePrompt(config.proactivePrompt);
+          hasShownProactiveRef.current.add(bestSection);
+          proactiveTimerRef.current = null;
+        }, 3000);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const sectionIds = SECTION_CONFIGS.map((s) => s.id);
     const elements: Element[] = [];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the most visible section
-        let maxRatio = 0;
-        let visibleId = "";
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-            maxRatio = entry.intersectionRatio;
-            visibleId = entry.target.id;
-          }
-        });
-        if (visibleId) {
-          updateSection(visibleId);
-        }
-      },
-      { threshold: [0.1, 0.3, 0.5], rootMargin: "-10% 0px -10% 0px" }
-    );
 
-    // Observe all sections that exist in the DOM
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: [0, 0.1, 0.3, 0.5, 0.7, 1],
+      rootMargin: "-10% 0px -10% 0px",
+    });
+
     sectionIds.forEach((id) => {
       const el = document.getElementById(id);
       if (el) {
@@ -163,12 +185,11 @@ export function usePageContext() {
 
     return () => {
       elements.forEach((el) => observer.unobserve(el));
+      if (proactiveTimerRef.current) {
+        clearTimeout(proactiveTimerRef.current);
+      }
     };
-  }, [updateSection]);
-
-  const dismissProactive = useCallback(() => {
-    setProactivePrompt(null);
-  }, []);
+  }, [handleIntersection]);
 
   return {
     currentSection,

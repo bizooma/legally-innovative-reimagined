@@ -1,28 +1,47 @@
 
 
-# Fix: Chatbot Help Bubble Not Updating on Section Change
+# JaxReferrals Proposal Page
 
-## Problem
+## Overview
+Create a new proposal page at `/proposals/jaxreferrals` for the JaxReferrals client, focused on website updates. The page will follow the existing proposal template pattern but with a custom "Website Updates" service section instead of Google Grants and Video Chatbot sections.
 
-Two bugs in `usePageContext.ts`:
+## What Will Be Built
 
-1. **Stale closure / observer thrashing**: `updateSection` depends on `hasShownProactive` state. Every time a new proactive prompt is shown, `hasShownProactive` changes → `updateSection` gets a new reference → the `useEffect` tears down and recreates the `IntersectionObserver`. This causes missed section transitions during the teardown/setup gap.
+### 1. New Service Section Component
+A new `WebsiteUpdatesSection` component tailored to website update services, including:
+- Service cards covering items like design refresh, performance optimization, SEO improvements, and content updates
+- Stats row highlighting key metrics (e.g., page speed improvements, mobile responsiveness)
+- Benefits callout explaining why website updates matter for referral networks
 
-2. **Incomplete intersection logic**: The observer callback only examines entries in the *current batch*, not all observed elements. When scrolling slowly, only one entry fires — if it's leaving visibility (`isIntersecting: false`), `visibleId` stays empty and nothing updates. The observer needs to track visibility ratios across all elements.
+### 2. Custom Value Prop Section
+A `JaxReferralsValueProp` component with a timeline and outcomes specific to website work:
+- **Week 1-2**: Discovery and audit
+- **Week 3-4**: Design and development
+- **Month 2+**: Launch, testing, and ongoing support
+- Outcomes focused on referral growth, user experience, and conversion
 
-3. **Timer cleanup ignored**: `updateSection` returns a cleanup function for the timeout, but since it's called from the observer callback (not a useEffect), the cleanup is never executed. Rapid section changes can cause stale timers to fire.
+### 3. Proposal Page
+A new page at `src/pages/proposals/JaxReferralsProposalPage.tsx` composing:
+- `ProposalLayout` (client name: "JaxReferrals")
+- `ProposalHero` (subtitle: "Version 2")
+- `WebsiteUpdatesSection` (new component)
+- `JaxReferralsValueProp` (new component)
+- `ProposalDownloadCTA` (placeholder filename `jaxreferrals-proposal.pdf` for later upload)
 
-## Solution
+### 4. Route Registration
+Add route `/proposals/jaxreferrals` in `App.tsx` pointing to the new page.
 
-Refactor `usePageContext.ts` to use **refs instead of state** for the mutable tracking data (`hasShownProactive`, visibility ratios), keeping the observer stable:
+## Files to Create
+- `src/components/proposals/WebsiteUpdatesSection.tsx`
+- `src/components/proposals/JaxReferralsValueProp.tsx`
+- `src/pages/proposals/JaxReferralsProposalPage.tsx`
 
-- Store `hasShownProactive` in a `useRef<Set<string>>` instead of state — it doesn't need to trigger re-renders
-- Track intersection ratios for all sections in a `useRef<Map<string, number>>` and pick the highest on each callback
-- Store the proactive timer in a ref so it can be properly cleared on section change
-- Remove `hasShownProactive` from `updateSection` dependencies so the observer is created once and never recreated
-- Keep `proactivePrompt`, `currentSection`, and `suggestedPrompts` as state since they drive UI
+## Files to Modify
+- `src/App.tsx` — add import and route
 
-## Files Changed
-
-- **`src/hooks/usePageContext.ts`** — Refactor to use refs for stable observer + proper timer cleanup
-
+## Technical Notes
+- Follows the same pink background design system and component patterns as the Phillips proposal
+- Hero intro text will be customized for a website updates context rather than nonprofit messaging
+- The `ProposalDownloadCTA` will use bucket `"proposals"` and filename `"jaxreferrals-proposal.pdf"` as a placeholder until you upload the actual PDF
+- Page will have `noindex/nofollow` meta tags automatically via `ProposalLayout`
+- Already blocked by existing `robots.txt` rules for `/proposals/`
