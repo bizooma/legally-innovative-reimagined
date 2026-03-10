@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
 import underConstructionImg from "@/assets/under-construction.webp";
+import ketoneclockImg from "@/assets/ketoneclock-screenshot.png";
 import aeoAnalyzerImg from "@/assets/aeo-analyzer-screenshot.png";
 import npobotsImg from "@/assets/npobots-screenshot.png";
 import mvpSoftlaunchImg from "@/assets/mvp-softlaunch-screenshot.png";
@@ -98,17 +99,18 @@ const MarketingProducts = () => {
       isExternal: true
     },
     {
-      title: "Support Bots",
-      subtitle: "AI Customer Support",
-      description: "Automate customer support with AI chatbots. Resolve 85% of inquiries instantly, reduce costs by 60%, and provide 24/7 multilingual support.",
-      badges: ["AI Support", "Automation", "24/7"],
+      title: "Ketone Clock",
+      subtitle: "Intermittent Fasting Tracker",
+      description: "A science-based intermittent fasting tracker with real-time body timeline. Understand what's happening inside you — hour by hour — and optimize your fasting journey.",
+      badges: ["Health Tech", "Fasting", "PWA"],
       keyResults: [
-        "85% Auto-Resolved",
-        "60% Cost Reduction",
-        "24/7 Availability"
+        "Real-Time Body Timeline",
+        "Science-Based Tracking",
+        "Installable PWA"
       ],
-      image: underConstructionImg,
-      link: "/products/support-bots"
+      image: ketoneclockImg,
+      link: "https://ketoneclock.com",
+      isExternal: true
     },
     {
       title: "Signature Pop",
