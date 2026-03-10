@@ -262,16 +262,28 @@ export function SmartChatbot() {
               <img src={bizMascot} alt="Biz" className="w-8 h-8 object-contain" />
               <h3 className="text-sm font-semibold text-foreground tracking-tight">Biz</h3>
             </div>
-            <button
-              onClick={handleClose}
-              className="p-1.5 rounded-lg hover:bg-muted transition-colors"
-            >
-              {isMobile ? (
-                <ChevronDown className="h-4 w-4 text-muted-foreground" />
-              ) : (
-                <X className="h-4 w-4 text-muted-foreground" />
+            <div className="flex items-center gap-1">
+              {messages.length > 0 && (
+                <button
+                  onClick={() => { setMessages([]); setWelcomeDone(false); }}
+                  className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                  aria-label="New chat"
+                  title="New chat"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                </button>
               )}
-            </button>
+              <button
+                onClick={handleClose}
+                className="p-1.5 rounded-lg hover:bg-muted transition-colors"
+              >
+                {isMobile ? (
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <X className="h-4 w-4 text-muted-foreground" />
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Messages feed */}
