@@ -1,0 +1,361 @@
+import { useState, useRef, useEffect, useCallback } from "react";
+import { MessageSquare, X, Send, Sparkles, ChevronDown } from "lucide-react";
+import { usePageContext } from "@/hooks/usePageContext";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
+import { ChatMessage } from "./ChatMessage";
+import { useLocation } from "react-router-dom";
+
+type Msg = { role: "user" | "assistant"; content: string };
+
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/site-chatbot`;
+
+async function streamChat({
+  messages,
+  currentSection,
+  onDelta,
+  onDone,
+  onError,
+  signal,
+}: {
+  messages: Msg[];
+  currentSection: string;
+  onDelta: (text: string) => void;
+  onDone: () => void;
+  onError: (err: string) => void;
+  signal?: AbortSignal;
+}) {
+  try {
+    const resp = await fetch(CHAT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      },
+      body: JSON.stringify({ messages, currentSection }),
+      signal,
+    });
+
+    if (!resp.ok) {
+      const errData = await resp.json().catch(() => ({}));
+      onError(errData.error || "Something went wrong. Please try again.");
+      return;
+    }
+
+    if (!resp.body) {
+      onError("No response received.");
+      return;
+    }
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let textBuffer = "";
+    let streamDone = false;
+
+    while (!streamDone) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      textBuffer += decoder.decode(value, { stream: true });
+
+      let newlineIndex: number;
+      while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+        let line = textBuffer.slice(0, newlineIndex);
+        textBuffer = textBuffer.slice(newlineIndex + 1);
+
+        if (line.endsWith("\r")) line = line.slice(0, -1);
+        if (line.startsWith(":") || line.trim() === "") continue;
+        if (!line.startsWith("data: ")) continue;
+
+        const jsonStr = line.slice(6).trim();
+        if (jsonStr === "[DONE]") {
+          streamDone = true;
+          break;
+        }
+
+        try {
+          const parsed = JSON.parse(jsonStr);
+          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+          if (content) onDelta(content);
+        } catch {
+          textBuffer = line + "\n" + textBuffer;
+          break;
+        }
+      }
+    }
+
+    // Final flush
+    if (textBuffer.trim()) {
+      for (let raw of textBuffer.split("\n")) {
+        if (!raw) continue;
+        if (raw.endsWith("\r")) raw = raw.slice(0, -1);
+        if (raw.startsWith(":") || raw.trim() === "") continue;
+        if (!raw.startsWith("data: ")) continue;
+        const jsonStr = raw.slice(6).trim();
+        if (jsonStr === "[DONE]") continue;
+        try {
+          const parsed = JSON.parse(jsonStr);
+          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+          if (content) onDelta(content);
+        } catch {
+          /* ignore */
+        }
+      }
+    }
+
+    onDone();
+  } catch (e: any) {
+    if (e.name === "AbortError") return;
+    onError("Connection lost. Please try again.");
+  }
+}
+
+export function SmartChatbot() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Msg[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showProactive, setShowProactive] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const location = useLocation();
+  const isMobile = useIsMobile();
+
+  const { currentSection, proactivePrompt, suggestedPrompts, dismissProactive } =
+    usePageContext();
+
+  // Hide on portal/staff pages
+  const isHiddenPage =
+    location.pathname.startsWith("/portal") ||
+    location.pathname.startsWith("/staff") ||
+    location.pathname.startsWith("/embed");
+
+  // Show proactive bubble
+  useEffect(() => {
+    if (proactivePrompt && !isOpen) {
+      setShowProactive(true);
+      const timer = setTimeout(() => setShowProactive(false), 8000);
+      return () => clearTimeout(timer);
+    }
+  }, [proactivePrompt, isOpen]);
+
+  // Scroll to bottom on new messages
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Focus input when opened
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 300);
+    }
+  }, [isOpen]);
+
+  const sendMessage = useCallback(
+    async (text: string) => {
+      if (!text.trim() || isLoading) return;
+
+      const userMsg: Msg = { role: "user", content: text.trim() };
+      const newMessages = [...messages, userMsg];
+      setMessages(newMessages);
+      setInput("");
+      setIsLoading(true);
+      dismissProactive();
+
+      let assistantSoFar = "";
+      abortRef.current = new AbortController();
+
+      const upsertAssistant = (chunk: string) => {
+        assistantSoFar += chunk;
+        setMessages((prev) => {
+          const last = prev[prev.length - 1];
+          if (last?.role === "assistant") {
+            return prev.map((m, i) =>
+              i === prev.length - 1 ? { ...m, content: assistantSoFar } : m
+            );
+          }
+          return [...prev, { role: "assistant", content: assistantSoFar }];
+        });
+      };
+
+      await streamChat({
+        messages: newMessages,
+        currentSection,
+        onDelta: upsertAssistant,
+        onDone: () => setIsLoading(false),
+        onError: (err) => {
+          setMessages((prev) => [
+            ...prev,
+            { role: "assistant", content: `⚠️ ${err}` },
+          ]);
+          setIsLoading(false);
+        },
+        signal: abortRef.current.signal,
+      });
+    },
+    [messages, isLoading, currentSection, dismissProactive]
+  );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    sendMessage(input);
+  };
+
+  const handleSuggestion = (prompt: string) => {
+    sendMessage(prompt);
+  };
+
+  if (isHiddenPage) return null;
+
+  return (
+    <>
+      {/* Proactive bubble */}
+      {showProactive && !isOpen && (
+        <div
+          className="fixed bottom-24 right-4 z-50 max-w-xs animate-in slide-in-from-right-5 fade-in duration-500 cursor-pointer"
+          onClick={() => {
+            setIsOpen(true);
+            setShowProactive(false);
+            dismissProactive();
+          }}
+        >
+          <div className="bg-card/95 backdrop-blur-xl border border-border rounded-2xl rounded-br-sm p-4 shadow-2xl">
+            <p className="text-sm text-foreground">{proactivePrompt}</p>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowProactive(false);
+                dismissProactive();
+              }}
+              className="absolute -top-2 -right-2 bg-muted rounded-full p-1 hover:bg-accent transition-colors"
+            >
+              <X className="h-3 w-3 text-muted-foreground" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Chat panel */}
+      {isOpen && (
+        <div
+          className={cn(
+            "fixed z-50 flex flex-col bg-card/95 backdrop-blur-xl border border-border shadow-2xl",
+            isMobile
+              ? "inset-0"
+              : "bottom-24 right-4 w-[420px] h-[600px] max-h-[80vh] rounded-2xl"
+          )}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-primary/5 rounded-t-2xl">
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                </div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-card" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-foreground">Biz</h3>
+                <p className="text-xs text-muted-foreground">Bizooma AI Assistant</p>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-1.5 rounded-lg hover:bg-muted transition-colors"
+            >
+              {isMobile ? <ChevronDown className="h-5 w-5 text-muted-foreground" /> : <X className="h-5 w-5 text-muted-foreground" />}
+            </button>
+          </div>
+
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {messages.length === 0 && (
+              <div className="space-y-4">
+                <div className="text-center py-4">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                    <Sparkles className="h-7 w-7 text-primary" />
+                  </div>
+                  <h4 className="font-semibold text-foreground">
+                    Hey! I'm Biz 👋
+                  </h4>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Bizooma's AI assistant. Ask me about our services, get a quick quote, or just chat!
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  {suggestedPrompts.map((prompt) => (
+                    <button
+                      key={prompt}
+                      onClick={() => handleSuggestion(prompt)}
+                      className="w-full text-left px-3 py-2.5 rounded-xl border border-border bg-muted/50 hover:bg-accent/20 hover:border-accent/40 text-sm text-foreground transition-all duration-200"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {messages.map((msg, i) => (
+              <ChatMessage key={i} message={msg} />
+            ))}
+
+            {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
+              <div className="flex items-center gap-2 px-3 py-2">
+                <div className="flex gap-1">
+                  <span className="w-2 h-2 rounded-full bg-primary/60 animate-bounce [animation-delay:0ms]" />
+                  <span className="w-2 h-2 rounded-full bg-primary/60 animate-bounce [animation-delay:150ms]" />
+                  <span className="w-2 h-2 rounded-full bg-primary/60 animate-bounce [animation-delay:300ms]" />
+                </div>
+                <span className="text-xs text-muted-foreground">Biz is thinking...</span>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input */}
+          <form
+            onSubmit={handleSubmit}
+            className="px-4 py-3 border-t border-border bg-muted/30"
+          >
+            <div className="flex items-center gap-2">
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask Biz anything..."
+                className="flex-1 bg-background border border-input rounded-xl px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || isLoading}
+                className="p-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <Send className="h-4 w-4" />
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Floating button */}
+      {!isOpen && (
+        <button
+          onClick={() => {
+            setIsOpen(true);
+            setShowProactive(false);
+            dismissProactive();
+          }}
+          className="fixed bottom-4 right-4 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center group"
+          aria-label="Open chat"
+        >
+          <MessageSquare className="h-6 w-6 group-hover:scale-110 transition-transform" />
+          {/* Pulse ring */}
+          <span className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+        </button>
+      )}
+    </>
+  );
+}

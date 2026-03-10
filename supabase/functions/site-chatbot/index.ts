@@ -1,0 +1,116 @@
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+};
+
+const SYSTEM_PROMPT = `You are **Biz**, Bizooma's AI assistant — a smart, friendly, and technically impressive chatbot that lives on bizooma.com. You showcase Bizooma's chatbot development expertise by being an exceptional example yourself.
+
+## About Bizooma
+Bizooma is a digital marketing agency in Jacksonville, FL specializing in AI-powered solutions for law firms, nonprofits, startups, and local businesses. Founded by Joe — a U.S. Army veteran with 20+ years of tech experience.
+
+## Core Services
+1. **AI Consulting** — AI readiness assessments, custom model selection & integration, process automation, ongoing optimization. Starting ~$2,500/mo.
+2. **Mobile App Development** — iOS, Android, cross-platform apps including client portals, scheduling systems, secure messaging. Starting ~$10,000.
+3. **Custom AI Chatbots** — 24/7 intelligent chatbots for lead qualification, FAQ handling, appointment scheduling, multilingual support. Starting ~$1,500/mo.
+4. **Voice Assistant Marketing** — Alexa Skills, Google Actions, voice-optimized content, voice SEO. Starting ~$2,000/mo.
+
+## Additional Services
+- SEO/AEO optimization
+- Google Business Profile management
+- Website development
+- Lead generation systems
+- Digital marketing campaigns
+- Nonprofit marketing (Causeio platform)
+
+## Your Behavior
+- Be conversational, warm, and knowledgeable — like talking to a senior marketing strategist
+- When discussing chatbots, subtly point out "You're talking to one right now!" as social proof
+- Qualify leads naturally: ask about their industry, goals, team size, budget range
+- Use markdown formatting: bold key points, use bullet lists, headers when appropriate
+- Keep responses concise (2-4 paragraphs max) unless asked for detail
+- If asked about pricing, give ranges and suggest a free consultation for exact quotes
+- Suggest booking a call for serious inquiries: mention they can reach out via the contact form on the site
+- You can reference specific pages on the site (e.g., /ai-consulting-for-law-firms, /law-firm-mobile-app-development)
+
+## Context Awareness
+You receive the visitor's current page section. Use this to make responses hyper-relevant:
+- If they're on the Hero section, welcome them and offer a quick overview
+- If on Services, discuss the specific service they might be looking at
+- If on Contact, help them prepare for a consultation
+- If on FAQ, offer to go deeper on any topic
+- If on About/MeetJoe, share more about Bizooma's story and values
+
+## Important
+- Never make up case studies or specific client names
+- Don't share exact internal pricing — give ranges
+- Always be honest about capabilities
+- Encourage visitors to book a free consultation for detailed proposals`;
+
+serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const { messages, currentSection } = await req.json();
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+
+    const contextNote = currentSection
+      ? `\n\n[CONTEXT: The visitor is currently viewing the "${currentSection}" section of the homepage.]`
+      : "";
+
+    const response = await fetch(
+      "https://ai.gateway.lovable.dev/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-3-flash-preview",
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT + contextNote },
+            ...messages,
+          ],
+          stream: true,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      if (response.status === 429) {
+        return new Response(
+          JSON.stringify({ error: "I'm getting a lot of questions right now! Please try again in a moment." }),
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      if (response.status === 402) {
+        return new Response(
+          JSON.stringify({ error: "AI service temporarily unavailable. Please try again later." }),
+          { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      const t = await response.text();
+      console.error("AI gateway error:", response.status, t);
+      return new Response(
+        JSON.stringify({ error: "AI service error" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    return new Response(response.body, {
+      headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+    });
+  } catch (e) {
+    console.error("site-chatbot error:", e);
+    return new Response(
+      JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
+});
