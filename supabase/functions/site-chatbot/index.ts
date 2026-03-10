@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -79,9 +80,39 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, currentSection } = await req.json();
+    const { messages, currentSection, sessionId } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+
+    // Create Supabase client with service role for logging
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Fetch active training entries to inject into system prompt
+    let trainingContext = "";
+    try {
+      const { data: entries } = await supabase
+        .from("chatbot_training_entries")
+        .select("title, content, category")
+        .eq("is_active", true)
+        .order("category");
+
+      if (entries && entries.length > 0) {
+        const grouped: Record<string, string[]> = {};
+        for (const e of entries) {
+          const cat = e.category || "knowledge";
+          if (!grouped[cat]) grouped[cat] = [];
+          grouped[cat].push(`**${e.title}**: ${e.content}`);
+        }
+        const sections = Object.entries(grouped)
+          .map(([cat, items]) => `### ${cat.charAt(0).toUpperCase() + cat.slice(1)}\n${items.join("\n")}`)
+          .join("\n\n");
+        trainingContext = `\n\n## Additional Knowledge & Instructions\n${sections}`;
+      }
+    } catch (e) {
+      console.error("Error fetching training entries:", e);
+    }
 
     const contextNote = currentSection
       ? `\n\n[CONTEXT: The visitor is currently viewing the "${currentSection}" section of the homepage.]`
@@ -98,7 +129,7 @@ serve(async (req) => {
         body: JSON.stringify({
           model: "google/gemini-3-flash-preview",
           messages: [
-            { role: "system", content: SYSTEM_PROMPT + contextNote },
+            { role: "system", content: SYSTEM_PROMPT + trainingContext + contextNote },
             ...messages,
           ],
           stream: true,
@@ -125,6 +156,25 @@ serve(async (req) => {
         JSON.stringify({ error: "AI service error" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    // Fire-and-forget: log conversation asynchronously
+    if (sessionId && messages.length > 0) {
+      supabase
+        .from("chatbot_conversations")
+        .upsert(
+          {
+            session_id: sessionId,
+            messages: messages,
+            visitor_section: currentSection || null,
+            message_count: messages.length,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "session_id" }
+        )
+        .then(({ error }) => {
+          if (error) console.error("Error logging conversation:", error);
+        });
     }
 
     return new Response(response.body, {
