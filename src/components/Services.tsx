@@ -57,7 +57,7 @@ const Services = () => {
         "Lead qualification & appointment booking",
         "Analytics dashboard & conversation insights",
       ],
-      examples: "Deployed for law firms handling 80%+ of routine inquiries and booking consultations automatically.",
+      examples: "At Bizooma, we design and build bots that are tailored to your organization's unique objectives. Instead of using rigid prebuilt systems, we create conversational experiences that integrate with your website, marketing funnels, and operational workflows.",
       icon: <MessageSquare className="h-8 w-8" />,
       bgImage: chatbotExamples,
       link: "/ai-customer-support-chatbots",
