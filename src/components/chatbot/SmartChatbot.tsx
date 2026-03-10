@@ -8,7 +8,7 @@ import { ChatMessage, SkeletonCard } from "./ChatMessage";
 import { TypingWelcome } from "./TypingWelcome";
 import { useLocation } from "react-router-dom";
 
-type Msg = { role: "user" | "assistant"; content: string };
+type Msg = { role: "user" | "assistant"; content: string }; // stable msg type
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/site-chatbot`;
 
