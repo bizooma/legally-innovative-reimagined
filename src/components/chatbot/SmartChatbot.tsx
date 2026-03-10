@@ -154,6 +154,7 @@ export function SmartChatbot() {
   const handleOpen = () => {
     setIsOpen(true);
     setIsClosing(false);
+    window.dispatchEvent(new CustomEvent('chatbot-state', { detail: { open: true } }));
   };
 
   const handleClose = () => {
@@ -161,6 +162,7 @@ export function SmartChatbot() {
     setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
+      window.dispatchEvent(new CustomEvent('chatbot-state', { detail: { open: false } }));
     }, 250);
   };
 
