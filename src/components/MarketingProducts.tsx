@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
 import underConstructionImg from "@/assets/under-construction.webp";
+import ketoneclockImg from "@/assets/ketoneclock-screenshot.png";
 import aeoAnalyzerImg from "@/assets/aeo-analyzer-screenshot.png";
 import npobotsImg from "@/assets/npobots-screenshot.png";
 import mvpSoftlaunchImg from "@/assets/mvp-softlaunch-screenshot.png";
