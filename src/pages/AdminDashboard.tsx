@@ -21,6 +21,9 @@ import { ProviderStatusManager } from '@/components/admin/ProviderStatusManager'
 import { IncidentManager } from '@/components/admin/IncidentManager';
 import { AuditCodeManager } from '@/components/admin/AuditCodeManager';
 import AdminPasswordReset from '@/components/auth/AdminPasswordReset';
+import { ChatbotConversations } from '@/components/dashboard/ChatbotConversations';
+import { ChatbotTrainingManager } from '@/components/dashboard/ChatbotTrainingManager';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();

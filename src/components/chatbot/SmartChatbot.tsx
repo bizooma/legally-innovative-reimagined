@@ -12,6 +12,9 @@ type Msg = { role: "user" | "assistant"; content: string };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/site-chatbot`;
 
+// Generate a stable session ID per browser tab
+const SESSION_ID = crypto.randomUUID();
+
 async function streamChat({
   messages,
   currentSection,
@@ -34,7 +37,7 @@ async function streamChat({
         "Content-Type": "application/json",
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
-      body: JSON.stringify({ messages, currentSection }),
+      body: JSON.stringify({ messages, currentSection, sessionId: SESSION_ID }),
       signal,
     });
 
