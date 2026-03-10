@@ -74,7 +74,7 @@ const MobileMenu = ({ isOpen, navLinks, serviceLinks, productLinks, onNavLinkCli
           )
         ))}
         
-        {/* Mobile Services Submenu */}
+        {/* Services and Products submenus - commented out for future use
         <div className="border-b border-gray-100">
           <button
             onClick={() => setServicesOpen(!servicesOpen)}
@@ -98,7 +98,6 @@ const MobileMenu = ({ isOpen, navLinks, serviceLinks, productLinks, onNavLinkCli
           )}
         </div>
 
-        {/* Mobile Products Submenu */}
         <div className="border-b border-gray-100">
           <button
             onClick={() => setProductsOpen(!productsOpen)}
@@ -126,6 +125,7 @@ const MobileMenu = ({ isOpen, navLinks, serviceLinks, productLinks, onNavLinkCli
             </div>
           )}
         </div>
+        */}
 
         {/* Stay Informed Link */}
         <Link

@@ -90,6 +90,7 @@ const Navbar = () => {
             textColorClass={textColorClass}
           />
           
+          {/* Services and Products dropdowns - commented out for future use
           <ServicesDropdown 
             serviceLinks={serviceLinks}
             textColorClass={textColorClass}
@@ -99,6 +100,7 @@ const Navbar = () => {
             productLinks={productLinks}
             textColorClass={textColorClass}
           />
+          */}
 
           <Link 
             to="/stay-informed"
