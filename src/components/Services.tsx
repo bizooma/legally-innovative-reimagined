@@ -106,7 +106,7 @@ const Services = () => {
                       className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-transform duration-700 group-hover:scale-105"
                       style={{
                         backgroundImage: `url(${service.bgImage})`,
-                        ...(service.noOverlay ? { backgroundColor: '#f0f0f0' } : {}),
+                        ...(service.noOverlay ? { backgroundColor: '#ffffff' } : {}),
                         backgroundSize: service.noOverlay ? 'contain' : 'cover',
                       }}
                     />
