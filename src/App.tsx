@@ -68,7 +68,7 @@ import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
 import ScrollToTop from "./components/ScrollToTop";
-import { VideoAskWidget } from "./components/integrations/VideoAskWidget";
+import { SmartChatbot } from "./components/chatbot/SmartChatbot";
 
 // Create a new query client
 const queryClient = new QueryClient();
@@ -97,7 +97,7 @@ const App = () => (
           <GlobalSEO />
           <CanonicalMeta />
           <ScrollToTop />
-          <VideoAskWidget />
+          <SmartChatbot />
           <RouteDebug>
             <Routes>
               {/* Donut page with highest priority */}

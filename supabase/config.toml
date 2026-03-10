@@ -118,4 +118,7 @@ verify_jwt = false
 [functions.marketing-ai-chat]
 verify_jwt = true
 
+[functions.site-chatbot]
+verify_jwt = false
+
 
