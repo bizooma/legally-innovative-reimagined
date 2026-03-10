@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import bizMascot from "@/assets/biz-mascot.png";
 import { MessageSquare, X, Send, ChevronDown, Square } from "lucide-react";
 import { usePageContext } from "@/hooks/usePageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -338,11 +339,10 @@ export function SmartChatbot() {
       {!isOpen && (
         <button
           onClick={handleOpen}
-          className="fixed bottom-4 right-4 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center group"
+          className="fixed bottom-4 right-4 z-50 w-16 h-16 hover:scale-110 transition-all duration-300 drop-shadow-lg hover:drop-shadow-xl"
           aria-label="Open chat"
         >
-          <MessageSquare className="h-6 w-6 group-hover:scale-110 transition-transform" />
-          <span className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+          <img src={bizMascot} alt="Chat with Biz" className="w-full h-full object-contain" />
         </button>
       )}
     </>
