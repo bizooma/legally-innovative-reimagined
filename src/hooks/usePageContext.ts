@@ -9,7 +9,7 @@ interface SectionConfig {
 
 const SECTION_CONFIGS: SectionConfig[] = [
   {
-    id: "hero",
+    id: "home",
     label: "Hero",
     proactivePrompt: "👋 Welcome! Want to know how AI can transform your business?",
     suggestedPrompts: [
