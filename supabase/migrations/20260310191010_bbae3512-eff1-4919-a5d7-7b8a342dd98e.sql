@@ -1,0 +1,1 @@
+ALTER TABLE public.chatbot_conversations ADD CONSTRAINT chatbot_conversations_session_id_key UNIQUE (session_id);
