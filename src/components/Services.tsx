@@ -4,6 +4,7 @@ import { trackNavigation } from "@/utils/gtmTracking";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import immigrationLawApp from "@/assets/immigration-law-app.png";
 
 const Services = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
@@ -36,7 +37,7 @@ const Services = () => {
       ],
       examples: "Built health trackers, client portals, and engagement apps for organizations of all sizes.",
       icon: <Smartphone className="h-8 w-8" />,
-      bgImage: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?q=80&w=1932&auto=format&fit=crop",
+      bgImage: immigrationLawApp,
       link: "/law-firm-mobile-app-development",
       accentColor: "from-emerald-600 to-teal-700",
     },
