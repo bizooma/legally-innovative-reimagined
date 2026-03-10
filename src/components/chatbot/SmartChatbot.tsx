@@ -112,6 +112,7 @@ async function streamChat({
 
 export function SmartChatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showNewChatConfirm, setShowNewChatConfirm] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
