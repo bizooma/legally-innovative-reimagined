@@ -153,8 +153,6 @@ export function SmartChatbot() {
   const handleOpen = () => {
     setIsOpen(true);
     setIsClosing(false);
-    setShowProactive(false);
-    dismissProactive();
   };
 
   const handleClose = () => {
