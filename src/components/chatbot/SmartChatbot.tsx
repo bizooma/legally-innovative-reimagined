@@ -116,6 +116,7 @@ export function SmartChatbot() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showProactive, setShowProactive] = useState(false);
+  const [welcomeDone, setWelcomeDone] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
