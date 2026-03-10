@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MessageSquare, X, Send, Sparkles, ChevronDown } from "lucide-react";
+import { MessageSquare, X, Send, ChevronDown, Square } from "lucide-react";
 import { usePageContext } from "@/hooks/usePageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import { ChatMessage } from "./ChatMessage";
+import { ChatMessage, SkeletonCard } from "./ChatMessage";
 import { TypingWelcome } from "./TypingWelcome";
 import { useLocation } from "react-router-dom";
 
@@ -84,7 +84,6 @@ async function streamChat({
       }
     }
 
-    // Final flush
     if (textBuffer.trim()) {
       for (let raw of textBuffer.split("\n")) {
         if (!raw) continue;
@@ -117,6 +116,7 @@ export function SmartChatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const [showProactive, setShowProactive] = useState(false);
   const [welcomeDone, setWelcomeDone] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -126,13 +126,11 @@ export function SmartChatbot() {
   const { currentSection, proactivePrompt, suggestedPrompts, dismissProactive } =
     usePageContext();
 
-  // Hide on portal/staff pages
   const isHiddenPage =
     location.pathname.startsWith("/portal") ||
     location.pathname.startsWith("/staff") ||
     location.pathname.startsWith("/embed");
 
-  // Show proactive bubble
   useEffect(() => {
     if (proactivePrompt && !isOpen) {
       setShowProactive(true);
@@ -141,17 +139,30 @@ export function SmartChatbot() {
     }
   }, [proactivePrompt, isOpen]);
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Focus input when opened
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 300);
     }
   }, [isOpen]);
+
+  const handleOpen = () => {
+    setIsOpen(true);
+    setIsClosing(false);
+    setShowProactive(false);
+    dismissProactive();
+  };
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 250);
+  };
 
   const sendMessage = useCallback(
     async (text: string) => {
@@ -198,13 +209,14 @@ export function SmartChatbot() {
     [messages, isLoading, currentSection, dismissProactive]
   );
 
+  const handleAbort = () => {
+    abortRef.current?.abort();
+    setIsLoading(false);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     sendMessage(input);
-  };
-
-  const handleSuggestion = (prompt: string) => {
-    sendMessage(prompt);
   };
 
   if (isHiddenPage) return null;
@@ -215,11 +227,7 @@ export function SmartChatbot() {
       {showProactive && !isOpen && (
         <div
           className="fixed bottom-24 right-4 z-50 max-w-xs animate-in slide-in-from-right-5 fade-in duration-500 cursor-pointer"
-          onClick={() => {
-            setIsOpen(true);
-            setShowProactive(false);
-            dismissProactive();
-          }}
+          onClick={handleOpen}
         >
           <div className="bg-card/95 backdrop-blur-xl border border-border rounded-2xl rounded-br-sm p-4 shadow-2xl">
             <p className="text-sm text-foreground">{proactivePrompt}</p>
@@ -241,53 +249,39 @@ export function SmartChatbot() {
       {isOpen && (
         <div
           className={cn(
-            "fixed z-50 flex flex-col bg-card/95 backdrop-blur-xl border border-border shadow-2xl",
+            "fixed z-50 flex flex-col bg-background/95 backdrop-blur-xl border border-border shadow-2xl transition-all duration-300",
+            isClosing ? "chatbot-slide-down" : "chatbot-slide-up",
             isMobile
               ? "inset-0"
               : "bottom-24 right-4 w-[420px] h-[600px] max-h-[80vh] rounded-2xl"
           )}
         >
-          {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-primary/5 rounded-t-2xl">
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Sparkles className="h-5 w-5 text-primary" />
-                </div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-card" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-foreground">Biz</h3>
-                <p className="text-xs text-muted-foreground">Bizooma AI Assistant</p>
-              </div>
+          {/* Header — minimal */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+            <div className="flex items-center gap-1.5">
+              <span className="text-base chatbot-shimmer-text">✦</span>
+              <h3 className="text-sm font-semibold text-foreground tracking-tight">Biz</h3>
             </div>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="p-1.5 rounded-lg hover:bg-muted transition-colors"
             >
-              {isMobile ? <ChevronDown className="h-5 w-5 text-muted-foreground" /> : <X className="h-5 w-5 text-muted-foreground" />}
+              {isMobile ? (
+                <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              ) : (
+                <X className="h-4 w-4 text-muted-foreground" />
+              )}
             </button>
           </div>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {/* Messages feed */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.length === 0 && (
-              <div className="space-y-4">
-                <TypingWelcome onComplete={() => setWelcomeDone(true)} />
-                {welcomeDone && (
-                  <div className="space-y-2 animate-fade-in">
-                    {suggestedPrompts.map((prompt) => (
-                      <button
-                        key={prompt}
-                        onClick={() => handleSuggestion(prompt)}
-                        className="w-full text-left px-3 py-2.5 rounded-xl border border-border bg-muted/50 hover:bg-accent/20 hover:border-accent/40 text-sm text-foreground transition-all duration-200"
-                      >
-                        {prompt}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <TypingWelcome
+                onComplete={() => setWelcomeDone(true)}
+                suggestedPrompts={welcomeDone ? suggestedPrompts : undefined}
+                onSuggestion={sendMessage}
+              />
             )}
 
             {messages.map((msg, i) => (
@@ -295,58 +289,58 @@ export function SmartChatbot() {
             ))}
 
             {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
-              <div className="flex items-center gap-2 px-3 py-2">
-                <div className="flex gap-1">
-                  <span className="w-2 h-2 rounded-full bg-primary/60 animate-bounce [animation-delay:0ms]" />
-                  <span className="w-2 h-2 rounded-full bg-primary/60 animate-bounce [animation-delay:150ms]" />
-                  <span className="w-2 h-2 rounded-full bg-primary/60 animate-bounce [animation-delay:300ms]" />
-                </div>
-                <span className="text-xs text-muted-foreground">Biz is thinking...</span>
-              </div>
+              <SkeletonCard />
             )}
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
-          <form
-            onSubmit={handleSubmit}
-            className="px-4 py-3 border-t border-border bg-muted/30"
-          >
-            <div className="flex items-center gap-2">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask Biz anything..."
-                className="flex-1 bg-background border border-input rounded-xl px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                disabled={isLoading}
-              />
-              <button
-                type="submit"
-                disabled={!input.trim() || isLoading}
-                className="p-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                <Send className="h-4 w-4" />
-              </button>
-            </div>
-          </form>
+          {/* Input — floating bar */}
+          <div className="px-4 py-3 border-t border-border">
+            <form onSubmit={handleSubmit}>
+              <div className="flex items-center gap-2">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Ask Biz anything..."
+                  className="flex-1 bg-muted/50 border border-input rounded-xl px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/30 transition-shadow"
+                  disabled={isLoading}
+                />
+                {isLoading ? (
+                  <button
+                    type="button"
+                    onClick={handleAbort}
+                    className="p-2.5 rounded-xl bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors"
+                  >
+                    <Square className="h-4 w-4" />
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={!input.trim()}
+                    className="p-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <Send className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            </form>
+            <p className="text-[9px] text-muted-foreground/40 text-center mt-1.5 tracking-wide">
+              Powered by Bizooma AI
+            </p>
+          </div>
         </div>
       )}
 
       {/* Floating button */}
       {!isOpen && (
         <button
-          onClick={() => {
-            setIsOpen(true);
-            setShowProactive(false);
-            dismissProactive();
-          }}
+          onClick={handleOpen}
           className="fixed bottom-4 right-4 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center group"
           aria-label="Open chat"
         >
           <MessageSquare className="h-6 w-6 group-hover:scale-110 transition-transform" />
-          {/* Pulse ring */}
           <span className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
         </button>
       )}
