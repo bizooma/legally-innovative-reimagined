@@ -92,6 +92,7 @@ const Services = () => {
             return (
               <Card
                 key={index}
+                id={`service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}
                 className="overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border-0 group"
               >
                 <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>

@@ -133,6 +133,26 @@ const Hero = () => {
         </div>
       </div>
 
+      {/* Service Navigation Buttons */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 flex">
+        {[
+          { label: "AI Consulting", id: "service-ai-consulting" },
+          { label: "Mobile App Development", id: "service-mobile-app-development" },
+          { label: "Custom AI Chatbots", id: "service-custom-ai-chatbot" },
+          { label: "Voice Assisted Marketing", id: "service-voice-assistant-marketing" },
+        ].map((item, index) => (
+          <button
+            key={item.id}
+            onClick={() => document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+            className={`flex-1 py-4 text-sm md:text-base font-semibold text-white/90 hover:text-white transition-all duration-300 hover:bg-white/15 backdrop-blur-sm cursor-pointer ${
+              index < 3 ? 'border-r border-white/20' : ''
+            } bg-white/10`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
       {/* Floating Elements */}
       <div className="absolute top-1/4 left-10 w-2 h-2 bg-legal-accent rounded-full animate-pulse opacity-60"></div>
       <div className="absolute top-1/3 right-20 w-3 h-3 bg-white rounded-full animate-pulse opacity-40 animation-delay-1000"></div>
