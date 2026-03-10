@@ -134,8 +134,8 @@ export function SmartChatbot() {
   useEffect(() => {
     if (proactivePrompt && !isOpen) {
       setShowProactive(true);
-      const timer = setTimeout(() => setShowProactive(false), 8000);
-      return () => clearTimeout(timer);
+    } else if (!proactivePrompt) {
+      setShowProactive(false);
     }
   }, [proactivePrompt, isOpen]);
 
