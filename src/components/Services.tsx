@@ -21,46 +21,11 @@ const Services = () => {
       link: "/law-firm-mobile-app-development"
     },
     {
-      title: "Website Development",
-      description: "Custom website solutions designed to meet your specific business needs, from simple informational sites to complex web applications with seamless user experiences.",
-      icon: "💻",
-      bgImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1932&auto=format&fit=crop",
-      link: "/law-firm-website-development"
-    },
-    {
-      title: "Digital Marketing",
-      description: "Comprehensive digital marketing strategies that increase your online visibility, engage your target audience, and convert visitors into loyal customers.",
-      icon: "📈",
-      bgImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1932&auto=format&fit=crop",
-      link: "/law-firm-digital-marketing"
-    },
-    {
-      title: "Google Business Profile/Bing Places",
-      description: "Optimize your local online presence with professionally managed Google Business Profile and Bing Places listings to improve local search visibility and customer engagement.",
-      icon: "🗺️",
-      bgImage: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=1932&auto=format&fit=crop",
-      link: "/google-business-profile-optimization"
-    },
-    {
-      title: "SEO/AEO",
-      description: "Search Engine Optimization and Answer Engine Optimization services that improve your website's ranking, visibility, and traffic through proven, sustainable techniques.",
-      icon: "🔍",
-      bgImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1932&auto=format&fit=crop",
-      link: "/law-firm-seo-aeo-voiceseo"
-    },
-    {
       title: "Custom AI Chatbot",
       description: "Develop intelligent, personalized AI chatbots that engage your customers, answer queries, and provide assistance 24/7, enhancing customer service while reducing operational costs.",
       icon: "💬",
       bgImage: "/lovable-uploads/a88cbdbd-0e22-4907-afe1-0622b2c876ab.png",
       link: "/ai-customer-support-chatbots"
-    },
-    {
-      title: "Lead Generation Systems",
-      description: "Implement effective lead generation systems that capture high-quality leads, nurture prospects through automated workflows, and convert potential customers into loyal clients.",
-      icon: "🎯",
-      bgImage: "https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=1932&auto=format&fit=crop",
-      link: "/law-firm-lead-generation"
     },
     {
       title: "Voice Assistant Marketing",
