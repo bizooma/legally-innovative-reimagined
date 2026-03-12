@@ -158,17 +158,6 @@ const Services = () => {
                       </p>
                     </div>
 
-                    <div>
-                      <Link
-                        to={service.link}
-                        onClick={() => trackNavigation(service.link, service.title)}
-                      >
-                        <Button className="bg-legal-primary hover:bg-legal-secondary text-white group/btn">
-                          Learn More
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                        </Button>
-                      </Link>
-                    </div>
                   </CardContent>
                 </div>
               </Card>
