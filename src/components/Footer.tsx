@@ -118,8 +118,6 @@ Powered by Innovation.</h4>
         </div>
       </div>
       
-      {/* PWA Install Banner */}
-      <PWAInstallBanner />
     </footer>;
 };
 export default Footer;
