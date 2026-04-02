@@ -5,7 +5,7 @@ import footerTechBg from "@/assets/footer-tech-bg.jpg";
 import { trackEvent } from "@/utils/gtmTracking";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
 import { Facebook, Instagram, Youtube, Linkedin } from "lucide-react";
-import PWAInstallBanner from "./PWAInstallBanner";
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return <footer className="text-white py-12 relative overflow-hidden" style={{
@@ -118,8 +118,6 @@ Powered by Innovation.</h4>
         </div>
       </div>
       
-      {/* PWA Install Banner */}
-      <PWAInstallBanner />
     </footer>;
 };
 export default Footer;
