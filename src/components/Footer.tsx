@@ -117,7 +117,6 @@ Powered by Innovation.</h4>
           </div>
         </div>
       </div>
-      
     </footer>;
 };
 export default Footer;
