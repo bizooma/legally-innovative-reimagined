@@ -52,6 +52,7 @@ const ChatbotsPage = () => {
         <ChatbotsHero />
         <ChatbotTypes />
         <ConditionalChatbots />
+        <ConversationalBot />
         <ChatbotsProcess />
         <ChatbotsCTA />
         <Footer />
