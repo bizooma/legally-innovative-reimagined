@@ -232,7 +232,7 @@ export function SmartChatbot() {
       {showProactive && !isOpen && (
         <div
           key={proactivePrompt}
-          className="fixed bottom-24 right-4 z-50 max-w-xs animate-in slide-in-from-right-5 fade-in duration-500 cursor-pointer"
+          className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 max-w-xs animate-in slide-in-from-bottom-5 fade-in duration-500 cursor-pointer"
           onClick={handleOpen}
         >
           <div className="bg-card/95 backdrop-blur-xl border border-border rounded-2xl rounded-br-sm p-4 shadow-2xl">
@@ -259,7 +259,7 @@ export function SmartChatbot() {
             isClosing ? "chatbot-slide-down" : "chatbot-slide-up",
             isMobile
               ? "inset-0 z-[60]"
-              : "bottom-24 right-4 w-[460px] h-[680px] max-h-[85vh] rounded-2xl z-50"
+              : "bottom-24 left-1/2 -translate-x-1/2 w-[460px] h-[680px] max-h-[85vh] rounded-2xl z-50"
           )}
         >
           {/* Header — minimal */}
@@ -383,7 +383,7 @@ export function SmartChatbot() {
       {!isOpen && (
         <button
           onClick={handleOpen}
-          className="fixed bottom-4 right-4 z-50 w-20 h-20 hover:scale-110 transition-all duration-300 drop-shadow-lg hover:drop-shadow-xl"
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-20 h-20 hover:scale-110 transition-all duration-300 drop-shadow-lg hover:drop-shadow-xl"
           aria-label="Open chat"
         >
           <img src={bizMascot} alt="Chat with Biz" className="w-full h-full object-contain" />
