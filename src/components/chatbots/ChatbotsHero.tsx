@@ -1,16 +1,39 @@
 
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Bot, Sparkles, MessageSquareText } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 const ChatbotsHero = () => {
+  const agentLoaded = useRef(false);
+
   const scrollToContact = () => {
     const el = document.getElementById("chatbot-types");
     el?.scrollIntoView({ behavior: "smooth" });
   };
 
+  useEffect(() => {
+    if (agentLoaded.current) return;
+    agentLoaded.current = true;
+
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://agent.d-id.com/v2/index.js";
+    script.setAttribute("data-mode", "full");
+    script.setAttribute("data-client-key", "Z29vZ2xlLW9hdXRoMnwxMDc0NjQ2Njc4OTg3MTA5ODM4ODA6b0ZNWUp4Xy1oV01PYzJtVFFQYkhP");
+    script.setAttribute("data-agent-id", "v2_agt_aHkCdBDR");
+    script.setAttribute("data-name", "did-agent");
+    script.setAttribute("data-monitor", "true");
+    script.setAttribute("data-target-id", "did-agent-container");
+
+    document.body.appendChild(script);
+
+    return () => {
+      script.remove();
+    };
+  }, []);
+
   return (
     <section className="min-h-[80vh] flex items-center pt-20 section-padding bg-gradient-to-br from-legal-primary via-legal-secondary to-legal-primary text-white relative overflow-hidden">
-      {/* Background decorations */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-legal-accent rounded-full blur-3xl" />
@@ -41,36 +64,10 @@ const ChatbotsHero = () => {
           </div>
 
           <div className="hidden lg:flex justify-center">
-            <div className="relative">
-              {/* Floating chat cards */}
-              <div className="bg-white rounded-2xl shadow-2xl p-6 w-80 animate-float">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-legal-primary/10 flex items-center justify-center">
-                    <Bot className="w-5 h-5 text-legal-primary" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-legal-dark text-sm">Support Bot</p>
-                    <p className="text-xs text-gray-400">Online</p>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="bg-gray-100 rounded-xl rounded-tl-sm p-3">
-                    <p className="text-sm text-gray-700">How can I help you today?</p>
-                  </div>
-                  <div className="bg-legal-primary text-white rounded-xl rounded-tr-sm p-3 ml-6">
-                    <p className="text-sm">I need to schedule a consultation</p>
-                  </div>
-                  <div className="bg-gray-100 rounded-xl rounded-tl-sm p-3">
-                    <p className="text-sm text-gray-700">I'd be happy to help! Let me pull up available times...</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Small floating badge */}
-              <div className="absolute -top-4 -right-4 bg-legal-accent text-legal-dark rounded-xl shadow-lg p-3 animate-float" style={{ animationDelay: "1s" }}>
-                <MessageSquareText className="w-6 h-6" />
-              </div>
-            </div>
+            <div
+              id="did-agent-container"
+              className="w-full min-h-[450px] rounded-2xl overflow-hidden shadow-2xl"
+            />
           </div>
         </div>
       </div>
