@@ -1,21 +1,6 @@
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Mic, MessageSquare } from "lucide-react";
-
-// Import the widget side-effect
-import "@elevenlabs/convai-widget";
-
-// Declare the custom element for TypeScript
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "elevenlabs-convai": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement> & { "agent-id": string },
-        HTMLElement
-      >;
-    }
-  }
-}
 
 const features = [
   "Natural, human-like voice conversations powered by AI",
@@ -26,6 +11,29 @@ const features = [
 ];
 
 const ConversationalBot = () => {
+  const widgetContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Load the ElevenLabs widget script
+    const script = document.createElement("script");
+    script.src = "https://elevenlabs.io/convai-widget/index.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Create the widget element
+    script.onload = () => {
+      if (widgetContainerRef.current && !widgetContainerRef.current.querySelector("elevenlabs-convai")) {
+        const widget = document.createElement("elevenlabs-convai");
+        widget.setAttribute("agent-id", "cylHD3Ay9g1H7eGVdSdj");
+        widgetContainerRef.current.appendChild(widget);
+      }
+    };
+
+    return () => {
+      script.remove();
+    };
+  }, []);
+
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -83,10 +91,10 @@ const ConversationalBot = () => {
                   Meet Joe — Our AI Voice Agent
                 </p>
                 <p className="text-muted-foreground text-sm mb-4">
-                  Click the chat widget in the bottom-right corner to start a voice conversation with Joe.
+                  Click the chat widget that appears to start a voice conversation with Joe.
                 </p>
               </div>
-              <elevenlabs-convai agent-id="cylHD3Ay9g1H7eGVdSdj"></elevenlabs-convai>
+              <div ref={widgetContainerRef} />
             </div>
             <p className="text-xs text-muted-foreground mt-3 text-center">
               This live demo showcases a conversational AI agent that can hold natural voice conversations.
