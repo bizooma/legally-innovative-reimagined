@@ -12,6 +12,7 @@ import ChatbotsProcess from "@/components/chatbots/ChatbotsProcess";
 import ConditionalChatbots from "@/components/chatbots/ConditionalChatbots";
 import ChatbotsCTA from "@/components/chatbots/ChatbotsCTA";
 
+/** Chatbots service page */
 const ChatbotsPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
