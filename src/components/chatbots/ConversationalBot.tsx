@@ -1,5 +1,4 @@
 
-import { useEffect, useRef } from "react";
 import { Mic, MessageSquare } from "lucide-react";
 
 const features = [
@@ -11,32 +10,6 @@ const features = [
 ];
 
 const ConversationalBot = () => {
-  const widgetContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Load the ElevenLabs embeddable widget script
-    const script = document.createElement("script");
-    script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
-    script.async = true;
-    script.type = "text/javascript";
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      if (widgetContainerRef.current && !widgetContainerRef.current.querySelector("elevenlabs-convai")) {
-        const widget = document.createElement("elevenlabs-convai");
-        widget.setAttribute("agent-id", "cylHD3Ay9g1H7eGVdSdj");
-        widgetContainerRef.current.appendChild(widget);
-      }
-    };
-
-    return () => {
-      script.remove();
-      if (widgetContainerRef.current) {
-        const widget = widgetContainerRef.current.querySelector("elevenlabs-convai");
-        if (widget) widget.remove();
-      }
-    };
-  }, []);
 
   return (
     <section className="py-20 bg-background">
