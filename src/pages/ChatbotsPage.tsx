@@ -11,6 +11,7 @@ import ChatbotTypes from "@/components/chatbots/ChatbotTypes";
 import ChatbotsProcess from "@/components/chatbots/ChatbotsProcess";
 import ConditionalChatbots from "@/components/chatbots/ConditionalChatbots";
 import ChatbotsCTA from "@/components/chatbots/ChatbotsCTA";
+import ConversationalBot from "@/components/chatbots/ConversationalBot";
 
 /** Chatbots service page */
 const ChatbotsPage = () => {
