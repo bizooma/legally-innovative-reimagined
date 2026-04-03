@@ -14,13 +14,13 @@ const ConversationalBot = () => {
   const widgetContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Load the ElevenLabs widget script
+    // Load the ElevenLabs embeddable widget script
     const script = document.createElement("script");
-    script.src = "https://elevenlabs.io/convai-widget/index.js";
+    script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
     script.async = true;
+    script.type = "text/javascript";
     document.body.appendChild(script);
 
-    // Create the widget element
     script.onload = () => {
       if (widgetContainerRef.current && !widgetContainerRef.current.querySelector("elevenlabs-convai")) {
         const widget = document.createElement("elevenlabs-convai");
@@ -31,6 +31,10 @@ const ConversationalBot = () => {
 
     return () => {
       script.remove();
+      if (widgetContainerRef.current) {
+        const widget = widgetContainerRef.current.querySelector("elevenlabs-convai");
+        if (widget) widget.remove();
+      }
     };
   }, []);
 
@@ -78,22 +82,14 @@ const ConversationalBot = () => {
             </ul>
           </div>
 
-          <div className="rounded-3xl overflow-hidden shadow-lg border border-border bg-muted/30 flex items-center justify-center min-h-[400px] relative">
-            <div className="text-center p-8">
-              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <Mic className="w-10 h-10 text-primary animate-pulse" />
-              </div>
-              <p className="text-foreground font-semibold text-lg mb-2">
-                Try It Live — Meet Joe
-              </p>
-              <p className="text-muted-foreground text-sm mb-4 max-w-xs mx-auto">
-                See the widget in the bottom-right corner of this page? That's Joe — our AI voice agent. Click it to start a real-time voice conversation.
-              </p>
-              <div className="inline-flex items-center gap-2 text-primary text-sm font-medium animate-bounce">
-                <span>👉</span> Look for Joe in the bottom-right corner
-              </div>
-            </div>
-            <div ref={widgetContainerRef} />
+          <div>
+            <p className="text-sm font-semibold text-foreground mb-3">
+              Live Example — Talk to Joe:
+            </p>
+            <div className="rounded-3xl overflow-hidden shadow-lg border border-border min-h-[500px]" ref={widgetContainerRef} />
+            <p className="text-xs text-muted-foreground mt-3 text-center">
+              Click the mic to start a real-time voice conversation with our AI agent.
+            </p>
           </div>
         </div>
       </div>
