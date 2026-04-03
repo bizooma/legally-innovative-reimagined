@@ -259,7 +259,7 @@ export function SmartChatbot() {
             isClosing ? "chatbot-slide-down" : "chatbot-slide-up",
             isMobile
               ? "inset-0 z-[60]"
-              : "bottom-24 left-1/2 -translate-x-1/2 w-[460px] h-[680px] max-h-[85vh] rounded-2xl z-50"
+              : "bottom-24 left-1/2 -translate-x-1/2 w-[460px] h-[600px] max-h-[80vh] rounded-2xl z-50"
           )}
         >
           {/* Header — minimal */}
