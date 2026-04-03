@@ -29,6 +29,7 @@ import DonutsPage from "./pages/DonutsPage";
 import MichaelSalesPage from "./pages/MichaelSalesPage";
 import JacksonvilleAttorneyPage from "./pages/JacksonvilleAttorneyPage";
 import AiCustomerSupportChatbotsPage from "./pages/AiCustomerSupportChatbotsPage";
+import ChatbotsPage from "./pages/ChatbotsPage";
 import LawFirmWebsiteDevelopmentPage from "./pages/LawFirmWebsiteDevelopmentPage";
 import LawFirmMobileAppDevelopmentPage from "./pages/LawFirmMobileAppDevelopmentPage";
 import AiConsultingPage from "./pages/AiConsultingPage";
