@@ -9,6 +9,7 @@ import { useScrollTracking } from "@/hooks/useScrollTracking";
 import ChatbotsHero from "@/components/chatbots/ChatbotsHero";
 import ChatbotTypes from "@/components/chatbots/ChatbotTypes";
 import ChatbotsProcess from "@/components/chatbots/ChatbotsProcess";
+import ConditionalChatbots from "@/components/chatbots/ConditionalChatbots";
 import ChatbotsCTA from "@/components/chatbots/ChatbotsCTA";
 
 const ChatbotsPage = () => {
