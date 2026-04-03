@@ -120,6 +120,9 @@ const App = () => (
               {/* AI Customer Support Chatbots page */}
               <Route path="/ai-customer-support-chatbots" element={<AiCustomerSupportChatbotsPage />} />
               
+              {/* Custom Chatbots types page */}
+              <Route path="/chatbots" element={<ChatbotsPage />} />
+              
               {/* AI Consulting page */}
               <Route path="/ai-consulting-for-law-firms" element={<AiConsultingPage />} />
               
