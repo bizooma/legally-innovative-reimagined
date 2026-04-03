@@ -82,13 +82,18 @@ const ConversationalBot = () => {
             </ul>
           </div>
 
-          <div>
-            <p className="text-sm font-semibold text-foreground mb-3">
-              Live Example — Talk to Joe:
+          <div className="bg-card border border-border rounded-2xl p-8 flex flex-col items-center justify-center text-center space-y-4">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+              <Mic className="w-8 h-8 text-primary" />
+            </div>
+            <h3 className="text-xl font-bold text-foreground">
+              Try It Live — Talk to Joe
+            </h3>
+            <p className="text-muted-foreground leading-relaxed max-w-sm">
+              Look for the voice agent widget in the <strong>lower-right corner</strong> of this page. Click it to start a real-time spoken conversation with our AI agent, Joe.
             </p>
-            <div className="rounded-3xl overflow-hidden shadow-lg border border-border min-h-[500px]" ref={widgetContainerRef} />
-            <p className="text-xs text-muted-foreground mt-3 text-center">
-              Click the mic to start a real-time voice conversation with our AI agent.
+            <p className="text-xs text-muted-foreground/70">
+              Powered by ElevenLabs Conversational AI
             </p>
           </div>
         </div>
