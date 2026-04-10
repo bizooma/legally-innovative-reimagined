@@ -5,7 +5,7 @@ export const navLinks = [
   { name: "FAQ", href: "#faq", isExternal: false },
   { name: "Why Us", href: "#why-us", isExternal: false },
   { name: "Contact", href: "#contact", isExternal: false },
-  { name: "Newsletter", href: null, isExternal: false, path: "/route-to-results-newsletter" },
+  
 ];
 
 export const serviceLinks = [
