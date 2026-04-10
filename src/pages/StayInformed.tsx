@@ -17,6 +17,17 @@ import websiteConversionImage from "@/assets/website-conversion-law-firms.jpg";
 const StayInformed = () => {
   const blogPosts = [
     {
+      id: 13,
+      title: "Google's Latest Core Update: Why \"Helpful Content\" Is Now the Only Strategy That Works",
+      excerpt: "Google just wrapped up its latest core algorithm update—and this time, they're actually enforcing the shift toward helpful, experience-based content. Learn what changed and how to adapt.",
+      date: "March 28, 2026",
+      readTime: "10 min read",
+      author: "SEO Strategy Team",
+      category: "SEO",
+      image: googleMarch2026Image,
+      link: "/google-march-2026-update"
+    },
+    {
       id: 12,
       title: "Before You Increase Your Marketing Budget, Fix Your Website",
       excerpt: "Traffic without conversion is just expensive vanity. Learn why your law firm's website might be the real reason your marketing isn't working.",
