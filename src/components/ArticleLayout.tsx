@@ -150,7 +150,7 @@ const ArticleLayout = ({
             <div className="flex items-center justify-center gap-6 text-white/80 mb-6">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                <span>{new Date(date).toLocaleDateString()}</span>
+                <span>{new Date(date + 'T00:00:00').toLocaleDateString()}</span>
               </div>
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />
