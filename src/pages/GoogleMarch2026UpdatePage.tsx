@@ -29,7 +29,7 @@ const GoogleMarch2026UpdatePage = () => {
     <ArticleLayout
       title="Google's Latest Core Update: Why 'Helpful Content' Is Now the Only Strategy That Works"
       excerpt="Google just wrapped up its latest core algorithm update—and this time, they're actually enforcing the 'create content for people, not search engines' message."
-      date="2026-03-28"
+      date="2026-04-08"
       author="Bizooma Team"
       category="SEO & AEO"
       image={heroImage}
