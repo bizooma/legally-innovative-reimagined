@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import voiceSeoHeroImage from "@/assets/voice-seo-hero.jpg";
+import googleMarch2026Image from "@/assets/google-march-2026-update.jpg";
 import appleMapsInterfaceImage from "@/assets/apple-maps-interface.jpg";
 import appleMapsLawFirmImage from "@/assets/apple-maps-law-firm.jpg";
 import openaiImage from "@/assets/openai-browser-legal-tech.jpg";
