@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import voiceSeoHeroImage from "@/assets/voice-seo-hero.jpg";
+import googleMarch2026Image from "@/assets/google-march-2026-update.jpg";
 import appleMapsInterfaceImage from "@/assets/apple-maps-interface.jpg";
 import appleMapsLawFirmImage from "@/assets/apple-maps-law-firm.jpg";
 import openaiImage from "@/assets/openai-browser-legal-tech.jpg";
@@ -15,6 +16,17 @@ import websiteConversionImage from "@/assets/website-conversion-law-firms.jpg";
 
 const StayInformed = () => {
   const blogPosts = [
+    {
+      id: 13,
+      title: "Google's Latest Core Update: Why \"Helpful Content\" Is Now the Only Strategy That Works",
+      excerpt: "Google just wrapped up its latest core algorithm update—and this time, they're actually enforcing the shift toward helpful, experience-based content. Learn what changed and how to adapt.",
+      date: "March 28, 2026",
+      readTime: "10 min read",
+      author: "SEO Strategy Team",
+      category: "SEO",
+      image: googleMarch2026Image,
+      link: "/google-march-2026-update"
+    },
     {
       id: 12,
       title: "Before You Increase Your Marketing Budget, Fix Your Website",
