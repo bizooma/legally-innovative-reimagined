@@ -56,6 +56,7 @@ import IncidentHistory from "./pages/IncidentHistory";
 import CloudDevStatusExtensionPrivacy from "./pages/CloudDevStatusExtensionPrivacy";
 import AIMarketingLawFirms2025 from "./pages/AIMarketingLawFirms2025";
 import GbpOptimization2026Page from "./pages/GbpOptimization2026Page";
+import GoogleMarch2026UpdatePage from "./pages/GoogleMarch2026UpdatePage";
 import SchemaMarkupFeaturedSnippetsPage from "./pages/SchemaMarkupFeaturedSnippetsPage";
 import AlexaSkillsLawFirmsPage from "./pages/AlexaSkillsLawFirmsPage";
 import WebsiteConversionLawFirmsPage from "./pages/WebsiteConversionLawFirmsPage";
@@ -192,6 +193,7 @@ const App = () => (
               <Route path="/schema-markup-featured-snippets" element={<SchemaMarkupFeaturedSnippetsPage />} />
               <Route path="/alexa-skills-law-firms" element={<AlexaSkillsLawFirmsPage />} />
               <Route path="/website-conversion-law-firms" element={<WebsiteConversionLawFirmsPage />} />
+              <Route path="/google-march-2026-update" element={<GoogleMarch2026UpdatePage />} />
               
               {/* Privacy Policy */}
               <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
