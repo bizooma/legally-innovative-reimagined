@@ -20,7 +20,7 @@ const StayInformed = () => {
       id: 13,
       title: "Google's Latest Core Update: Why \"Helpful Content\" Is Now the Only Strategy That Works",
       excerpt: "Google just wrapped up its latest core algorithm update—and this time, they're actually enforcing the shift toward helpful, experience-based content. Learn what changed and how to adapt.",
-      date: "March 28, 2026",
+      date: "April 8, 2026",
       readTime: "10 min read",
       author: "SEO Strategy Team",
       category: "SEO",
