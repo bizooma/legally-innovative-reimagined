@@ -14,6 +14,7 @@ import Footer from "@/components/Footer";
 import GoogleMap from "@/components/GoogleMap";
 import Newsletter from "@/components/Newsletter";
 import MobileFooterNav from "@/components/MobileFooterNav";
+import ChamberMemberships from "@/components/ChamberMemberships";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
 import nonprofitVolunteersBg from "@/assets/nonprofit-volunteers-bg.jpg";
 import causeioLogo from "@/assets/causeio-logo.png";
@@ -165,6 +166,7 @@ const Index = () => {
       <Hero />
       <About />
       <MeetJoe />
+      <ChamberMemberships />
       <Services />
       <VideoSection />
       <MarketingProducts />
