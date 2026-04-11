@@ -60,9 +60,10 @@ const Services = () => {
       examples: "At Bizooma, we design and build bots that are tailored to your organization's unique objectives. Instead of using rigid prebuilt systems, we create conversational experiences that integrate with your website, marketing funnels, and operational workflows.",
       icon: <MessageSquare className="h-8 w-8" />,
       bgImage: chatbotExamples,
-      link: "/ai-customer-support-chatbots",
+      link: "/chatbots",
       accentColor: "from-violet-600 to-purple-700",
       noOverlay: true,
+      showLearnMore: true,
     },
     {
       title: "Voice Assistant Marketing",
@@ -157,6 +158,16 @@ const Services = () => {
                         {service.examples}
                       </p>
                     </div>
+
+                    {service.showLearnMore && service.link && (
+                      <div>
+                        <Link to={service.link}>
+                          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                            Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
 
                   </CardContent>
                 </div>
