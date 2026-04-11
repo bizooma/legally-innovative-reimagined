@@ -16,11 +16,13 @@ const ChamberMemberships = () => {
               className="h-16 md:h-20 w-auto object-contain"
             />
           </a>
-          <img
-            src={clayChamberLogo}
-            alt="Clay Chamber of Commerce"
-            className="h-16 md:h-20 w-auto object-contain"
-          />
+          <a href="https://www.claychamber.com/" target="_blank" rel="noopener noreferrer">
+            <img
+              src={clayChamberLogo}
+              alt="Clay Chamber of Commerce"
+              className="h-16 md:h-20 w-auto object-contain"
+            />
+          </a>
         </div>
       </div>
     </section>
