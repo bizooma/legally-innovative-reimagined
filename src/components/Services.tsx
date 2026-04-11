@@ -159,6 +159,16 @@ const Services = () => {
                       </p>
                     </div>
 
+                    {service.showLearnMore && service.link && (
+                      <div>
+                        <Link to={service.link}>
+                          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                            Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
+
                   </CardContent>
                 </div>
               </Card>
