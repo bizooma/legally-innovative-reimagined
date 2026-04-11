@@ -9,11 +9,13 @@ const ChamberMemberships = () => {
           Bizooma is a proud member of
         </p>
         <div className="flex flex-wrap items-center justify-center gap-10">
-          <img
-            src={amarilloChamberLogo}
-            alt="Amarillo Chamber of Commerce"
-            className="h-16 md:h-20 w-auto object-contain"
-          />
+          <a href="https://web.amarillo-chamber.org/Marketing/Bizooma,-LLC-12876" target="_blank" rel="noopener noreferrer">
+            <img
+              src={amarilloChamberLogo}
+              alt="Amarillo Chamber of Commerce"
+              className="h-16 md:h-20 w-auto object-contain"
+            />
+          </a>
           <img
             src={clayChamberLogo}
             alt="Clay Chamber of Commerce"
