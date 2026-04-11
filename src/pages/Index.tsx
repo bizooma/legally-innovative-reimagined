@@ -166,6 +166,7 @@ const Index = () => {
       <Hero />
       <About />
       <MeetJoe />
+      <ChamberMemberships />
       <Services />
       <VideoSection />
       <MarketingProducts />
