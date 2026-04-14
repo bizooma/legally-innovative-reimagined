@@ -1,9 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
-import { Brain, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import bannerAi from "@/assets/banner_ai_600x200.png";
 
 const AiSectionPage = () => {
   return (
@@ -15,11 +16,12 @@ const AiSectionPage = () => {
       <Navbar />
       <main className="pt-20">
         {/* Hero */}
-        <section className="relative py-20 bg-gradient-to-br from-secondary/20 via-background to-primary/10 overflow-hidden">
-          <div className="container mx-auto px-4 text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-secondary/10 mb-6">
-              <Brain className="w-10 h-10 text-secondary-foreground" />
-            </div>
+        <section
+          className="relative py-20 overflow-hidden bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${bannerAi})` }}
+        >
+          <div className="absolute inset-0 bg-background/60" />
+          <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">AI</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               From the <span className="font-semibold text-foreground">Route to Results</span> newsletter — Where Marketing Meets Code + AI
