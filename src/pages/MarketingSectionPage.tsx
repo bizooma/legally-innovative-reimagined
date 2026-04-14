@@ -4,7 +4,7 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import bannerMarketing from "@/assets/banner_marketing_600x200.png";
+import bannerMarketing from "@/assets/banner_marketing_hero.png";
 
 const MarketingSectionPage = () => {
   return (
