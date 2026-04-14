@@ -27,21 +27,57 @@ const CodeSectionPage = () => {
         <section className="py-16">
           <div className="container mx-auto px-4 max-w-3xl">
             <div className="prose prose-lg dark:prose-invert mx-auto">
+              <h2 className="text-2xl font-semibold text-foreground mt-0 mb-4">Your Website Should Be a System—Not Just a Design</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                The <strong>Code</strong> section of our newsletter dives into the technical side — the development tools, frameworks, and innovations that power modern digital experiences.
+                Most law firm websites are built like brochures.
               </p>
-              <h2 className="text-2xl font-semibold text-foreground mt-8 mb-4">What We Cover</h2>
-              <ul className="space-y-3 text-muted-foreground">
-                <li>💻 Web development trends and best practices</li>
-                <li>📱 Mobile app development insights</li>
-                <li>🔧 Developer tools and productivity tips</li>
-                <li>⚡ Performance optimization and Core Web Vitals</li>
-                <li>🏗️ Software architecture and design patterns</li>
-                <li>🔐 Security best practices and updates</li>
-                <li>🚀 New frameworks, libraries, and tech launches</li>
+              <p className="text-muted-foreground">
+                They look good. They have pages. They might even rank.
+              </p>
+              <p className="text-muted-foreground">
+                But they don't work the way they should.
+              </p>
+
+              <h3 className="text-xl font-semibold text-foreground mt-8 mb-3">The Problem with Traditional Platforms</h3>
+              <p className="text-muted-foreground">
+                Platforms like WordPress can be powerful—but they often rely on:
+              </p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>✅ Multiple plugins</li>
+                <li>✅ Third-party integrations</li>
+                <li>✅ Ongoing patchwork maintenance</li>
               </ul>
-              <p className="text-muted-foreground mt-8">
-                We translate technical concepts into practical insights so you can make better decisions about your digital infrastructure.
+              <p className="text-muted-foreground">As your needs grow, so does complexity.</p>
+              <p className="text-muted-foreground">That's when issues start to appear:</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>⚠️ Slower load times</li>
+                <li>⚠️ Broken integrations</li>
+                <li>⚠️ Limited flexibility</li>
+              </ul>
+
+              <h3 className="text-xl font-semibold text-foreground mt-8 mb-3">A Better Approach: Modern Development</h3>
+              <p className="text-muted-foreground">
+                We build websites using TypeScript and modern JavaScript frameworks, which allows us to create:
+              </p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>✅ Faster, high-performance websites</li>
+                <li>✅ Custom features tailored to your firm</li>
+                <li>✅ Seamless integrations with AI and automation tools</li>
+                <li>✅ Scalable systems that grow with your business</li>
+              </ul>
+
+              <h3 className="text-xl font-semibold text-foreground mt-8 mb-3">What This Means for Your Firm</h3>
+              <p className="text-muted-foreground">Instead of a static website, you get:</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>✅ A platform that adapts to your marketing strategy</li>
+                <li>✅ A system that integrates with your intake process</li>
+                <li>✅ A foundation for future growth (AI, voice, automation)</li>
+              </ul>
+
+              <h3 className="text-xl font-semibold text-foreground mt-10 mb-3">Built for What's Next</h3>
+              <p className="text-muted-foreground">Your website shouldn't limit what you can do.</p>
+              <p className="text-muted-foreground">
+                It should enable everything you want to build next.
               </p>
             </div>
             <div className="mt-12 text-center">
