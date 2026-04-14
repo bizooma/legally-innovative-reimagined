@@ -4,7 +4,7 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import bannerAi from "@/assets/banner_ai_600x200.png";
+import bannerAi from "@/assets/banner_ai_hero.png";
 
 const AiSectionPage = () => {
   return (
