@@ -66,6 +66,10 @@ import JaxBarAssociationResourcesPage from "./pages/JaxBarAssociationResourcesPa
 import JaxBarInfographicPage from "./pages/JaxBarInfographicPage";
 import SupportPage from "./pages/SupportPage";
 import MomentumCampaignsPage from "./pages/MomentumCampaignsPage";
+import MarketingSectionPage from "./pages/MarketingSectionPage";
+import CodeSectionPage from "./pages/CodeSectionPage";
+import AiSectionPage from "./pages/AiSectionPage";
+import InsightsSectionPage from "./pages/InsightsSectionPage";
 import { useEffect } from "react";
 import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
@@ -210,6 +214,12 @@ const App = () => (
               
               {/* Momentum Campaigns */}
               <Route path="/momentum-campaigns" element={<MomentumCampaignsPage />} />
+              
+              {/* Newsletter Section Pages */}
+              <Route path="/marketing" element={<MarketingSectionPage />} />
+              <Route path="/code" element={<CodeSectionPage />} />
+              <Route path="/ai" element={<AiSectionPage />} />
+              <Route path="/insights" element={<InsightsSectionPage />} />
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />
