@@ -27,20 +27,59 @@ const InsightsSectionPage = () => {
         <section className="py-16">
           <div className="container mx-auto px-4 max-w-3xl">
             <div className="prose prose-lg dark:prose-invert mx-auto">
+              <h2 className="text-2xl font-semibold text-foreground mt-0 mb-4">What We're Seeing Across Law Firms Right Now</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                The <strong>Insights</strong> section is where we bring it all together — summarizing the key takeaways from each newsletter and connecting the dots between marketing, code, and AI.
+                Every week, we work with law firms across the country—and clear patterns are emerging.
               </p>
-              <h2 className="text-2xl font-semibold text-foreground mt-8 mb-4">What We Cover</h2>
-              <ul className="space-y-3 text-muted-foreground">
-                <li>💡 Key takeaways and action items from each issue</li>
-                <li>🔗 How marketing, code, and AI intersect</li>
-                <li>📌 Strategic recommendations for your business</li>
-                <li>🗓️ What to watch for in the coming weeks</li>
-                <li>🎯 Priority actions ranked by impact</li>
-                <li>📝 Quick summaries for busy professionals</li>
+
+              <h3 className="text-xl font-semibold text-foreground mt-8 mb-3">1. Traffic Isn't the Problem</h3>
+              <p className="text-muted-foreground">Many firms are getting visitors.</p>
+              <p className="text-muted-foreground">But those visitors aren't converting.</p>
+              <p className="text-muted-foreground">Why?</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>⚠️ Confusing websites</li>
+                <li>⚠️ Slow response times</li>
+                <li>⚠️ Lack of clear next steps</li>
               </ul>
-              <p className="text-muted-foreground mt-8">
-                Think of Insights as your executive summary — the TL;DR that helps you take action fast.
+
+              <h3 className="text-xl font-semibold text-foreground mt-8 mb-3">2. Speed Wins</h3>
+              <p className="text-muted-foreground">
+                The firms capturing the most cases aren't always the biggest or the most visible.
+              </p>
+              <p className="text-muted-foreground">They're the ones that:</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>✅ Respond immediately</li>
+                <li>✅ Make it easy to connect</li>
+                <li>✅ Follow up consistently</li>
+              </ul>
+
+              <h3 className="text-xl font-semibold text-foreground mt-8 mb-3">3. Systems Beat Tactics</h3>
+              <p className="text-muted-foreground">
+                Running ads, improving SEO, or redesigning a website can all help…
+              </p>
+              <p className="text-muted-foreground">
+                But without a connected system, results are inconsistent.
+              </p>
+              <p className="text-muted-foreground">The firms growing the fastest are building:</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>✅ Integrated marketing systems</li>
+                <li>✅ Automated intake processes</li>
+                <li>✅ Data-driven decision frameworks</li>
+              </ul>
+
+              <h3 className="text-xl font-semibold text-foreground mt-8 mb-3">4. Perception Matters</h3>
+              <p className="text-muted-foreground">From the client's perspective, the firm that:</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>✅ Responds first</li>
+                <li>✅ Feels modern</li>
+                <li>✅ Communicates clearly</li>
+              </ul>
+              <p className="text-muted-foreground">…is often seen as the better choice.</p>
+
+              <h3 className="text-xl font-semibold text-foreground mt-10 mb-3">Our Take</h3>
+              <p className="text-muted-foreground">The future of law firm marketing isn't about doing more.</p>
+              <p className="text-muted-foreground">
+                It's about building smarter, faster, more connected systems.
               </p>
             </div>
             <div className="mt-12 text-center">
