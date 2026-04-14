@@ -1,47 +1,30 @@
 
+## Plan: Create 4 Newsletter Section Pages
 
-# JaxReferrals Proposal Page
+### Overview
+Create 4 simple landing pages for your newsletter sections (Marketing, Code, AI, Insights) at `/marketing`, `/code`, `/ai`, and `/insights`. Each page will have a header image area, section title, brief description of what that section covers in your newsletter, and standard Navbar/Footer.
 
-## Overview
-Create a new proposal page at `/proposals/jaxreferrals` for the JaxReferrals client, focused on website updates. The page will follow the existing proposal template pattern but with a custom "Website Updates" service section instead of Google Grants and Video Chatbot sections.
+### Pages to Create
 
-## What Will Be Built
+1. **`/marketing`** - Marketing section: covers digital marketing strategies, SEO/AEO, lead generation, and branding tips
+2. **`/code`** - Code section: covers web development, mobile apps, tech tools, and coding insights
+3. **`/ai`** - AI section: covers AI tools, chatbots, automation, and emerging AI trends
+4. **`/insights`** - Insights section: newsletter summary and key takeaways
 
-### 1. New Service Section Component
-A new `WebsiteUpdatesSection` component tailored to website update services, including:
-- Service cards covering items like design refresh, performance optimization, SEO improvements, and content updates
-- Stats row highlighting key metrics (e.g., page speed improvements, mobile responsiveness)
-- Benefits callout explaining why website updates matter for referral networks
+### Technical Steps
 
-### 2. Custom Value Prop Section
-A `JaxReferralsValueProp` component with a timeline and outcomes specific to website work:
-- **Week 1-2**: Discovery and audit
-- **Week 3-4**: Design and development
-- **Month 2+**: Launch, testing, and ongoing support
-- Outcomes focused on referral growth, user experience, and conversion
+1. **Create 4 new page components** in `src/pages/`:
+   - `MarketingSectionPage.tsx`
+   - `CodeSectionPage.tsx`
+   - `AiSectionPage.tsx`
+   - `InsightsSectionPage.tsx`
+   
+   Each will follow the existing page pattern (Navbar, hero section with gradient, description content, Footer, MobileFooterNav) and tie back to the newsletter tagline "Where Marketing Meets Code + AI."
 
-### 3. Proposal Page
-A new page at `src/pages/proposals/JaxReferralsProposalPage.tsx` composing:
-- `ProposalLayout` (client name: "JaxReferrals")
-- `ProposalHero` (subtitle: "Version 2")
-- `WebsiteUpdatesSection` (new component)
-- `JaxReferralsValueProp` (new component)
-- `ProposalDownloadCTA` (placeholder filename `jaxreferrals-proposal.pdf` for later upload)
+2. **Register routes** in `src/App.tsx` for `/marketing`, `/code`, `/ai`, `/insights`
 
-### 4. Route Registration
-Add route `/proposals/jaxreferrals` in `App.tsx` pointing to the new page.
-
-## Files to Create
-- `src/components/proposals/WebsiteUpdatesSection.tsx`
-- `src/components/proposals/JaxReferralsValueProp.tsx`
-- `src/pages/proposals/JaxReferralsProposalPage.tsx`
-
-## Files to Modify
-- `src/App.tsx` — add import and route
-
-## Technical Notes
-- Follows the same pink background design system and component patterns as the Phillips proposal
-- Hero intro text will be customized for a website updates context rather than nonprofit messaging
-- The `ProposalDownloadCTA` will use bucket `"proposals"` and filename `"jaxreferrals-proposal.pdf"` as a placeholder until you upload the actual PDF
-- Page will have `noindex/nofollow` meta tags automatically via `ProposalLayout`
-- Already blocked by existing `robots.txt` rules for `/proposals/`
+3. Each page will include:
+   - Hero section with relevant icon and section name
+   - Brief description of what that section covers
+   - Link back to the newsletter page
+   - Consistent styling with existing pages
