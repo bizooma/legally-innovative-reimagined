@@ -17,7 +17,7 @@ const InsightsSectionPage = () => {
       <main className="pt-20">
         {/* Hero */}
         <section
-          className="relative py-20 overflow-hidden bg-cover bg-center bg-no-repeat"
+          className="relative overflow-hidden bg-cover bg-center bg-no-repeat aspect-[3/1]"
           style={{ backgroundImage: `url(${bannerInsights})` }}
         >
           <h1 className="sr-only">Insights</h1>
