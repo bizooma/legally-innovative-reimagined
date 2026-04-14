@@ -1,30 +1,53 @@
 
-## Plan: Create 4 Newsletter Section Pages
+# Update Sitemap and SEO Schema for New Pages
 
-### Overview
-Create 4 simple landing pages for your newsletter sections (Marketing, Code, AI, Insights) at `/marketing`, `/code`, `/ai`, and `/insights`. Each page will have a header image area, section title, brief description of what that section covers in your newsletter, and standard Navbar/Footer.
+## What's Missing
 
-### Pages to Create
+The sitemap (`public/sitemap.xml`) and SEO structured data are missing several pages that have been added since the sitemap was last updated. Here are the pages not currently in the sitemap:
 
-1. **`/marketing`** - Marketing section: covers digital marketing strategies, SEO/AEO, lead generation, and branding tips
-2. **`/code`** - Code section: covers web development, mobile apps, tech tools, and coding insights
-3. **`/ai`** - AI section: covers AI tools, chatbots, automation, and emerging AI trends
-4. **`/insights`** - Insights section: newsletter summary and key takeaways
+**Newsletter Section Pages (the 4 new ones):**
+- `/marketing`
+- `/code`
+- `/ai`
+- `/insights`
 
-### Technical Steps
+**Other pages also missing:**
+- `/chatbots`
+- `/why-reviews-matter-for-law-firms`
+- `/mobile-apps-as-marketing-tool`
+- `/route-to-results-newsletter`
+- `/ai-marketing-law-firms-2025`
+- `/gbp-optimization-2026`
+- `/schema-markup-featured-snippets`
+- `/website-conversion-law-firms`
+- `/google-march-2026-update`
+- `/privacy-policy`
+- `/seo-audit`
+- `/jax-bar-association`
+- `/support`
+- `/momentum-campaigns`
+- `/products/mvp-soft-launch`
+- `/install`
 
-1. **Create 4 new page components** in `src/pages/`:
-   - `MarketingSectionPage.tsx`
-   - `CodeSectionPage.tsx`
-   - `AiSectionPage.tsx`
-   - `InsightsSectionPage.tsx`
-   
-   Each will follow the existing page pattern (Navbar, hero section with gradient, description content, Footer, MobileFooterNav) and tie back to the newsletter tagline "Where Marketing Meets Code + AI."
+(Private/internal pages like `/donuts`, `/michael`, `/proposals/*`, `/staff`, `/admin`, `/portal`, `/this-is-our-jax`, `/status-ticker`, `/embed/*`, `/privacy/cloud-dev-status-extension` should remain excluded.)
 
-2. **Register routes** in `src/App.tsx` for `/marketing`, `/code`, `/ai`, `/insights`
+## Plan
 
-3. Each page will include:
-   - Hero section with relevant icon and section name
-   - Brief description of what that section covers
-   - Link back to the newsletter page
-   - Consistent styling with existing pages
+### 1. Update `public/sitemap.xml`
+Add all public-facing pages listed above with appropriate priority values:
+- Newsletter section pages (`/marketing`, `/code`, `/ai`, `/insights`): priority 0.7
+- Blog posts: priority 0.6
+- Product pages: priority 0.6-0.7
+- Utility pages (`/support`, `/privacy-policy`): priority 0.3-0.4
+- Set `lastmod` to `2026-04-14` for new entries
+
+### 2. Update `src/components/SEO/CanonicalMeta.tsx`
+Add the 4 newsletter section pages to the `isSpeakablePath` check so they get speakable structured data, since they are key content pages.
+
+### 3. No changes needed to `GlobalSEO.tsx`
+The organization and website schema are site-wide and don't need per-page updates.
+
+## Technical Details
+- The sitemap is a static XML file — just add `<url>` entries
+- CanonicalMeta already auto-generates breadcrumbs for all pages via the pathname, so that's covered
+- Each of the 4 new pages already has its own `<Helmet>` with title/description/OG tags
