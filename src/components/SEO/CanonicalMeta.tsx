@@ -31,7 +31,8 @@ const CanonicalMeta = () => {
   };
 
   // Speakable (basic) for key pages
-  const isSpeakablePath = pathname === "/" || pathname === "/law-firm-seo-aeo-voiceseo";
+  const speakablePaths = ["/", "/law-firm-seo-aeo-voiceseo", "/marketing", "/code", "/ai", "/insights"];
+  const isSpeakablePath = speakablePaths.includes(pathname);
   const speakableLd = isSpeakablePath
     ? {
         "@context": "https://schema.org",
