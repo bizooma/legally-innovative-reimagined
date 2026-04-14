@@ -4,7 +4,7 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import bannerCode from "@/assets/banner_code_600x200.png";
+import bannerCode from "@/assets/banner_code_hero.png";
 
 const CodeSectionPage = () => {
   return (
