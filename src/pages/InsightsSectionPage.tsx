@@ -21,6 +21,7 @@ const InsightsSectionPage = () => {
           style={{ backgroundImage: `url(${bannerInsights})` }}
         >
           <h1 className="sr-only">Insights</h1>
+          <HeroServiceNav />
         </section>
 
         {/* Content */}

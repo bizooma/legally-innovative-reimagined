@@ -21,6 +21,7 @@ const MarketingSectionPage = () => {
           style={{ backgroundImage: `url(${bannerMarketing})` }}
         >
           <h1 className="sr-only">Marketing</h1>
+          <HeroServiceNav />
         </section>
 
         {/* Content */}

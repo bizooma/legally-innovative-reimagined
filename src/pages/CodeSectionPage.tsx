@@ -21,6 +21,7 @@ const CodeSectionPage = () => {
           style={{ backgroundImage: `url(${bannerCode})` }}
         >
           <h1 className="sr-only">Code</h1>
+          <HeroServiceNav />
         </section>
 
         {/* Content */}

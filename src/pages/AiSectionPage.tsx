@@ -21,6 +21,7 @@ const AiSectionPage = () => {
           style={{ backgroundImage: `url(${bannerAi})` }}
         >
           <h1 className="sr-only">AI</h1>
+          <HeroServiceNav />
         </section>
 
         {/* Content */}
