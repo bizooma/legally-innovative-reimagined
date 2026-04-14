@@ -4,6 +4,7 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import CalendlySection from "@/components/CalendlySection";
 import { Helmet } from "react-helmet-async";
 import bannerCode from "@/assets/banner_code_hero.png";
+import HeroServiceNav from "@/components/HeroServiceNav";
 
 const CodeSectionPage = () => {
   return (
@@ -20,6 +21,7 @@ const CodeSectionPage = () => {
           style={{ backgroundImage: `url(${bannerCode})` }}
         >
           <h1 className="sr-only">Code</h1>
+          <HeroServiceNav />
         </section>
 
         {/* Content */}

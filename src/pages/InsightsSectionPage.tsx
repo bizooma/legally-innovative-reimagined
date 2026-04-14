@@ -4,6 +4,7 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import CalendlySection from "@/components/CalendlySection";
 import { Helmet } from "react-helmet-async";
 import bannerInsights from "@/assets/banner_insights_hero.png";
+import HeroServiceNav from "@/components/HeroServiceNav";
 
 const InsightsSectionPage = () => {
   return (
@@ -20,6 +21,7 @@ const InsightsSectionPage = () => {
           style={{ backgroundImage: `url(${bannerInsights})` }}
         >
           <h1 className="sr-only">Insights</h1>
+          <HeroServiceNav />
         </section>
 
         {/* Content */}
