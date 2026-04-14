@@ -1,8 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import CalendlySection from "@/components/CalendlySection";
 import { Helmet } from "react-helmet-async";
 import bannerAi from "@/assets/banner_ai_hero.png";
 
@@ -84,12 +83,7 @@ const AiSectionPage = () => {
                 It's about enhancing your responsiveness, improving efficiency, and creating better client experiences at scale.
               </p>
             </div>
-            <div className="mt-12 text-center">
-              <Link to="/route-to-results-newsletter" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Newsletter
-              </Link>
-            </div>
+        <CalendlySection />
           </div>
         </section>
       </main>
