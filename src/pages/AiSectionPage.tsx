@@ -17,7 +17,7 @@ const AiSectionPage = () => {
       <main className="pt-20">
         {/* Hero */}
         <section
-          className="relative py-20 overflow-hidden bg-cover bg-center bg-no-repeat"
+          className="relative overflow-hidden bg-cover bg-center bg-no-repeat aspect-[3/1]"
           style={{ backgroundImage: `url(${bannerAi})` }}
         >
           <h1 className="sr-only">AI</h1>
