@@ -4,6 +4,7 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import CalendlySection from "@/components/CalendlySection";
 import { Helmet } from "react-helmet-async";
 import bannerAi from "@/assets/banner_ai_hero.png";
+import HeroServiceNav from "@/components/HeroServiceNav";
 
 const AiSectionPage = () => {
   return (
