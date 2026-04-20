@@ -213,6 +213,15 @@ const SchemaForExactMatchDomainsPage = () => {
           <li>“Hey Siri, find me a car accident lawyer in Seattle.”</li>
           <li>“Alexa, who handles personal injury cases nearby?”</li>
         </ul>
+        <p className="font-semibold text-foreground mt-4 mb-2">Example:</p>
+        <pre className="bg-legal-dark text-white text-xs rounded-lg p-4 overflow-x-auto m-0"><code>{`{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".speakable-content"]
+  }
+}`}</code></pre>
       </SchemaCard>
 
       <h2>Why This Matters (Big Picture)</h2>
