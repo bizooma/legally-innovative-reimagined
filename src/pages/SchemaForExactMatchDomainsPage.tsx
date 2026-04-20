@@ -230,6 +230,17 @@ const SchemaForExactMatchDomainsPage = () => {
           <li>Click-through rate</li>
           <li>Conversion lift</li>
         </ul>
+        <p className="font-semibold text-foreground mt-4 mb-2">Example:</p>
+        <pre className="bg-legal-dark text-white text-xs rounded-lg p-4 overflow-x-auto m-0"><code>{`{
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "name": "Seattle Car Accident Lawyer",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "87"
+  }
+}`}</code></pre>
       </SchemaCard>
 
       <SchemaCard
