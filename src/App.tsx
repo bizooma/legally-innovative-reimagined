@@ -60,6 +60,7 @@ import GoogleMarch2026UpdatePage from "./pages/GoogleMarch2026UpdatePage";
 import SchemaMarkupFeaturedSnippetsPage from "./pages/SchemaMarkupFeaturedSnippetsPage";
 import AlexaSkillsLawFirmsPage from "./pages/AlexaSkillsLawFirmsPage";
 import WebsiteConversionLawFirmsPage from "./pages/WebsiteConversionLawFirmsPage";
+import SchemaForExactMatchDomainsPage from "./pages/SchemaForExactMatchDomainsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import SeoAuditPage from "./pages/SeoAuditPage";
 import JaxBarAssociationResourcesPage from "./pages/JaxBarAssociationResourcesPage";
@@ -198,6 +199,7 @@ const App = () => (
               <Route path="/alexa-skills-law-firms" element={<AlexaSkillsLawFirmsPage />} />
               <Route path="/website-conversion-law-firms" element={<WebsiteConversionLawFirmsPage />} />
               <Route path="/google-march-2026-update" element={<GoogleMarch2026UpdatePage />} />
+              <Route path="/schema-for-exact-match-domains" element={<SchemaForExactMatchDomainsPage />} />
               
               {/* Privacy Policy */}
               <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />

@@ -13,9 +13,21 @@ import openaiImage from "@/assets/openai-browser-legal-tech.jpg";
 import aiMarketingImage from "@/assets/ai-marketing-law-firms.jpg";
 import schemaMarkupHeroImage from "@/assets/schema-markup-hero.jpg";
 import websiteConversionImage from "@/assets/website-conversion-law-firms.jpg";
+import schemaEmdImage from "@/assets/schema-emd-hero.jpg";
 
 const StayInformed = () => {
   const blogPosts = [
+    {
+      id: 14,
+      title: "Schema For Exact Match Domains",
+      excerpt: "Most firms buy an EMD, forward it, and lose the advantage. Here's the schema stack we implement on every EMD site to turn a keyword domain into a search-winning entity.",
+      date: "2026-04-20",
+      readTime: "8 min read",
+      author: "SEO Strategy Team",
+      category: "SEO",
+      image: schemaEmdImage,
+      link: "/schema-for-exact-match-domains"
+    },
     {
       id: 13,
       title: "Google's Latest Core Update: Why \"Helpful Content\" Is Now the Only Strategy That Works",
