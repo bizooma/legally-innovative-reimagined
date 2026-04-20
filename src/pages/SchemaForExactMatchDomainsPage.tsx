@@ -1,5 +1,5 @@
 import ArticleLayout from "@/components/ArticleLayout";
-import { Building2, Wrench, MessageSquareQuote, Mic, Network, Trophy, Lightbulb } from "lucide-react";
+import { Building2, Wrench, MessageSquareQuote, Mic, Network, Star, Trophy, Lightbulb } from "lucide-react";
 import heroImage from "@/assets/schema-emd-hero.jpg";
 
 const SchemaCard = ({
@@ -248,6 +248,31 @@ const SchemaForExactMatchDomainsPage = () => {
     "https://www.facebook.com/yourfirm",
     "https://www.linkedin.com/company/yourfirm"
   ]
+}`}</code></pre>
+      </SchemaCard>
+
+      <SchemaCard
+        icon={Star}
+        number={6}
+        title="Review Schema"
+        subtitle="Trust + click boost"
+      >
+        <p>Even a small rating display can improve CTR. This builds:</p>
+        <ul>
+          <li>Trust</li>
+          <li>Click-through rate</li>
+          <li>Conversion lift</li>
+        </ul>
+        <p className="font-semibold text-foreground mt-4 mb-2">Example:</p>
+        <pre className="bg-legal-dark text-white text-xs rounded-lg p-4 overflow-x-auto m-0"><code>{`{
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "name": "Seattle Car Accident Lawyer",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "87"
+  }
 }`}</code></pre>
       </SchemaCard>
 
