@@ -1,5 +1,5 @@
 import ArticleLayout from "@/components/ArticleLayout";
-import { Building2, Wrench, MessageSquareQuote, Mic, Star, Network, Trophy, Lightbulb } from "lucide-react";
+import { Building2, Wrench, MessageSquareQuote, Mic, Trophy, Lightbulb } from "lucide-react";
 import heroImage from "@/assets/schema-emd-hero.jpg";
 
 const SchemaCard = ({
@@ -212,53 +212,6 @@ const SchemaForExactMatchDomainsPage = () => {
         <ul>
           <li>“Hey Siri, find me a car accident lawyer in Seattle.”</li>
           <li>“Alexa, who handles personal injury cases nearby?”</li>
-        </ul>
-      </SchemaCard>
-
-      <SchemaCard
-        icon={Star}
-        number={5}
-        title="Review + Rating Schema"
-        subtitle="Trust signals that travel with the EMD"
-      >
-        <p>
-          Even if reviews live on your main site or Google Business Profile, we connect them
-          here. This builds:
-        </p>
-        <ul>
-          <li>Trust</li>
-          <li>Click-through rate</li>
-          <li>Conversion lift</li>
-        </ul>
-        <p className="font-semibold text-foreground mt-4 mb-2">Example:</p>
-        <pre className="bg-legal-dark text-white text-xs rounded-lg p-4 overflow-x-auto m-0"><code>{`{
-  "@context": "https://schema.org",
-  "@type": "LegalService",
-  "name": "Seattle Car Accident Lawyer",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "87"
-  }
-}`}</code></pre>
-      </SchemaCard>
-
-      <SchemaCard
-        icon={Network}
-        number={6}
-        title="Organization + SameAs Schema"
-        subtitle="Ties the EMD back to your core brand"
-      >
-        <p>This connects the EMD to your real-world entity:</p>
-        <ul>
-          <li>Main website</li>
-          <li>Google Business Profile</li>
-          <li>Social profiles</li>
-        </ul>
-        <p>So you get the benefit of:</p>
-        <ul>
-          <li>✔️ A focused EMD targeting a high-intent keyword</li>
-          <li>✔️ Without losing domain authority from your core brand</li>
         </ul>
       </SchemaCard>
 
