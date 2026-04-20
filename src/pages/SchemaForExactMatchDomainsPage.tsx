@@ -1,5 +1,5 @@
 import ArticleLayout from "@/components/ArticleLayout";
-import { Building2, Wrench, MessageSquareQuote, Mic, Trophy, Lightbulb } from "lucide-react";
+import { Building2, Wrench, MessageSquareQuote, Mic, Network, Trophy, Lightbulb } from "lucide-react";
 import heroImage from "@/assets/schema-emd-hero.jpg";
 
 const SchemaCard = ({
@@ -221,6 +221,33 @@ const SchemaForExactMatchDomainsPage = () => {
     "@type": "SpeakableSpecification",
     "cssSelector": [".speakable-content"]
   }
+}`}</code></pre>
+      </SchemaCard>
+
+      <SchemaCard
+        icon={Network}
+        number={5}
+        title="Organization + SameAs Schema"
+        subtitle="Connects everything together"
+      >
+        <p>This ties the EMD back to your real-world brand:</p>
+        <ul>
+          <li>Main website</li>
+          <li>Google Business Profile</li>
+          <li>Social profiles</li>
+        </ul>
+        <p>So you get the benefit of a focused EMD without losing domain authority from your core brand.</p>
+        <p className="font-semibold text-foreground mt-4 mb-2">Example:</p>
+        <pre className="bg-legal-dark text-white text-xs rounded-lg p-4 overflow-x-auto m-0"><code>{`{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Your Law Firm Name",
+  "url": "https://yourmainwebsite.com",
+  "sameAs": [
+    "https://www.google.com/maps",
+    "https://www.facebook.com/yourfirm",
+    "https://www.linkedin.com/company/yourfirm"
+  ]
 }`}</code></pre>
       </SchemaCard>
 
