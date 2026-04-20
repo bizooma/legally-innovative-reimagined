@@ -172,6 +172,29 @@ const SchemaForExactMatchDomainsPage = () => {
           Properly formatted FAQ schema feeds directly into AI-generated answers — putting your
           EMD in the response itself, not just the link list.
         </p>
+        <p className="font-semibold text-foreground mt-4 mb-2">Example:</p>
+        <pre className="bg-legal-dark text-white text-xs rounded-lg p-4 overflow-x-auto m-0"><code>{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What should I do after a car accident in Seattle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Seek medical attention, document the scene, and contact a car accident lawyer as soon as possible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much is my car accident case worth?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Case value depends on injuries, liability, and damages. A consultation can help estimate your claim."
+      }
+    }
+  ]
+}`}</code></pre>
       </SchemaCard>
 
       <SchemaCard
