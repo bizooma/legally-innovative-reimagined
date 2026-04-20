@@ -91,6 +91,28 @@ const SchemaForExactMatchDomainsPage = () => {
           tells Google: <strong>“This is a real firm serving a real market.”</strong> Without it,
           an EMD looks like a microsite with no operator behind it.
         </p>
+        <p className="font-semibold text-foreground mt-4 mb-2">Example:</p>
+        <pre className="bg-legal-dark text-white text-xs rounded-lg p-4 overflow-x-auto m-0"><code>{`{
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "name": "Seattle Car Accident Lawyer",
+  "image": "https://seattlecaraccidentlawyer.com/logo.png",
+  "url": "https://seattlecaraccidentlawyer.com",
+  "telephone": "+1-206-555-1234",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "123 Main St",
+    "addressLocality": "Seattle",
+    "addressRegion": "WA",
+    "postalCode": "98101",
+    "addressCountry": "US"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Seattle"
+  },
+  "priceRange": "$$$"
+}`}</code></pre>
       </SchemaCard>
 
       <SchemaCard
