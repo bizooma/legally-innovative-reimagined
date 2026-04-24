@@ -168,6 +168,7 @@ const Hero = () => {
       <audio 
         ref={audioRef} 
         loop 
+        className="hidden"
         src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_53ce5b35c2.mp3?filename=we-wish-you-a-merry-christmas-christmas-carol-opera-choir-96183.mp3"
       />
     </section>;
