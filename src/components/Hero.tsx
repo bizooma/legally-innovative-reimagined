@@ -113,6 +113,9 @@ const Hero = () => {
                 */}
               </div>
             </div>
+            <p className="text-white/90 text-sm md:text-base">
+              Offices: Jacksonville, FL &amp; Amarillo, TX
+            </p>
           </div>
 
           {/* Right Column - Animated Visualization - Disabled on mobile for performance */}
