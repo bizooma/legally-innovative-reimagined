@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dice5, Users, Smartphone, Trophy, Apple, Play, Shield } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import lcrFeature from "@/assets/lcr-feature.png";
 
 const LcrPage = () => {
   return (
@@ -23,7 +24,7 @@ const LcrPage = () => {
         {/* Hero */}
         <section className="relative pt-32 pb-20 bg-gradient-to-br from-legal-primary via-legal-secondary to-legal-dark text-white overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-5xl mx-auto text-center">
               <div className="flex justify-center mb-6">
                 <div className="bg-white/10 backdrop-blur-sm rounded-full p-4">
                   <Dice5 className="w-12 h-12 text-legal-accent" />
@@ -36,13 +37,21 @@ const LcrPage = () => {
                 The classic dice game you love, reimagined for mobile. Quick to learn,
                 impossible to put down — perfect for game night, road trips, and family gatherings.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
                 <Button size="lg" className="bg-legal-accent hover:bg-legal-accent/90 text-legal-dark font-semibold text-lg px-8 py-4">
                   <Apple className="w-5 h-5 mr-2" /> Download for iOS
                 </Button>
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-legal-primary text-lg px-8 py-4">
                   <Play className="w-5 h-5 mr-2" /> Get it on Android
                 </Button>
+              </div>
+              <div className="rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl">
+                <img
+                  src={lcrFeature}
+                  alt="Left Center Right (LCR) mobile dice game shown on three phone screens — setup, home, and gameplay"
+                  className="w-full h-auto block"
+                  loading="eager"
+                />
               </div>
             </div>
           </div>
