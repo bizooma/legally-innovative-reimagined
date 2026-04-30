@@ -61,6 +61,7 @@ import SchemaMarkupFeaturedSnippetsPage from "./pages/SchemaMarkupFeaturedSnippe
 import AlexaSkillsLawFirmsPage from "./pages/AlexaSkillsLawFirmsPage";
 import WebsiteConversionLawFirmsPage from "./pages/WebsiteConversionLawFirmsPage";
 import SchemaForExactMatchDomainsPage from "./pages/SchemaForExactMatchDomainsPage";
+import LcrPage from "./pages/LcrPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import SeoAuditPage from "./pages/SeoAuditPage";
 import JaxBarAssociationResourcesPage from "./pages/JaxBarAssociationResourcesPage";
@@ -200,6 +201,9 @@ const App = () => (
               <Route path="/website-conversion-law-firms" element={<WebsiteConversionLawFirmsPage />} />
               <Route path="/google-march-2026-update" element={<GoogleMarch2026UpdatePage />} />
               <Route path="/schema-for-exact-match-domains" element={<SchemaForExactMatchDomainsPage />} />
+
+              {/* LCR Mobile Game */}
+              <Route path="/lcr" element={<LcrPage />} />
               
               {/* Privacy Policy */}
               <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
