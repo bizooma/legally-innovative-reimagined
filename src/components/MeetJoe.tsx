@@ -102,8 +102,12 @@ const MeetJoe = () => {
             <h3 className="text-lg font-semibold text-legal-dark mb-4">
               Certifications &amp; Credentials
             </h3>
-            <div
-              className="group relative overflow-hidden"
+            <a
+              href="https://skillshop.credential.net/profile/heyjoe/wallet"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Joseph Murphy's full credential wallet (opens in new window)"
+              className="group relative overflow-hidden block cursor-pointer"
               style={{
                 WebkitMaskImage:
                   "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
@@ -133,7 +137,7 @@ const MeetJoe = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </a>
           </div>
         </Card>
       </div>
