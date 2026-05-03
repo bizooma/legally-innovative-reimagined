@@ -2,6 +2,21 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Linkedin, Phone, Mail } from "lucide-react";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
+import androidEngineer from "@/assets/certifications/android-certified-application-engineer.jpg";
+import flutterDeveloper from "@/assets/certifications/flutter-certified-application-developer.jpg";
+import androidDeveloper from "@/assets/certifications/android-certified-application-developer.jpg";
+import googleConversion from "@/assets/certifications/google-conversion-optimization.png";
+import googleShopping from "@/assets/certifications/google-shopping-ads.png";
+import googleAiPerformance from "@/assets/certifications/google-ads-ai-powered-performance.png";
+
+const certifications = [
+  { src: androidEngineer, label: "Android Certified Application Engineer", variant: "wide" as const },
+  { src: flutterDeveloper, label: "Flutter Certified Application Developer", variant: "wide" as const },
+  { src: androidDeveloper, label: "Android Certified Application Developer", variant: "wide" as const },
+  { src: googleConversion, label: "Google Conversion Optimization Certified", variant: "badge" as const },
+  { src: googleShopping, label: "Google Shopping Ads Certified", variant: "badge" as const },
+  { src: googleAiPerformance, label: "Google Ads AI-Powered Performance Certified", variant: "badge" as const },
+];
 
 const MeetJoe = () => {
   return <section id="meet-joe" className="py-20 bg-gradient-to-b from-background to-secondary/20">
@@ -78,6 +93,34 @@ const MeetJoe = () => {
               <p className="text-lg leading-relaxed">
                 Today, as a Marketing Technologist at his company, Bizooma, Joseph leads his team of developers and marketers to help companies modernize how they attract and convert clients—merging data, creativity, and technology to drive results in an increasingly competitive digital landscape.
               </p>
+            </div>
+          </div>
+
+          <div className="border-t px-8 md:px-12 py-8">
+            <h3 className="text-lg font-semibold text-legal-dark mb-4">
+              Certifications &amp; Credentials
+            </h3>
+            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory [scrollbar-width:thin]">
+              {certifications.map((cert) => (
+                <div
+                  key={cert.label}
+                  className={`snap-start shrink-0 flex flex-col items-center gap-2 ${
+                    cert.variant === "wide" ? "w-72" : "w-40"
+                  }`}
+                >
+                  <div className="w-full rounded-lg border bg-white shadow-sm overflow-hidden flex items-center justify-center p-2">
+                    <img
+                      src={cert.src}
+                      alt={cert.label}
+                      loading="lazy"
+                      className={`object-contain ${cert.variant === "wide" ? "w-full h-40" : "w-32 h-32"}`}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground text-center leading-tight">
+                    {cert.label}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </Card>

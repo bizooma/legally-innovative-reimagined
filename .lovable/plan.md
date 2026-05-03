@@ -1,53 +1,29 @@
+## Add Certifications Scroller to Meet Joseph Murphy Card
 
-# Update Sitemap and SEO Schema for New Pages
+Add a horizontal scrolling row of certification images at the bottom of the MeetJoe card on the home page.
 
-## What's Missing
+### Steps
 
-The sitemap (`public/sitemap.xml`) and SEO structured data are missing several pages that have been added since the sitemap was last updated. Here are the pages not currently in the sitemap:
+1. **Copy uploaded images to `src/assets/certifications/`:**
+   - `android-certified-application-engineer.jpg`
+   - `flutter-certified-application-developer.jpg`
+   - `android-certified-application-developer.jpg`
+   - `google-conversion-optimization-certified.png`
+   - `google-shopping-ads-certified.png`
+   - `google-ads-ai-powered-performance-certified.png`
 
-**Newsletter Section Pages (the 4 new ones):**
-- `/marketing`
-- `/code`
-- `/ai`
-- `/insights`
+2. **Update `src/components/MeetJoe.tsx`:**
+   - Import all six certification images.
+   - Add a new section *inside the Card* (below the existing 2-column grid) with:
+     - Small heading: "Certifications & Credentials"
+     - A horizontally scrolling flex row (`overflow-x-auto`, `snap-x`, hidden scrollbar) containing each certificate as a fixed-width card (`min-w-[280px]` for the wide ATC certificates, `min-w-[160px]` for the round Google badges) with subtle border, rounded corners, and a small caption underneath each.
+     - Auto-scroll/marquee optional — keep it as a manual scroll with smooth touch scrolling for simplicity and reliability.
 
-**Other pages also missing:**
-- `/chatbots`
-- `/why-reviews-matter-for-law-firms`
-- `/mobile-apps-as-marketing-tool`
-- `/route-to-results-newsletter`
-- `/ai-marketing-law-firms-2025`
-- `/gbp-optimization-2026`
-- `/schema-markup-featured-snippets`
-- `/website-conversion-law-firms`
-- `/google-march-2026-update`
-- `/privacy-policy`
-- `/seo-audit`
-- `/jax-bar-association`
-- `/support`
-- `/momentum-campaigns`
-- `/products/mvp-soft-launch`
-- `/install`
+### Technical Notes
+- Images imported as ES6 modules (per `src/assets` convention).
+- Use a single horizontal track so all 6 certs scroll together; ATC ones display larger to preserve readability, Google badges as compact circles.
+- No new dependencies required.
 
-(Private/internal pages like `/donuts`, `/michael`, `/proposals/*`, `/staff`, `/admin`, `/portal`, `/this-is-our-jax`, `/status-ticker`, `/embed/*`, `/privacy/cloud-dev-status-extension` should remain excluded.)
-
-## Plan
-
-### 1. Update `public/sitemap.xml`
-Add all public-facing pages listed above with appropriate priority values:
-- Newsletter section pages (`/marketing`, `/code`, `/ai`, `/insights`): priority 0.7
-- Blog posts: priority 0.6
-- Product pages: priority 0.6-0.7
-- Utility pages (`/support`, `/privacy-policy`): priority 0.3-0.4
-- Set `lastmod` to `2026-04-14` for new entries
-
-### 2. Update `src/components/SEO/CanonicalMeta.tsx`
-Add the 4 newsletter section pages to the `isSpeakablePath` check so they get speakable structured data, since they are key content pages.
-
-### 3. No changes needed to `GlobalSEO.tsx`
-The organization and website schema are site-wide and don't need per-page updates.
-
-## Technical Details
-- The sitemap is a static XML file — just add `<url>` entries
-- CanonicalMeta already auto-generates breadcrumbs for all pages via the pathname, so that's covered
-- Each of the 4 new pages already has its own `<Helmet>` with title/description/OG tags
+### Files
+- `src/assets/certifications/*` (created, 6 files)
+- `src/components/MeetJoe.tsx` (edited)
