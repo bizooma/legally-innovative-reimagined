@@ -68,6 +68,7 @@ import JaxBarAssociationResourcesPage from "./pages/JaxBarAssociationResourcesPa
 import JaxBarInfographicPage from "./pages/JaxBarInfographicPage";
 import SupportPage from "./pages/SupportPage";
 import MomentumCampaignsPage from "./pages/MomentumCampaignsPage";
+import WordpressPluginsPage from "./pages/WordpressPluginsPage";
 import MarketingSectionPage from "./pages/MarketingSectionPage";
 import CodeSectionPage from "./pages/CodeSectionPage";
 import AiSectionPage from "./pages/AiSectionPage";
@@ -217,6 +218,9 @@ const App = () => (
               
               {/* Support */}
               <Route path="/support" element={<SupportPage />} />
+
+              {/* WordPress Plugins */}
+              <Route path="/wordpress-plugins" element={<WordpressPluginsPage />} />
               
               {/* Momentum Campaigns */}
               <Route path="/momentum-campaigns" element={<MomentumCampaignsPage />} />
