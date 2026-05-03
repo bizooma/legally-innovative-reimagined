@@ -100,27 +100,37 @@ const MeetJoe = () => {
             <h3 className="text-lg font-semibold text-legal-dark mb-4">
               Certifications &amp; Credentials
             </h3>
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory [scrollbar-width:thin]">
-              {certifications.map((cert) => (
-                <div
-                  key={cert.label}
-                  className={`snap-start shrink-0 flex flex-col items-center gap-2 ${
-                    cert.variant === "wide" ? "w-72" : "w-40"
-                  }`}
-                >
-                  <div className="w-full rounded-lg border bg-white shadow-sm overflow-hidden flex items-center justify-center p-2">
-                    <img
-                      src={cert.src}
-                      alt={cert.label}
-                      loading="lazy"
-                      className={`object-contain ${cert.variant === "wide" ? "w-full h-40" : "w-32 h-32"}`}
-                    />
+            <div
+              className="group relative overflow-hidden"
+              style={{
+                WebkitMaskImage:
+                  "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+                maskImage:
+                  "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+              }}
+            >
+              <div className="flex gap-4 w-max animate-scroll-feast group-hover:[animation-play-state:paused]" style={{ animationDuration: "40s" }}>
+                {[...certifications, ...certifications].map((cert, idx) => (
+                  <div
+                    key={`${cert.label}-${idx}`}
+                    className={`shrink-0 flex flex-col items-center gap-2 ${
+                      cert.variant === "wide" ? "w-72" : "w-40"
+                    }`}
+                  >
+                    <div className="w-full rounded-lg border bg-white shadow-sm overflow-hidden flex items-center justify-center p-2">
+                      <img
+                        src={cert.src}
+                        alt={cert.label}
+                        loading="lazy"
+                        className={`object-contain ${cert.variant === "wide" ? "w-full h-40" : "w-32 h-32"}`}
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground text-center leading-tight">
+                      {cert.label}
+                    </p>
                   </div>
-                  <p className="text-xs text-muted-foreground text-center leading-tight">
-                    {cert.label}
-                  </p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </Card>
