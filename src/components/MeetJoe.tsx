@@ -9,6 +9,7 @@ import googleConversion from "@/assets/certifications/google-conversion-optimiza
 import googleShopping from "@/assets/certifications/google-shopping-ads.png";
 import googleAiPerformance from "@/assets/certifications/google-ads-ai-powered-performance.png";
 import googleAnalytics from "@/assets/certifications/google-analytics-certified.png";
+import displayVideo360 from "@/assets/certifications/display-video-360-certified.png";
 
 const certifications = [
   { src: androidEngineer, label: "Android Certified Application Engineer", variant: "wide" as const },
@@ -18,6 +19,7 @@ const certifications = [
   { src: googleShopping, label: "Google Shopping Ads Certified", variant: "badge" as const },
   { src: googleAiPerformance, label: "Google Ads AI-Powered Performance Certified", variant: "badge" as const },
   { src: googleAnalytics, label: "Google Analytics Certified", variant: "badge" as const },
+  { src: displayVideo360, label: "Display & Video 360 Certified", variant: "badge" as const },
 ];
 
 const MeetJoe = () => {
