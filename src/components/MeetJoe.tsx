@@ -109,7 +109,7 @@ const MeetJoe = () => {
                   "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
               }}
             >
-              <div className="flex gap-4 w-max animate-marquee group-hover:[animation-play-state:paused]">
+              <div className="flex gap-4 w-max animate-scroll-feast group-hover:[animation-play-state:paused]" style={{ animationDuration: "40s" }}>
                 {[...certifications, ...certifications].map((cert, idx) => (
                   <div
                     key={`${cert.label}-${idx}`}
