@@ -69,6 +69,7 @@ import JaxBarInfographicPage from "./pages/JaxBarInfographicPage";
 import SupportPage from "./pages/SupportPage";
 import MomentumCampaignsPage from "./pages/MomentumCampaignsPage";
 import WordpressPluginsPage from "./pages/WordpressPluginsPage";
+import LawFirmStartupsPage from "./pages/LawFirmStartupsPage";
 import MarketingSectionPage from "./pages/MarketingSectionPage";
 import CodeSectionPage from "./pages/CodeSectionPage";
 import AiSectionPage from "./pages/AiSectionPage";
@@ -221,6 +222,9 @@ const App = () => (
 
               {/* WordPress Plugins */}
               <Route path="/wordpress-plugins" element={<WordpressPluginsPage />} />
+
+              {/* Law Firm Startups Playbook */}
+              <Route path="/law-firm-startups" element={<LawFirmStartupsPage />} />
               
               {/* Momentum Campaigns */}
               <Route path="/momentum-campaigns" element={<MomentumCampaignsPage />} />
