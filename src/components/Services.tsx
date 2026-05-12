@@ -2,12 +2,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { trackNavigation } from "@/utils/gtmTracking";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2 } from "lucide-react";
+import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2, Accessibility } from "lucide-react";
 import { Link } from "react-router-dom";
 import immigrationLawApp from "@/assets/immigration-law-app.png";
 import rokuDemo from "@/assets/roku-demo.png";
 import alexaSkill from "@/assets/alexa-skill.png";
 import chatbotExamples from "@/assets/chatbot-examples.png";
+import accessibilityWidget from "@/assets/accessibility-widget.png";
 
 const Services = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
@@ -82,6 +83,25 @@ const Services = () => {
       link: "/law-firm-voice-assistant-marketing",
       accentColor: "from-orange-500 to-red-600",
       noOverlay: true,
+    },
+    {
+      title: "ADA Accessibility Widget",
+      subtitle: "ADA · WCAG 2.2 · AI-Powered Compliance",
+      description: "Our Bizooma Accessibility Layer helps businesses monitor, improve, and demonstrate ADA/WCAG compliance across their websites. A single embeddable widget gives every visitor the tools they need — font scaling, contrast modes, dyslexia-friendly typography, animation pausing, and more — while our scanner and AI engine surface issues to fix on the back end.",
+      highlights: [
+        "One-line embeddable widget",
+        "Automated WCAG 2.2 site scans",
+        "AI-powered remediation guidance",
+        "Multi-site, multi-tenant dashboard",
+      ],
+      examples: "Reduce legal exposure under ADA Title III and demonstrate ongoing accessibility efforts with audit-ready reporting and a visible compliance widget on your site.",
+      examplesLabel: "Why it matters: ",
+      icon: <Accessibility className="h-8 w-8" />,
+      bgImage: accessibilityWidget,
+      link: "/accessibility-layer",
+      accentColor: "from-rose-700 to-red-900",
+      noOverlay: true,
+      showLearnMore: true,
     },
   ];
 
