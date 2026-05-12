@@ -70,6 +70,10 @@ import SupportPage from "./pages/SupportPage";
 import MomentumCampaignsPage from "./pages/MomentumCampaignsPage";
 import WordpressPluginsPage from "./pages/WordpressPluginsPage";
 import LawFirmStartupsPage from "./pages/LawFirmStartupsPage";
+import AccessibilityLayerPage from "./pages/AccessibilityLayerPage";
+import AccessibilityLayout from "./pages/accessibility/AccessibilityLayout";
+import AccessibilityDashboard from "./pages/accessibility/AccessibilityDashboard";
+import PlaceholderPage from "./pages/accessibility/PlaceholderPage";
 import MarketingSectionPage from "./pages/MarketingSectionPage";
 import CodeSectionPage from "./pages/CodeSectionPage";
 import AiSectionPage from "./pages/AiSectionPage";
@@ -225,6 +229,25 @@ const App = () => (
 
               {/* Law Firm Startups Playbook */}
               <Route path="/law-firm-startups" element={<LawFirmStartupsPage />} />
+
+              {/* Bizooma Accessibility Layer */}
+              <Route path="/accessibility-layer" element={<AccessibilityLayerPage />} />
+              <Route path="/accessibility" element={<AccessibilityLayout />}>
+                <Route index element={<AccessibilityDashboard />} />
+                <Route path="dashboard" element={<AccessibilityDashboard />} />
+                <Route path="websites" element={<PlaceholderPage title="Websites" description="Add, verify, and manage the domains you're monitoring." />} />
+                <Route path="scans" element={<PlaceholderPage title="Accessibility Scans" description="Run and review automated WCAG scans across your sites." />} />
+                <Route path="compliance" element={<PlaceholderPage title="Compliance Center" description="WCAG 2.1 AA progress, ADA readiness, and audit-ready statements." />} />
+                <Route path="widget" element={<PlaceholderPage title="Widget Settings" description="Branding, position, and feature toggles for your accessibility widget." />} />
+                <Route path="issues" element={<PlaceholderPage title="Issues" description="Triage, assign, and resolve accessibility issues with AI-suggested fixes." />} />
+                <Route path="ai" element={<PlaceholderPage title="AI Recommendations" description="Prioritized insights, quick wins, and recurring problem detection." />} />
+                <Route path="reports" element={<PlaceholderPage title="Reports" description="Executive summaries, technical reports, and historical comparisons." />} />
+                <Route path="team" element={<PlaceholderPage title="Team Members" description="Invite teammates and manage roles within your organization." />} />
+                <Route path="billing" element={<PlaceholderPage title="Billing" description="Manage your plan, invoices, and payment method." />} />
+                <Route path="api-keys" element={<PlaceholderPage title="API Keys" description="Programmatic access for integrations and automation." />} />
+                <Route path="integrations" element={<PlaceholderPage title="Integrations" description="Slack, Linear, Jira, GitHub, and CMS connectors." />} />
+                <Route path="settings" element={<PlaceholderPage title="Settings" description="Organization details, white-labeling, and notifications." />} />
+              </Route>
               
               {/* Momentum Campaigns */}
               <Route path="/momentum-campaigns" element={<MomentumCampaignsPage />} />
