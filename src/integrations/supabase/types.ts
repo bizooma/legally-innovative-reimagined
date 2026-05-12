@@ -14,6 +14,562 @@ export type Database = {
   }
   public: {
     Tables: {
+      acc_accessibility_issues: {
+        Row: {
+          ai_recommendation: string | null
+          assigned_to: string | null
+          created_at: string
+          description: string | null
+          element_html: string | null
+          element_selector: string | null
+          id: string
+          organization_id: string
+          page_url: string
+          resolved_at: string | null
+          rule_id: string
+          scan_id: string | null
+          severity: Database["public"]["Enums"]["acc_severity"]
+          status: Database["public"]["Enums"]["acc_issue_status"]
+          suggested_fix: string | null
+          title: string
+          updated_at: string
+          wcag_reference: string | null
+          website_id: string
+        }
+        Insert: {
+          ai_recommendation?: string | null
+          assigned_to?: string | null
+          created_at?: string
+          description?: string | null
+          element_html?: string | null
+          element_selector?: string | null
+          id?: string
+          organization_id: string
+          page_url: string
+          resolved_at?: string | null
+          rule_id: string
+          scan_id?: string | null
+          severity?: Database["public"]["Enums"]["acc_severity"]
+          status?: Database["public"]["Enums"]["acc_issue_status"]
+          suggested_fix?: string | null
+          title: string
+          updated_at?: string
+          wcag_reference?: string | null
+          website_id: string
+        }
+        Update: {
+          ai_recommendation?: string | null
+          assigned_to?: string | null
+          created_at?: string
+          description?: string | null
+          element_html?: string | null
+          element_selector?: string | null
+          id?: string
+          organization_id?: string
+          page_url?: string
+          resolved_at?: string | null
+          rule_id?: string
+          scan_id?: string | null
+          severity?: Database["public"]["Enums"]["acc_severity"]
+          status?: Database["public"]["Enums"]["acc_issue_status"]
+          suggested_fix?: string | null
+          title?: string
+          updated_at?: string
+          wcag_reference?: string | null
+          website_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_accessibility_issues_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "acc_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "acc_accessibility_issues_scan_id_fkey"
+            columns: ["scan_id"]
+            isOneToOne: false
+            referencedRelation: "acc_scans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "acc_accessibility_issues_website_id_fkey"
+            columns: ["website_id"]
+            isOneToOne: false
+            referencedRelation: "acc_websites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_ai_recommendations: {
+        Row: {
+          category: string
+          created_at: string
+          estimated_impact: string | null
+          id: string
+          message: string
+          organization_id: string
+          priority: Database["public"]["Enums"]["acc_severity"]
+          title: string
+          website_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          estimated_impact?: string | null
+          id?: string
+          message: string
+          organization_id: string
+          priority?: Database["public"]["Enums"]["acc_severity"]
+          title: string
+          website_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          estimated_impact?: string | null
+          id?: string
+          message?: string
+          organization_id?: string
+          priority?: Database["public"]["Enums"]["acc_severity"]
+          title?: string
+          website_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_ai_recommendations_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "acc_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "acc_ai_recommendations_website_id_fkey"
+            columns: ["website_id"]
+            isOneToOne: false
+            referencedRelation: "acc_websites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_api_keys: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          key_hash: string
+          key_prefix: string
+          last_used_at: string | null
+          name: string
+          organization_id: string
+          revoked_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          key_hash: string
+          key_prefix: string
+          last_used_at?: string | null
+          name: string
+          organization_id: string
+          revoked_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          key_hash?: string
+          key_prefix?: string
+          last_used_at?: string | null
+          name?: string
+          organization_id?: string
+          revoked_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_api_keys_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "acc_organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_notifications: {
+        Row: {
+          created_at: string
+          id: string
+          link: string | null
+          message: string | null
+          organization_id: string | null
+          read_at: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          link?: string | null
+          message?: string | null
+          organization_id?: string | null
+          read_at?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          link?: string | null
+          message?: string | null
+          organization_id?: string | null
+          read_at?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_notifications_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "acc_organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_organization_members: {
+        Row: {
+          created_at: string
+          id: string
+          invited_at: string | null
+          invited_email: string | null
+          joined_at: string | null
+          organization_id: string
+          role: Database["public"]["Enums"]["acc_member_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          invited_at?: string | null
+          invited_email?: string | null
+          joined_at?: string | null
+          organization_id: string
+          role?: Database["public"]["Enums"]["acc_member_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          invited_at?: string | null
+          invited_email?: string | null
+          joined_at?: string | null
+          organization_id?: string
+          role?: Database["public"]["Enums"]["acc_member_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_organization_members_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "acc_organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_organizations: {
+        Row: {
+          brand_color: string | null
+          created_at: string
+          created_by: string
+          id: string
+          is_agency: boolean
+          logo_url: string | null
+          name: string
+          plan: Database["public"]["Enums"]["acc_plan"]
+          slug: string
+          updated_at: string
+          white_label: Json | null
+        }
+        Insert: {
+          brand_color?: string | null
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_agency?: boolean
+          logo_url?: string | null
+          name: string
+          plan?: Database["public"]["Enums"]["acc_plan"]
+          slug: string
+          updated_at?: string
+          white_label?: Json | null
+        }
+        Update: {
+          brand_color?: string | null
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_agency?: boolean
+          logo_url?: string | null
+          name?: string
+          plan?: Database["public"]["Enums"]["acc_plan"]
+          slug?: string
+          updated_at?: string
+          white_label?: Json | null
+        }
+        Relationships: []
+      }
+      acc_reports: {
+        Row: {
+          created_at: string
+          file_url: string | null
+          format: string
+          generated_by: string | null
+          id: string
+          organization_id: string
+          period_end: string | null
+          period_start: string | null
+          type: string
+          website_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          file_url?: string | null
+          format?: string
+          generated_by?: string | null
+          id?: string
+          organization_id: string
+          period_end?: string | null
+          period_start?: string | null
+          type: string
+          website_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          file_url?: string | null
+          format?: string
+          generated_by?: string | null
+          id?: string
+          organization_id?: string
+          period_end?: string | null
+          period_start?: string | null
+          type?: string
+          website_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_reports_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "acc_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "acc_reports_website_id_fkey"
+            columns: ["website_id"]
+            isOneToOne: false
+            referencedRelation: "acc_websites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_scan_pages: {
+        Row: {
+          created_at: string
+          id: string
+          issue_count: number | null
+          scan_id: string
+          score: number | null
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          issue_count?: number | null
+          scan_id: string
+          score?: number | null
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          issue_count?: number | null
+          scan_id?: string
+          score?: number | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_scan_pages_scan_id_fkey"
+            columns: ["scan_id"]
+            isOneToOne: false
+            referencedRelation: "acc_scans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_scans: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          organization_id: string
+          pages_scanned: number | null
+          score: number | null
+          started_at: string | null
+          status: Database["public"]["Enums"]["acc_scan_status"]
+          summary: Json | null
+          total_issues: number | null
+          triggered_by: string | null
+          wcag_aa_pct: number | null
+          website_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          organization_id: string
+          pages_scanned?: number | null
+          score?: number | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["acc_scan_status"]
+          summary?: Json | null
+          total_issues?: number | null
+          triggered_by?: string | null
+          wcag_aa_pct?: number | null
+          website_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          organization_id?: string
+          pages_scanned?: number | null
+          score?: number | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["acc_scan_status"]
+          summary?: Json | null
+          total_issues?: number | null
+          triggered_by?: string | null
+          wcag_aa_pct?: number | null
+          website_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_scans_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "acc_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "acc_scans_website_id_fkey"
+            columns: ["website_id"]
+            isOneToOne: false
+            referencedRelation: "acc_websites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_websites: {
+        Row: {
+          created_at: string
+          current_score: number | null
+          id: string
+          last_scan_at: string | null
+          name: string
+          organization_id: string
+          updated_at: string
+          url: string
+          verification_status: string
+          verification_token: string | null
+          widget_enabled: boolean
+        }
+        Insert: {
+          created_at?: string
+          current_score?: number | null
+          id?: string
+          last_scan_at?: string | null
+          name: string
+          organization_id: string
+          updated_at?: string
+          url: string
+          verification_status?: string
+          verification_token?: string | null
+          widget_enabled?: boolean
+        }
+        Update: {
+          created_at?: string
+          current_score?: number | null
+          id?: string
+          last_scan_at?: string | null
+          name?: string
+          organization_id?: string
+          updated_at?: string
+          url?: string
+          verification_status?: string
+          verification_token?: string | null
+          widget_enabled?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_websites_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "acc_organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_widget_settings: {
+        Row: {
+          custom_css: string | null
+          enabled_features: Json | null
+          hide_branding: boolean | null
+          id: string
+          logo_url: string | null
+          position: string
+          primary_color: string | null
+          updated_at: string
+          website_id: string
+        }
+        Insert: {
+          custom_css?: string | null
+          enabled_features?: Json | null
+          hide_branding?: boolean | null
+          id?: string
+          logo_url?: string | null
+          position?: string
+          primary_color?: string | null
+          updated_at?: string
+          website_id: string
+        }
+        Update: {
+          custom_css?: string | null
+          enabled_features?: Json | null
+          hide_branding?: boolean | null
+          id?: string
+          logo_url?: string | null
+          position?: string
+          primary_color?: string | null
+          updated_at?: string
+          website_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_widget_settings_website_id_fkey"
+            columns: ["website_id"]
+            isOneToOne: true
+            referencedRelation: "acc_websites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_access_codes: {
         Row: {
           action_plan: Json | null
@@ -1251,6 +1807,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      acc_can_manage_org: {
+        Args: { _org_id: string; _user_id?: string }
+        Returns: boolean
+      }
+      acc_is_org_member: {
+        Args: { _org_id: string; _user_id?: string }
+        Returns: boolean
+      }
+      acc_org_role: {
+        Args: { _org_id: string; _user_id?: string }
+        Returns: Database["public"]["Enums"]["acc_member_role"]
+      }
       admin_reset_user_password: {
         Args: { new_password: string; user_email: string }
         Returns: Json
@@ -1265,7 +1833,11 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      acc_issue_status: "open" | "in_progress" | "resolved" | "ignored"
+      acc_member_role: "owner" | "admin" | "developer" | "viewer"
+      acc_plan: "starter" | "professional" | "agency" | "enterprise"
+      acc_scan_status: "queued" | "running" | "completed" | "failed"
+      acc_severity: "critical" | "high" | "medium" | "low"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1392,6 +1964,12 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      acc_issue_status: ["open", "in_progress", "resolved", "ignored"],
+      acc_member_role: ["owner", "admin", "developer", "viewer"],
+      acc_plan: ["starter", "professional", "agency", "enterprise"],
+      acc_scan_status: ["queued", "running", "completed", "failed"],
+      acc_severity: ["critical", "high", "medium", "low"],
+    },
   },
 } as const
