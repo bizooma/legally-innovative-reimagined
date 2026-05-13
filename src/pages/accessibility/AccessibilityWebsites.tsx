@@ -31,7 +31,7 @@ type Website = {
 
 export default function AccessibilityWebsites() {
   const ctx = useOutletContext<Ctx>();
-  const siteLimit = limitFor((ctx.org as any)?.plan);
+  const siteLimit = limitFor(ctx.org?.plan);
   const [sites, setSites] = useState<Website[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
