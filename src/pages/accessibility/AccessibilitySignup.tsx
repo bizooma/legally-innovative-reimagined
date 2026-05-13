@@ -39,7 +39,20 @@ export default function AccessibilitySignup() {
         throw new Error((checkout as any)?.error || checkoutErr?.message || "Could not start checkout");
       }
 
-      window.location.href = (checkout as any).url as string;
+      const url = (checkout as any).url as string;
+      // Stripe Checkout cannot run inside an iframe (e.g. the Lovable preview).
+      // Always redirect the top-level window so Stripe loads at the top level.
+      try {
+        if (window.top && window.top !== window.self) {
+          window.top.location.href = url;
+          return;
+        }
+      } catch {
+        // cross-origin top access blocked — fall through to opening a new tab
+        window.open(url, "_blank", "noopener,noreferrer");
+        return;
+      }
+      window.location.href = url;
     } catch (err: any) {
       toast({ title: "Signup failed", description: err.message ?? String(err), variant: "destructive" });
       setLoading(false);
