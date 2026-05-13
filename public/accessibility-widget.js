@@ -33,19 +33,19 @@
 
   // Translation strings — single source of truth for all UI text
   var I18N = {
-    en: { title: "Accessibility Tools", sub: "Customize this site for your needs.", profiles: "Quick Profiles", individual: "Individual Tools", language: "Language", reset: "Reset all", powered: "Powered by Bizooma", openMenu: "Open accessibility menu", closeMenu: "Close accessibility menu", enabled: "enabled", disabled: "disabled", presetSuffix: "preset", resetMsg: "All accessibility settings reset",
+    en: { title: "Accessibility Menu", sub: "Customize this site for your needs.", profiles: "Accessibility Profiles", individual: "Content Adjustments", color: "Color Adjustments", language: "Select language", reset: "Reset all", powered: "Powered by Bizooma", statement: "Accessibility Statement", openMenu: "Open accessibility menu", closeMenu: "Close accessibility menu", enabled: "enabled", disabled: "disabled", presetSuffix: "preset", resetMsg: "All accessibility settings reset", fontSize: "Font size",
       f: { large: "Larger Text", xl: "Huge Text", contrast: "High Contrast", invert: "Invert Colors", grayscale: "Grayscale", dyslexia: "Dyslexia Font", links: "Highlight Links", pause: "Pause Animations", cursor: "Big Cursor" },
       p: { vision: "Vision Impaired", dyslexia: "Dyslexia Friendly", motor: "Motor Impaired", seizure: "Seizure Safe" } },
-    es: { title: "Herramientas de accesibilidad", sub: "Personaliza este sitio según tus necesidades.", profiles: "Perfiles rápidos", individual: "Herramientas individuales", language: "Idioma", reset: "Restablecer todo", powered: "Desarrollado por Bizooma", openMenu: "Abrir menú de accesibilidad", closeMenu: "Cerrar menú de accesibilidad", enabled: "activado", disabled: "desactivado", presetSuffix: "perfil", resetMsg: "Todos los ajustes restablecidos",
+    es: { title: "Menú de accesibilidad", sub: "Personaliza este sitio según tus necesidades.", profiles: "Perfiles de accesibilidad", individual: "Ajustes de contenido", color: "Ajustes de color", language: "Seleccionar idioma", reset: "Restablecer todo", powered: "Desarrollado por Bizooma", statement: "Declaración de accesibilidad", openMenu: "Abrir menú de accesibilidad", closeMenu: "Cerrar menú de accesibilidad", enabled: "activado", disabled: "desactivado", presetSuffix: "perfil", resetMsg: "Todos los ajustes restablecidos", fontSize: "Tamaño de fuente",
       f: { large: "Texto más grande", xl: "Texto enorme", contrast: "Alto contraste", invert: "Invertir colores", grayscale: "Escala de grises", dyslexia: "Fuente para dislexia", links: "Resaltar enlaces", pause: "Pausar animaciones", cursor: "Cursor grande" },
       p: { vision: "Discapacidad visual", dyslexia: "Amigable con dislexia", motor: "Discapacidad motora", seizure: "Seguro para epilepsia" } },
-    fr: { title: "Outils d'accessibilité", sub: "Personnalisez ce site selon vos besoins.", profiles: "Profils rapides", individual: "Outils individuels", language: "Langue", reset: "Tout réinitialiser", powered: "Propulsé par Bizooma", openMenu: "Ouvrir le menu d'accessibilité", closeMenu: "Fermer le menu d'accessibilité", enabled: "activé", disabled: "désactivé", presetSuffix: "profil", resetMsg: "Tous les paramètres réinitialisés",
+    fr: { title: "Menu d'accessibilité", sub: "Personnalisez ce site selon vos besoins.", profiles: "Profils d'accessibilité", individual: "Ajustements de contenu", color: "Ajustements de couleur", language: "Choisir la langue", reset: "Tout réinitialiser", powered: "Propulsé par Bizooma", statement: "Déclaration d'accessibilité", openMenu: "Ouvrir le menu d'accessibilité", closeMenu: "Fermer le menu d'accessibilité", enabled: "activé", disabled: "désactivé", presetSuffix: "profil", resetMsg: "Tous les paramètres réinitialisés", fontSize: "Taille de police",
       f: { large: "Texte plus grand", xl: "Texte énorme", contrast: "Contraste élevé", invert: "Inverser les couleurs", grayscale: "Niveaux de gris", dyslexia: "Police dyslexie", links: "Surligner les liens", pause: "Pause animations", cursor: "Grand curseur" },
       p: { vision: "Déficience visuelle", dyslexia: "Adapté dyslexie", motor: "Déficience motrice", seizure: "Sans crise" } },
-    pt: { title: "Ferramentas de acessibilidade", sub: "Personalize este site para suas necessidades.", profiles: "Perfis rápidos", individual: "Ferramentas individuais", language: "Idioma", reset: "Redefinir tudo", powered: "Desenvolvido por Bizooma", openMenu: "Abrir menu de acessibilidade", closeMenu: "Fechar menu de acessibilidade", enabled: "ativado", disabled: "desativado", presetSuffix: "perfil", resetMsg: "Todas as configurações redefinidas",
+    pt: { title: "Menu de acessibilidade", sub: "Personalize este site para suas necessidades.", profiles: "Perfis de acessibilidade", individual: "Ajustes de conteúdo", color: "Ajustes de cor", language: "Selecionar idioma", reset: "Redefinir tudo", powered: "Desenvolvido por Bizooma", statement: "Declaração de acessibilidade", openMenu: "Abrir menu de acessibilidade", closeMenu: "Fechar menu de acessibilidade", enabled: "ativado", disabled: "desativado", presetSuffix: "perfil", resetMsg: "Todas as configurações redefinidas", fontSize: "Tamanho da fonte",
       f: { large: "Texto maior", xl: "Texto enorme", contrast: "Alto contraste", invert: "Inverter cores", grayscale: "Escala de cinza", dyslexia: "Fonte para dislexia", links: "Destacar links", pause: "Pausar animações", cursor: "Cursor grande" },
       p: { vision: "Deficiência visual", dyslexia: "Amigo da dislexia", motor: "Deficiência motora", seizure: "Seguro para epilepsia" } },
-    de: { title: "Barrierefreiheit", sub: "Passen Sie diese Seite nach Ihren Bedürfnissen an.", profiles: "Schnellprofile", individual: "Einzelne Werkzeuge", language: "Sprache", reset: "Alles zurücksetzen", powered: "Bereitgestellt von Bizooma", openMenu: "Barrierefreiheitsmenü öffnen", closeMenu: "Barrierefreiheitsmenü schließen", enabled: "aktiviert", disabled: "deaktiviert", presetSuffix: "Profil", resetMsg: "Alle Einstellungen zurückgesetzt",
+    de: { title: "Barrierefreiheit", sub: "Passen Sie diese Seite nach Ihren Bedürfnissen an.", profiles: "Barrierefreiheitsprofile", individual: "Inhaltsanpassungen", color: "Farbanpassungen", language: "Sprache auswählen", reset: "Alles zurücksetzen", powered: "Bereitgestellt von Bizooma", statement: "Erklärung zur Barrierefreiheit", openMenu: "Barrierefreiheitsmenü öffnen", closeMenu: "Barrierefreiheitsmenü schließen", enabled: "aktiviert", disabled: "deaktiviert", presetSuffix: "Profil", resetMsg: "Alle Einstellungen zurückgesetzt", fontSize: "Schriftgröße",
       f: { large: "Größerer Text", xl: "Riesiger Text", contrast: "Hoher Kontrast", invert: "Farben umkehren", grayscale: "Graustufen", dyslexia: "Legasthenie-Schrift", links: "Links hervorheben", pause: "Animationen pausieren", cursor: "Großer Cursor" },
       p: { vision: "Sehbehinderung", dyslexia: "Legasthenie-freundlich", motor: "Motorische Einschränkung", seizure: "Anfallssicher" } }
   };
@@ -110,15 +110,16 @@
   }
 
   var ALL_FEATURES = [
-    { key: "large", label: "Larger Text", cls: "bz-large", group: "size" },
-    { key: "xl", label: "Huge Text", cls: "bz-xl", group: "size" },
-    { key: "contrast", label: "High Contrast", cls: "bz-contrast" },
-    { key: "invert", label: "Invert Colors", cls: "bz-invert" },
-    { key: "grayscale", label: "Grayscale", cls: "bz-grayscale" },
-    { key: "dyslexia", label: "Dyslexia Font", cls: "bz-dyslexia" },
-    { key: "links", label: "Highlight Links", cls: "bz-links" },
-    { key: "pause", label: "Pause Animations", cls: "bz-pause" },
-    { key: "cursor", label: "Big Cursor", cls: "bz-cursor" }
+    // section: "content" or "color" — drives which grid the tile appears in
+    { key: "large",     label: "Larger Text",       cls: "bz-large",     group: "size",  section: "content", icon: "T<sup>+</sup>" },
+    { key: "xl",        label: "Huge Text",         cls: "bz-xl",        group: "size",  section: "content", icon: "T<sup>++</sup>" },
+    { key: "dyslexia",  label: "Dyslexia Font",     cls: "bz-dyslexia",                  section: "content", icon: "&#119909;" },
+    { key: "links",     label: "Highlight Links",   cls: "bz-links",                     section: "content", icon: "&#128279;" },
+    { key: "cursor",    label: "Big Cursor",        cls: "bz-cursor",                    section: "content", icon: "&#10138;" },
+    { key: "pause",     label: "Pause Animations",  cls: "bz-pause",                     section: "content", icon: "&#10074;&#10074;" },
+    { key: "contrast",  label: "High Contrast",     cls: "bz-contrast",                  section: "color",   icon: "&#9680;" },
+    { key: "invert",    label: "Invert Colors",     cls: "bz-invert",                    section: "color",   icon: "&#9681;" },
+    { key: "grayscale", label: "Grayscale",         cls: "bz-grayscale",                 section: "color",   icon: "&#9633;" }
   ];
 
   // One-click profile presets — each sets a deterministic feature bundle
@@ -153,27 +154,50 @@
     var style = document.createElement("style");
     style.id = "bz-acc-style";
     style.textContent = [
-      ".bz-acc-btn{position:fixed;" + btnPos + ";z-index:2147483646;width:56px;height:56px;border-radius:9999px;background:" + PRIMARY + ";color:#fff;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}",
-      ".bz-acc-btn:focus-visible,.bz-acc-row:focus-visible,.bz-acc-preset:focus-visible,.bz-acc-reset:focus-visible,.bz-acc-close:focus-visible{outline:3px solid " + PRIMARY + ";outline-offset:2px;box-shadow:0 0 0 5px #fff,0 0 0 8px " + PRIMARY + "}",
-      ".bz-acc-btn img{width:32px;height:32px;object-fit:contain}",
-      ".bz-acc-panel{position:fixed;" + panelPos + ";z-index:2147483647;width:340px;max-height:80vh;overflow:auto;background:#fff;color:#111;border-radius:14px;box-shadow:0 25px 60px rgba(0,0,0,.25);font-family:Inter,system-ui,sans-serif;padding:16px;display:none}",
-      ".bz-acc-panel.open{display:block}",
-      ".bz-acc-h{font-weight:700;font-size:15px;margin:0 0 8px;display:flex;align-items:center;gap:8px;color:#111}",
-      ".bz-acc-h img{width:18px;height:18px;object-fit:contain}",
-      ".bz-acc-sub{font-size:11px;color:#555;margin:0 0 12px}",
-      ".bz-acc-section{font-size:11px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:.05em;margin:8px 0 6px}",
-      ".bz-acc-presets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}",
-      ".bz-acc-preset{padding:10px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#111;font-size:13px;font-weight:600;cursor:pointer;text-align:left;line-height:1.2}",
+      ".bz-acc-btn{position:fixed;" + btnPos + ";z-index:2147483646;width:60px;height:60px;border-radius:9999px;background:" + PRIMARY + ";color:#fff;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden}",
+      ".bz-acc-btn:focus-visible,.bz-acc-tile:focus-visible,.bz-acc-preset:focus-visible,.bz-acc-reset:focus-visible,.bz-acc-close:focus-visible,.bz-acc-hbtn:focus-visible,.bz-acc-step:focus-visible,.bz-acc-stmt:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 5px " + PRIMARY + "}",
+      ".bz-acc-btn img{width:34px;height:34px;object-fit:contain}",
+      ".bz-acc-panel{position:fixed;" + panelPos + ";z-index:2147483647;width:420px;max-width:calc(100vw - 32px);max-height:85vh;overflow:hidden;background:#fff;color:#111;border-radius:18px;box-shadow:0 30px 70px rgba(0,0,0,.28);font-family:Inter,system-ui,sans-serif;display:none;flex-direction:column}",
+      "@media (max-width:480px){.bz-acc-panel{width:calc(100vw - 24px);left:12px !important;right:12px !important}}",
+      ".bz-acc-panel.open{display:flex}",
+      ".bz-acc-head{background:" + PRIMARY + ";color:#fff;padding:16px 18px;border-radius:18px 18px 0 0;position:relative}",
+      ".bz-acc-head-row{display:flex;align-items:center;justify-content:space-between;gap:8px}",
+      ".bz-acc-h{font-weight:700;font-size:18px;margin:0;display:flex;align-items:center;gap:10px;color:#fff}",
+      ".bz-acc-h img{width:22px;height:22px;object-fit:contain;background:#fff;border-radius:6px;padding:2px}",
+      ".bz-acc-head-actions{display:flex;align-items:center;gap:6px}",
+      ".bz-acc-hbtn{background:rgba(255,255,255,.18);border:none;color:#fff;width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center;line-height:1}",
+      ".bz-acc-hbtn:hover{background:rgba(255,255,255,.32)}",
+      ".bz-acc-hbar{display:flex;gap:8px;margin-top:12px}",
+      ".bz-acc-hbar > *{flex:1}",
+      ".bz-acc-hbar select,.bz-acc-hbar button.bz-acc-report{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:9px 12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;height:40px}",
+      ".bz-acc-hbar select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#fff 50%),linear-gradient(135deg,#fff 50%,transparent 50%);background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:28px}",
+      ".bz-acc-hbar select option{color:#111;background:#fff}",
+      ".bz-acc-body{padding:16px 18px;overflow:auto;flex:1}",
+      ".bz-acc-section{font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 8px}",
+      ".bz-acc-section:first-child{margin-top:2px}",
+      ".bz-acc-presets{display:grid;grid-template-columns:1fr 1fr;gap:8px}",
+      ".bz-acc-preset{padding:12px;border:1px solid #e3e3e8;border-radius:12px;background:#fff;color:#111;font-size:13px;font-weight:600;cursor:pointer;text-align:left;line-height:1.25;min-height:52px}",
       ".bz-acc-preset:hover{border-color:" + PRIMARY + ";background:#fafafa}",
       ".bz-acc-preset.on{background:" + PRIMARY + ";color:#fff;border-color:" + PRIMARY + "}",
-      ".bz-acc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}",
-      ".bz-acc-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px;border:1px solid #ddd;border-radius:10px;font-size:13px;cursor:pointer;background:#fafafa;color:#111;text-align:left;min-height:44px}",
-      ".bz-acc-row:hover{background:#f0f0f0}",
-      ".bz-acc-row.on{background:" + PRIMARY + ";color:#fff;border-color:" + PRIMARY + "}",
-      ".bz-acc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:11px;color:#666}",
-      ".bz-acc-reset{background:none;border:1px solid #bbb;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;color:#111;min-height:32px}",
-      ".bz-acc-close{position:absolute;top:8px;right:8px;background:none;border:1px solid transparent;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;line-height:1;color:#111}",
-      ".bz-acc-close:hover{border-color:#ddd;background:#f5f5f5}",
+      ".bz-acc-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}",
+      ".bz-acc-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 8px;border:1px solid #e3e3e8;border-radius:12px;background:#fff;color:#111;font-size:12px;font-weight:600;cursor:pointer;text-align:center;line-height:1.2;min-height:88px;font-family:inherit}",
+      ".bz-acc-tile:hover{border-color:" + PRIMARY + ";background:#fafafa}",
+      ".bz-acc-tile.on{background:" + PRIMARY + ";color:#fff;border-color:" + PRIMARY + "}",
+      ".bz-acc-tile-icon{font-size:22px;line-height:1;font-weight:700}",
+      ".bz-acc-fs{border:1px solid #e3e3e8;border-radius:12px;padding:12px}",
+      ".bz-acc-fs-row{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:8px;color:#111}",
+      ".bz-acc-fs-pct{color:#666;font-weight:500;font-size:12px}",
+      ".bz-acc-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}",
+      ".bz-acc-step{padding:8px 0;border:1px solid #e3e3e8;border-radius:8px;background:#fff;color:#111;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}",
+      ".bz-acc-step:hover{border-color:" + PRIMARY + "}",
+      ".bz-acc-step.on{background:" + PRIMARY + ";color:#fff;border-color:" + PRIMARY + "}",
+      ".bz-acc-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid #eee;background:#fafafa;border-radius:0 0 18px 18px}",
+      ".bz-acc-stmt{flex:1;display:flex;align-items:center;gap:8px;background:" + PRIMARY + ";color:#fff;border:none;border-radius:10px;padding:10px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;min-height:40px}",
+      ".bz-acc-stmt-i{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;background:#fff;color:" + PRIMARY + ";font-weight:800;font-size:13px;flex-shrink:0}",
+      ".bz-acc-reset{background:#fff;border:1px solid #d8d8de;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:600;cursor:pointer;color:#111;min-height:40px;font-family:inherit}",
+      ".bz-acc-reset:hover{background:#f3f3f5}",
+      ".bz-acc-close{background:rgba(255,255,255,.18);border:none;color:#fff;border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:20px;line-height:1;display:inline-flex;align-items:center;justify-content:center}",
+      ".bz-acc-close:hover{background:rgba(255,255,255,.32)}",
       ".bz-acc-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}",
       "html.bz-large body, html.bz-large body *{font-size:118% !important;line-height:1.6 !important}",
       "html.bz-xl body, html.bz-xl body *{font-size:135% !important;line-height:1.7 !important}",
@@ -286,32 +310,37 @@
 
   function render() {
     panel.innerHTML = "";
-    // Close button
+
+    // ---------- HEADER ----------
+    var head = document.createElement("div");
+    head.className = "bz-acc-head";
+
+    var headRow = document.createElement("div");
+    headRow.className = "bz-acc-head-row";
+    var h = document.createElement("div");
+    h.className = "bz-acc-h";
+    if (CONFIG.logo_url) { var hi = document.createElement("img"); hi.src = CONFIG.logo_url; hi.alt = ""; h.appendChild(hi); }
+    var ht = document.createElement("span"); ht.textContent = t().title; h.appendChild(ht);
+    headRow.appendChild(h);
+
+    var headActions = document.createElement("div");
+    headActions.className = "bz-acc-head-actions";
     var close = document.createElement("button");
     close.className = "bz-acc-close"; close.type = "button";
     close.setAttribute("aria-label", t().closeMenu);
     close.innerHTML = "&times;";
     close.onclick = function () { closePanel(); };
-    panel.appendChild(close);
+    headActions.appendChild(close);
+    headRow.appendChild(headActions);
+    head.appendChild(headRow);
 
-    var h = document.createElement("div");
-    h.className = "bz-acc-h";
-    if (CONFIG.logo_url) { var hi = document.createElement("img"); hi.src = CONFIG.logo_url; hi.alt = ""; h.appendChild(hi); }
-    var ht = document.createElement("span"); ht.textContent = t().title; h.appendChild(ht);
-    var sub = document.createElement("div");
-    sub.className = "bz-acc-sub"; sub.textContent = t().sub;
-    panel.appendChild(h); panel.appendChild(sub);
-
-    // Language switcher (only if more than one language available)
+    // Language switcher in header (only if >1 available)
     var avail = (CONFIG.available_languages && CONFIG.available_languages.length) ? CONFIG.available_languages : ["en"];
     if (avail.length > 1) {
-      var lwrap = document.createElement("div");
-      lwrap.style.cssText = "display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:12px;color:#444";
-      var llabel = document.createElement("label");
-      llabel.textContent = t().language; llabel.setAttribute("for", "bz-acc-lang-sel");
+      var hbar = document.createElement("div");
+      hbar.className = "bz-acc-hbar";
       var lsel = document.createElement("select");
-      lsel.id = "bz-acc-lang-sel";
-      lsel.style.cssText = "flex:1;padding:6px 8px;border:1px solid #ccc;border-radius:8px;background:#fff;color:#111;font-size:12px";
+      lsel.setAttribute("aria-label", t().language);
       avail.forEach(function (code) {
         if (!I18N[code]) return;
         var o = document.createElement("option"); o.value = code; o.textContent = LANG_LABELS[code] || code;
@@ -319,15 +348,20 @@
         lsel.appendChild(o);
       });
       lsel.onchange = function () { setLang(lsel.value); };
-      lwrap.appendChild(llabel); lwrap.appendChild(lsel);
-      panel.appendChild(lwrap);
+      hbar.appendChild(lsel);
+      head.appendChild(hbar);
     }
+    panel.appendChild(head);
+
+    // ---------- BODY ----------
+    var body = document.createElement("div");
+    body.className = "bz-acc-body";
 
     // Presets
     var presets = activePresets();
     if (presets.length) {
       var ps = document.createElement("div"); ps.className = "bz-acc-section"; ps.textContent = t().profiles;
-      panel.appendChild(ps);
+      body.appendChild(ps);
       var pgrid = document.createElement("div"); pgrid.className = "bz-acc-presets";
       presets.forEach(function (p) {
         var b = document.createElement("button");
@@ -338,33 +372,107 @@
         b.onclick = function () { applyPreset(p); };
         pgrid.appendChild(b);
       });
-      panel.appendChild(pgrid);
+      body.appendChild(pgrid);
     }
 
-    var fs = document.createElement("div"); fs.className = "bz-acc-section"; fs.textContent = t().individual;
-    panel.appendChild(fs);
+    // Helper: tile builder
+    function buildTile(f) {
+      var tile = document.createElement("button");
+      tile.className = "bz-acc-tile" + (prefs[f.key] ? " on" : "");
+      tile.type = "button";
+      tile.setAttribute("aria-pressed", prefs[f.key] ? "true" : "false");
+      var ic = document.createElement("span");
+      ic.className = "bz-acc-tile-icon"; ic.setAttribute("aria-hidden", "true");
+      ic.innerHTML = f.icon || "&#9881;";
+      var lb = document.createElement("span");
+      lb.textContent = t().f[f.key] || f.label;
+      tile.appendChild(ic); tile.appendChild(lb);
+      tile.onclick = function () { toggle(f.key); };
+      return tile;
+    }
 
-    var grid = document.createElement("div");
-    grid.className = "bz-acc-grid";
-    activeFeatures().forEach(function (f) {
-      var row = document.createElement("button");
-      row.className = "bz-acc-row" + (prefs[f.key] ? " on" : "");
-      row.type = "button";
-      row.textContent = t().f[f.key] || f.label;
-      row.setAttribute("aria-pressed", prefs[f.key] ? "true" : "false");
-      row.onclick = function () { toggle(f.key); };
-      grid.appendChild(row);
-    });
-    panel.appendChild(grid);
+    var feats = activeFeatures();
+    var contentFeats = feats.filter(function (f) { return f.section !== "color"; });
+    var colorFeats = feats.filter(function (f) { return f.section === "color"; });
 
+    // Content adjustments
+    if (contentFeats.length) {
+      var cs = document.createElement("div"); cs.className = "bz-acc-section"; cs.textContent = t().individual;
+      body.appendChild(cs);
+      var cgrid = document.createElement("div"); cgrid.className = "bz-acc-grid3";
+      contentFeats.forEach(function (f) { cgrid.appendChild(buildTile(f)); });
+      body.appendChild(cgrid);
+
+      // Font size stepper (only if size features are enabled at org level)
+      var sizeFeats = ALL_FEATURES.filter(function (f) { return f.group === "size" && CONFIG.enabled_features[f.key] !== false; });
+      if (sizeFeats.length) {
+        var fsWrap = document.createElement("div"); fsWrap.className = "bz-acc-fs"; fsWrap.style.marginTop = "8px";
+        var fsRow = document.createElement("div"); fsRow.className = "bz-acc-fs-row";
+        var fsLabel = document.createElement("span"); fsLabel.textContent = t().fontSize;
+        var fsPct = document.createElement("span"); fsPct.className = "bz-acc-fs-pct";
+        var pct = prefs.xl ? "135%" : prefs.large ? "118%" : "100%";
+        fsPct.textContent = pct;
+        fsRow.appendChild(fsLabel); fsRow.appendChild(fsPct);
+        fsWrap.appendChild(fsRow);
+        var steps = document.createElement("div"); steps.className = "bz-acc-steps";
+        // 5 steps: 100, 110, 118 (=large), 125, 135 (=xl)
+        var stepDefs = [
+          { n: 1, key: null },
+          { n: 2, key: null }, // visual only — same as 1
+          { n: 3, key: "large" },
+          { n: 4, key: "large" },
+          { n: 5, key: "xl" }
+        ];
+        var activeStep = prefs.xl ? 5 : prefs.large ? 3 : 1;
+        stepDefs.forEach(function (sd) {
+          var sb = document.createElement("button");
+          sb.className = "bz-acc-step" + (sd.n === activeStep ? " on" : "");
+          sb.type = "button"; sb.textContent = sd.n;
+          sb.setAttribute("aria-label", t().fontSize + " " + sd.n);
+          sb.onclick = function () {
+            // Reset both, then apply target
+            prefs.large = false; prefs.xl = false;
+            if (sd.key === "large" && CONFIG.enabled_features.large !== false) prefs.large = true;
+            if (sd.key === "xl" && CONFIG.enabled_features.xl !== false) prefs.xl = true;
+            track("feature_on", "fontsize:" + sd.n);
+            save(); applyAll(); render();
+          };
+          steps.appendChild(sb);
+        });
+        fsWrap.appendChild(steps);
+        body.appendChild(fsWrap);
+      }
+    }
+
+    // Color adjustments
+    if (colorFeats.length) {
+      var ks = document.createElement("div"); ks.className = "bz-acc-section"; ks.textContent = t().color;
+      body.appendChild(ks);
+      var kgrid = document.createElement("div"); kgrid.className = "bz-acc-grid3";
+      colorFeats.forEach(function (f) { kgrid.appendChild(buildTile(f)); });
+      body.appendChild(kgrid);
+    }
+
+    panel.appendChild(body);
+
+    // ---------- FOOTER ----------
     var foot = document.createElement("div");
     foot.className = "bz-acc-foot";
-    var poweredBy = document.createElement("span");
-    poweredBy.textContent = CONFIG.hide_branding ? "" : t().powered;
+    if (!CONFIG.hide_branding) {
+      var stmt = document.createElement("button");
+      stmt.className = "bz-acc-stmt"; stmt.type = "button";
+      var si = document.createElement("span"); si.className = "bz-acc-stmt-i"; si.textContent = "B"; si.setAttribute("aria-hidden", "true");
+      var sl = document.createElement("span"); sl.textContent = t().statement;
+      stmt.appendChild(si); stmt.appendChild(sl);
+      stmt.onclick = function () { try { window.open("https://bizooma.com/accessibility-statement", "_blank", "noopener"); } catch(e){} };
+      foot.appendChild(stmt);
+    } else {
+      var sp = document.createElement("span"); sp.style.flex = "1"; foot.appendChild(sp);
+    }
     var resetBtn = document.createElement("button");
     resetBtn.className = "bz-acc-reset"; resetBtn.type = "button"; resetBtn.textContent = t().reset;
     resetBtn.onclick = reset;
-    foot.appendChild(poweredBy); foot.appendChild(resetBtn);
+    foot.appendChild(resetBtn);
     panel.appendChild(foot);
   }
 
