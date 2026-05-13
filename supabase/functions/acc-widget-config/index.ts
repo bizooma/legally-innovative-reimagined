@@ -44,7 +44,7 @@ Deno.serve(async (req) => {
 
     const { data: site } = await supabase
       .from("acc_websites")
-      .select("id")
+      .select("id, widget_enabled")
       .eq("organization_id", org.id)
       .order("created_at", { ascending: true })
       .limit(1)
@@ -61,6 +61,7 @@ Deno.serve(async (req) => {
     }
 
     const merged = {
+      enabled: site ? site.widget_enabled !== false : true,
       primary_color: settings?.primary_color || org.brand_color || DEFAULTS.primary_color,
       position: settings?.position || DEFAULTS.position,
       logo_url: settings?.logo_url ?? org.logo_url ?? null,

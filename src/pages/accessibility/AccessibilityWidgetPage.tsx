@@ -53,6 +53,8 @@ export default function AccessibilityWidgetPage() {
 
   const [siteUrl, setSiteUrl] = useState<string | null>(null);
   const [websiteId, setWebsiteId] = useState<string | null>(null);
+  const [widgetEnabled, setWidgetEnabled] = useState<boolean>(true);
+  const [togglingEnabled, setTogglingEnabled] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [s, setS] = useState<Settings>(DEFAULTS);
@@ -64,13 +66,14 @@ export default function AccessibilityWidgetPage() {
       setLoading(true);
       const { data: site } = await supabase
         .from("acc_websites")
-        .select("id, url")
+        .select("id, url, widget_enabled")
         .eq("organization_id", ctx.org!.id)
         .order("created_at", { ascending: true })
         .limit(1)
         .maybeSingle();
       setSiteUrl((site as any)?.url ?? null);
       setWebsiteId((site as any)?.id ?? null);
+      setWidgetEnabled((site as any)?.widget_enabled !== false);
       if ((site as any)?.id) {
         const { data: existing } = await supabase
           .from("acc_widget_settings")
@@ -128,6 +131,23 @@ export default function AccessibilityWidgetPage() {
     setS((prev) => ({ ...prev, enabled_features: { ...prev.enabled_features, [k]: v } }));
   };
 
+  const toggleWidgetEnabled = async (v: boolean) => {
+    if (!websiteId) return;
+    setTogglingEnabled(true);
+    const { error } = await supabase
+      .from("acc_websites")
+      .update({ widget_enabled: v })
+      .eq("id", websiteId);
+    setTogglingEnabled(false);
+    if (error) {
+      toast({ title: "Update failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    setWidgetEnabled(v);
+    toast({ title: v ? "Widget enabled" : "Widget disabled", description: v ? "The widget will appear on your site within ~1 minute." : "The widget will stop appearing on your site within ~1 minute." });
+    setPreviewKey((k) => k + 1);
+  };
+
   const previewSrcDoc = useMemo(() => {
     return `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Preview</title><style>body{font-family:Inter,system-ui;padding:24px;color:#111}</style></head><body><h1>Sample page</h1><p>This iframe is loading the live widget for <strong>${slug || "your org"}</strong>.</p><script src="${origin}/accessibility-widget.js" data-org="${slug}"></script></body></html>`;
   }, [origin, slug, previewKey]);
@@ -146,6 +166,13 @@ export default function AccessibilityWidgetPage() {
       <Card>
         <CardContent className="pt-6 space-y-4">
           <div className="flex items-center gap-2"><Code2 className="h-4 w-4" /><span className="font-medium">Install snippet</span></div>
+          <div className="flex items-center justify-between rounded-md border p-3">
+            <div>
+              <div className="text-sm font-medium">Widget enabled</div>
+              <div className="text-xs text-muted-foreground">Master switch — turn the floating widget on or off across your site without removing the snippet.</div>
+            </div>
+            <Switch checked={widgetEnabled} disabled={!websiteId || togglingEnabled} onCheckedChange={toggleWidgetEnabled} />
+          </div>
           {siteUrl && (
             <p className="text-xs text-muted-foreground">Paste this just before <code>&lt;/body&gt;</code> on <span className="font-mono">{siteUrl}</span></p>
           )}

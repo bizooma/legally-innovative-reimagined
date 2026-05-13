@@ -18,6 +18,7 @@
   var ENDPOINT = "https://hvyjvbdforunsjgqhhny.supabase.co/functions/v1/acc-widget-config?org=" + encodeURIComponent(ORG_SLUG);
 
   var DEFAULTS = {
+    enabled: true,
     primary_color: "#7A0A0A",
     position: "bottom-right",
     logo_url: null,
@@ -190,6 +191,7 @@
       .then(function (cfg) {
         if (cfg && typeof cfg === "object") {
           CONFIG = {
+            enabled: cfg.enabled !== false,
             primary_color: cfg.primary_color || DEFAULTS.primary_color,
             position: cfg.position || DEFAULTS.position,
             logo_url: cfg.logo_url || null,
@@ -200,7 +202,7 @@
         }
       })
       .catch(function () {})
-      .finally(mount);
+      .finally(function () { if (CONFIG.enabled === false) return; mount(); });
   }
 
   if (document.readyState === "loading") {
