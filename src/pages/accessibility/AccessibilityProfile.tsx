@@ -9,6 +9,7 @@ import { Loader2 } from "lucide-react";
 
 export default function AccessibilityProfile() {
   const [email, setEmail] = useState("");
+  const [originalEmail, setOriginalEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ export default function AccessibilityProfile() {
       const { data } = await supabase.auth.getUser();
       if (data.user) {
         setEmail(data.user.email ?? "");
+        setOriginalEmail(data.user.email ?? "");
         setFullName((data.user.user_metadata as any)?.full_name ?? "");
       }
       setLoading(false);
@@ -28,13 +30,18 @@ export default function AccessibilityProfile() {
 
   const saveProfile = async () => {
     setSavingProfile(true);
-    const { error } = await supabase.auth.updateUser({
-      email: email || undefined,
-      data: { full_name: fullName },
-    });
+    const emailChanged = email && email !== originalEmail;
+    const payload: { email?: string; data: { full_name: string } } = { data: { full_name: fullName } };
+    if (emailChanged) payload.email = email;
+    const { error } = await supabase.auth.updateUser(payload);
     setSavingProfile(false);
     if (error) return toast({ title: "Update failed", description: error.message, variant: "destructive" });
-    toast({ title: "Profile updated", description: email ? "If you changed your email, check your inbox to confirm." : "Saved." });
+    toast({
+      title: "Profile updated",
+      description: emailChanged
+        ? "Check your inbox at the new address to confirm the change."
+        : "Saved.",
+    });
   };
 
   const changePassword = async () => {
