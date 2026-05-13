@@ -37,7 +37,7 @@ Deno.serve(async (req) => {
     );
     const { data: org } = await supabase
       .from("acc_organizations")
-      .select("id, brand_color, logo_url")
+      .select("id, brand_color, logo_url, subscription_status")
       .eq("slug", slug)
       .maybeSingle();
     if (!org) return new Response(JSON.stringify(DEFAULTS), { headers });
@@ -69,6 +69,12 @@ Deno.serve(async (req) => {
     const inGrace = Date.now() - createdAt < 24 * 60 * 60 * 1000;
     const verificationOk = !site || isVerified || inGrace;
 
+    // Subscription gate (null status = trial/free, allow). Block only on negative states.
+    const subStatus = (org as any).subscription_status as string | null;
+    const subBlocked = subStatus
+      ? !["active", "trialing", "past_due"].includes(subStatus)
+      : false;
+
     let settings: any = null;
     if (site?.id) {
       const r = await supabase
@@ -83,8 +89,11 @@ Deno.serve(async (req) => {
       enabled:
         (site ? site.widget_enabled !== false : true) &&
         domainOk &&
-        verificationOk,
-      blocked_reason: !domainOk
+        verificationOk &&
+        !subBlocked,
+      blocked_reason: subBlocked
+        ? "subscription_inactive"
+        : !domainOk
         ? "domain_not_allowed"
         : !verificationOk
         ? "site_unverified"
