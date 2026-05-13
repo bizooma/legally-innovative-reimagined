@@ -8,6 +8,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianG
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import type { useAccessibilityOrg } from "@/hooks/useAccessibilityOrg";
+import AdminSubscribersPanel from "@/components/accessibility/AdminSubscribersPanel";
 
 type Ctx = ReturnType<typeof useAccessibilityOrg>;
 type Site = { id: string; name: string; url: string; current_score: number | null; last_scan_at: string | null };
@@ -32,6 +33,18 @@ export default function AccessibilityDashboard() {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [events, setEvents] = useState<WidgetEvent[]>([]);
   const [scanningAll, setScanningAll] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    let cancel = false;
+    (async () => {
+      const { data: auth } = await supabase.auth.getUser();
+      if (!auth.user) return;
+      const { data } = await supabase.from("users").select("is_admin").eq("id", auth.user.id).maybeSingle();
+      if (!cancel) setIsAdmin(!!data?.is_admin);
+    })();
+    return () => { cancel = true; };
+  }, []);
 
   const load = async () => {
     if (!ctx.org) return;
@@ -283,6 +296,8 @@ export default function AccessibilityDashboard() {
           </Card>
         </>
       )}
+
+      {isAdmin && <AdminSubscribersPanel />}
     </div>
   );
 }
