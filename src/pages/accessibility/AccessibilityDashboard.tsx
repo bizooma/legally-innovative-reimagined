@@ -3,8 +3,8 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Gauge, Shield, AlertTriangle, AlertCircle, CheckCircle2, FileText, ScanLine, Globe, Calendar, Loader2 } from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { Gauge, Shield, AlertTriangle, AlertCircle, CheckCircle2, FileText, ScanLine, Globe, Calendar, Loader2, MousePointerClick, Users } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, BarChart, Bar } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import type { useAccessibilityOrg } from "@/hooks/useAccessibilityOrg";
@@ -13,6 +13,7 @@ type Ctx = ReturnType<typeof useAccessibilityOrg>;
 type Site = { id: string; name: string; url: string; current_score: number | null; last_scan_at: string | null };
 type Scan = { id: string; score: number | null; wcag_aa_pct: number | null; pages_scanned: number | null; completed_at: string | null; started_at: string | null };
 type Issue = { id: string; rule_id: string; title: string; severity: string; status: string };
+type WidgetEvent = { event_type: string; feature_key: string | null; session_hash: string | null; created_at: string };
 
 const riskBand = (score: number | null) => {
   if (score == null) return "—";
@@ -29,20 +30,24 @@ export default function AccessibilityDashboard() {
   const [sites, setSites] = useState<Site[]>([]);
   const [scans, setScans] = useState<Scan[]>([]);
   const [issues, setIssues] = useState<Issue[]>([]);
+  const [events, setEvents] = useState<WidgetEvent[]>([]);
   const [scanningAll, setScanningAll] = useState(false);
 
   const load = async () => {
     if (!ctx.org) return;
     setLoading(true);
     const orgId = ctx.org.id;
-    const [{ data: w }, { data: s }, { data: i }] = await Promise.all([
+    const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+    const [{ data: w }, { data: s }, { data: i }, { data: e }] = await Promise.all([
       supabase.from("acc_websites").select("id, name, url, current_score, last_scan_at").eq("organization_id", orgId).order("created_at", { ascending: false }),
       supabase.from("acc_scans").select("id, score, wcag_aa_pct, pages_scanned, completed_at, started_at").eq("organization_id", orgId).order("started_at", { ascending: false }).limit(30),
       supabase.from("acc_accessibility_issues").select("id, rule_id, title, severity, status").eq("organization_id", orgId).limit(1000),
+      supabase.from("acc_widget_events").select("event_type, feature_key, session_hash, created_at").eq("organization_id", orgId).gte("created_at", since).limit(5000),
     ]);
     setSites((w as any) ?? []);
     setScans((s as any) ?? []);
     setIssues((i as any) ?? []);
+    setEvents((e as any) ?? []);
     setLoading(false);
   };
 
@@ -83,6 +88,20 @@ export default function AccessibilityDashboard() {
     return [...map.values()].sort((a, b) => b.count - a.count).slice(0, 5);
   }, [issues]);
 
+  const widgetStats = useMemo(() => {
+    const opens = events.filter((e) => e.event_type === "open").length;
+    const sessions = new Set(events.filter((e) => e.session_hash).map((e) => e.session_hash!)).size;
+    const featureCounts = new Map<string, number>();
+    events.filter((e) => e.event_type === "feature_on" && e.feature_key).forEach((e) => {
+      featureCounts.set(e.feature_key!, (featureCounts.get(e.feature_key!) ?? 0) + 1);
+    });
+    const topFeatures = [...featureCounts.entries()]
+      .map(([feature, count]) => ({ feature, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 6);
+    return { opens, sessions, topFeatures };
+  }, [events]);
+
   const runScan = async () => {
     if (sites.length === 0) { navigate("/accessibility/websites"); return; }
     if (sites.length > 1) { navigate("/accessibility/websites"); return; }
@@ -100,8 +119,9 @@ export default function AccessibilityDashboard() {
     { label: "Critical issues", value: String(stats.critical), icon: AlertTriangle },
     { label: "Warnings", value: String(stats.warnings), icon: AlertCircle },
     { label: "Resolved", value: String(stats.resolved), icon: CheckCircle2 },
-    { label: "Pages scanned", value: String(stats.pages), icon: FileText },
     { label: "ADA risk", value: stats.risk, icon: Shield },
+    { label: "Widget opens (30d)", value: String(widgetStats.opens), icon: MousePointerClick },
+    { label: "Unique visitors (30d)", value: String(widgetStats.sessions), icon: Users },
     { label: "Last scan", value: stats.lastScanAt ? new Date(stats.lastScanAt).toLocaleDateString() : "Never", icon: Calendar },
   ];
 
@@ -186,6 +206,29 @@ export default function AccessibilityDashboard() {
               </CardContent>
             </Card>
           </div>
+
+          <Card>
+            <CardContent className="pt-6">
+              <h3 className="font-semibold mb-4">Most-used widget features (30d)</h3>
+              {widgetStats.topFeatures.length === 0 ? (
+                <div className="text-sm text-muted-foreground text-center py-8 border rounded-lg">
+                  No widget activity yet — install the snippet on your site to start collecting usage.
+                </div>
+              ) : (
+                <div className="h-56">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={widgetStats.topFeatures} margin={{ top: 5, right: 12, left: -12, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                      <XAxis dataKey="feature" fontSize={11} stroke="hsl(var(--muted-foreground))" />
+                      <YAxis fontSize={11} stroke="hsl(var(--muted-foreground))" allowDecimals={false} />
+                      <Tooltip contentStyle={{ background: "hsl(var(--background))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }} />
+                      <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           <Card>
             <CardContent className="pt-6">
