@@ -150,6 +150,7 @@
     if (pos === "bottom-left") { btnPos = "bottom:20px;left:20px"; panelPos = "bottom:90px;left:20px"; }
     if (pos === "top-right") { btnPos = "top:20px;right:20px"; panelPos = "top:90px;right:20px"; }
     if (pos === "top-left") { btnPos = "top:20px;left:20px"; panelPos = "top:90px;left:20px"; }
+    if (pos === "bottom-center") { btnPos = "bottom:20px;left:50%;transform:translateX(-50%)"; panelPos = "bottom:90px;left:50%;transform:translateX(-50%)"; }
 
     var style = document.createElement("style");
     style.id = "bz-acc-style";
