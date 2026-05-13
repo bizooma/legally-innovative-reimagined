@@ -44,6 +44,7 @@ type Settings = {
   custom_css: string | null;
   default_language: string;
   available_languages: string[];
+  statement_url: string | null;
 };
 
 const DEFAULTS: Settings = {
@@ -55,6 +56,7 @@ const DEFAULTS: Settings = {
   custom_css: null,
   default_language: "auto",
   available_languages: ["en", "es", "fr", "pt", "de"],
+  statement_url: null,
 };
 
 export default function AccessibilityWidgetPage() {
@@ -89,7 +91,7 @@ export default function AccessibilityWidgetPage() {
       if ((site as any)?.id) {
         const { data: existing } = await supabase
           .from("acc_widget_settings")
-          .select("position, primary_color, logo_url, hide_branding, enabled_features, custom_css, default_language, available_languages")
+          .select("position, primary_color, logo_url, hide_branding, enabled_features, custom_css, default_language, available_languages, statement_url")
           .eq("website_id", (site as any).id)
           .maybeSingle();
         if (existing) {
@@ -104,6 +106,7 @@ export default function AccessibilityWidgetPage() {
             available_languages: ((existing as any).available_languages && (existing as any).available_languages.length)
               ? (existing as any).available_languages
               : DEFAULTS.available_languages,
+            statement_url: (existing as any).statement_url ?? null,
           });
         }
       }
@@ -132,6 +135,7 @@ export default function AccessibilityWidgetPage() {
       custom_css: s.custom_css || null,
       default_language: s.default_language,
       available_languages: s.available_languages.length ? s.available_languages : ["en"],
+      statement_url: s.statement_url || null,
     };
     const { error } = await supabase
       .from("acc_widget_settings")
