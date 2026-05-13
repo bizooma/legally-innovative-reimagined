@@ -74,11 +74,17 @@ const LawFirmDigitalMarketingPage = () => {
   return (
     <>
       <Helmet>
-        <title>Jacksonville Digital Marketing for Law Firms | Bizooma Digital Marketing Agency</title>
+        <title>Jacksonville Digital Marketing for Law Firms | Bizooma</title>
         <meta 
           name="description" 
           content="Jacksonville digital marketing for law firms. Increase online visibility, generate quality local leads, and grow your legal practice with proven digital strategies." 
         />
+        <meta property="og:title" content="Jacksonville Digital Marketing for Law Firms | Bizooma" />
+        <meta property="og:description" content="Increase visibility, generate local leads, and grow your legal practice with Bizooma's digital marketing." />
+        <meta property="og:image" content={`https://bizooma.com${ogImage}`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`https://bizooma.com${ogImage}`} />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
