@@ -79,7 +79,7 @@ Deno.serve(async (req) => {
     if (site?.id) {
       const r = await supabase
         .from("acc_widget_settings")
-        .select("position, primary_color, logo_url, hide_branding, enabled_features, custom_css")
+        .select("position, primary_color, logo_url, hide_branding, enabled_features, custom_css, default_language, available_languages")
         .eq("website_id", site.id)
         .maybeSingle();
       settings = r.data;
@@ -105,6 +105,8 @@ Deno.serve(async (req) => {
       hide_branding: !!settings?.hide_branding,
       enabled_features: { ...DEFAULTS.enabled_features, ...(settings?.enabled_features || {}) },
       custom_css: settings?.custom_css ?? null,
+      default_language: settings?.default_language || "auto",
+      available_languages: settings?.available_languages || ["en", "es", "fr", "pt", "de"],
     };
     return new Response(JSON.stringify(merged), { headers });
   } catch (e) {
