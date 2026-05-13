@@ -244,6 +244,7 @@ const App = () => (
               {/* Bizooma Accessibility Layer */}
               <Route path="/accessibility-layer" element={<AccessibilityLayerPage />} />
               <Route path="/accessibility/signup" element={<AccessibilitySignup />} />
+              <Route path="/accessibility/reset-password" element={<AccessibilityResetPassword />} />
               <Route path="/accessibility/checkout-success" element={<AccessibilityCheckoutSuccess />} />
               <Route path="/accessibility" element={<AccessibilityLayout />}>
                 <Route index element={<AccessibilityDashboard />} />
