@@ -1,4 +1,4 @@
-/* Bizooma Accessibility Layer - embeddable widget v0.4
+/* Bizooma Accessibility Layer - embeddable widget v0.5
  * Drop-in script: <script src="https://yourdomain.com/accessibility-widget.js" data-org="your-org-slug" defer></script>
  */
 (function () {
@@ -25,9 +25,55 @@
     logo_url: null,
     hide_branding: false,
     enabled_features: { large: true, xl: true, contrast: true, invert: true, grayscale: true, dyslexia: true, links: true, pause: true, cursor: true },
-    custom_css: null
+    custom_css: null,
+    default_language: "auto",
+    available_languages: ["en", "es", "fr", "pt", "de"]
   };
   var CONFIG = DEFAULTS;
+
+  // Translation strings — single source of truth for all UI text
+  var I18N = {
+    en: { title: "Accessibility Tools", sub: "Customize this site for your needs.", profiles: "Quick Profiles", individual: "Individual Tools", language: "Language", reset: "Reset all", powered: "Powered by Bizooma", openMenu: "Open accessibility menu", closeMenu: "Close accessibility menu", enabled: "enabled", disabled: "disabled", presetSuffix: "preset", resetMsg: "All accessibility settings reset",
+      f: { large: "Larger Text", xl: "Huge Text", contrast: "High Contrast", invert: "Invert Colors", grayscale: "Grayscale", dyslexia: "Dyslexia Font", links: "Highlight Links", pause: "Pause Animations", cursor: "Big Cursor" },
+      p: { vision: "Vision Impaired", dyslexia: "Dyslexia Friendly", motor: "Motor Impaired", seizure: "Seizure Safe" } },
+    es: { title: "Herramientas de accesibilidad", sub: "Personaliza este sitio según tus necesidades.", profiles: "Perfiles rápidos", individual: "Herramientas individuales", language: "Idioma", reset: "Restablecer todo", powered: "Desarrollado por Bizooma", openMenu: "Abrir menú de accesibilidad", closeMenu: "Cerrar menú de accesibilidad", enabled: "activado", disabled: "desactivado", presetSuffix: "perfil", resetMsg: "Todos los ajustes restablecidos",
+      f: { large: "Texto más grande", xl: "Texto enorme", contrast: "Alto contraste", invert: "Invertir colores", grayscale: "Escala de grises", dyslexia: "Fuente para dislexia", links: "Resaltar enlaces", pause: "Pausar animaciones", cursor: "Cursor grande" },
+      p: { vision: "Discapacidad visual", dyslexia: "Amigable con dislexia", motor: "Discapacidad motora", seizure: "Seguro para epilepsia" } },
+    fr: { title: "Outils d'accessibilité", sub: "Personnalisez ce site selon vos besoins.", profiles: "Profils rapides", individual: "Outils individuels", language: "Langue", reset: "Tout réinitialiser", powered: "Propulsé par Bizooma", openMenu: "Ouvrir le menu d'accessibilité", closeMenu: "Fermer le menu d'accessibilité", enabled: "activé", disabled: "désactivé", presetSuffix: "profil", resetMsg: "Tous les paramètres réinitialisés",
+      f: { large: "Texte plus grand", xl: "Texte énorme", contrast: "Contraste élevé", invert: "Inverser les couleurs", grayscale: "Niveaux de gris", dyslexia: "Police dyslexie", links: "Surligner les liens", pause: "Pause animations", cursor: "Grand curseur" },
+      p: { vision: "Déficience visuelle", dyslexia: "Adapté dyslexie", motor: "Déficience motrice", seizure: "Sans crise" } },
+    pt: { title: "Ferramentas de acessibilidade", sub: "Personalize este site para suas necessidades.", profiles: "Perfis rápidos", individual: "Ferramentas individuais", language: "Idioma", reset: "Redefinir tudo", powered: "Desenvolvido por Bizooma", openMenu: "Abrir menu de acessibilidade", closeMenu: "Fechar menu de acessibilidade", enabled: "ativado", disabled: "desativado", presetSuffix: "perfil", resetMsg: "Todas as configurações redefinidas",
+      f: { large: "Texto maior", xl: "Texto enorme", contrast: "Alto contraste", invert: "Inverter cores", grayscale: "Escala de cinza", dyslexia: "Fonte para dislexia", links: "Destacar links", pause: "Pausar animações", cursor: "Cursor grande" },
+      p: { vision: "Deficiência visual", dyslexia: "Amigo da dislexia", motor: "Deficiência motora", seizure: "Seguro para epilepsia" } },
+    de: { title: "Barrierefreiheit", sub: "Passen Sie diese Seite nach Ihren Bedürfnissen an.", profiles: "Schnellprofile", individual: "Einzelne Werkzeuge", language: "Sprache", reset: "Alles zurücksetzen", powered: "Bereitgestellt von Bizooma", openMenu: "Barrierefreiheitsmenü öffnen", closeMenu: "Barrierefreiheitsmenü schließen", enabled: "aktiviert", disabled: "deaktiviert", presetSuffix: "Profil", resetMsg: "Alle Einstellungen zurückgesetzt",
+      f: { large: "Größerer Text", xl: "Riesiger Text", contrast: "Hoher Kontrast", invert: "Farben umkehren", grayscale: "Graustufen", dyslexia: "Legasthenie-Schrift", links: "Links hervorheben", pause: "Animationen pausieren", cursor: "Großer Cursor" },
+      p: { vision: "Sehbehinderung", dyslexia: "Legasthenie-freundlich", motor: "Motorische Einschränkung", seizure: "Anfallssicher" } }
+  };
+  var LANG_LABELS = { en: "English", es: "Español", fr: "Français", pt: "Português", de: "Deutsch" };
+  var LANG_KEY = "bz-acc-lang";
+  var lang = "en";
+  function pickLang() {
+    var saved = "";
+    try { saved = localStorage.getItem(LANG_KEY) || ""; } catch (e) {}
+    var avail = (CONFIG.available_languages && CONFIG.available_languages.length) ? CONFIG.available_languages : ["en"];
+    if (saved && avail.indexOf(saved) !== -1 && I18N[saved]) return saved;
+    var def = CONFIG.default_language || "auto";
+    if (def !== "auto" && avail.indexOf(def) !== -1 && I18N[def]) return def;
+    // auto: detect from browser
+    var nav = (navigator.language || "en").toLowerCase().split("-")[0];
+    if (avail.indexOf(nav) !== -1 && I18N[nav]) return nav;
+    return avail.indexOf("en") !== -1 ? "en" : avail[0];
+  }
+  function t() { return I18N[lang] || I18N.en; }
+  function setLang(code) {
+    if (!I18N[code]) return;
+    lang = code;
+    try { localStorage.setItem(LANG_KEY, code); } catch (e) {}
+    document.documentElement.setAttribute("data-bz-acc-lang", code);
+    btn.setAttribute("aria-label", t().openMenu);
+    panel.setAttribute("aria-label", t().title);
+    render();
+  }
 
   var STORAGE_KEY = "bz-acc-prefs";
   var prefs = {};
@@ -171,10 +217,10 @@
     save();
     applyAll();
     render();
-    announce((f.label) + " " + (prefs[key] ? "enabled" : "disabled"));
+    announce((t().f[key] || f.label) + " " + (prefs[key] ? t().enabled : t().disabled));
   }
 
-  function reset() { prefs = {}; save(); applyAll(); render(); track("reset"); announce("All accessibility settings reset"); }
+  function reset() { prefs = {}; save(); applyAll(); render(); track("reset"); announce(t().resetMsg); }
 
   function presetIsOn(p) {
     return Object.keys(p.features).every(function (k) {
@@ -202,7 +248,7 @@
     }
     track(on ? "feature_off" : "feature_on", "preset:" + p.key);
     save(); applyAll(); render();
-    announce(p.label + " preset " + (on ? "disabled" : "enabled"));
+    announce((t().p[p.key] || p.label) + " " + t().presetSuffix + " " + (on ? t().disabled : t().enabled));
   }
 
   var btn = document.createElement("button");
@@ -243,7 +289,7 @@
     // Close button
     var close = document.createElement("button");
     close.className = "bz-acc-close"; close.type = "button";
-    close.setAttribute("aria-label", "Close accessibility menu");
+    close.setAttribute("aria-label", t().closeMenu);
     close.innerHTML = "&times;";
     close.onclick = function () { closePanel(); };
     panel.appendChild(close);
@@ -251,22 +297,43 @@
     var h = document.createElement("div");
     h.className = "bz-acc-h";
     if (CONFIG.logo_url) { var hi = document.createElement("img"); hi.src = CONFIG.logo_url; hi.alt = ""; h.appendChild(hi); }
-    var ht = document.createElement("span"); ht.textContent = "Accessibility Tools"; h.appendChild(ht);
+    var ht = document.createElement("span"); ht.textContent = t().title; h.appendChild(ht);
     var sub = document.createElement("div");
-    sub.className = "bz-acc-sub"; sub.textContent = "Customize this site for your needs.";
+    sub.className = "bz-acc-sub"; sub.textContent = t().sub;
     panel.appendChild(h); panel.appendChild(sub);
+
+    // Language switcher (only if more than one language available)
+    var avail = (CONFIG.available_languages && CONFIG.available_languages.length) ? CONFIG.available_languages : ["en"];
+    if (avail.length > 1) {
+      var lwrap = document.createElement("div");
+      lwrap.style.cssText = "display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:12px;color:#444";
+      var llabel = document.createElement("label");
+      llabel.textContent = t().language; llabel.setAttribute("for", "bz-acc-lang-sel");
+      var lsel = document.createElement("select");
+      lsel.id = "bz-acc-lang-sel";
+      lsel.style.cssText = "flex:1;padding:6px 8px;border:1px solid #ccc;border-radius:8px;background:#fff;color:#111;font-size:12px";
+      avail.forEach(function (code) {
+        if (!I18N[code]) return;
+        var o = document.createElement("option"); o.value = code; o.textContent = LANG_LABELS[code] || code;
+        if (code === lang) o.selected = true;
+        lsel.appendChild(o);
+      });
+      lsel.onchange = function () { setLang(lsel.value); };
+      lwrap.appendChild(llabel); lwrap.appendChild(lsel);
+      panel.appendChild(lwrap);
+    }
 
     // Presets
     var presets = activePresets();
     if (presets.length) {
-      var ps = document.createElement("div"); ps.className = "bz-acc-section"; ps.textContent = "Quick Profiles";
+      var ps = document.createElement("div"); ps.className = "bz-acc-section"; ps.textContent = t().profiles;
       panel.appendChild(ps);
       var pgrid = document.createElement("div"); pgrid.className = "bz-acc-presets";
       presets.forEach(function (p) {
         var b = document.createElement("button");
         b.className = "bz-acc-preset" + (presetIsOn(p) ? " on" : "");
         b.type = "button";
-        b.textContent = p.label;
+        b.textContent = t().p[p.key] || p.label;
         b.setAttribute("aria-pressed", presetIsOn(p) ? "true" : "false");
         b.onclick = function () { applyPreset(p); };
         pgrid.appendChild(b);
@@ -274,7 +341,7 @@
       panel.appendChild(pgrid);
     }
 
-    var fs = document.createElement("div"); fs.className = "bz-acc-section"; fs.textContent = "Individual Tools";
+    var fs = document.createElement("div"); fs.className = "bz-acc-section"; fs.textContent = t().individual;
     panel.appendChild(fs);
 
     var grid = document.createElement("div");
@@ -283,7 +350,7 @@
       var row = document.createElement("button");
       row.className = "bz-acc-row" + (prefs[f.key] ? " on" : "");
       row.type = "button";
-      row.textContent = f.label;
+      row.textContent = t().f[f.key] || f.label;
       row.setAttribute("aria-pressed", prefs[f.key] ? "true" : "false");
       row.onclick = function () { toggle(f.key); };
       grid.appendChild(row);
@@ -293,9 +360,9 @@
     var foot = document.createElement("div");
     foot.className = "bz-acc-foot";
     var poweredBy = document.createElement("span");
-    poweredBy.textContent = CONFIG.hide_branding ? "" : "Powered by Bizooma";
+    poweredBy.textContent = CONFIG.hide_branding ? "" : t().powered;
     var resetBtn = document.createElement("button");
-    resetBtn.className = "bz-acc-reset"; resetBtn.type = "button"; resetBtn.textContent = "Reset all";
+    resetBtn.className = "bz-acc-reset"; resetBtn.type = "button"; resetBtn.textContent = t().reset;
     resetBtn.onclick = reset;
     foot.appendChild(poweredBy); foot.appendChild(resetBtn);
     panel.appendChild(foot);
@@ -342,6 +409,10 @@
 
   function mount() {
     injectStyles();
+    lang = pickLang();
+    document.documentElement.setAttribute("data-bz-acc-lang", lang);
+    btn.setAttribute("aria-label", t().openMenu);
+    panel.setAttribute("aria-label", t().title);
     renderBtn();
     if (!document.body.contains(btn)) document.body.appendChild(btn);
     if (!document.body.contains(panel)) document.body.appendChild(panel);
@@ -363,7 +434,9 @@
             logo_url: cfg.logo_url || null,
             hide_branding: !!cfg.hide_branding,
             enabled_features: Object.assign({}, DEFAULTS.enabled_features, cfg.enabled_features || {}),
-            custom_css: cfg.custom_css || null
+            custom_css: cfg.custom_css || null,
+            default_language: cfg.default_language || DEFAULTS.default_language,
+            available_languages: (cfg.available_languages && cfg.available_languages.length) ? cfg.available_languages : DEFAULTS.available_languages
           };
         }
       })
