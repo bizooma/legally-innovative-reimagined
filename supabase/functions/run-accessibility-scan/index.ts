@@ -388,13 +388,16 @@ Deno.serve(async (req) => {
 
     // Analyze pages with limited concurrency
     const perPage: { url: string; score: number; issues: Issue[] }[] = [];
+    let spaShellPages = 0;
     for (let i = 0; i < targets.length; i += CRAWL_CONCURRENCY) {
       const batch = targets.slice(i, i + CRAWL_CONCURRENCY);
       const out = await Promise.all(batch.map(async (u) => {
         const r = await fetchAndAnalyze(u);
-        return { url: u, score: r.score, issues: r.issues };
+        const spa = looksLikeSpaShell(r.html);
+        if (spa) spaShellPages++;
+        return { url: u, score: r.score, issues: r.issues, spa };
       }));
-      perPage.push(...out);
+      perPage.push(...out.map(({ spa, ...rest }) => rest));
     }
 
     // Persist per-page rows
@@ -430,10 +433,15 @@ Deno.serve(async (req) => {
     const avgScore = perPage.length
       ? Math.round(perPage.reduce((a, p) => a + p.score, 0) / perPage.length)
       : 0;
-    const blockingPerPage = perPage.length
-      ? perPage.reduce((a, p) => a + p.issues.filter(i => i.severity === "critical" || i.severity === "serious").length, 0) / perPage.length
+    // Weighted WCAG AA % — counts ALL severities, not just critical+serious.
+    // Weights: critical=10, serious=6, moderate=3, minor=1. Per-page deduction = sum of weights.
+    const sevWeight = (s: string) =>
+      s === "critical" ? 10 : s === "serious" ? 6 : s === "moderate" ? 3 : 1;
+    const weightedPerPage = perPage.length
+      ? perPage.reduce((a, p) => a + p.issues.reduce((b, i) => b + sevWeight(i.severity), 0), 0) / perPage.length
       : 0;
-    const wcagAa = Math.max(0, Math.min(100, Math.round(100 - blockingPerPage * 6)));
+    const wcagAa = Math.max(0, Math.min(100, Math.round(100 - weightedPerPage)));
+    const spaWarning = spaShellPages > 0 && spaShellPages >= Math.ceil(perPage.length / 2);
 
     await admin
       .from("acc_scans")
@@ -451,6 +459,8 @@ Deno.serve(async (req) => {
           minor: allIssues.filter(i=>i.severity==="minor").length,
           pages: perPage.length,
           discovered_via: pages.length ? "crawl" : "single",
+          spa_shell_pages: spaShellPages,
+          spa_warning: spaWarning,
         },
       })
       .eq("id", scan.id);
