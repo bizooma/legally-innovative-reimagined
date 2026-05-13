@@ -27,6 +27,14 @@ const ALL_FEATURES: { key: string; label: string }[] = [
 
 const POSITIONS = ["bottom-right", "bottom-left", "top-right", "top-left"] as const;
 
+const ALL_LANGUAGES: { code: string; label: string }[] = [
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" },
+  { code: "fr", label: "Français" },
+  { code: "pt", label: "Português" },
+  { code: "de", label: "Deutsch" },
+];
+
 type Settings = {
   position: string;
   primary_color: string;
@@ -34,6 +42,8 @@ type Settings = {
   hide_branding: boolean;
   enabled_features: Record<string, boolean>;
   custom_css: string | null;
+  default_language: string;
+  available_languages: string[];
 };
 
 const DEFAULTS: Settings = {
@@ -43,6 +53,8 @@ const DEFAULTS: Settings = {
   hide_branding: false,
   enabled_features: ALL_FEATURES.reduce((acc, f) => ({ ...acc, [f.key]: true }), {}),
   custom_css: null,
+  default_language: "auto",
+  available_languages: ["en", "es", "fr", "pt", "de"],
 };
 
 export default function AccessibilityWidgetPage() {
@@ -77,7 +89,7 @@ export default function AccessibilityWidgetPage() {
       if ((site as any)?.id) {
         const { data: existing } = await supabase
           .from("acc_widget_settings")
-          .select("position, primary_color, logo_url, hide_branding, enabled_features, custom_css")
+          .select("position, primary_color, logo_url, hide_branding, enabled_features, custom_css, default_language, available_languages")
           .eq("website_id", (site as any).id)
           .maybeSingle();
         if (existing) {
@@ -88,6 +100,10 @@ export default function AccessibilityWidgetPage() {
             hide_branding: !!(existing as any).hide_branding,
             enabled_features: { ...DEFAULTS.enabled_features, ...((existing as any).enabled_features || {}) },
             custom_css: (existing as any).custom_css ?? null,
+            default_language: (existing as any).default_language || DEFAULTS.default_language,
+            available_languages: ((existing as any).available_languages && (existing as any).available_languages.length)
+              ? (existing as any).available_languages
+              : DEFAULTS.available_languages,
           });
         }
       }
@@ -114,6 +130,8 @@ export default function AccessibilityWidgetPage() {
       hide_branding: s.hide_branding,
       enabled_features: s.enabled_features,
       custom_css: s.custom_css || null,
+      default_language: s.default_language,
+      available_languages: s.available_languages.length ? s.available_languages : ["en"],
     };
     const { error } = await supabase
       .from("acc_widget_settings")
@@ -257,6 +275,64 @@ export default function AccessibilityWidgetPage() {
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardContent className="pt-6 space-y-4">
+          <div className="font-medium">Languages</div>
+          <p className="text-xs text-muted-foreground">
+            Choose which languages visitors can switch between in the widget, and the default to load.
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label>Default language</Label>
+              <select
+                value={s.default_language}
+                onChange={(e) => setS({ ...s, default_language: e.target.value })}
+                className="w-full h-10 rounded-md border bg-background px-3 text-sm"
+              >
+                <option value="auto">Auto (detect from visitor's browser)</option>
+                {ALL_LANGUAGES.filter((l) => s.available_languages.includes(l.code)).map((l) => (
+                  <option key={l.code} value={l.code}>{l.label}</option>
+                ))}
+              </select>
+              <p className="text-[11px] text-muted-foreground">
+                "Auto" picks the closest match to the visitor's browser language, falling back to English.
+              </p>
+            </div>
+            <div className="space-y-1.5">
+              <Label>Available languages</Label>
+              <div className="grid grid-cols-1 gap-1.5 rounded-md border p-2">
+                {ALL_LANGUAGES.map((l) => {
+                  const checked = s.available_languages.includes(l.code);
+                  return (
+                    <label key={l.code} className="flex items-center justify-between text-sm px-1.5 py-1">
+                      <span>{l.label} <span className="text-xs text-muted-foreground">({l.code})</span></span>
+                      <Switch
+                        checked={checked}
+                        onCheckedChange={(v) => {
+                          const next = v
+                            ? Array.from(new Set([...s.available_languages, l.code]))
+                            : s.available_languages.filter((c) => c !== l.code);
+                          const finalList = next.length ? next : ["en"];
+                          const default_language =
+                            s.default_language !== "auto" && !finalList.includes(s.default_language)
+                              ? "auto"
+                              : s.default_language;
+                          setS({ ...s, available_languages: finalList, default_language });
+                        }}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+              <p className="text-[11px] text-muted-foreground">
+                Visitors can switch between any language enabled here from inside the widget.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="flex justify-end">
         <Button onClick={save} disabled={saving || !websiteId} className="gap-2">
