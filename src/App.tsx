@@ -73,7 +73,6 @@ import LawFirmStartupsPage from "./pages/LawFirmStartupsPage";
 import AccessibilityLayerPage from "./pages/AccessibilityLayerPage";
 import AccessibilityLayout from "./pages/accessibility/AccessibilityLayout";
 import AccessibilityDashboard from "./pages/accessibility/AccessibilityDashboard";
-import PlaceholderPage from "./pages/accessibility/PlaceholderPage";
 import AccessibilityWebsites from "./pages/accessibility/AccessibilityWebsites";
 import AccessibilityScans from "./pages/accessibility/AccessibilityScans";
 import AccessibilityIssues from "./pages/accessibility/AccessibilityIssues";
@@ -256,11 +255,7 @@ const App = () => (
                 <Route path="ai" element={<AccessibilityAi />} />
                 <Route path="reports" element={<AccessibilityReports />} />
                 <Route path="profile" element={<AccessibilityProfile />} />
-                <Route path="team" element={<PlaceholderPage title="Team Members" description="Invite teammates and manage roles within your organization." />} />
                 <Route path="billing" element={<AccessibilityBilling />} />
-                <Route path="api-keys" element={<PlaceholderPage title="API Keys" description="Programmatic access for integrations and automation." />} />
-                <Route path="integrations" element={<PlaceholderPage title="Integrations" description="Slack, Linear, Jira, GitHub, and CMS connectors." />} />
-                <Route path="settings" element={<PlaceholderPage title="Settings" description="Organization details, white-labeling, and notifications." />} />
               </Route>
               
               {/* Momentum Campaigns */}
