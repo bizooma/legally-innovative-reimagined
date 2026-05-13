@@ -25,7 +25,7 @@ const ALL_FEATURES: { key: string; label: string }[] = [
   { key: "cursor", label: "Big Cursor" },
 ];
 
-const POSITIONS = ["bottom-right", "bottom-left", "top-right", "top-left"] as const;
+const POSITIONS = ["bottom-right", "bottom-left", "bottom-center", "top-right", "top-left"] as const;
 
 const ALL_LANGUAGES: { code: string; label: string }[] = [
   { code: "en", label: "English" },
