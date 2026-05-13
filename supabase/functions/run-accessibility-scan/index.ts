@@ -328,24 +328,35 @@ Deno.serve(async (req) => {
     const userClient = createClient(SUPABASE_URL, ANON, { global: { headers: { Authorization: auth } } });
     const admin = createClient(SUPABASE_URL, SRK);
 
-    const { data: u } = await userClient.auth.getUser();
-    if (!u?.user) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
-
     const body = await req.json().catch(() => ({}));
+
+    // Internal/scheduled call uses the service-role key as bearer.
+    // Constant-ish-time compare to avoid trivially leaking key shape.
+    const bearer = auth.replace(/^Bearer\s+/i, "").trim();
+    const isInternal = !!body.scheduled && bearer.length === SRK.length && bearer === SRK;
+
+    let triggeredBy: string | null = null;
+    if (!isInternal) {
+      const { data: u } = await userClient.auth.getUser();
+      if (!u?.user) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      triggeredBy = u.user.id;
+    }
+
     const websiteId = body.website_id as string | undefined;
     const requestedMax = Number(body.max_pages);
     const maxPages = Math.max(1, Math.min(HARD_MAX_PAGES, Number.isFinite(requestedMax) && requestedMax > 0 ? requestedMax : DEFAULT_MAX_PAGES));
     if (!websiteId) return new Response(JSON.stringify({ error: "website_id required" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
-    // Membership-checked fetch via user client (RLS)
-    const { data: site, error: siteErr } = await userClient
+    // Membership-checked fetch via user client (RLS) — admin bypass for internal scheduled runs.
+    const fetchClient = isInternal ? admin : userClient;
+    const { data: site, error: siteErr } = await fetchClient
       .from("acc_websites").select("id, url, organization_id").eq("id", websiteId).maybeSingle();
     if (siteErr || !site) return new Response(JSON.stringify({ error: "Website not found or no access" }), { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
     // Create scan
     const { data: scan, error: scanErr } = await admin
       .from("acc_scans")
-      .insert({ website_id: site.id, organization_id: site.organization_id, status: "running", triggered_by: u.user.id, started_at: new Date().toISOString() })
+      .insert({ website_id: site.id, organization_id: site.organization_id, status: "running", triggered_by: triggeredBy, started_at: new Date().toISOString() })
       .select().single();
     if (scanErr) throw scanErr;
 

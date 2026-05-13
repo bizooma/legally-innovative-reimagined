@@ -12,6 +12,15 @@ import { toast } from "@/hooks/use-toast";
 import type { useAccessibilityOrg } from "@/hooks/useAccessibilityOrg";
 
 type Ctx = ReturnType<typeof useAccessibilityOrg>;
+
+const PLAN_LIMITS: Record<string, number> = {
+  starter: 1,
+  professional: 5,
+  agency: 25,
+  enterprise: Infinity,
+};
+const limitFor = (plan?: string | null) => PLAN_LIMITS[plan ?? "starter"] ?? 1;
+
 type Website = {
   id: string; name: string; url: string;
   current_score: number | null; last_scan_at: string | null;
@@ -22,6 +31,7 @@ type Website = {
 
 export default function AccessibilityWebsites() {
   const ctx = useOutletContext<Ctx>();
+  const siteLimit = limitFor(ctx.org?.plan);
   const [sites, setSites] = useState<Website[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -49,8 +59,8 @@ export default function AccessibilityWebsites() {
 
   const add = async () => {
     if (!ctx.org) return;
-    if (sites.length >= 1) {
-      toast({ title: "Website limit reached", description: "Your plan includes 1 website. Contact us to add more.", variant: "destructive" });
+    if (sites.length >= siteLimit) {
+      toast({ title: "Website limit reached", description: `Your plan includes ${siteLimit === Infinity ? "unlimited" : siteLimit} website${siteLimit === 1 ? "" : "s"}. Upgrade to add more.`, variant: "destructive" });
       return;
     }
     setBusy(true);
@@ -114,7 +124,7 @@ export default function AccessibilityWebsites() {
           <p className="text-sm text-muted-foreground">Add, verify, and monitor the domains you protect.</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button className="gap-2" disabled={sites.length >= 1}><Plus className="h-4 w-4" /> Add website</Button></DialogTrigger>
+          <DialogTrigger asChild><Button className="gap-2" disabled={sites.length >= siteLimit}><Plus className="h-4 w-4" /> Add website</Button></DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>Add a website</DialogTitle></DialogHeader>
             <div className="space-y-3">

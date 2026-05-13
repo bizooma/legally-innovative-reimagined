@@ -8,11 +8,7 @@ import {
   AlertCircle,
   Sparkles,
   FileBarChart2,
-  Users,
   CreditCard,
-  KeyRound,
-  Plug,
-  Settings,
   Accessibility,
 } from "lucide-react";
 import {
@@ -40,11 +36,7 @@ const items = [
 ];
 
 const orgItems = [
-  { title: "Team", url: "/accessibility/team", icon: Users },
   { title: "Billing", url: "/accessibility/billing", icon: CreditCard },
-  { title: "API Keys", url: "/accessibility/api-keys", icon: KeyRound },
-  { title: "Integrations", url: "/accessibility/integrations", icon: Plug },
-  { title: "Settings", url: "/accessibility/settings", icon: Settings },
 ];
 
 export function AccessibilitySidebar() {
