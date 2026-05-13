@@ -276,6 +276,64 @@ export default function AccessibilityWidgetPage() {
         </Card>
       </div>
 
+      <Card>
+        <CardContent className="pt-6 space-y-4">
+          <div className="font-medium">Languages</div>
+          <p className="text-xs text-muted-foreground">
+            Choose which languages visitors can switch between in the widget, and the default to load.
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label>Default language</Label>
+              <select
+                value={s.default_language}
+                onChange={(e) => setS({ ...s, default_language: e.target.value })}
+                className="w-full h-10 rounded-md border bg-background px-3 text-sm"
+              >
+                <option value="auto">Auto (detect from visitor's browser)</option>
+                {ALL_LANGUAGES.filter((l) => s.available_languages.includes(l.code)).map((l) => (
+                  <option key={l.code} value={l.code}>{l.label}</option>
+                ))}
+              </select>
+              <p className="text-[11px] text-muted-foreground">
+                "Auto" picks the closest match to the visitor's browser language, falling back to English.
+              </p>
+            </div>
+            <div className="space-y-1.5">
+              <Label>Available languages</Label>
+              <div className="grid grid-cols-1 gap-1.5 rounded-md border p-2">
+                {ALL_LANGUAGES.map((l) => {
+                  const checked = s.available_languages.includes(l.code);
+                  return (
+                    <label key={l.code} className="flex items-center justify-between text-sm px-1.5 py-1">
+                      <span>{l.label} <span className="text-xs text-muted-foreground">({l.code})</span></span>
+                      <Switch
+                        checked={checked}
+                        onCheckedChange={(v) => {
+                          const next = v
+                            ? Array.from(new Set([...s.available_languages, l.code]))
+                            : s.available_languages.filter((c) => c !== l.code);
+                          const finalList = next.length ? next : ["en"];
+                          const default_language =
+                            s.default_language !== "auto" && !finalList.includes(s.default_language)
+                              ? "auto"
+                              : s.default_language;
+                          setS({ ...s, available_languages: finalList, default_language });
+                        }}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+              <p className="text-[11px] text-muted-foreground">
+                Visitors can switch between any language enabled here from inside the widget.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="flex justify-end">
         <Button onClick={save} disabled={saving || !websiteId} className="gap-2">
           {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} Save changes
