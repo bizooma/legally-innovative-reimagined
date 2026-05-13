@@ -27,6 +27,14 @@ const ALL_FEATURES: { key: string; label: string }[] = [
 
 const POSITIONS = ["bottom-right", "bottom-left", "top-right", "top-left"] as const;
 
+const ALL_LANGUAGES: { code: string; label: string }[] = [
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" },
+  { code: "fr", label: "Français" },
+  { code: "pt", label: "Português" },
+  { code: "de", label: "Deutsch" },
+];
+
 type Settings = {
   position: string;
   primary_color: string;
@@ -34,6 +42,8 @@ type Settings = {
   hide_branding: boolean;
   enabled_features: Record<string, boolean>;
   custom_css: string | null;
+  default_language: string;
+  available_languages: string[];
 };
 
 const DEFAULTS: Settings = {
@@ -43,6 +53,8 @@ const DEFAULTS: Settings = {
   hide_branding: false,
   enabled_features: ALL_FEATURES.reduce((acc, f) => ({ ...acc, [f.key]: true }), {}),
   custom_css: null,
+  default_language: "auto",
+  available_languages: ["en", "es", "fr", "pt", "de"],
 };
 
 export default function AccessibilityWidgetPage() {
@@ -77,7 +89,7 @@ export default function AccessibilityWidgetPage() {
       if ((site as any)?.id) {
         const { data: existing } = await supabase
           .from("acc_widget_settings")
-          .select("position, primary_color, logo_url, hide_branding, enabled_features, custom_css")
+          .select("position, primary_color, logo_url, hide_branding, enabled_features, custom_css, default_language, available_languages")
           .eq("website_id", (site as any).id)
           .maybeSingle();
         if (existing) {
@@ -88,6 +100,10 @@ export default function AccessibilityWidgetPage() {
             hide_branding: !!(existing as any).hide_branding,
             enabled_features: { ...DEFAULTS.enabled_features, ...((existing as any).enabled_features || {}) },
             custom_css: (existing as any).custom_css ?? null,
+            default_language: (existing as any).default_language || DEFAULTS.default_language,
+            available_languages: ((existing as any).available_languages && (existing as any).available_languages.length)
+              ? (existing as any).available_languages
+              : DEFAULTS.available_languages,
           });
         }
       }
@@ -114,6 +130,8 @@ export default function AccessibilityWidgetPage() {
       hide_branding: s.hide_branding,
       enabled_features: s.enabled_features,
       custom_css: s.custom_css || null,
+      default_language: s.default_language,
+      available_languages: s.available_languages.length ? s.available_languages : ["en"],
     };
     const { error } = await supabase
       .from("acc_widget_settings")
