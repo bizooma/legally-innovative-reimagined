@@ -79,6 +79,7 @@ import AccessibilityIssues from "./pages/accessibility/AccessibilityIssues";
 import AccessibilityAi from "./pages/accessibility/AccessibilityAi";
 import AccessibilityWidgetPage from "./pages/accessibility/AccessibilityWidgetPage";
 import AccessibilitySignup from "./pages/accessibility/AccessibilitySignup";
+import AccessibilityResetPassword from "./pages/accessibility/AccessibilityResetPassword";
 import AccessibilityCheckoutSuccess from "./pages/accessibility/AccessibilityCheckoutSuccess";
 import AccessibilityProfile from "./pages/accessibility/AccessibilityProfile";
 import AccessibilityBilling from "./pages/accessibility/AccessibilityBilling";
