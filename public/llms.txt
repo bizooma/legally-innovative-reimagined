@@ -1,0 +1,59 @@
+# Bizooma
+
+> AI-powered marketing and development solutions for law firms, nonprofits, and startups in Jacksonville, FL.
+
+Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile apps, and lead-generation systems. We also publish products and tools (NPO Bots, AEO Analyzer, Quickie QR, Signature Pop, Lead Scraper CRM) and run a free SEO/AEO audit.
+
+## Services
+
+- [Law Firm SEO, AEO & Voice SEO](/law-firm-seo-aeo-voiceseo): Search, answer engine, and voice optimization for law firms.
+- [Law Firm Digital Marketing](/law-firm-digital-marketing): Full-service marketing for legal practices.
+- [Law Firm Lead Generation](/law-firm-lead-generation): Capture and nurture high-quality legal leads.
+- [Law Firm Website Development](/law-firm-website-development): Custom law firm websites built to convert.
+- [Law Firm Mobile App Development](/law-firm-mobile-app-development): iOS and Android apps for law firms.
+- [Law Firm Voice Assistant Marketing](/law-firm-voice-assistant-marketing): Alexa and Google Assistant solutions.
+- [AI Consulting for Law Firms](/ai-consulting-for-law-firms): Strategy and implementation of AI tools.
+- [AI Customer Support Chatbots](/ai-customer-support-chatbots): 24/7 chatbot support for client engagement.
+- [Custom Chatbots](/chatbots): Multi-modal chatbots for any use case.
+- [Google Business Profile Optimization](/google-business-profile-optimization): Local search ranking for GBP.
+- [Apple Maps Marketing](/apple-maps-marketing): Visibility in Apple Maps and Siri results.
+- [Alexa Skills for Law Firms](/alexa-skills-law-firms): Custom Alexa skills.
+- [Accessibility Layer](/accessibility-layer): WCAG-compliant accessibility widget for any site.
+- [SEO Audit](/seo-audit): Free comprehensive SEO/AEO/Voice audit tool.
+
+## Products
+
+- [NPO Bots](/products/npo-bots): Chatbots for nonprofits.
+- [AEO Analyzer](/products/aeo-analyzer): Answer engine optimization analysis.
+- [Branded Books](/products/branded-books): Author-branded book publishing.
+- [Quickie QR](/products/quickie-qr): Trackable QR code generator.
+- [Signature Pop](/products/signature-pop): Email signature design tool.
+- [Support Bots](/products/support-bots): AI customer support automation.
+- [Lead Scraper CRM](/products/lead-scraper-crm): Lead generation CRM.
+- [MVP Soft Launch](/products/mvp-soft-launch): MVP launch service for startups.
+
+## Insights
+
+- [Marketing](/marketing): Marketing newsletter section.
+- [Code](/code): Development newsletter section.
+- [AI](/ai): AI newsletter section.
+- [Insights](/insights): General insights section.
+- [Stay Informed](/stay-informed): Subscribe to updates.
+- [Route to Results Newsletter](/route-to-results-newsletter): Subscribe to the newsletter.
+- [Death of Traditional SEO](/death-of-traditional-seo): Article on SEO's evolution.
+- [Voice SEO & AEO Stats](/voice-seo-aeo-stats): Stats on voice search and answer engines.
+- [Why Reviews Matter for Law Firms](/why-reviews-matter-for-law-firms): Importance of online reviews.
+- [AI Marketing for Law Firms 2025](/ai-marketing-law-firms-2025): AI marketing trends.
+- [GBP Optimization 2026](/gbp-optimization-2026): Google Business Profile in 2026.
+- [Schema Markup for Featured Snippets](/schema-markup-featured-snippets): Structured data guide.
+- [Website Conversion for Law Firms](/website-conversion-law-firms): Conversion optimization.
+- [Google March 2026 Update](/google-march-2026-update): Algorithm update analysis.
+- [Schema for Exact Match Domains](/schema-for-exact-match-domains): Schema strategy.
+- [OpenAI Web Browser](/openai-web-browser): OpenAI's browser overview.
+
+## Optional
+
+- [Privacy Policy](/privacy-policy)
+- [Support](/support)
+- [Install PWA](/install)
+- [Jax Bar Association Resources](/jax-bar-association)
