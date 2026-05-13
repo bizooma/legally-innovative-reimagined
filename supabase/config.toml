@@ -121,4 +121,13 @@ verify_jwt = true
 [functions.site-chatbot]
 verify_jwt = false
 
+[functions.accessibility-signup]
+verify_jwt = false
+
+[functions.create-accessibility-checkout]
+verify_jwt = true
+
+[functions.verify-accessibility-checkout]
+verify_jwt = true
+
 
