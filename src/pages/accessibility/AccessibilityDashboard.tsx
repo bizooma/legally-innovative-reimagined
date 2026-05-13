@@ -36,7 +36,7 @@ export default function AccessibilityDashboard() {
                 <s.icon className="h-4 w-4" />
               </div>
               <div className="text-3xl font-bold mt-2">{s.value}</div>
-              {s.hint && <div className="text-xs text-muted-foreground mt-1">{s.hint}</div>}
+
             </CardContent>
           </Card>
         ))}
