@@ -615,6 +615,7 @@ export type Database = {
           logo_url: string | null
           position: string
           primary_color: string | null
+          statement_url: string | null
           updated_at: string
           website_id: string
         }
@@ -628,6 +629,7 @@ export type Database = {
           logo_url?: string | null
           position?: string
           primary_color?: string | null
+          statement_url?: string | null
           updated_at?: string
           website_id: string
         }
@@ -641,6 +643,7 @@ export type Database = {
           logo_url?: string | null
           position?: string
           primary_color?: string | null
+          statement_url?: string | null
           updated_at?: string
           website_id?: string
         }
