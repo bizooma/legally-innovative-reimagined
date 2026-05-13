@@ -75,11 +75,17 @@ const LawFirmWebsiteDevelopmentPage = () => {
   return (
     <>
       <Helmet>
-        <title>Jacksonville Website Development for Law Firms | Bizooma Digital Marketing Agency</title>
+        <title>Jacksonville Website Development for Law Firms | Bizooma</title>
         <meta 
           name="description" 
           content="Jacksonville website development for law firms. Custom designs, responsive layouts, SEO optimization, and compliance-focused solutions to grow your legal practice online." 
         />
+        <meta property="og:title" content="Jacksonville Website Development for Law Firms | Bizooma" />
+        <meta property="og:description" content="Custom, responsive, SEO-ready websites for law firms — built to grow your legal practice." />
+        <meta property="og:image" content={`https://bizooma.com${ogImage}`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`https://bizooma.com${ogImage}`} />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
