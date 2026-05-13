@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,11 +10,22 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 export default function AccessibilitySignup() {
+  const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
+  const mode: "signin" | "signup" = params.get("mode") === "signin" ? "signin" : "signup";
+  const setMode = (m: "signin" | "signup") => {
+    const next = new URLSearchParams(params);
+    if (m === "signin") next.set("mode", "signin");
+    else next.delete("mode");
+    setParams(next, { replace: true });
+  };
+
   const [orgName, setOrgName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [resetting, setResetting] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,10 +71,43 @@ export default function AccessibilitySignup() {
     }
   };
 
+  const signIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      toast({ title: "Welcome back", description: "Signed in successfully." });
+      navigate("/accessibility/dashboard");
+    } catch (err: any) {
+      toast({ title: "Sign in failed", description: err.message ?? String(err), variant: "destructive" });
+      setLoading(false);
+    }
+  };
+
+  const forgotPassword = async () => {
+    if (!email) {
+      toast({ title: "Enter your email", description: "Type your email above first, then click Forgot password.", variant: "destructive" });
+      return;
+    }
+    setResetting(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/accessibility/reset-password`,
+      });
+      if (error) throw error;
+      toast({ title: "Check your inbox", description: "We sent you a password reset link." });
+    } catch (err: any) {
+      toast({ title: "Could not send reset email", description: err.message ?? String(err), variant: "destructive" });
+    } finally {
+      setResetting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4 py-16">
       <Helmet>
-        <title>Create Account – Bizooma Accessibility Widget</title>
+        <title>{mode === "signin" ? "Sign In" : "Create Account"} – Bizooma Accessibility Widget</title>
         <meta name="robots" content="noindex" />
       </Helmet>
       <Card className="w-full max-w-md">
@@ -72,9 +116,34 @@ export default function AccessibilitySignup() {
             <div className="h-12 w-12 rounded-full bg-primary/10 text-primary inline-flex items-center justify-center">
               <Accessibility className="h-6 w-6" />
             </div>
-            <h1 className="text-2xl font-bold">Create your account</h1>
-            <p className="text-sm text-muted-foreground">Bizooma Accessibility Widget · $25/month · 1 website</p>
+            <h1 className="text-2xl font-bold">
+              {mode === "signin" ? "Sign in to your dashboard" : "Create your account"}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {mode === "signin"
+                ? "Bizooma Accessibility Widget subscribers"
+                : "Bizooma Accessibility Widget · $25/month · 1 website"}
+            </p>
           </div>
+
+          <div className="grid grid-cols-2 gap-1 p-1 bg-muted rounded-md text-sm">
+            <button
+              type="button"
+              onClick={() => setMode("signin")}
+              className={`py-2 rounded ${mode === "signin" ? "bg-background shadow-sm font-medium" : "text-muted-foreground"}`}
+            >
+              Sign in
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("signup")}
+              className={`py-2 rounded ${mode === "signup" ? "bg-background shadow-sm font-medium" : "text-muted-foreground"}`}
+            >
+              Create account
+            </button>
+          </div>
+
+          {mode === "signup" ? (
           <form onSubmit={submit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="orgName">Organization name</Label>
@@ -115,9 +184,52 @@ export default function AccessibilitySignup() {
               You'll be redirected to Stripe to complete your $25/month subscription. No confirmation email is required.
             </p>
           </form>
-          <div className="text-xs text-center text-muted-foreground">
-            Already have an account? <Link to="/portal" className="text-primary hover:underline">Sign in</Link>
-          </div>
+          ) : (
+          <form onSubmit={signIn} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="signin-email">Email</Label>
+              <Input id="signin-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="signin-password">Password</Label>
+                <button
+                  type="button"
+                  onClick={forgotPassword}
+                  className="text-xs text-primary hover:underline disabled:opacity-50"
+                  disabled={resetting}
+                >
+                  {resetting ? "Sending…" : "Forgot password?"}
+                </button>
+              </div>
+              <div className="relative">
+                <Input
+                  id="signin-password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((s) => !s)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground hover:text-foreground"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+            <Button type="submit" className="w-full gap-2" disabled={loading}>
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <>Sign in <ArrowRight className="h-4 w-4" /></>}
+            </Button>
+            <p className="text-xs text-muted-foreground text-center">
+              Need a different account? <Link to="/portal" className="text-primary hover:underline">Client portal sign in</Link>
+            </p>
+          </form>
+          )}
         </CardContent>
       </Card>
     </div>
