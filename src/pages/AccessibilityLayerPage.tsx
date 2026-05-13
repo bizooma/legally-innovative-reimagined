@@ -45,13 +45,6 @@ const featureGroups = [
   },
 ];
 
-const pricing = [
-  { name: "Starter", price: "$49", desc: "1 website · monthly scans · widget", features: ["1 website", "Monthly scans", "Accessibility widget", "Email reports"] },
-  { name: "Professional", price: "$149", desc: "5 websites · weekly AI scans", features: ["5 websites", "Weekly scans", "AI recommendations", "PDF compliance reports", "3 team members"], featured: true },
-  { name: "Agency", price: "$399", desc: "25 sites · white-label · multi-client", features: ["25 websites", "Daily scans", "White-label widget & reports", "Unlimited team", "API access"] },
-  { name: "Enterprise", price: "Custom", desc: "Unlimited · SLA · dedicated support", features: ["Unlimited websites", "Custom scan cadence", "SSO & audit logs", "Dedicated CSM", "Legal documentation vault"] },
-];
-
 const faqs = [
   { q: "What laws does this help me comply with?", a: "WCAG 2.1 AA, the ADA (Title III), Section 508, and EAA. Our reports map findings to the relevant criteria." },
   { q: "Will the widget slow my site down?", a: "No. The widget is a small async script (<25KB gzipped) that loads after the main thread is idle." },
@@ -85,7 +78,7 @@ export default function AccessibilityLayerPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="gap-2">
-                <Link to="/accessibility/dashboard">Start Free Scan <ArrowRight className="h-4 w-4" /></Link>
+                <Link to="/accessibility/signup">Get the widget – $25/mo <ArrowRight className="h-4 w-4" /></Link>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <a href="https://calendly.com/heyjoe" target="_blank" rel="noreferrer">Schedule Demo</a>
@@ -203,7 +196,7 @@ export default function AccessibilityLayerPage() {
                 <li key={f} className="flex items-center gap-3"><CheckCircle2 className="h-4 w-4 text-primary"/>{f}</li>
               ))}
             </ul>
-            <Button asChild className="mt-6 gap-2"><Link to="/accessibility/dashboard">Open dashboard <ArrowRight className="h-4 w-4"/></Link></Button>
+            <Button asChild className="mt-6 gap-2"><Link to="/accessibility/signup">Get started <ArrowRight className="h-4 w-4"/></Link></Button>
           </div>
         </div>
       </section>
@@ -212,26 +205,37 @@ export default function AccessibilityLayerPage() {
       <section className="border-t bg-muted/30">
         <div className="container mx-auto px-4 py-20">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Pricing that scales with you</h2>
-            <p className="text-muted-foreground">From a single site to multi-client agency. Cancel anytime.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, transparent pricing</h2>
+            <p className="text-muted-foreground">One plan to get your site accessible today. Cancel anytime.</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pricing.map((p)=>(
-              <Card key={p.name} className={p.featured ? "border-2 border-primary shadow-xl relative" : ""}>
-                {p.featured && <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">Most popular</Badge>}
-                <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg">{p.name}</h3>
-                  <div className="mt-3"><span className="text-4xl font-bold">{p.price}</span>{p.price !== "Custom" && <span className="text-muted-foreground">/mo</span>}</div>
-                  <p className="text-sm text-muted-foreground mt-2 min-h-[40px]">{p.desc}</p>
-                  <ul className="space-y-2 my-6 text-sm">
-                    {p.features.map((f)=><li key={f} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0"/>{f}</li>)}
-                  </ul>
-                  <Button asChild className="w-full" variant={p.featured ? "default" : "outline"}>
-                    <Link to="/accessibility/dashboard">Get started</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="max-w-md mx-auto">
+            <Card className="border-2 border-primary shadow-xl relative">
+              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">Launch plan</Badge>
+              <CardContent className="pt-8">
+                <h3 className="font-semibold text-lg text-center">Bizooma Accessibility Widget</h3>
+                <div className="mt-3 text-center">
+                  <span className="text-5xl font-bold">$25</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+                <p className="text-sm text-muted-foreground mt-2 text-center">Everything you need to ship an accessible site.</p>
+                <ul className="space-y-2 my-6 text-sm">
+                  {[
+                    "1 website",
+                    "Embeddable accessibility widget",
+                    "Automated WCAG scans",
+                    "AI-powered remediation tips",
+                    "Issue tracking dashboard",
+                    "Cancel anytime",
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />{f}</li>
+                  ))}
+                </ul>
+                <Button asChild className="w-full gap-2">
+                  <Link to="/accessibility/signup">Get started <ArrowRight className="h-4 w-4" /></Link>
+                </Button>
+                <p className="text-xs text-muted-foreground text-center mt-3">More plans coming soon.</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -257,7 +261,7 @@ export default function AccessibilityLayerPage() {
           <Globe className="h-10 w-10 mx-auto text-primary mb-4"/>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Make every visitor feel welcome</h2>
           <p className="text-muted-foreground mb-8 max-w-xl mx-auto">Get an instant accessibility score for your site and see exactly what to fix.</p>
-          <Button asChild size="lg" className="gap-2"><Link to="/accessibility/dashboard">Run my free scan <ScanLine className="h-4 w-4"/></Link></Button>
+          <Button asChild size="lg" className="gap-2"><Link to="/accessibility/signup">Get the widget – $25/mo <ScanLine className="h-4 w-4"/></Link></Button>
         </div>
       </section>
     </div>
