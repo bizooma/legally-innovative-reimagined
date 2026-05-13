@@ -18,6 +18,7 @@ export const ResponsiveImage = ({
   sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
   widths = [320, 640, 768, 1024, 1280, 1536],
   className,
+  loading = "lazy",
   ...props
 }: ResponsiveImageProps) => {
   // Generate srcset with different widths
@@ -36,7 +37,7 @@ export const ResponsiveImage = ({
       alt={alt}
       srcSet={srcSet}
       sizes={sizes}
-      loading="lazy"
+      loading={loading}
       className={className}
       {...props}
     />

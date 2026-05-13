@@ -53,6 +53,8 @@ const Hero = () => {
           sizes="100vw"
           widths={[640, 1024, 1280, 1536, 1920]}
           className="w-full h-full object-cover" 
+          loading="eager"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-legal-primary/90 via-legal-primary/70 to-legal-primary/80"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-legal-primary/60"></div>
