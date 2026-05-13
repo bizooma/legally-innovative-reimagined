@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Gauge, Shield, AlertTriangle, AlertCircle, CheckCircle2, FileText, ScanLine, Globe, Calendar, Loader2, MousePointerClick, Users } from "lucide-react";
+import { Gauge, Shield, AlertTriangle, AlertCircle, CheckCircle2, FileText, ScanLine, Globe, Calendar, Loader2, MousePointerClick, Users, Info } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, BarChart, Bar } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -11,7 +11,7 @@ import type { useAccessibilityOrg } from "@/hooks/useAccessibilityOrg";
 
 type Ctx = ReturnType<typeof useAccessibilityOrg>;
 type Site = { id: string; name: string; url: string; current_score: number | null; last_scan_at: string | null };
-type Scan = { id: string; score: number | null; wcag_aa_pct: number | null; pages_scanned: number | null; completed_at: string | null; started_at: string | null };
+type Scan = { id: string; score: number | null; wcag_aa_pct: number | null; pages_scanned: number | null; completed_at: string | null; started_at: string | null; summary: any | null };
 type Issue = { id: string; rule_id: string; title: string; severity: string; status: string };
 type WidgetEvent = { event_type: string; feature_key: string | null; session_hash: string | null; created_at: string };
 
@@ -40,7 +40,7 @@ export default function AccessibilityDashboard() {
     const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
     const [{ data: w }, { data: s }, { data: i }, { data: e }] = await Promise.all([
       supabase.from("acc_websites").select("id, name, url, current_score, last_scan_at").eq("organization_id", orgId).order("created_at", { ascending: false }),
-      supabase.from("acc_scans").select("id, score, wcag_aa_pct, pages_scanned, completed_at, started_at").eq("organization_id", orgId).order("started_at", { ascending: false }).limit(30),
+      supabase.from("acc_scans").select("id, score, wcag_aa_pct, pages_scanned, completed_at, started_at, summary").eq("organization_id", orgId).order("started_at", { ascending: false }).limit(30),
       supabase.from("acc_accessibility_issues").select("id, rule_id, title, severity, status").eq("organization_id", orgId).limit(1000),
       supabase.from("acc_widget_events").select("event_type, feature_key, session_hash, created_at").eq("organization_id", orgId).gte("created_at", since).limit(5000),
     ]);
@@ -125,6 +125,9 @@ export default function AccessibilityDashboard() {
     { label: "Last scan", value: stats.lastScanAt ? new Date(stats.lastScanAt).toLocaleDateString() : "Never", icon: Calendar },
   ];
 
+  const latestScan = scans.find((s) => s.completed_at) ?? scans[0];
+  const spaWarning = !!latestScan?.summary?.spa_warning;
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -141,6 +144,20 @@ export default function AccessibilityDashboard() {
           </Button>
         </div>
       </div>
+
+      {spaWarning && !loading && (
+        <Card className="border-amber-500/40 bg-amber-50/50 dark:bg-amber-950/20">
+          <CardContent className="pt-6 flex gap-3">
+            <Info className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+            <div className="text-sm">
+              <div className="font-semibold text-amber-900 dark:text-amber-200">Limited scan results — JavaScript-rendered site detected</div>
+              <p className="text-amber-900/80 dark:text-amber-200/80 mt-1">
+                Your site appears to render content with JavaScript (React, Vue, Next.js, etc.). Our static scanner only sees the initial HTML shell, so the score and issue counts may be artificially high. Real accessibility issues in the rendered DOM are not detected. Headless-browser scanning is on the roadmap — until then, treat these results as a baseline check on your HTML shell.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {loading ? (
         <div className="text-sm text-muted-foreground flex items-center gap-2"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</div>
