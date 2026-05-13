@@ -315,6 +315,28 @@ async function fetchAndAnalyze(url: string): Promise<{ html: string; issues: Iss
   }
 }
 
+// Heuristic: looks like a client-rendered SPA shell where static HTML has little content.
+function looksLikeSpaShell(html: string): boolean {
+  if (!html) return false;
+  // Strip scripts/styles, then tags, to estimate visible text.
+  const stripped = html
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const hasRootMount = /<div[^>]+id\s*=\s*["'](root|app|__next|__nuxt|svelte)["']/i.test(html);
+  const hasH1 = /<h1\b/i.test(html);
+  const hasMain = /<main\b/i.test(html) || /role\s*=\s*["']main["']/i.test(html);
+  const linkCount = (html.match(/<a\b/gi) || []).length;
+  const imgCount = (html.match(/<img\b/gi) || []).length;
+  // SPA shell: has a known mount point AND very little rendered content.
+  if (hasRootMount && stripped.length < 500 && !hasH1 && !hasMain && linkCount < 5 && imgCount < 3) return true;
+  // Even without a known mount id, near-empty body with heavy script bundles is suspicious.
+  if (stripped.length < 200 && /<script[^>]+src=/i.test(html)) return true;
+  return false;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   try {
