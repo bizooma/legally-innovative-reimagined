@@ -547,6 +547,42 @@ export type Database = {
           },
         ]
       }
+      acc_widget_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          feature_key: string | null
+          id: string
+          organization_id: string
+          page_url: string | null
+          referrer_host: string | null
+          session_hash: string | null
+          website_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          feature_key?: string | null
+          id?: string
+          organization_id: string
+          page_url?: string | null
+          referrer_host?: string | null
+          session_hash?: string | null
+          website_id: string
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          feature_key?: string | null
+          id?: string
+          organization_id?: string
+          page_url?: string | null
+          referrer_host?: string | null
+          session_hash?: string | null
+          website_id?: string
+        }
+        Relationships: []
+      }
       acc_widget_settings: {
         Row: {
           custom_css: string | null
