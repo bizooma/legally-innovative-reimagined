@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
@@ -28,6 +29,10 @@ export default function SeoAuditPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <Helmet>
+        <title>Free SEO, AEO & Voice Search Audit | Bizooma</title>
+        <meta name="description" content="Run a free SEO, AEO, and Voice Search audit. Get actionable recommendations to improve your rankings and AI search visibility." />
+      </Helmet>
       <Navbar />
       <main className="flex-1 container mx-auto px-4 pt-24 pb-8">
         {!accessCode ? (
