@@ -44,7 +44,7 @@ Deno.serve(async (req) => {
 
     const { data: site } = await supabase
       .from("acc_websites")
-      .select("id, widget_enabled, verification_status, verified_at, allowed_domains, created_at")
+      .select("id, widget_enabled, allowed_domains, created_at")
       .eq("organization_id", org.id)
       .order("created_at", { ascending: true })
       .limit(1)
@@ -62,12 +62,6 @@ Deno.serve(async (req) => {
         const norm = (d || "").toLowerCase().replace(/^www\./, "");
         return requestHost === norm || requestHost.endsWith("." + norm);
       });
-
-    // Verification: enforce after a 24h grace period from website creation
-    const isVerified = site?.verification_status === "verified";
-    const createdAt = site?.created_at ? new Date(site.created_at as string).getTime() : Date.now();
-    const inGrace = Date.now() - createdAt < 24 * 60 * 60 * 1000;
-    const verificationOk = !site || isVerified || inGrace;
 
     // Subscription gate (null status = trial/free, allow). Block only on negative states.
     const subStatus = (org as any).subscription_status as string | null;
@@ -89,16 +83,12 @@ Deno.serve(async (req) => {
       enabled:
         (site ? site.widget_enabled !== false : true) &&
         domainOk &&
-        verificationOk &&
         !subBlocked,
       blocked_reason: subBlocked
         ? "subscription_inactive"
         : !domainOk
         ? "domain_not_allowed"
-        : !verificationOk
-        ? "site_unverified"
         : null,
-      verified: isVerified,
       primary_color: settings?.primary_color || org.brand_color || DEFAULTS.primary_color,
       position: settings?.position || DEFAULTS.position,
       logo_url: settings?.logo_url ?? org.logo_url ?? null,
