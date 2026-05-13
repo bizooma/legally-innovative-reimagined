@@ -299,13 +299,10 @@
 
   function renderBtn() {
     btn.innerHTML = "";
-    if (CONFIG.logo_url) {
-      var img = document.createElement("img");
-      img.src = CONFIG.logo_url; img.alt = "";
-      btn.appendChild(img);
-    } else {
-      btn.innerHTML = "&#9855;";
-    }
+    var img = document.createElement("img");
+    img.src = CONFIG.logo_url || (SCRIPT_ORIGIN + "/accessibility-widget-default.png");
+    img.alt = "";
+    btn.appendChild(img);
   }
 
   function render() {
