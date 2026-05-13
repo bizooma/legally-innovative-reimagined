@@ -513,11 +513,6 @@ export type Database = {
           scan_frequency: string
           updated_at: string
           url: string
-          verification_last_checked_at: string | null
-          verification_last_error: string | null
-          verification_status: string
-          verification_token: string | null
-          verified_at: string | null
           widget_enabled: boolean
         }
         Insert: {
@@ -532,11 +527,6 @@ export type Database = {
           scan_frequency?: string
           updated_at?: string
           url: string
-          verification_last_checked_at?: string | null
-          verification_last_error?: string | null
-          verification_status?: string
-          verification_token?: string | null
-          verified_at?: string | null
           widget_enabled?: boolean
         }
         Update: {
@@ -551,11 +541,6 @@ export type Database = {
           scan_frequency?: string
           updated_at?: string
           url?: string
-          verification_last_checked_at?: string | null
-          verification_last_error?: string | null
-          verification_status?: string
-          verification_token?: string | null
-          verified_at?: string | null
           widget_enabled?: boolean
         }
         Relationships: [
