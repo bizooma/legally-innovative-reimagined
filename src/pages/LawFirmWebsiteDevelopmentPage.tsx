@@ -1,6 +1,7 @@
 
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import ogImage from "@/assets/og/og-website-dev.jpg";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";

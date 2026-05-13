@@ -1,6 +1,7 @@
 
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import ogImage from "@/assets/og/og-mobile-app.jpg";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
@@ -73,6 +74,12 @@ const LawFirmMobileAppDevelopmentPage = () => {
           name="description" 
           content="Jacksonville mobile app development for law firms. Custom iOS and Android apps that enhance client communication, streamline processes, and grow your legal practice." 
         />
+        <meta property="og:title" content="Jacksonville Mobile App Development for Law Firms | Bizooma" />
+        <meta property="og:description" content="Custom iOS and Android apps that enhance client communication and grow your legal practice." />
+        <meta property="og:image" content={`https://bizooma.com${ogImage}`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`https://bizooma.com${ogImage}`} />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">

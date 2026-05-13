@@ -12,6 +12,7 @@ import DigitalMarketingResults from "@/components/digital-marketing/DigitalMarke
 import DigitalMarketingCTA from "@/components/digital-marketing/DigitalMarketingCTA";
 import { trackServiceView } from "@/utils/gtmTracking";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
+import ogImage from "@/assets/og/og-digital-marketing.jpg";
 
 const LawFirmDigitalMarketingPage = () => {
   useEffect(() => {
