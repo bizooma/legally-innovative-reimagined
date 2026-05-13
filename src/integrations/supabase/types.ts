@@ -585,7 +585,9 @@ export type Database = {
       }
       acc_widget_settings: {
         Row: {
+          available_languages: string[]
           custom_css: string | null
+          default_language: string
           enabled_features: Json | null
           hide_branding: boolean | null
           id: string
@@ -596,7 +598,9 @@ export type Database = {
           website_id: string
         }
         Insert: {
+          available_languages?: string[]
           custom_css?: string | null
+          default_language?: string
           enabled_features?: Json | null
           hide_branding?: boolean | null
           id?: string
@@ -607,7 +611,9 @@ export type Database = {
           website_id: string
         }
         Update: {
+          available_languages?: string[]
           custom_css?: string | null
+          default_language?: string
           enabled_features?: Json | null
           hide_branding?: boolean | null
           id?: string
