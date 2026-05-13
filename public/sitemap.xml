@@ -189,7 +189,7 @@
     <lastmod>2026-04-14</lastmod>
   </url>
   <url>
-    <loc>https://bizooma.com/mobile-apps-as-marketing-tool</loc>
+    <loc>https://bizooma.com/mobile-apps-marketing-tool</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <lastmod>2026-04-14</lastmod>
@@ -279,5 +279,18 @@
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
     <lastmod>2026-04-14</lastmod>
+  </url>
+  <!-- Additional public pages -->
+  <url>
+    <loc>https://bizooma.com/donuts</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <lastmod>2026-05-13</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/michael</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <lastmod>2026-05-13</lastmod>
   </url>
 </urlset>
