@@ -113,17 +113,18 @@ const MarketingProducts = () => {
       isExternal: true
     },
     {
-      title: "Signature Pop",
-      subtitle: "Email Signature Marketing",
-      description: "Transform every email into a marketing opportunity with branded, interactive email signatures. Add dynamic banners and track clicks across your team.",
-      badges: ["Email Marketing", "Branding", "Analytics"],
+      title: "Lex Guild",
+      subtitle: "Legal Professionals Network",
+      description: "A modern guild for legal professionals — connect, collaborate, and grow your practice through a curated community built for attorneys.",
+      badges: ["Legal", "Community", "Network"],
       keyResults: [
-        "425% ↑ Engagement",
-        "8K+ Impressions/Year",
-        "Zero Extra Cost"
+        "Curated Membership",
+        "Professional Network",
+        "Practice Growth"
       ],
       image: underConstructionImg,
-      link: "/products/signature-pop"
+      link: "https://lexguild.com",
+      isExternal: true
     }
   ];
 
