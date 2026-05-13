@@ -40,6 +40,10 @@ export default function AccessibilityWebsites() {
 
   const add = async () => {
     if (!ctx.org) return;
+    if (sites.length >= 1) {
+      toast({ title: "Website limit reached", description: "Your plan includes 1 website. Contact us to add more.", variant: "destructive" });
+      return;
+    }
     setBusy(true);
     let normalized = url.trim();
     if (!/^https?:\/\//i.test(normalized)) normalized = "https://" + normalized;
@@ -76,7 +80,7 @@ export default function AccessibilityWebsites() {
           <p className="text-sm text-muted-foreground">Add, verify, and monitor the domains you protect.</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button className="gap-2"><Plus className="h-4 w-4" /> Add website</Button></DialogTrigger>
+          <DialogTrigger asChild><Button className="gap-2" disabled={sites.length >= 1}><Plus className="h-4 w-4" /> Add website</Button></DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>Add a website</DialogTitle></DialogHeader>
             <div className="space-y-3">
