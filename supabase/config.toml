@@ -130,4 +130,7 @@ verify_jwt = true
 [functions.verify-accessibility-checkout]
 verify_jwt = true
 
+[functions.acc-widget-config]
+verify_jwt = false
+
 
