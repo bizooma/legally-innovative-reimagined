@@ -487,6 +487,7 @@ export type Database = {
       }
       acc_websites: {
         Row: {
+          allowed_domains: string[]
           created_at: string
           current_score: number | null
           id: string
@@ -495,11 +496,15 @@ export type Database = {
           organization_id: string
           updated_at: string
           url: string
+          verification_last_checked_at: string | null
+          verification_last_error: string | null
           verification_status: string
           verification_token: string | null
+          verified_at: string | null
           widget_enabled: boolean
         }
         Insert: {
+          allowed_domains?: string[]
           created_at?: string
           current_score?: number | null
           id?: string
@@ -508,11 +513,15 @@ export type Database = {
           organization_id: string
           updated_at?: string
           url: string
+          verification_last_checked_at?: string | null
+          verification_last_error?: string | null
           verification_status?: string
           verification_token?: string | null
+          verified_at?: string | null
           widget_enabled?: boolean
         }
         Update: {
+          allowed_domains?: string[]
           created_at?: string
           current_score?: number | null
           id?: string
@@ -521,8 +530,11 @@ export type Database = {
           organization_id?: string
           updated_at?: string
           url?: string
+          verification_last_checked_at?: string | null
+          verification_last_error?: string | null
           verification_status?: string
           verification_token?: string | null
+          verified_at?: string | null
           widget_enabled?: boolean
         }
         Relationships: [
