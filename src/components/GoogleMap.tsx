@@ -11,6 +11,7 @@ const GoogleMap = () => {
           loading="lazy" 
           referrerPolicy="no-referrer-when-downgrade"
           className="w-full"
+          title="Bizooma Jacksonville Office Location Map"
         />
       </div>
     </section>

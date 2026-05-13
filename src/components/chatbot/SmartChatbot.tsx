@@ -372,7 +372,7 @@ export function SmartChatbot() {
                 )}
               </div>
             </form>
-            <p className="text-[9px] text-muted-foreground/40 text-center mt-1.5 tracking-wide">
+            <p className="text-[10px] text-muted-foreground text-center mt-1.5 tracking-wide">
               Powered by Bizooma AI
             </p>
           </div>
