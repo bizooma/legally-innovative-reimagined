@@ -549,7 +549,8 @@
             enabled_features: Object.assign({}, DEFAULTS.enabled_features, cfg.enabled_features || {}),
             custom_css: cfg.custom_css || null,
             default_language: cfg.default_language || DEFAULTS.default_language,
-            available_languages: (cfg.available_languages && cfg.available_languages.length) ? cfg.available_languages : DEFAULTS.available_languages
+            available_languages: (cfg.available_languages && cfg.available_languages.length) ? cfg.available_languages : DEFAULTS.available_languages,
+            statement_url: cfg.statement_url || null
           };
         }
       })
