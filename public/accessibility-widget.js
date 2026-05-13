@@ -16,6 +16,7 @@
     ? SCRIPT_ORIGIN.replace(/^https?:\/\/[^/]*$/, "https://hvyjvbdforunsjgqhhny.supabase.co")
     : "https://hvyjvbdforunsjgqhhny.supabase.co";
   var ENDPOINT = "https://hvyjvbdforunsjgqhhny.supabase.co/functions/v1/acc-widget-config?org=" + encodeURIComponent(ORG_SLUG);
+  var EVENT_ENDPOINT = "https://hvyjvbdforunsjgqhhny.supabase.co/functions/v1/acc-widget-event";
 
   var DEFAULTS = {
     enabled: true,
@@ -32,6 +33,35 @@
   var prefs = {};
   try { prefs = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (e) {}
   function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs)); }
+
+  // Anonymous, persistent-but-rotating session id (no PII)
+  var SESSION_KEY = "bz-acc-sid";
+  var sessionHash = "";
+  try {
+    sessionHash = localStorage.getItem(SESSION_KEY) || "";
+    if (!sessionHash) {
+      sessionHash = (Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
+      localStorage.setItem(SESSION_KEY, sessionHash);
+    }
+  } catch (e) {}
+
+  function track(event_type, feature_key) {
+    if (!ORG_SLUG) return;
+    try {
+      var body = JSON.stringify({
+        org: ORG_SLUG,
+        event_type: event_type,
+        feature_key: feature_key || null,
+        session_hash: sessionHash,
+        page_url: location.href.slice(0, 500)
+      });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(EVENT_ENDPOINT, new Blob([body], { type: "application/json" }));
+      } else {
+        fetch(EVENT_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: body, keepalive: true }).catch(function(){});
+      }
+    } catch (e) {}
+  }
 
   var ALL_FEATURES = [
     { key: "large", label: "Larger Text", cls: "bz-large", group: "size" },
@@ -111,12 +141,13 @@
       });
     }
     prefs[key] = !prefs[key];
+    track(prefs[key] ? "feature_on" : "feature_off", key);
     save();
     applyAll();
     render();
   }
 
-  function reset() { prefs = {}; save(); applyAll(); render(); }
+  function reset() { prefs = {}; save(); applyAll(); render(); track("reset"); }
 
   var btn = document.createElement("button");
   btn.className = "bz-acc-btn";
@@ -173,7 +204,8 @@
 
   btn.onclick = function () {
     panel.classList.toggle("open");
-    if (panel.classList.contains("open")) render();
+    if (panel.classList.contains("open")) { render(); track("open"); }
+    else track("close");
   };
 
   function mount() {
@@ -182,6 +214,7 @@
     if (!document.body.contains(btn)) document.body.appendChild(btn);
     if (!document.body.contains(panel)) document.body.appendChild(panel);
     applyAll();
+    track("view");
   }
 
   function loadConfig() {
