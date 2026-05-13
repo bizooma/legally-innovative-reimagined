@@ -241,6 +241,16 @@ export default function AccessibilityWidgetPage() {
               <p className="text-[11px] text-muted-foreground">Replaces the default icon inside the floating button.</p>
             </div>
 
+            <div className="space-y-1.5">
+              <Label>Accessibility Statement URL (optional)</Label>
+              <Input
+                placeholder="https://yoursite.com/accessibility-statement"
+                value={s.statement_url ?? ""}
+                onChange={(e) => setS({ ...s, statement_url: e.target.value })}
+              />
+              <p className="text-[11px] text-muted-foreground">Where the "Accessibility Statement" button in the widget footer should link. Defaults to <span className="font-mono">/accessibility-statement</span> on your own site.</p>
+            </div>
+
             <div className="flex items-center justify-between rounded-md border p-3">
               <div>
                 <div className="text-sm font-medium">Hide "Powered by Bizooma"</div>
