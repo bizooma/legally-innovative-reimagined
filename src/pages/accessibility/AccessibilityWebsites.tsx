@@ -31,7 +31,8 @@ type Website = {
 
 export default function AccessibilityWebsites() {
   const ctx = useOutletContext<Ctx>();
-  const siteLimit = limitFor(ctx.org?.plan);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const siteLimit = isAdmin ? Infinity : limitFor(ctx.org?.plan);
   const [sites, setSites] = useState<Website[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -56,6 +57,17 @@ export default function AccessibilityWebsites() {
   };
 
   useEffect(() => { load(); }, [ctx.org?.id]);
+
+  useEffect(() => {
+    let cancel = false;
+    (async () => {
+      const { data: auth } = await supabase.auth.getUser();
+      if (!auth.user) return;
+      const { data } = await supabase.from("users").select("is_admin").eq("id", auth.user.id).maybeSingle();
+      if (!cancel) setIsAdmin(!!data?.is_admin);
+    })();
+    return () => { cancel = true; };
+  }, []);
 
   const add = async () => {
     if (!ctx.org) return;
