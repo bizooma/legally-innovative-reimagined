@@ -315,6 +315,28 @@ async function fetchAndAnalyze(url: string): Promise<{ html: string; issues: Iss
   }
 }
 
+// Heuristic: looks like a client-rendered SPA shell where static HTML has little content.
+function looksLikeSpaShell(html: string): boolean {
+  if (!html) return false;
+  // Strip scripts/styles, then tags, to estimate visible text.
+  const stripped = html
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const hasRootMount = /<div[^>]+id\s*=\s*["'](root|app|__next|__nuxt|svelte)["']/i.test(html);
+  const hasH1 = /<h1\b/i.test(html);
+  const hasMain = /<main\b/i.test(html) || /role\s*=\s*["']main["']/i.test(html);
+  const linkCount = (html.match(/<a\b/gi) || []).length;
+  const imgCount = (html.match(/<img\b/gi) || []).length;
+  // SPA shell: has a known mount point AND very little rendered content.
+  if (hasRootMount && stripped.length < 500 && !hasH1 && !hasMain && linkCount < 5 && imgCount < 3) return true;
+  // Even without a known mount id, near-empty body with heavy script bundles is suspicious.
+  if (stripped.length < 200 && /<script[^>]+src=/i.test(html)) return true;
+  return false;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   try {
@@ -366,13 +388,16 @@ Deno.serve(async (req) => {
 
     // Analyze pages with limited concurrency
     const perPage: { url: string; score: number; issues: Issue[] }[] = [];
+    let spaShellPages = 0;
     for (let i = 0; i < targets.length; i += CRAWL_CONCURRENCY) {
       const batch = targets.slice(i, i + CRAWL_CONCURRENCY);
       const out = await Promise.all(batch.map(async (u) => {
         const r = await fetchAndAnalyze(u);
-        return { url: u, score: r.score, issues: r.issues };
+        const spa = looksLikeSpaShell(r.html);
+        if (spa) spaShellPages++;
+        return { url: u, score: r.score, issues: r.issues, spa };
       }));
-      perPage.push(...out);
+      perPage.push(...out.map(({ spa, ...rest }) => rest));
     }
 
     // Persist per-page rows
@@ -408,10 +433,15 @@ Deno.serve(async (req) => {
     const avgScore = perPage.length
       ? Math.round(perPage.reduce((a, p) => a + p.score, 0) / perPage.length)
       : 0;
-    const blockingPerPage = perPage.length
-      ? perPage.reduce((a, p) => a + p.issues.filter(i => i.severity === "critical" || i.severity === "serious").length, 0) / perPage.length
+    // Weighted WCAG AA % — counts ALL severities, not just critical+serious.
+    // Weights: critical=10, serious=6, moderate=3, minor=1. Per-page deduction = sum of weights.
+    const sevWeight = (s: string) =>
+      s === "critical" ? 10 : s === "serious" ? 6 : s === "moderate" ? 3 : 1;
+    const weightedPerPage = perPage.length
+      ? perPage.reduce((a, p) => a + p.issues.reduce((b, i) => b + sevWeight(i.severity), 0), 0) / perPage.length
       : 0;
-    const wcagAa = Math.max(0, Math.min(100, Math.round(100 - blockingPerPage * 6)));
+    const wcagAa = Math.max(0, Math.min(100, Math.round(100 - weightedPerPage)));
+    const spaWarning = spaShellPages > 0 && spaShellPages >= Math.ceil(perPage.length / 2);
 
     await admin
       .from("acc_scans")
@@ -429,6 +459,8 @@ Deno.serve(async (req) => {
           minor: allIssues.filter(i=>i.severity==="minor").length,
           pages: perPage.length,
           discovered_via: pages.length ? "crawl" : "single",
+          spa_shell_pages: spaShellPages,
+          spa_warning: spaWarning,
         },
       })
       .eq("id", scan.id);
