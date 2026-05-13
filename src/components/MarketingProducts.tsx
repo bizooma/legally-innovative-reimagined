@@ -115,13 +115,13 @@ const MarketingProducts = () => {
     },
     {
       title: "Lex Guild",
-      subtitle: "Legal Professionals Network",
-      description: "A modern guild for legal professionals — connect, collaborate, and grow your practice through a curated community built for attorneys.",
-      badges: ["Legal", "Community", "Network"],
+      subtitle: "Legal Mentorship & Knowledge Sharing",
+      description: "An invitation-only mentorship program and knowledge sharing platform for the legal profession — pairing attorneys, sharing expertise, and strengthening practice communities.",
+      badges: ["Mentorship", "Knowledge Sharing", "Legal"],
       keyResults: [
-        "Curated Membership",
-        "Professional Network",
-        "Practice Growth"
+        "Curated Mentor Matching",
+        "Structured Knowledge Sharing",
+        "Stronger Member Engagement"
       ],
       image: lexguildImg,
       link: "https://lexguild.com",
