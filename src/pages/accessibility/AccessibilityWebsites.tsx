@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Globe, Plus, ScanLine, Loader2, ExternalLink, Trash2, ShieldCheck, ShieldAlert, Copy } from "lucide-react";
+import { Globe, Plus, ScanLine, Loader2, ExternalLink, Trash2, ShieldCheck, ShieldAlert, Copy, CalendarClock } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import type { useAccessibilityOrg } from "@/hooks/useAccessibilityOrg";
@@ -19,6 +20,8 @@ type Website = {
   verification_token: string;
   verification_last_error: string | null;
   allowed_domains: string[] | null;
+  scan_frequency: string;
+  next_scan_at: string | null;
 };
 
 export default function AccessibilityWebsites() {
@@ -40,7 +43,7 @@ export default function AccessibilityWebsites() {
     setLoading(true);
     const { data } = await supabase
       .from("acc_websites")
-      .select("id, name, url, current_score, last_scan_at, verification_status, verification_token, verification_last_error, allowed_domains")
+      .select("id, name, url, current_score, last_scan_at, verification_status, verification_token, verification_last_error, allowed_domains, scan_frequency, next_scan_at")
       .eq("organization_id", ctx.org.id)
       .order("created_at", { ascending: false });
     setSites((data as any) ?? []);
@@ -118,6 +121,14 @@ export default function AccessibilityWebsites() {
     toast({ title: `${label} copied` });
   };
 
+  const updateFrequency = async (id: string, freq: string) => {
+    const next = freq === "off" ? null : new Date(Date.now() + 60 * 1000).toISOString();
+    const { error } = await supabase.from("acc_websites").update({ scan_frequency: freq, next_scan_at: next }).eq("id", id);
+    if (error) { toast({ title: "Could not update schedule", description: error.message, variant: "destructive" }); return; }
+    toast({ title: freq === "off" ? "Scheduled scans paused" : `Scans scheduled ${freq}` });
+    load();
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -166,6 +177,15 @@ export default function AccessibilityWebsites() {
                   <div className="text-[10px] uppercase text-muted-foreground tracking-wide">Score</div>
                 </div>
                 <Button size="sm" variant="outline" onClick={() => openManage(s)}>Manage</Button>
+                <Select value={s.scan_frequency} onValueChange={(v) => updateFrequency(s.id, v)}>
+                  <SelectTrigger className="h-9 w-[130px]"><CalendarClock className="h-3.5 w-3.5 mr-1" /><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="off">Manual only</SelectItem>
+                    <SelectItem value="daily">Daily</SelectItem>
+                    <SelectItem value="weekly">Weekly</SelectItem>
+                    <SelectItem value="monthly">Monthly</SelectItem>
+                  </SelectContent>
+                </Select>
                 <Button size="sm" variant="outline" className="gap-2" disabled={scanningId === s.id} onClick={() => scan(s.id)}>
                   {scanningId === s.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <ScanLine className="h-4 w-4" />} Scan
                 </Button>

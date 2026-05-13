@@ -293,6 +293,9 @@ export type Database = {
           brand_color: string | null
           created_at: string
           created_by: string
+          digest_email: string | null
+          digest_frequency: string
+          digest_last_sent_at: string | null
           id: string
           is_agency: boolean
           logo_url: string | null
@@ -309,6 +312,9 @@ export type Database = {
           brand_color?: string | null
           created_at?: string
           created_by?: string
+          digest_email?: string | null
+          digest_frequency?: string
+          digest_last_sent_at?: string | null
           id?: string
           is_agency?: boolean
           logo_url?: string | null
@@ -325,6 +331,9 @@ export type Database = {
           brand_color?: string | null
           created_at?: string
           created_by?: string
+          digest_email?: string | null
+          digest_frequency?: string
+          digest_last_sent_at?: string | null
           id?: string
           is_agency?: boolean
           logo_url?: string | null
@@ -499,7 +508,9 @@ export type Database = {
           id: string
           last_scan_at: string | null
           name: string
+          next_scan_at: string | null
           organization_id: string
+          scan_frequency: string
           updated_at: string
           url: string
           verification_last_checked_at: string | null
@@ -516,7 +527,9 @@ export type Database = {
           id?: string
           last_scan_at?: string | null
           name: string
+          next_scan_at?: string | null
           organization_id: string
+          scan_frequency?: string
           updated_at?: string
           url: string
           verification_last_checked_at?: string | null
@@ -533,7 +546,9 @@ export type Database = {
           id?: string
           last_scan_at?: string | null
           name?: string
+          next_scan_at?: string | null
           organization_id?: string
+          scan_frequency?: string
           updated_at?: string
           url?: string
           verification_last_checked_at?: string | null
