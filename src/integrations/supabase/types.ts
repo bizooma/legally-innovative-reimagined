@@ -16,6 +16,8 @@ export type Database = {
     Tables: {
       acc_accessibility_issues: {
         Row: {
+          ai_fix: string | null
+          ai_fix_generated_at: string | null
           ai_recommendation: string | null
           assigned_to: string | null
           created_at: string
@@ -37,6 +39,8 @@ export type Database = {
           website_id: string
         }
         Insert: {
+          ai_fix?: string | null
+          ai_fix_generated_at?: string | null
           ai_recommendation?: string | null
           assigned_to?: string | null
           created_at?: string
@@ -58,6 +62,8 @@ export type Database = {
           website_id: string
         }
         Update: {
+          ai_fix?: string | null
+          ai_fix_generated_at?: string | null
           ai_recommendation?: string | null
           assigned_to?: string | null
           created_at?: string
