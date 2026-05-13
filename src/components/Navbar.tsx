@@ -111,7 +111,7 @@ const Navbar = () => {
 
           <Link
             to="/accessibility/signup?mode=signin"
-            className={`hover:text-legal-primary transition-colors font-medium text-sm ${textColorClass}`}
+            className={`px-4 py-2 rounded-md border border-legal-primary hover:bg-legal-primary hover:text-white transition-colors font-medium text-sm ${textColorClass}`}
           >
             Accessibility Login
           </Link>
