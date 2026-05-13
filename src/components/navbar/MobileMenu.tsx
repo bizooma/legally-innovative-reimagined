@@ -136,6 +136,14 @@ const MobileMenu = ({ isOpen, navLinks, serviceLinks, productLinks, onNavLinkCli
           Stay Informed
         </Link>
 
+        <Link
+          to="/accessibility/signup?mode=signin"
+          className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium"
+          onClick={onClose}
+        >
+          Accessibility Login
+        </Link>
+
         <Button
           className="bg-legal-primary hover:bg-legal-secondary text-white w-full flex items-center justify-center"
           onClick={() => {
