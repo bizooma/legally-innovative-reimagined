@@ -1,21 +1,35 @@
-## Newsletter Banner — ADA/WCAG Widget
+# Add Sign-In for Accessibility Subscribers
 
-**Specs**
-- Size: 600 × 200 px PNG (standard newsletter width)
-- Headline: "Make your website ADA/WCAG compliant for just $25/month"
-- Brand: Bizooma dark red (#7A0A0A) + black (#1A0000), clean minimal, no cartoons
-- Output: `/mnt/documents/ada-widget-newsletter-banner.png`
+## Goal
+Paid Accessibility Layer subscribers currently have no visible way to sign in. Add a clear entry point in the global top navigation that takes them to a sign-in form on the existing `/accessibility/signup` page.
 
-**Composition**
-- Left ~60%: black/dark-red panel with the headline in bold Inter, subline ("ADA & WCAG 2.1 AA Widget · No code · Install in minutes"), and a dark-red pill CTA button reading "Start free trial"
-- Right ~40%: subtle accessibility iconography (universal access symbol + abstract widget UI lines) in muted red on black — flat, geometric, no AI text
-- Thin red accent rule separating the two zones; small "bizooma" wordmark bottom-left
+## Changes
 
-**Approach**
-1. Generate the banner via `imagegen` at 1920×640 (3:1 close to 3.0 ratio), then resize cleanly to 600×200 with PIL — keeps text crisp at email size.
-2. QA the output: inspect for legibility at 600px, no clipped/garbled text, correct brand colors, proper margins. Re-render if anything is off.
-3. Deliver as a `<presentation-artifact>` PNG.
+### 1. Global top nav (`src/components/Navbar.tsx` + `src/components/navbar/MobileMenu.tsx`)
+- Add an "Accessibility Login" link next to the existing "Stay Informed" link (desktop) and inside the mobile menu.
+- Style as a subtle text link — keep "Client Portal" as the prominent primary button.
+- Links to `/accessibility/signup?mode=signin`.
 
-**If text rendering looks unreliable from the model**, fallback: generate only the background/iconography with imagegen, then composite the headline + CTA via PIL using Inter so typography is pixel-perfect. This guarantees clean type for email use.
+### 2. `/accessibility/signup` page (`src/pages/accessibility/AccessibilitySignup.tsx`)
+- Convert into a tabbed view with two modes: **Sign in** and **Create account** (current signup flow).
+- Default mode driven by `?mode=signin` query param (defaults to `signup` when absent, preserving current behavior for existing CTAs).
+- **Sign-in tab**: email + password fields → `supabase.auth.signInWithPassword` → on success redirect to `/accessibility/dashboard`. Include "Forgot password?" link using `supabase.auth.resetPasswordForEmail` with `redirectTo: ${origin}/accessibility/reset-password`.
+- **Sign-up tab**: existing flow unchanged.
+- Update page `<title>` and H1 dynamically per tab.
 
-Approve and I'll generate the banner.
+### 3. Password reset page (new — `src/pages/accessibility/AccessibilityResetPassword.tsx`)
+- Public route at `/accessibility/reset-password`.
+- Detects `type=recovery` in URL hash, shows new-password form, calls `supabase.auth.updateUser({ password })`, then redirects to `/accessibility/dashboard`.
+- Required so the "Forgot password?" flow actually works.
+
+### 4. Routing (`src/App.tsx`)
+- Add the new `/accessibility/reset-password` public route.
+
+## Out of scope
+- No changes to the embedded widget, accessibility product landing page, or `/portal`.
+- No changes to RLS, edge functions, or the existing signup edge function.
+
+## Technical notes
+- Uses existing `supabase` client; no new dependencies.
+- Mobile menu already iterates `navLinks` — will add the accessibility login as a separate explicit item (mirrors how "Stay Informed" / "Client Portal" are rendered) rather than into the data array, to avoid leaking it into other surfaces that consume `navLinks`.
+- Tab state is local React state initialized from `useSearchParams()`.
