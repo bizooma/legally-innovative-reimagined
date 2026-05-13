@@ -81,6 +81,7 @@ import AccessibilityAi from "./pages/accessibility/AccessibilityAi";
 import AccessibilityWidgetPage from "./pages/accessibility/AccessibilityWidgetPage";
 import AccessibilitySignup from "./pages/accessibility/AccessibilitySignup";
 import AccessibilityCheckoutSuccess from "./pages/accessibility/AccessibilityCheckoutSuccess";
+import AccessibilityProfile from "./pages/accessibility/AccessibilityProfile";
 import MarketingSectionPage from "./pages/MarketingSectionPage";
 import CodeSectionPage from "./pages/CodeSectionPage";
 import AiSectionPage from "./pages/AiSectionPage";
@@ -251,6 +252,7 @@ const App = () => (
                 <Route path="issues" element={<AccessibilityIssues />} />
                 <Route path="ai" element={<AccessibilityAi />} />
                 <Route path="reports" element={<PlaceholderPage title="Reports" description="Executive summaries, technical reports, and historical comparisons." />} />
+                <Route path="profile" element={<AccessibilityProfile />} />
                 <Route path="team" element={<PlaceholderPage title="Team Members" description="Invite teammates and manage roles within your organization." />} />
                 <Route path="billing" element={<PlaceholderPage title="Billing" description="Manage your plan, invoices, and payment method." />} />
                 <Route path="api-keys" element={<PlaceholderPage title="API Keys" description="Programmatic access for integrations and automation." />} />
