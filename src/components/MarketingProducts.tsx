@@ -8,6 +8,7 @@ import aeoAnalyzerImg from "@/assets/aeo-analyzer-screenshot.png";
 import npobotsImg from "@/assets/npobots-screenshot.png";
 import mvpSoftlaunchImg from "@/assets/mvp-softlaunch-screenshot.png";
 import mapprrImg from "@/assets/mapprr-screenshot.png";
+import lexguildImg from "@/assets/lexguild-screenshot.png";
 import { useEffect, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -122,7 +123,7 @@ const MarketingProducts = () => {
         "Professional Network",
         "Practice Growth"
       ],
-      image: underConstructionImg,
+      image: lexguildImg,
       link: "https://lexguild.com",
       isExternal: true
     }
