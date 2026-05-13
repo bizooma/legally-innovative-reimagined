@@ -1,4 +1,4 @@
-/* Bizooma Accessibility Layer - embeddable widget v0.2
+/* Bizooma Accessibility Layer - embeddable widget v0.4
  * Drop-in script: <script src="https://yourdomain.com/accessibility-widget.js" data-org="your-org-slug" defer></script>
  */
 (function () {
@@ -75,8 +75,22 @@
     { key: "cursor", label: "Big Cursor", cls: "bz-cursor" }
   ];
 
+  // One-click profile presets — each sets a deterministic feature bundle
+  var PRESETS = [
+    { key: "vision",   label: "Vision Impaired",   features: { xl: true, contrast: true, links: true } },
+    { key: "dyslexia", label: "Dyslexia Friendly", features: { dyslexia: true, large: true, pause: true } },
+    { key: "motor",    label: "Motor Impaired",    features: { cursor: true, large: true, pause: true } },
+    { key: "seizure",  label: "Seizure Safe",      features: { pause: true, grayscale: true } }
+  ];
+
   function activeFeatures() {
     return ALL_FEATURES.filter(function (f) { return CONFIG.enabled_features[f.key] !== false; });
+  }
+  function activePresets() {
+    // Hide a preset if every feature it would enable is disabled at the org level
+    return PRESETS.filter(function (p) {
+      return Object.keys(p.features).some(function (k) { return CONFIG.enabled_features[k] !== false; });
+    });
   }
 
   function injectStyles() {
@@ -94,17 +108,27 @@
     style.id = "bz-acc-style";
     style.textContent = [
       ".bz-acc-btn{position:fixed;" + btnPos + ";z-index:2147483646;width:56px;height:56px;border-radius:9999px;background:" + PRIMARY + ";color:#fff;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}",
+      ".bz-acc-btn:focus-visible,.bz-acc-row:focus-visible,.bz-acc-preset:focus-visible,.bz-acc-reset:focus-visible,.bz-acc-close:focus-visible{outline:3px solid " + PRIMARY + ";outline-offset:2px;box-shadow:0 0 0 5px #fff,0 0 0 8px " + PRIMARY + "}",
       ".bz-acc-btn img{width:32px;height:32px;object-fit:contain}",
       ".bz-acc-panel{position:fixed;" + panelPos + ";z-index:2147483647;width:340px;max-height:80vh;overflow:auto;background:#fff;color:#111;border-radius:14px;box-shadow:0 25px 60px rgba(0,0,0,.25);font-family:Inter,system-ui,sans-serif;padding:16px;display:none}",
       ".bz-acc-panel.open{display:block}",
-      ".bz-acc-h{font-weight:700;font-size:15px;margin:0 0 8px;display:flex;align-items:center;gap:8px}",
+      ".bz-acc-h{font-weight:700;font-size:15px;margin:0 0 8px;display:flex;align-items:center;gap:8px;color:#111}",
       ".bz-acc-h img{width:18px;height:18px;object-fit:contain}",
-      ".bz-acc-sub{font-size:11px;color:#666;margin:0 0 12px}",
+      ".bz-acc-sub{font-size:11px;color:#555;margin:0 0 12px}",
+      ".bz-acc-section{font-size:11px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:.05em;margin:8px 0 6px}",
+      ".bz-acc-presets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}",
+      ".bz-acc-preset{padding:10px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#111;font-size:13px;font-weight:600;cursor:pointer;text-align:left;line-height:1.2}",
+      ".bz-acc-preset:hover{border-color:" + PRIMARY + ";background:#fafafa}",
+      ".bz-acc-preset.on{background:" + PRIMARY + ";color:#fff;border-color:" + PRIMARY + "}",
       ".bz-acc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}",
-      ".bz-acc-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border:1px solid #eee;border-radius:10px;font-size:13px;cursor:pointer;background:#fafafa;text-align:left}",
+      ".bz-acc-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px;border:1px solid #ddd;border-radius:10px;font-size:13px;cursor:pointer;background:#fafafa;color:#111;text-align:left;min-height:44px}",
+      ".bz-acc-row:hover{background:#f0f0f0}",
       ".bz-acc-row.on{background:" + PRIMARY + ";color:#fff;border-color:" + PRIMARY + "}",
-      ".bz-acc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:11px;color:#888}",
-      ".bz-acc-reset{background:none;border:1px solid #ddd;border-radius:8px;padding:4px 8px;font-size:11px;cursor:pointer}",
+      ".bz-acc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:11px;color:#666}",
+      ".bz-acc-reset{background:none;border:1px solid #bbb;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;color:#111;min-height:32px}",
+      ".bz-acc-close{position:absolute;top:8px;right:8px;background:none;border:1px solid transparent;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;line-height:1;color:#111}",
+      ".bz-acc-close:hover{border-color:#ddd;background:#f5f5f5}",
+      ".bz-acc-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}",
       "html.bz-large body, html.bz-large body *{font-size:118% !important;line-height:1.6 !important}",
       "html.bz-xl body, html.bz-xl body *{font-size:135% !important;line-height:1.7 !important}",
       "html.bz-contrast body{background:#000 !important;color:#fff !important}",
@@ -115,8 +139,10 @@
       "html.bz-grayscale{filter:grayscale(1)}",
       "html.bz-dyslexia body, html.bz-dyslexia body *{font-family:'Comic Sans MS','OpenDyslexic',Arial,sans-serif !important;letter-spacing:.05em !important;word-spacing:.1em !important}",
       "html.bz-links a{text-decoration:underline !important;color:#0645ad !important;background:#fff8a3 !important}",
-      "html.bz-pause *,html.bz-pause *::before,html.bz-pause *::after{animation:none !important;transition:none !important}",
+      "html.bz-pause *,html.bz-pause *::before,html.bz-pause *::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}",
+      "html.bz-pause video,html.bz-pause audio{}",
       "html.bz-cursor *{cursor:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22><circle cx=%2220%22 cy=%2220%22 r=%2218%22 fill=%22black%22/></svg>'),auto !important}",
+      "@media (prefers-reduced-motion: reduce){.bz-acc-panel,.bz-acc-btn{transition:none !important;animation:none !important}}",
       CONFIG.custom_css || ""
     ].join("\n");
     document.head.appendChild(style);
@@ -145,18 +171,61 @@
     save();
     applyAll();
     render();
+    announce((f.label) + " " + (prefs[key] ? "enabled" : "disabled"));
   }
 
-  function reset() { prefs = {}; save(); applyAll(); render(); track("reset"); }
+  function reset() { prefs = {}; save(); applyAll(); render(); track("reset"); announce("All accessibility settings reset"); }
+
+  function presetIsOn(p) {
+    return Object.keys(p.features).every(function (k) {
+      return CONFIG.enabled_features[k] === false || prefs[k] === true;
+    });
+  }
+
+  function applyPreset(p) {
+    var on = presetIsOn(p);
+    if (on) {
+      // toggle off — clear that preset's features
+      Object.keys(p.features).forEach(function (k) { prefs[k] = false; });
+    } else {
+      // enforce single-feature-per-group rule
+      Object.keys(p.features).forEach(function (k) {
+        var f = ALL_FEATURES.find(function (x) { return x.key === k; });
+        if (!f || CONFIG.enabled_features[f.key] === false) return;
+        if (f.group) {
+          ALL_FEATURES.forEach(function (other) {
+            if (other.group === f.group && other.key !== k) prefs[other.key] = false;
+          });
+        }
+        prefs[k] = true;
+      });
+    }
+    track(on ? "feature_off" : "feature_on", "preset:" + p.key);
+    save(); applyAll(); render();
+    announce(p.label + " preset " + (on ? "disabled" : "enabled"));
+  }
 
   var btn = document.createElement("button");
   btn.className = "bz-acc-btn";
+  btn.type = "button";
   btn.setAttribute("aria-label", "Open accessibility menu");
+  btn.setAttribute("aria-expanded", "false");
+  btn.setAttribute("aria-haspopup", "dialog");
 
   var panel = document.createElement("div");
   panel.className = "bz-acc-panel";
   panel.setAttribute("role", "dialog");
+  panel.setAttribute("aria-modal", "false");
   panel.setAttribute("aria-label", "Accessibility options");
+  panel.style.position = "fixed"; // ensure absolute close button anchors correctly
+  panel.tabIndex = -1;
+
+  // Live region for screen-reader announcements
+  var live = document.createElement("div");
+  live.className = "bz-acc-sr";
+  live.setAttribute("aria-live", "polite");
+  live.setAttribute("aria-atomic", "true");
+  function announce(msg) { try { live.textContent = ""; setTimeout(function(){ live.textContent = msg; }, 50); } catch(e){} }
 
   function renderBtn() {
     btn.innerHTML = "";
@@ -171,6 +240,14 @@
 
   function render() {
     panel.innerHTML = "";
+    // Close button
+    var close = document.createElement("button");
+    close.className = "bz-acc-close"; close.type = "button";
+    close.setAttribute("aria-label", "Close accessibility menu");
+    close.innerHTML = "&times;";
+    close.onclick = function () { closePanel(); };
+    panel.appendChild(close);
+
     var h = document.createElement("div");
     h.className = "bz-acc-h";
     if (CONFIG.logo_url) { var hi = document.createElement("img"); hi.src = CONFIG.logo_url; hi.alt = ""; h.appendChild(hi); }
@@ -179,6 +256,27 @@
     sub.className = "bz-acc-sub"; sub.textContent = "Customize this site for your needs.";
     panel.appendChild(h); panel.appendChild(sub);
 
+    // Presets
+    var presets = activePresets();
+    if (presets.length) {
+      var ps = document.createElement("div"); ps.className = "bz-acc-section"; ps.textContent = "Quick Profiles";
+      panel.appendChild(ps);
+      var pgrid = document.createElement("div"); pgrid.className = "bz-acc-presets";
+      presets.forEach(function (p) {
+        var b = document.createElement("button");
+        b.className = "bz-acc-preset" + (presetIsOn(p) ? " on" : "");
+        b.type = "button";
+        b.textContent = p.label;
+        b.setAttribute("aria-pressed", presetIsOn(p) ? "true" : "false");
+        b.onclick = function () { applyPreset(p); };
+        pgrid.appendChild(b);
+      });
+      panel.appendChild(pgrid);
+    }
+
+    var fs = document.createElement("div"); fs.className = "bz-acc-section"; fs.textContent = "Individual Tools";
+    panel.appendChild(fs);
+
     var grid = document.createElement("div");
     grid.className = "bz-acc-grid";
     activeFeatures().forEach(function (f) {
@@ -186,6 +284,7 @@
       row.className = "bz-acc-row" + (prefs[f.key] ? " on" : "");
       row.type = "button";
       row.textContent = f.label;
+      row.setAttribute("aria-pressed", prefs[f.key] ? "true" : "false");
       row.onclick = function () { toggle(f.key); };
       grid.appendChild(row);
     });
@@ -196,23 +295,57 @@
     var poweredBy = document.createElement("span");
     poweredBy.textContent = CONFIG.hide_branding ? "" : "Powered by Bizooma";
     var resetBtn = document.createElement("button");
-    resetBtn.className = "bz-acc-reset"; resetBtn.textContent = "Reset";
+    resetBtn.className = "bz-acc-reset"; resetBtn.type = "button"; resetBtn.textContent = "Reset all";
     resetBtn.onclick = reset;
     foot.appendChild(poweredBy); foot.appendChild(resetBtn);
     panel.appendChild(foot);
   }
 
+  function getFocusable() {
+    return Array.prototype.slice.call(
+      panel.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])')
+    ).filter(function (el) { return !el.disabled && el.offsetParent !== null; });
+  }
+  function openPanel() {
+    panel.classList.add("open");
+    btn.setAttribute("aria-expanded", "true");
+    render();
+    track("open");
+    setTimeout(function () {
+      var f = getFocusable();
+      (f[0] || panel).focus();
+    }, 0);
+  }
+  function closePanel() {
+    if (!panel.classList.contains("open")) return;
+    panel.classList.remove("open");
+    btn.setAttribute("aria-expanded", "false");
+    track("close");
+    try { btn.focus(); } catch (e) {}
+  }
   btn.onclick = function () {
-    panel.classList.toggle("open");
-    if (panel.classList.contains("open")) { render(); track("open"); }
-    else track("close");
+    if (panel.classList.contains("open")) closePanel(); else openPanel();
   };
+
+  // Keyboard handling: Esc closes, Tab traps within panel when open
+  document.addEventListener("keydown", function (e) {
+    if (!panel.classList.contains("open")) return;
+    if (e.key === "Escape") { e.preventDefault(); closePanel(); return; }
+    if (e.key === "Tab") {
+      var f = getFocusable();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
 
   function mount() {
     injectStyles();
     renderBtn();
     if (!document.body.contains(btn)) document.body.appendChild(btn);
     if (!document.body.contains(panel)) document.body.appendChild(panel);
+    if (!document.body.contains(live)) document.body.appendChild(live);
     applyAll();
     track("view");
   }
