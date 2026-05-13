@@ -45,7 +45,7 @@ Deno.serve(async (req) => {
       method: "POST",
       headers: { Authorization: `Bearer ${LOVABLE_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: "You are an accessibility expert. Generate prioritized, actionable recommendations." },
           { role: "user", content: `Website: ${site.name} (${site.url})\nOpen issues:\n${summary}\n\nReturn 4-6 recommendations.` },
