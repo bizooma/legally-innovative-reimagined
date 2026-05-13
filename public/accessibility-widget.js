@@ -464,7 +464,12 @@
       var si = document.createElement("span"); si.className = "bz-acc-stmt-i"; si.textContent = "B"; si.setAttribute("aria-hidden", "true");
       var sl = document.createElement("span"); sl.textContent = t().statement;
       stmt.appendChild(si); stmt.appendChild(sl);
-      stmt.onclick = function () { try { window.open("https://bizooma.com/accessibility-statement", "_blank", "noopener"); } catch(e){} };
+      stmt.onclick = function () {
+        try {
+          var url = CONFIG.statement_url || (location.origin + "/accessibility-statement");
+          window.open(url, "_blank", "noopener");
+        } catch(e){}
+      };
       foot.appendChild(stmt);
     } else {
       var sp = document.createElement("span"); sp.style.flex = "1"; foot.appendChild(sp);
@@ -544,7 +549,8 @@
             enabled_features: Object.assign({}, DEFAULTS.enabled_features, cfg.enabled_features || {}),
             custom_css: cfg.custom_css || null,
             default_language: cfg.default_language || DEFAULTS.default_language,
-            available_languages: (cfg.available_languages && cfg.available_languages.length) ? cfg.available_languages : DEFAULTS.available_languages
+            available_languages: (cfg.available_languages && cfg.available_languages.length) ? cfg.available_languages : DEFAULTS.available_languages,
+            statement_url: cfg.statement_url || null
           };
         }
       })
