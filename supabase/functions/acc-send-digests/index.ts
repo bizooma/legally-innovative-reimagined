@@ -26,6 +26,7 @@ Deno.serve(async (req) => {
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
   const resendKey = Deno.env.get("RESEND_API_KEY");
+  const fromAddress = Deno.env.get("ACC_DIGEST_FROM") || "Bizooma Accessibility <accessibility@notifications.bizooma.com>";
   if (!resendKey) {
     return new Response(JSON.stringify({ error: "RESEND_API_KEY not configured" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
@@ -122,7 +123,7 @@ Deno.serve(async (req) => {
         method: "POST",
         headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          from: "Bizooma Accessibility <accessibility@notifications.bizooma.com>",
+          from: fromAddress,
           to: [org.digest_email],
           subject: `${periodLabel} accessibility digest — ${org.name}`,
           html,
