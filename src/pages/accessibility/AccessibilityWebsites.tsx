@@ -4,9 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Globe, Plus, ScanLine, Loader2, ExternalLink, Trash2, ShieldCheck, ShieldAlert, Copy, CalendarClock } from "lucide-react";
+import { Globe, Plus, ScanLine, Loader2, ExternalLink, Trash2, CalendarClock } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -16,9 +15,6 @@ type Ctx = ReturnType<typeof useAccessibilityOrg>;
 type Website = {
   id: string; name: string; url: string;
   current_score: number | null; last_scan_at: string | null;
-  verification_status: string;
-  verification_token: string;
-  verification_last_error: string | null;
   allowed_domains: string[] | null;
   scan_frequency: string;
   next_scan_at: string | null;
@@ -33,7 +29,6 @@ export default function AccessibilityWebsites() {
   const [url, setUrl] = useState("");
   const [busy, setBusy] = useState(false);
   const [scanningId, setScanningId] = useState<string | null>(null);
-  const [verifyingId, setVerifyingId] = useState<string | null>(null);
   const [manageSite, setManageSite] = useState<Website | null>(null);
   const [domainsDraft, setDomainsDraft] = useState("");
   const [savingDomains, setSavingDomains] = useState(false);
@@ -43,7 +38,7 @@ export default function AccessibilityWebsites() {
     setLoading(true);
     const { data } = await supabase
       .from("acc_websites")
-      .select("id, name, url, current_score, last_scan_at, verification_status, verification_token, verification_last_error, allowed_domains, scan_frequency, next_scan_at")
+      .select("id, name, url, current_score, last_scan_at, allowed_domains, scan_frequency, next_scan_at")
       .eq("organization_id", ctx.org.id)
       .order("created_at", { ascending: false });
     setSites((data as any) ?? []);
@@ -86,19 +81,6 @@ export default function AccessibilityWebsites() {
     load();
   };
 
-  const verify = async (id: string) => {
-    setVerifyingId(id);
-    const { data, error } = await supabase.functions.invoke("acc-verify-website", { body: { website_id: id } });
-    setVerifyingId(null);
-    if (error) { toast({ title: "Verification failed", description: error.message, variant: "destructive" }); return; }
-    if (data?.verified) {
-      toast({ title: "Site verified", description: `Confirmed via ${data.method}` });
-    } else {
-      toast({ title: "Not verified yet", description: data?.error || "Token not found on the site.", variant: "destructive" });
-    }
-    load();
-  };
-
   const openManage = (s: Website) => {
     setManageSite(s);
     setDomainsDraft((s.allowed_domains ?? []).join("\n"));
@@ -114,11 +96,6 @@ export default function AccessibilityWebsites() {
     toast({ title: "Allowed domains updated" });
     setManageSite(null);
     load();
-  };
-
-  const copy = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    toast({ title: `${label} copied` });
   };
 
   const updateFrequency = async (id: string, freq: string) => {
@@ -165,10 +142,6 @@ export default function AccessibilityWebsites() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="font-medium truncate">{s.name}</span>
-                    <Badge variant={s.verification_status === "verified" ? "default" : "secondary"} className="gap-1">
-                      {s.verification_status === "verified" ? <ShieldCheck className="h-3 w-3" /> : <ShieldAlert className="h-3 w-3" />}
-                      {s.verification_status}
-                    </Badge>
                   </div>
                   <a href={s.url} target="_blank" rel="noreferrer" className="text-xs text-muted-foreground hover:underline inline-flex items-center gap-1">{s.url} <ExternalLink className="h-3 w-3" /></a>
                 </div>
@@ -201,49 +174,6 @@ export default function AccessibilityWebsites() {
           <DialogHeader><DialogTitle>{manageSite?.name}</DialogTitle></DialogHeader>
           {manageSite && (
             <div className="space-y-6">
-              <section className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-semibold flex items-center gap-2">
-                    {manageSite.verification_status === "verified"
-                      ? <ShieldCheck className="h-4 w-4 text-primary" />
-                      : <ShieldAlert className="h-4 w-4 text-muted-foreground" />}
-                    Site verification
-                  </h3>
-                  <Button size="sm" disabled={verifyingId === manageSite.id} onClick={() => verify(manageSite.id)}>
-                    {verifyingId === manageSite.id ? <Loader2 className="h-4 w-4 animate-spin" /> : "Verify now"}
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Prove you own <strong>{manageSite.url}</strong> using either method below. The widget will be disabled on unverified sites after a 24h grace period.
-                </p>
-                <div className="space-y-2 text-xs">
-                  <div>
-                    <div className="font-medium mb-1">Option 1 — Meta tag in &lt;head&gt;</div>
-                    <div className="flex items-center gap-2">
-                      <code className="flex-1 bg-muted px-2 py-1.5 rounded text-[11px] break-all">
-                        {`<meta name="bizooma-verify" content="${manageSite.verification_token}" />`}
-                      </code>
-                      <Button size="icon" variant="ghost" onClick={() => copy(`<meta name="bizooma-verify" content="${manageSite.verification_token}" />`, "Meta tag")}><Copy className="h-3.5 w-3.5" /></Button>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="font-medium mb-1">Option 2 — Upload a file at</div>
-                    <div className="flex items-center gap-2">
-                      <code className="flex-1 bg-muted px-2 py-1.5 rounded text-[11px] break-all">{`/.well-known/bizooma-${manageSite.verification_token}.txt`}</code>
-                      <Button size="icon" variant="ghost" onClick={() => copy(`/.well-known/bizooma-${manageSite.verification_token}.txt`, "Path")}><Copy className="h-3.5 w-3.5" /></Button>
-                    </div>
-                    <div className="text-muted-foreground mt-1">…containing exactly this token:</div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <code className="flex-1 bg-muted px-2 py-1.5 rounded text-[11px] break-all">{manageSite.verification_token}</code>
-                      <Button size="icon" variant="ghost" onClick={() => copy(manageSite.verification_token, "Token")}><Copy className="h-3.5 w-3.5" /></Button>
-                    </div>
-                  </div>
-                </div>
-                {manageSite.verification_last_error && manageSite.verification_status !== "verified" && (
-                  <p className="text-xs text-destructive">Last attempt: {manageSite.verification_last_error}</p>
-                )}
-              </section>
-
               <section className="space-y-2">
                 <h3 className="text-sm font-semibold">Allowed domains</h3>
                 <p className="text-xs text-muted-foreground">
