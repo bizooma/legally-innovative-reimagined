@@ -7,11 +7,39 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Check, Search, Database, Target, Zap, Mail, TrendingUp } from "lucide-react";
 
 const LeadScraperCrmPage = () => {
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Lead Scraper CRM",
+    "description": "Automated lead generation and management platform. AI-powered lead scraping with built-in CRM, email automation, verification, and enrichment.",
+    "brand": { "@type": "Brand", "name": "Bizooma" },
+    "url": "https://bizooma.com/products/lead-scraper-crm",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Starter",
+        "price": "99",
+        "priceCurrency": "USD",
+        "url": "https://bizooma.com/products/lead-scraper-crm",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "name": "Growth",
+        "price": "299",
+        "priceCurrency": "USD",
+        "url": "https://bizooma.com/products/lead-scraper-crm",
+        "availability": "https://schema.org/InStock"
+      }
+    ]
+  };
+
   return (
     <>
       <Helmet>
         <title>Lead Scraper CRM - Automated Lead Generation & Management | Bizooma</title>
         <meta name="description" content="Automatically find, verify, and manage leads with AI-powered lead scraper. Built-in CRM with email automation and enrichment." />
+        <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-white">
