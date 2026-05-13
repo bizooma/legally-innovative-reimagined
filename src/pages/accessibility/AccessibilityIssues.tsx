@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, Loader2, CheckCircle2 } from "lucide-react";
+import { AlertCircle, Loader2, CheckCircle2, Sparkles, RefreshCw, Copy } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import type { useAccessibilityOrg } from "@/hooks/useAccessibilityOrg";
@@ -13,6 +13,7 @@ type Issue = {
   id: string; title: string; description: string | null; severity: string; status: string;
   rule_id: string; wcag_reference: string | null; page_url: string; suggested_fix: string | null;
   element_html: string | null; created_at: string;
+  ai_fix: string | null; ai_fix_generated_at: string | null;
 };
 
 const sevColor = (s: string) =>
@@ -26,6 +27,8 @@ export default function AccessibilityIssues() {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"open" | "all">("open");
+  const [aiBusy, setAiBusy] = useState<Record<string, boolean>>({});
+  const [aiOpen, setAiOpen] = useState<Record<string, boolean>>({});
 
   const load = async () => {
     if (!ctx.org) return;
@@ -42,6 +45,28 @@ export default function AccessibilityIssues() {
     const { error } = await supabase.from("acc_accessibility_issues").update({ status: "resolved", resolved_at: new Date().toISOString() }).eq("id", id);
     if (error) toast({ title: "Update failed", description: error.message, variant: "destructive" });
     else load();
+  };
+
+  const getAiFix = async (id: string, regenerate = false) => {
+    setAiBusy((b) => ({ ...b, [id]: true }));
+    const { data, error } = await supabase.functions.invoke("acc-issue-ai-fix", { body: { issue_id: id, force: regenerate } });
+    setAiBusy((b) => ({ ...b, [id]: false }));
+    if (error) {
+      toast({ title: "AI fix failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    if ((data as any)?.error) {
+      toast({ title: "AI fix failed", description: (data as any).error, variant: "destructive" });
+      return;
+    }
+    setIssues((prev) => prev.map((it) => it.id === id ? { ...it, ai_fix: (data as any).ai_fix, ai_fix_generated_at: (data as any).ai_fix_generated_at } : it));
+    setAiOpen((o) => ({ ...o, [id]: true }));
+    if (!(data as any).cached) toast({ title: "AI fix ready", description: "Generated a contextual fix for this issue." });
+  };
+
+  const copyFix = async (txt: string) => {
+    await navigator.clipboard.writeText(txt);
+    toast({ title: "Copied", description: "AI fix copied to clipboard." });
   };
 
   return (
@@ -72,6 +97,14 @@ export default function AccessibilityIssues() {
                   {i.wcag_reference && <Badge variant="outline" className="text-[10px]">{i.wcag_reference}</Badge>}
                   <Badge variant="secondary" className="text-[10px]">{i.rule_id}</Badge>
                   <div className="flex-1" />
+                  <Button
+                    size="sm" variant="outline" className="gap-1"
+                    disabled={!!aiBusy[i.id]}
+                    onClick={() => i.ai_fix ? setAiOpen((o) => ({ ...o, [i.id]: !o[i.id] })) : getAiFix(i.id)}
+                  >
+                    {aiBusy[i.id] ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                    {i.ai_fix ? (aiOpen[i.id] ? "Hide AI fix" : "Show AI fix") : "Get AI fix"}
+                  </Button>
                   {i.status === "open" && (
                     <Button size="sm" variant="ghost" className="gap-1" onClick={() => resolve(i.id)}>
                       <CheckCircle2 className="h-4 w-4" /> Mark resolved
@@ -82,6 +115,30 @@ export default function AccessibilityIssues() {
                 {i.suggested_fix && <p className="text-sm"><span className="font-medium">Fix:</span> {i.suggested_fix}</p>}
                 {i.element_html && <pre className="text-xs bg-muted/40 rounded p-2 overflow-x-auto"><code>{i.element_html}</code></pre>}
                 <div className="text-xs text-muted-foreground truncate">{i.page_url}</div>
+
+                {i.ai_fix && aiOpen[i.id] && (
+                  <div className="mt-2 rounded-md border border-primary/20 bg-primary/5 p-3 space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 text-xs font-semibold text-primary">
+                        <Sparkles className="h-3.5 w-3.5" /> AI fix recommendation
+                        {i.ai_fix_generated_at && (
+                          <span className="text-[10px] font-normal text-muted-foreground">
+                            · {new Date(i.ai_fix_generated_at).toLocaleString()}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex gap-1">
+                        <Button size="sm" variant="ghost" className="h-7 px-2 gap-1" onClick={() => copyFix(i.ai_fix!)}>
+                          <Copy className="h-3.5 w-3.5" /> Copy
+                        </Button>
+                        <Button size="sm" variant="ghost" className="h-7 px-2 gap-1" disabled={!!aiBusy[i.id]} onClick={() => getAiFix(i.id, true)}>
+                          {aiBusy[i.id] ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />} Regenerate
+                        </Button>
+                      </div>
+                    </div>
+                    <pre className="text-xs whitespace-pre-wrap font-sans leading-relaxed">{i.ai_fix}</pre>
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}
