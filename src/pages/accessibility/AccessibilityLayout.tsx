@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AccessibilitySidebar } from "@/components/accessibility/AccessibilitySidebar";
 import { Button } from "@/components/ui/button";
-import { Bell, User as UserIcon, LogOut, Settings as SettingsIcon } from "lucide-react";
+import { Bell, User as UserIcon, LogOut } from "lucide-react";
 import { useAccessibilityOrg } from "@/hooks/useAccessibilityOrg";
 import { OrgGate } from "@/components/accessibility/OrgGate";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -45,9 +45,6 @@ export default function AccessibilityLayout() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link to="/accessibility/profile"><UserIcon className="h-4 w-4 mr-2" />Profile</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/accessibility/settings"><SettingsIcon className="h-4 w-4 mr-2" />Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut}>
