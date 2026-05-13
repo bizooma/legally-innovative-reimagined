@@ -110,15 +110,16 @@
   }
 
   var ALL_FEATURES = [
-    { key: "large", label: "Larger Text", cls: "bz-large", group: "size" },
-    { key: "xl", label: "Huge Text", cls: "bz-xl", group: "size" },
-    { key: "contrast", label: "High Contrast", cls: "bz-contrast" },
-    { key: "invert", label: "Invert Colors", cls: "bz-invert" },
-    { key: "grayscale", label: "Grayscale", cls: "bz-grayscale" },
-    { key: "dyslexia", label: "Dyslexia Font", cls: "bz-dyslexia" },
-    { key: "links", label: "Highlight Links", cls: "bz-links" },
-    { key: "pause", label: "Pause Animations", cls: "bz-pause" },
-    { key: "cursor", label: "Big Cursor", cls: "bz-cursor" }
+    // section: "content" or "color" — drives which grid the tile appears in
+    { key: "large",     label: "Larger Text",       cls: "bz-large",     group: "size",  section: "content", icon: "T<sup>+</sup>" },
+    { key: "xl",        label: "Huge Text",         cls: "bz-xl",        group: "size",  section: "content", icon: "T<sup>++</sup>" },
+    { key: "dyslexia",  label: "Dyslexia Font",     cls: "bz-dyslexia",                  section: "content", icon: "&#119909;" },
+    { key: "links",     label: "Highlight Links",   cls: "bz-links",                     section: "content", icon: "&#128279;" },
+    { key: "cursor",    label: "Big Cursor",        cls: "bz-cursor",                    section: "content", icon: "&#10138;" },
+    { key: "pause",     label: "Pause Animations",  cls: "bz-pause",                     section: "content", icon: "&#10074;&#10074;" },
+    { key: "contrast",  label: "High Contrast",     cls: "bz-contrast",                  section: "color",   icon: "&#9680;" },
+    { key: "invert",    label: "Invert Colors",     cls: "bz-invert",                    section: "color",   icon: "&#9681;" },
+    { key: "grayscale", label: "Grayscale",         cls: "bz-grayscale",                 section: "color",   icon: "&#9633;" }
   ];
 
   // One-click profile presets — each sets a deterministic feature bundle
