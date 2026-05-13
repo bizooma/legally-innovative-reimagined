@@ -310,32 +310,37 @@
 
   function render() {
     panel.innerHTML = "";
-    // Close button
+
+    // ---------- HEADER ----------
+    var head = document.createElement("div");
+    head.className = "bz-acc-head";
+
+    var headRow = document.createElement("div");
+    headRow.className = "bz-acc-head-row";
+    var h = document.createElement("div");
+    h.className = "bz-acc-h";
+    if (CONFIG.logo_url) { var hi = document.createElement("img"); hi.src = CONFIG.logo_url; hi.alt = ""; h.appendChild(hi); }
+    var ht = document.createElement("span"); ht.textContent = t().title; h.appendChild(ht);
+    headRow.appendChild(h);
+
+    var headActions = document.createElement("div");
+    headActions.className = "bz-acc-head-actions";
     var close = document.createElement("button");
     close.className = "bz-acc-close"; close.type = "button";
     close.setAttribute("aria-label", t().closeMenu);
     close.innerHTML = "&times;";
     close.onclick = function () { closePanel(); };
-    panel.appendChild(close);
+    headActions.appendChild(close);
+    headRow.appendChild(headActions);
+    head.appendChild(headRow);
 
-    var h = document.createElement("div");
-    h.className = "bz-acc-h";
-    if (CONFIG.logo_url) { var hi = document.createElement("img"); hi.src = CONFIG.logo_url; hi.alt = ""; h.appendChild(hi); }
-    var ht = document.createElement("span"); ht.textContent = t().title; h.appendChild(ht);
-    var sub = document.createElement("div");
-    sub.className = "bz-acc-sub"; sub.textContent = t().sub;
-    panel.appendChild(h); panel.appendChild(sub);
-
-    // Language switcher (only if more than one language available)
+    // Language switcher in header (only if >1 available)
     var avail = (CONFIG.available_languages && CONFIG.available_languages.length) ? CONFIG.available_languages : ["en"];
     if (avail.length > 1) {
-      var lwrap = document.createElement("div");
-      lwrap.style.cssText = "display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:12px;color:#444";
-      var llabel = document.createElement("label");
-      llabel.textContent = t().language; llabel.setAttribute("for", "bz-acc-lang-sel");
+      var hbar = document.createElement("div");
+      hbar.className = "bz-acc-hbar";
       var lsel = document.createElement("select");
-      lsel.id = "bz-acc-lang-sel";
-      lsel.style.cssText = "flex:1;padding:6px 8px;border:1px solid #ccc;border-radius:8px;background:#fff;color:#111;font-size:12px";
+      lsel.setAttribute("aria-label", t().language);
       avail.forEach(function (code) {
         if (!I18N[code]) return;
         var o = document.createElement("option"); o.value = code; o.textContent = LANG_LABELS[code] || code;
@@ -343,15 +348,20 @@
         lsel.appendChild(o);
       });
       lsel.onchange = function () { setLang(lsel.value); };
-      lwrap.appendChild(llabel); lwrap.appendChild(lsel);
-      panel.appendChild(lwrap);
+      hbar.appendChild(lsel);
+      head.appendChild(hbar);
     }
+    panel.appendChild(head);
+
+    // ---------- BODY ----------
+    var body = document.createElement("div");
+    body.className = "bz-acc-body";
 
     // Presets
     var presets = activePresets();
     if (presets.length) {
       var ps = document.createElement("div"); ps.className = "bz-acc-section"; ps.textContent = t().profiles;
-      panel.appendChild(ps);
+      body.appendChild(ps);
       var pgrid = document.createElement("div"); pgrid.className = "bz-acc-presets";
       presets.forEach(function (p) {
         var b = document.createElement("button");
@@ -362,33 +372,107 @@
         b.onclick = function () { applyPreset(p); };
         pgrid.appendChild(b);
       });
-      panel.appendChild(pgrid);
+      body.appendChild(pgrid);
     }
 
-    var fs = document.createElement("div"); fs.className = "bz-acc-section"; fs.textContent = t().individual;
-    panel.appendChild(fs);
+    // Helper: tile builder
+    function buildTile(f) {
+      var tile = document.createElement("button");
+      tile.className = "bz-acc-tile" + (prefs[f.key] ? " on" : "");
+      tile.type = "button";
+      tile.setAttribute("aria-pressed", prefs[f.key] ? "true" : "false");
+      var ic = document.createElement("span");
+      ic.className = "bz-acc-tile-icon"; ic.setAttribute("aria-hidden", "true");
+      ic.innerHTML = f.icon || "&#9881;";
+      var lb = document.createElement("span");
+      lb.textContent = t().f[f.key] || f.label;
+      tile.appendChild(ic); tile.appendChild(lb);
+      tile.onclick = function () { toggle(f.key); };
+      return tile;
+    }
 
-    var grid = document.createElement("div");
-    grid.className = "bz-acc-grid";
-    activeFeatures().forEach(function (f) {
-      var row = document.createElement("button");
-      row.className = "bz-acc-row" + (prefs[f.key] ? " on" : "");
-      row.type = "button";
-      row.textContent = t().f[f.key] || f.label;
-      row.setAttribute("aria-pressed", prefs[f.key] ? "true" : "false");
-      row.onclick = function () { toggle(f.key); };
-      grid.appendChild(row);
-    });
-    panel.appendChild(grid);
+    var feats = activeFeatures();
+    var contentFeats = feats.filter(function (f) { return f.section !== "color"; });
+    var colorFeats = feats.filter(function (f) { return f.section === "color"; });
 
+    // Content adjustments
+    if (contentFeats.length) {
+      var cs = document.createElement("div"); cs.className = "bz-acc-section"; cs.textContent = t().individual;
+      body.appendChild(cs);
+      var cgrid = document.createElement("div"); cgrid.className = "bz-acc-grid3";
+      contentFeats.forEach(function (f) { cgrid.appendChild(buildTile(f)); });
+      body.appendChild(cgrid);
+
+      // Font size stepper (only if size features are enabled at org level)
+      var sizeFeats = ALL_FEATURES.filter(function (f) { return f.group === "size" && CONFIG.enabled_features[f.key] !== false; });
+      if (sizeFeats.length) {
+        var fsWrap = document.createElement("div"); fsWrap.className = "bz-acc-fs"; fsWrap.style.marginTop = "8px";
+        var fsRow = document.createElement("div"); fsRow.className = "bz-acc-fs-row";
+        var fsLabel = document.createElement("span"); fsLabel.textContent = t().fontSize;
+        var fsPct = document.createElement("span"); fsPct.className = "bz-acc-fs-pct";
+        var pct = prefs.xl ? "135%" : prefs.large ? "118%" : "100%";
+        fsPct.textContent = pct;
+        fsRow.appendChild(fsLabel); fsRow.appendChild(fsPct);
+        fsWrap.appendChild(fsRow);
+        var steps = document.createElement("div"); steps.className = "bz-acc-steps";
+        // 5 steps: 100, 110, 118 (=large), 125, 135 (=xl)
+        var stepDefs = [
+          { n: 1, key: null },
+          { n: 2, key: null }, // visual only — same as 1
+          { n: 3, key: "large" },
+          { n: 4, key: "large" },
+          { n: 5, key: "xl" }
+        ];
+        var activeStep = prefs.xl ? 5 : prefs.large ? 3 : 1;
+        stepDefs.forEach(function (sd) {
+          var sb = document.createElement("button");
+          sb.className = "bz-acc-step" + (sd.n === activeStep ? " on" : "");
+          sb.type = "button"; sb.textContent = sd.n;
+          sb.setAttribute("aria-label", t().fontSize + " " + sd.n);
+          sb.onclick = function () {
+            // Reset both, then apply target
+            prefs.large = false; prefs.xl = false;
+            if (sd.key === "large" && CONFIG.enabled_features.large !== false) prefs.large = true;
+            if (sd.key === "xl" && CONFIG.enabled_features.xl !== false) prefs.xl = true;
+            track("feature_on", "fontsize:" + sd.n);
+            save(); applyAll(); render();
+          };
+          steps.appendChild(sb);
+        });
+        fsWrap.appendChild(steps);
+        body.appendChild(fsWrap);
+      }
+    }
+
+    // Color adjustments
+    if (colorFeats.length) {
+      var ks = document.createElement("div"); ks.className = "bz-acc-section"; ks.textContent = t().color;
+      body.appendChild(ks);
+      var kgrid = document.createElement("div"); kgrid.className = "bz-acc-grid3";
+      colorFeats.forEach(function (f) { kgrid.appendChild(buildTile(f)); });
+      body.appendChild(kgrid);
+    }
+
+    panel.appendChild(body);
+
+    // ---------- FOOTER ----------
     var foot = document.createElement("div");
     foot.className = "bz-acc-foot";
-    var poweredBy = document.createElement("span");
-    poweredBy.textContent = CONFIG.hide_branding ? "" : t().powered;
+    if (!CONFIG.hide_branding) {
+      var stmt = document.createElement("button");
+      stmt.className = "bz-acc-stmt"; stmt.type = "button";
+      var si = document.createElement("span"); si.className = "bz-acc-stmt-i"; si.textContent = "B"; si.setAttribute("aria-hidden", "true");
+      var sl = document.createElement("span"); sl.textContent = t().statement;
+      stmt.appendChild(si); stmt.appendChild(sl);
+      stmt.onclick = function () { try { window.open("https://bizooma.com/accessibility-statement", "_blank", "noopener"); } catch(e){} };
+      foot.appendChild(stmt);
+    } else {
+      var sp = document.createElement("span"); sp.style.flex = "1"; foot.appendChild(sp);
+    }
     var resetBtn = document.createElement("button");
     resetBtn.className = "bz-acc-reset"; resetBtn.type = "button"; resetBtn.textContent = t().reset;
     resetBtn.onclick = reset;
-    foot.appendChild(poweredBy); foot.appendChild(resetBtn);
+    foot.appendChild(resetBtn);
     panel.appendChild(foot);
   }
 
