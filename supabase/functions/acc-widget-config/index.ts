@@ -44,11 +44,30 @@ Deno.serve(async (req) => {
 
     const { data: site } = await supabase
       .from("acc_websites")
-      .select("id, widget_enabled")
+      .select("id, widget_enabled, verification_status, verified_at, allowed_domains, created_at")
       .eq("organization_id", org.id)
       .order("created_at", { ascending: true })
       .limit(1)
       .maybeSingle();
+
+    // Origin / Referer check against allowed_domains
+    const originHeader = req.headers.get("Origin") || req.headers.get("Referer") || "";
+    let requestHost = "";
+    try { requestHost = originHeader ? new URL(originHeader).hostname.replace(/^www\./, "") : ""; } catch {}
+    const allowed = (site?.allowed_domains as string[] | null) ?? [];
+    const domainOk =
+      allowed.length === 0 ||
+      !requestHost ||
+      allowed.some((d) => {
+        const norm = (d || "").toLowerCase().replace(/^www\./, "");
+        return requestHost === norm || requestHost.endsWith("." + norm);
+      });
+
+    // Verification: enforce after a 24h grace period from website creation
+    const isVerified = site?.verification_status === "verified";
+    const createdAt = site?.created_at ? new Date(site.created_at as string).getTime() : Date.now();
+    const inGrace = Date.now() - createdAt < 24 * 60 * 60 * 1000;
+    const verificationOk = !site || isVerified || inGrace;
 
     let settings: any = null;
     if (site?.id) {
@@ -61,7 +80,16 @@ Deno.serve(async (req) => {
     }
 
     const merged = {
-      enabled: site ? site.widget_enabled !== false : true,
+      enabled:
+        (site ? site.widget_enabled !== false : true) &&
+        domainOk &&
+        verificationOk,
+      blocked_reason: !domainOk
+        ? "domain_not_allowed"
+        : !verificationOk
+        ? "site_unverified"
+        : null,
+      verified: isVerified,
       primary_color: settings?.primary_color || org.brand_color || DEFAULTS.primary_color,
       position: settings?.position || DEFAULTS.position,
       logo_url: settings?.logo_url ?? org.logo_url ?? null,
