@@ -109,6 +109,13 @@ const Navbar = () => {
             Stay Informed
           </Link>
 
+          <Link
+            to="/accessibility/signup?mode=signin"
+            className={`hover:text-legal-primary transition-colors font-medium text-sm ${textColorClass}`}
+          >
+            Accessibility Login
+          </Link>
+
           <Button 
             className="bg-legal-primary hover:bg-legal-secondary text-white"
             onClick={() => navigate('/portal')}
