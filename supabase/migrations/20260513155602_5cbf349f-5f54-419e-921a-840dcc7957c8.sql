@@ -1,0 +1,1 @@
+ALTER TABLE public.acc_widget_settings ADD COLUMN IF NOT EXISTS statement_url text;
