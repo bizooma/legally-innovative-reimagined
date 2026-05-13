@@ -191,7 +191,11 @@
       ".bz-acc-step{padding:8px 0;border:1px solid #e3e3e8;border-radius:8px;background:#fff;color:#111;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}",
       ".bz-acc-step:hover{border-color:" + PRIMARY + "}",
       ".bz-acc-step.on{background:" + PRIMARY + ";color:#fff;border-color:" + PRIMARY + "}",
-      ".bz-acc-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid #eee;background:#fafafa;border-radius:0 0 18px 18px}",
+      ".bz-acc-foot{display:flex;flex-direction:column;gap:8px;padding:12px 18px;border-top:1px solid #eee;background:#fafafa;border-radius:0 0 18px 18px}",
+      ".bz-acc-foot-row{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%}",
+      ".bz-acc-powered{text-align:center;font-size:11px;color:#666;font-weight:500}",
+      ".bz-acc-powered a{color:" + PRIMARY + ";text-decoration:none;font-weight:600}",
+      ".bz-acc-powered a:hover{text-decoration:underline}",
       ".bz-acc-stmt{flex:1;display:flex;align-items:center;gap:8px;background:" + PRIMARY + ";color:#fff;border:none;border-radius:10px;padding:10px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;min-height:40px}",
       ".bz-acc-stmt-i{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;background:#fff;color:" + PRIMARY + ";font-weight:800;font-size:13px;flex-shrink:0}",
       ".bz-acc-reset{background:#fff;border:1px solid #d8d8de;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:600;cursor:pointer;color:#111;min-height:40px;font-family:inherit}",
@@ -455,6 +459,8 @@
     // ---------- FOOTER ----------
     var foot = document.createElement("div");
     foot.className = "bz-acc-foot";
+    var footRow = document.createElement("div");
+    footRow.className = "bz-acc-foot-row";
     if (!CONFIG.hide_branding) {
       var stmt = document.createElement("button");
       stmt.className = "bz-acc-stmt"; stmt.type = "button";
@@ -467,14 +473,21 @@
           window.open(url, "_blank", "noopener");
         } catch(e){}
       };
-      foot.appendChild(stmt);
+      footRow.appendChild(stmt);
     } else {
-      var sp = document.createElement("span"); sp.style.flex = "1"; foot.appendChild(sp);
+      var sp = document.createElement("span"); sp.style.flex = "1"; footRow.appendChild(sp);
     }
     var resetBtn = document.createElement("button");
     resetBtn.className = "bz-acc-reset"; resetBtn.type = "button"; resetBtn.textContent = t().reset;
     resetBtn.onclick = reset;
-    foot.appendChild(resetBtn);
+    footRow.appendChild(resetBtn);
+    foot.appendChild(footRow);
+    if (!CONFIG.hide_branding) {
+      var pwr = document.createElement("div");
+      pwr.className = "bz-acc-powered";
+      pwr.innerHTML = '<a href="https://bizooma.com" target="_blank" rel="noopener">' + t().powered + '</a>';
+      foot.appendChild(pwr);
+    }
     panel.appendChild(foot);
   }
 
