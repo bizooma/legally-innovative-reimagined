@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { toast } from '@/hooks/use-toast';
 import { resetJoePassword, createAngelaAffordAdmin, createPugetLawUser } from '@/utils/resetAdminPassword';
 import CreateClientUserButton from '@/components/admin/CreateClientUserButton';
+import CreateCompOrgButton from '@/components/admin/CreateCompOrgButton';
 
 const AdminPasswordReset = () => {
   const [isResetting, setIsResetting] = useState(false);
@@ -125,6 +126,7 @@ const AdminPasswordReset = () => {
       </Card>
       
       <CreateClientUserButton />
+      <CreateCompOrgButton />
     </div>
   );
 };
