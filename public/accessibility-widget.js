@@ -459,6 +459,8 @@
     // ---------- FOOTER ----------
     var foot = document.createElement("div");
     foot.className = "bz-acc-foot";
+    var footRow = document.createElement("div");
+    footRow.className = "bz-acc-foot-row";
     if (!CONFIG.hide_branding) {
       var stmt = document.createElement("button");
       stmt.className = "bz-acc-stmt"; stmt.type = "button";
@@ -471,14 +473,21 @@
           window.open(url, "_blank", "noopener");
         } catch(e){}
       };
-      foot.appendChild(stmt);
+      footRow.appendChild(stmt);
     } else {
-      var sp = document.createElement("span"); sp.style.flex = "1"; foot.appendChild(sp);
+      var sp = document.createElement("span"); sp.style.flex = "1"; footRow.appendChild(sp);
     }
     var resetBtn = document.createElement("button");
     resetBtn.className = "bz-acc-reset"; resetBtn.type = "button"; resetBtn.textContent = t().reset;
     resetBtn.onclick = reset;
-    foot.appendChild(resetBtn);
+    footRow.appendChild(resetBtn);
+    foot.appendChild(footRow);
+    if (!CONFIG.hide_branding) {
+      var pwr = document.createElement("div");
+      pwr.className = "bz-acc-powered";
+      pwr.innerHTML = '<a href="https://bizooma.com" target="_blank" rel="noopener">' + t().powered + '</a>';
+      foot.appendChild(pwr);
+    }
     panel.appendChild(foot);
   }
 
