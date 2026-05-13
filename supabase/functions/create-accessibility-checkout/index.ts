@@ -7,7 +7,7 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const PRODUCT_ID = "prod_UVbwWOouagCn5r";
+const PRODUCT_ID = Deno.env.get("ACC_STRIPE_PRODUCT_ID") || "prod_UVbwWOouagCn5r";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
