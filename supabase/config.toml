@@ -136,4 +136,10 @@ verify_jwt = false
 [functions.acc-verify-website]
 verify_jwt = false
 
+[functions.acc-widget-event]
+verify_jwt = false
+
+[functions.acc-stripe-webhook]
+verify_jwt = false
+
 
