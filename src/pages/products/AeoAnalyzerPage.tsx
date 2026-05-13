@@ -7,11 +7,39 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Check, BarChart3, Brain, Zap, FileSearch, TrendingUp, Shield } from "lucide-react";
 
 const AeoAnalyzerPage = () => {
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "AEO Analyzer",
+    "description": "AI-powered legal analytics platform that helps law firms identify case patterns, predict outcomes, and optimize legal strategies with 95% accuracy.",
+    "brand": { "@type": "Brand", "name": "Bizooma" },
+    "url": "https://bizooma.com/products/aeo-analyzer",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Solo",
+        "price": "499",
+        "priceCurrency": "USD",
+        "url": "https://bizooma.com/products/aeo-analyzer",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "name": "Firm",
+        "price": "1299",
+        "priceCurrency": "USD",
+        "url": "https://bizooma.com/products/aeo-analyzer",
+        "availability": "https://schema.org/InStock"
+      }
+    ]
+  };
+
   return (
     <>
       <Helmet>
         <title>AEO Analyzer - Legal Analytics Dashboard | Bizooma</title>
         <meta name="description" content="Advanced AI analytics platform for law firms. Identify case patterns, predict outcomes, and optimize legal strategies with 95% accuracy." />
+        <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-white">
