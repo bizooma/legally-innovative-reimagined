@@ -82,6 +82,9 @@ import AccessibilityWidgetPage from "./pages/accessibility/AccessibilityWidgetPa
 import AccessibilitySignup from "./pages/accessibility/AccessibilitySignup";
 import AccessibilityCheckoutSuccess from "./pages/accessibility/AccessibilityCheckoutSuccess";
 import AccessibilityProfile from "./pages/accessibility/AccessibilityProfile";
+import AccessibilityBilling from "./pages/accessibility/AccessibilityBilling";
+import AccessibilityReports from "./pages/accessibility/AccessibilityReports";
+import AccessibilityCompliance from "./pages/accessibility/AccessibilityCompliance";
 import MarketingSectionPage from "./pages/MarketingSectionPage";
 import CodeSectionPage from "./pages/CodeSectionPage";
 import AiSectionPage from "./pages/AiSectionPage";
@@ -247,14 +250,14 @@ const App = () => (
                 <Route path="dashboard" element={<AccessibilityDashboard />} />
                 <Route path="websites" element={<AccessibilityWebsites />} />
                 <Route path="scans" element={<AccessibilityScans />} />
-                <Route path="compliance" element={<PlaceholderPage title="Compliance Center" description="WCAG 2.1 AA progress, ADA readiness, and audit-ready statements." />} />
+                <Route path="compliance" element={<AccessibilityCompliance />} />
                 <Route path="widget" element={<AccessibilityWidgetPage />} />
                 <Route path="issues" element={<AccessibilityIssues />} />
                 <Route path="ai" element={<AccessibilityAi />} />
-                <Route path="reports" element={<PlaceholderPage title="Reports" description="Executive summaries, technical reports, and historical comparisons." />} />
+                <Route path="reports" element={<AccessibilityReports />} />
                 <Route path="profile" element={<AccessibilityProfile />} />
                 <Route path="team" element={<PlaceholderPage title="Team Members" description="Invite teammates and manage roles within your organization." />} />
-                <Route path="billing" element={<PlaceholderPage title="Billing" description="Manage your plan, invoices, and payment method." />} />
+                <Route path="billing" element={<AccessibilityBilling />} />
                 <Route path="api-keys" element={<PlaceholderPage title="API Keys" description="Programmatic access for integrations and automation." />} />
                 <Route path="integrations" element={<PlaceholderPage title="Integrations" description="Slack, Linear, Jira, GitHub, and CMS connectors." />} />
                 <Route path="settings" element={<PlaceholderPage title="Settings" description="Organization details, white-labeling, and notifications." />} />
