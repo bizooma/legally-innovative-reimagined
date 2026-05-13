@@ -161,6 +161,160 @@ function score(issues: Issue[]): number {
   return Math.max(0, Math.min(100, s));
 }
 
+const UA = "BizoomaAccessibilityBot/1.0 (+https://bizooma.com/accessibility)";
+const FETCH_TIMEOUT_MS = 12000;
+const CRAWL_CONCURRENCY = 4;
+const DEFAULT_MAX_PAGES = 20;
+const HARD_MAX_PAGES = 50;
+
+async function fetchWithTimeout(url: string, ms = FETCH_TIMEOUT_MS): Promise<Response> {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), ms);
+  try {
+    return await fetch(url, { headers: { "User-Agent": UA, Accept: "text/html,application/xhtml+xml" }, signal: ctrl.signal, redirect: "follow" });
+  } finally { clearTimeout(t); }
+}
+
+function normalizeUrl(href: string, base: URL): string | null {
+  try {
+    const u = new URL(href, base);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return null;
+    if (u.hostname.replace(/^www\./, "") !== base.hostname.replace(/^www\./, "")) return null;
+    u.hash = "";
+    // Strip common tracking params
+    ["utm_source","utm_medium","utm_campaign","utm_term","utm_content","gclid","fbclid"].forEach(p => u.searchParams.delete(p));
+    let s = u.toString();
+    if (s.endsWith("/") && u.pathname !== "/") s = s.slice(0, -1);
+    return s;
+  } catch { return null; }
+}
+
+function extractLinks(html: string, base: URL): string[] {
+  const out = new Set<string>();
+  const re = /<a\b[^>]*\bhref\s*=\s*["']([^"'#]+)["']/gi;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(html)) !== null) {
+    const n = normalizeUrl(m[1], base);
+    if (!n) continue;
+    // skip obvious binary / asset links
+    if (/\.(png|jpg|jpeg|gif|svg|webp|ico|pdf|zip|mp4|mp3|css|js|woff2?|ttf|eot|xml|json)(\?|$)/i.test(n)) continue;
+    out.add(n);
+  }
+  return [...out];
+}
+
+async function loadRobots(origin: string): Promise<{ disallow: string[] }> {
+  try {
+    const r = await fetchWithTimeout(origin + "/robots.txt", 5000);
+    if (!r.ok) return { disallow: [] };
+    const txt = await r.text();
+    const lines = txt.split(/\r?\n/);
+    let appliesToUs = false;
+    const disallow: string[] = [];
+    for (const raw of lines) {
+      const line = raw.replace(/#.*$/, "").trim();
+      if (!line) continue;
+      const [k, ...rest] = line.split(":");
+      const key = (k || "").trim().toLowerCase();
+      const val = rest.join(":").trim();
+      if (key === "user-agent") appliesToUs = val === "*" || /bizoomaaccessibilitybot/i.test(val);
+      else if (appliesToUs && key === "disallow" && val) disallow.push(val);
+    }
+    return { disallow };
+  } catch { return { disallow: [] }; }
+}
+function isAllowed(url: string, disallow: string[]): boolean {
+  if (!disallow.length) return true;
+  try {
+    const path = new URL(url).pathname;
+    return !disallow.some((d) => path.startsWith(d));
+  } catch { return true; }
+}
+
+async function discoverFromSitemap(origin: string, base: URL, max: number): Promise<string[]> {
+  const urls: string[] = [];
+  const seen = new Set<string>();
+  async function parse(sitemapUrl: string, depth = 0) {
+    if (depth > 2 || urls.length >= max) return;
+    try {
+      const r = await fetchWithTimeout(sitemapUrl, 8000);
+      if (!r.ok) return;
+      const xml = await r.text();
+      const childMaps = [...xml.matchAll(/<sitemap>[\s\S]*?<loc>([^<]+)<\/loc>[\s\S]*?<\/sitemap>/gi)].map(m => m[1].trim());
+      if (childMaps.length) {
+        for (const c of childMaps.slice(0, 5)) { if (urls.length >= max) break; await parse(c, depth + 1); }
+      }
+      const locs = [...xml.matchAll(/<url>[\s\S]*?<loc>([^<]+)<\/loc>[\s\S]*?<\/url>/gi)].map(m => m[1].trim());
+      for (const loc of locs) {
+        const n = normalizeUrl(loc, base);
+        if (n && !seen.has(n)) { seen.add(n); urls.push(n); if (urls.length >= max) return; }
+      }
+    } catch { /* ignore */ }
+  }
+  await parse(origin + "/sitemap.xml");
+  if (urls.length === 0) await parse(origin + "/sitemap_index.xml");
+  return urls;
+}
+
+async function crawl(rootUrl: string, max: number): Promise<string[]> {
+  const base = new URL(rootUrl);
+  const origin = base.origin;
+  const robots = await loadRobots(origin);
+
+  // Prefer sitemap discovery
+  const fromSitemap = await discoverFromSitemap(origin, base, max);
+  const startList = fromSitemap.length ? fromSitemap : [base.toString().replace(/\/$/, "") || base.toString()];
+
+  // Always include the root first
+  const seed = normalizeUrl(rootUrl, base) || rootUrl;
+  const queue: string[] = [seed, ...startList.filter(u => u !== seed)];
+  const seen = new Set<string>(queue);
+  const collected: string[] = [];
+
+  // BFS — only expand from already-fetched pages we keep
+  while (queue.length && collected.length < max) {
+    const batch = queue.splice(0, CRAWL_CONCURRENCY).filter(u => isAllowed(u, robots.disallow));
+    if (!batch.length) continue;
+    const results = await Promise.all(batch.map(async (u) => {
+      try {
+        const r = await fetchWithTimeout(u);
+        if (!r.ok) return { u, html: "" };
+        const ct = r.headers.get("content-type") || "";
+        if (!ct.includes("text/html") && !ct.includes("application/xhtml")) return { u, html: "" };
+        return { u, html: await r.text() };
+      } catch { return { u, html: "" }; }
+    }));
+    for (const { u, html } of results) {
+      if (collected.length >= max) break;
+      if (!html) continue;
+      collected.push(u);
+      // Discover more links only if we haven't met the cap
+      if (collected.length + queue.length < max && !fromSitemap.length) {
+        for (const link of extractLinks(html, base)) {
+          if (!seen.has(link)) { seen.add(link); queue.push(link); }
+          if (collected.length + queue.length >= max) break;
+        }
+      }
+    }
+  }
+  return collected;
+}
+
+async function fetchAndAnalyze(url: string): Promise<{ html: string; issues: Issue[]; score: number }> {
+  try {
+    const r = await fetchWithTimeout(url);
+    if (!r.ok) {
+      const issues: Issue[] = [{ rule_id: "fetch-failed", title: `HTTP ${r.status} fetching page`, severity: "critical", page_url: url }];
+      return { html: "", issues, score: 0 };
+    }
+    const html = await r.text();
+    const issues = analyze(html, url);
+    return { html, issues, score: score(issues) };
+  } catch (e) {
+    return { html: "", issues: [{ rule_id: "fetch-failed", title: "Could not fetch page", severity: "critical", page_url: url, description: String(e) }], score: 0 };
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   try {
@@ -179,6 +333,8 @@ Deno.serve(async (req) => {
 
     const body = await req.json().catch(() => ({}));
     const websiteId = body.website_id as string | undefined;
+    const requestedMax = Number(body.max_pages);
+    const maxPages = Math.max(1, Math.min(HARD_MAX_PAGES, Number.isFinite(requestedMax) && requestedMax > 0 ? requestedMax : DEFAULT_MAX_PAGES));
     if (!websiteId) return new Response(JSON.stringify({ error: "website_id required" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
     // Membership-checked fetch via user client (RLS)
@@ -193,25 +349,32 @@ Deno.serve(async (req) => {
       .select().single();
     if (scanErr) throw scanErr;
 
-    // Fetch HTML
-    let html = "";
-    let pageScore = 0;
-    let issues: Issue[] = [];
-    try {
-      const r = await fetch(site.url, { headers: { "User-Agent": "BizoomaAccessibilityBot/1.0" } });
-      html = await r.text();
-      issues = analyze(html, site.url);
-      pageScore = score(issues);
-    } catch (e) {
-      issues = [{ rule_id: "fetch-failed", title: "Could not fetch page", severity: "critical", page_url: site.url, description: String(e) }];
-      pageScore = 0;
+    // Discover pages — sitemap first, then BFS crawl, capped at maxPages
+    const pages = await crawl(site.url, maxPages);
+    const targets = pages.length ? pages : [site.url];
+
+    // Analyze pages with limited concurrency
+    const perPage: { url: string; score: number; issues: Issue[] }[] = [];
+    for (let i = 0; i < targets.length; i += CRAWL_CONCURRENCY) {
+      const batch = targets.slice(i, i + CRAWL_CONCURRENCY);
+      const out = await Promise.all(batch.map(async (u) => {
+        const r = await fetchAndAnalyze(u);
+        return { url: u, score: r.score, issues: r.issues };
+      }));
+      perPage.push(...out);
     }
 
-    // Insert scan page
-    await admin.from("acc_scan_pages").insert({ scan_id: scan.id, url: site.url, score: pageScore, issue_count: issues.length });
+    // Persist per-page rows
+    if (perPage.length) {
+      await admin.from("acc_scan_pages").insert(
+        perPage.map(p => ({ scan_id: scan.id, url: p.url, score: p.score, issue_count: p.issues.length }))
+      );
+    }
 
-    if (issues.length) {
-      const rows = issues.map((i) => ({
+    const allIssues: Issue[] = perPage.flatMap(p => p.issues);
+    if (allIssues.length) {
+      // Insert in chunks to avoid payload limits
+      const rows = allIssues.map((i) => ({
         scan_id: scan.id,
         organization_id: site.organization_id,
         website_id: site.id,
@@ -225,27 +388,43 @@ Deno.serve(async (req) => {
         suggested_fix: i.suggested_fix ?? null,
         status: "open",
       }));
-      await admin.from("acc_accessibility_issues").insert(rows);
+      const CHUNK = 500;
+      for (let i = 0; i < rows.length; i += CHUNK) {
+        await admin.from("acc_accessibility_issues").insert(rows.slice(i, i + CHUNK));
+      }
     }
 
-    const wcagAa = Math.max(0, Math.min(100, 100 - issues.filter(i => ["critical","serious"].includes(i.severity)).length * 6));
+    const avgScore = perPage.length
+      ? Math.round(perPage.reduce((a, p) => a + p.score, 0) / perPage.length)
+      : 0;
+    const blockingPerPage = perPage.length
+      ? perPage.reduce((a, p) => a + p.issues.filter(i => i.severity === "critical" || i.severity === "serious").length, 0) / perPage.length
+      : 0;
+    const wcagAa = Math.max(0, Math.min(100, Math.round(100 - blockingPerPage * 6)));
 
     await admin
       .from("acc_scans")
       .update({
         status: "completed",
         completed_at: new Date().toISOString(),
-        score: pageScore,
+        score: avgScore,
         wcag_aa_pct: wcagAa,
-        total_issues: issues.length,
-        pages_scanned: 1,
-        summary: { critical: issues.filter(i=>i.severity==="critical").length, serious: issues.filter(i=>i.severity==="serious").length, moderate: issues.filter(i=>i.severity==="moderate").length, minor: issues.filter(i=>i.severity==="minor").length },
+        total_issues: allIssues.length,
+        pages_scanned: perPage.length || 1,
+        summary: {
+          critical: allIssues.filter(i=>i.severity==="critical").length,
+          serious: allIssues.filter(i=>i.severity==="serious").length,
+          moderate: allIssues.filter(i=>i.severity==="moderate").length,
+          minor: allIssues.filter(i=>i.severity==="minor").length,
+          pages: perPage.length,
+          discovered_via: pages.length ? "crawl" : "single",
+        },
       })
       .eq("id", scan.id);
 
-    await admin.from("acc_websites").update({ current_score: pageScore, last_scan_at: new Date().toISOString() }).eq("id", site.id);
+    await admin.from("acc_websites").update({ current_score: avgScore, last_scan_at: new Date().toISOString() }).eq("id", site.id);
 
-    return new Response(JSON.stringify({ scan_id: scan.id, score: pageScore, issues_count: issues.length }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ scan_id: scan.id, score: avgScore, issues_count: allIssues.length, pages_scanned: perPage.length }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
   } catch (e) {
     console.error("scan error", e);
     return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
