@@ -1,61 +1,72 @@
-## Audit findings
 
-After reviewing the entire `/accessibility/*` dashboard (layout, sidebar, dashboard, websites, scans, issues, AI, widget, profile, signup, checkout-success) plus the supporting edge functions and embed script, the structure is sound but several things are not actually wired up:
+# Accessibility widget — full functional review
 
-### Bugs / dead UI
-1. **Dashboard stats are hardcoded** (`"—"`, `"0"`). They never reflect real data even after a scan.
-2. **Dashboard "Run new scan" button** does nothing (no onClick, no link).
-3. **Dashboard "Generate report" button** does nothing.
-4. **Dashboard "Add website" card button** does nothing (should go to `/accessibility/websites`).
-5. **"Top violations" card** is a static empty state — never populates from `acc_accessibility_issues`.
-6. **"Score over time" card** is a static empty state — never plots history from `acc_scans`.
-7. **Websites list on dashboard** says "No websites yet" even when websites exist (it's hardcoded).
+I audited every accessibility surface (3 admin pages, 14 dashboard pages, 13 edge functions, the embed script, RLS, and pg_cron jobs). The good news: most of it is real. There are no mock data sources or hardcoded scan results — the scanner actually fetches sites, parses HTML, and writes findings; Stripe and Resend are real; the dashboard reads live Supabase data; tenant isolation via RLS is correct.
 
-### Profile / auth
-8. **Email change via `supabase.auth.updateUser({ email })`** silently requires Supabase email confirmation. If "Confirm email" is enabled, the change won't take effect and the user gets a misleading "saved" toast. Need to detect and message correctly.
+The bad news: there are a few real bugs that quietly break paid features, plus some hardcoded values that block multi-tenant operation.
 
-### Widget page
-9. **Embed snippet uses `data-org="${slug}"`** but `public/accessibility-widget.js` ignores that attribute — it always loads the same generic widget. Either remove the attribute (to avoid implying per-org config that doesn't exist) or have the script read it. For now, the cleanest pre-test fix is to keep the attribute but document that widget styling/feature toggles per org are coming soon (and read it client-side defensively).
-10. **Live preview iframe** loads the widget over a tiny stub page — works, but the floating button overlaps the iframe scroll. Minor; fine for testing.
+## What is real and works
 
-### Sidebar / placeholders
-11. Compliance, Reports, Team, Billing, API Keys, Integrations, Settings are all `PlaceholderPage`. Acceptable for now; flag to user so they aren't surprised during testing.
+- **Embed script** loads per-org config, persists prefs, beacons real events.
+- **`acc-widget-config`** enforces `allowed_domains` + Stripe subscription state.
+- **`acc-widget-event`** validates origin and writes real analytics rows.
+- **`run-accessibility-scan`** actually crawls (sitemap-first, then BFS), parses HTML for 8 axe-style WCAG rules, persists per-page + per-issue rows, computes score and WCAG-AA %.
+- **Dashboard / Issues / Scans / Compliance / Reports / Billing pages** all query Supabase directly — no fixtures.
+- **Stripe** end-to-end is wired: signup → checkout → webhook flips `widget_enabled`.
+- **RLS** is correct everywhere I checked (`acc_is_org_member`, `acc_can_manage_org`).
 
-## Fix plan
+## Tier 1 — real bugs that will hit paying users
 
-### 1. Make the Dashboard live
-Rewrite `src/pages/accessibility/AccessibilityDashboard.tsx` to:
-- On mount, query (scoped to `ctx.org.id`):
-  - `acc_websites` → count, list (top 5), latest `last_scan_at`, average `current_score`.
-  - `acc_scans` (last 30) → score-over-time points, last scan timestamp, pages_scanned sum.
-  - `acc_accessibility_issues` → counts grouped by `severity` (critical/serious/moderate/minor), `status='resolved'` count, top 5 by frequency for the "Top violations" card.
-- Render real values into the 8 stat cards (Score = avg current_score; WCAG 2.1 AA = avg `wcag_aa_pct` from latest scans; Critical, Warnings = serious+moderate, Resolved, Pages scanned, ADA risk = derived band from score, Last scan = most recent timestamp).
-- Replace the chart placeholder with a small Recharts `LineChart` of score over time (Recharts is already in the project).
-- Replace the violations placeholder with a real list of the top rules by occurrence.
-- Replace the websites placeholder with a real mini-list of websites with score badges.
+### 1. Scheduled scans silently fail
+`acc-run-scheduled-scans` calls `run-accessibility-scan` with the **service-role JWT** in `Authorization`. The scan function then calls `userClient.auth.getUser()` and returns 401 because that token has no user. The schedule still gets bumped (`next_scan_at`), so customers think automated scans are running when they're not.
 
-### 2. Wire up dashboard buttons
-- "Run new scan" → navigate to `/accessibility/websites` (where the per-site Scan button lives). If exactly one site exists, call `run-accessibility-scan` directly.
-- "Generate report" → navigate to `/accessibility/reports` (placeholder for now, but no longer dead).
-- "Add website" card button → navigate to `/accessibility/websites`.
+**Fix:** allow `run-accessibility-scan` to accept an internal service-role call when `body.scheduled === true` AND the bearer token equals `SUPABASE_SERVICE_ROLE_KEY`; in that path, skip the user/membership check and trust `website_id`.
 
-### 3. Profile email confirmation handling
-Update `AccessibilityProfile.tsx`:
-- Only send `email` in `updateUser` if it actually changed.
-- Show distinct toast when email change is queued ("Check your inbox to confirm the new email") vs. when only the name changed ("Profile saved").
+### 2. AI features return errors
+Both `acc-issue-ai-fix` and `accessibility-ai-recs` use `model: "google/gemini-3-flash-preview"` — that ID does not exist on the Lovable Gateway. The "Get AI fix" and "Generate recommendations" buttons will both fail.
 
-### 4. Widget snippet hardening
-Update `AccessibilityWidgetPage.tsx`:
-- Disable Copy button until `ctx.org?.slug` exists.
-- Show the user's website URL alongside the snippet so they know where to paste it (pulled from `acc_websites`).
-- Leave `accessibility-widget.js` as-is (already functional — verified).
+**Fix:** change to `google/gemini-2.5-flash` (the model the working `marketing-ai-chat` function uses).
 
-### 5. Communicate placeholders
-Final chat reply will explicitly list which sidebar pages are still placeholders (Compliance, Reports, Team, Billing, API Keys, Integrations, Settings) so testing focuses on the working surfaces: Dashboard, Websites, Scans, Issues, AI Recommendations, Widget, Profile.
+## Tier 2 — hardcoded values that block multi-environment / proper SaaS
 
-## Out of scope for this pass
-- Building real Compliance / Reports / Team / Billing / API Keys / Integrations / Settings pages.
-- Per-org widget customization (color, position, feature toggles persisted in `acc_widget_settings`).
-- Multi-page crawling (current scanner only fetches the root URL).
+| Hardcoded | Where | Impact |
+|---|---|---|
+| Stripe `PRODUCT_ID = "prod_UVbwWOouagCn5r"` | `create-accessibility-checkout` | Breaks in Stripe test mode and on any new tier |
+| Resend `from: "accessibility@notifications.bizooma.com"` | `acc-send-digests` | If that domain isn't verified, all digests fail silently |
+| `sites.length >= 1` cap | `AccessibilityWebsites.tsx` | Every plan is hard-capped at 1 site regardless of `acc_organizations.plan` |
 
-Ready to implement on approval.
+**Fix:** move the Stripe product ID and Resend "from" to secrets (`ACC_STRIPE_PRODUCT_ID`, `ACC_DIGEST_FROM`) with current values as fallbacks. Replace the hard cap with a `PLAN_LIMITS = { starter: 1, growth: 5, agency: 25, enterprise: Infinity }` map driven by `org.plan`.
+
+## Tier 3 — dead code / schema cruft (low risk, removes confusion)
+
+- **`acc-verify-website` edge function** (127 lines) is no longer referenced anywhere — site verification was removed last turn. Delete the function.
+- **`acc_websites.verification_status / verification_token / verified_at / verification_last_checked_at / verification_last_error`** columns are no longer read or written. Drop in a migration.
+- **Placeholder routes**: `/accessibility/team`, `/accessibility/api-keys`, `/accessibility/integrations`, `/accessibility/settings` all render the "Coming next" placeholder. Either build them or hide them from the sidebar so customers don't see empty rooms.
+
+## Tier 4 — schema vs UI mismatches (optional)
+
+- **`acc_api_keys`** table exists with RLS but has no UI and no edge function reads from it.
+- **`acc_notifications`** table exists with RLS but is never written or read.
+- **`acc_reports.file_url`** is always `null` — PDFs are generated client-side via jspdf and downloaded directly; the `acc_reports` row is logged but the file isn't actually re-retrievable.
+
+Either build the UI or drop the unused tables and the `file_url` column.
+
+## Recommended execution order
+
+1. **Tier 1** — fix scheduled scans and the AI model name. ~30 lines across 3 files.
+2. **Tier 2** — move 3 hardcoded values to secrets / plan map. Affects 3 files + 2 secrets.
+3. **Tier 3** — delete `acc-verify-website` + a migration to drop verification columns + remove or hide placeholder routes.
+4. **Tier 4** — decide whether to ship Team/API-Keys/Integrations/Settings or remove them; same for `acc_api_keys` / `acc_notifications` / `acc_reports.file_url`.
+
+## Technical notes
+
+- Tier 1 fix #1 must be authenticated against `SUPABASE_SERVICE_ROLE_KEY` (constant-time compare), not just the presence of `?scheduled=true`, otherwise anyone could trigger free scans on any `website_id`.
+- Tier 1 fix #2 — just a string change; no schema impact.
+- Tier 2 secret fallbacks should use `Deno.env.get("X") ?? "<current value>"` so live Stripe + Resend keep working through the deploy.
+- For Tier 3 column drops, all references in `AccessibilityWebsites.tsx` and `acc-widget-config` were already removed last turn; the migration is safe.
+
+## What I'd like you to confirm before I start
+
+- Tier 1 alone, or Tier 1 + Tier 2 in one pass?
+- For Tier 3 placeholders — build them out or just hide them from the sidebar?
+- For Tier 4 — keep `acc_api_keys` / `acc_notifications` for a future iteration, or drop them now?
