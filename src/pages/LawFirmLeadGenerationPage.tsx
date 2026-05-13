@@ -10,6 +10,7 @@ import LeadGenBenefits from "@/components/lead-gen/LeadGenBenefits";
 import LeadGenProcess from "@/components/lead-gen/LeadGenProcess";
 import LeadGenResults from "@/components/lead-gen/LeadGenResults";
 import LeadGenCTA from "@/components/lead-gen/LeadGenCTA";
+import ogImage from "@/assets/og/og-lead-gen.jpg";
 
 const LawFirmLeadGenerationPage = () => {
   useEffect(() => {
@@ -73,6 +74,12 @@ const LawFirmLeadGenerationPage = () => {
           name="description" 
           content="Jacksonville lead generation systems for law firms. Capture high-quality local leads, nurture prospects, and convert potential clients with automated workflows." 
         />
+        <meta property="og:title" content="Jacksonville Lead Generation for Law Firms | Bizooma" />
+        <meta property="og:description" content="Capture high-quality local leads, nurture prospects, and convert clients with Bizooma's automated lead-gen systems." />
+        <meta property="og:image" content={`https://bizooma.com${ogImage}`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`https://bizooma.com${ogImage}`} />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">

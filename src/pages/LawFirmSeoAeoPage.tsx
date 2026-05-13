@@ -10,6 +10,7 @@ import SeoAeoBenefits from "@/components/seo-aeo/SeoAeoBenefits";
 import SeoAeoProcess from "@/components/seo-aeo/SeoAeoProcess";
 import SeoAeoResults from "@/components/seo-aeo/SeoAeoResults";
 import SeoAeoCTA from "@/components/seo-aeo/SeoAeoCTA";
+import ogImage from "@/assets/og/og-seo-aeo.jpg";
 
 const LawFirmSeoAeoPage = () => {
   useEffect(() => {
@@ -73,6 +74,12 @@ const LawFirmSeoAeoPage = () => {
           name="description" 
           content="Jacksonville SEO, AEO, and Voice SEO services for law firms. Improve search rankings, answer engine optimization, and voice search visibility to attract more local clients." 
         />
+        <meta property="og:title" content="Jacksonville SEO, AEO & Voice SEO for Law Firms | Bizooma" />
+        <meta property="og:description" content="Improve search, answer engine, and voice search visibility for your law firm with Bizooma." />
+        <meta property="og:image" content={`https://bizooma.com${ogImage}`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`https://bizooma.com${ogImage}`} />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">

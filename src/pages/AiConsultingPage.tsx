@@ -10,6 +10,7 @@ import AiConsultingBenefits from "@/components/ai-consulting/AiConsultingBenefit
 import AiConsultingProcess from "@/components/ai-consulting/AiConsultingProcess";
 import AiConsultingCaseStudies from "@/components/ai-consulting/AiConsultingCaseStudies";
 import AiConsultingCTA from "@/components/ai-consulting/AiConsultingCTA";
+import ogImage from "@/assets/og/og-ai-consulting.jpg";
 
 const AiConsultingPage = () => {
   useEffect(() => {
@@ -73,6 +74,12 @@ const AiConsultingPage = () => {
           name="description" 
           content="Jacksonville AI consulting for law firms. Streamline operations, enhance client experiences, and drive innovation with strategic AI implementation tailored for legal practices." 
         />
+        <meta property="og:title" content="Jacksonville AI Consulting for Law Firms | Bizooma" />
+        <meta property="og:description" content="Strategic AI implementation for law firms: automation, chatbots, and innovation tailored to legal practice." />
+        <meta property="og:image" content={`https://bizooma.com${ogImage}`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`https://bizooma.com${ogImage}`} />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
       <div className="min-h-screen">
