@@ -79,6 +79,8 @@ import AccessibilityScans from "./pages/accessibility/AccessibilityScans";
 import AccessibilityIssues from "./pages/accessibility/AccessibilityIssues";
 import AccessibilityAi from "./pages/accessibility/AccessibilityAi";
 import AccessibilityWidgetPage from "./pages/accessibility/AccessibilityWidgetPage";
+import AccessibilitySignup from "./pages/accessibility/AccessibilitySignup";
+import AccessibilityCheckoutSuccess from "./pages/accessibility/AccessibilityCheckoutSuccess";
 import MarketingSectionPage from "./pages/MarketingSectionPage";
 import CodeSectionPage from "./pages/CodeSectionPage";
 import AiSectionPage from "./pages/AiSectionPage";
@@ -237,6 +239,8 @@ const App = () => (
 
               {/* Bizooma Accessibility Layer */}
               <Route path="/accessibility-layer" element={<AccessibilityLayerPage />} />
+              <Route path="/accessibility/signup" element={<AccessibilitySignup />} />
+              <Route path="/accessibility/checkout-success" element={<AccessibilityCheckoutSuccess />} />
               <Route path="/accessibility" element={<AccessibilityLayout />}>
                 <Route index element={<AccessibilityDashboard />} />
                 <Route path="dashboard" element={<AccessibilityDashboard />} />
