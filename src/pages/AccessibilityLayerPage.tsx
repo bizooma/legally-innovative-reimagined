@@ -63,6 +63,7 @@ const faqs = [
 
 export default function AccessibilityLayerPage() {
   const [ccpaOpen, setCcpaOpen] = useState(false);
+  const [cpraOpen, setCpraOpen] = useState(false);
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Helmet>
