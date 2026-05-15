@@ -1,35 +1,17 @@
-# Add Sign-In for Accessibility Subscribers
+## Add Privacy section + CCPA modal to /accessibility-layer
 
-## Goal
-Paid Accessibility Layer subscribers currently have no visible way to sign in. Add a clear entry point in the global top navigation that takes them to a sign-in form on the existing `/accessibility/signup` page.
+**File:** `src/pages/AccessibilityLayerPage.tsx`
 
-## Changes
+1. Add a new "Privacy & Compliance" section between the FAQ and final CTA blocks.
+   - Heading: "Your privacy matters"
+   - Short paragraph explaining Bizooma respects user privacy, the widget collects only minimal anonymized usage data needed for accessibility scoring, and never sells personal info.
+   - A list of relevant privacy frameworks the widget aligns with (GDPR, ADA, WCAG) plus a button-style link "California Consumer Privacy Act (CCPA)" that opens a modal.
 
-### 1. Global top nav (`src/components/Navbar.tsx` + `src/components/navbar/MobileMenu.tsx`)
-- Add an "Accessibility Login" link next to the existing "Stay Informed" link (desktop) and inside the mobile menu.
-- Style as a subtle text link — keep "Client Portal" as the prominent primary button.
-- Links to `/accessibility/signup?mode=signin`.
+2. Add a `<Dialog>` (shadcn) controlled by `useState`, triggered by the CCPA link.
+   - Modal title: "California Consumer Privacy Act"
+   - Scrollable content (max-h with overflow-auto) containing the full provided copy, formatted with subheadings ("Key facts", "Origins and legislative development", "Core consumer rights", "Enforcement and penalties", "Subsequent amendments and evolution") and bulleted lists where the copy uses lists.
+   - Styled with existing semantic tokens (`text-foreground`, `text-muted-foreground`, `border`).
 
-### 2. `/accessibility/signup` page (`src/pages/accessibility/AccessibilitySignup.tsx`)
-- Convert into a tabbed view with two modes: **Sign in** and **Create account** (current signup flow).
-- Default mode driven by `?mode=signin` query param (defaults to `signup` when absent, preserving current behavior for existing CTAs).
-- **Sign-in tab**: email + password fields → `supabase.auth.signInWithPassword` → on success redirect to `/accessibility/dashboard`. Include "Forgot password?" link using `supabase.auth.resetPasswordForEmail` with `redirectTo: ${origin}/accessibility/reset-password`.
-- **Sign-up tab**: existing flow unchanged.
-- Update page `<title>` and H1 dynamically per tab.
+3. Imports to add: `Dialog, DialogContent, DialogHeader, DialogTitle` from `@/components/ui/dialog`, `useState` from React, and an icon (e.g. `Lock` or `ShieldCheck`) from `lucide-react`.
 
-### 3. Password reset page (new — `src/pages/accessibility/AccessibilityResetPassword.tsx`)
-- Public route at `/accessibility/reset-password`.
-- Detects `type=recovery` in URL hash, shows new-password form, calls `supabase.auth.updateUser({ password })`, then redirects to `/accessibility/dashboard`.
-- Required so the "Forgot password?" flow actually works.
-
-### 4. Routing (`src/App.tsx`)
-- Add the new `/accessibility/reset-password` public route.
-
-## Out of scope
-- No changes to the embedded widget, accessibility product landing page, or `/portal`.
-- No changes to RLS, edge functions, or the existing signup edge function.
-
-## Technical notes
-- Uses existing `supabase` client; no new dependencies.
-- Mobile menu already iterates `navLinks` — will add the accessibility login as a separate explicit item (mirrors how "Stay Informed" / "Client Portal" are rendered) rather than into the data array, to avoid leaking it into other surfaces that consume `navLinks`.
-- Tab state is local React state initialized from `useSearchParams()`.
+No other files change. Purely a presentation update on the marketing page.
