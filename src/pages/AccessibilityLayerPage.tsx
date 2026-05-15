@@ -295,9 +295,14 @@ export default function AccessibilityLayerPage() {
                 </span>
               ))}
             </div>
-            <Button variant="outline" className="gap-2" onClick={() => setCcpaOpen(true)}>
-              <Shield className="h-4 w-4" /> California Consumer Privacy Act (CCPA)
-            </Button>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button variant="outline" className="gap-2" onClick={() => setCcpaOpen(true)}>
+                <Shield className="h-4 w-4" /> California Consumer Privacy Act (CCPA)
+              </Button>
+              <Button variant="outline" className="gap-2" onClick={() => setCpraOpen(true)}>
+                <Shield className="h-4 w-4" /> California Privacy Rights Act (CPRA)
+              </Button>
+            </div>
           </div>
         </div>
       </section>
