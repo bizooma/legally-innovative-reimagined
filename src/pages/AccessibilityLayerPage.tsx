@@ -1,8 +1,15 @@
 import { Helmet } from "react-helmet-async";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Accessibility,
   Shield,
@@ -20,6 +27,8 @@ import {
   MousePointer2,
   Languages,
   AlertTriangle,
+  Lock,
+  ShieldCheck,
 } from "lucide-react";
 
 const featureGroups = [
@@ -53,6 +62,7 @@ const faqs = [
 ];
 
 export default function AccessibilityLayerPage() {
+  const [ccpaOpen, setCcpaOpen] = useState(false);
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Helmet>
@@ -264,6 +274,92 @@ export default function AccessibilityLayerPage() {
           <Button asChild size="lg" className="gap-2"><Link to="/accessibility/signup">Get the widget – $25/mo <ScanLine className="h-4 w-4"/></Link></Button>
         </div>
       </section>
+
+      {/* Privacy */}
+      <section className="border-t bg-muted/30">
+        <div className="container mx-auto px-4 py-20">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+              <Lock className="h-6 w-6" />
+            </div>
+            <Badge variant="secondary" className="mb-4">Privacy & Compliance</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Your privacy matters</h2>
+            <p className="text-muted-foreground mb-8">
+              The Bizooma Accessibility Layer is designed to respect every visitor. The widget collects only the minimal, anonymized usage signals required to deliver accessibility features and produce compliance reports. We never sell personal information, and your dashboard data stays scoped to your organization.
+            </p>
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
+              {["GDPR aware", "ADA Title III", "WCAG 2.1 AA", "Section 508"].map((t) => (
+                <span key={t} className="inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1 text-xs text-muted-foreground">
+                  <ShieldCheck className="h-3 w-3 text-primary" />{t}
+                </span>
+              ))}
+            </div>
+            <Button variant="outline" className="gap-2" onClick={() => setCcpaOpen(true)}>
+              <Shield className="h-4 w-4" /> California Consumer Privacy Act (CCPA)
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <Dialog open={ccpaOpen} onOpenChange={setCcpaOpen}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>California Consumer Privacy Act</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-5 text-sm text-muted-foreground leading-relaxed">
+            <p>
+              The California Consumer Privacy Act (CCPA) is a landmark data privacy law enacted in 2018 that grants California residents extensive rights over their personal information. Effective January 1, 2020, it established the most comprehensive consumer privacy framework in the United States, influencing privacy standards nationwide.
+            </p>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Key facts</h3>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Signed into law: June 28, 2018 (Assembly Bill 375)</li>
+                <li>Effective date: January 1, 2020</li>
+                <li>Primary enforcers: California Attorney General and California Privacy Protection Agency (CPPA)</li>
+                <li>Major amendment: California Privacy Rights Act (effective 2023)</li>
+                <li>Penalty range (2025 adjustment): $2,663 – $7,988 per violation</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Origins and legislative development</h3>
+              <p>
+                Sparked by a 2017 ballot initiative led by privacy advocate Alastair Mactaggart, lawmakers passed the CCPA as a legislative compromise to avoid a voter initiative. It was signed by Governor Jerry Brown in June 2018 and took effect January 1, 2020, with enforcement beginning July 1, 2020. The act was subsequently amended by multiple bills and expanded by the 2020 California Privacy Rights Act, which created the CPPA to oversee rulemaking and enforcement.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Core consumer rights</h3>
+              <p className="mb-2">The CCPA grants California residents rights to:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Know what personal data businesses collect, use, and share.</li>
+                <li>Delete personal data held by businesses (with certain exceptions).</li>
+                <li>Opt out of the sale or sharing of personal information.</li>
+                <li>Correct inaccurate data and limit use of sensitive information (CPRA amendments).</li>
+                <li>Be free from discrimination for exercising these rights.</li>
+              </ul>
+              <p className="mt-2">
+                These rights apply broadly to for-profit entities meeting thresholds such as over $25 million in annual revenue or handling data of 100,000+ consumers or households.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Enforcement and penalties</h3>
+              <p>
+                Since 2023, enforcement has been shared by the California Attorney General and the CPPA. Businesses face administrative fines up to $7,988 per intentional violation or violations involving minors. Consumers also hold a limited private right of action for data breaches caused by inadequate security.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Subsequent amendments and evolution</h3>
+              <p>
+                Recent expansions include the Delete Act (Senate Bill 362), establishing the Delete Request and Opt-Out Platform (DROP) in 2026, and 2024 amendments addressing AI systems and neural data. California continues to update CCPA regulations to cover emerging technologies and automated decision-making by 2027.
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
