@@ -366,6 +366,58 @@ export default function AccessibilityLayerPage() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={cpraOpen} onOpenChange={setCpraOpen}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>California Privacy Rights Act</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-5 text-sm text-muted-foreground leading-relaxed">
+            <p>
+              The California Privacy Rights Act (CPRA) is a 2020 state ballot initiative that significantly expanded the California Consumer Privacy Act. It strengthens privacy protections for residents and establishes new enforcement mechanisms, marking a major milestone in U.S. data privacy regulation.
+            </p>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Key facts</h3>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Enacted: November 2020 (Proposition 24)</li>
+                <li>Effective date: January 1, 2023</li>
+                <li>Primary agency: California Privacy Protection Agency</li>
+                <li>Predecessor law: California Consumer Privacy Act (CCPA, 2018)</li>
+                <li>Scope: Applies to businesses handling California residents' personal data</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Background and purpose</h3>
+              <p>
+                Voters approved the CPRA through Proposition 24 to enhance Californians' control over personal information. It arose from concerns that the earlier CCPA offered limited consumer rights and weak enforcement. The act aligns California's privacy standards more closely with global frameworks such as the General Data Protection Regulation.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Major provisions</h3>
+              <p>
+                The CPRA introduces new consumer rights, including the ability to correct inaccurate data, limit the use of sensitive personal information, and opt out of cross-context behavioral advertising. It mandates stricter data minimization and retention rules and requires transparency in profiling and automated decision-making.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Enforcement and governance</h3>
+              <p>
+                A distinctive feature is the creation of the independent California Privacy Protection Agency (CPPA), empowered to implement regulations, investigate violations, and issue fines. The California Department of Justice retains authority for certain civil actions, reinforcing dual oversight.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-foreground mb-2">Impact and significance</h3>
+              <p>
+                The CPRA has made California the first U.S. state with a dedicated privacy regulator, influencing nationwide corporate data practices. Many companies have adopted its standards as a baseline for U.S. privacy compliance, shaping legislative models in other states and prompting discussions of a potential federal privacy framework.
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
