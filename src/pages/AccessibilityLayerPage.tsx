@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -72,10 +73,12 @@ export default function AccessibilityLayerPage() {
         <link rel="canonical" href="https://bizooma.com/accessibility-layer" />
       </Helmet>
 
+      <Navbar />
+
       {/* Hero */}
       <section className="relative overflow-hidden border-b">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.15),transparent_60%)]" />
-        <div className="container mx-auto px-4 py-24 lg:py-32">
+        <div className="container mx-auto px-4 pt-32 pb-24 lg:pt-40 lg:pb-32">
           <div className="max-w-4xl mx-auto text-center">
             <Badge variant="outline" className="mb-6 gap-2">
               <Sparkles className="h-3 w-3" /> Accessibility meets automation
