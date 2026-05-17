@@ -71,6 +71,7 @@ import MomentumCampaignsPage from "./pages/MomentumCampaignsPage";
 import WordpressPluginsPage from "./pages/WordpressPluginsPage";
 import LawFirmStartupsPage from "./pages/LawFirmStartupsPage";
 import AccessibilityLayerPage from "./pages/AccessibilityLayerPage";
+import ClaudeCoworkPage from "./pages/ClaudeCoworkPage";
 import AccessibilityLayout from "./pages/accessibility/AccessibilityLayout";
 import AccessibilityDashboard from "./pages/accessibility/AccessibilityDashboard";
 import AccessibilityWebsites from "./pages/accessibility/AccessibilityWebsites";
@@ -127,6 +128,9 @@ const App = () => (
             <Routes>
               {/* Donut page with highest priority */}
               <Route path="/donuts" element={<DonutsPage />} />
+
+              {/* Claude Cowork landing page */}
+              <Route path="/claude-cowork" element={<ClaudeCoworkPage />} />
               
               {/* Michael sales page */}
               <Route path="/michael" element={<MichaelSalesPage />} />
