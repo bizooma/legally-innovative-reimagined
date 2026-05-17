@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { trackNavigation } from "@/utils/gtmTracking";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2, Accessibility } from "lucide-react";
+import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2, Accessibility, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import immigrationLawApp from "@/assets/immigration-law-app.png";
 import rokuDemo from "@/assets/roku-demo.png";
@@ -101,6 +101,25 @@ const Services = () => {
       link: "/accessibility-layer",
       accentColor: "from-rose-700 to-red-900",
       noOverlay: true,
+      showLearnMore: true,
+    },
+    {
+      title: "Claude Cowork",
+      subtitle: "Tutorials · Resources · Skills",
+      description: "A curated library of Claude-powered tutorials, resources, and skills built for two verticals: law firms and nonprofits. Equip your team with practical workflows for intake, drafting, grant writing, donor cultivation, and more — all designed to plug Claude directly into the work you already do.",
+      highlights: [
+        "Claude Skills for law firms & nonprofits",
+        "Step-by-step tutorial series",
+        "Downloadable templates & prompt packs",
+        "Vertical-specific workflows",
+      ],
+      examples: "Browse Skills like Intake Triage and Grant Writing Co-Pilot, plus tutorials on deposition prep, donor cultivation, and impact measurement.",
+      examplesLabel: "What's inside: ",
+      icon: <Sparkles className="h-8 w-8" />,
+      bgImage: accessibilityWidget,
+      link: "/claude-cowork",
+      accentColor: "from-orange-500 to-amber-700",
+      noOverlay: false,
       showLearnMore: true,
     },
   ];
