@@ -9,6 +9,7 @@ import rokuDemo from "@/assets/roku-demo.png";
 import alexaSkill from "@/assets/alexa-skill.png";
 import chatbotExamples from "@/assets/chatbot-examples.png";
 import accessibilityWidget from "@/assets/accessibility-widget.png";
+import claudeCowork from "@/assets/claude-cowork.jpg";
 
 const Services = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
@@ -116,10 +117,10 @@ const Services = () => {
       examples: "Browse Skills like Intake Triage and Grant Writing Co-Pilot, plus tutorials on deposition prep, donor cultivation, and impact measurement.",
       examplesLabel: "What's inside: ",
       icon: <Sparkles className="h-8 w-8" />,
-      bgImage: accessibilityWidget,
+      bgImage: claudeCowork,
       link: "/claude-cowork",
       accentColor: "from-orange-500 to-amber-700",
-      noOverlay: false,
+      noOverlay: true,
       showLearnMore: true,
     },
   ];
