@@ -42,53 +42,6 @@ type Item = {
   duration?: string;
 };
 
-const lawFirmItems: Item[] = [
-  {
-    title: "Intake Triage Skill for Claude",
-    description:
-      "Drop-in Claude Skill that classifies inbound leads by practice area, urgency, and conflict risk, then drafts a tailored response.",
-    type: "Skill",
-    price: "$149",
-  },
-  {
-    title: "Deposition Prep Tutorial Series",
-    description:
-      "Six-part walkthrough on using Claude to summarize transcripts, build question outlines, and surface contradictions.",
-    type: "Tutorial",
-    price: "$79",
-    duration: "6 modules",
-  },
-  {
-    title: "Engagement Letter Prompt Pack",
-    description:
-      "20 attorney-reviewed prompts covering fee agreements, scope letters, and disengagement notices with placeholders ready to fill.",
-    type: "Resource",
-    price: "$39",
-  },
-  {
-    title: "Discovery Document Reviewer Skill",
-    description:
-      "Claude Skill that ingests PDFs, tags privileged material, and produces a chronological summary of key facts.",
-    type: "Skill",
-    price: "$199",
-  },
-  {
-    title: "Local SEO Playbook for Solo & Small Firms",
-    description:
-      "Step-by-step guide to using Claude for GBP optimization, local content, and review response at scale.",
-    type: "Resource",
-    price: "$29",
-  },
-  {
-    title: "Court Filing Checklist Generator",
-    description:
-      "Tutorial + reusable prompt that produces jurisdiction-aware filing checklists in seconds.",
-    type: "Tutorial",
-    price: "Free",
-    duration: "45 min",
-  },
-];
-
 const nonprofitItems: Item[] = [
   {
     title: "Grant Writing Co-Pilot Skill",
