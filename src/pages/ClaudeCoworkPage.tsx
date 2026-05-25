@@ -399,7 +399,7 @@ const LawFirmCoworkSections = () => (
           <div className="text-center mb-8">
             <p className="text-sm uppercase tracking-wider text-[#7a3a1f] font-semibold mb-2">Law Firm CoWork OS</p>
             <p className="text-5xl font-bold text-legal-dark mb-1">
-              $<span className="text-[#d97757]">[price]</span>
+              $<span className="text-[#d97757]">149</span>
             </p>
             <p className="text-sm text-muted-foreground">one-time</p>
           </div>
@@ -803,7 +803,7 @@ const NonprofitCoworkSections = () => (
           <div className="text-center mb-8">
             <p className="text-sm uppercase tracking-wider text-[#7a3a1f] font-semibold mb-2">Nonprofit CoWork OS</p>
             <p className="text-5xl font-bold text-legal-dark mb-1">
-              $<span className="text-[#d97757]">[price]</span>
+              $<span className="text-[#d97757]">49</span>
             </p>
             <p className="text-sm text-muted-foreground">one-time</p>
           </div>
