@@ -7,6 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   Scale,
   HeartHandshake,
   BookOpen,
@@ -16,6 +22,16 @@ import {
   PlayCircle,
   ArrowRight,
   Wrench,
+  AlertTriangle,
+  Brain,
+  FolderTree,
+  ShieldCheck,
+  FileText,
+  CheckCircle2,
+  Folder,
+  Users,
+  Building2,
+  Briefcase,
 } from "lucide-react";
 
 type Item = {
