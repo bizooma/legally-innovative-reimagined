@@ -298,14 +298,7 @@ const ClaudeCoworkPage = () => {
           </div>
         </section>
 
-        <VerticalSection
-          id="law-firms"
-          icon={Scale}
-          eyebrow="For Law Firms"
-          title="Practical AI for solo, small, and mid-size firms"
-          description="Tutorials, prompt resources, and Claude Skills built around intake, document review, marketing, and client communication. Every item is reviewed by a practitioner before it ships."
-          items={lawFirmItems}
-        />
+        <LawFirmCoworkSections />
 
         <div className="container mx-auto px-4">
           <div className="h-px bg-gradient-to-r from-transparent via-[#e6d5bf] to-transparent" />
