@@ -437,8 +437,12 @@ const LawFirmCoworkSections = () => (
               </li>
             ))}
           </ul>
-          <Button size="lg" className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white">
-            Download CoWork OS <Download className="h-4 w-4 ml-2" />
+          <Button
+            size="lg"
+            className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white"
+            onClick={() => startCoworkCheckout("law")}
+          >
+            Buy &amp; Download — $149 <Download className="h-4 w-4 ml-2" />
           </Button>
           <p className="text-xs text-muted-foreground text-center mt-5 leading-relaxed">
             Instant download. Works with Claude and the CoWork desktop app. One folder per firm — install for as many attorneys as you have. All templates require attorney review before use.
@@ -841,8 +845,12 @@ const NonprofitCoworkSections = () => (
               </li>
             ))}
           </ul>
-          <Button size="lg" className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white">
-            Download CoWork OS <Download className="h-4 w-4 ml-2" />
+          <Button
+            size="lg"
+            className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white"
+            onClick={() => startCoworkCheckout("nonprofit")}
+          >
+            Buy &amp; Download — $49 <Download className="h-4 w-4 ml-2" />
           </Button>
           <p className="text-xs text-muted-foreground text-center mt-5 leading-relaxed">
             Instant download. Works with Claude and the CoWork desktop app. One folder per organization — your whole team can use the same install. All grant proposals and donor communications require human review before submission or distribution.
