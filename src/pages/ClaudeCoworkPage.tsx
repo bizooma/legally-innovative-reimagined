@@ -32,6 +32,10 @@ import {
   Users,
   Building2,
   Briefcase,
+  Database,
+  MessageSquare,
+  Target,
+  Heart,
 } from "lucide-react";
 
 type Item = {
@@ -41,53 +45,6 @@ type Item = {
   price: string;
   duration?: string;
 };
-
-const nonprofitItems: Item[] = [
-  {
-    title: "Grant Writing Co-Pilot Skill",
-    description:
-      "Claude Skill that drafts LOIs, full proposals, and budget narratives from your program brief and funder profile.",
-    type: "Skill",
-    price: "$129",
-  },
-  {
-    title: "Donor Cultivation Tutorial",
-    description:
-      "Learn how to use Claude to segment donors, draft personalized appeals, and prep major-gift briefings.",
-    type: "Tutorial",
-    price: "$59",
-    duration: "4 modules",
-  },
-  {
-    title: "Board Reporting Template Pack",
-    description:
-      "Editable prompts and templates for monthly impact reports, financial summaries, and program dashboards.",
-    type: "Resource",
-    price: "$25",
-  },
-  {
-    title: "Volunteer Coordinator Skill",
-    description:
-      "Claude Skill that drafts shift schedules, reminder emails, and post-event thank-yous tailored to each volunteer.",
-    type: "Skill",
-    price: "$99",
-  },
-  {
-    title: "Annual Appeal Story Kit",
-    description:
-      "Frameworks and prompts for turning beneficiary interviews into compelling year-end campaign copy.",
-    type: "Resource",
-    price: "$35",
-  },
-  {
-    title: "Impact Measurement Tutorial",
-    description:
-      "Walkthrough on using Claude to translate program data into board-ready outcomes and funder-ready proof points.",
-    type: "Tutorial",
-    price: "Free",
-    duration: "60 min",
-  },
-];
 
 const typeIcon = (type: Item["type"]) => {
   if (type === "Skill") return <Wrench className="h-4 w-4" />;
