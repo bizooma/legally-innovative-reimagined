@@ -6,6 +6,32 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
+
+async function startCoworkCheckout(product: "law" | "nonprofit") {
+  try {
+    const { data, error } = await supabase.functions.invoke("create-cowork-checkout", {
+      body: { product, origin: window.location.origin },
+    });
+    if (error || (data as any)?.error || !(data as any)?.url) {
+      throw new Error((data as any)?.error || error?.message || "Could not start checkout");
+    }
+    const url = (data as any).url as string;
+    try {
+      if (window.top && window.top !== window.self) {
+        window.top.location.href = url;
+        return;
+      }
+    } catch {
+      window.open(url, "_blank", "noopener,noreferrer");
+      return;
+    }
+    window.location.href = url;
+  } catch (err: any) {
+    toast({ title: "Checkout failed", description: err.message ?? String(err), variant: "destructive" });
+  }
+}
 import {
   Accordion,
   AccordionContent,
