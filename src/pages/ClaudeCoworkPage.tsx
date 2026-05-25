@@ -538,14 +538,7 @@ const ClaudeCoworkPage = () => {
           <div className="h-px bg-gradient-to-r from-transparent via-[#e6d5bf] to-transparent" />
         </div>
 
-        <VerticalSection
-          id="nonprofits"
-          icon={HeartHandshake}
-          eyebrow="For Nonprofits"
-          title="AI workflows that respect small teams and big missions"
-          description="From grant writing to donor cultivation and impact reporting, these resources help mission-driven teams do more with the staff and budget they already have."
-          items={nonprofitItems}
-        />
+        <NonprofitCoworkSections />
 
         {/* CTA */}
         <section className="py-20 lg:py-24">
