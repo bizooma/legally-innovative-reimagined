@@ -6,6 +6,32 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
+
+async function startCoworkCheckout(product: "law" | "nonprofit") {
+  try {
+    const { data, error } = await supabase.functions.invoke("create-cowork-checkout", {
+      body: { product, origin: window.location.origin },
+    });
+    if (error || (data as any)?.error || !(data as any)?.url) {
+      throw new Error((data as any)?.error || error?.message || "Could not start checkout");
+    }
+    const url = (data as any).url as string;
+    try {
+      if (window.top && window.top !== window.self) {
+        window.top.location.href = url;
+        return;
+      }
+    } catch {
+      window.open(url, "_blank", "noopener,noreferrer");
+      return;
+    }
+    window.location.href = url;
+  } catch (err: any) {
+    toast({ title: "Checkout failed", description: err.message ?? String(err), variant: "destructive" });
+  }
+}
 import {
   Accordion,
   AccordionContent,
@@ -411,8 +437,12 @@ const LawFirmCoworkSections = () => (
               </li>
             ))}
           </ul>
-          <Button size="lg" className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white">
-            Download CoWork OS <Download className="h-4 w-4 ml-2" />
+          <Button
+            size="lg"
+            className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white"
+            onClick={() => startCoworkCheckout("law")}
+          >
+            Buy &amp; Download — $149 <Download className="h-4 w-4 ml-2" />
           </Button>
           <p className="text-xs text-muted-foreground text-center mt-5 leading-relaxed">
             Instant download. Works with Claude and the CoWork desktop app. One folder per firm — install for as many attorneys as you have. All templates require attorney review before use.
@@ -815,8 +845,12 @@ const NonprofitCoworkSections = () => (
               </li>
             ))}
           </ul>
-          <Button size="lg" className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white">
-            Download CoWork OS <Download className="h-4 w-4 ml-2" />
+          <Button
+            size="lg"
+            className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white"
+            onClick={() => startCoworkCheckout("nonprofit")}
+          >
+            Buy &amp; Download — $49 <Download className="h-4 w-4 ml-2" />
           </Button>
           <p className="text-xs text-muted-foreground text-center mt-5 leading-relaxed">
             Instant download. Works with Claude and the CoWork desktop app. One folder per organization — your whole team can use the same install. All grant proposals and donor communications require human review before submission or distribution.

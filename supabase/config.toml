@@ -142,4 +142,7 @@ verify_jwt = false
 [functions.acc-stripe-webhook]
 verify_jwt = false
 
+[functions.create-cowork-checkout]
+verify_jwt = false
+
 
