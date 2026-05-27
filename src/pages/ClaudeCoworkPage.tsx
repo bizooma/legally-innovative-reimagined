@@ -231,7 +231,6 @@ const lawPricingIncludes = [
   "Specialist sub-agent builder plugin",
   "Lifetime access — no subscription, no renewal",
   "Install for every attorney in your firm",
-  "30-day money-back guarantee",
 ];
 
 const lawFaqs = [
@@ -240,7 +239,6 @@ const lawFaqs = [
   { q: "Is my client data safe?", a: "Your data never leaves your computer. The folder system is entirely local — no cloud storage, no third-party servers involved in the CoWork OS itself. Claude processes information through Anthropic's API, subject to their privacy policy." },
   { q: "Can I use this for multiple firms?", a: "Yes. Create a separate folder for each firm. CoWork lets you switch workspaces — each one is completely isolated. One purchase covers all of them." },
   { q: "Does this work for any practice area?", a: "Yes. The templates and folder structure are practice-area agnostic. The identity files are where you customise for your specific firm — estate planning, litigation, real estate, family law, business, or any combination." },
-  { q: "What if it doesn't work for me?", a: "30-day money-back guarantee, no questions asked. Email support@bizooma.com and we'll refund you." },
   { q: "Do I need to be technical to set this up?", a: "No. If you can unzip a file and drag a folder, you can install this. The first-run setup is guided — Claude walks you through every step." },
 ];
 
@@ -582,7 +580,6 @@ const npPricingIncludes = [
   "Specialist sub-agent builder plugin",
   "Lifetime access — no subscription, no renewal",
   "Install for your whole team — one purchase per organization",
-  "30-day money-back guarantee",
 ];
 
 const npFaqs = [
@@ -592,7 +589,6 @@ const npFaqs = [
   { q: "Can one purchase cover our whole team?", a: "Yes. One purchase, one installation per organization. Multiple development staff, program staff, and the ED can all use the same CoWork OS folder. Each person opens CoWork and points it at the shared folder." },
   { q: "Does this work for any type of nonprofit?", a: "Yes. The templates and structure work across sectors — human services, advocacy, arts, education, environment, health, community development. The identity files are where you customise for your specific organization, mission, and funding mix." },
   { q: "What about the data-first rule — does it slow things down?", a: "It takes an extra two minutes at the start of a grant session to provide your program data and the external statistics for your needs statement. What you get in return is a proposal draft where every impact claim has a source — which is the draft you would have had to produce anyway after reviewing generic AI output. The data-first rule doesn't slow you down; it removes a revision cycle." },
-  { q: "What if it doesn't work for us?", a: "30-day money-back guarantee, no questions asked. Email support@bizooma.com and we'll refund you." },
 ];
 
 const NonprofitCoworkSections = () => (
