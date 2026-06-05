@@ -95,7 +95,7 @@ export default function AccessibilityLayerPage() {
                 <Link to="/accessibility/signup">Get the widget – $25/mo <ArrowRight className="h-4 w-4" /></Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <a href="https://calendly.com/heyjoe" target="_blank" rel="noreferrer">Schedule Demo</a>
+                <a href="https://calendly.com/joe-bizooma/30min" target="_blank" rel="noreferrer">Schedule Demo</a>
               </Button>
             </div>
 
