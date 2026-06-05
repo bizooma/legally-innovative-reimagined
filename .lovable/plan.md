@@ -1,17 +1,14 @@
-## Add Privacy section + CCPA modal to /accessibility-layer
+## Why /accessibility-layer shows 404
 
-**File:** `src/pages/AccessibilityLayerPage.tsx`
+- The route is registered in `src/App.tsx` (line 251) and `AccessibilityLayerPage.tsx` exists.
+- The console log shows the browser running an old bundle (`index-BIyoPdrU.js`) that doesn't contain this route, so React Router falls to the `NotFound` page.
+- This is a stale-preview/build issue, not a code bug.
 
-1. Add a new "Privacy & Compliance" section between the FAQ and final CTA blocks.
-   - Heading: "Your privacy matters"
-   - Short paragraph explaining Bizooma respects user privacy, the widget collects only minimal anonymized usage data needed for accessibility scoring, and never sells personal info.
-   - A list of relevant privacy frameworks the widget aligns with (GDPR, ADA, WCAG) plus a button-style link "California Consumer Privacy Act (CCPA)" that opens a modal.
+## Fix
 
-2. Add a `<Dialog>` (shadcn) controlled by `useState`, triggered by the CCPA link.
-   - Modal title: "California Consumer Privacy Act"
-   - Scrollable content (max-h with overflow-auto) containing the full provided copy, formatted with subheadings ("Key facts", "Origins and legislative development", "Core consumer rights", "Enforcement and penalties", "Subsequent amendments and evolution") and bulleted lists where the copy uses lists.
-   - Styled with existing semantic tokens (`text-foreground`, `text-muted-foreground`, `border`).
+1. Switch to build mode and restart the dev server so Vite serves a fresh bundle that includes the route.
+2. Reload `/accessibility-layer` and confirm `AccessibilityLayerPage` renders (no 404).
+3. If it still 404s after a clean restart, open `AccessibilityLayerPage.tsx` to look for a render-time throw that could bubble to an error boundary — but no runtime errors are currently reported, so this is unlikely.
+4. Once the page renders, you can tell me what you want to change on it and we'll iterate.
 
-3. Imports to add: `Dialog, DialogContent, DialogHeader, DialogTitle` from `@/components/ui/dialog`, `useState` from React, and an icon (e.g. `Lock` or `ShieldCheck`) from `lucide-react`.
-
-No other files change. Purely a presentation update on the marketing page.
+No file edits are needed for this step — just a sandbox/dev-server restart.
