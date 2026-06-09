@@ -105,7 +105,11 @@ export default function AiAuditPage() {
                 See what's inside
               </a>
             </div>
-            <p className="text-xs text-muted-foreground mt-4 inline-flex items-center gap-1.5">
+            <div className="mt-4 inline-flex items-center gap-2">
+              <span className="text-2xl font-bold text-[#d97757]">$19.95</span>
+              <span className="text-sm text-muted-foreground">one-time</span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3 inline-flex items-center gap-1.5">
               <ShieldCheck className="h-3.5 w-3.5" /> Instant download after checkout. Lifetime access.
             </p>
           </div>
@@ -196,6 +200,10 @@ export default function AiAuditPage() {
               <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-2">
                 AI Audit + Implementation Toolkit
               </h2>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <span className="text-3xl font-bold text-[#d97757]">$19.95</span>
+                <span className="text-sm text-muted-foreground">one-time</span>
+              </div>
               <p className="text-muted-foreground">
                 One purchase. Instant download. Yours to use across your firm.
               </p>
