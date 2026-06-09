@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import auditPreview from "@/assets/ai-audit-preview.png.asset.json";
+import trackerPreview from "@/assets/ai-tracker-preview.png.asset.json";
 import {
   CheckCircle2,
   FileSpreadsheet,
@@ -145,6 +147,14 @@ export default function AiAuditPage() {
                 </div>
               </CardHeader>
               <CardContent>
+                <div className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm">
+                  <img
+                    src={auditPreview.url}
+                    alt="Preview of the Law Firm AI Workflow Audit spreadsheet showing departments, workflows, impact and risk scoring, and prioritized recommendations"
+                    className="w-full h-auto block"
+                    loading="lazy"
+                  />
+                </div>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                   A structured audit of where AI fits in your firm — across intake, drafting, research, billing, marketing, and operations. Score it, rank it, and walk away with a prioritized list.
                 </p>
@@ -172,6 +182,14 @@ export default function AiAuditPage() {
                 </div>
               </CardHeader>
               <CardContent>
+                <div className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm">
+                  <img
+                    src={trackerPreview.url}
+                    alt="Preview of the Law Firm AI Implementation Tracker spreadsheet showing build priority, owners, status, start dates, target go-live dates, and effort scoring"
+                    className="w-full h-auto block"
+                    loading="lazy"
+                  />
+                </div>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                   A project tracker built specifically for AI rollouts inside a law firm. Owners, deadlines, tools, prompts, training — everything in one place so the work actually gets done.
                 </p>
