@@ -73,6 +73,8 @@ import LawFirmStartupsPage from "./pages/LawFirmStartupsPage";
 import AccessibilityLayerPage from "./pages/AccessibilityLayerPage";
 import ClaudeCoworkPage from "./pages/ClaudeCoworkPage";
 import ClaudeCoworkSuccess from "./pages/ClaudeCoworkSuccess";
+import AiAuditPage from "./pages/AiAuditPage";
+import AiAuditSuccess from "./pages/AiAuditSuccess";
 import AccessibilityLayout from "./pages/accessibility/AccessibilityLayout";
 import AccessibilityDashboard from "./pages/accessibility/AccessibilityDashboard";
 import AccessibilityWebsites from "./pages/accessibility/AccessibilityWebsites";
@@ -133,6 +135,10 @@ const App = () => (
               {/* Claude Cowork landing page */}
               <Route path="/claude-cowork" element={<ClaudeCoworkPage />} />
               <Route path="/claude-cowork/success" element={<ClaudeCoworkSuccess />} />
+
+              {/* AI Audit landing page */}
+              <Route path="/ai-audit" element={<AiAuditPage />} />
+              <Route path="/ai-audit/success" element={<AiAuditSuccess />} />
               
               {/* Michael sales page */}
               <Route path="/michael" element={<MichaelSalesPage />} />
