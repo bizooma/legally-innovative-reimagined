@@ -1,10 +1,26 @@
+import { useState, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Download, ArrowLeft, FileSpreadsheet } from "lucide-react";
+import {
+  CheckCircle2,
+  Download,
+  ArrowLeft,
+  FileSpreadsheet,
+  Loader2,
+  RefreshCw,
+} from "lucide-react";
 import { useFileDownload } from "@/hooks/useFileDownload";
 
-const FILES = [
+type FileState = "idle" | "loading" | "success" | "error";
+
+interface FileDef {
+  fileName: string;
+  displayName: string;
+  label: string;
+}
+
+const FILES: FileDef[] = [
   {
     fileName: "AI_Workflow_Audit_LawFirm_Final.xlsx",
     displayName: "AI-Workflow-Audit-Law-Firm.xlsx",
