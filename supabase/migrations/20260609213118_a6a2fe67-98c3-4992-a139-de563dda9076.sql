@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "temp_anon_upload_downloads" ON storage.objects;
