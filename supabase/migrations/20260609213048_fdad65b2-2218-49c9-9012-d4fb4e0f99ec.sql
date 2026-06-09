@@ -1,0 +1,1 @@
+CREATE POLICY "temp_anon_upload_downloads" ON storage.objects FOR INSERT TO anon, authenticated WITH CHECK (bucket_id = 'downloads');
