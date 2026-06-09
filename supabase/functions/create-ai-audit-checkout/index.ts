@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 // TODO: replace with the real Stripe product ID once provided.
-const PRODUCT_ID = Deno.env.get("AI_AUDIT_PRODUCT_ID") || "prod_REPLACE_ME";
+const PRODUCT_ID = Deno.env.get("AI_AUDIT_PRODUCT_ID") || "prod_Ufp44IXinO3MqU";
 const PRODUCT_NAME = "AI Audit + Implementation Toolkit";
 
 Deno.serve(async (req) => {
