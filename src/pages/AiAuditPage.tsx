@@ -105,7 +105,11 @@ export default function AiAuditPage() {
                 See what's inside
               </a>
             </div>
-            <p className="text-xs text-muted-foreground mt-4 inline-flex items-center gap-1.5">
+            <div className="mt-4 inline-flex items-center gap-2">
+              <span className="text-2xl font-bold text-[#d97757]">$19.95</span>
+              <span className="text-sm text-muted-foreground">one-time</span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3 inline-flex items-center gap-1.5">
               <ShieldCheck className="h-3.5 w-3.5" /> Instant download after checkout. Lifetime access.
             </p>
           </div>
