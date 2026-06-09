@@ -4,17 +4,15 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, Download, ArrowLeft, FileSpreadsheet } from "lucide-react";
 import { useFileDownload } from "@/hooks/useFileDownload";
 
-// TODO: replace these filenames once the actual spreadsheets are uploaded
-// to the `downloads` bucket in Supabase Storage.
 const FILES = [
   {
-    fileName: "law-firm-ai-audit.xlsx",
-    displayName: "Law-Firm-AI-Audit.xlsx",
+    fileName: "AI_Workflow_Audit_LawFirm_Final.xlsx",
+    displayName: "AI-Workflow-Audit-Law-Firm.xlsx",
     label: "Law Firm AI Audit",
   },
   {
-    fileName: "ai-workflow-implementation-tracker.xlsx",
-    displayName: "AI-Workflow-Implementation-Tracker.xlsx",
+    fileName: "Law_Firm_AI_Implementation_Tracker_Final.xlsx",
+    displayName: "Law-Firm-AI-Implementation-Tracker.xlsx",
     label: "AI Workflow Implementation Tracker",
   },
 ];
