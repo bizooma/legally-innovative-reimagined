@@ -200,6 +200,10 @@ export default function AiAuditPage() {
               <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-2">
                 AI Audit + Implementation Toolkit
               </h2>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <span className="text-3xl font-bold text-[#d97757]">$19.95</span>
+                <span className="text-sm text-muted-foreground">one-time</span>
+              </div>
               <p className="text-muted-foreground">
                 One purchase. Instant download. Yours to use across your firm.
               </p>
