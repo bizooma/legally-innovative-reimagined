@@ -191,7 +191,10 @@ export default function AiAuditPage() {
                   />
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                  A project tracker built specifically for AI rollouts inside a law firm. Owners, deadlines, tools, prompts, training — everything in one place so the work actually gets done.
+                  <strong className="text-legal-dark">The AI Implementation Tracker</strong> Take the workflows that made the cut and run them like real projects. Owners, timelines, status, and the dollars and hours each one gives back. The high-stakes work keeps its attorney-sign-off requirement baked in, so the discipline doesn't disappear the moment things get busy.
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+                  One finds the opportunities. The other gets them done. Together they take you from "we should probably use AI" to a managed rollout you can defend.
                 </p>
                 <ul className="space-y-2.5">
                   {trackerUses.map((u) => (
