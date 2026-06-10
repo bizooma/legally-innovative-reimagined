@@ -210,6 +210,58 @@ export default function AiAuditPage() {
         </div>
       </section>
 
+      {/* Why it's built for law firms */}
+      <section className="py-16 lg:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl">
+            <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-8">
+              Why it's built for law firms
+            </h2>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3 text-legal-dark">
+                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
+                <span>Scored on Impact × Risk — the only two axes that matter when a wrong answer is the expensive one</span>
+              </li>
+              <li className="flex items-start gap-3 text-legal-dark">
+                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
+                <span>Keeps the attorney in the loop exactly where ethics and malpractice demand it</span>
+              </li>
+              <li className="flex items-start gap-3 text-legal-dark">
+                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
+                <span>Built-in compliance guardrails — confidentiality, citation verification, UPL boundaries, trust-account controls, bar advertising rules</span>
+              </li>
+              <li className="flex items-start gap-3 text-legal-dark">
+                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
+                <span>Shows the time and revenue each project gives back, so you build what pays</span>
+              </li>
+              <li className="flex items-start gap-3 text-legal-dark">
+                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
+                <span>Self-serve. Open it, calibrate it to your firm, start this week</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Who it's for */}
+      <section className="py-16 lg:py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl">
+            <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-6">
+              Who it's for
+            </h2>
+            <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <p className="text-lg text-legal-dark">
+                Managing attorneys and firm operators who keep hearing they "need AI" — and want a straight answer on where it actually helps, where it's dangerous, and what to do first.
+              </p>
+              <p>
+                Solo and small firms get a two-hour exercise that replaces months of guessing. Larger firms get a shared map their whole team can calibrate together.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing / CTA */}
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
