@@ -7,8 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import auditPreview from "@/assets/ai-audit-preview.png.asset.json";
-import trackerPreview from "@/assets/ai-tracker-preview.png.asset.json";
+import auditPreview from "@/assets/ai-audit-preview.png";
+import trackerPreview from "@/assets/ai-tracker-preview.png";
 import {
   CheckCircle2,
   FileSpreadsheet,
@@ -149,7 +149,7 @@ export default function AiAuditPage() {
               <CardContent>
                 <div className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm">
                   <img
-                    src={auditPreview.url}
+                    src={auditPreview}
                     alt="Preview of the Law Firm AI Workflow Audit spreadsheet showing departments, workflows, impact and risk scoring, and prioritized recommendations"
                     className="w-full h-auto block"
                     loading="lazy"
@@ -184,7 +184,7 @@ export default function AiAuditPage() {
               <CardContent>
                 <div className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm">
                   <img
-                    src={trackerPreview.url}
+                    src={trackerPreview}
                     alt="Preview of the Law Firm AI Implementation Tracker spreadsheet showing build priority, owners, status, start dates, target go-live dates, and effort scoring"
                     className="w-full h-auto block"
                     loading="lazy"
