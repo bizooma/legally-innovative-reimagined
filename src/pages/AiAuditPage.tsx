@@ -250,14 +250,9 @@ export default function AiAuditPage() {
             <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-6">
               Who it's for
             </h2>
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p className="text-lg text-legal-dark">
-                Managing attorneys and firm operators who keep hearing they "need AI" — and want a straight answer on where it actually helps, where it's dangerous, and what to do first.
-              </p>
-              <p>
-                Solo and small firms get a two-hour exercise that replaces months of guessing. Larger firms get a shared map their whole team can calibrate together.
-              </p>
-            </div>
+            <p className="text-lg text-legal-dark leading-relaxed">
+              Managing attorneys and firm operators who keep hearing they "need AI" — and want a straight answer on where it actually helps, where it's dangerous, and what to do first.
+            </p>
           </div>
         </div>
       </section>
