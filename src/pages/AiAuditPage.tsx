@@ -156,7 +156,7 @@ export default function AiAuditPage() {
                   />
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                  A structured audit of where AI fits in your firm — across intake, drafting, research, billing, marketing, and operations. Score it, rank it, and walk away with a prioritized list.
+                  The AI Workflow Audit scores every workflow in your firm on two things that matter: how much it moves the business, and what it costs if the AI gets it wrong. You get a clear verdict on each one — automate it, keep a human in the loop, or leave it alone — plus a ranked build order. No more debating; the matrix decides.
                 </p>
                 <ul className="space-y-2.5">
                   {auditUses.map((u) => (
