@@ -126,7 +126,7 @@ export default function AiAuditPage() {
               <Sparkles className="h-3.5 w-3.5" /> What you get
             </div>
             <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-4">
-              Two spreadsheets. One workflow.
+              Stop guessing about AI. Score it, prioritize it, build it safely.
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Diagnose first, implement second. The audit tells you where to start. The tracker keeps it moving.
