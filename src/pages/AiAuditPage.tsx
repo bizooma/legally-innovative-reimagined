@@ -384,6 +384,9 @@ export default function AiAuditPage() {
       <section className="py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-8">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#d97757] text-white text-2xl font-bold mb-4">
+              2
+            </div>
             <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-3">
               Prefer a hands-on approach?
             </h2>
