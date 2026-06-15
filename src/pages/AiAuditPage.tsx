@@ -1,4 +1,10 @@
 import { useState, useEffect } from "react";
+
+declare global {
+  interface Window {
+    Calendly: any;
+  }
+}
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
