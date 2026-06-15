@@ -88,6 +88,15 @@ export default function AiAuditPage() {
     setLightboxAlt("");
   };
 
+  useState(() => {
+    if (!window.Calendly) {
+      const script = document.createElement("script");
+      script.src = "https://assets.calendly.com/assets/external/widget.js";
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  });
+
   return (
     <div className="min-h-screen bg-[#fbf8f3]">
       <Helmet>
