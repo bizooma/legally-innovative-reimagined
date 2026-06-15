@@ -165,7 +165,7 @@ const sections: TermSection[] = [
       {
         term: "Automation",
         definition:
-          "Getting repetitive work to happen without manual effort_map effort. Worth noting: not all automation is AI. A rule like \"tag every email from this client\" is automation; an AI that summarizes those emails is AI. The most useful systems combine both.",
+          "Getting repetitive work to happen without manual effort. Worth noting: not all automation is AI. A rule like \"tag every email from this client\" is automation; an AI that summarizes those emails is AI. The most useful systems combine both.",
       },
       {
         term: "Guardrails",
