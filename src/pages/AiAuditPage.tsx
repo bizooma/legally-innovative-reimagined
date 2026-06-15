@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -5,6 +6,12 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import auditPreview from "@/assets/ai-audit-preview.png";
@@ -19,6 +26,7 @@ import {
   Scale,
   Download,
   Sparkles,
+  ZoomIn,
 } from "lucide-react";
 
 async function startAiAuditCheckout() {
