@@ -152,6 +152,9 @@ export default function AiAuditPage() {
             <p className="text-lg text-muted-foreground leading-relaxed">
               Diagnose first, implement second. The audit tells you where to start. The tracker keeps it moving.
             </p>
+            <p className="text-sm text-muted-foreground mt-4 italic">
+              The previews below are filled with mock data to show you exactly how each sheet should be completed.
+            </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6">
