@@ -22,6 +22,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import auditPreview from "@/assets/ai-audit-preview.png";
 import trackerPreview from "@/assets/ai-tracker-preview.png";
+import dashboardPlaceholder from "@/assets/dashboard-placeholder.jpg";
 import {
   CheckCircle2,
   FileSpreadsheet,
@@ -33,6 +34,7 @@ import {
   Download,
   Sparkles,
   ZoomIn,
+  ExternalLink,
 } from "lucide-react";
 
 async function startAiAuditCheckout() {
@@ -378,6 +380,41 @@ export default function AiAuditPage() {
               data-url="https://calendly.com/joe-bizooma"
               style={{ minWidth: "320px", height: "700px" }}
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Web app option */}
+      <section className="py-16 lg:py-20 bg-[#fbf8f3]">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-8">
+            <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-3">
+              Want to run the audit online?
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Use our web-based audit system at lawfirmaudit.ai. Sign up, walk through the same scoring framework, and generate your report without touching a spreadsheet. Built for firms that prefer a guided, digital experience.
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="rounded-xl overflow-hidden border border-[#e6d5bf] shadow-sm bg-white">
+              <img
+                src={dashboardPlaceholder}
+                alt="Dashboard preview — lawfirmaudit.ai audit platform"
+                className="w-full h-auto block"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div className="text-center">
+            <a
+              href="https://lawfirmaudit.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-[#d97757] hover:bg-[#b85d3f] text-white text-sm font-medium transition-colors"
+            >
+              Start your audit at lawfirmaudit.ai
+              <ExternalLink className="h-4 w-4 ml-2" />
+            </a>
           </div>
         </div>
       </section>
