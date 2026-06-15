@@ -75,6 +75,7 @@ import ClaudeCoworkPage from "./pages/ClaudeCoworkPage";
 import ClaudeCoworkSuccess from "./pages/ClaudeCoworkSuccess";
 import AiAuditPage from "./pages/AiAuditPage";
 import AiAuditSuccess from "./pages/AiAuditSuccess";
+import AiExplainedPage from "./pages/AiExplainedPage";
 import AccessibilityLayout from "./pages/accessibility/AccessibilityLayout";
 import AccessibilityDashboard from "./pages/accessibility/AccessibilityDashboard";
 import AccessibilityWebsites from "./pages/accessibility/AccessibilityWebsites";
@@ -139,6 +140,9 @@ const App = () => (
               {/* AI Audit landing page */}
               <Route path="/ai-audit" element={<AiAuditPage />} />
               <Route path="/ai-audit/success" element={<AiAuditSuccess />} />
+
+              {/* AI Explained glossary page */}
+              <Route path="/ai-explained" element={<AiExplainedPage />} />
               
               {/* Michael sales page */}
               <Route path="/michael" element={<MichaelSalesPage />} />

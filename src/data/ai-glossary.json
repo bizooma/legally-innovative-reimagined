@@ -1,0 +1,181 @@
+{
+  "sections": [
+    {
+      "heading": "The Foundations",
+      "terms": [
+        {
+          "term": "Artificial Intelligence (AI)",
+          "definition": "Software that performs tasks we'd normally expect to require human thinking — understanding language, spotting patterns, making decisions, creating content. It's a broad umbrella, and most of what people call \"AI\" today is one specific branch of it (see Generative AI)."
+        },
+        {
+          "term": "Machine Learning (ML)",
+          "definition": "A way of building AI where the software learns patterns from examples instead of being hand-coded with rules. Show it thousands of contracts and it learns what a contract looks like, rather than someone writing out every rule by hand."
+        },
+        {
+          "term": "Deep Learning",
+          "definition": "A more advanced form of machine learning that stacks many layers of processing (see Neural Network) to handle very complex patterns. It's the breakthrough that made today's image recognition, speech, and language tools possible."
+        },
+        {
+          "term": "Neural Network",
+          "definition": "A computing structure loosely inspired by how the brain connects neurons. Information passes through layers, each picking up on finer detail, which is what lets the system recognize nuance — a face, a tone, the meaning of a sentence."
+        },
+        {
+          "term": "Generative AI",
+          "definition": "AI that creates new content — text, images, audio, code — rather than just analyzing existing data. When a tool drafts an email, summarizes a deposition, or writes a blog post, that's generative AI at work."
+        },
+        {
+          "term": "Large Language Model (LLM)",
+          "definition": "The engine behind most text-based AI tools, like ChatGPT, Claude, and Gemini. It's trained on enormous amounts of text and works by predicting what comes next, which lets it answer questions, draft documents, and hold a conversation. \"Large\" refers to the sheer amount of data and computing power behind it."
+        },
+        {
+          "term": "Foundation Model (or Frontier Model)",
+          "definition": "A large, general-purpose AI trained on a massive, broad dataset so it can be adapted to many different tasks. \"Frontier model\" refers to the most capable, cutting-edge ones at any given moment. Most AI products you use are built on top of one."
+        },
+        {
+          "term": "Natural Language Processing (NLP)",
+          "definition": "The field focused on helping computers understand and work with human language. It's what lets you type a plain-English question and get a sensible answer back, instead of needing special commands or code."
+        }
+      ]
+    },
+    {
+      "heading": "How AI Actually Works",
+      "terms": [
+        {
+          "term": "Model",
+          "definition": "The specific trained system doing the work. When someone asks \"which model are you using,\" they mean which exact AI. Different models have different strengths, speeds, and costs."
+        },
+        {
+          "term": "Parameters",
+          "definition": "The internal settings a model adjusts as it learns — think of them as the dials that store everything it has picked up. Models are often described by their parameter count, in the billions. More isn't automatically better, but it's a rough signal of capacity."
+        },
+        {
+          "term": "Training Data",
+          "definition": "The examples an AI learned from. The source matters: a model trained on the broad internet knows a little about everything, while one trained further on legal documents will be sharper with legal language."
+        },
+        {
+          "term": "Token",
+          "definition": "The small chunks of text an AI reads and writes — roughly a word or part of a word. Usage and pricing are usually measured in tokens, not words. Rough rule of thumb: 1,000 tokens is about 750 words."
+        },
+        {
+          "term": "Context Window",
+          "definition": "How much information an AI can hold in mind at once — your input plus its response. A larger context window means you can feed it a long document and it won't lose track of the start by the time it reaches the end."
+        },
+        {
+          "term": "Inference",
+          "definition": "The moment an AI produces an answer from your input. Training is how the model learns; inference is it doing the actual work, in real time."
+        },
+        {
+          "term": "Fine-Tuning",
+          "definition": "Taking a general model and training it further on a narrower set of examples so it specializes — for instance, shaping a general-purpose writer into one that matches your organization's voice and document style."
+        },
+        {
+          "term": "Embeddings & Vector Database",
+          "definition": "A way of turning text into numbers that capture meaning, so a computer can find related ideas even when the wording differs. A vector database stores those numbers — and together they're what make RAG (below) work, letting an AI search your documents by meaning rather than exact keywords."
+        },
+        {
+          "term": "Retrieval-Augmented Generation (RAG)",
+          "definition": "A setup where the AI looks up relevant information from your own documents or database before answering, instead of relying only on what it learned in training. This is how you get an AI that can answer questions about your specific files, policies, or knowledge base — accurately, and with sources."
+        },
+        {
+          "term": "Multimodal",
+          "definition": "An AI that can work with more than one type of input or output — text, images, audio, even video — in the same conversation. You can hand it a photo of a document and ask questions about it, rather than being limited to typed text."
+        },
+        {
+          "term": "Temperature",
+          "definition": "A setting that controls how predictable or creative an AI's responses are. Low temperature keeps it focused and consistent — good for legal drafting. Higher temperature makes it more varied and inventive — good for brainstorming."
+        },
+        {
+          "term": "Hallucination",
+          "definition": "When an AI states something false with complete confidence — an invented citation, a made-up statute, a fabricated fact. This is the single most important risk to understand: AI output is a draft to verify, not a source of truth. In legal work especially, a fabricated citation has real consequences."
+        }
+      ]
+    },
+    {
+      "heading": "Working With AI",
+      "terms": [
+        {
+          "term": "Prompt",
+          "definition": "The instruction or question you give an AI. The clearer and more specific the prompt, the better the result. \"Write a client intake email\" gets you something generic; \"Write a warm, three-paragraph intake email for a personal injury client, no legalese\" gets you something usable."
+        },
+        {
+          "term": "Prompt Engineering",
+          "definition": "The skill of writing prompts that get the best results from an AI. It involves giving context, setting constraints, and iterating — not magic words, just clear communication."
+        },
+        {
+          "term": "System Prompt",
+          "definition": "The hidden instructions that shape how an AI behaves — its tone, rules, and role. It's set by the toolmaker or admin, not the end user, and it's what keeps an AI consistent and on-brand."
+        },
+        {
+          "term": "Chatbot / Conversational AI",
+          "definition": "An AI designed for back-and-forth dialogue. Modern chatbots use LLMs to hold natural conversations, answer questions, and help with tasks — a big leap from the rigid menu-driven bots of the past."
+        },
+        {
+          "term": "Copilot",
+          "definition": "An AI assistant embedded in a specific tool or workflow — like a copilot in an airplane. It works alongside you inside software you already use, suggesting and assisting rather than replacing you."
+        },
+        {
+          "term": "AI Agent / Agentic AI",
+          "definition": "An AI that can act on its own to accomplish goals — not just answer questions, but take steps like sending emails, booking meetings, or updating records. This is the next frontier beyond simple chat."
+        },
+        {
+          "term": "Human-in-the-Loop",
+          "definition": "A workflow design where AI handles the heavy lifting but a human reviews and approves the final output before it goes out. It's the safest approach for high-stakes work, and it's where law firms should start."
+        },
+        {
+          "term": "Automation",
+          "definition": "Using technology to handle repetitive tasks without human intervention. Not all automation is AI — a simple email auto-reply is automation, while an AI that drafts personalized responses is AI-powered automation."
+        },
+        {
+          "term": "Guardrails",
+          "definition": "Safety rules and boundaries built around an AI to prevent it from going off-script — refusing inappropriate requests, staying on topic, protecting sensitive data, and maintaining compliance."
+        },
+        {
+          "term": "API",
+          "definition": "A set of rules that lets two software applications talk to each other. APIs are how AI capabilities get plugged into the tools you already use — your website, your CRM, your email system."
+        }
+      ]
+    },
+    {
+      "heading": "Trust, Risk & Governance",
+      "terms": [
+        {
+          "term": "AI Bias",
+          "definition": "When an AI produces skewed or unfair results because the data it learned from carried those patterns. It matters anywhere fairness and consequences are on the line — hiring, lending, intake screening — and it's a key reason human review stays essential."
+        },
+        {
+          "term": "Data Privacy & Confidentiality",
+          "definition": "The question of what happens to the information you put into an AI tool — is it stored, is it used to train the model, who can see it. For anyone handling privileged or sensitive material, this is the first question to ask before adopting a tool, not the last."
+        },
+        {
+          "term": "Responsible AI (AI Governance)",
+          "definition": "The practices and policies that keep AI use ethical, transparent, and accountable: clear rules on what's allowed, human oversight on high-stakes decisions, and a record of how AI is being used. For regulated fields, a written policy is fast becoming table stakes."
+        },
+        {
+          "term": "Prompt Injection",
+          "definition": "A security risk where hidden or malicious instructions get slipped into content an AI reads — a web page, an email, a document — tricking it into ignoring its real instructions. It's why you don't let an AI act on untrusted text without human oversight."
+        }
+      ]
+    },
+    {
+      "heading": "AI & Getting Found Online",
+      "terms": [
+        {
+          "term": "SEO (Search Engine Optimization)",
+          "definition": "The long-standing practice of getting your website to rank in search results so people find you on Google."
+        },
+        {
+          "term": "AEO (Answer Engine Optimization)",
+          "definition": "The newer discipline of getting your business cited when people ask an AI tool a question — ChatGPT, Google's AI overviews, and the like — instead of running a traditional search. As more people \"ask AI\" rather than \"search Google,\" being the answer the AI gives matters as much as ranking on page one."
+        },
+        {
+          "term": "GEO (Generative Engine Optimization)",
+          "definition": "Often used interchangeably with AEO: shaping your content so generative AI tools surface and cite it when answering questions. If you see GEO and AEO used to mean roughly the same thing, you're not missing anything — the field is still settling on its vocabulary."
+        },
+        {
+          "term": "Answer Engine",
+          "definition": "Any AI tool that responds with a direct answer rather than a list of links. The shift from search engines to answer engines is quietly changing how clients discover the businesses they hire."
+        }
+      ]
+    }
+  ]
+}
