@@ -215,14 +215,26 @@ export default function AiAuditPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm">
+                <button
+                  type="button"
+                  onClick={() =>
+                    openLightbox(
+                      trackerPreview,
+                      "Preview of the Law Firm AI Implementation Tracker spreadsheet showing build priority, owners, status, start dates, target go-live dates, and effort scoring"
+                    )
+                  }
+                  className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm block w-full text-left relative group cursor-zoom-in"
+                >
                   <img
                     src={trackerPreview}
                     alt="Preview of the Law Firm AI Implementation Tracker spreadsheet showing build priority, owners, status, start dates, target go-live dates, and effort scoring"
                     className="w-full h-auto block"
                     loading="lazy"
                   />
-                </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                    <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
+                  </div>
+                </button>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                   <strong className="text-legal-dark">The AI Implementation Tracker</strong> Take the workflows that made the cut and run them like real projects. Owners, timelines, status, and the dollars and hours each one gives back. The high-stakes work keeps its attorney-sign-off requirement baked in, so the discipline doesn't disappear the moment things get busy.
                 </p>
