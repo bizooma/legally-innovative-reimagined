@@ -168,14 +168,26 @@ export default function AiAuditPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm">
+                <button
+                  type="button"
+                  onClick={() =>
+                    openLightbox(
+                      auditPreview,
+                      "Preview of the Law Firm AI Workflow Audit spreadsheet showing departments, workflows, impact and risk scoring, and prioritized recommendations"
+                    )
+                  }
+                  className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm block w-full text-left relative group cursor-zoom-in"
+                >
                   <img
                     src={auditPreview}
                     alt="Preview of the Law Firm AI Workflow Audit spreadsheet showing departments, workflows, impact and risk scoring, and prioritized recommendations"
                     className="w-full h-auto block"
                     loading="lazy"
                   />
-                </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                    <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
+                  </div>
+                </button>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                   The AI Workflow Audit scores every workflow in your firm on two things that matter: how much it moves the business, and what it costs if the AI gets it wrong. You get a clear verdict on each one — automate it, keep a human in the loop, or leave it alone — plus a ranked build order. No more debating; the matrix decides.
                 </p>
