@@ -322,12 +322,29 @@ export default function AiAuditPage() {
         </div>
       </section>
 
+      {/* Choose your path intro */}
+      <section className="pt-16 lg:pt-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-4">
+              Three ways to get your audit done
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Everyone's firm is different, so we built three ways to run the same audit. Pick the one that fits how you work best.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing / CTA */}
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto rounded-2xl border-2 border-[#d97757] bg-white p-8 lg:p-10 shadow-lg">
             <div className="text-center mb-6">
-              <Badge variant="secondary" className="bg-[#f5f0e6] text-[#7a3a1f] border-0 mb-3">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#d97757] text-white text-2xl font-bold mb-4">
+                1
+              </div>
+              <Badge variant="secondary" className="bg-[#f5f0e6] text-[#7a3a1f] border-0 mb-3 block w-fit mx-auto">
                 Both spreadsheets included
               </Badge>
               <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-2">
@@ -367,6 +384,9 @@ export default function AiAuditPage() {
       <section className="py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-8">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#d97757] text-white text-2xl font-bold mb-4">
+              2
+            </div>
             <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-3">
               Prefer a hands-on approach?
             </h2>
@@ -388,6 +408,9 @@ export default function AiAuditPage() {
       <section className="py-16 lg:py-20 bg-[#fbf8f3]">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-8">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#d97757] text-white text-2xl font-bold mb-4">
+              3
+            </div>
             <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-3">
               Want to run the audit online?
             </h2>
