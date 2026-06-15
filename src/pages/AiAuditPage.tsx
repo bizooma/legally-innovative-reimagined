@@ -322,6 +322,20 @@ export default function AiAuditPage() {
         </div>
       </section>
 
+      {/* Choose your path intro */}
+      <section className="pt-16 lg:pt-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-4">
+              Three ways to get your audit done
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Everyone's firm is different, so we built three ways to run the same audit. Pick the one that fits how you work best.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing / CTA */}
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
