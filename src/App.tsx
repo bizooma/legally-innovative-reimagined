@@ -140,6 +140,9 @@ const App = () => (
               {/* AI Audit landing page */}
               <Route path="/ai-audit" element={<AiAuditPage />} />
               <Route path="/ai-audit/success" element={<AiAuditSuccess />} />
+
+              {/* AI Explained glossary page */}
+              <Route path="/ai-explained" element={<AiExplainedPage />} />
               
               {/* Michael sales page */}
               <Route path="/michael" element={<MichaelSalesPage />} />
