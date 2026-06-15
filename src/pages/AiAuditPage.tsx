@@ -341,7 +341,10 @@ export default function AiAuditPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto rounded-2xl border-2 border-[#d97757] bg-white p-8 lg:p-10 shadow-lg">
             <div className="text-center mb-6">
-              <Badge variant="secondary" className="bg-[#f5f0e6] text-[#7a3a1f] border-0 mb-3">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#d97757] text-white text-2xl font-bold mb-4">
+                1
+              </div>
+              <Badge variant="secondary" className="bg-[#f5f0e6] text-[#7a3a1f] border-0 mb-3 block w-fit mx-auto">
                 Both spreadsheets included
               </Badge>
               <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-2">
