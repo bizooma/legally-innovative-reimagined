@@ -75,6 +75,19 @@ const trackerUses = [
 ];
 
 export default function AiAuditPage() {
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [lightboxAlt, setLightboxAlt] = useState<string>("");
+
+  const openLightbox = (src: string, alt: string) => {
+    setLightboxImage(src);
+    setLightboxAlt(alt);
+  };
+
+  const closeLightbox = () => {
+    setLightboxImage(null);
+    setLightboxAlt("");
+  };
+
   return (
     <div className="min-h-screen bg-[#fbf8f3]">
       <Helmet>
