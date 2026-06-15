@@ -361,6 +361,27 @@ export default function AiAuditPage() {
         </div>
       </section>
 
+      {/* In-person consulting CTA */}
+      <section className="py-16 lg:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-8">
+            <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-3">
+              Prefer a hands-on approach?
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              I can come to your law firm office and conduct the AI audit in person. We'll walk through your workflows together, identify the highest-impact opportunities, and build a tailored implementation plan on the spot. Book a time below to discuss the arrangement.
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div
+              className="calendly-inline-widget"
+              data-url="https://calendly.com/joe-bizooma"
+              style={{ minWidth: "320px", height: "700px" }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Lightbox */}
       <Dialog open={!!lightboxImage} onOpenChange={(open) => !open && closeLightbox()}>
         <DialogContent className="max-w-6xl w-[95vw] p-2 bg-white border-[#e6d5bf]">
