@@ -343,6 +343,23 @@ export default function AiAuditPage() {
         </div>
       </section>
 
+      {/* Lightbox */}
+      <Dialog open={!!lightboxImage} onOpenChange={(open) => !open && closeLightbox()}>
+        <DialogContent className="max-w-6xl w-[95vw] p-2 bg-white border-[#e6d5bf]">
+          <DialogTitle className="sr-only">{lightboxAlt}</DialogTitle>
+          <DialogDescription className="sr-only">
+            Enlarged preview of the spreadsheet
+          </DialogDescription>
+          {lightboxImage && (
+            <img
+              src={lightboxImage}
+              alt={lightboxAlt}
+              className="w-full h-auto rounded-md block"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
       <Footer />
       <MobileFooterNav />
     </div>
