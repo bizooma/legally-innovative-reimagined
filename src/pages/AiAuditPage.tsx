@@ -34,6 +34,7 @@ import {
   Download,
   Sparkles,
   ZoomIn,
+  ExternalLink,
 } from "lucide-react";
 
 async function startAiAuditCheckout() {
