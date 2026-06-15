@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -5,6 +6,12 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import auditPreview from "@/assets/ai-audit-preview.png";
@@ -19,6 +26,7 @@ import {
   Scale,
   Download,
   Sparkles,
+  ZoomIn,
 } from "lucide-react";
 
 async function startAiAuditCheckout() {
@@ -67,6 +75,19 @@ const trackerUses = [
 ];
 
 export default function AiAuditPage() {
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [lightboxAlt, setLightboxAlt] = useState<string>("");
+
+  const openLightbox = (src: string, alt: string) => {
+    setLightboxImage(src);
+    setLightboxAlt(alt);
+  };
+
+  const closeLightbox = () => {
+    setLightboxImage(null);
+    setLightboxAlt("");
+  };
+
   return (
     <div className="min-h-screen bg-[#fbf8f3]">
       <Helmet>
@@ -147,14 +168,26 @@ export default function AiAuditPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm">
+                <button
+                  type="button"
+                  onClick={() =>
+                    openLightbox(
+                      auditPreview,
+                      "Preview of the Law Firm AI Workflow Audit spreadsheet showing departments, workflows, impact and risk scoring, and prioritized recommendations"
+                    )
+                  }
+                  className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm block w-full text-left relative group cursor-zoom-in"
+                >
                   <img
                     src={auditPreview}
                     alt="Preview of the Law Firm AI Workflow Audit spreadsheet showing departments, workflows, impact and risk scoring, and prioritized recommendations"
                     className="w-full h-auto block"
                     loading="lazy"
                   />
-                </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                    <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
+                  </div>
+                </button>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                   The AI Workflow Audit scores every workflow in your firm on two things that matter: how much it moves the business, and what it costs if the AI gets it wrong. You get a clear verdict on each one — automate it, keep a human in the loop, or leave it alone — plus a ranked build order. No more debating; the matrix decides.
                 </p>
@@ -182,14 +215,26 @@ export default function AiAuditPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm">
+                <button
+                  type="button"
+                  onClick={() =>
+                    openLightbox(
+                      trackerPreview,
+                      "Preview of the Law Firm AI Implementation Tracker spreadsheet showing build priority, owners, status, start dates, target go-live dates, and effort scoring"
+                    )
+                  }
+                  className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm block w-full text-left relative group cursor-zoom-in"
+                >
                   <img
                     src={trackerPreview}
                     alt="Preview of the Law Firm AI Implementation Tracker spreadsheet showing build priority, owners, status, start dates, target go-live dates, and effort scoring"
                     className="w-full h-auto block"
                     loading="lazy"
                   />
-                </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                    <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
+                  </div>
+                </button>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                   <strong className="text-legal-dark">The AI Implementation Tracker</strong> Take the workflows that made the cut and run them like real projects. Owners, timelines, status, and the dollars and hours each one gives back. The high-stakes work keeps its attorney-sign-off requirement baked in, so the discipline doesn't disappear the moment things get busy.
                 </p>
@@ -297,6 +342,23 @@ export default function AiAuditPage() {
           </div>
         </div>
       </section>
+
+      {/* Lightbox */}
+      <Dialog open={!!lightboxImage} onOpenChange={(open) => !open && closeLightbox()}>
+        <DialogContent className="max-w-6xl w-[95vw] p-2 bg-white border-[#e6d5bf]">
+          <DialogTitle className="sr-only">{lightboxAlt}</DialogTitle>
+          <DialogDescription className="sr-only">
+            Enlarged preview of the spreadsheet
+          </DialogDescription>
+          {lightboxImage && (
+            <img
+              src={lightboxImage}
+              alt={lightboxAlt}
+              className="w-full h-auto rounded-md block"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
 
       <Footer />
       <MobileFooterNav />
