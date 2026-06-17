@@ -22,7 +22,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import auditPreview from "@/assets/ai-audit-preview.png";
 import trackerPreview from "@/assets/ai-tracker-preview.png";
-import dashboardPlaceholder from "@/assets/dashboard-placeholder.jpg";
+import dashboardImage from "@/assets/audit-2.png.asset.json";
 import {
   CheckCircle2,
   FileSpreadsheet,
@@ -421,7 +421,7 @@ export default function AiAuditPage() {
           <div className="max-w-4xl mx-auto mb-8">
             <div className="rounded-xl overflow-hidden border border-[#e6d5bf] shadow-sm bg-white">
               <img
-                src={dashboardPlaceholder}
+                src={dashboardImage.url}
                 alt="Dashboard preview — lawfirmaudit.ai audit platform"
                 className="w-full h-auto block"
                 loading="lazy"
