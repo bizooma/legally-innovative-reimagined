@@ -22,7 +22,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import auditPreview from "@/assets/ai-audit-preview.png";
 import trackerPreview from "@/assets/ai-tracker-preview.png";
-import dashboardPlaceholder from "@/assets/dashboard-placeholder.jpg";
+import dashboardImage from "@/assets/audit-2.png.asset.json";
 import {
   CheckCircle2,
   FileSpreadsheet,
