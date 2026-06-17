@@ -421,7 +421,7 @@ export default function AiAuditPage() {
           <div className="max-w-4xl mx-auto mb-8">
             <div className="rounded-xl overflow-hidden border border-[#e6d5bf] shadow-sm bg-white">
               <img
-                src={dashboardPlaceholder}
+                src={dashboardImage.url}
                 alt="Dashboard preview — lawfirmaudit.ai audit platform"
                 className="w-full h-auto block"
                 loading="lazy"
