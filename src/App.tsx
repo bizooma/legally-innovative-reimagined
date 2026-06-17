@@ -287,7 +287,6 @@ const App = () => (
               
               {/* 404 page for truly non-existent routes */}
               <Route path="*" element={<NotFound />} />
-              <Route path="*" element={<NotFound />} />
             </Routes>
           </RouteDebug>
         </TooltipProvider>
