@@ -1,5 +1,4 @@
 import ArticleLayout from "@/components/ArticleLayout";
-import appDemoImage from "@/assets/app-demo-2.png.asset.json";
 
 const MobileAppsMarketingToolPage = () => {
   const faqs = [
