@@ -29,7 +29,7 @@ const MobileAppsMarketingToolPage = () => {
       
       author="Mobile Marketing Team"
       category="Mobile Development"
-      image="/images/mobile-apps-marketing.jpg"
+      image={appDemoImage.url}
       faqs={faqs}
     >
       <p className="text-lg">
