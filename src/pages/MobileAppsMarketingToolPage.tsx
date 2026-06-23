@@ -28,7 +28,7 @@ const MobileAppsMarketingToolPage = () => {
       
       author="Mobile Marketing Team"
       category="Mobile Development"
-      image={appDemoImage.url}
+      
       faqs={faqs}
     >
       <p className="text-lg">
