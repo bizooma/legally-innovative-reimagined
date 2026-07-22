@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
 import productTempImg from "@/assets/product-temp.jpg";
+import amicusEdgeCardImg from "@/assets/amicus-edge-card.png.asset.json";
 import { useEffect, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -63,7 +64,7 @@ const MarketingProducts = () => {
         "Research acceleration",
         "Operational intelligence"
       ],
-      image: productTempImg,
+      image: amicusEdgeCardImg.url,
       link: "#contact"
     },
     {
