@@ -123,11 +123,11 @@ const MarketingProducts = () => {
                 className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1 overflow-hidden group"
               >
                 <div className="flex flex-col md:flex-row">
-                  <div className="relative w-full md:w-2/5 lg:w-1/3 h-64 md:h-auto md:min-h-[280px] overflow-hidden shrink-0">
+                  <div className="relative w-full md:w-2/5 lg:w-1/3 h-auto overflow-hidden shrink-0 bg-black/20 flex items-center justify-center">
                     <img 
                       src={product.image} 
                       alt={product.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                       loading="lazy"
                       width={1024}
                       height={768}
