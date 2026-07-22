@@ -186,19 +186,6 @@ const MarketingProducts = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <p className="text-white text-lg">
-            To view all the products we've developed, visit our Development Team's site at{' '}
-            <a 
-              href="https://bizooma.dev" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-legal-accent font-semibold hover:underline"
-            >
-              Bizooma.dev
-            </a>
-          </p>
-        </div>
       </div>
     </section>
   );
