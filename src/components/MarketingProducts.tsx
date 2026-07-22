@@ -2,13 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
-import underConstructionImg from "@/assets/under-construction.webp";
-import ketoneclockImg from "@/assets/ketoneclock-screenshot.png";
-import aeoAnalyzerImg from "@/assets/aeo-analyzer-screenshot.png";
-import npobotsImg from "@/assets/npobots-screenshot.png";
-import mvpSoftlaunchImg from "@/assets/mvp-softlaunch-screenshot.png";
-import mapprrImg from "@/assets/mapprr-screenshot.png";
-import lexguildImg from "@/assets/lexguild-screenshot.png";
+import productTempImg from "@/assets/product-temp.jpg";
 import { useEffect, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -47,71 +41,30 @@ const MarketingProducts = () => {
 
   const products = [
     {
-      title: "NPOBots",
-      subtitle: "AI-Powered Nonprofit Engagement",
-      description: "Revolutionary chatbot platform that increased donor engagement by 340% using fully automated 80% of common inquiries for nonprofit organizations.",
-      badges: ["AI Chatbots", "Nonprofit", "Fundraising"],
+      title: "Law Firm Audit",
+      subtitle: "AI Readiness & Workflow Assessment",
+      description: "A structured audit that scores every workflow in your firm on impact and risk, then gives you a ranked plan for safe AI rollout.",
+      badges: ["AI Audit", "Law Firms", "Workflow"],
       keyResults: [
-        "340% ↑ Engagement",
-        "80% Automation",
-        "24/7 Support"
+        "Impact × Risk scoring",
+        "Prioritized build order",
+        "Attorney-in-the-loop guardrails"
       ],
-      image: npobotsImg,
-      link: "/products/npo-bots"
+      image: productTempImg,
+      link: "/ai-audit"
     },
     {
-      title: "AEOAnalyzer",
-      subtitle: "Legal Analytics Dashboard",
-      description: "Advanced AI analytics platform that helps law firms identify case patterns, predict outcomes, and optimize their legal strategies with data-driven insights.",
-      badges: ["Legal Tech", "AI Analytics", "SaaS"],
+      title: "Amicus Edge",
+      subtitle: "Legal Intelligence Platform",
+      description: "A powerful platform that helps law firms turn case patterns, research, and operational data into a competitive advantage.",
+      badges: ["Legal Tech", "Analytics", "SaaS"],
       keyResults: [
-        "60% Faster Analysis",
-        "95% Accuracy",
-        "500+ Cases Analyzed"
+        "Case pattern analysis",
+        "Research acceleration",
+        "Operational intelligence"
       ],
-      image: aeoAnalyzerImg,
-      link: "/products/aeo-analyzer"
-    },
-    {
-      title: "MVP Soft Launch",
-      subtitle: "Launch Platform Directory",
-      description: "Discover 200+ platforms to list, launch, and promote your SaaS, mobile app, or software. Find the perfect launch sites for your target audience and ship faster.",
-      badges: ["Launch Strategy", "SaaS", "Startup"],
-      keyResults: [
-        "200+ Platforms",
-        "Faster Time-to-Market",
-        "Targeted Visibility"
-      ],
-      image: mvpSoftlaunchImg,
-      link: "/products/mvp-soft-launch"
-    },
-    {
-      title: "Mapprr",
-      subtitle: "Digital Presence Mapping",
-      description: "Visualize your entire online presence in one beautiful, interactive flowchart. Connect your websites, social media, and digital properties like never before.",
-      badges: ["Visualization", "Digital Mapping", "SaaS"],
-      keyResults: [
-        "Lifetime Deals Available",
-        "Unified Digital View",
-        "Interactive Flowcharts"
-      ],
-      image: mapprrImg,
-      link: "https://mapprr.com",
-      isExternal: true
-    },
-    {
-      title: "Ketone Clock",
-      subtitle: "Intermittent Fasting Tracker",
-      description: "A science-based intermittent fasting tracker with real-time body timeline. Understand what's happening inside you — hour by hour — and optimize your fasting journey.",
-      badges: ["Health Tech", "Fasting", "PWA"],
-      keyResults: [
-        "Real-Time Body Timeline",
-        "Science-Based Tracking",
-        "Installable PWA"
-      ],
-      image: ketoneclockImg,
-      link: "https://ketoneclock.com",
-      isExternal: true
+      image: productTempImg,
+      link: "#contact"
     },
     {
       title: "Lex Guild",
@@ -119,11 +72,11 @@ const MarketingProducts = () => {
       description: "An invitation-only mentorship program and knowledge sharing platform for the legal profession — pairing attorneys, sharing expertise, and strengthening practice communities.",
       badges: ["Mentorship", "Knowledge Sharing", "Legal"],
       keyResults: [
-        "Curated Mentor Matching",
-        "Structured Knowledge Sharing",
-        "Stronger Member Engagement"
+        "Curated mentor matching",
+        "Structured knowledge sharing",
+        "Stronger member engagement"
       ],
-      image: lexguildImg,
+      image: productTempImg,
       link: "https://lexguild.com",
       isExternal: true
     }
@@ -155,7 +108,7 @@ const MarketingProducts = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {products.map((product, index) => (
             <div
               key={index}
@@ -173,6 +126,9 @@ const MarketingProducts = () => {
                   src={product.image} 
                   alt={product.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                  width={1024}
+                  height={768}
                 />
                 <div className="absolute inset-0 bg-legal-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
