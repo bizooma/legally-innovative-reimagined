@@ -136,7 +136,7 @@ const MarketingProducts = () => {
                     <div className="absolute inset-0 bg-legal-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   
-                  <CardContent className="p-6 md:p-8 flex flex-col justify-center w-full md:w-3/5 lg:w-2/3">
+                  <CardContent className="p-6 md:p-8 flex flex-col justify-center w-full md:w-1/2">
                     <div className="flex flex-wrap gap-2 mb-4">
                       {product.badges.map((badge, badgeIndex) => (
                         <Badge 
