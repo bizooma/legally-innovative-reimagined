@@ -79,7 +79,7 @@ const MarketingProducts = () => {
         "Structured knowledge sharing",
         "Stronger member engagement"
       ],
-      image: productTempImg,
+      image: lexGuildCardImg.url,
       link: "https://lexguild.com",
       isExternal: true
     }
