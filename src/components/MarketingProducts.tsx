@@ -52,7 +52,7 @@ const MarketingProducts = () => {
         "Prioritized build order",
         "Attorney-in-the-loop guardrails"
       ],
-      image: productTempImg,
+      image: lawFirmAuditCardImg.url,
       link: "/ai-audit"
     },
     {
