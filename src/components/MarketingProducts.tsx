@@ -54,7 +54,8 @@ const MarketingProducts = () => {
         "Attorney-in-the-loop guardrails"
       ],
       image: lawFirmAuditCardImg.url,
-      link: "/ai-audit"
+      link: "https://lawfirmaudit.ai",
+      isExternal: true
     },
     {
       title: "Amicus Edge",
@@ -67,7 +68,8 @@ const MarketingProducts = () => {
         "Operational intelligence"
       ],
       image: amicusEdgeCardImg.url,
-      link: "#contact"
+      link: "https://amicusedge.com",
+      isExternal: true
     },
     {
       title: "Lex Guild",
