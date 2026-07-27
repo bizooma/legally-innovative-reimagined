@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
 import productTempImg from "@/assets/product-temp.jpg";
 import amicusEdgeCardImg from "@/assets/amicus-edge-card.png.asset.json";
+import lawFirmAuditCardImg from "@/assets/law-firm-audit-card.png.asset.json";
 import { useEffect, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -51,7 +52,7 @@ const MarketingProducts = () => {
         "Prioritized build order",
         "Attorney-in-the-loop guardrails"
       ],
-      image: productTempImg,
+      image: lawFirmAuditCardImg.url,
       link: "/ai-audit"
     },
     {
@@ -123,7 +124,7 @@ const MarketingProducts = () => {
                 className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1 overflow-hidden group"
               >
                 <div className="flex flex-col md:flex-row">
-                  <div className="relative w-full md:w-2/5 lg:w-1/3 h-auto overflow-hidden shrink-0 bg-black/20 flex items-center justify-center">
+                  <div className="relative w-full md:w-1/2 aspect-[16/10] overflow-hidden shrink-0 bg-black/20 flex items-center justify-center">
                     <img 
                       src={product.image} 
                       alt={product.title}
@@ -135,7 +136,7 @@ const MarketingProducts = () => {
                     <div className="absolute inset-0 bg-legal-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   
-                  <CardContent className="p-6 md:p-8 flex flex-col justify-center w-full md:w-3/5 lg:w-2/3">
+                  <CardContent className="p-6 md:p-8 flex flex-col justify-center w-full md:w-1/2">
                     <div className="flex flex-wrap gap-2 mb-4">
                       {product.badges.map((badge, badgeIndex) => (
                         <Badge 
