@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import whyChooseBg from "@/assets/why-choose-bg-bold.jpg";
 import productTempImg from "@/assets/product-temp.jpg";
 import amicusEdgeCardImg from "@/assets/amicus-edge-card.png.asset.json";
+import lawFirmAuditCardImg from "@/assets/law-firm-audit-card.png.asset.json";
 import { useEffect, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
