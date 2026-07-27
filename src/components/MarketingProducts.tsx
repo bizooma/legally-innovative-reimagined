@@ -124,7 +124,7 @@ const MarketingProducts = () => {
                 className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1 overflow-hidden group"
               >
                 <div className="flex flex-col md:flex-row">
-                  <div className="relative w-full md:w-2/5 lg:w-1/3 h-auto overflow-hidden shrink-0 bg-black/20 flex items-center justify-center">
+                  <div className="relative w-full md:w-1/2 h-auto min-h-[260px] overflow-hidden shrink-0 bg-black/20 flex items-center justify-center">
                     <img 
                       src={product.image} 
                       alt={product.title}
