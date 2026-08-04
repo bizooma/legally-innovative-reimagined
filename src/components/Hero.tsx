@@ -65,9 +65,6 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
           <div className="animate-fade-in">
-            <p className="text-lg md:text-xl font-semibold mb-4 text-legal-accent tracking-wide">
-              Bizooma Digital Marketing Agency
-            </p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
               Where <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Marketing</span> Meets <span className="bg-gradient-to-r from-white to-legal-accent bg-clip-text text-transparent">Code + AI</span>
             </h1>
