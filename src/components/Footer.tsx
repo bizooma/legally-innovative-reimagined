@@ -19,10 +19,10 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <ResponsiveImage 
-                src="/logo.png" 
+                src="/logo-white.png" 
                 alt="Bizooma - AI-Powered Marketing & Development for Law Firms" 
-                sizes="80px"
-                widths={[80, 160]}
+                sizes="220px"
+                widths={[220, 440]}
                 className="h-20 w-auto object-contain" 
               />
             </div>
