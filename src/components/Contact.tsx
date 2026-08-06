@@ -229,13 +229,15 @@ const Contact = () => {
                 />
               </div>
               
+              <div className="mb-6">
+                <TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken(null)} />
+              </div>
+
               <Button 
                 type="submit" 
                 className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 w-full md:w-auto" 
                 disabled={isSubmitting || !turnstileToken}
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </Button>
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
