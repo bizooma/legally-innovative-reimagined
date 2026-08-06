@@ -236,6 +236,8 @@ const Contact = () => {
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
             </form>
           </div>
         </div>
