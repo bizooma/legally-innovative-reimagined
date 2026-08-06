@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { verifyTurnstile, getClientIp } from "../_shared/turnstile.ts";
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -14,6 +15,7 @@ interface ContactFormRequest {
   email: string;
   company?: string;
   message: string;
+  turnstileToken?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -23,7 +25,15 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, company, message }: ContactFormRequest = await req.json();
+    const { name, email, company, message, turnstileToken }: ContactFormRequest = await req.json();
+
+    const verification = await verifyTurnstile(turnstileToken, getClientIp(req));
+    if (!verification.success) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Bot verification failed. Please try again." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
 
     console.log('Received contact form submission:', { name, email, company: company || 'Not provided' });
 

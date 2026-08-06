@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { JacksonvilleFormData } from "./types";
+import TurnstileWidget from "@/components/security/TurnstileWidget";
 
 const JacksonvilleLeadForm = () => {
   const [formData, setFormData] = useState<JacksonvilleFormData>({
@@ -22,6 +23,7 @@ const JacksonvilleLeadForm = () => {
     description: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -48,13 +50,21 @@ const JacksonvilleLeadForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!turnstileToken) {
+      toast({
+        title: "Verification required",
+        description: "Please complete the security check before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
     setIsSubmitting(true);
     
     try {
       console.log("Submitting lead form:", formData);
       
       const { data, error } = await supabase.functions.invoke('send-jacksonville-lead', {
-        body: formData
+        body: { ...formData, turnstileToken }
       });
 
       if (error) {
@@ -79,6 +89,8 @@ const JacksonvilleLeadForm = () => {
         wantHighSettlement: true,
         description: ""
       });
+      setTurnstileToken(null);
+      window.turnstile?.reset();
     } catch (error: any) {
       console.error("Error submitting lead form:", error);
       toast({
@@ -245,9 +257,11 @@ const JacksonvilleLeadForm = () => {
             />
           </div>
 
+          <TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken(null)} />
+
           <Button 
             type="submit" 
-            disabled={isSubmitting}
+            disabled={isSubmitting || !turnstileToken}
             className="w-full bg-legal-primary hover:bg-legal-secondary text-white py-3 text-lg font-semibold disabled:opacity-50"
           >
             {isSubmitting ? "Submitting..." : "Get My Free Case Evaluation"}
