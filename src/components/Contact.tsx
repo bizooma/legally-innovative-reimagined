@@ -7,6 +7,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { trackFormSubmission, trackPhoneClick, trackEmailClick, trackCalendarClick } from "@/utils/gtmTracking";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import TurnstileWidget from "@/components/security/TurnstileWidget";
 
 const Contact = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
@@ -18,6 +19,7 @@ const Contact = () => {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -26,6 +28,14 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!turnstileToken) {
+      toast({
+        title: "Verification required",
+        description: "Please complete the security check before submitting.",
+        variant: "destructive"
+      });
+      return;
+    }
     setIsSubmitting(true);
     try {
       const { data, error } = await supabase.functions.invoke('send-contact-email', {
@@ -33,7 +43,8 @@ const Contact = () => {
           name: formData.name,
           email: formData.email,
           company: formData.company,
-          message: formData.message
+          message: formData.message,
+          turnstileToken
         }
       });
       if (error) throw error;
@@ -57,6 +68,8 @@ const Contact = () => {
         company: "",
         message: ""
       });
+      setTurnstileToken(null);
+      window.turnstile?.reset();
     } catch (error: any) {
       console.error("Error submitting form:", error);
       toast({
@@ -219,7 +232,7 @@ const Contact = () => {
               <Button 
                 type="submit" 
                 className="bg-legal-primary hover:bg-legal-secondary text-white px-8 py-6 w-full md:w-auto" 
-                disabled={isSubmitting}
+                disabled={isSubmitting || !turnstileToken}
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
