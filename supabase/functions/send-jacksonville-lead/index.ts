@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
+import { verifyTurnstile, getClientIp } from "../_shared/turnstile.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -18,6 +19,7 @@ interface LeadFormData {
   justWantSettle: boolean;
   wantHighSettlement: boolean;
   description: string;
+  turnstileToken?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -29,6 +31,14 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const formData: LeadFormData = await req.json();
     console.log("Received lead form data:", formData);
+
+    const verification = await verifyTurnstile(formData.turnstileToken, getClientIp(req));
+    if (!verification.success) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Bot verification failed. Please try again." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
 
     const emailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
