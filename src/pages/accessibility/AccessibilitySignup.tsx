@@ -204,7 +204,12 @@ export default function AccessibilitySignup() {
                 </button>
               </div>
             </div>
-            <Button type="submit" className="w-full gap-2" disabled={loading}>
+            <TurnstileWidget
+              ref={turnstileRef}
+              onVerify={setCaptchaToken}
+              onExpire={() => setCaptchaToken(null)}
+            />
+            <Button type="submit" className="w-full gap-2" disabled={loading || !captchaToken}>
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <>Continue to payment <ArrowRight className="h-4 w-4" /></>}
             </Button>
             <p className="text-xs text-muted-foreground text-center">
