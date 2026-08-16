@@ -80,8 +80,6 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
-            <div>
-              <Button 
             <TurnstileWidget
               ref={turnstileRef}
               onVerify={setCaptchaToken}
