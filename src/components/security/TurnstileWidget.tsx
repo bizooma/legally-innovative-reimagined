@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 
-export const TURNSTILE_SITE_KEY = "0x4AAAAAAEH-uDaU0H_ei76V";
+export const TURNSTILE_SITE_KEY = "0x4AAAAAAERyW41U2AvxZQYL";
 export const TURNSTILE_ACTION = "turnstile-spin-v2";
 
 declare global {

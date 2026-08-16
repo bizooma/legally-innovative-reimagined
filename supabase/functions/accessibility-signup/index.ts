@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { verifyTurnstile, getClientIp } from "../_shared/turnstile.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -8,27 +9,6 @@ const corsHeaders = {
 
 function slugify(s: string) {
   return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "org";
-}
-
-async function verifyTurnstile(token: string, remoteip?: string): Promise<boolean> {
-  const secret = Deno.env.get("TURNSTILE_SECRET_KEY");
-  if (!secret) {
-    console.error("TURNSTILE_SECRET_KEY is not configured");
-    return false;
-  }
-  const body: Record<string, string> = { secret, response: token };
-  if (remoteip) body.remoteip = remoteip;
-  const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  const outcome = await res.json();
-  if (outcome.success !== true) {
-    console.warn("Turnstile verification failed:", outcome["error-codes"]);
-    return false;
-  }
-  return true;
 }
 
 Deno.serve(async (req) => {
@@ -42,8 +22,8 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "Password must be at least 8 characters" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    const remoteip = req.headers.get("CF-Connecting-IP") ?? req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? undefined;
-    if (!turnstileToken || typeof turnstileToken !== "string" || !(await verifyTurnstile(turnstileToken, remoteip))) {
+    const verification = await verifyTurnstile(turnstileToken, getClientIp(req));
+    if (!verification.success) {
       return new Response(JSON.stringify({ error: "Captcha verification failed" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
