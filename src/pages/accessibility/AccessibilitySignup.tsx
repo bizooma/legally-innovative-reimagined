@@ -266,7 +266,7 @@ export default function AccessibilitySignup() {
             </div>
             <TurnstileWidget
               ref={turnstileRef}
-              onVerify={setCaptchaToken}
+              onVerify={handleVerify}
               onExpire={() => setCaptchaToken(null)}
             />
             <Button type="submit" className="w-full gap-2" disabled={loading || !captchaToken}>
@@ -316,7 +316,7 @@ export default function AccessibilitySignup() {
             </div>
             <TurnstileWidget
               ref={turnstileRef}
-              onVerify={setCaptchaToken}
+              onVerify={handleVerify}
               onExpire={() => setCaptchaToken(null)}
             />
             <Button type="submit" className="w-full gap-2" disabled={loading || !captchaToken}>
