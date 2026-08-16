@@ -150,7 +150,6 @@ export function ContactForm({ clients, onSubmit, onCancel, isSubmitting }: Conta
           )}
         />
         
-        <div className="flex justify-end space-x-2 pt-4">
         <TurnstileWidget
           ref={turnstileRef}
           onVerify={setCaptchaToken}
