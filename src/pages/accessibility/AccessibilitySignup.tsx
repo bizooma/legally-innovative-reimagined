@@ -29,9 +29,36 @@ export default function AccessibilitySignup() {
   const [resetting, setResetting] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileHandle>(null);
+  const tokenWaiterRef = useRef<((token: string) => void) | null>(null);
+
+  const handleVerify = (token: string) => {
+    setCaptchaToken(token);
+    const waiter = tokenWaiterRef.current;
+    if (waiter) {
+      tokenWaiterRef.current = null;
+      waiter(token);
+    }
+  };
+
+  // Turnstile tokens are single use — request a brand new one before a second gated call.
+  const requestFreshToken = (timeoutMs = 10000) =>
+    new Promise<string | null>((resolve) => {
+      let settled = false;
+      const finish = (t: string | null) => {
+        if (settled) return;
+        settled = true;
+        tokenWaiterRef.current = null;
+        resolve(t);
+      };
+      tokenWaiterRef.current = (t) => finish(t);
+      setCaptchaToken(null);
+      turnstileRef.current?.reset();
+      window.setTimeout(() => finish(null), timeoutMs);
+    });
 
   const resetCaptcha = () => {
     setCaptchaToken(null);
+    tokenWaiterRef.current = null;
     turnstileRef.current?.reset();
   };
 
@@ -45,16 +72,49 @@ export default function AccessibilitySignup() {
         body: { email, password, orgName, turnstileToken: captchaToken },
       });
       if (signupErr || (signupData as any)?.error) {
-        throw new Error((signupData as any)?.error || signupErr?.message || "Signup failed");
+        const msg = String((signupData as any)?.error || signupErr?.message || "Signup failed");
+        if (/already (been )?registered|already exists|user_exists|email_exists|duplicate/i.test(msg)) {
+          toast({
+            title: "Account already exists",
+            description: "An account with this email already exists — please sign in",
+          });
+          setMode("signin");
+          setPassword("");
+          resetCaptcha();
+          setLoading(false);
+          return;
+        }
+        throw new Error(msg);
       }
 
-      // 2) Sign in to get a session for the checkout call
+      // 2) Sign in with a FRESH captcha token (the first one was consumed above)
+      const freshToken = await requestFreshToken();
+      if (!freshToken) {
+        toast({
+          title: "Account created",
+          description: "Your account was created. Please sign in to continue.",
+        });
+        setMode("signin");
+        resetCaptcha();
+        setLoading(false);
+        return;
+      }
+
       const { error: signInErr } = await supabase.auth.signInWithPassword({
         email,
         password,
-        options: { captchaToken },
+        options: { captchaToken: freshToken },
       });
-      if (signInErr) throw signInErr;
+      if (signInErr) {
+        toast({
+          title: "Account created",
+          description: "Your account was created. Please sign in to continue.",
+        });
+        setMode("signin");
+        resetCaptcha();
+        setLoading(false);
+        return;
+      }
 
       // 3) Create Stripe Checkout session
       const { data: checkout, error: checkoutErr } = await supabase.functions.invoke("create-accessibility-checkout", {
@@ -206,7 +266,7 @@ export default function AccessibilitySignup() {
             </div>
             <TurnstileWidget
               ref={turnstileRef}
-              onVerify={setCaptchaToken}
+              onVerify={handleVerify}
               onExpire={() => setCaptchaToken(null)}
             />
             <Button type="submit" className="w-full gap-2" disabled={loading || !captchaToken}>
@@ -256,7 +316,7 @@ export default function AccessibilitySignup() {
             </div>
             <TurnstileWidget
               ref={turnstileRef}
-              onVerify={setCaptchaToken}
+              onVerify={handleVerify}
               onExpire={() => setCaptchaToken(null)}
             />
             <Button type="submit" className="w-full gap-2" disabled={loading || !captchaToken}>
