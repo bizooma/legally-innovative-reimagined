@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Accessibility, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import TurnstileWidget, { TurnstileHandle } from "@/components/security/TurnstileWidget";
 
 export default function AccessibilitySignup() {
   const [params, setParams] = useSearchParams();
@@ -26,21 +27,33 @@ export default function AccessibilitySignup() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [resetting, setResetting] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileHandle>(null);
+
+  const resetCaptcha = () => {
+    setCaptchaToken(null);
+    turnstileRef.current?.reset();
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!captchaToken) return;
     setLoading(true);
     try {
       // 1) Create account (no confirmation email) + organization
       const { data: signupData, error: signupErr } = await supabase.functions.invoke("accessibility-signup", {
-        body: { email, password, orgName },
+        body: { email, password, orgName, turnstileToken: captchaToken },
       });
       if (signupErr || (signupData as any)?.error) {
         throw new Error((signupData as any)?.error || signupErr?.message || "Signup failed");
       }
 
       // 2) Sign in to get a session for the checkout call
-      const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+      const { error: signInErr } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+        options: { captchaToken },
+      });
       if (signInErr) throw signInErr;
 
       // 3) Create Stripe Checkout session
@@ -67,20 +80,27 @@ export default function AccessibilitySignup() {
       window.location.href = url;
     } catch (err: any) {
       toast({ title: "Signup failed", description: err.message ?? String(err), variant: "destructive" });
+      resetCaptcha();
       setLoading(false);
     }
   };
 
   const signIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!captchaToken) return;
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+        options: { captchaToken },
+      });
       if (error) throw error;
       toast({ title: "Welcome back", description: "Signed in successfully." });
       navigate("/accessibility/dashboard");
     } catch (err: any) {
       toast({ title: "Sign in failed", description: err.message ?? String(err), variant: "destructive" });
+      resetCaptcha();
       setLoading(false);
     }
   };
@@ -90,15 +110,22 @@ export default function AccessibilitySignup() {
       toast({ title: "Enter your email", description: "Type your email above first, then click Forgot password.", variant: "destructive" });
       return;
     }
+    if (!captchaToken) {
+      toast({ title: "Complete the captcha", description: "Please complete the verification below first.", variant: "destructive" });
+      return;
+    }
     setResetting(true);
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/accessibility/reset-password`,
+        captchaToken,
       });
       if (error) throw error;
       toast({ title: "Check your inbox", description: "We sent you a password reset link." });
+      resetCaptcha();
     } catch (err: any) {
       toast({ title: "Could not send reset email", description: err.message ?? String(err), variant: "destructive" });
+      resetCaptcha();
     } finally {
       setResetting(false);
     }
