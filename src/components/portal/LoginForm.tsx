@@ -82,6 +82,13 @@ const LoginForm = () => {
             />
             <div>
               <Button 
+            <TurnstileWidget
+              ref={turnstileRef}
+              onVerify={setCaptchaToken}
+              onExpire={() => setCaptchaToken(null)}
+            />
+            <div>
+              <Button 
                 type="submit" 
                 className="w-full bg-legal-primary hover:bg-legal-secondary"
                 disabled={isLoading || !captchaToken}
