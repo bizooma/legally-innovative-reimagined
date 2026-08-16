@@ -292,7 +292,7 @@ export type Database = {
         Row: {
           brand_color: string | null
           created_at: string
-          created_by: string
+          created_by: string | null
           digest_email: string | null
           digest_frequency: string
           digest_last_sent_at: string | null
@@ -311,7 +311,7 @@ export type Database = {
         Insert: {
           brand_color?: string | null
           created_at?: string
-          created_by?: string
+          created_by?: string | null
           digest_email?: string | null
           digest_frequency?: string
           digest_last_sent_at?: string | null
@@ -330,7 +330,7 @@ export type Database = {
         Update: {
           brand_color?: string | null
           created_at?: string
-          created_by?: string
+          created_by?: string | null
           digest_email?: string | null
           digest_frequency?: string
           digest_last_sent_at?: string | null
