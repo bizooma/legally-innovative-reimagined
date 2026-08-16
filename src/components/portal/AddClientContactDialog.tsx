@@ -24,10 +24,10 @@ export function AddClientContactDialog({ clients }: AddClientContactDialogProps)
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleSubmit(data: ContactFormValues) {
+  async function handleSubmit(data: ContactFormValues, captchaToken: string) {
     setIsSubmitting(true);
     try {
-      await createClientContact(data);
+      await createClientContact(data, captchaToken);
       
       toast({
         title: "Contact Added Successfully",

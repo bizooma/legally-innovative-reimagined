@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import TurnstileWidget, { TurnstileHandle } from '@/components/security/TurnstileWidget';
 
 // Form validation schema
 const staffLoginSchema = z.object({
@@ -30,6 +31,8 @@ type StaffLoginValues = z.infer<typeof staffLoginSchema>;
 
 const StaffLoginForm = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [captchaToken, setCaptchaToken] = React.useState<string | null>(null);
+  const turnstileRef = React.useRef<TurnstileHandle>(null);
   const navigate = useNavigate();
   
   // Initialize the form with validation
@@ -42,6 +45,7 @@ const StaffLoginForm = () => {
   });
 
   const onSubmit = async (values: StaffLoginValues) => {
+    if (!captchaToken) return;
     setIsLoading(true);
     
     console.log('StaffLoginForm: Starting staff login for:', values.email);
@@ -57,7 +61,8 @@ const StaffLoginForm = () => {
       
       const { data, error } = await supabase.auth.signInWithPassword({
         email: values.email,
-        password: values.password
+        password: values.password,
+        options: { captchaToken },
       });
       
       if (error) {
@@ -80,6 +85,8 @@ const StaffLoginForm = () => {
         description: error.message || "An error occurred during login. Please check your credentials and try again.",
         variant: "destructive",
       });
+      setCaptchaToken(null);
+      turnstileRef.current?.reset();
     } finally {
       setIsLoading(false);
     }
@@ -122,11 +129,16 @@ const StaffLoginForm = () => {
                 </FormItem>
               )}
             />
+            <TurnstileWidget
+              ref={turnstileRef}
+              onVerify={setCaptchaToken}
+              onExpire={() => setCaptchaToken(null)}
+            />
             <div>
               <Button 
                 type="submit" 
                 className="w-full bg-legal-primary hover:bg-legal-secondary"
-                disabled={isLoading}
+                disabled={isLoading || !captchaToken}
               >
                 {isLoading ? "Logging in..." : "Log In"}
               </Button>

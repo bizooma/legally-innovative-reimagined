@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 
 export const TURNSTILE_SITE_KEY = "0x4AAAAAAEH-uDaU0H_ei76V";
 export const TURNSTILE_ACTION = "turnstile-spin-v2";
@@ -47,13 +47,21 @@ export interface TurnstileHandle {
   reset: () => void;
 }
 
-const TurnstileWidget = ({ onVerify, onExpire, className }: TurnstileWidgetProps) => {
+const TurnstileWidget = forwardRef<TurnstileHandle, TurnstileWidgetProps>(({ onVerify, onExpire, className }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
   const onVerifyRef = useRef(onVerify);
   const onExpireRef = useRef(onExpire);
   onVerifyRef.current = onVerify;
   onExpireRef.current = onExpire;
+
+  useImperativeHandle(ref, () => ({
+    reset: () => {
+      if (widgetIdRef.current && window.turnstile) {
+        window.turnstile.reset(widgetIdRef.current);
+      }
+    },
+  }), []);
 
   useEffect(() => {
     let cancelled = false;
@@ -88,6 +96,8 @@ const TurnstileWidget = ({ onVerify, onExpire, className }: TurnstileWidgetProps
       data-action={TURNSTILE_ACTION}
     />
   );
-};
+});
+
+TurnstileWidget.displayName = "TurnstileWidget";
 
 export default TurnstileWidget;

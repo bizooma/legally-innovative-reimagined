@@ -9,7 +9,7 @@ export function useAuth() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (values: LoginFormValues) => {
+  const handleLogin = async (values: LoginFormValues, captchaToken?: string) => {
     setIsLoading(true);
     
     console.log('useAuth: Starting login process for:', values.email);
@@ -25,7 +25,8 @@ export function useAuth() {
       
       const { data, error } = await supabase.auth.signInWithPassword({
         email: values.email,
-        password: values.password
+        password: values.password,
+        options: { captchaToken },
       });
       
       if (error) {
@@ -62,7 +63,7 @@ export function useAuth() {
         title: "Login Successful",
         description: "Welcome to your dashboard.",
       });
-      
+      return true;
     } catch (error: any) {
       console.error("Login error:", error);
       toast({
@@ -70,6 +71,7 @@ export function useAuth() {
         description: error.message || "An error occurred during login. Please check your credentials and try again.",
         variant: "destructive",
       });
+      return false;
     } finally {
       setIsLoading(false);
     }
