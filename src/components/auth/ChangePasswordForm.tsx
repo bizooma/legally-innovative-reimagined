@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { PasswordInput } from '@/components/ui/password-input';
+import TurnstileWidget, { TurnstileHandle } from '@/components/security/TurnstileWidget';
 
 interface ChangePasswordFormProps {
   isPrimaryContact?: boolean;
@@ -24,6 +25,8 @@ interface ChangePasswordFormProps {
 
 export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePasswordFormProps) {
   const { toast } = useToast();
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileHandle>(null);
   
   // Create a schema that only requires new password fields (no current password)
   const passwordChangeSchema = z.object({
@@ -57,6 +60,7 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: PasswordChangeFormValues) => {
+    if (!isPrimaryContact && !captchaToken) return;
     try {
       if (isPrimaryContact && email) {
         // For primary contacts, use our adminSetPassword service function
@@ -71,9 +75,12 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
         const { error: loginError } = await supabase.auth.signInWithPassword({
           email: email || (await supabase.auth.getUser()).data.user?.email || '',
           password: values.currentPassword!,
+          options: { captchaToken: captchaToken ?? undefined },
         });
 
         if (loginError) {
+          setCaptchaToken(null);
+          turnstileRef.current?.reset();
           toast({
             title: "Error",
             description: "Current password is incorrect",
@@ -100,6 +107,8 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
       // Reset the form
       form.reset();
     } catch (error: any) {
+      setCaptchaToken(null);
+      turnstileRef.current?.reset();
       toast({
         title: "Password Change Failed",
         description: error.message || "An error occurred while changing the password.",
@@ -161,7 +170,18 @@ export function ChangePasswordForm({ isPrimaryContact = false, email }: ChangePa
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        {!isPrimaryContact && (
+          <TurnstileWidget
+            ref={turnstileRef}
+            onVerify={setCaptchaToken}
+            onExpire={() => setCaptchaToken(null)}
+          />
+        )}
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isLoading || (!isPrimaryContact && !captchaToken)}
+        >
           {isLoading ? "Processing..." : (isPrimaryContact ? "Set Password" : "Change Password")}
         </Button>
       </form>
