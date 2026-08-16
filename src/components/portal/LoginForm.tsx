@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -18,9 +18,12 @@ import {
 import LoginFormFooter from './LoginFormFooter';
 import { useAuth } from '@/hooks/useAuth';
 import { loginFormSchema, LoginFormValues } from '@/schemas/authSchema';
+import TurnstileWidget, { TurnstileHandle } from '@/components/security/TurnstileWidget';
 
 const LoginForm = () => {
   const { isLoading, handleLogin } = useAuth();
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileHandle>(null);
   
   // Initialize the form with validation
   const form = useForm<LoginFormValues>({
@@ -31,9 +34,13 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = (values: LoginFormValues) => {
-    console.log('Portal LoginForm: Attempting login with:', { email: values.email, hasPassword: !!values.password });
-    handleLogin(values);
+  const onSubmit = async (values: LoginFormValues) => {
+    if (!captchaToken) return;
+    const ok = await handleLogin(values, captchaToken);
+    if (!ok) {
+      setCaptchaToken(null);
+      turnstileRef.current?.reset();
+    }
   };
 
   return (
@@ -77,7 +84,7 @@ const LoginForm = () => {
               <Button 
                 type="submit" 
                 className="w-full bg-legal-primary hover:bg-legal-secondary"
-                disabled={isLoading}
+                disabled={isLoading || !captchaToken}
               >
                 {isLoading ? "Logging in..." : "Log In"}
               </Button>
