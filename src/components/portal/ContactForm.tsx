@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,6 +16,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from '@/components/ui/button';
 import { Client } from '@/types/database';
+import TurnstileWidget, { TurnstileHandle } from '@/components/security/TurnstileWidget';
 
 // Form schema
 export const contactFormSchema = z.object({
@@ -30,12 +31,14 @@ export type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 interface ContactFormProps {
   clients: Client[];
-  onSubmit: (data: ContactFormValues) => void;
+  onSubmit: (data: ContactFormValues, captchaToken: string) => void | Promise<void>;
   onCancel: () => void;
   isSubmitting: boolean;
 }
 
 export function ContactForm({ clients, onSubmit, onCancel, isSubmitting }: ContactFormProps) {
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileHandle>(null);
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -49,7 +52,18 @@ export function ContactForm({ clients, onSubmit, onCancel, isSubmitting }: Conta
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form
+        onSubmit={form.handleSubmit(async (data) => {
+          if (!captchaToken) return;
+          try {
+            await onSubmit(data, captchaToken);
+          } finally {
+            setCaptchaToken(null);
+            turnstileRef.current?.reset();
+          }
+        })}
+        className="space-y-4"
+      >
         <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
@@ -137,6 +151,12 @@ export function ContactForm({ clients, onSubmit, onCancel, isSubmitting }: Conta
         />
         
         <div className="flex justify-end space-x-2 pt-4">
+        <TurnstileWidget
+          ref={turnstileRef}
+          onVerify={setCaptchaToken}
+          onExpire={() => setCaptchaToken(null)}
+        />
+        <div className="flex justify-end space-x-2 pt-4">
           <Button 
             variant="outline" 
             type="button" 
@@ -144,7 +164,7 @@ export function ContactForm({ clients, onSubmit, onCancel, isSubmitting }: Conta
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting || !captchaToken}>
             {isSubmitting ? "Adding..." : "Add Contact"}
           </Button>
         </div>

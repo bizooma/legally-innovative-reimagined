@@ -2,7 +2,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { ContactFormValues } from '@/components/portal/ContactForm';
 
-export async function createClientContact(data: ContactFormValues): Promise<void> {
+export async function createClientContact(data: ContactFormValues, captchaToken?: string): Promise<void> {
   // First, create the user in Supabase Auth
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email: data.email,
@@ -11,7 +11,8 @@ export async function createClientContact(data: ContactFormValues): Promise<void
       data: {
         full_name: `${data.firstName} ${data.lastName}`,
         client_id: data.clientId,
-      }
+      },
+      captchaToken,
     }
   });
   
