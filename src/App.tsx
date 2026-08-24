@@ -76,6 +76,7 @@ import ClaudeCoworkSuccess from "./pages/ClaudeCoworkSuccess";
 import AiAuditPage from "./pages/AiAuditPage";
 import AiAuditSuccess from "./pages/AiAuditSuccess";
 import AiExplainedPage from "./pages/AiExplainedPage";
+import AIReceptionist from "./pages/AIReceptionist";
 import AccessibilityLayout from "./pages/accessibility/AccessibilityLayout";
 import AccessibilityDashboard from "./pages/accessibility/AccessibilityDashboard";
 import AccessibilityWebsites from "./pages/accessibility/AccessibilityWebsites";
