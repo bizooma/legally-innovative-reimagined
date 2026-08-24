@@ -24,7 +24,7 @@ const AIReceptionist = () => {
     "@type": "ProfessionalService",
     "name": "Bizooma - AI Receptionist",
     "url": "https://bizooma.com/ai-receptionist",
-    "telephone": "+1-904-295-6670",
+    "telephone": "+1-904-331-8130",
     "description": "An AI receptionist that answers every call 24/7, qualifies callers, and hands your team a clean summary. Built and trained on your business by Bizooma.",
     "serviceType": "AI Receptionist",
     "provider": {

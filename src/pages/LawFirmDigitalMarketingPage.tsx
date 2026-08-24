@@ -29,7 +29,7 @@ const LawFirmDigitalMarketingPage = () => {
     "name": "Bizooma Digital Marketing Agency - Digital Marketing Services",
     "image": "https://bizooma.com/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png",
     "url": "https://bizooma.com/law-firm-digital-marketing",
-    "telephone": "+1-904-295-6670",
+    "telephone": "+1-904-331-8130",
     "priceRange": "$2,000 - $10,000/month",
     "address": {
       "@type": "PostalAddress",

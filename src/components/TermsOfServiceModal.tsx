@@ -311,7 +311,7 @@ const TermsOfServiceModal = ({ triggerClassName }: TermsOfServiceModalProps) => 
             2465 US-1S, Suite 1045<br />
             St. Augustine, FL 32086<br />
             Email: joe@bizooma.com<br />
-            Phone: <a href="tel:9042956670" className="text-legal-primary hover:underline">904-295-6670</a>
+            Phone: <a href="tel:+19043318130" className="text-legal-primary hover:underline">904-331-8130</a>
           </p>
           
           <hr className="my-6" />

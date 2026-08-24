@@ -301,7 +301,7 @@ const PrivacyPolicyPage = () => {
                 <p>2465 US-1S, Suite 1045</p>
                 <p>St. Augustine, FL 32086</p>
                 <p>Email: <a href="mailto:joe@bizooma.com" className="text-primary hover:underline">joe@bizooma.com</a></p>
-                <p>Phone: <a href="tel:9042956670" className="text-primary hover:underline">904-295-6670</a></p>
+                <p>Phone: <a href="tel:+19043318130" className="text-primary hover:underline">904-331-8130</a></p>
               </div>
             </section>
 

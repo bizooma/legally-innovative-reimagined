@@ -23,7 +23,7 @@ const LawFirmSeoAeoPage = () => {
     "name": "Bizooma Digital Marketing Agency - SEO/AEO/Voice SEO Services",
     "image": "https://bizooma.com/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png",
     "url": "https://bizooma.com/law-firm-seo-aeo-voiceseo",
-    "telephone": "+1-904-295-6670",
+    "telephone": "+1-904-331-8130",
     "priceRange": "$1,500 - $5,000/month",
     "address": {
       "@type": "PostalAddress",

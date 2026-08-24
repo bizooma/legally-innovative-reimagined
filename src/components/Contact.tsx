@@ -126,11 +126,11 @@ const Contact = () => {
                   <p className="font-medium text-gray-600">Call Us</p>
                   <p className="text-legal-dark font-semibold">
                     <a 
-                      href="tel:9042956670" 
-                      onClick={() => trackPhoneClick('904-295-6670', 'Contact Section')}
+                      href="tel:+19043318130" 
+                      onClick={() => trackPhoneClick('904-331-8130', 'Contact Section')}
                       className="hover:underline"
                     >
-                      904-295-6670
+                      904-331-8130
                     </a>
                   </p>
                 </div>
