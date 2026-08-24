@@ -156,9 +156,6 @@ const Index = () => {
       <Helmet>
         <title>Bizooma | Jacksonville Digital Marketing Agency</title>
         <meta name="description" content="Jacksonville digital marketing agency: AI marketing, SEO/AEO, web, mobile apps, and lead gen for law firms, nonprofits, and local businesses." />
-        <meta property="og:title" content="Bizooma | Jacksonville Digital Marketing Agency" />
-        <meta property="og:description" content="Jacksonville digital marketing agency: AI marketing, SEO/AEO, web, mobile apps, and lead gen for law firms, nonprofits, and local businesses." />
-        <meta property="og:image" content="https://bizooma.com/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png" />
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
       <div className="min-h-screen">

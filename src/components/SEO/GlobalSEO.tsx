@@ -66,13 +66,6 @@ const GlobalSEO = () => {
       areaServed: "US",
       availableLanguage: ["English"]
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "127",
-      bestRating: "5",
-      worstRating: "1"
-    },
     priceRange: "$$$",
     paymentAccepted: ["Cash", "Credit Card", "Debit Card", "Bank Transfer", "Check", "PayPal", "Venmo"],
     currenciesAccepted: "USD",
