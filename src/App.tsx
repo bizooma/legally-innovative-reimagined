@@ -144,6 +144,9 @@ const App = () => (
 
               {/* AI Explained glossary page */}
               <Route path="/ai-explained" element={<AiExplainedPage />} />
+
+              {/* AI Receptionist service page */}
+              <Route path="/ai-receptionist" element={<AIReceptionist />} />
               
               {/* Michael sales page */}
               <Route path="/michael" element={<MichaelSalesPage />} />
