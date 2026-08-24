@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { trackNavigation } from "@/utils/gtmTracking";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2, Accessibility, Sparkles } from "lucide-react";
+import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2, Accessibility, Sparkles, PhoneCall } from "lucide-react";
 import { Link } from "react-router-dom";
 import immigrationLawApp from "@/assets/immigration-law-app.png";
 import rokuDemo from "@/assets/roku-demo.png";
@@ -10,10 +10,30 @@ import alexaSkill from "@/assets/alexa-skill.png";
 import chatbotExamples from "@/assets/chatbot-examples.png";
 import accessibilityWidget from "@/assets/accessibility-widget.png";
 import claudeCowork from "@/assets/claude-cowork.jpg";
+import aiReceptionist from "@/assets/ai-receptionist.png";
 
 const Services = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
   const services = [
+    {
+      title: "AI Receptionist",
+      subtitle: "24/7 Call Answering · Lead Qualification · Instant Handoff",
+      description: "Every missed call is a client who called someone else. Our AI receptionist answers on the first ring, around the clock — nights, weekends, and while you're already on the phone. It greets callers by name, figures out what they need, captures their contact details, and hands your team a clean summary before the caller has hung up. It is trained on your business, not a generic script, so it sounds like your firm and never invents an answer it wasn't given.",
+      highlights: [
+        "Answers 24/7 — nights, weekends, and overflow",
+        "Trained on your services, hours, and FAQs",
+        "Qualifies callers and routes urgent ones first",
+        "Verified contact capture with instant team handoff",
+      ],
+      examples: "We answer Bizooma's own phone with it. Every call to our main line is handled by the same system we build for clients — that's how we know it holds up.",
+      examplesLabel: "We use it ourselves: ",
+      icon: <PhoneCall className="h-8 w-8" />,
+      bgImage: aiReceptionist,
+      link: "/ai-receptionist",
+      accentColor: "from-cyan-600 to-blue-700",
+      noOverlay: true,
+      showLearnMore: true,
+    },
     {
       title: "Custom Roku Channel Development",
       subtitle: "Design · Development · Publishing",
@@ -133,7 +153,7 @@ const Services = () => {
             Our <span className="highlight-text">Services</span>
           </h2>
           <p className="text-lg text-gray-700">
-            From custom Roku channels and mobile apps to AI-powered chatbots and voice assistant marketing, we help businesses reach audiences on the platforms that matter most — connected TVs, smartphones, websites, and smart speakers.
+            From AI receptionists that answer every call to custom mobile apps, chatbots, Roku channels, and voice assistant marketing, we help businesses reach audiences on the platforms that matter most — phone lines, connected TVs, smartphones, websites, and smart speakers.
           </p>
         </div>
 
