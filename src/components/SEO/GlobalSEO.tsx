@@ -66,13 +66,6 @@ const GlobalSEO = () => {
       areaServed: "US",
       availableLanguage: ["English"]
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "127",
-      bestRating: "5",
-      worstRating: "1"
-    },
     priceRange: "$$$",
     paymentAccepted: ["Cash", "Credit Card", "Debit Card", "Bank Transfer", "Check", "PayPal", "Venmo"],
     currenciesAccepted: "USD",
@@ -143,8 +136,8 @@ const GlobalSEO = () => {
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
 
-        {/* Google Search Console Verification */}
-        <meta name="google-site-verification" content="KGi7cTbcqjyL6GMPEq14A0Iwg55cc6flZO0ObLKPbQM" />
+        {/* Fallback description for routes that don't set their own */}
+        <meta name="description" content="AI marketing, SEO/AEO, web development, mobile apps, and lead generation for law firms, nonprofits, and startups. Offices in Jacksonville, FL and Amarillo, TX." />
 
         {/* Global JSON-LD */}
         <script type="application/ld+json">{JSON.stringify(organizationLd)}</script>
