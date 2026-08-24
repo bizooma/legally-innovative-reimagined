@@ -22,7 +22,7 @@ const LawFirmVoiceAssistantMarketingPage = () => {
     "name": "Bizooma Digital Marketing Agency - Voice Assistant Marketing",
     "image": "https://bizooma.com/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png",
     "url": "https://bizooma.com/law-firm-voice-assistant-marketing",
-    "telephone": "+1-904-295-6670",
+    "telephone": "+1-904-331-8130",
     "priceRange": "$3,000 - $10,000",
     "address": {
       "@type": "PostalAddress",

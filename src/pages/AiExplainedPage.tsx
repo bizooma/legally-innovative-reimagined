@@ -61,8 +61,8 @@ export default function AiExplainedPage() {
                 joe@bizooma.com
               </a>
               <span className="hidden sm:inline">·</span>
-              <a href="tel:904-295-6670" className="hover:text-legal-dark transition-colors">
-                904-295-6670
+              <a href="tel:+19043318130" className="hover:text-legal-dark transition-colors">
+                904-331-8130
               </a>
               <span className="hidden sm:inline">·</span>
               <a href="https://bizooma.com" target="_blank" rel="noopener noreferrer" className="hover:text-legal-dark transition-colors">

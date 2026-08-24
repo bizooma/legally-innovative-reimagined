@@ -68,11 +68,11 @@ const ProposalDownloadCTA = ({ bucketName, fileName, displayName }: ProposalDown
             </a>
             <span className="hidden sm:inline text-gray-600">|</span>
             <a 
-              href="tel:+19042586The" 
+              href="tel:+19043318130" 
               className="flex items-center gap-2 text-gray-400 hover:text-legal-primary transition-colors"
             >
               <Phone className="w-5 h-5" />
-              <span>(904) 258-6397</span>
+              <span>904-331-8130</span>
             </a>
           </div>
           

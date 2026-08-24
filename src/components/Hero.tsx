@@ -73,11 +73,11 @@ const Hero = () => {
               <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
                 <Phone size={20} className="mr-2" />
                 <a 
-                  href="tel:9042956670" 
-                  onClick={() => trackPhoneClick('904-295-6670', 'Hero Section')}
+                  href="tel:+19043318130" 
+                  onClick={() => trackPhoneClick('904-331-8130', 'Hero Section')}
                   className="text-lg hover:underline"
                 >
-                  904-295-6670
+                  904-331-8130
                 </a>
               </div>
               <div className="flex gap-3">

@@ -27,7 +27,7 @@ const ChatbotsPage = () => {
     "@type": "ProfessionalService",
     "name": "Bizooma - Custom AI Chatbot Development",
     "url": "https://bizooma.com/chatbots",
-    "telephone": "+1-904-295-6670",
+    "telephone": "+1-904-331-8130",
     "description": "Custom AI chatbot development for businesses. We build tailored conversational experiences including customer support bots, lead generation bots, internal operations bots, and more.",
     "serviceType": "Custom AI Chatbot Development",
     "provider": {

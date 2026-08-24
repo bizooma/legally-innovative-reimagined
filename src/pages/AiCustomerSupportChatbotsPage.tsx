@@ -28,7 +28,7 @@ const AiCustomerSupportChatbotsPage = () => {
     "name": "Bizooma Digital Marketing Agency - AI Customer Support Chatbots",
     "image": "https://bizooma.com/lovable-uploads/6c062279-8370-45d7-9334-45ada83333a1.png",
     "url": "https://bizooma.com/ai-customer-support-chatbots",
-    "telephone": "+1-904-295-6670",
+    "telephone": "+1-904-331-8130",
     "priceRange": "$2,500 - $8,000",
     "address": {
       "@type": "PostalAddress",
