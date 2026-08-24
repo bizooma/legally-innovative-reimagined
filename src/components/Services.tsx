@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { trackNavigation } from "@/utils/gtmTracking";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2, Accessibility, Sparkles } from "lucide-react";
+import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2, Accessibility, Sparkles, PhoneCall } from "lucide-react";
 import { Link } from "react-router-dom";
 import immigrationLawApp from "@/assets/immigration-law-app.png";
 import rokuDemo from "@/assets/roku-demo.png";
@@ -10,6 +10,7 @@ import alexaSkill from "@/assets/alexa-skill.png";
 import chatbotExamples from "@/assets/chatbot-examples.png";
 import accessibilityWidget from "@/assets/accessibility-widget.png";
 import claudeCowork from "@/assets/claude-cowork.jpg";
+import aiReceptionist from "@/assets/ai-receptionist.png";
 
 const Services = () => {
   const sectionRef = useScrollAnimation({ animationClass: 'animate-fade-in' });
