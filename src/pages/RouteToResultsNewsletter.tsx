@@ -13,12 +13,8 @@ const RouteToResultsNewsletter = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   useEffect(() => {
-    // Load Mailchimp CSS
-    const cssLink = document.createElement("link");
-    cssLink.href = "//cdn-images.mailchimp.com/embedcode/classic-061523.css";
-    cssLink.rel = "stylesheet";
-    cssLink.type = "text/css";
-    document.head.appendChild(cssLink);
+    // Mailchimp's remote stylesheet (cdn-images.mailchimp.com) removed: the form
+    // is styled locally so no third-party request fires.
 
     // Mailchimp's mc-validate.js (s3.amazonaws.com) removed: the form posts
     // directly to Mailchimp and relies on native HTML5 validation instead.
@@ -43,7 +39,6 @@ const RouteToResultsNewsletter = () => {
 
     setTimeout(handleFormSubmit, 500);
     return () => {
-      document.head.removeChild(cssLink);
     };
 
   }, []);
@@ -111,7 +106,6 @@ const RouteToResultsNewsletter = () => {
             </h2>
 
             <div id="mc_embed_shell">
-              <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css" />
               <style dangerouslySetInnerHTML={{
                 __html: `
                   #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width: 600px;}
