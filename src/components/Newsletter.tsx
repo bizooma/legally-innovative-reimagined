@@ -16,11 +16,9 @@ const Newsletter = () => {
     cssLink.type = "text/css";
     document.head.appendChild(cssLink);
 
-    // Load Mailchimp validation script
-    const validateScript = document.createElement("script");
-    validateScript.src = "//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js";
-    validateScript.type = "text/javascript";
-    document.body.appendChild(validateScript);
+    // Mailchimp's mc-validate.js (s3.amazonaws.com) removed: the form posts
+    // directly to Mailchimp and relies on native HTML5 validation instead.
+
 
     // Add form submission handler for success message
     const handleFormSubmit = () => {
@@ -44,8 +42,8 @@ const Newsletter = () => {
     setTimeout(handleFormSubmit, 500);
     return () => {
       document.head.removeChild(cssLink);
-      document.body.removeChild(validateScript);
     };
+
   }, []);
   return <section className="section-padding bg-white">
       <div className="container mx-auto">
