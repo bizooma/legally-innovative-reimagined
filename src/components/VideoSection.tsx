@@ -1,3 +1,5 @@
+import VideoAskEmbed from "@/components/integrations/VideoAskEmbed";
+
 const VideoSection = () => {
   return <section id="video" className="section-padding bg-gradient-to-br from-legal-primary/5 to-legal-accent/5">
       <div className="container mx-auto">
@@ -7,10 +9,11 @@ const VideoSection = () => {
         </div>
         <div className="max-w-4xl mx-auto">
           <div className="relative backdrop-blur-sm bg-white/80 p-2 rounded-3xl border border-legal-primary/20 shadow-2xl">
-            <iframe src="https://www.videoask.com/f5jr9rk94" title="Bizooma video introduction" allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" width="100%" height="600px" style={{
-            border: 'none',
-            borderRadius: '24px'
-          }} className="w-full" />
+            <VideoAskEmbed
+              src="https://www.videoask.com/f5jr9rk94"
+              title="Bizooma video introduction"
+              className="rounded-3xl"
+            />
           </div>
         </div>
       </div>
