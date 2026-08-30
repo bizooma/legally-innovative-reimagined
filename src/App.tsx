@@ -129,6 +129,8 @@ const App = () => (
           <CanonicalMeta />
           <ScrollToTop />
           <SmartChatbot />
+          <AvaVoiceWidget />
+
           <RouteDebug>
             <Routes>
               {/* Donut page with highest priority */}
