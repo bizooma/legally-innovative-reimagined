@@ -1,10 +1,5 @@
-import { useState, useEffect } from "react";
-
-declare global {
-  interface Window {
-    Calendly: any;
-  }
-}
+import { useState } from "react";
+import CalendlyEmbed from "@/components/integrations/CalendlyEmbed";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -95,15 +90,6 @@ export default function AiAuditPage() {
     setLightboxImage(null);
     setLightboxAlt("");
   };
-
-  useEffect(() => {
-    if (!window.Calendly) {
-      const script = document.createElement("script");
-      script.src = "https://assets.calendly.com/assets/external/widget.js";
-      script.async = true;
-      document.head.appendChild(script);
-    }
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#fbf8f3]">
@@ -395,10 +381,9 @@ export default function AiAuditPage() {
             </p>
           </div>
           <div className="max-w-4xl mx-auto">
-            <div
-              className="calendly-inline-widget"
-              data-url="https://calendly.com/joe-bizooma"
-              style={{ minWidth: "320px", height: "700px" }}
+            <CalendlyEmbed
+              url="https://calendly.com/joe-bizooma"
+              label="Book a call to discuss an in-person audit"
             />
           </div>
         </div>

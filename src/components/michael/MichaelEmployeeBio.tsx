@@ -5,7 +5,7 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 const MichaelEmployeeBio = () => {
   const scrollToCalendly = () => {
-    const calendlySection = document.querySelector('.calendly-inline-widget');
+    const calendlySection = document.querySelector('#calendly');
     if (calendlySection) {
       calendlySection.scrollIntoView({ behavior: 'smooth' });
     }
