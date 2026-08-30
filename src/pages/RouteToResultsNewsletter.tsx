@@ -44,8 +44,8 @@ const RouteToResultsNewsletter = () => {
     setTimeout(handleFormSubmit, 500);
     return () => {
       document.head.removeChild(cssLink);
-      document.body.removeChild(validateScript);
     };
+
   }, []);
 
   return (
