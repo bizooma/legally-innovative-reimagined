@@ -1,5 +1,6 @@
 
 import { GitBranch, CheckCircle } from "lucide-react";
+import VideoAskEmbed from "@/components/integrations/VideoAskEmbed";
 
 const benefits = [
   "Every visitor follows a tailored path based on their answers",
@@ -59,14 +60,9 @@ const ConditionalChatbots = () => {
               Live Example — Try It Yourself:
             </p>
             <div className="rounded-3xl overflow-hidden shadow-lg border border-border">
-              <iframe
+              <VideoAskEmbed
                 src="https://www.videoask.com/fips5dogy"
-                allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;"
-                width="100%"
-                height="600px"
-                style={{ border: "none" }}
                 title="Conditional chatbot example"
-                loading="lazy"
               />
             </div>
             <p className="text-xs text-muted-foreground mt-3 text-center">
