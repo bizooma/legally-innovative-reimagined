@@ -1,4 +1,5 @@
 import ArticleLayout from "@/components/ArticleLayout";
+import SoundCloudEmbed from "@/components/integrations/SoundCloudEmbed";
 
 const DeathOfTraditionalSeo = () => {
   return (
@@ -12,13 +13,9 @@ const DeathOfTraditionalSeo = () => {
       image="/lovable-uploads/414ce62c-05f7-4a1a-a76e-328c8a4fb9fb.png"
       audioEmbed={
         <>
-          <iframe 
-            width="100%" 
-            height="166" 
-            scrolling="no" 
-            frameBorder="0" 
-            allow="autoplay" 
+          <SoundCloudEmbed
             src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2209769015&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+            title={"Legal Marketing Survival: SEO is Dead, Meet GEO"}
             className="rounded-lg"
           />
           <div className="text-xs text-white/60 mt-2 overflow-hidden text-ellipsis whitespace-nowrap">

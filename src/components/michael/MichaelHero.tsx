@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const MichaelHero = () => {
   const scrollToCalendly = () => {
-    const calendlySection = document.querySelector('.calendly-inline-widget');
+    const calendlySection = document.querySelector('#calendly');
     if (calendlySection) {
       calendlySection.scrollIntoView({ behavior: 'smooth' });
     }

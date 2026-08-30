@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { trackFormSubmission } from "@/utils/gtmTracking";
 import routeToResultsLogo from "@/assets/route-to-results-logo.png";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
+import SoundCloudEmbed from "@/components/integrations/SoundCloudEmbed";
 
 const RouteToResultsNewsletter = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
@@ -197,12 +198,8 @@ const RouteToResultsNewsletter = () => {
         {/* SoundCloud Widget */}
         <section className="py-4 md:py-8 lg:py-12 px-2 sm:px-4 md:px-6 bg-white">
           <div className="container mx-auto max-w-4xl">
-            <iframe 
-              width="100%" 
-              className="h-32 sm:h-40 md:h-44 lg:h-[166px]"
-              scrolling="no" 
-              frameBorder="no" 
-              allow="autoplay" 
+            <SoundCloudEmbed
+              title="The Click Is Dead"
               src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2209780067&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
             />
             <div style={{ fontSize: '10px', color: '#cccccc', lineBreak: 'anywhere', wordBreak: 'normal', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', fontFamily: 'Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif', fontWeight: 100 }}>
