@@ -42,8 +42,8 @@ const Newsletter = () => {
     setTimeout(handleFormSubmit, 500);
     return () => {
       document.head.removeChild(cssLink);
-      document.body.removeChild(validateScript);
     };
+
   }, []);
   return <section className="section-padding bg-white">
       <div className="container mx-auto">
