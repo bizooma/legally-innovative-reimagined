@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { trackFormSubmission } from "@/utils/gtmTracking";
 import routeToResultsLogo from "@/assets/route-to-results-logo.png";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
+import SoundCloudEmbed from "@/components/integrations/SoundCloudEmbed";
 
 const RouteToResultsNewsletter = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
