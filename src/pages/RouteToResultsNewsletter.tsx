@@ -38,8 +38,6 @@ const RouteToResultsNewsletter = () => {
     };
 
     setTimeout(handleFormSubmit, 500);
-    return () => {
-    };
 
   }, []);
 

@@ -36,8 +36,6 @@ const Newsletter = () => {
 
     // Wait for DOM to be ready
     setTimeout(handleFormSubmit, 500);
-    return () => {
-    };
 
   }, []);
   return <section className="section-padding bg-white">

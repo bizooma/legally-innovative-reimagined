@@ -226,3 +226,22 @@
 .chatbot-slide-down {
   animation: chatbot-slide-down 0.25s ease-in forwards;
 }
+
+/* Mailchimp embed form — locally styled (replaces cdn-images.mailchimp.com stylesheet) */
+#mc_embed_signup { background: hsl(var(--card)); clear: left; width: 100%; }
+#mc_embed_signup h2 { @apply text-xl font-semibold mb-2; }
+#mc_embed_signup .indicates-required { @apply text-xs text-muted-foreground mb-3 text-right; }
+#mc_embed_signup .asterisk { @apply text-destructive; }
+#mc_embed_signup .mc-field-group { @apply mb-4; }
+#mc_embed_signup .mc-field-group label { @apply block text-sm font-medium mb-1; }
+#mc_embed_signup .mc-field-group input[type="email"],
+#mc_embed_signup .mc-field-group input[type="text"] {
+  @apply w-full rounded-md border border-input bg-background px-3 py-2 text-sm;
+}
+#mc_embed_signup .mc-field-group input:focus { @apply outline-none ring-2 ring-ring; }
+#mc_embed_signup .button {
+  @apply inline-flex items-center justify-center rounded-md bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground cursor-pointer transition-colors hover:bg-primary/90;
+}
+#mc_embed_signup .response { @apply text-sm mt-2; }
+#mc_embed_signup #mce-error-response { @apply text-destructive; }
+#mc_embed_signup #mce-success-response { @apply text-success; }
