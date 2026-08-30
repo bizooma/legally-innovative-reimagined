@@ -26,7 +26,7 @@ const features = [
     description: 'Leverage cutting-edge artificial intelligence to transform your business operations and customer experiences.',
     videoUrl: 'https://www.youtube.com/embed/IV7xnUkwags',
     duration: '1:47',
-    thumbnail: 'https://img.youtube.com/vi/IV7xnUkwags/hqdefault.jpg',
+    thumbnail: '/thumbnails/IV7xnUkwags.jpg',
     stats: [
       { value: '87%', label: 'Efficiency Increase' },
       { value: '3x', label: 'Faster Response Times' },
@@ -48,7 +48,7 @@ const features = [
     description: 'Tailored software solutions built specifically for your unique business needs and workflows.',
     videoUrl: 'https://www.youtube.com/embed/5L1SKshqBRs',
     duration: '1:24',
-    thumbnail: 'https://img.youtube.com/vi/5L1SKshqBRs/hqdefault.jpg',
+    thumbnail: '/thumbnails/5L1SKshqBRs.jpg',
     stats: [
       { value: '100%', label: 'Custom Built' },
       { value: '99.9%', label: 'Uptime SLA' },
@@ -70,7 +70,7 @@ const features = [
     description: 'Data-driven marketing strategies that deliver measurable results and sustainable growth.',
     videoUrl: 'https://www.youtube.com/embed/3uskySkLeJ0',
     duration: '1:08',
-    thumbnail: 'https://img.youtube.com/vi/3uskySkLeJ0/hqdefault.jpg',
+    thumbnail: '/thumbnails/3uskySkLeJ0.jpg',
     stats: [
       { value: '320%', label: 'Avg. ROI Increase' },
       { value: '5x', label: 'Lead Generation Growth' },
@@ -92,7 +92,7 @@ const features = [
     description: 'Streamline operations and eliminate repetitive tasks with intelligent automation solutions.',
     videoUrl: 'https://www.youtube.com/embed/xWkWoY5WdX0',
     duration: '1:21',
-    thumbnail: 'https://img.youtube.com/vi/xWkWoY5WdX0/hqdefault.jpg',
+    thumbnail: '/thumbnails/xWkWoY5WdX0.jpg',
     stats: [
       { value: '40hrs', label: 'Saved Per Week' },
       { value: '95%', label: 'Error Reduction' },
