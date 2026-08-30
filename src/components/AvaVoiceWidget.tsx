@@ -30,8 +30,10 @@ const AvaVoiceWidget = () => {
   }, [loaded, loading]);
 
   if (loaded) {
-    return <elevenlabs-convai agent-id={AGENT_ID}></elevenlabs-convai>;
+    // Custom element — created via createElement so no JSX typing shim is needed.
+    return createElement("elevenlabs-convai", { "agent-id": AGENT_ID });
   }
+
 
   return (
     <button
