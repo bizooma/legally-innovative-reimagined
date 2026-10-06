@@ -83,7 +83,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center gap-x-2.5 xl:gap-x-6 whitespace-nowrap text-[13px] xl:text-base">
           <NavLinks 
             navLinks={navLinks}
             onNavLinkClick={handleNavLinkClick}
@@ -104,20 +104,20 @@ const Navbar = () => {
 
           <Link 
             to="/stay-informed"
-            className={`hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
+            className={`whitespace-nowrap hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
           >
             Stay Informed
           </Link>
 
           <Link
             to="/accessibility/signup?mode=signin"
-            className={`px-4 py-2 rounded-md border border-legal-primary hover:bg-legal-primary hover:text-white transition-colors font-medium text-sm ${textColorClass}`}
+            className={`px-2.5 xl:px-4 py-2 rounded-md border border-legal-primary hover:bg-legal-primary hover:text-white transition-colors font-medium text-[13px] xl:text-sm whitespace-nowrap ${textColorClass}`}
           >
             Accessibility Login
           </Link>
 
           <Button 
-            className="bg-legal-primary hover:bg-legal-secondary text-white"
+            className="bg-legal-primary hover:bg-legal-secondary text-white px-3 xl:px-4 text-[13px] xl:text-sm"
             onClick={() => navigate('/portal')}
           >
             Client Portal
