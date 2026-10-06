@@ -76,6 +76,7 @@ import ClaudeCoworkSuccess from "./pages/ClaudeCoworkSuccess";
 import AiAuditPage from "./pages/AiAuditPage";
 import AiAuditSuccess from "./pages/AiAuditSuccess";
 import AiExplainedPage from "./pages/AiExplainedPage";
+import OrderOfOperationsPage from "./pages/OrderOfOperationsPage";
 import AIReceptionist from "./pages/AIReceptionist";
 import AccessibilityLayout from "./pages/accessibility/AccessibilityLayout";
 import AccessibilityDashboard from "./pages/accessibility/AccessibilityDashboard";
@@ -148,6 +149,7 @@ const App = () => (
 
               {/* AI Explained glossary page */}
               <Route path="/ai-explained" element={<AiExplainedPage />} />
+              <Route path="/order-of-operations" element={<OrderOfOperationsPage />} />
 
               {/* AI Receptionist service page */}
               <Route path="/ai-receptionist" element={<AIReceptionist />} />
