@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import AiChatbotsHero from "@/components/ai-chatbots/AiChatbotsHero";
 import AiChatbotsFeatures from "@/components/ai-chatbots/AiChatbotsFeatures";
-import AiChatbotsBenefits from "@/components/ai-chatbots/AiChatbotsBenefits";
 import AiChatbotsDemo from "@/components/ai-chatbots/AiChatbotsDemo";
 import AiChatbotsPricing from "@/components/ai-chatbots/AiChatbotsPricing";
 import AiChatbotsCTA from "@/components/ai-chatbots/AiChatbotsCTA";
@@ -85,7 +84,6 @@ const AiCustomerSupportChatbotsPage = () => {
         <Navbar />
         <AiChatbotsHero />
         <AiChatbotsFeatures />
-        <AiChatbotsBenefits />
         <AiChatbotsDemo />
         <AiChatbotsPricing />
         <AiChatbotsCTA />

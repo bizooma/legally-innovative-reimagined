@@ -27,11 +27,6 @@ const features = [
     videoUrl: 'https://www.youtube.com/embed/IV7xnUkwags',
     duration: '1:47',
     thumbnail: '/thumbnails/IV7xnUkwags.jpg',
-    stats: [
-      { value: '87%', label: 'Efficiency Increase' },
-      { value: '3x', label: 'Faster Response Times' },
-      { value: '24/7', label: 'Automated Support' },
-    ],
     benefits: [
       'Smart chatbots that understand context and intent',
       'Automated content generation and optimization',
@@ -48,11 +43,6 @@ const features = [
     videoUrl: 'https://www.youtube.com/embed/5L1SKshqBRs',
     duration: '1:24',
     thumbnail: '/thumbnails/5L1SKshqBRs.jpg',
-    stats: [
-      { value: '100%', label: 'Custom Built' },
-      { value: '99.9%', label: 'Uptime SLA' },
-      { value: '50+', label: 'Integrations Available' },
-    ],
     benefits: [
       'Fully customized web and mobile applications',
       'Seamless integration with existing systems',
@@ -69,11 +59,6 @@ const features = [
     videoUrl: 'https://www.youtube.com/embed/3uskySkLeJ0',
     duration: '1:08',
     thumbnail: '/thumbnails/3uskySkLeJ0.jpg',
-    stats: [
-      { value: '320%', label: 'Avg. ROI Increase' },
-      { value: '5x', label: 'Lead Generation Growth' },
-      { value: '#1', label: 'Average Search Rankings' },
-    ],
     benefits: [
       'Comprehensive SEO and AEO optimization',
       'Multi-channel digital marketing campaigns',
@@ -90,11 +75,6 @@ const features = [
     videoUrl: 'https://www.youtube.com/embed/xWkWoY5WdX0',
     duration: '1:21',
     thumbnail: '/thumbnails/xWkWoY5WdX0.jpg',
-    stats: [
-      { value: '40hrs', label: 'Saved Per Week' },
-      { value: '95%', label: 'Error Reduction' },
-      { value: '$100K+', label: 'Annual Savings' },
-    ],
     benefits: [
       'Workflow automation for repetitive tasks',
       'Smart document processing and management',
@@ -201,15 +181,6 @@ export const FloatingFeatureCards = ({ holidayMode = false }: FloatingFeatureCar
                 </div>
               )}
 
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-4">
-                {features[selectedFeature].stats.map((stat, idx) => (
-                  <div key={idx} className="text-center p-4 rounded-lg bg-muted">
-                    <div className="text-2xl font-bold text-primary">{stat.value}</div>
-                    <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
 
               {/* Benefits */}
               <div>

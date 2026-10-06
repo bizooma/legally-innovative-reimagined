@@ -6,9 +6,7 @@ import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import SeoAeoHero from "@/components/seo-aeo/SeoAeoHero";
 import SeoAeoServices from "@/components/seo-aeo/SeoAeoServices";
-import SeoAeoBenefits from "@/components/seo-aeo/SeoAeoBenefits";
 import SeoAeoProcess from "@/components/seo-aeo/SeoAeoProcess";
-import SeoAeoResults from "@/components/seo-aeo/SeoAeoResults";
 import SeoAeoCTA from "@/components/seo-aeo/SeoAeoCTA";
 import ogImage from "@/assets/og/og-seo-aeo.jpg";
 
@@ -86,9 +84,7 @@ const LawFirmSeoAeoPage = () => {
         <Navbar />
         <SeoAeoHero />
         <SeoAeoServices />
-        <SeoAeoBenefits />
         <SeoAeoProcess />
-        <SeoAeoResults />
         <SeoAeoCTA />
         <Footer />
         <MobileFooterNav />

@@ -39,26 +39,6 @@ const SignaturePopPage = () => {
           </div>
         </section>
 
-        {/* Key Results */}
-        <section className="py-12 bg-legal-light/30">
-          <div className="container mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">425%</div>
-                <div className="text-gray-700">Increase in Engagement</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">8K+</div>
-                <div className="text-gray-700">Impressions Per Employee/Year</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">Zero</div>
-                <div className="text-gray-700">Additional Marketing Spend</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Features */}
         <section className="section-padding">
           <div className="container mx-auto">
