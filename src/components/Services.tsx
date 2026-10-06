@@ -212,12 +212,14 @@ const Services = () => {
                       ))}
                     </div>
 
+                    {service.examples && (
                     <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-100">
                       <p className="text-sm text-gray-600">
                         <span className="font-semibold text-legal-dark">{service.examplesLabel || (service.noOverlay ? "Payment options: " : "Real-world example: ")}</span>
                         {service.examples}
                       </p>
                     </div>
+                    )}
 
                     {service.showLearnMore && service.link && (
                       <div>
