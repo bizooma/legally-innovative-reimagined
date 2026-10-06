@@ -22,7 +22,7 @@ const NavLinks = ({ navLinks, onNavLinkClick, textColorClass }: NavLinksProps) =
           <Link
             key={link.name}
             to={link.path}
-            className={`hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
+            className={`whitespace-nowrap hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
           >
             {link.name}
           </Link>
@@ -30,7 +30,7 @@ const NavLinks = ({ navLinks, onNavLinkClick, textColorClass }: NavLinksProps) =
           <button
             key={link.name}
             onClick={() => onNavLinkClick(link)}
-            className={`hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
+            className={`whitespace-nowrap hover:text-legal-primary transition-colors font-medium ${textColorClass}`}
           >
             {link.name}
           </button>
