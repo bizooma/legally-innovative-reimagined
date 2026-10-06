@@ -6,6 +6,7 @@ export const navLinks = [
   { name: "FAQ", href: "#faq", isExternal: false },
   { name: "Why Us", href: "#why-us", isExternal: false },
   { name: "Contact", href: "#contact", isExternal: false },
+  { name: "Framework", href: null, isExternal: false, path: "/order-of-operations" },
   
 ];
 
