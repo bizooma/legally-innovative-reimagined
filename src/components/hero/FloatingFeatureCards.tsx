@@ -38,7 +38,6 @@ const features = [
       'Predictive analytics for better decision making',
       'Natural language processing for customer insights',
     ],
-    caseStudy: 'Helped a law firm reduce response time by 75% while increasing client satisfaction scores from 3.2 to 4.8 stars.',
   },
   { 
     icon: Code, 
@@ -60,7 +59,6 @@ const features = [
       'Scalable architecture for future growth',
       'Clean, maintainable code with documentation',
     ],
-    caseStudy: 'Built a custom CRM that increased a client\'s lead conversion rate by 45% and reduced manual data entry by 90%.',
   },
   { 
     icon: TrendingUp, 
@@ -82,7 +80,6 @@ const features = [
       'Advanced analytics and performance tracking',
       'Conversion rate optimization strategies',
     ],
-    caseStudy: 'Increased a client\'s organic traffic by 425% and generated $2.3M in new revenue within 12 months.',
   },
   { 
     icon: Zap, 
@@ -104,7 +101,6 @@ const features = [
       'Automated reporting and data synchronization',
       'Integration between disconnected systems',
     ],
-    caseStudy: 'Automated invoice processing for a client, reducing processing time from 5 days to 2 hours and eliminating 98% of errors.',
   },
 ];
 
@@ -226,12 +222,6 @@ export const FloatingFeatureCards = ({ holidayMode = false }: FloatingFeatureCar
                     </div>
                   ))}
                 </div>
-              </div>
-
-              {/* Case Study */}
-              <div className="bg-muted p-4 rounded-lg">
-                <h3 className="font-semibold text-sm mb-2 text-primary">Success Story</h3>
-                <p className="text-sm text-muted-foreground">{features[selectedFeature].caseStudy}</p>
               </div>
 
               {/* CTAs */}

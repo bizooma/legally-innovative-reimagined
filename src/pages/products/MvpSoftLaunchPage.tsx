@@ -183,39 +183,6 @@ const MvpSoftLaunchPage = () => {
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section className="section-padding">
-          <div className="container mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-legal-dark">
-              What Founders Say
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[
-                {
-                  quote: "MVP Soft Launch saved me at least 40 hours of research. I launched my SaaS on 50+ platforms in one weekend and got my first 500 users within two weeks.",
-                  author: "Alex Chen",
-                  role: "Founder, TaskFlow AI"
-                },
-                {
-                  quote: "As a solo founder, time is my most valuable resource. This directory helped me find niche platforms I never knew existed. My launch got 3x more visibility than expected.",
-                  author: "Sarah Miller",
-                  role: "Indie Hacker, DataPulse"
-                }
-              ].map((testimonial, index) => (
-                <Card key={index} className="border-legal-primary/20">
-                  <CardContent className="p-6">
-                    <p className="text-gray-700 italic mb-4">"{testimonial.quote}"</p>
-                    <div className="border-t pt-4">
-                      <p className="font-bold text-legal-dark">{testimonial.author}</p>
-                      <p className="text-sm text-gray-600">{testimonial.role}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Pricing */}
         <section className="section-padding bg-legal-light/30">
           <div className="container mx-auto">
