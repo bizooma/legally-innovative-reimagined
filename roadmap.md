@@ -5,3 +5,5 @@
 - [x] Delete confirmed unused website/mobile/lead-generation/SEO sections.
 - [x] Add product routes to sitemap.
 - [x] Verify page widths, navigation, payments, downloads, content and preview health.
+# Home/About/FAQ phase
+- [x] Rebuild /, build /about and /faq, nav/footer/sitemap updates.
