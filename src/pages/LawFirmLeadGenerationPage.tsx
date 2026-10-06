@@ -8,7 +8,6 @@ import LeadGenHero from "@/components/lead-gen/LeadGenHero";
 import LeadGenServices from "@/components/lead-gen/LeadGenServices";
 import LeadGenBenefits from "@/components/lead-gen/LeadGenBenefits";
 import LeadGenProcess from "@/components/lead-gen/LeadGenProcess";
-import LeadGenResults from "@/components/lead-gen/LeadGenResults";
 import LeadGenCTA from "@/components/lead-gen/LeadGenCTA";
 import ogImage from "@/assets/og/og-lead-gen.jpg";
 
@@ -88,7 +87,6 @@ const LawFirmLeadGenerationPage = () => {
         <LeadGenServices />
         <LeadGenBenefits />
         <LeadGenProcess />
-        <LeadGenResults />
         <LeadGenCTA />
         <Footer />
         <MobileFooterNav />

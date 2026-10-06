@@ -173,67 +173,6 @@ const BrandedBooksPage = () => {
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section className="section-padding">
-          <div className="container mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-legal-dark">
-              What Law Firms Are Saying
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="border-legal-primary/20">
-                <CardContent className="p-6">
-                  <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-yellow-500 text-xl">★</span>
-                    ))}
-                  </div>
-                  <p className="text-gray-700 mb-6 italic">
-                    "The branded journals have been a game-changer for our client relationships. Every meeting starts with clients thanking us for such a thoughtful gift. Our logo is everywhere!"
-                  </p>
-                  <div className="border-t border-legal-primary/20 pt-4">
-                    <p className="font-bold text-legal-dark">Sarah Martinez</p>
-                    <p className="text-sm text-gray-600">Managing Partner, Martinez Law Group</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-legal-primary/20">
-                <CardContent className="p-6">
-                  <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-yellow-500 text-xl">★</span>
-                    ))}
-                  </div>
-                  <p className="text-gray-700 mb-6 italic">
-                    "The coloring books are brilliant! Families love them, and it's created such positive associations with our firm. We've seen a significant uptick in referrals from happy clients."
-                  </p>
-                  <div className="border-t border-legal-primary/20 pt-4">
-                    <p className="font-bold text-legal-dark">Michael Chen</p>
-                    <p className="text-sm text-gray-600">Senior Partner, Chen & Associates</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-legal-primary/20">
-                <CardContent className="p-6">
-                  <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-yellow-500 text-xl">★</span>
-                    ))}
-                  </div>
-                  <p className="text-gray-700 mb-6 italic">
-                    "Quality is exceptional, and the customization options allowed us to perfectly represent our brand. These books are conversation starters at every event we attend."
-                  </p>
-                  <div className="border-t border-legal-primary/20 pt-4">
-                    <p className="font-bold text-legal-dark">Jennifer Wilson</p>
-                    <p className="text-sm text-gray-600">Marketing Director, Wilson Legal</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
         {/* Pricing */}
         <section className="section-padding bg-legal-light/30">
           <div className="container mx-auto">
