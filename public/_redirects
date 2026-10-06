@@ -1,1 +1,22 @@
-/*    /index.html   200
+# --- Permanent moves (301) ---
+/google-business-profile              /google-business-profile-optimization   301!
+/mobile-app-development               /law-firm-mobile-app-development         301!
+/mobile-apps-marketing-tool           /law-firm-mobile-app-development         301!
+/law-firm-voice-assistant-marketing   /law-firm-seo-aeo-voiceseo               301!
+/alexa-skills-law-firms               /law-firm-seo-aeo-voiceseo               301!
+/products/npo-bots                    /labs   301!
+/products/aeo-analyzer                /labs   301!
+/products/quickie-qr                  /labs   301!
+/products/lead-scraper-crm            /labs   301!
+/products/support-bots                /labs   301!
+/products/signature-pop               /labs   301!
+/products/branded-books               /labs   301!
+/products/mvp-soft-launch             /labs   301!
+# --- Gone for good (410) ---
+/seo-audit            /index.html   410
+/diy                  /index.html   410
+/momentum-campaigns   /index.html   410
+/proposals/phillips       /index.html   410
+/proposals/jaxreferrals   /index.html   410
+# --- SPA fallback, MUST remain last ---
+/*   /index.html   200
