@@ -44,7 +44,7 @@ const Services = () => {
         "Roku Channel Store publishing",
         "Analytics integration & performance tracking",
       ],
-      examples: "Roku surpassed 90 million streaming households globally in the first week of 2025, with a significant concentration in the U.S. where they serve over half of all broadband homes. By late 2025, the platform continued to grow, maintaining its position as the #1 TV streaming platform in North America.",
+      examples: "Roku remains the leading TV streaming platform in North America, reaching more than half of U.S. broadband households.",
       examplesLabel: "Why Roku? ",
       icon: <Bot className="h-8 w-8" />,
       bgImage: rokuDemo,
@@ -62,7 +62,6 @@ const Services = () => {
         "App Store & Play Store deployment",
         "Push notifications & real-time features",
       ],
-      examples: "Two ways to pay: 1/2 up front, 1/2 upon delivery of quoted fee, or $1,000/month until quoted fee is paid in full.",
       icon: <Smartphone className="h-8 w-8" />,
       bgImage: immigrationLawApp,
       link: "/law-firm-mobile-app-development",
@@ -80,6 +79,7 @@ const Services = () => {
         "Analytics dashboard & conversation insights",
       ],
       examples: "At Bizooma, we design and build bots that are tailored to your organization's unique objectives. Instead of using rigid prebuilt systems, we create conversational experiences that integrate with your website, marketing funnels, and operational workflows.",
+      examplesLabel: "Our approach: ",
       icon: <MessageSquare className="h-8 w-8" />,
       bgImage: chatbotExamples,
       link: "/chatbots",
@@ -97,7 +97,7 @@ const Services = () => {
         "FAQ & service information delivery",
         "Voice search optimization (Voice SEO)",
       ],
-      examples: "As of 2025, the total Amazon Echo users is expected to reach around 69.9 million. In 2024, the Amazon Echo with Alexa is the most popular smart speaker in the U.S, with around 90% of users using it on mobile devices.",
+      examples: "Smart speakers and voice assistants remain a daily habit for tens of millions of U.S. households, and voice queries phrase themselves as questions — which is exactly how answer-engine optimization works.",
       examplesLabel: "Why Voice? ",
       icon: <Volume2 className="h-8 w-8" />,
       bgImage: alexaSkill,
@@ -212,12 +212,14 @@ const Services = () => {
                       ))}
                     </div>
 
+                    {service.examples && (
                     <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-100">
                       <p className="text-sm text-gray-600">
                         <span className="font-semibold text-legal-dark">{service.examplesLabel || (service.noOverlay ? "Payment options: " : "Real-world example: ")}</span>
                         {service.examples}
                       </p>
                     </div>
+                    )}
 
                     {service.showLearnMore && service.link && (
                       <div>

@@ -30,7 +30,7 @@ const Footer = () => {
               <h4 className="text-lg font-semibold mb-2 text-legal-accent">Built for Business.
 Powered by Innovation.</h4>
               <p className="text-legal-light text-sm leading-relaxed">
-                We understand the unique challenges law firms face because we work exclusively in the legal space. From trust-building client intake systems to AI-powered content strategies, our services are designed to make your firm more visible, more approachable, and more efficient — without ever compromising compliance.
+                We work with law firms and nonprofits, and we know both well. From trust-building intake systems to AI-powered content strategy, our work is built to make your organization more visible, more approachable, and more efficient — without compromising compliance or the standards your profession holds you to.
               </p>
             </div>
             <div className="flex gap-4 items-center mt-4">
@@ -83,11 +83,6 @@ Powered by Innovation.</h4>
               <li><Link to="/#services" className="text-legal-light hover:text-legal-accent transition-colors">Services</Link></li>
               <li><Link to="/#contact" className="text-legal-light hover:text-legal-accent transition-colors">Contact</Link></li>
               <li>
-                <Link to="/this-is-our-jax" className="text-legal-light hover:text-legal-accent transition-colors">
-                  Jacksonville Attorney
-                </Link>
-              </li>
-              <li>
                 <Link to="/install" className="text-legal-light hover:text-legal-accent transition-colors">
                   Install App
                 </Link>
@@ -112,7 +107,7 @@ Powered by Innovation.</h4>
         <div className="border-t border-white/20 pt-6">
           <div className="flex flex-col md:flex-row justify-center items-center">
             <p className="text-legal-light text-sm text-center">
-              © Bizooma 2025. A <a href="https://bizooma.com" target="_blank" rel="noopener noreferrer" className="text-legal-accent hover:text-white transition-colors">Bizooma, LLC</a> property, All rights reserved.
+              © Bizooma 2026. A <a href="https://bizooma.com" target="_blank" rel="noopener noreferrer" className="text-legal-accent hover:text-white transition-colors">Bizooma, LLC</a> property, All rights reserved.
             </p>
           </div>
         </div>

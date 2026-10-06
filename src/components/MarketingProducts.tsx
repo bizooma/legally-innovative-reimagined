@@ -165,7 +165,7 @@ const MarketingProducts = () => {
                     </p>
 
                     <div className="mb-4">
-                      <p className="font-semibold text-white mb-2">Key Results:</p>
+                      <p className="font-semibold text-white mb-2">What it does:</p>
                       <ul className="space-y-1">
                         {product.keyResults.map((result, resultIndex) => (
                           <li key={resultIndex} className="flex items-center text-white/90">
