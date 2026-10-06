@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import LeadGenHero from "@/components/lead-gen/LeadGenHero";
 import LeadGenServices from "@/components/lead-gen/LeadGenServices";
-import LeadGenBenefits from "@/components/lead-gen/LeadGenBenefits";
 import LeadGenProcess from "@/components/lead-gen/LeadGenProcess";
 import LeadGenCTA from "@/components/lead-gen/LeadGenCTA";
 import ogImage from "@/assets/og/og-lead-gen.jpg";
@@ -85,7 +84,6 @@ const LawFirmLeadGenerationPage = () => {
         <Navbar />
         <LeadGenHero />
         <LeadGenServices />
-        <LeadGenBenefits />
         <LeadGenProcess />
         <LeadGenCTA />
         <Footer />

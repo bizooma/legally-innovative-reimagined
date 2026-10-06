@@ -17,7 +17,7 @@ const SeoAeoHero = () => {
               clients wherever they search.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
                 className="bg-white hover:bg-gray-100 text-legal-primary px-8 py-4 text-lg"
@@ -33,29 +33,6 @@ const SeoAeoHero = () => {
               </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Search className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-white">500%</div>
-                <div className="text-sm text-legal-light">Organic Traffic Growth</div>
-              </div>
-              <div className="text-center">
-                <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Mic className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-white">75%</div>
-                <div className="text-sm text-legal-light">Voice Search Ready</div>
-              </div>
-              <div className="text-center">
-                <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <TrendingUp className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-white">#1</div>
-                <div className="text-sm text-legal-light">Local Rankings</div>
-              </div>
-            </div>
           </div>
           
           <div className="relative">

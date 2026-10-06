@@ -6,9 +6,7 @@ import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import VoiceAssistantHero from "@/components/voice-assistant/VoiceAssistantHero";
 import VoiceAssistantServices from "@/components/voice-assistant/VoiceAssistantServices";
-import VoiceAssistantBenefits from "@/components/voice-assistant/VoiceAssistantBenefits";
 import VoiceAssistantProcess from "@/components/voice-assistant/VoiceAssistantProcess";
-import VoiceAssistantResults from "@/components/voice-assistant/VoiceAssistantResults";
 import VoiceAssistantCTA from "@/components/voice-assistant/VoiceAssistantCTA";
 
 const LawFirmVoiceAssistantMarketingPage = () => {
@@ -79,9 +77,7 @@ const LawFirmVoiceAssistantMarketingPage = () => {
         <Navbar />
         <VoiceAssistantHero />
         <VoiceAssistantServices />
-        <VoiceAssistantBenefits />
         <VoiceAssistantProcess />
-        <VoiceAssistantResults />
         <VoiceAssistantCTA />
         <Footer />
         <MobileFooterNav />

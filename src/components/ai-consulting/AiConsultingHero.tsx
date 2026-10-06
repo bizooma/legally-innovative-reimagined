@@ -18,7 +18,7 @@ const AiConsultingHero = () => {
               and drive innovation in your legal practice with our expert consulting services.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
                 className="bg-legal-accent hover:bg-legal-accent/90 text-legal-dark font-semibold"
@@ -35,20 +35,6 @@ const AiConsultingHero = () => {
               </Button>
             </div>
             
-            <div className="grid grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-3xl font-bold text-legal-accent mb-2">85%</div>
-                <div className="text-sm text-legal-light">Efficiency Increase</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-legal-accent mb-2">60%</div>
-                <div className="text-sm text-legal-light">Cost Reduction</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-legal-accent mb-2">95%</div>
-                <div className="text-sm text-legal-light">Client Satisfaction</div>
-              </div>
-            </div>
           </div>
           
           <div className="relative">

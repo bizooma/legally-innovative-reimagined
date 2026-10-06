@@ -67,26 +67,6 @@ const AeoAnalyzerPage = () => {
           </div>
         </section>
 
-        {/* Key Results */}
-        <section className="py-12 bg-legal-light/30">
-          <div className="container mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">60%</div>
-                <div className="text-gray-700">Faster Case Analysis</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">95%</div>
-                <div className="text-gray-700">Prediction Accuracy</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-legal-primary mb-2">500+</div>
-                <div className="text-gray-700">Cases Analyzed Daily</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Features */}
         <section className="section-padding">
           <div className="container mx-auto">

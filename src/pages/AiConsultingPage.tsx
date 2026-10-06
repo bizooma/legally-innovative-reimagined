@@ -6,9 +6,7 @@ import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import AiConsultingHero from "@/components/ai-consulting/AiConsultingHero";
 import AiConsultingServices from "@/components/ai-consulting/AiConsultingServices";
-import AiConsultingBenefits from "@/components/ai-consulting/AiConsultingBenefits";
 import AiConsultingProcess from "@/components/ai-consulting/AiConsultingProcess";
-import AiConsultingCaseStudies from "@/components/ai-consulting/AiConsultingCaseStudies";
 import AiConsultingCTA from "@/components/ai-consulting/AiConsultingCTA";
 import ogImage from "@/assets/og/og-ai-consulting.jpg";
 
@@ -86,9 +84,7 @@ const AiConsultingPage = () => {
         <Navbar />
         <AiConsultingHero />
         <AiConsultingServices />
-        <AiConsultingBenefits />
         <AiConsultingProcess />
-        <AiConsultingCaseStudies />
         <AiConsultingCTA />
         <Footer />
         <MobileFooterNav />

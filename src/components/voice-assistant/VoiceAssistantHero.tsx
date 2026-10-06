@@ -16,7 +16,7 @@ const VoiceAssistantHero = () => {
               Provide legal guidance, answer common questions, and capture leads through voice technology.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
                 className="bg-white hover:bg-gray-100 text-legal-primary px-8 py-4 text-lg"
@@ -32,29 +32,6 @@ const VoiceAssistantHero = () => {
               </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Mic className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-white">24/7</div>
-                <div className="text-sm text-legal-light">Voice Availability</div>
-              </div>
-              <div className="text-center">
-                <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <MessageSquare className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-white">90%</div>
-                <div className="text-sm text-legal-light">Query Success Rate</div>
-              </div>
-              <div className="text-center">
-                <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Volume2 className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-white">50M+</div>
-                <div className="text-sm text-legal-light">Voice Device Users</div>
-              </div>
-            </div>
           </div>
           
           <div className="relative">

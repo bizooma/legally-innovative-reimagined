@@ -6,9 +6,7 @@ import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import DigitalMarketingHero from "@/components/digital-marketing/DigitalMarketingHero";
 import DigitalMarketingServices from "@/components/digital-marketing/DigitalMarketingServices";
-import DigitalMarketingBenefits from "@/components/digital-marketing/DigitalMarketingBenefits";
 import DigitalMarketingProcess from "@/components/digital-marketing/DigitalMarketingProcess";
-import DigitalMarketingResults from "@/components/digital-marketing/DigitalMarketingResults";
 import DigitalMarketingCTA from "@/components/digital-marketing/DigitalMarketingCTA";
 import { trackServiceView } from "@/utils/gtmTracking";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
@@ -92,9 +90,7 @@ const LawFirmDigitalMarketingPage = () => {
         <Navbar />
         <DigitalMarketingHero />
         <DigitalMarketingServices />
-        <DigitalMarketingBenefits />
         <DigitalMarketingProcess />
-        <DigitalMarketingResults />
         <DigitalMarketingCTA />
         <Footer />
         <MobileFooterNav />

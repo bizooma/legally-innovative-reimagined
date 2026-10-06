@@ -8,7 +8,6 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import MobileAppHero from "@/components/mobile-app/MobileAppHero";
 import MobileAppServices from "@/components/mobile-app/MobileAppServices";
 import MobileAppFeatures from "@/components/mobile-app/MobileAppFeatures";
-import MobileAppBenefits from "@/components/mobile-app/MobileAppBenefits";
 import MobileAppProcess from "@/components/mobile-app/MobileAppProcess";
 import MobileAppCTA from "@/components/mobile-app/MobileAppCTA";
 
@@ -87,7 +86,6 @@ const LawFirmMobileAppDevelopmentPage = () => {
         <MobileAppHero />
         <MobileAppServices />
         <MobileAppFeatures />
-        <MobileAppBenefits />
         <MobileAppProcess />
         <MobileAppCTA />
         <Footer />

@@ -17,7 +17,7 @@ const DigitalMarketingHero = () => {
               clients and build a strong online presence.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
                 className="bg-white hover:bg-gray-100 text-legal-primary px-8 py-4 text-lg"
@@ -33,29 +33,6 @@ const DigitalMarketingHero = () => {
               </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <TrendingUp className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-white">300%</div>
-                <div className="text-sm text-legal-light">ROI Increase</div>
-              </div>
-              <div className="text-center">
-                <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-white">50+</div>
-                <div className="text-sm text-legal-light">Law Firms Served</div>
-              </div>
-              <div className="text-center">
-                <div className="bg-white/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                  <Target className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-white">85%</div>
-                <div className="text-sm text-legal-light">Lead Quality Score</div>
-              </div>
-            </div>
           </div>
           
           <div className="relative">
