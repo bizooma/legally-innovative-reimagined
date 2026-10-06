@@ -74,11 +74,11 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center shrink-0 mr-6">
+        <Link to="/" className="flex items-center shrink-0 mr-4">
           <img 
             src="/logo.png" 
             alt="Bizooma Logo"
-            className="h-16 w-auto object-contain"
+            className="h-12 xl:h-16 w-auto object-contain"
           />
         </Link>
 
