@@ -1,0 +1,14 @@
+import type { ProductContent } from './types';
+export const datarightsos: ProductContent = {
+  slug: 'datarightsos', seoTitle: 'DataRightsOS | Privacy & Data Rights Compliance | Bizooma',
+  hero: { eyebrow: 'PRODUCTS', title: 'DataRightsOS', lede: 'Privacy, consent and data-rights compliance, running on your site from a single embed.', sub: 'Built for organizations that acquired privacy obligations without acquiring a privacy department.' },
+  problem: { title: 'Compliance arrived for everyone, not just enterprises', paragraphs: [
+    'State privacy laws now reach well past California, and the obligations are concrete rather than philosophical. Tell people what you collect. Let them choose. Let them ask what you hold about them. Answer when they do, within a deadline, and be able to show you answered.',
+    "Almost every tool in this category is priced and built for a company that employs someone whose job this is. Smaller organizations end up with a cookie banner that does nothing, a policy page copied from a template and never updated, and no process at all for the day someone actually submits a request.",
+    'That gap is what DataRightsOS is for. One embed, configured once, that handles the visitor-facing side and gives you somewhere for the requests to land.'
+  ] },
+  features: ['Cookie and tracking consent, with the choice recorded and respected', 'A data rights request centre — access, correction and deletion requests, with tracking so nothing is missed', 'Hosted, versioned policies: privacy, cookie, accessibility and AI use', 'An AI disclosure statement, so visitors can see where you use AI and how', 'An accessibility reporting route, so issues reach you instead of a lawyer', 'English and Spanish', 'Multi-site support, for organizations and agencies running more than one domain'],
+  audience: ['Law firms, who hold more sensitive data than almost any business their size', 'Nonprofits handling donor and beneficiary data without a compliance function', 'Agencies managing privacy across a portfolio of client sites'],
+  proof: { title: 'We run it on this site', paragraphs: ['The Privacy & Data Rights Center on bizooma.com is DataRightsOS. Every consent choice, policy and request route you can see here is the product doing its job. We would not ask you to install something we were not willing to put on our own front door.'] },
+  cta: { title: 'See it on your own site', paragraph: 'The fastest way to evaluate it is to put it on a staging domain and look at what your visitors actually see.', label: 'Book a demo', href: '/#contact', secondary: { label: 'datarightsos.com', href: 'https://datarightsos.com' } }
+};

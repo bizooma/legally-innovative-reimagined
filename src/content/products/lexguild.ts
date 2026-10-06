@@ -1,0 +1,14 @@
+import type { ProductContent } from './types';
+export const lexguild: ProductContent = {
+  slug: 'lexguild', seoTitle: 'LexGuild | Member Platform for Bar Associations | Bizooma',
+  hero: { eyebrow: 'PRODUCTS', title: 'LexGuild', lede: 'One member platform for bar associations — mentorship, wellness, sponsorships and referrals.', sub: 'White-labeled to your association and priced by member count, not staff seats.' },
+  problem: { title: 'Four programs, four spreadsheets, no system', paragraphs: [
+    "Bar associations run several programs that each deserve proper software and none of which, on their own, justify buying a system. So mentorship lives in a spreadsheet. Wellness is a survey tool nobody trusts to be anonymous. Sponsorship is a deck and an invoice. The referral service is a phone list and someone's memory.",
+    'Each one is a real member benefit, and each one is quietly capped by the tooling underneath it. Programs get paused not because members stopped wanting them but because running them manually stopped being possible.',
+    "LexGuild puts the four in one place, under your association's own branding, so a member sees your organization rather than a vendor's."
+  ] },
+  features: ['Mentorship — curated matching rather than a signup sheet, structured programs, and visibility into which pairings are actually meeting', 'Wellness — anonymous pulse surveys with a hard separation between responses and member records, so participation is safe, plus wellness-CLE tracking', 'Sponsorships — packages, placement, renewals and reporting sponsors will accept', 'Lawyer Referral Service — public intake, matching and routing, with the reporting the program needs to justify itself', "Public modules can run on their own subdomain alongside your existing website, so the association's site does not have to be rebuilt to adopt any of this", 'White-label branding on every tier, not as an upgrade'],
+  audience: ['Bar associations and similar professional membership organizations — particularly ones where a program has already been paused, scaled back, or is being run by one person who cannot keep doing it manually.'],
+  pricing: { title: 'Pricing on request', paragraphs: ['Every tier includes every module. We price on the size of your membership rather than how many staff seats you need, because charging per administrator punishes exactly the organizations with the smallest teams.'] },
+  cta: { title: "Start with the program that's stuck", paragraph: 'Most associations do not adopt all four at once. We usually begin with whichever program is currently paused or straining, prove it works, and expand.', label: 'Book a walkthrough', href: '/#contact' }
+};
