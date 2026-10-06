@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs",
+    "build": "vite build && PUPPETEER_CACHE_DIR=./.cache/puppeteer npx puppeteer browsers install chrome && PUPPETEER_CACHE_DIR=./.cache/puppeteer node scripts/prerender.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -94,5 +94,11 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
+  },
+  "trustedDependencies": [
+    "puppeteer"
+  ],
+  "config": {
+    "puppeteer_cache_dir": "./.cache/puppeteer"
   }
 }
