@@ -73,7 +73,13 @@ Powered by Innovation.</h4>
             </div>
           </div>
           
-          <div></div>
+          <div>
+            <h4 className="text-lg font-semibold mb-4">Customer logins</h4>
+            <ul className="space-y-2">
+              <li><Link to="/accessibility/signup?mode=signin" className="text-legal-light hover:text-legal-accent transition-colors">Accessibility Login</Link></li>
+              <li><Link to="/portal" className="text-legal-light hover:text-legal-accent transition-colors">Client Portal</Link></li>
+            </ul>
+          </div>
           
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>

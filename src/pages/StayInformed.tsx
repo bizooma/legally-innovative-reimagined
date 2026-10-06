@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Calendar, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import voiceSeoHeroImage from "@/assets/voice-seo-hero.jpg";
@@ -134,6 +135,13 @@ const StayInformed = () => {
             Discover the latest insights, trends, and innovations in legal technology, 
             digital marketing, and law firm growth strategies.
           </p>
+        </div>
+      </section>
+
+      <section className="product-inverted py-10 border-t border-border">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <h2 className="font-playfair text-3xl">Route to Results</h2>
+          <Button asChild className="product-button"><Link to="/route-to-results-newsletter">Subscribe to Route to Results</Link></Button>
         </div>
       </section>
 
