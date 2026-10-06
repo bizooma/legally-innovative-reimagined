@@ -41,7 +41,7 @@ export default function FaqPage() {
               {cat.questions.map((q, qi) => (
                 <AccordionItem key={q.question} value={`${ci}-${qi}`}>
                   <AccordionTrigger className="text-left font-medium text-lg">{q.question}</AccordionTrigger>
-                  <AccordionContent className="text-base leading-relaxed"><Answer item={q} /></AccordionContent>
+                  <AccordionContent keepMounted className="text-base leading-relaxed"><Answer item={q} /></AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
