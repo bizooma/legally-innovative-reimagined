@@ -284,6 +284,7 @@
 .product-grid > * { min-width: 0; }
 .product-shelf-item { border: 1px solid var(--editorial-rule); border-radius: 4px; padding: 28px; display: flex; flex-direction: column; gap: 20px; }
 .product-shelf-item h2 { font-size: 28px; line-height: 1.3; }
+.product-shelf-item h3 { font-size: 24px; line-height: 1.3; }
 .product-shelf-item p { line-height: 1.7; flex-grow: 1; }
 .product-shelf-item:hover { border-color: var(--editorial-oxblood); }
 .product-tier { border-top: 1px solid var(--editorial-rule); padding-top: 28px; }
