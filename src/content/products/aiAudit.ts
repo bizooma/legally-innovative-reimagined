@@ -19,6 +19,6 @@ export const aiAudit: {
     { title: 'Do it with us', paragraph: 'We run the audit with your team: interviews, inventory, scoring, the build order, the policy, and a working session on the first project. For organizations that would rather have it done than learn to do it.', price: 'Book a call', label: 'Book a call', href: '/#contact' }
   ],
   framework: { paragraph: 'This audit is pillar three of our framework, delivered. The framework is published in full and free to read — if you would rather run it yourself from the source, start there.', label: 'Read the framework', href: '/order-of-operations' },
-  audience: { title: "Who it's for", paragraphs: ['Law firms and nonprofits.'] },
+  audience: { title: "Who it's for", paragraphs: ['Law firms and nonprofits.', 'Keeps the attorney in the loop exactly where ethics and malpractice demand it', 'Built-in compliance guardrails — confidentiality, citation verification, UPL boundaries, trust-account controls, bar advertising rules'] },
   previews: [ { title: 'Law Firm AI Audit', alt: 'AI Workflow Audit spreadsheet preview' }, { title: 'AI Workflow Implementation Tracker', alt: 'AI Workflow Implementation Tracker spreadsheet preview' } ]
 };
