@@ -48,6 +48,7 @@ export const home = {
     paragraph: 'Bizooma is a veteran-owned company based in Jacksonville, Florida, with a US-based team. We have been building on the web since 1998 and we still write the code ourselves.',
     link: { label: 'More about us', href: '/about' },
   },
+  newsletterPromise: 'Working through one pillar of the framework at a time, with the failure modes.',
   newsletterCards: [
     { title: 'Weekly insights', description: 'One pillar at a time, working through the framework.' },
     { title: 'Early access', description: "New tools, templates and resources before they're announced." },

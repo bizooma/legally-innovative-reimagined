@@ -1,5 +1,6 @@
 import { MapPin } from "lucide-react";
 import MeetJoe from "@/components/MeetJoe";
+import ChamberMemberships from "@/components/ChamberMemberships";
 import { EditorialShell, EditorialButton } from "@/pages/products/ProductLayout";
 import { about as c } from "@/content/about";
 
@@ -16,6 +17,7 @@ export default function AboutPage() {
         </div></section>
       ))}
       <MeetJoe />
+      <ChamberMemberships />
       <section className="product-band"><div className="product-inner">
         <h2 className="product-heading">{c.locations.title}</h2>
         <div className="product-grid sm:grid-cols-2 max-w-3xl">

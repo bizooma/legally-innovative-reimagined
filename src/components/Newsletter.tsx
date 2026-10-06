@@ -62,7 +62,7 @@ const Newsletter = () => {
             With the Route to Results Newsletter
           </h3>
           
-          <p className="text-lg text-gray-700 mb-6 max-w-2xl">Get exclusive insights, case studies, and updates on the latest technology trends delivered every Tuesday.</p>
+          <p className="text-lg text-gray-700 mb-6 max-w-2xl">{home.newsletterPromise}</p>
           
           <div className="flex justify-center mb-8">
             <Button asChild variant="outline" className="gap-2">
@@ -216,7 +216,7 @@ const Newsletter = () => {
                 <ul className="list-disc pl-5 space-y-1">
                   <li>Send newsletter updates and insights</li>
                   <li>Provide information about our services</li>
-                  <li>Share case studies and industry trends</li>
+                  <li>{home.newsletterPromise}</li>
                 </ul>
                 <h2 className="text-xl font-semibold mt-6">Your Rights</h2>
                 <p>
