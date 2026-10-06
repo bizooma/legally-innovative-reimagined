@@ -28,6 +28,12 @@
     
     --success: 142 70% 45%;
     --success-foreground: 210 40% 98%;
+    --status-live: 142 64% 26%;
+    --status-live-bg: 142 40% 93%;
+    --status-dev: 32 90% 30%;
+    --status-dev-bg: 40 90% 92%;
+    --status-retired: 220 9% 40%;
+    --status-retired-bg: 220 12% 93%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
