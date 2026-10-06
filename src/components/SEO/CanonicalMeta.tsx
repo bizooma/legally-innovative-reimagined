@@ -5,7 +5,6 @@ const SITE_URL = "https://bizooma.com";
 
 // Pages whose canonical points elsewhere (duplicate content awaiting merge).
 const CANONICAL_OVERRIDES: Record<string, string> = {
-  "/gbp-optimization-2026": "/google-business-profile-optimization",
 };
 
 const CanonicalMeta = () => {
@@ -36,7 +35,7 @@ const CanonicalMeta = () => {
   };
 
   // Speakable (basic) for key pages
-  const speakablePaths = ["/", "/law-firm-seo-aeo-voiceseo", "/marketing", "/code", "/ai", "/insights"];
+  const speakablePaths = ["/", "/services/seo-aeo", "/marketing", "/code", "/ai", "/insights"];
   const isSpeakablePath = speakablePaths.includes(pathname);
   const speakableLd = isSpeakablePath
     ? {

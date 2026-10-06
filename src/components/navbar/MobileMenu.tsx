@@ -127,15 +127,6 @@ const MobileMenu = ({ isOpen, navLinks, serviceLinks, productLinks, onNavLinkCli
         </div>
         */}
 
-        {/* Stay Informed Link */}
-        <Link
-          to="/stay-informed"
-          className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium"
-          onClick={onClose}
-        >
-          Stay Informed
-        </Link>
-
         <Link
           to="/accessibility/signup?mode=signin"
           className="text-legal-dark hover:text-legal-primary transition-colors py-2 border-b border-gray-100 font-medium"

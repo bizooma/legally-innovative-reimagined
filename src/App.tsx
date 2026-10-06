@@ -27,16 +27,7 @@ import ProtectedRoute from "./components/staff/ProtectedRoute";
 import DonutsPage from "./pages/DonutsPage";
 import MichaelSalesPage from "./pages/MichaelSalesPage";
 import JacksonvilleAttorneyPage from "./pages/JacksonvilleAttorneyPage";
-import AiCustomerSupportChatbotsPage from "./pages/AiCustomerSupportChatbotsPage";
-import ChatbotsPage from "./pages/ChatbotsPage";
-import LawFirmWebsiteDevelopmentPage from "./pages/LawFirmWebsiteDevelopmentPage";
-import LawFirmMobileAppDevelopmentPage from "./pages/LawFirmMobileAppDevelopmentPage";
-import AiConsultingPage from "./pages/AiConsultingPage";
-import LawFirmDigitalMarketingPage from "./pages/LawFirmDigitalMarketingPage";
-import GoogleBusinessProfilePage from "./pages/GoogleBusinessProfilePage";
 import WhyReviewsMatterPage from "./pages/WhyReviewsMatterPage";
-import LawFirmSeoAeoPage from "./pages/LawFirmSeoAeoPage";
-import LawFirmLeadGenerationPage from "./pages/LawFirmLeadGenerationPage";
 import InstallPWA from "./pages/InstallPWA";
 import RouteToResultsNewsletter from "./pages/RouteToResultsNewsletter";
 import StatusTicker from "./pages/StatusTicker";
@@ -44,10 +35,8 @@ import StatusTickerEmbed from "./pages/StatusTickerEmbed";
 import IncidentHistory from "./pages/IncidentHistory";
 import CloudDevStatusExtensionPrivacy from "./pages/CloudDevStatusExtensionPrivacy";
 import AIMarketingLawFirms2025 from "./pages/AIMarketingLawFirms2025";
-import GbpOptimization2026Page from "./pages/GbpOptimization2026Page";
 import GoogleMarch2026UpdatePage from "./pages/GoogleMarch2026UpdatePage";
 import SchemaMarkupFeaturedSnippetsPage from "./pages/SchemaMarkupFeaturedSnippetsPage";
-import WebsiteConversionLawFirmsPage from "./pages/WebsiteConversionLawFirmsPage";
 import SchemaForExactMatchDomainsPage from "./pages/SchemaForExactMatchDomainsPage";
 import LcrPage from "./pages/LcrPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
@@ -64,6 +53,12 @@ import AiAuditSuccess from "./pages/AiAuditSuccess";
 import AiExplainedPage from "./pages/AiExplainedPage";
 import OrderOfOperationsPage from "./pages/OrderOfOperationsPage";
 import LabsPage from "./pages/LabsPage";
+import ServicesOverviewPage from "./pages/services/ServicesOverviewPage";
+import ServicePage from "./pages/services/ServicePage";
+import { aiMarketing } from "./content/services/aiMarketing";
+import { seoAeo } from "./content/services/seoAeo";
+import { websitesAndApps } from "./content/services/websitesAndApps";
+import { leadGeneration } from "./content/services/leadGeneration";
 import AIReceptionist from "./pages/AIReceptionist";
 import AccessibilityLayout from "./pages/accessibility/AccessibilityLayout";
 import AccessibilityDashboard from "./pages/accessibility/AccessibilityDashboard";
@@ -138,6 +133,11 @@ const App = () => (
               <Route path="/ai-explained" element={<AiExplainedPage />} />
               <Route path="/order-of-operations" element={<OrderOfOperationsPage />} />
               <Route path="/labs" element={<LabsPage />} />
+              <Route path="/services" element={<ServicesOverviewPage />} />
+              <Route path="/services/ai-marketing" element={<ServicePage content={aiMarketing} />} />
+              <Route path="/services/seo-aeo" element={<ServicePage content={seoAeo} />} />
+              <Route path="/services/websites-and-apps" element={<ServicePage content={websitesAndApps} />} />
+              <Route path="/services/lead-generation" element={<ServicePage content={leadGeneration} />} />
 
               {/* AI Receptionist service page */}
               <Route path="/ai-receptionist" element={<AIReceptionist />} />
@@ -156,33 +156,22 @@ const App = () => (
               <Route path="/this-is-our-jax" element={<JacksonvilleAttorneyPage />} />
               
               {/* AI Customer Support Chatbots page */}
-              <Route path="/ai-customer-support-chatbots" element={<AiCustomerSupportChatbotsPage />} />
               
               {/* Custom Chatbots types page */}
-              <Route path="/chatbots" element={<ChatbotsPage />} />
               
               {/* AI Consulting page */}
-              <Route path="/ai-consulting-for-law-firms" element={<AiConsultingPage />} />
               
               {/* Law Firm Website Development page */}
-              <Route path="/law-firm-website-development" element={<LawFirmWebsiteDevelopmentPage />} />
               
               {/* Law Firm Mobile App Development page */}
-              <Route path="/law-firm-mobile-app-development" element={<LawFirmMobileAppDevelopmentPage />} />
-              <Route path="/mobile-app-development" element={<Navigate to="/law-firm-mobile-app-development" replace />} />
               
               {/* Law Firm Digital Marketing page */}
-              <Route path="/law-firm-digital-marketing" element={<LawFirmDigitalMarketingPage />} />
               
               {/* Google Business Profile Optimization page */}
-              <Route path="/google-business-profile-optimization" element={<GoogleBusinessProfilePage />} />
-              <Route path="/google-business-profile" element={<Navigate to="/google-business-profile-optimization" replace />} />
               
               {/* SEO/AEO/Voice SEO page */}
-              <Route path="/law-firm-seo-aeo-voiceseo" element={<LawFirmSeoAeoPage />} />
               
               {/* Lead Generation page */}
-              <Route path="/law-firm-lead-generation" element={<LawFirmLeadGenerationPage />} />
               
               {/* Voice Assistant Marketing page */}
               
@@ -215,9 +204,7 @@ const App = () => (
               
               {/* Blog Posts */}
               <Route path="/ai-marketing-law-firms-2025" element={<AIMarketingLawFirms2025 />} />
-              <Route path="/gbp-optimization-2026" element={<GbpOptimization2026Page />} />
               <Route path="/schema-markup-featured-snippets" element={<SchemaMarkupFeaturedSnippetsPage />} />
-              <Route path="/website-conversion-law-firms" element={<WebsiteConversionLawFirmsPage />} />
               <Route path="/google-march-2026-update" element={<GoogleMarch2026UpdatePage />} />
               <Route path="/schema-for-exact-match-domains" element={<SchemaForExactMatchDomainsPage />} />
 

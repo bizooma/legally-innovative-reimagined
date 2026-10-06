@@ -6,15 +6,11 @@ Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile 
 
 ## Services
 
-- [Law Firm SEO, AEO & Voice SEO](/law-firm-seo-aeo-voiceseo): Search, answer engine, and voice optimization for law firms.
-- [Law Firm Digital Marketing](/law-firm-digital-marketing): Full-service marketing for legal practices.
-- [Law Firm Lead Generation](/law-firm-lead-generation): Capture and nurture high-quality legal leads.
-- [Law Firm Website Development](/law-firm-website-development): Custom law firm websites built to convert.
-- [Law Firm Mobile App Development](/law-firm-mobile-app-development): iOS and Android apps for law firms.
-- [AI Consulting for Law Firms](/ai-consulting-for-law-firms): Strategy and implementation of AI tools.
-- [AI Customer Support Chatbots](/ai-customer-support-chatbots): 24/7 chatbot support for client engagement.
-- [Custom Chatbots](/chatbots): Multi-modal chatbots for any use case.
-- [Google Business Profile Optimization](/google-business-profile-optimization): Local search ranking for GBP.
+- [Services](/services): Overview of Bizooma services for law firms and nonprofits.
+- [AI Marketing & Automation](/services/ai-marketing): Automating repeated work around intake, follow-up and content, with governance.
+- [SEO & AEO](/services/seo-aeo): Findable in search and citable by AI assistants.
+- [Websites & Apps](/services/websites-and-apps): Sites built around what a visitor came to do; apps where warranted.
+- [Lead Generation & Intake](/services/lead-generation): Closing the gap between enquiry and conversation.
 - [Apple Maps Marketing](/apple-maps-marketing): Visibility in Apple Maps and Siri results.
 - [Accessibility Layer](/accessibility-layer): WCAG-compliant accessibility widget for any site.
 
@@ -36,9 +32,7 @@ Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile 
 - [Voice SEO & AEO Stats](/voice-seo-aeo-stats): Stats on voice search and answer engines.
 - [Why Reviews Matter for Law Firms](/why-reviews-matter-for-law-firms): Importance of online reviews.
 - [AI Marketing for Law Firms 2025](/ai-marketing-law-firms-2025): AI marketing trends.
-- [GBP Optimization 2026](/gbp-optimization-2026): Google Business Profile in 2026.
 - [Schema Markup for Featured Snippets](/schema-markup-featured-snippets): Structured data guide.
-- [Website Conversion for Law Firms](/website-conversion-law-firms): Conversion optimization.
 - [Google March 2026 Update](/google-march-2026-update): Algorithm update analysis.
 - [Schema for Exact Match Domains](/schema-for-exact-match-domains): Schema strategy.
 - [OpenAI Web Browser](/openai-web-browser): OpenAI's browser overview.

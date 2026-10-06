@@ -89,6 +89,7 @@ const MarketingProducts = () => {
 
   return (
     <section 
+      id="products"
       ref={sectionRef}
       className="section-padding"
       style={{
