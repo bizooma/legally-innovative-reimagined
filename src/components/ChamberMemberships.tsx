@@ -1,28 +1,22 @@
 import amarilloChamberLogo from "@/assets/amarillo-chamber-logo.png";
 import clayChamberLogo from "@/assets/clay-chamber-logo.png";
+import { about } from "@/content/about";
+
+const logos = { amarillo: amarilloChamberLogo, clay: clayChamberLogo };
 
 const ChamberMemberships = () => {
   return (
-    <section className="py-12 bg-secondary/20">
-      <div className="container mx-auto px-4 text-center">
+    <section className="product-band product-soft">
+      <div className="product-inner text-center">
         <p className="text-lg font-semibold text-muted-foreground mb-6">
-          Bizooma is a proud member of
+          {about.affiliations.title}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-10">
-          <a href="https://web.amarillo-chamber.org/Marketing/Bizooma,-LLC-12876" target="_blank" rel="noopener noreferrer">
-            <img
-              src={amarilloChamberLogo}
-              alt="Amarillo Chamber of Commerce"
-              className="h-16 md:h-20 w-auto object-contain"
-            />
-          </a>
-          <a href="https://www.claychamber.com/" target="_blank" rel="noopener noreferrer">
-            <img
-              src={clayChamberLogo}
-              alt="Clay Chamber of Commerce"
-              className="h-16 md:h-20 w-auto object-contain"
-            />
-          </a>
+          {about.affiliations.items.map((item) => (
+            <a key={item.name} href={item.href} target="_blank" rel="noopener noreferrer">
+              <img src={logos[item.logo]} alt={item.name} className="h-16 md:h-20 w-auto max-w-full object-contain" />
+            </a>
+          ))}
         </div>
       </div>
     </section>
