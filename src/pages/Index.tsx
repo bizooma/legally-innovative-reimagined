@@ -154,8 +154,8 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Bizooma | Jacksonville Digital Marketing Agency</title>
-        <meta name="description" content="Jacksonville digital marketing agency: AI marketing, SEO/AEO, web, mobile apps, and lead gen for law firms, nonprofits, and local businesses." />
+        <title>Bizooma | AI Marketing & Software for Law Firms and Nonprofits</title>
+        <meta name="description" content="Bizooma builds AI-powered marketing, automation, and custom software for law firms and nonprofits. Jacksonville, FL." />
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
       <div className="min-h-screen">

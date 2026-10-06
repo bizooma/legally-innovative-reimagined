@@ -17,8 +17,8 @@ const MobileFooterNav = () => {
   
   const navItems = [
     { name: "Home", icon: Home, path: "/" },
-    { name: "Services", icon: Briefcase, path: "/ai-consulting-for-law-firms" },
-    { name: "Products", icon: Package, path: "/products/npo-bots" },
+    { name: "For Law Firms", icon: Briefcase, path: "/ai-consulting-for-law-firms" },
+    { name: "For Nonprofits", icon: Package, path: "/products/npo-bots" },
     { name: "News", icon: Newspaper, path: "/stay-informed" },
     { name: "Contact", icon: Mail, path: "/#contact" },
   ];

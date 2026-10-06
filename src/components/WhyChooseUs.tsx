@@ -71,40 +71,6 @@ const WhyChooseUs = () => {
             </div>
           </div>
           
-          <div className="lg:w-1/2 relative">
-            <div className="absolute -top-10 -left-10 w-40 h-40 bg-legal-accent/20 rounded-full blur-2xl"></div>
-            <div className="absolute -bottom-5 -right-5 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
-            
-            <div className="bg-white/10 backdrop-blur-md rounded-lg p-8 shadow-xl border border-white/20">
-              <h3 className="text-2xl font-bold mb-6 text-white border-b border-white/20 pb-4">
-                What Our Clients Say
-              </h3>
-              
-              <div className="space-y-6">
-                <div className="bg-white/10 backdrop-blur-sm p-4 rounded-md border border-white/10">
-                  <p className="italic text-legal-light mb-4">
-                    "Bizooma helped us navigate our digital transformation journey,
-                    resulting in a 30% increase in efficiency and significantly improved client satisfaction."
-                  </p>
-                  <div>
-                    <p className="font-bold text-white">Sarah Johnson</p>
-                    <p className="text-sm text-legal-light">Managing Partner, Johnson Legal</p>
-                  </div>
-                </div>
-                
-                <div className="bg-white/10 backdrop-blur-sm p-4 rounded-md border border-white/10">
-                  <p className="italic text-legal-light mb-4">
-                    "The training programs provided by Bizooma have completely
-                    transformed how our team approaches legal service delivery."
-                  </p>
-                  <div>
-                    <p className="font-bold text-white">Michael Chen</p>
-                    <p className="text-sm text-legal-light">Legal Operations Director, Global Corp</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
