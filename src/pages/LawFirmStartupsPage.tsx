@@ -57,7 +57,7 @@ const steps = [
       "Make it mobile-first, fast (under 2s load), and ADA accessible.",
       "Install SSL, set up a backup system, and configure a staging environment.",
     ],
-    cta: { label: "See our website development", href: "/law-firm-website-development" },
+    cta: { label: "See our website development", href: "/services/websites-and-apps" },
   },
   {
     icon: MapPin,
@@ -70,7 +70,7 @@ const steps = [
       "Add services, hours, attributes, and a keyword-rich (but natural) business description.",
       "Post weekly updates — Google rewards active profiles.",
     ],
-    cta: { label: "GBP optimization details", href: "/google-business-profile-optimization" },
+    cta: { label: "GBP optimization details", href: "/services/seo-aeo" },
   },
   {
     icon: Search,
@@ -83,7 +83,7 @@ const steps = [
       "Submit your sitemap to Google Search Console and Bing Webmaster Tools.",
       "Structure FAQ content so AI assistants (ChatGPT, Gemini, Alexa) can quote you.",
     ],
-    cta: { label: "SEO / AEO / Voice SEO", href: "/law-firm-seo-aeo-voiceseo" },
+    cta: { label: "SEO / AEO / Voice SEO", href: "/services/seo-aeo" },
   },
   {
     icon: Star,
@@ -130,7 +130,7 @@ const steps = [
       "Pre-screen for conflicts and jurisdiction before a human ever touches the lead.",
       "Route hot leads (e.g., recent car accident) directly to a phone call.",
     ],
-    cta: { label: "AI chatbots for law firms", href: "/ai-customer-support-chatbots" },
+    cta: { label: "AI chatbots for law firms", href: "/services/ai-marketing" },
   },
   {
     icon: Megaphone,
@@ -142,7 +142,7 @@ const steps = [
       "Build retargeting audiences from website visitors using Meta Pixel + Google Tag Manager.",
       "Set a strict daily budget cap and review CPL weekly for the first 90 days.",
     ],
-    cta: { label: "Lead generation services", href: "/law-firm-lead-generation" },
+    cta: { label: "Lead generation services", href: "/services/lead-generation" },
   },
   {
     icon: BarChart3,
@@ -331,7 +331,7 @@ const LawFirmStartupsPage = () => {
               variant="outline"
               className="bg-white/10 text-white border-white/40 hover:bg-white hover:text-legal-primary"
             >
-              <Link to="/law-firm-digital-marketing">See All Services</Link>
+              <Link to="/services">See All Services</Link>
             </Button>
           </div>
         </div>

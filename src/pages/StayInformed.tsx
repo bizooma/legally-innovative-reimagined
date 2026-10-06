@@ -40,17 +40,6 @@ const StayInformed = () => {
       link: "/google-march-2026-update"
     },
     {
-      id: 12,
-      title: "Before You Increase Your Marketing Budget, Fix Your Website",
-      excerpt: "Traffic without conversion is just expensive vanity. Learn why your law firm's website might be the real reason your marketing isn't working.",
-      date: "February 18, 2026",
-      readTime: "10 min read",
-      author: "Bizooma Team",
-      category: "Digital Marketing",
-      image: websiteConversionImage,
-      link: "/website-conversion-law-firms"
-    },
-    {
       id: 10,
       title: "How to Use Schema Markup to Win Featured Snippets: A Guide for Attorneys",
       excerpt: "Learn how to leverage the five essential schema types—FAQ, HowTo, Article, Organization, and Attorney—to capture position zero and dominate search results for your law firm.",
@@ -60,17 +49,6 @@ const StayInformed = () => {
       category: "SEO",
       image: schemaMarkupHeroImage,
       link: "/schema-markup-featured-snippets"
-    },
-    {
-      id: 9,
-      title: "Google Business Profile Optimization for Law Firms in 2026: The Complete Guide",
-      excerpt: "GBP optimization is no longer just about filling out fields. Google now evaluates how your GBP interacts with your website, entity authority, reviews, and brand consistency. Learn how to dominate local and national search.",
-      date: "2025-12-02",
-      readTime: "25 min read",
-      author: "Legal Marketing Strategy Team",
-      category: "Local SEO",
-      image: appleMapsLawFirmImage,
-      link: "/gbp-optimization-2026"
     },
     {
       id: 8,
@@ -126,17 +104,6 @@ const StayInformed = () => {
       category: "Digital Marketing",
       image: appleMapsInterfaceImage,
       link: "/apple-maps-marketing"
-    },
-    {
-      id: 5,
-      title: "Why Google Business Profiles and NAP Consistency Are Critical for Legal Practices: The 3-Pack Advantage",
-      excerpt: "Discover how Google's Local Pack dominates 93% of local searches and why NAP consistency is essential for legal practice visibility and client acquisition.",
-      date: "2025-01-15",
-      readTime: "18 min read",
-      author: "Legal Marketing Research Team",
-      category: "Local SEO",
-      image: appleMapsLawFirmImage,
-      link: "/google-business-profile-optimization"
     },
     {
       id: 6,

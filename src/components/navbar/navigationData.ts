@@ -1,24 +1,18 @@
 
 export const navLinks = [
-  { name: "Home", href: "#home", isExternal: false, path: "/" },
-  { name: "About", href: "#about", isExternal: false },
-  { name: "Services", href: "#services", isExternal: false },
-  { name: "FAQ", href: "#faq", isExternal: false },
-  { name: "Why Us", href: "#why-us", isExternal: false },
-  { name: "Contact", href: "#contact", isExternal: false },
   { name: "Framework", href: null, isExternal: false, path: "/order-of-operations" },
-  
+  { name: "Services", href: null, isExternal: false, path: "/services" },
+  { name: "Products", href: "#products", isExternal: false },
+  { name: "Newsletter", href: null, isExternal: false, path: "/route-to-results-newsletter" },
+  { name: "About", href: "#about", isExternal: false },
+  { name: "Contact", href: "#contact", isExternal: false },
 ];
 
 export const serviceLinks = [
-  { name: "AI Consulting", path: "/ai-consulting-for-law-firms" },
-  { name: "AI Customer Support Chatbots", path: "/ai-customer-support-chatbots" },
-  { name: "Website Development", path: "/law-firm-website-development" },
-  { name: "Mobile App Development", path: "/law-firm-mobile-app-development" },
-  { name: "Digital Marketing", path: "/law-firm-digital-marketing" },
-  { name: "Google Business Profile", path: "/google-business-profile-optimization" },
-  { name: "SEO/AEO/Voice SEO", path: "/law-firm-seo-aeo-voiceseo" },
-  { name: "Lead Generation", path: "/law-firm-lead-generation" },
+  { name: "AI Marketing & Automation", path: "/services/ai-marketing" },
+  { name: "SEO & AEO", path: "/services/seo-aeo" },
+  { name: "Websites & Apps", path: "/services/websites-and-apps" },
+  { name: "Lead Generation & Intake", path: "/services/lead-generation" },
 ];
 
 export const productLinks = [

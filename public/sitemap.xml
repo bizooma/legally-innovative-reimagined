@@ -42,54 +42,6 @@
     <priority>0.7</priority>
     <lastmod>2025-11-06</lastmod>
   </url>
-  <url>
-    <loc>https://bizooma.com/ai-customer-support-chatbots</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/ai-consulting-for-law-firms</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/law-firm-website-development</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/law-firm-mobile-app-development</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/law-firm-digital-marketing</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/google-business-profile-optimization</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/law-firm-seo-aeo-voiceseo</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/law-firm-lead-generation</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
   <!-- New newsletter section pages -->
   <!-- Blog posts -->
   <url>
@@ -111,24 +63,12 @@
     <lastmod>2026-04-14</lastmod>
   </url>
   <url>
-    <loc>https://bizooma.com/website-conversion-law-firms</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
-  <url>
     <loc>https://bizooma.com/google-march-2026-update</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <lastmod>2026-04-14</lastmod>
   </url>
   <!-- Service & product pages -->
-  <url>
-    <loc>https://bizooma.com/chatbots</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
   <url>
     <loc>https://bizooma.com/route-to-results-newsletter</loc>
     <changefreq>monthly</changefreq>
@@ -192,5 +132,20 @@
   </url>
   <url>
     <loc>https://bizooma.com/labs</loc>
+  </url>
+  <url>
+    <loc>https://bizooma.com/services</loc>
+  </url>
+  <url>
+    <loc>https://bizooma.com/services/ai-marketing</loc>
+  </url>
+  <url>
+    <loc>https://bizooma.com/services/seo-aeo</loc>
+  </url>
+  <url>
+    <loc>https://bizooma.com/services/websites-and-apps</loc>
+  </url>
+  <url>
+    <loc>https://bizooma.com/services/lead-generation</loc>
   </url>
 </urlset>
