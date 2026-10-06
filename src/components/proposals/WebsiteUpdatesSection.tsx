@@ -37,7 +37,6 @@ const services = [
 const stats = [
   { value: "53%", label: "of visitors leave if a page takes >3s to load" },
   { value: "70%", label: "of traffic now comes from mobile devices" },
-  { value: "3x", label: "more leads from optimized websites" },
 ];
 
 const WebsiteUpdatesSection = () => {
