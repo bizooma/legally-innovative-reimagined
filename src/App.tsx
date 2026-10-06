@@ -53,6 +53,11 @@ import AiAuditSuccess from "./pages/AiAuditSuccess";
 import AiExplainedPage from "./pages/AiExplainedPage";
 import OrderOfOperationsPage from "./pages/OrderOfOperationsPage";
 import LabsPage from "./pages/LabsPage";
+import ProductPage from "./pages/products/ProductLayout";
+import ProductsOverviewPage from "./pages/products/ProductsOverviewPage";
+import { datarightsos } from "./content/products/datarightsos";
+import { lexguild } from "./content/products/lexguild";
+import { amicusEdge } from "./content/products/amicusEdge";
 import ServicesOverviewPage from "./pages/services/ServicesOverviewPage";
 import ServicePage from "./pages/services/ServicePage";
 import { aiMarketing } from "./content/services/aiMarketing";
@@ -133,6 +138,10 @@ const App = () => (
               <Route path="/ai-explained" element={<AiExplainedPage />} />
               <Route path="/order-of-operations" element={<OrderOfOperationsPage />} />
               <Route path="/labs" element={<LabsPage />} />
+              <Route path="/products" element={<ProductsOverviewPage />} />
+              <Route path="/products/datarightsos" element={<ProductPage content={datarightsos} />} />
+              <Route path="/products/lexguild" element={<ProductPage content={lexguild} />} />
+              <Route path="/products/amicus-edge" element={<ProductPage content={amicusEdge} />} />
               <Route path="/services" element={<ServicesOverviewPage />} />
               <Route path="/services/ai-marketing" element={<ServicePage content={aiMarketing} />} />
               <Route path="/services/seo-aeo" element={<ServicePage content={seoAeo} />} />

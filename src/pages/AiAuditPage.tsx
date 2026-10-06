@@ -1,36 +1,14 @@
 import { useState } from "react";
-import CalendlyEmbed from "@/components/integrations/CalendlyEmbed";
-import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import MobileFooterNav from "@/components/MobileFooterNav";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import auditPreview from "@/assets/ai-audit-preview.png";
 import trackerPreview from "@/assets/ai-tracker-preview.png";
-import dashboardImage from "@/assets/audit-2.png.asset.json";
-import {
-  CheckCircle2,
-  FileSpreadsheet,
-  ClipboardCheck,
-  Workflow,
-  ArrowRight,
-  ShieldCheck,
-  Scale,
-  Download,
-  Sparkles,
-  ZoomIn,
-  ExternalLink,
-} from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { aiAudit as c } from "@/content/products/aiAudit";
+import { EditorialShell, EditorialHeroSection, TextBand, FeatureBand, EditorialButton } from "./products/ProductLayout";
 
 async function startAiAuditCheckout() {
   try {
@@ -56,396 +34,31 @@ async function startAiAuditCheckout() {
   }
 }
 
-const included = [
-  "AI Audit spreadsheet — score your firm across the workflows that matter",
-  "Implementation Tracker spreadsheet — manage every AI workflow rollout",
-  "Pre-built scoring formulas and prioritization logic",
-  "Lifetime access — no subscription, instant download after checkout",
-];
-
-const auditUses = [
-  "Identify which practice-area tasks are highest-leverage for AI",
-  "Score current tooling, data readiness, and team capability",
-  "Surface the 3–5 workflows that will pay back the fastest",
-  "Produce a defensible baseline to measure progress against",
-];
-
-const trackerUses = [
-  "Assign owners, deadlines, and status to every AI workflow",
-  "Track tools, prompts, SOPs, and training per workflow",
-  "Monitor adoption, time saved, and ROI over time",
-  "Keep partners and staff aligned on what's live, what's next",
-];
 
 export default function AiAuditPage() {
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
-  const [lightboxAlt, setLightboxAlt] = useState<string>("");
-
-  const openLightbox = (src: string, alt: string) => {
-    setLightboxImage(src);
-    setLightboxAlt(alt);
-  };
-
-  const closeLightbox = () => {
-    setLightboxImage(null);
-    setLightboxAlt("");
-  };
-
-  return (
-    <div className="min-h-screen bg-[#fbf8f3]">
-      <Helmet>
-        <title>AI Audit for Law Firms — Audit & Implementation Spreadsheets</title>
-        <meta
-          name="description"
-          content="Two spreadsheets to audit your law firm's AI readiness and manage the rollout of AI workflows. Instant download after purchase."
-        />
-        <link rel="canonical" href="https://legallyinnovative.com/ai-audit" />
-      </Helmet>
-      <Navbar />
-
-      {/* Hero */}
-      <section className="pt-28 pb-16 lg:pt-32 lg:pb-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f5f0e6] text-[#7a3a1f] text-xs font-semibold uppercase tracking-wider mb-5">
-              <Scale className="h-3.5 w-3.5" /> For Law Firms
-            </div>
-            <h1 className="text-4xl lg:text-6xl font-bold text-legal-dark leading-tight mb-5">
-              Audit your firm's AI. Then actually implement it.
-            </h1>
-            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-8">
-              Two spreadsheets, built for law firms. The first scores where AI will pay off in your practice. The second runs the implementation so it doesn't stall after the kickoff meeting.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button
-                size="lg"
-                className="bg-[#d97757] hover:bg-[#b85d3f] text-white"
-                onClick={startAiAuditCheckout}
-              >
-                Buy both spreadsheets <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-              <a
-                href="#whats-inside"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-md border border-[#d97757]/40 text-[#7a3a1f] hover:bg-[#fdecdf] text-sm font-medium"
-              >
-                See what's inside
-              </a>
-            </div>
-            <div className="mt-4 inline-flex items-center gap-2">
-              <span className="text-2xl font-bold text-[#d97757]">$19.95</span>
-              <span className="text-sm text-muted-foreground">one-time</span>
-            </div>
-            <p className="text-xs text-muted-foreground mt-3 inline-flex items-center gap-1.5">
-              <ShieldCheck className="h-3.5 w-3.5" /> Instant download after checkout. Lifetime access.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Two products */}
-      <section id="whats-inside" className="py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f5f0e6] text-[#7a3a1f] text-xs font-semibold uppercase tracking-wider mb-4">
-              <Sparkles className="h-3.5 w-3.5" /> What you get
-            </div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-4">
-              Stop guessing about AI. Score it, prioritize it, build it safely.
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Diagnose first, implement second. The audit tells you where to start. The tracker keeps it moving.
-            </p>
-            <p className="text-sm text-muted-foreground mt-4 italic">
-              The previews below are filled with mock data to show you exactly how each sheet should be completed.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-6">
-            <Card className="border-[#e6d5bf] bg-[#fbf8f3]">
-              <CardHeader>
-                <Badge variant="secondary" className="bg-[#f5f0e6] text-[#7a3a1f] border-0 flex items-center gap-1.5 w-fit mb-3">
-                  <FileSpreadsheet className="h-4 w-4" /> Spreadsheet 1
-                </Badge>
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="h-10 w-10 rounded-lg bg-[#d97757] text-white flex items-center justify-center">
-                    <ClipboardCheck className="h-5 w-5" />
-                  </div>
-                  <CardTitle className="text-xl text-legal-dark">Law Firm AI Audit</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <button
-                  type="button"
-                  onClick={() =>
-                    openLightbox(
-                      auditPreview,
-                      "Preview of the Law Firm AI Workflow Audit spreadsheet showing departments, workflows, impact and risk scoring, and prioritized recommendations"
-                    )
-                  }
-                  className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm block w-full text-left relative group cursor-zoom-in"
-                >
-                  <img
-                    src={auditPreview}
-                    alt="Preview of the Law Firm AI Workflow Audit spreadsheet showing departments, workflows, impact and risk scoring, and prioritized recommendations"
-                    className="w-full h-auto block"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                    <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
-                  </div>
-                </button>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                  The AI Workflow Audit scores every workflow in your firm on two things that matter: how much it moves the business, and what it costs if the AI gets it wrong. You get a clear verdict on each one — automate it, keep a human in the loop, or leave it alone — plus a ranked build order. No more debating; the matrix decides.
-                </p>
-                <ul className="space-y-2.5">
-                  {auditUses.map((u) => (
-                    <li key={u} className="flex items-start gap-2.5 text-sm text-legal-dark">
-                      <CheckCircle2 className="h-4 w-4 text-[#d97757] shrink-0 mt-0.5" />
-                      <span>{u}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="border-[#e6d5bf] bg-[#fbf8f3]">
-              <CardHeader>
-                <Badge variant="secondary" className="bg-[#f5f0e6] text-[#7a3a1f] border-0 flex items-center gap-1.5 w-fit mb-3">
-                  <FileSpreadsheet className="h-4 w-4" /> Spreadsheet 2
-                </Badge>
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="h-10 w-10 rounded-lg bg-[#d97757] text-white flex items-center justify-center">
-                    <Workflow className="h-5 w-5" />
-                  </div>
-                  <CardTitle className="text-xl text-legal-dark">AI Workflow Implementation Tracker</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <button
-                  type="button"
-                  onClick={() =>
-                    openLightbox(
-                      trackerPreview,
-                      "Preview of the Law Firm AI Implementation Tracker spreadsheet showing build priority, owners, status, start dates, target go-live dates, and effort scoring"
-                    )
-                  }
-                  className="mb-5 rounded-lg overflow-hidden border border-[#e6d5bf] bg-white shadow-sm block w-full text-left relative group cursor-zoom-in"
-                >
-                  <img
-                    src={trackerPreview}
-                    alt="Preview of the Law Firm AI Implementation Tracker spreadsheet showing build priority, owners, status, start dates, target go-live dates, and effort scoring"
-                    className="w-full h-auto block"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                    <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
-                  </div>
-                </button>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                  <strong className="text-legal-dark">The AI Implementation Tracker</strong> Take the workflows that made the cut and run them like real projects. Owners, timelines, status, and the dollars and hours each one gives back. The high-stakes work keeps its attorney-sign-off requirement baked in, so the discipline doesn't disappear the moment things get busy.
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                  One finds the opportunities. The other gets them done. Together they take you from "we should probably use AI" to a managed rollout you can defend.
-                </p>
-                <ul className="space-y-2.5">
-                  {trackerUses.map((u) => (
-                    <li key={u} className="flex items-start gap-2.5 text-sm text-legal-dark">
-                      <CheckCircle2 className="h-4 w-4 text-[#d97757] shrink-0 mt-0.5" />
-                      <span>{u}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Why it's built for law firms */}
-      <section className="py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-8">
-              Why it's built for law firms
-            </h2>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-legal-dark">
-                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
-                <span>Scored on Impact × Risk — the only two axes that matter when a wrong answer is the expensive one</span>
-              </li>
-              <li className="flex items-start gap-3 text-legal-dark">
-                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
-                <span>Keeps the attorney in the loop exactly where ethics and malpractice demand it</span>
-              </li>
-              <li className="flex items-start gap-3 text-legal-dark">
-                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
-                <span>Built-in compliance guardrails — confidentiality, citation verification, UPL boundaries, trust-account controls, bar advertising rules</span>
-              </li>
-              <li className="flex items-start gap-3 text-legal-dark">
-                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
-                <span>Shows the time and revenue each project gives back, so you build what pays</span>
-              </li>
-              <li className="flex items-start gap-3 text-legal-dark">
-                <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
-                <span>Self-serve. Open it, calibrate it to your firm, start this week</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Who it's for */}
-      <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-6">
-              Who it's for
-            </h2>
-            <p className="text-lg text-legal-dark leading-relaxed">
-              Managing attorneys and firm operators who keep hearing they "need AI" — and want a straight answer on where it actually helps, where it's dangerous, and what to do first.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Choose your path intro */}
-      <section className="pt-16 lg:pt-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-legal-dark mb-4">
-              Three ways to get your audit done
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Everyone's firm is different, so we built three ways to run the same audit. Pick the one that fits how you work best.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing / CTA */}
-      <section className="py-16 lg:py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto rounded-2xl border-2 border-[#d97757] bg-white p-8 lg:p-10 shadow-lg">
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#d97757] text-white text-2xl font-bold mb-4">
-                1
-              </div>
-              <Badge variant="secondary" className="bg-[#f5f0e6] text-[#7a3a1f] border-0 mb-3 block w-fit mx-auto">
-                Both spreadsheets included
-              </Badge>
-              <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-2">
-                AI Audit + Implementation Toolkit
-              </h2>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <span className="text-3xl font-bold text-[#d97757]">$19.95</span>
-                <span className="text-sm text-muted-foreground">one-time</span>
-              </div>
-              <p className="text-muted-foreground">
-                One purchase. Instant download. Yours to use across your firm.
-              </p>
-            </div>
-            <ul className="space-y-3 mb-7">
-              {included.map((i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-legal-dark">
-                  <CheckCircle2 className="h-5 w-5 text-[#d97757] shrink-0 mt-0.5" />
-                  <span>{i}</span>
-                </li>
-              ))}
-            </ul>
-            <Button
-              size="lg"
-              className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white"
-              onClick={startAiAuditCheckout}
-            >
-              Buy now <Download className="h-4 w-4 ml-2" />
-            </Button>
-            <p className="text-xs text-center text-muted-foreground mt-3">
-              Secure checkout via Stripe. You'll be redirected back to download both spreadsheets.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* In-person consulting CTA */}
-      <section className="py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-8">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#d97757] text-white text-2xl font-bold mb-4">
-              2
-            </div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-3">
-              Prefer a hands-on approach?
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              I can come to your law firm office and conduct the AI audit in person. We'll walk through your workflows together, identify the highest-impact opportunities, and build a tailored implementation plan on the spot. Book a time below to discuss the arrangement.
-            </p>
-          </div>
-          <div className="max-w-4xl mx-auto">
-            <CalendlyEmbed
-              url="https://calendly.com/joe-bizooma"
-              label="Book a call to discuss an in-person audit"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Web app option */}
-      <section className="py-16 lg:py-20 bg-[#fbf8f3]">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-8">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#d97757] text-white text-2xl font-bold mb-4">
-              3
-            </div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-legal-dark mb-3">
-              Want to run the audit online?
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              Use our web-based audit system at lawfirmaudit.ai. Sign up, walk through the same scoring framework, and generate your report without touching a spreadsheet. Built for firms that prefer a guided, digital experience.
-            </p>
-          </div>
-          <div className="max-w-4xl mx-auto mb-8">
-            <div className="rounded-xl overflow-hidden border border-[#e6d5bf] shadow-sm bg-white">
-              <img
-                src={dashboardImage.url}
-                alt="Dashboard preview — lawfirmaudit.ai audit platform"
-                className="w-full h-auto block"
-                loading="lazy"
-              />
-            </div>
-          </div>
-          <div className="text-center">
-            <a
-              href="https://lawfirmaudit.ai/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-[#d97757] hover:bg-[#b85d3f] text-white text-sm font-medium transition-colors"
-            >
-              Start your audit at lawfirmaudit.ai
-              <ExternalLink className="h-4 w-4 ml-2" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Lightbox */}
-      <Dialog open={!!lightboxImage} onOpenChange={(open) => !open && closeLightbox()}>
-        <DialogContent className="max-w-6xl w-[95vw] p-2 bg-white border-[#e6d5bf]">
-          <DialogTitle className="sr-only">{lightboxAlt}</DialogTitle>
-          <DialogDescription className="sr-only">
-            Enlarged preview of the spreadsheet
-          </DialogDescription>
-          {lightboxImage && (
-            <img
-              src={lightboxImage}
-              alt={lightboxAlt}
-              className="w-full h-auto rounded-md block"
-            />
-          )}
-        </DialogContent>
-      </Dialog>
-
-      <Footer />
-      <MobileFooterNav />
-    </div>
-  );
+  const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
+  const [checkingOut, setCheckingOut] = useState(false);
+  const checkout = async () => { setCheckingOut(true); await startAiAuditCheckout(); setCheckingOut(false); };
+  const images = [auditPreview, trackerPreview];
+  return <EditorialShell title={c.seoTitle} description={c.hero.lede} path="/ai-audit">
+    <EditorialHeroSection hero={c.hero} />
+    <TextBand band={c.argument} />
+    <FeatureBand title="What you get" items={c.features} />
+    <section className="product-band"><div className="product-inner">
+      <h2 className="product-heading">{c.tiersTitle}</h2>
+      <div className="product-grid">{c.tiers.map(tier => <div className="product-tier" key={tier.title}>
+        <h3>{tier.title}</h3><p>{tier.paragraph}</p>
+        {!tier.href && <p className="font-semibold text-xl">{tier.price}</p>}
+        {tier.href ? <EditorialButton href={tier.href}>{tier.label}</EditorialButton> : <Button className="product-button" disabled={checkingOut} onClick={checkout}>{tier.label}<ArrowRight className="ml-2 h-4 w-4" /></Button>}
+      </div>)}</div>
+    </div></section>
+    <section className="product-band product-soft"><div className="product-inner product-grid">
+      {c.previews.map((item, i) => <div key={item.title}><h2 className="font-playfair text-2xl mb-5">{item.title}</h2>
+        <Button variant="ghost" className="product-preview" onClick={() => setPreview({ src: images[i], alt: item.alt })} aria-label={`Enlarge ${item.title} preview`}><img src={images[i]} alt={item.alt} loading="lazy" /></Button>
+      </div>)}
+    </div></section>
+    <section className="product-band product-inverted"><div className="product-inner"><p className="product-prose mb-6">{c.framework.paragraph}</p><Link className="product-link" to={c.framework.href}>{c.framework.label}</Link></div></section>
+    <TextBand band={c.audience} />
+    <Dialog open={Boolean(preview)} onOpenChange={open => { if (!open) setPreview(null); }}><DialogContent className="max-w-6xl w-[95vw] p-3"><DialogTitle>{preview?.alt}</DialogTitle><DialogDescription className="sr-only">Enlarged spreadsheet preview</DialogDescription>{preview && <img src={preview.src} alt={preview.alt} className="w-full h-auto" />}</DialogContent></Dialog>
+  </EditorialShell>;
 }

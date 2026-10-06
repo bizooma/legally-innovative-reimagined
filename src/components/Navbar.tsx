@@ -78,12 +78,12 @@ const Navbar = () => {
           <img 
             src="/logo.png" 
             alt="Bizooma Logo"
-            className="h-12 xl:h-16 w-auto object-contain"
+            className="h-16 w-auto object-contain"
           />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-x-4 xl:gap-x-6 whitespace-nowrap">
+        <nav className="hidden md:flex items-center gap-x-6 whitespace-nowrap" aria-label="Main navigation">
           <NavLinks 
             navLinks={navLinks}
             onNavLinkClick={handleNavLinkClick}
@@ -102,13 +102,6 @@ const Navbar = () => {
           />
           */}
 
-          <Link
-            to="/accessibility/signup?mode=signin"
-            className={`ml-2 px-4 py-2 rounded-md border border-legal-primary hover:bg-legal-primary hover:text-white transition-colors font-medium text-sm whitespace-nowrap ${textColorClass}`}
-          >
-            Accessibility Login
-          </Link>
-
           <Button 
             className="bg-legal-primary hover:bg-legal-secondary text-white px-4 text-sm"
             onClick={() => navigate('/portal')}
@@ -118,12 +111,13 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile Menu Button */}
-        <button
+        <Button variant="ghost" size="icon"
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           className={`md:hidden ${textColorClass}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        </Button>
       </div>
 
       <MobileMenu 
