@@ -2,7 +2,7 @@
 
 > AI-powered marketing and development solutions for law firms, nonprofits, and startups in Jacksonville, FL.
 
-Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile apps, and lead-generation systems. We also publish products and tools (NPO Bots, AEO Analyzer, Quickie QR, Signature Pop, Lead Scraper CRM) and run a free SEO/AEO audit.
+Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile apps, and lead-generation systems. We also build and publish our own products and tools.
 
 ## Services
 
@@ -20,6 +20,9 @@ Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile 
 
 ## Products
 
+- [Bizooma Labs](/labs): Everything Bizooma has built — live, in development, and retired.
+- [Claude Cowork](/claude-cowork): Claude skills and tutorials for law firms and nonprofits.
+- [WordPress Plugins](/wordpress-plugins): Custom WordPress plugins.
 
 ## Insights
 
