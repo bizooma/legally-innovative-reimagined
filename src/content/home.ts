@@ -2,8 +2,8 @@ export interface HomeCard { name: string; description: string; href: string }
 export const home = {
   hero: {
     eyebrow: 'WHERE MARKETING MEETS CODE + AI',
-    title: 'Marketing and software for law firms and nonprofits',
-    lede: 'Search, websites, intake and automation — plus the software to run them when nothing off the shelf fits.',
+    title: 'Serious marketing & software for law firms and nonprofits',
+    lede: 'Search, websites, intake and automation — plus we build the software to run them when nothing off the shelf fits.',
     primary: { label: 'See what we do', href: '/services' },
     secondary: { label: 'Read our framework', href: '/order-of-operations' },
     phone: { label: '904-331-8130', href: 'tel:+19043318130' },
