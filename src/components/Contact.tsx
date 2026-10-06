@@ -230,7 +230,7 @@ const Contact = () => {
               </div>
               
               <div className="mb-6">
-                <TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken(null)} />
+                <div className="max-w-full overflow-hidden"><div className="origin-top-left scale-[0.84] min-[400px]:scale-100 h-[55px] min-[400px]:h-auto"><TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken(null)} /></div></div>
               </div>
 
               <Button 
