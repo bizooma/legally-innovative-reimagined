@@ -24,6 +24,8 @@ interface ArticleLayoutProps {
   audioEmbed?: ReactNode;
   faqs?: FAQ[];
   children: ReactNode;
+  /** Optional path to use as canonical instead of the current URL. */
+  canonicalPath?: string;
 }
 
 const ArticleLayout = ({
@@ -36,11 +38,13 @@ const ArticleLayout = ({
   image,
   audioEmbed,
   faqs,
-  children
+  children,
+  canonicalPath,
 }: ArticleLayoutProps) => {
   const location = useLocation();
   const siteUrl = "https://bizooma.com";
   const currentUrl = `${siteUrl}${location.pathname}`;
+  const canonicalUrl = canonicalPath ? `${siteUrl}${canonicalPath}` : currentUrl;
   const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/og-image.png`;
 
   const articleSchema = {
@@ -105,7 +109,7 @@ const ArticleLayout = ({
         <meta name="twitter:image" content={ogImage} />
         
         {/* Additional SEO */}
-        <link rel="canonical" href={currentUrl} />
+        <link rel="canonical" href={canonicalUrl} />
         
         {/* Structured Data - Article Schema */}
         <script type="application/ld+json">

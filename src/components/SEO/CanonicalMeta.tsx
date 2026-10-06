@@ -3,9 +3,14 @@ import { useLocation } from "react-router-dom";
 
 const SITE_URL = "https://bizooma.com";
 
+// Pages whose canonical points elsewhere (duplicate content awaiting merge).
+const CANONICAL_OVERRIDES: Record<string, string> = {
+  "/gbp-optimization-2026": "/google-business-profile-optimization",
+};
+
 const CanonicalMeta = () => {
   const { pathname } = useLocation();
-  const canonical = `${SITE_URL}${pathname}`;
+  const canonical = `${SITE_URL}${CANONICAL_OVERRIDES[pathname] ?? pathname}`;
 
   // Breadcrumbs built from the path
   const segments = pathname.split("/").filter(Boolean);

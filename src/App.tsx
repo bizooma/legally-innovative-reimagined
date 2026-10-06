@@ -11,7 +11,6 @@ import DeathOfTraditionalSeo from "./pages/DeathOfTraditionalSeo";
 import AppleMapsMarketingPage from "./pages/AppleMapsMarketingPage";
 import OpenAiWebBrowserPage from "./pages/OpenAiWebBrowserPage";
 import VoiceSeoAeoStatsPage from "./pages/VoiceSeoAeoStatsPage";
-import DIY from "./pages/DIY";
 import Portal from "./pages/Portal";
 import AdminDashboard from "./pages/AdminDashboard";
 import ClientDashboard from "./pages/ClientDashboard";
@@ -63,11 +62,9 @@ import WebsiteConversionLawFirmsPage from "./pages/WebsiteConversionLawFirmsPage
 import SchemaForExactMatchDomainsPage from "./pages/SchemaForExactMatchDomainsPage";
 import LcrPage from "./pages/LcrPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
-import SeoAuditPage from "./pages/SeoAuditPage";
 import JaxBarAssociationResourcesPage from "./pages/JaxBarAssociationResourcesPage";
 import JaxBarInfographicPage from "./pages/JaxBarInfographicPage";
 import SupportPage from "./pages/SupportPage";
-import MomentumCampaignsPage from "./pages/MomentumCampaignsPage";
 import WordpressPluginsPage from "./pages/WordpressPluginsPage";
 import LawFirmStartupsPage from "./pages/LawFirmStartupsPage";
 import AccessibilityLayerPage from "./pages/AccessibilityLayerPage";
@@ -158,8 +155,8 @@ const App = () => (
               <Route path="/michael" element={<MichaelSalesPage />} />
               
               {/* Proposal pages */}
-              <Route path="/proposals/phillips" element={<PhillipsProposalPage />} />
-              <Route path="/proposals/jaxreferrals" element={<JaxReferralsProposalPage />} />
+              <Route path="/proposals/phillips-gku0mza5" element={<PhillipsProposalPage />} />
+              <Route path="/proposals/jaxreferrals-xzq68ois" element={<JaxReferralsProposalPage />} />
               
               {/* Newsletter page */}
               <Route path="/route-to-results-newsletter" element={<RouteToResultsNewsletter />} />
@@ -188,7 +185,7 @@ const App = () => (
               
               {/* Google Business Profile Optimization page */}
               <Route path="/google-business-profile-optimization" element={<GoogleBusinessProfilePage />} />
-              <Route path="/google-business-profile" element={<GoogleBusinessProfilePage />} />
+              <Route path="/google-business-profile" element={<Navigate to="/google-business-profile-optimization" replace />} />
               
               {/* SEO/AEO/Voice SEO page */}
               <Route path="/law-firm-seo-aeo-voiceseo" element={<LawFirmSeoAeoPage />} />
@@ -218,7 +215,6 @@ const App = () => (
               <Route path="/openai-web-browser" element={<OpenAiWebBrowserPage />} />
               <Route path="/voice-seo-aeo-stats" element={<VoiceSeoAeoStatsPage />} />
               <Route path="/mobile-apps-marketing-tool" element={<MobileAppsMarketingToolPage />} />
-              <Route path="/diy" element={<DIY />} />
               <Route path="/install" element={<InstallPWA />} />
               <Route path="/portal" element={<Portal />} />
               <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
@@ -252,7 +248,6 @@ const App = () => (
               <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
               
               {/* SEO Audit Tool */}
-              <Route path="/seo-audit" element={<SeoAuditPage />} />
               
               {/* Jacksonville Bar Association CLE Resources */}
               <Route path="/jax-bar-association" element={<JaxBarAssociationResourcesPage />} />
@@ -287,7 +282,6 @@ const App = () => (
               </Route>
               
               {/* Momentum Campaigns */}
-              <Route path="/momentum-campaigns" element={<MomentumCampaignsPage />} />
               
               {/* Newsletter Section Pages */}
               <Route path="/marketing" element={<MarketingSectionPage />} />

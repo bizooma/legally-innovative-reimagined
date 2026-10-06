@@ -43,12 +43,6 @@
     <lastmod>2025-11-06</lastmod>
   </url>
   <url>
-    <loc>https://bizooma.com/diy</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
-  <url>
     <loc>https://bizooma.com/ai-customer-support-chatbots</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -82,12 +76,6 @@
     <loc>https://bizooma.com/google-business-profile-optimization</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-11-06</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/google-business-profile</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
     <lastmod>2025-11-06</lastmod>
   </url>
   <url>
@@ -157,30 +145,6 @@
     <lastmod>2026-01-05</lastmod>
   </url>
   <!-- New newsletter section pages -->
-  <url>
-    <loc>https://bizooma.com/marketing</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/code</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/ai</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/insights</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
   <!-- Blog posts -->
   <url>
     <loc>https://bizooma.com/why-reviews-matter-for-law-firms</loc>
@@ -196,12 +160,6 @@
   </url>
   <url>
     <loc>https://bizooma.com/ai-marketing-law-firms-2025</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/gbp-optimization-2026</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <lastmod>2026-04-14</lastmod>
@@ -238,18 +196,6 @@
     <lastmod>2026-04-14</lastmod>
   </url>
   <url>
-    <loc>https://bizooma.com/seo-audit</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/momentum-campaigns</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
-  <url>
     <loc>https://bizooma.com/products/mvp-soft-launch</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -268,35 +214,46 @@
     <priority>0.3</priority>
     <lastmod>2026-04-14</lastmod>
   </url>
-  <url>
-    <loc>https://bizooma.com/support</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/install</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-    <lastmod>2026-04-14</lastmod>
-  </url>
   <!-- Additional public pages -->
-  <url>
-    <loc>https://bizooma.com/donuts</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <lastmod>2026-05-13</lastmod>
-  </url>
-  <url>
-    <loc>https://bizooma.com/michael</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <lastmod>2026-05-13</lastmod>
-  </url>
   <url>
     <loc>https://bizooma.com/order-of-operations</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <lastmod>2026-10-06</lastmod>
+  </url>
+  <url>
+    <loc>https://bizooma.com/ai-receptionist</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bizooma.com/accessibility-layer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bizooma.com/claude-cowork</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bizooma.com/ai-audit</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bizooma.com/ai-explained</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bizooma.com/wordpress-plugins</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bizooma.com/law-firm-startups</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

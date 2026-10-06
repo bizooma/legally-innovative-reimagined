@@ -158,7 +158,7 @@ const StayInformed = () => {
       author: "Legal Marketing Research Team",
       category: "Local SEO",
       image: appleMapsLawFirmImage,
-      link: "/google-business-profile"
+      link: "/google-business-profile-optimization"
     },
     {
       id: 6,
