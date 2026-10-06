@@ -40,14 +40,10 @@ const LeadGenCTA = () => {
           </Button>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8 text-center">
+        <div className="grid md:grid-cols-2 gap-8 text-center max-w-xl mx-auto">
           <div>
             <div className="text-2xl font-bold mb-2">Free</div>
             <div className="text-legal-light">Lead Generation Audit</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold mb-2">30-Day</div>
-            <div className="text-legal-light">Results Guarantee</div>
           </div>
           <div>
             <div className="text-2xl font-bold mb-2">24/7</div>
