@@ -11,25 +11,15 @@ Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile 
 - [Law Firm Lead Generation](/law-firm-lead-generation): Capture and nurture high-quality legal leads.
 - [Law Firm Website Development](/law-firm-website-development): Custom law firm websites built to convert.
 - [Law Firm Mobile App Development](/law-firm-mobile-app-development): iOS and Android apps for law firms.
-- [Law Firm Voice Assistant Marketing](/law-firm-voice-assistant-marketing): Alexa and Google Assistant solutions.
 - [AI Consulting for Law Firms](/ai-consulting-for-law-firms): Strategy and implementation of AI tools.
 - [AI Customer Support Chatbots](/ai-customer-support-chatbots): 24/7 chatbot support for client engagement.
 - [Custom Chatbots](/chatbots): Multi-modal chatbots for any use case.
 - [Google Business Profile Optimization](/google-business-profile-optimization): Local search ranking for GBP.
 - [Apple Maps Marketing](/apple-maps-marketing): Visibility in Apple Maps and Siri results.
-- [Alexa Skills for Law Firms](/alexa-skills-law-firms): Custom Alexa skills.
 - [Accessibility Layer](/accessibility-layer): WCAG-compliant accessibility widget for any site.
 
 ## Products
 
-- [NPO Bots](/products/npo-bots): Chatbots for nonprofits.
-- [AEO Analyzer](/products/aeo-analyzer): Answer engine optimization analysis.
-- [Branded Books](/products/branded-books): Author-branded book publishing.
-- [Quickie QR](/products/quickie-qr): Trackable QR code generator.
-- [Signature Pop](/products/signature-pop): Email signature design tool.
-- [Support Bots](/products/support-bots): AI customer support automation.
-- [Lead Scraper CRM](/products/lead-scraper-crm): Lead generation CRM.
-- [MVP Soft Launch](/products/mvp-soft-launch): MVP launch service for startups.
 
 ## Insights
 
