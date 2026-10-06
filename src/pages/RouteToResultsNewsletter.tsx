@@ -9,6 +9,7 @@ import { trackFormSubmission } from "@/utils/gtmTracking";
 import routeToResultsLogo from "@/assets/route-to-results-logo.png";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
 import SoundCloudEmbed from "@/components/integrations/SoundCloudEmbed";
+import { home } from "@/content/home";
 
 const RouteToResultsNewsletter = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
@@ -46,9 +47,9 @@ const RouteToResultsNewsletter = () => {
     <>
       <Helmet>
         <title>Route to Results Newsletter - AI Marketing & Development Insights | Bizooma</title>
-        <meta name="description" content="Subscribe to Route to Results Newsletter for weekly insights on AI marketing, web development, SEO, and digital transformation. Join thousands of professionals staying ahead of technology trends." />
+        <meta name="description" content={home.newsletterPromise} />
         <meta property="og:title" content="Route to Results Newsletter - Weekly AI & Marketing Insights" />
-        <meta property="og:description" content="Get exclusive insights, case studies, and updates on the latest AI and technology trends delivered every Tuesday." />
+        <meta property="og:description" content={home.newsletterPromise} />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://bizooma.com/route-to-results-newsletter" />
       </Helmet>
@@ -85,8 +86,8 @@ const RouteToResultsNewsletter = () => {
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="text-3xl mb-2">📊</div>
-                <h3 className="font-semibold text-legal-dark mb-2">Real Case Studies</h3>
-                <p className="text-gray-600 text-sm">See how others are succeeding</p>
+                <h3 className="font-semibold text-legal-dark mb-2">{home.newsletterCards[0].title}</h3>
+                <p className="text-gray-600 text-sm">{home.newsletterPromise}</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="text-3xl mb-2">💡</div>
