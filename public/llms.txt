@@ -19,7 +19,6 @@ Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile 
 - [Apple Maps Marketing](/apple-maps-marketing): Visibility in Apple Maps and Siri results.
 - [Alexa Skills for Law Firms](/alexa-skills-law-firms): Custom Alexa skills.
 - [Accessibility Layer](/accessibility-layer): WCAG-compliant accessibility widget for any site.
-- [SEO Audit](/seo-audit): Free comprehensive SEO/AEO/Voice audit tool.
 
 ## Products
 
