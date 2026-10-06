@@ -74,7 +74,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center shrink-0 mr-6">
           <img 
             src="/logo.png" 
             alt="Bizooma Logo"
