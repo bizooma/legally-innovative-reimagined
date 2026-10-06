@@ -35,6 +35,7 @@ const GbpOptimization2026Page = () => {
       category="Local SEO"
       image={appleMapsLawFirmImage}
       faqs={faqs}
+      canonicalPath="/google-business-profile-optimization"
     >
       <div className="space-y-8">
         <div className="space-y-6">
