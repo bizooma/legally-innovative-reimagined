@@ -125,54 +125,6 @@ const BrandedBooksPage = () => {
           </div>
         </section>
 
-        {/* Case Study */}
-        <section className="section-padding bg-legal-light/30">
-          <div className="container mx-auto">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-legal-dark">
-                Success Story: Thompson & Associates Law Firm
-              </h2>
-              <Card className="border-none shadow-xl">
-                <CardContent className="p-8">
-                  <div className="mb-6">
-                    <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Challenge</h3>
-                    <p className="text-gray-700 mb-4">
-                      Thompson & Associates wanted to stand out in a competitive market and build stronger relationships with clients beyond traditional marketing materials. They needed a unique way to stay top-of-mind with clients and their families.
-                    </p>
-                  </div>
-                  <div className="mb-6">
-                    <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Solution</h3>
-                    <p className="text-gray-700 mb-4">
-                      Bizooma created custom coloring books for families and professional journals for clients. The coloring books featured engaging illustrations and educational legal tips, while journals included inspirational quotes and the firm's core values on every page.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold mb-4 text-legal-primary">The Results</h3>
-                    <ul className="space-y-3">
-                      <li className="flex items-start">
-                        <Check className="w-6 h-6 text-legal-primary mr-3 flex-shrink-0 mt-1" />
-                        <span className="text-gray-700">85% increase in client referrals within 6 months</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="w-6 h-6 text-legal-primary mr-3 flex-shrink-0 mt-1" />
-                        <span className="text-gray-700">Clients reported feeling more connected to the firm</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="w-6 h-6 text-legal-primary mr-3 flex-shrink-0 mt-1" />
-                        <span className="text-gray-700">Social media engagement increased by 120% from clients sharing photos</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="w-6 h-6 text-legal-primary mr-3 flex-shrink-0 mt-1" />
-                        <span className="text-gray-700">Books became conversation starters at community events</span>
-                      </li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
         {/* Pricing */}
         <section className="section-padding bg-legal-light/30">
           <div className="container mx-auto">
