@@ -1,3 +1,4 @@
+import { home } from "@/content/home";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -230,27 +231,13 @@ const Newsletter = () => {
             </DialogContent>
           </Dialog>
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="font-semibold text-legal-dark mb-2">Weekly Insights</h3>
-              <p className="text-gray-600 text-sm">
-                Get the latest trends in legal technology and practice management delivered every Tuesday.
-              </p>
-            </div>
-            
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="font-semibold text-legal-dark mb-2">Case Studies</h3>
-              <p className="text-gray-600 text-sm">
-                Learn from real law firms that have successfully implemented innovative solutions.
-              </p>
-            </div>
-            
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="font-semibold text-legal-dark mb-2">Exclusive Access</h3>
-              <p className="text-gray-600 text-sm">
-                Be the first to know about new tools, templates, and resources for legal professionals.
-              </p>
-            </div>
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            {home.newsletterCards.map((card) => (
+              <div key={card.title} className="bg-gray-50 rounded-lg p-6">
+                <h3 className="font-semibold text-legal-dark mb-2">{card.title}</h3>
+                <p className="text-gray-600 text-sm">{card.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

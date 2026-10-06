@@ -230,7 +230,7 @@ const Contact = () => {
               </div>
               
               <div className="mb-6">
-                <TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken(null)} />
+                <div className="max-w-full overflow-hidden"><div className="origin-top-left scale-[0.84] min-[400px]:scale-100 h-[55px] min-[400px]:h-auto"><TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken(null)} /></div></div>
               </div>
 
               <Button 
@@ -249,7 +249,7 @@ const Contact = () => {
           <h3 className="text-2xl md:text-3xl font-bold mb-10 text-legal-dark text-center">
             Our <span className="highlight-text">Locations</span>
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 gap-8 max-w-xl mx-auto">
             {/* Jacksonville Office */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden">
               <iframe 
@@ -280,35 +280,6 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Amarillo Office */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.9971159263355!2d-101.8388806!3d35.2065408!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87014efebbd00001%3A0x6d22297156b25a93!2s600%20S%20Tyler%20St%20suite%202100%2C%20Amarillo%2C%20TX%2079101!5e0!3m2!1sen!2sus!4v1767917279697!5m2!1sen!2sus" 
-                width="100%" 
-                height="280" 
-                style={{ border: 0 }} 
-                allowFullScreen 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Amarillo Office Location"
-                className="w-full"
-              />
-              <div className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="bg-legal-light p-2 rounded-full flex-shrink-0">
-                    <MapPin className="h-5 w-5 text-legal-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg text-legal-dark">Amarillo, TX</h4>
-                    <p className="text-gray-600 mt-1">
-                      600 S Tyler St, Suite 2100<br />
-                      Amarillo, TX 79101
-                    </p>
-                    <p className="text-sm text-legal-primary font-medium mt-2">By Appointment Only</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
