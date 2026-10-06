@@ -1,9 +1,4 @@
 # --- Permanent moves (301) ---
-/google-business-profile              /google-business-profile-optimization   301!
-/mobile-app-development               /law-firm-mobile-app-development         301!
-/mobile-apps-marketing-tool           /law-firm-mobile-app-development         301!
-/law-firm-voice-assistant-marketing   /law-firm-seo-aeo-voiceseo               301!
-/alexa-skills-law-firms               /law-firm-seo-aeo-voiceseo               301!
 /products/npo-bots                    /labs   301!
 /products/aeo-analyzer                /labs   301!
 /products/quickie-qr                  /labs   301!
@@ -12,6 +7,23 @@
 /products/signature-pop               /labs   301!
 /products/branded-books               /labs   301!
 /products/mvp-soft-launch             /labs   301!
+# --- Services consolidation (301) ---
+/law-firm-digital-marketing            /services/ai-marketing          301!
+/ai-consulting-for-law-firms           /services/ai-marketing          301!
+/ai-customer-support-chatbots          /services/ai-marketing          301!
+/chatbots                              /services/ai-marketing          301!
+/law-firm-seo-aeo-voiceseo             /services/seo-aeo               301!
+/google-business-profile-optimization  /services/seo-aeo               301!
+/google-business-profile               /services/seo-aeo               301!
+/gbp-optimization-2026                 /services/seo-aeo               301!
+/law-firm-voice-assistant-marketing    /services/seo-aeo               301!
+/alexa-skills-law-firms                /services/seo-aeo               301!
+/law-firm-website-development          /services/websites-and-apps     301!
+/website-conversion-law-firms          /services/websites-and-apps     301!
+/law-firm-mobile-app-development       /services/websites-and-apps     301!
+/mobile-app-development                /services/websites-and-apps     301!
+/mobile-apps-marketing-tool            /services/websites-and-apps     301!
+/law-firm-lead-generation              /services/lead-generation       301!
 # --- Gone for good (410) ---
 /seo-audit            /index.html   410
 /diy                  /index.html   410
