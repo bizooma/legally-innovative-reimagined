@@ -83,7 +83,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-x-6 whitespace-nowrap">
+        <nav className="hidden md:flex items-center gap-x-4 xl:gap-x-6 whitespace-nowrap">
           <NavLinks 
             navLinks={navLinks}
             onNavLinkClick={handleNavLinkClick}
