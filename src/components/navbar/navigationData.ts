@@ -4,7 +4,7 @@ export const navLinks = [
   { name: "Services", href: null, isExternal: false, path: "/services" },
   { name: "Products", href: null, isExternal: false, path: "/products" },
   { name: "Insights", href: null, isExternal: false, path: "/stay-informed" },
-  { name: "About", href: "#about", isExternal: false },
+  { name: "About", href: null, isExternal: false, path: "/about" },
   { name: "Contact", href: "#contact", isExternal: false },
 ];
 

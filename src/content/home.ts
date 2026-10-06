@@ -7,7 +7,7 @@ export const home = {
     primary: { label: 'See what we do', href: '/services' },
     secondary: { label: 'Read our framework', href: '/order-of-operations' },
     phone: { label: '904-331-8130', href: 'tel:+19043318130' },
-    office: 'Jacksonville, FL',
+    office: 'Office: Jacksonville, FL',
   },
   argument: {
     title: 'Two things, one argument',

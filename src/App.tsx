@@ -55,6 +55,8 @@ import OrderOfOperationsPage from "./pages/OrderOfOperationsPage";
 import LabsPage from "./pages/LabsPage";
 import ProductPage from "./pages/products/ProductLayout";
 import ProductsOverviewPage from "./pages/products/ProductsOverviewPage";
+import AboutPage from "./pages/AboutPage";
+import FaqPage from "./pages/FaqPage";
 import { datarightsos } from "./content/products/datarightsos";
 import { lexguild } from "./content/products/lexguild";
 import { amicusEdge } from "./content/products/amicusEdge";
@@ -139,6 +141,8 @@ const App = () => (
               <Route path="/order-of-operations" element={<OrderOfOperationsPage />} />
               <Route path="/labs" element={<LabsPage />} />
               <Route path="/products" element={<ProductsOverviewPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/faq" element={<FaqPage />} />
               <Route path="/products/datarightsos" element={<ProductPage content={datarightsos} />} />
               <Route path="/products/lexguild" element={<ProductPage content={lexguild} />} />
               <Route path="/products/amicus-edge" element={<ProductPage content={amicusEdge} />} />
