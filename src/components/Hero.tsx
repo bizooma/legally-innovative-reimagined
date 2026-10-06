@@ -18,7 +18,7 @@ const Hero = () => {
       <div className="container mx-auto relative z-10">
         <div className="max-w-3xl animate-fade-in text-primary-foreground">
           <p className="text-xs md:text-sm font-semibold tracking-[0.2em] mb-5 opacity-90">{h.eyebrow}</p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">{h.title}</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight [text-wrap:balance]">{h.title}</h1>
           <p className="text-lg md:text-xl mb-8 text-legal-light max-w-2xl">{h.lede}</p>
           <div className="flex flex-wrap items-center gap-6 mb-8">
             <Button asChild className="bg-white hover:bg-legal-accent text-legal-primary hover:text-white px-8 py-6 text-lg font-semibold shadow-lg">
