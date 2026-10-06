@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import auditPreview from "@/assets/ai-audit-preview.png.asset.json";
-import trackerPreview from "@/assets/ai-tracker-preview.png.asset.json";
+import auditPreview from "@/assets/ai-audit-preview.png";
+import trackerPreview from "@/assets/ai-tracker-preview.png";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { aiAudit as c } from "@/content/products/aiAudit";
@@ -39,7 +39,7 @@ export default function AiAuditPage() {
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const [checkingOut, setCheckingOut] = useState(false);
   const checkout = async () => { setCheckingOut(true); await startAiAuditCheckout(); setCheckingOut(false); };
-  const images = [auditPreview.url, trackerPreview.url];
+  const images = [auditPreview, trackerPreview];
   return <EditorialShell title={c.seoTitle} description={c.hero.lede} path="/ai-audit">
     <EditorialHeroSection hero={c.hero} />
     <TextBand band={c.argument} />
