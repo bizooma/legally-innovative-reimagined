@@ -38,7 +38,7 @@ const ArticleLayout = ({
   image,
   audioEmbed,
   faqs,
-  children
+  children,
   canonicalPath,
 }: ArticleLayoutProps) => {
   const location = useLocation();
