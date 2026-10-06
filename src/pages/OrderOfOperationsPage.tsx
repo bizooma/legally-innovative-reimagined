@@ -138,7 +138,7 @@ function PillarBand({ pillar, tinted }: { pillar: Pillar; tinted: boolean }) {
           {pillar.aside && (
             <div className="mt-8 border border-[#7A0A0A]/30 bg-white/70 p-6">
               <p className={`font-raleway text-xs font-semibold uppercase tracking-[0.18em] ${OX} mb-2`}>{pillar.aside.label}</p>
-              <p className="font-raleway text-base leading-relaxed text-[#333]">{pillar.aside.text}</p>
+              <p className="font-raleway text-base leading-relaxed text-[#333]">{rich(pillar.aside.text)}</p>
             </div>
           )}
           <dl className="mt-10 border-l-2 border-[#7A0A0A] pl-6 space-y-6 font-raleway">
@@ -162,7 +162,7 @@ function Blockers() {
           {blockers.map((b) => (
             <div key={b.label} className="grid gap-3 md:grid-cols-[13.5rem_minmax(0,1fr)] md:gap-16 border-t border-[#f5f1ea]/15 py-8">
               <p className={`font-raleway text-xs font-semibold uppercase tracking-[0.18em] ${CRIMSON}`}>{b.label}</p>
-              <p className="font-raleway text-base lg:text-lg leading-relaxed text-[#f5f1ea]/85 max-w-[40rem]">{b.text}</p>
+              <p className="font-raleway text-base lg:text-lg leading-relaxed text-[#f5f1ea]/85 max-w-[40rem]">{rich(b.text)}</p>
             </div>
           ))}
         </div>
