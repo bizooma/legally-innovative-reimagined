@@ -45,8 +45,8 @@ const WhyChooseUs = () => {
       }}
     >
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <div className="lg:w-1/2">
+        <div>
+          <div className="w-full">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
               Why Choose <span className="text-legal-accent">Bizooma</span>
             </h2>
@@ -56,7 +56,7 @@ const WhyChooseUs = () => {
               we provide practical, impactful solutions that drive real results.
             </p>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
               {reasons.map((reason, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <div className="mt-1 bg-legal-accent/20 rounded-full p-1 flex-shrink-0">
