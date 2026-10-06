@@ -62,6 +62,14 @@ const config = {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
         },
+        status: {
+          live: "hsl(var(--status-live))",
+          "live-bg": "hsl(var(--status-live-bg))",
+          dev: "hsl(var(--status-dev))",
+          "dev-bg": "hsl(var(--status-dev-bg))",
+          retired: "hsl(var(--status-retired))",
+          "retired-bg": "hsl(var(--status-retired-bg))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

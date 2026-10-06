@@ -2,11 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { trackNavigation } from "@/utils/gtmTracking";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { ArrowRight, Bot, Smartphone, MessageSquare, Volume2, Accessibility, Sparkles, PhoneCall } from "lucide-react";
+import { ArrowRight, Bot, Smartphone, MessageSquare, Accessibility, Sparkles, PhoneCall } from "lucide-react";
 import { Link } from "react-router-dom";
 import immigrationLawApp from "@/assets/immigration-law-app.png";
 import rokuDemo from "@/assets/roku-demo.png";
-import alexaSkill from "@/assets/alexa-skill.png";
 import chatbotExamples from "@/assets/chatbot-examples.png";
 import accessibilityWidget from "@/assets/accessibility-widget.png";
 import claudeCowork from "@/assets/claude-cowork.jpg";
@@ -86,24 +85,6 @@ const Services = () => {
       accentColor: "from-violet-600 to-purple-700",
       noOverlay: true,
       showLearnMore: true,
-    },
-    {
-      title: "Voice Assistant Marketing",
-      subtitle: "Alexa · Google Assistant · Custom Voice Apps",
-      description: "Create custom voice applications for Amazon Alexa and Google Assistant that allow your business to engage with clients through natural language interactions and provide valuable information on demand.",
-      highlights: [
-        "Custom Alexa Skills & Google Actions",
-        "Voice-optimized content strategy",
-        "FAQ & service information delivery",
-        "Voice search optimization (Voice SEO)",
-      ],
-      examples: "Smart speakers and voice assistants remain a daily habit for tens of millions of U.S. households, and voice queries phrase themselves as questions — which is exactly how answer-engine optimization works.",
-      examplesLabel: "Why Voice? ",
-      icon: <Volume2 className="h-8 w-8" />,
-      bgImage: alexaSkill,
-      link: "/law-firm-voice-assistant-marketing",
-      accentColor: "from-orange-500 to-red-600",
-      noOverlay: true,
     },
     {
       title: "ADA Accessibility Widget",

@@ -36,17 +36,7 @@ import LawFirmDigitalMarketingPage from "./pages/LawFirmDigitalMarketingPage";
 import GoogleBusinessProfilePage from "./pages/GoogleBusinessProfilePage";
 import WhyReviewsMatterPage from "./pages/WhyReviewsMatterPage";
 import LawFirmSeoAeoPage from "./pages/LawFirmSeoAeoPage";
-import MobileAppsMarketingToolPage from "./pages/MobileAppsMarketingToolPage";
 import LawFirmLeadGenerationPage from "./pages/LawFirmLeadGenerationPage";
-import LawFirmVoiceAssistantMarketingPage from "./pages/LawFirmVoiceAssistantMarketingPage";
-import NpoBotsPage from "./pages/products/NpoBotsPage";
-import AeoAnalyzerPage from "./pages/products/AeoAnalyzerPage";
-import QuickieQrPage from "./pages/products/QuickieQrPage";
-import LeadScraperCrmPage from "./pages/products/LeadScraperCrmPage";
-import SupportBotsPage from "./pages/products/SupportBotsPage";
-import SignaturePopPage from "./pages/products/SignaturePopPage";
-import BrandedBooksPage from "./pages/products/BrandedBooksPage";
-import MvpSoftLaunchPage from "./pages/products/MvpSoftLaunchPage";
 import InstallPWA from "./pages/InstallPWA";
 import RouteToResultsNewsletter from "./pages/RouteToResultsNewsletter";
 import StatusTicker from "./pages/StatusTicker";
@@ -57,7 +47,6 @@ import AIMarketingLawFirms2025 from "./pages/AIMarketingLawFirms2025";
 import GbpOptimization2026Page from "./pages/GbpOptimization2026Page";
 import GoogleMarch2026UpdatePage from "./pages/GoogleMarch2026UpdatePage";
 import SchemaMarkupFeaturedSnippetsPage from "./pages/SchemaMarkupFeaturedSnippetsPage";
-import AlexaSkillsLawFirmsPage from "./pages/AlexaSkillsLawFirmsPage";
 import WebsiteConversionLawFirmsPage from "./pages/WebsiteConversionLawFirmsPage";
 import SchemaForExactMatchDomainsPage from "./pages/SchemaForExactMatchDomainsPage";
 import LcrPage from "./pages/LcrPage";
@@ -74,6 +63,7 @@ import AiAuditPage from "./pages/AiAuditPage";
 import AiAuditSuccess from "./pages/AiAuditSuccess";
 import AiExplainedPage from "./pages/AiExplainedPage";
 import OrderOfOperationsPage from "./pages/OrderOfOperationsPage";
+import LabsPage from "./pages/LabsPage";
 import AIReceptionist from "./pages/AIReceptionist";
 import AccessibilityLayout from "./pages/accessibility/AccessibilityLayout";
 import AccessibilityDashboard from "./pages/accessibility/AccessibilityDashboard";
@@ -147,6 +137,7 @@ const App = () => (
               {/* AI Explained glossary page */}
               <Route path="/ai-explained" element={<AiExplainedPage />} />
               <Route path="/order-of-operations" element={<OrderOfOperationsPage />} />
+              <Route path="/labs" element={<LabsPage />} />
 
               {/* AI Receptionist service page */}
               <Route path="/ai-receptionist" element={<AIReceptionist />} />
@@ -194,17 +185,8 @@ const App = () => (
               <Route path="/law-firm-lead-generation" element={<LawFirmLeadGenerationPage />} />
               
               {/* Voice Assistant Marketing page */}
-              <Route path="/law-firm-voice-assistant-marketing" element={<LawFirmVoiceAssistantMarketingPage />} />
               
               {/* Product pages */}
-              <Route path="/products/npo-bots" element={<NpoBotsPage />} />
-              <Route path="/products/aeo-analyzer" element={<AeoAnalyzerPage />} />
-          <Route path="/products/quickie-qr" element={<QuickieQrPage />} />
-          <Route path="/products/lead-scraper-crm" element={<LeadScraperCrmPage />} />
-          <Route path="/products/support-bots" element={<SupportBotsPage />} />
-          <Route path="/products/signature-pop" element={<SignaturePopPage />} />
-          <Route path="/products/branded-books" element={<BrandedBooksPage />} />
-              <Route path="/products/mvp-soft-launch" element={<MvpSoftLaunchPage />} />
               
               {/* Main routes */}
               <Route path="/" element={<Index />} />
@@ -214,7 +196,6 @@ const App = () => (
               <Route path="/why-reviews-matter-for-law-firms" element={<WhyReviewsMatterPage />} />
               <Route path="/openai-web-browser" element={<OpenAiWebBrowserPage />} />
               <Route path="/voice-seo-aeo-stats" element={<VoiceSeoAeoStatsPage />} />
-              <Route path="/mobile-apps-marketing-tool" element={<MobileAppsMarketingToolPage />} />
               <Route path="/install" element={<InstallPWA />} />
               <Route path="/portal" element={<Portal />} />
               <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
@@ -236,7 +217,6 @@ const App = () => (
               <Route path="/ai-marketing-law-firms-2025" element={<AIMarketingLawFirms2025 />} />
               <Route path="/gbp-optimization-2026" element={<GbpOptimization2026Page />} />
               <Route path="/schema-markup-featured-snippets" element={<SchemaMarkupFeaturedSnippetsPage />} />
-              <Route path="/alexa-skills-law-firms" element={<AlexaSkillsLawFirmsPage />} />
               <Route path="/website-conversion-law-firms" element={<WebsiteConversionLawFirmsPage />} />
               <Route path="/google-march-2026-update" element={<GoogleMarch2026UpdatePage />} />
               <Route path="/schema-for-exact-match-domains" element={<SchemaForExactMatchDomainsPage />} />

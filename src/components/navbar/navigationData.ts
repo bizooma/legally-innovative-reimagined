@@ -19,15 +19,8 @@ export const serviceLinks = [
   { name: "Google Business Profile", path: "/google-business-profile-optimization" },
   { name: "SEO/AEO/Voice SEO", path: "/law-firm-seo-aeo-voiceseo" },
   { name: "Lead Generation", path: "/law-firm-lead-generation" },
-  { name: "Voice Assistant Marketing", path: "/law-firm-voice-assistant-marketing" },
 ];
 
 export const productLinks = [
-  { name: "NPO Bots", path: "/products/npo-bots", description: "AI-Powered Nonprofit Engagement" },
-  { name: "AEO Analyzer", path: "/products/aeo-analyzer", description: "Legal Analytics Dashboard" },
-  { name: "MVP Soft Launch", path: "/products/mvp-soft-launch", description: "Launch Platform Directory" },
-  { name: "Lead Scraper CRM", path: "/products/lead-scraper-crm", description: "Automated Lead Generation" },
-  { name: "Support Bots", path: "/products/support-bots", description: "AI Customer Support" },
-  { name: "Signature Pop", path: "/products/signature-pop", description: "Email Signature Marketing" },
-  { name: "Branded Books", path: "/products/branded-books", description: "Custom Coloring Books & Journals" },
+  { name: "Bizooma Labs", path: "/labs", description: "Everything we've built" },
 ];

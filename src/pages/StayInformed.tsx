@@ -51,17 +51,6 @@ const StayInformed = () => {
       link: "/website-conversion-law-firms"
     },
     {
-      id: 11,
-      title: "How Law Firms Can Leverage Amazon Alexa Skills for Modern Marketing",
-      excerpt: "With over 100 million Alexa-enabled devices in U.S. homes, developing an Amazon Alexa skill could be the competitive advantage your law firm needs.",
-      date: "January 5, 2026",
-      readTime: "10 min read",
-      author: "Voice Technology Team",
-      category: "Voice Marketing",
-      image: voiceSeoHeroImage,
-      link: "/alexa-skills-law-firms"
-    },
-    {
       id: 10,
       title: "How to Use Schema Markup to Win Featured Snippets: A Guide for Attorneys",
       excerpt: "Learn how to leverage the five essential schema types—FAQ, HowTo, Article, Organization, and Attorney—to capture position zero and dominate search results for your law firm.",
@@ -93,17 +82,6 @@ const StayInformed = () => {
       category: "AI Technology",
       image: aiMarketingImage,
       link: "/ai-marketing-law-firms-2025"
-    },
-    {
-      id: 7,
-      title: "Why Mobile Apps Remain a Powerful Marketing Tool—Even When Other Channels Slow Down",
-      excerpt: "In a digital landscape where algorithms shift overnight and marketing channels rise and fall in effectiveness, one tool continues to deliver consistent, long-term value: mobile apps.",
-      date: "2025-11-18",
-      readTime: "10 min read",
-      author: "Mobile Marketing Team",
-      category: "Mobile Development",
-    image: "/images/mobile-apps-marketing.jpg",
-      link: "/mobile-apps-marketing-tool"
     },
     {
       id: 1,
