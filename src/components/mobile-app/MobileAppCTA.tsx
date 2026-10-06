@@ -39,21 +39,6 @@ const MobileAppCTA = () => {
             Call Now
           </Button>
         </div>
-        
-        <div className="grid md:grid-cols-3 gap-8 text-center">
-          <div>
-            <div className="text-2xl font-bold mb-2">60-Day</div>
-            <div className="text-legal-light">Development Timeline</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold mb-2">24/7</div>
-            <div className="text-legal-light">Support Available</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold mb-2">100%</div>
-            <div className="text-legal-light">Satisfaction Guaranteed</div>
-          </div>
-        </div>
       </div>
     </section>
   );

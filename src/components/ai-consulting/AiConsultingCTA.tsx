@@ -40,7 +40,7 @@ const AiConsultingCTA = () => {
           </Button>
         </div>
         
-        <div className="grid md:grid-cols-4 gap-8 text-center mb-12">
+        <div className="grid md:grid-cols-2 gap-8 text-center mb-12 max-w-xl mx-auto">
           <div>
             <div className="text-2xl font-bold mb-2">Free</div>
             <div className="text-legal-light">Initial Consultation</div>
@@ -48,14 +48,6 @@ const AiConsultingCTA = () => {
           <div>
             <div className="text-2xl font-bold mb-2">30-Day</div>
             <div className="text-legal-light">Implementation Timeline</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold mb-2">24/7</div>
-            <div className="text-legal-light">Ongoing Support</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold mb-2">ROI</div>
-            <div className="text-legal-light">Guarantee</div>
           </div>
         </div>
         

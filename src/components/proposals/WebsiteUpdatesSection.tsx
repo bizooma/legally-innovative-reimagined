@@ -37,7 +37,6 @@ const services = [
 const stats = [
   { value: "53%", label: "of visitors leave if a page takes >3s to load" },
   { value: "70%", label: "of traffic now comes from mobile devices" },
-  { value: "3x", label: "more leads from optimized websites" },
 ];
 
 const WebsiteUpdatesSection = () => {
@@ -73,7 +72,7 @@ const WebsiteUpdatesSection = () => {
         </div>
 
         {/* Stats row */}
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center p-6 rounded-xl bg-white/60 border border-legal-primary/10">
               <p className="text-3xl font-bold text-legal-primary mb-2">{stat.value}</p>
