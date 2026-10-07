@@ -29,7 +29,7 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Bizooma | AI Marketing & Software for Law Firms and Nonprofits</title>
+        <title>Bizooma | AI Marketing Agency for Law Firms & Nonprofits</title>
         <meta name="description" content="Bizooma builds AI-powered marketing, automation, and custom software for law firms and nonprofits. Jacksonville, FL." />
       </Helmet>
       <div className="min-h-screen">

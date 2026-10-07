@@ -19,7 +19,7 @@ const GlobalSEO = () => {
       width: "600",
       height: "600"
     },
-    description: "Jacksonville's premier digital marketing agency specializing in AI-powered marketing, SEO/AEO optimization, web development, mobile apps, and lead generation for law firms, nonprofits, and local businesses.",
+    description: "A Jacksonville marketing agency serving law firms and nonprofits. AI marketing and automation, SEO and AEO, websites and apps, and lead generation — plus our own software products.",
     address: {
       "@type": "PostalAddress",
       streetAddress: "200 N Laura St",
@@ -85,32 +85,32 @@ const GlobalSEO = () => {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "SEO & AEO Optimization",
-            description: "Search engine and answer engine optimization for maximum online visibility"
+            name: "AI Marketing & Automation",
+            description: "Automating the work a team repeats, with the governance to do it safely."
           }
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "AI Chatbot Development",
-            description: "Custom AI-powered chatbots for customer support and lead generation"
+            name: "SEO & AEO",
+            description: "Being findable in search and citable by AI assistants."
           }
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Website Development",
-            description: "Custom website design and development for businesses"
+            name: "Websites & Apps",
+            description: "Sites built around what a visitor came to do, and apps where one is warranted."
           }
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Digital Marketing",
-            description: "Comprehensive digital marketing strategies and campaign management"
+            name: "Lead Generation & Intake",
+            description: "Closing the gap between an enquiry arriving and a human replying."
           }
         }
       ]
