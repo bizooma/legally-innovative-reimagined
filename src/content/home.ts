@@ -25,6 +25,14 @@ export const home = {
       'When we tell a firm that a workflow is worth automating, or that a channel is worth the money, it is because we built the thing and watched what happened. The products are not a side business. They are the reason the advice is any good.',
     ],
   },
+  argumentDiagram: {
+    ariaLabel: 'Diagram: agencies, which advise on technology they have never built, and software companies, which sell tools without understanding the work, both lead into Bizooma, which builds the software and runs the marketing.',
+    sources: [
+      { label: 'Agencies', caption: 'Advise on technology they have never built' },
+      { label: 'Software companies', caption: 'Sell tools without understanding the work' },
+    ],
+    result: { label: 'Bizooma', caption: 'Builds the software. Runs the marketing.' },
+  },
   services: {
     title: 'What we do',
     items: [

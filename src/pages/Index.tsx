@@ -11,6 +11,7 @@ import Testimonials from "@/components/Testimonials";
 import { EditorialButton } from "@/pages/products/ProductLayout";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
 import { home, type HomeCard } from "@/content/home";
+import ArgumentDiagram from "@/components/home/ArgumentDiagram";
 
 const CardGrid = ({ items }: { items: HomeCard[] }) => (
   <div className="product-grid product-grid-shelf">
@@ -35,9 +36,12 @@ const Index = () => {
         <Navbar />
         <Hero />
         <div className="product-editorial">
-          <section className="product-band"><div className="product-inner">
-            <h2 className="product-heading">{argument.title}</h2>
-            <div className="product-prose">{argument.paragraphs.map((p) => <p key={p}>{p}</p>)}</div>
+          <section className="product-band"><div className="product-inner grid gap-10 lg:grid-cols-2 lg:gap-16 lg:items-center">
+            <div className="min-w-0">
+              <h2 className="product-heading">{argument.title}</h2>
+              <div className="product-prose">{argument.paragraphs.map((p) => <p key={p}>{p}</p>)}</div>
+            </div>
+            <div className="min-w-0"><ArgumentDiagram /></div>
           </div></section>
           <section id="services" className="product-band product-soft"><div className="product-inner">
             <h2 className="product-heading">{services.title}</h2>
