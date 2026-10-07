@@ -13,8 +13,9 @@ export const home = {
       items: [
         { before: '', label: 'Ava', href: '/ai-receptionist', after: " answers the phone number above. Call it — you'll be talking to our AI receptionist, not a menu." },
         { before: '', label: 'DataRightsOS', href: '/products/datarightsos', after: ' powers the privacy center in the corner of this page.' },
+        { before: '', label: 'Biz', href: '', after: ', the assistant in the corner, runs on an engine we built and maintain.' },
       ],
-      footnote: 'Two of the five products we sell, working on our own site.',
+      footnote: 'Three of the things we make, working on our own site.',
     },
   },
   argument: {
