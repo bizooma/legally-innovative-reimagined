@@ -4,12 +4,14 @@ import MeetJoe from "@/components/MeetJoe";
 import ChamberMemberships from "@/components/ChamberMemberships";
 import { EditorialShell, EditorialButton } from "@/pages/products/ProductLayout";
 import { about as c } from "@/content/about";
+import { home } from "@/content/home";
 
 export default function AboutPage() {
   return (
     <EditorialShell title={c.seoTitle} description={c.description} path="/about">
       <section className="product-inverted product-hero hero-textured"><HeroTexture /><div className="product-inner">
         <p className="product-eyebrow">{c.hero.eyebrow}</p><h1>{c.hero.title}</h1><p className="product-lede">{c.hero.lede}</p>
+        <p className="product-sub">{home.publishingLine.before}<a className="product-link" href={home.publishingLine.href} target="_blank" rel="noopener noreferrer">{home.publishingLine.label}</a>{home.publishingLine.after}</p>
       </div></section>
       {c.sections.map((s, i) => (
         <section key={s.title} className={`product-band ${i % 2 ? 'product-soft' : ''}`}><div className="product-inner">

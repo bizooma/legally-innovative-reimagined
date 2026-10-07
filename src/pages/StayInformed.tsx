@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import HeroTexture from "@/components/HeroTexture";
 import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { ArrowUpRight } from "lucide-react";
 import voiceSeoHeroImage from "@/assets/voice-seo-hero.jpg";
 import googleMarch2026Image from "@/assets/google-march-2026-update.jpg";
 import appleMapsInterfaceImage from "@/assets/apple-maps-interface.jpg";
@@ -125,18 +128,33 @@ const StayInformed = () => {
     <div className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-legal-dark via-legal-primary to-legal-secondary pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Stay Informed
-          </h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Discover the latest insights, trends, and innovations in legal technology, 
-            digital marketing, and law firm growth strategies.
-          </p>
-        </div>
-      </section>
+      <Helmet>
+        <title>What We Publish | Bizooma</title>
+        <meta name="description" content="Route to Results, a weekly brief for law firms and nonprofits, and Moving Jacksonville Forward, a weekly brief on development in Jacksonville." />
+      </Helmet>
+      <div className="product-editorial">
+        <section className="product-inverted product-hero hero-textured"><HeroTexture /><div className="product-inner">
+          <h1>What we publish</h1>
+          <p className="product-lede">Two publications, both weekly.</p>
+          <p className="product-sub"><Link className="product-link" to="/order-of-operations">Our framework</Link> argues that the organizations AI assistants cite are the ones publishing original material consistently. It would be strange to say that and not do it ourselves.</p>
+        </div></section>
+        <section className="product-band"><div className="product-inner">
+          <div className="product-grid">
+            <div className="product-shelf-item">
+              <h2>Route to Results</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.15em]" style={{ flexGrow: 0 }}>Weekly, on Tuesdays</p>
+              <p>Working through the Order of Operations framework one pillar at a time — the numbers, the failure modes, and what to do in the next ninety days. Written for law firms and nonprofits.</p>
+              <Link className="product-link inline-flex items-center gap-2" to="/route-to-results-newsletter">Subscribe<ArrowUpRight aria-hidden className="h-4 w-4" /></Link>
+            </div>
+            <div className="product-shelf-item">
+              <h2>Moving Jacksonville Forward</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.15em]" style={{ flexGrow: 0 }}>Weekly</p>
+              <p>A brief on what is being built in Jacksonville — development approvals, construction, infrastructure and civic projects — and what each one actually means for the people here.</p>
+              <a className="product-link inline-flex items-center gap-2" href="https://movingjaxforward.com" target="_blank" rel="noopener noreferrer">Read it<ArrowUpRight aria-hidden className="h-4 w-4" /></a>
+            </div>
+          </div>
+        </div></section>
+      </div>
 
       <section className="product-inverted py-10 border-t border-border">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -165,6 +183,7 @@ const StayInformed = () => {
       {/* Blog Posts Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-playfair text-3xl md:text-4xl mb-8">Articles</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post) => {
               const CardComponent = (

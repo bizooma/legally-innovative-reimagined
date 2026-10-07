@@ -19,7 +19,7 @@ const MobileFooterNav = () => {
     { name: "Home", icon: Home, path: "/" },
     { name: "Services", icon: Briefcase, path: "/services" },
     { name: "Labs", icon: FlaskConical, path: "/labs" },
-    { name: "News", icon: Newspaper, path: "/stay-informed" },
+    { name: "Publishing", icon: Newspaper, path: "/stay-informed" },
     { name: "Contact", icon: Mail, path: "/#contact" },
   ];
 

@@ -57,7 +57,7 @@ const Index = () => {
           <Testimonials />
           <section id="about" className="product-band product-soft"><div className="product-inner">
             <h2 className="product-heading">{whoWeAre.title}</h2>
-            <p className="product-prose mb-6">{whoWeAre.paragraph}</p>
+            <p className="product-prose mb-6">{whoWeAre.paragraph} {home.publishingLine.before}<a className="product-link" href={home.publishingLine.href} target="_blank" rel="noopener noreferrer">{home.publishingLine.label}</a>{home.publishingLine.after}</p>
             <Link className="product-link" to={whoWeAre.link.href}>{whoWeAre.link.label}</Link>
           </div></section>
         </div>
