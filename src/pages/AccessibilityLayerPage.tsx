@@ -4,8 +4,8 @@ import { EditorialShell, EditorialHeroSection, EditorialButton } from "@/pages/p
 import PrivacyLawDialogs from "@/components/accessibility-layer/PrivacyLawDialogs";
 import { accessibilityLayer as c } from "@/content/products/accessibilityLayer";
 
-function Checks({ items }: { items: string[] }) {
-  return <ul className="product-features">{items.map(i => <li key={i}><Check aria-hidden className="h-4 w-4" /><span>{i}</span></li>)}</ul>;
+function Checks({ items, single = false }: { items: string[]; single?: boolean }) {
+  return <ul className={`product-features ${single ? "!grid-cols-1" : ""}`}>{items.map(i => <li key={i}><Check aria-hidden className="h-4 w-4" /><span>{i}</span></li>)}</ul>;
 }
 
 export default function AccessibilityLayerPage() {
@@ -18,8 +18,8 @@ export default function AccessibilityLayerPage() {
       <section className="product-band product-soft"><div className="product-inner">
         <h2 className="product-heading">{c.features.title}</h2>
         <p className="product-prose mb-10">{c.features.intro}</p>
-        <div className="product-grid lg:!grid-cols-4">
-          {c.features.groups.map(g => <div key={g.title}><h3 className="font-semibold text-lg mb-2">{g.title}</h3><Checks items={g.items} /></div>)}
+        <div className="product-grid lg:!grid-cols-4 gap-x-10">
+          {c.features.groups.map(g => <div key={g.title}><h3 className="font-semibold text-lg mb-2">{g.title}</h3><Checks items={g.items} single /></div>)}
         </div>
       </div></section>
 
