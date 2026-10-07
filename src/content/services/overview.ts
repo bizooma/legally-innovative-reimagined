@@ -32,5 +32,6 @@ export const startHere = {
   links: [
     { label: "Book an audit", href: "/ai-audit" },
     { label: "Read the framework", href: "/order-of-operations" },
+    { label: "Read the framework for nonprofits", href: "/order-of-operations/nonprofits" },
   ],
 };
