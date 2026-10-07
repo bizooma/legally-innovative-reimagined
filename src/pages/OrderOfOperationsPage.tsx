@@ -1,3 +1,4 @@
+import HeroTexture from "@/components/HeroTexture";
 import { Fragment, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -26,7 +27,8 @@ function Eyebrow({ children, dark }: { children: ReactNode; dark?: boolean }) {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#020817] text-[#f5f1ea] pt-36 pb-24 lg:pt-44 lg:pb-32">
+    <section className="hero-textured bg-[#020817] text-[#f5f1ea] pt-36 pb-24 lg:pt-44 lg:pb-32">
+      <HeroTexture />
       <div aria-hidden className="pointer-events-none absolute -bottom-40 -right-40 h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle,rgba(224,49,58,0.35)_0%,rgba(224,49,58,0)_65%)]" />
       <div className={`${inner} relative`}>
         <Eyebrow dark>{hero.eyebrow}</Eyebrow>
