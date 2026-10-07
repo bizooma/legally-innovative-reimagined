@@ -461,7 +461,7 @@ const LawFirmCoworkSections = () => (
               <AccordionTrigger className="text-left text-legal-dark font-semibold hover:no-underline">
                 {f.q}
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground leading-relaxed">
+              <AccordionContent keepMounted className="text-muted-foreground leading-relaxed">
                 {f.a}
               </AccordionContent>
             </AccordionItem>
@@ -867,7 +867,7 @@ const NonprofitCoworkSections = () => (
               <AccordionTrigger className="text-left text-legal-dark font-semibold hover:no-underline">
                 {f.q}
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground leading-relaxed">
+              <AccordionContent keepMounted className="text-muted-foreground leading-relaxed">
                 {f.a}
               </AccordionContent>
             </AccordionItem>
