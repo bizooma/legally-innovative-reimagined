@@ -232,7 +232,7 @@ export function SmartChatbot() {
       {showProactive && !isOpen && (
         <div
           key={proactivePrompt}
-          className="fixed right-4 bottom-[calc(184px+env(safe-area-inset-bottom,0px))] md:right-6 md:bottom-28 z-50 max-w-xs animate-in slide-in-from-bottom-5 fade-in duration-500 cursor-pointer"
+          className="fixed right-4 bottom-[calc(184px+env(safe-area-inset-bottom,0px))] md:right-6 md:bottom-[120px] z-50 max-w-xs animate-in slide-in-from-bottom-5 fade-in duration-500 cursor-pointer"
           onClick={handleOpen}
         >
           <div className="bg-card/95 backdrop-blur-xl border border-border rounded-2xl rounded-br-sm p-4 shadow-2xl">
