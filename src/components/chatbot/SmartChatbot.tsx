@@ -258,7 +258,7 @@ export function SmartChatbot() {
             "fixed flex flex-col bg-background/95 backdrop-blur-xl border border-border shadow-2xl transition-all duration-300",
             isClosing ? "chatbot-slide-down" : "chatbot-slide-up",
             isMobile
-              ? "left-4 right-4 bottom-[calc(160px+env(safe-area-inset-bottom,0px))] h-[calc(100vh-220px)] rounded-2xl z-50"
+              ? "left-4 right-4 bottom-[calc(160px+env(safe-area-inset-bottom,0px))] h-[calc(100vh-260px)] rounded-2xl z-50"
               : "right-6 bottom-[104px] w-[460px] h-[min(600px,calc(100vh-140px))] rounded-2xl z-50"
           )}
         >
