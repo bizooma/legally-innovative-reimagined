@@ -10,7 +10,7 @@ import MobileFooterNav from "@/components/MobileFooterNav";
 import Testimonials from "@/components/Testimonials";
 import { EditorialButton } from "@/pages/products/ProductLayout";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
-import { home, type HomeCard } from "@/content/home";
+import { home, type HomeCard, type HomeProductCard } from "@/content/home";
 import ArgumentDiagram from "@/components/home/ArgumentDiagram";
 
 const CardGrid = ({ items }: { items: HomeCard[] }) => (
@@ -18,6 +18,24 @@ const CardGrid = ({ items }: { items: HomeCard[] }) => (
     {items.map((item) => (
       <Link key={item.name} to={item.href} className="product-shelf-item">
         <h3>{item.name}</h3><p>{item.description}</p><ArrowUpRight aria-hidden className="h-5 w-5" />
+      </Link>
+    ))}
+  </div>
+);
+
+const ProductGrid = ({ items }: { items: HomeProductCard[] }) => (
+  <div className="home-product-grid">
+    {items.map((item) => (
+      <Link key={item.name} to={item.href} className={`home-product-card${item.featured ? ' is-featured' : ''}`}>
+        <div className="home-product-media">
+          {item.image ? <img src={item.image} alt={item.imageAlt} loading="lazy" /> : <span className="home-product-placeholder">{home.products.placeholder}</span>}
+        </div>
+        <div className="home-product-body">
+          <p className="home-product-qualifier">{item.qualifier}</p>
+          <h3>{item.name}</h3>
+          <p>{item.description}{item.extra ? ` ${item.extra}` : ''}</p>
+          <span className="home-product-more">{home.products.cardLink} <span aria-hidden>→</span></span>
+        </div>
       </Link>
     ))}
   </div>
@@ -48,9 +66,9 @@ const Index = () => {
             <CardGrid items={services.items} />
             <p className="product-prose mt-10">{services.footnote.before}<Link className="product-link" to={services.footnote.href}>{services.footnote.label}</Link>{services.footnote.after}</p>
           </div></section>
-          <section id="products" className="product-band"><div className="product-inner">
+          <section id="products" className="product-band product-inverted"><div className="product-inner">
             <h2 className="product-heading">{products.title}</h2>
-            <CardGrid items={products.items} />
+            <ProductGrid items={products.items} />
             <Link className="product-link mt-10 inline-flex items-center gap-2" to={products.footnote.href}>{products.footnote.label}<ArrowUpRight className="h-4 w-4 shrink-0" /></Link>
           </div></section>
           <section className="product-band product-inverted"><div className="product-inner">

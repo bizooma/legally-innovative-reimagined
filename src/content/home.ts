@@ -1,4 +1,5 @@
 export interface HomeCard { name: string; description: string; href: string }
+export interface HomeProductCard extends HomeCard { qualifier: string; extra?: string; featured?: boolean; image: string | null; imageAlt: string }
 export const home = {
   hero: {
     eyebrow: 'WHERE MARKETING MEETS CODE + AI',
@@ -45,13 +46,15 @@ export const home = {
   },
   products: {
     title: 'Software we built and sell',
+    placeholder: 'Product screenshot',
+    cardLink: 'Learn more',
     items: [
-      { name: 'DataRightsOS', description: 'Privacy, consent and data-rights compliance from one embed.', href: '/products/datarightsos' },
-      { name: 'LexGuild', description: 'One member platform for bar associations.', href: '/products/lexguild' },
-      { name: 'Amicus Edge', description: 'Self-serve marketing tools for firms that run their own.', href: '/products/amicus-edge' },
-      { name: 'Ava', description: 'An AI receptionist that answers the calls you miss.', href: '/ai-receptionist' },
-      { name: 'Accessibility Layer', description: 'ADA and WCAG monitoring with a visitor-facing widget.', href: '/accessibility-layer' },
-    ] as HomeCard[],
+      { name: 'DataRightsOS', qualifier: 'RUNNING ON THIS SITE', description: 'Privacy, consent and data-rights compliance from one embed.', extra: 'The privacy center you can see in the corner of this page is the product.', featured: true, href: '/products/datarightsos', image: null, imageAlt: 'DataRightsOS screenshot' },
+      { name: 'LexGuild', qualifier: 'FOR BAR ASSOCIATIONS', description: 'One member platform for bar associations.', href: '/products/lexguild', image: null, imageAlt: 'LexGuild screenshot' },
+      { name: 'Amicus Edge', qualifier: 'SELF-SERVE, NO RETAINER', description: 'Self-serve marketing tools for firms that run their own.', href: '/products/amicus-edge', image: null, imageAlt: 'Amicus Edge screenshot' },
+      { name: 'Ava', qualifier: 'ANSWERS OUR PHONE LINE', description: 'An AI receptionist that answers the calls you miss.', href: '/ai-receptionist', image: null, imageAlt: 'Ava screenshot' },
+      { name: 'Accessibility Layer', qualifier: 'FROM $25/MO', description: 'ADA and WCAG monitoring with a visitor-facing widget.', href: '/accessibility-layer', image: null, imageAlt: 'Accessibility Layer screenshot' },
+    ] as HomeProductCard[],
     footnote: { label: "Everything else we've built, including what we retired.", href: '/labs' },
   },
   framework: {
