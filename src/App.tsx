@@ -90,7 +90,6 @@ import GlobalSEO from "./components/SEO/GlobalSEO";
 import CanonicalMeta from "./components/SEO/CanonicalMeta";
 import ScrollToTop from "./components/ScrollToTop";
 import { SmartChatbot } from "./components/chatbot/SmartChatbot";
-import AvaVoiceWidget from "./components/AvaVoiceWidget";
 
 
 // Create a new query client
@@ -121,7 +120,6 @@ const App = () => (
           <CanonicalMeta />
           <ScrollToTop />
           <SmartChatbot />
-          <AvaVoiceWidget />
 
           <RouteDebug>
             <Routes>

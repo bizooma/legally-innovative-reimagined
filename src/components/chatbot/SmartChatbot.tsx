@@ -258,8 +258,8 @@ export function SmartChatbot() {
             "fixed flex flex-col bg-background/95 backdrop-blur-xl border border-border shadow-2xl transition-all duration-300",
             isClosing ? "chatbot-slide-down" : "chatbot-slide-up",
             isMobile
-              ? "inset-0 z-[60]"
-              : "bottom-24 left-1/2 -translate-x-1/2 w-[460px] h-[600px] max-h-[80vh] rounded-2xl z-50"
+              ? "left-4 right-4 bottom-[calc(160px+env(safe-area-inset-bottom,0px))] h-[calc(100vh-260px)] rounded-2xl z-50"
+              : "right-6 bottom-[104px] w-[460px] h-[min(600px,calc(100vh-140px))] rounded-2xl z-50"
           )}
         >
           {/* Header — minimal */}
@@ -383,7 +383,7 @@ export function SmartChatbot() {
       {!isOpen && (
         <button
           onClick={handleOpen}
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-20 h-20 hover:scale-110 transition-all duration-300 drop-shadow-lg hover:drop-shadow-xl"
+          className="fixed bottom-[calc(88px+env(safe-area-inset-bottom,0px))] right-4 md:bottom-6 md:right-6 z-50 w-20 h-20 hover:scale-110 transition-all duration-300 drop-shadow-lg hover:drop-shadow-xl"
           aria-label="Open chat"
         >
           <img src={bizMascot} alt="Chat with Biz" className="w-full h-full object-contain" />
