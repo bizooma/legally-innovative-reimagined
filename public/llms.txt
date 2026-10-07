@@ -28,23 +28,6 @@ Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile 
 - [Claude Cowork](/claude-cowork): Claude skills and tutorials for law firms and nonprofits.
 - [WordPress Plugins](/wordpress-plugins): Custom WordPress plugins.
 
-## Insights
-
-- [Marketing](/marketing): Marketing newsletter section.
-- [Code](/code): Development newsletter section.
-- [AI](/ai): AI newsletter section.
-- [Insights](/insights): General insights section.
-- [Stay Informed](/stay-informed): Subscribe to updates.
-- [Route to Results Newsletter](/route-to-results-newsletter): Subscribe to the newsletter.
-- [Death of Traditional SEO](/death-of-traditional-seo): Article on SEO's evolution.
-- [Voice SEO & AEO Stats](/voice-seo-aeo-stats): Stats on voice search and answer engines.
-- [Why Reviews Matter for Law Firms](/why-reviews-matter-for-law-firms): Importance of online reviews.
-- [AI Marketing for Law Firms 2025](/ai-marketing-law-firms-2025): AI marketing trends.
-- [Schema Markup for Featured Snippets](/schema-markup-featured-snippets): Structured data guide.
-- [Google March 2026 Update](/google-march-2026-update): Algorithm update analysis.
-- [Schema for Exact Match Domains](/schema-for-exact-match-domains): Schema strategy.
-- [OpenAI Web Browser](/openai-web-browser): OpenAI's browser overview.
-
 ## Optional
 
 - [Privacy Policy](/privacy-policy)
