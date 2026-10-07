@@ -4,3 +4,4 @@
 - Editorial product and audit styling uses global semantic CSS tokens, so brand roles remain consistent across all bands.
 - Homepage, About and FAQ copy lives in src/content/{home,about,faq}.ts and testimonials in src/content/testimonials.ts; the testimonial section renders nothing when that list is empty, so no placeholder can ever appear.
 - About affiliations render from typed About content, and newsletter signup promises share typed Home content across the homepage and newsletter page, so editorial changes stay consistent without changing presentation.
+- Both framework pages render through one FrameworkPage layout from per-audience typed content (src/content/orderOfOperations*.ts), so audience versions stay visually identical.

@@ -5,10 +5,13 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
-import {
-  seo, hero, chain, argument, pillars, blockersIntro, blockers,
-  scheduleIntro, schedule, close, type Pillar,
-} from "@/content/orderOfOperations";
+import * as lawFirms from "@/content/orderOfOperations";
+import * as nonprofits from "@/content/orderOfOperationsNonprofits";
+import { type Pillar } from "@/content/orderOfOperations";
+import { frameworkSwitcher } from "@/content/frameworkSwitcher";
+
+type FrameworkContent = Pick<typeof lawFirms, "seo" | "hero" | "chain" | "argument" | "pillars" | "blockersIntro" | "blockers" | "close">
+  & Partial<Pick<typeof lawFirms, "scheduleIntro" | "schedule">>;
 
 // Page palette (per brief): oxblood on light, crimson on dark, near-black inverted.
 const OX = "text-[#7A0A0A]";
@@ -25,7 +28,7 @@ function Eyebrow({ children, dark }: { children: ReactNode; dark?: boolean }) {
   return <p className={`font-raleway text-xs font-semibold uppercase tracking-[0.2em] mb-4 ${dark ? CRIMSON : OX}`}>{children}</p>;
 }
 
-function Hero() {
+function Hero({ hero }: { hero: FrameworkContent["hero"] }) {
   return (
     <section className="hero-textured bg-[#020817] text-[#f5f1ea] pt-36 pb-24 lg:pt-44 lg:pb-32">
       <HeroTexture />
@@ -48,7 +51,7 @@ function Hero() {
   );
 }
 
-function ChainSvg() {
+function ChainSvg({ chain }: { chain: FrameworkContent["chain"] }) {
   const n = chain.nodes;
   const W = 200, H = 96;
   const pos = [
@@ -73,20 +76,20 @@ function ChainSvg() {
           <rect width={W} height={H} fill="#ffffff" stroke="#1a1a1a" strokeOpacity="0.25" />
           <text x="16" y="36" fontFamily="Playfair Display, serif" fontSize="26" fill="#7A0A0A">{node.num}</text>
           <text x="64" y="34" fontFamily="Raleway, sans-serif" fontSize="17" fontWeight="700" fill="#1a1a1a">{node.name}</text>
-          <text x="16" y="72" fontFamily="Raleway, sans-serif" fontSize="14" fill="#555">{node.caption}</text>
+          <text x="16" y="72" fontFamily="Raleway, sans-serif" fontSize={node.caption.length > 26 ? 12.5 : 14} fill="#555">{node.caption}</text>
         </g>
       ))}
     </svg>
   );
 }
 
-function Chain() {
+function Chain({ chain }: { chain: FrameworkContent["chain"] }) {
   return (
     <section className="bg-[#fbf8f3] py-20 lg:py-28 border-b border-black/10">
       <div className={inner}>
         <h2 className="font-playfair text-4xl lg:text-5xl text-[#1a1a1a] mb-6">{chain.heading}</h2>
         <p className="font-raleway text-lg leading-relaxed text-[#333] max-w-[34rem] mb-12">{chain.intro}</p>
-        <div className="hidden min-[800px]:block"><ChainSvg /></div>
+        <div className="hidden min-[800px]:block"><ChainSvg chain={chain} /></div>
         <ol className="min-[800px]:hidden space-y-5">
           {chain.nodes.map((node) => (
             <li key={node.num} className="flex gap-4 border-t border-black/10 pt-4">
@@ -100,7 +103,7 @@ function Chain() {
   );
 }
 
-function Argument() {
+function Argument({ argument }: { argument: FrameworkContent["argument"] }) {
   return (
     <section className="bg-white py-20 lg:py-28">
       <div className={`${inner} grid gap-10 lg:grid-cols-[1fr_34rem] lg:gap-16`}>
@@ -153,7 +156,7 @@ function PillarBand({ pillar, tinted }: { pillar: Pillar; tinted: boolean }) {
   );
 }
 
-function Blockers() {
+function Blockers({ blockersIntro, blockers }: Pick<FrameworkContent, "blockersIntro" | "blockers">) {
   return (
     <section className="bg-[#1A0505] text-[#f5f1ea] py-20 lg:py-28">
       <div className={inner}>
@@ -173,7 +176,7 @@ function Blockers() {
   );
 }
 
-function Schedule() {
+function Schedule({ scheduleIntro, schedule }: Required<Pick<FrameworkContent, "scheduleIntro" | "schedule">>) {
   return (
     <section className="bg-white py-20 lg:py-28">
       <div className={inner}>
@@ -210,7 +213,7 @@ function Schedule() {
   );
 }
 
-function Close() {
+function Close({ close }: { close: FrameworkContent["close"] }) {
   return (
     <section className="bg-[#f6efe6] py-20 lg:py-28 border-t border-black/10">
       <div className={inner}>
@@ -225,11 +228,40 @@ function Close() {
   );
 }
 
-export default function OrderOfOperationsPage() {
+function AudienceSwitcher({ current }: { current: string }) {
+  return (
+    <section className="bg-[#fbf8f3] border-b border-black/10 py-8">
+      <div className={inner}>
+        <p className="font-raleway text-sm text-[#555] mb-3">{frameworkSwitcher.context}</p>
+        <nav aria-label={frameworkSwitcher.label}>
+          <ul className="inline-flex flex-wrap rounded-md border border-black/15 bg-white p-1 font-raleway text-sm">
+            {frameworkSwitcher.options.map((o) => {
+              const active = o.href === current;
+              return (
+                <li key={o.href}>
+                  <Link
+                    to={o.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`block rounded px-4 py-2 font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A0A0A] ${active ? "bg-[#7A0A0A] text-[#f5f1ea]" : "text-[#1a1a1a] hover:bg-black/5"}`}
+                  >
+                    {o.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
+    </section>
+  );
+}
+
+export function FrameworkPage({ content, path }: { content: FrameworkContent; path: string }) {
+  const { seo, hero, chain, argument, pillars, blockersIntro, blockers, scheduleIntro, schedule, close } = content;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: "Order of Operations",
+    headline: seo.title.split(" | ")[0],
     description: seo.description,
     url: seo.url,
     author: { "@type": "Person", name: seo.author },
@@ -248,16 +280,25 @@ export default function OrderOfOperationsPage() {
       </Helmet>
       <Navbar />
       <main>
-        <Hero />
-        <Chain />
-        <Argument />
+        <Hero hero={hero} />
+        <AudienceSwitcher current={path} />
+        <Chain chain={chain} />
+        <Argument argument={argument} />
         {pillars.map((p, i) => <PillarBand key={p.num} pillar={p} tinted={i % 2 === 1} />)}
-        <Blockers />
-        <Schedule />
-        <Close />
+        <Blockers blockersIntro={blockersIntro} blockers={blockers} />
+        {scheduleIntro && schedule && <Schedule scheduleIntro={scheduleIntro} schedule={schedule} />}
+        <Close close={close} />
       </main>
       <Footer />
       <MobileFooterNav />
     </div>
   );
+}
+
+export default function OrderOfOperationsPage() {
+  return <FrameworkPage content={lawFirms} path="/order-of-operations" />;
+}
+
+export function OrderOfOperationsNonprofitsPage() {
+  return <FrameworkPage content={nonprofits} path="/order-of-operations/nonprofits" />;
 }

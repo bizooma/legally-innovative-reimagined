@@ -4,6 +4,10 @@
 
 Bizooma builds SEO/AEO/Voice SEO programs, AI chatbots, custom websites, mobile apps, and lead-generation systems. We also build and publish our own products and tools.
 
+## Frameworks
+- [Order of Operations](https://bizooma.com/order-of-operations): The six-pillar framework for law firms — what to build to survive AI, and in what order.
+- [Order of Operations for Nonprofits](https://bizooma.com/order-of-operations/nonprofits): The same six-pillar framework for nonprofits, with pillar one reframed around where freed hours go.
+
 ## Services
 
 - [Services](/services): Overview of Bizooma services for law firms and nonprofits.
