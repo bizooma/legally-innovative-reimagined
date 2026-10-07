@@ -30,8 +30,6 @@ const Index = () => {
     <>
       <Helmet>
         <title>Bizooma | AI Marketing Agency for Law Firms & Nonprofits</title>
-        <meta property="og:title" content="Bizooma | AI Marketing Agency for Law Firms & Nonprofits" />
-        <meta name="twitter:title" content="Bizooma | AI Marketing Agency for Law Firms & Nonprofits" />
         <meta name="description" content="Bizooma builds AI-powered marketing, automation, and custom software for law firms and nonprofits. Jacksonville, FL." />
       </Helmet>
       <div className="min-h-screen">
