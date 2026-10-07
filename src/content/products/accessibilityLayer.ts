@@ -1,4 +1,4 @@
-import type { EditorialBand, EditorialHero } from './types';
+import type { EditorialHero } from './types';
 
 export const accessibilityLayer = {
   path: '/accessibility-layer',
@@ -40,10 +40,6 @@ export const accessibilityLayer = {
     mock: { title: 'Accessibility score', range: 'Last 30d', tiles: [{ label: 'Score', value: '92' }, { label: 'WCAG AA', value: '87%' }, { label: 'Critical', value: '3' }] },
     mockCaption: 'Example interface with sample data — not reported results.',
   },
-  audience: {
-    title: "Who it's for",
-    paragraphs: ['Any organization whose website needs to work for every visitor and stand up to ADA, WCAG 2.1 AA, Section 508 and EAA requirements.', 'Agencies can white-label the widget and reports on Agency and Enterprise plans.'],
-  } satisfies EditorialBand,
   pricing: {
     title: 'Simple, transparent pricing',
     intro: 'One plan to get your site accessible today. Cancel anytime.',
