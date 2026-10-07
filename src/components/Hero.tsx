@@ -15,8 +15,8 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-legal-primary/90 via-legal-primary/70 to-legal-primary/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-legal-primary/60" />
       </div>
-      <div className="container mx-auto relative z-10">
-        <div className="max-w-3xl animate-fade-in text-primary-foreground">
+      <div className="container mx-auto relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_40%] lg:gap-16 lg:items-center">
+        <div className="max-w-3xl animate-fade-in text-primary-foreground min-w-0">
           <p className="text-xs md:text-sm font-semibold tracking-[0.2em] mb-5 opacity-90">{h.eyebrow}</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight [text-wrap:balance]">{h.title}</h1>
           <p className="text-lg md:text-xl mb-8 text-legal-light max-w-2xl">{h.lede}</p>
@@ -34,6 +34,15 @@ const Hero = () => {
             <p className="opacity-90">{h.office}</p>
           </div>
         </div>
+        <aside aria-labelledby="hero-proof-heading" className="hero-proof min-w-0 rounded-md border p-6 text-primary-foreground backdrop-blur-sm">
+          <h2 id="hero-proof-heading" className="font-raleway text-xs font-semibold uppercase tracking-[0.2em] mb-4">{h.proof.heading}</h2>
+          <ul className="space-y-3 text-base leading-relaxed">
+            {h.proof.items.map((it) => (
+              <li key={it.label}>{it.before}<Link to={it.href} className="font-semibold underline underline-offset-4 hover:opacity-80">{it.label}</Link>{it.after}</li>
+            ))}
+          </ul>
+          <p className="mt-4 pt-4 border-t border-current/20 text-sm opacity-90">{h.proof.footnote}</p>
+        </aside>
       </div>
     </section>
   );

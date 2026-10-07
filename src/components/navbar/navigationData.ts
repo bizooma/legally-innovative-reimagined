@@ -3,7 +3,7 @@ export const navLinks = [
   { name: "Framework", href: null, isExternal: false, path: "/order-of-operations" },
   { name: "Services", href: null, isExternal: false, path: "/services" },
   { name: "Products", href: null, isExternal: false, path: "/products" },
-  { name: "Insights", href: null, isExternal: false, path: "/stay-informed" },
+  { name: "Publishing", href: null, isExternal: false, path: "/stay-informed" },
   { name: "About", href: null, isExternal: false, path: "/about" },
   { name: "Contact", href: "#contact", isExternal: false },
 ];

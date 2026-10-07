@@ -8,6 +8,14 @@ export const home = {
     secondary: { label: 'Read our framework', href: '/order-of-operations' },
     phone: { label: '904-331-8130', href: 'tel:+19043318130' },
     office: 'Office: Jacksonville, FL',
+    proof: {
+      heading: 'Running on our own software',
+      items: [
+        { before: '', label: 'Ava', href: '/ai-receptionist', after: " answers the phone number above. Call it — you'll be talking to our AI receptionist, not a menu." },
+        { before: '', label: 'DataRightsOS', href: '/products/datarightsos', after: ' powers the privacy centre in the corner of this page.' },
+      ],
+      footnote: 'Two of the five products we sell, working on our own site.',
+    },
   },
   argument: {
     title: 'Two things, one argument',
@@ -48,6 +56,7 @@ export const home = {
     paragraph: 'Bizooma is a veteran-owned company based in Jacksonville, Florida, with a US-based team. We have been building on the web since 1998 and we still write the code ourselves.',
     link: { label: 'More about us', href: '/about' },
   },
+  publishingLine: { before: 'We also publish ', label: 'Moving Jacksonville Forward', href: 'https://movingjaxforward.com', after: ', a weekly brief on what is being built in the city.' },
   newsletterPromise: 'Working through one pillar of the framework at a time, with the failure modes.',
   newsletterCards: [
     { title: 'Weekly insights', description: 'One pillar at a time, working through the framework.' },
