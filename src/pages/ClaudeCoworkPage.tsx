@@ -159,7 +159,7 @@ const lawProblems = [
   },
   {
     icon: FolderTree,
-    title: "Nothing stays organised",
+    title: "Nothing stays organized",
     body: "No matter memory. No file structure. No continuity between sessions. Just a chat window that starts fresh every time you open it, with no record of what was decided, drafted, or agreed last week.",
   },
 ];
@@ -212,12 +212,12 @@ const lawAudiences = [
   {
     icon: Building2,
     title: "Small and mid-size firms",
-    body: "Consistent firm voice across every attorney. Every matter organised the same way. New associates and paralegals get up to speed in one session because the brief and memory log are already there. The firm runs like a firm, not like five individual practitioners.",
+    body: "Consistent firm voice across every attorney. Every matter organized the same way. New associates and paralegals get up to speed in one session because the brief and memory log are already there. The firm runs like a firm, not like five individual practitioners.",
   },
   {
     icon: Users,
     title: "Legal ops and office managers",
-    body: "A system for the whole firm, not just the power users. Templates and workflows that every attorney can follow. Matter organisation that doesn't depend on individual habits. One standard — whoever opens the file next knows exactly where they are.",
+    body: "A system for the whole firm, not just the power users. Templates and workflows that every attorney can follow. Matter organization that doesn't depend on individual habits. One standard — whoever opens the file next knows exactly where they are.",
   },
 ];
 
@@ -238,7 +238,7 @@ const lawFaqs = [
   { q: "Do I need CoWork to use this?", a: "Yes. Law Firm CoWork OS is built to work with the CoWork desktop app, which connects Claude to your folder and maintains session context. CoWork is a separate product." },
   { q: "Is my client data safe?", a: "Your data never leaves your computer. The folder system is entirely local — no cloud storage, no third-party servers involved in the CoWork OS itself. Claude processes information through Anthropic's API, subject to their privacy policy." },
   { q: "Can I use this for multiple firms?", a: "Yes. Create a separate folder for each firm. CoWork lets you switch workspaces — each one is completely isolated. One purchase covers all of them." },
-  { q: "Does this work for any practice area?", a: "Yes. The templates and folder structure are practice-area agnostic. The identity files are where you customise for your specific firm — estate planning, litigation, real estate, family law, business, or any combination." },
+  { q: "Does this work for any practice area?", a: "Yes. The templates and folder structure are practice-area agnostic. The identity files are where you customize for your specific firm — estate planning, litigation, real estate, family law, business, or any combination." },
   { q: "Do I need to be technical to set this up?", a: "No. If you can unzip a file and drag a folder, you can install this. The first-run setup is guided — Claude walks you through every step." },
 ];
 
@@ -324,7 +324,7 @@ const LawFirmCoworkSections = () => (
             <h3 className="text-sm font-semibold uppercase tracking-wider text-[#7a3a1f]">The folder structure</h3>
             {[
               { name: "ABOUT ME/", body: "Six identity files Claude reads every session without exception. Your firm profile, communication voice, legal writing rules, tool map, specialist routing, and session memory. This is what makes the AI sound like your firm rather than a template." },
-              { name: "WORK AREAS/", body: "Five organised work areas covering every type of firm work: Client Matters, Practice Development, Marketing, Operations, and Admin. Each matter gets its own brief, memory log, and outputs folder." },
+              { name: "WORK AREAS/", body: "Five organized work areas covering every type of firm work: Client Matters, Practice Development, Marketing, Operations, and Admin. Each matter gets its own brief, memory log, and outputs folder." },
               { name: "RESOURCES/", body: "Templates, guides, plugins, and skills. Everything you need to work immediately." },
               { name: "CLAUDE.md", body: "The operating brain. Global instructions that govern how Claude behaves across every session, every matter, every document." },
             ].map((f) => (
@@ -587,7 +587,7 @@ const npFaqs = [
   { q: "Do I need CoWork to use this?", a: "Yes. Nonprofit CoWork OS is built to work with the CoWork desktop app, which connects Claude to your folder and maintains session context. CoWork is a separate product." },
   { q: "Is our donor and beneficiary data safe?", a: "Your data never leaves your computer. The folder system is entirely local — no cloud storage, no third-party servers involved in CoWork OS itself. Claude processes session content through Anthropic's API, subject to their privacy policy. We recommend reviewing that policy alongside your organization's data governance practices." },
   { q: "Can one purchase cover our whole team?", a: "Yes. One purchase, one installation per organization. Multiple development staff, program staff, and the ED can all use the same CoWork OS folder. Each person opens CoWork and points it at the shared folder." },
-  { q: "Does this work for any type of nonprofit?", a: "Yes. The templates and structure work across sectors — human services, advocacy, arts, education, environment, health, community development. The identity files are where you customise for your specific organization, mission, and funding mix." },
+  { q: "Does this work for any type of nonprofit?", a: "Yes. The templates and structure work across sectors — human services, advocacy, arts, education, environment, health, community development. The identity files are where you customize for your specific organization, mission, and funding mix." },
   { q: "What about the data-first rule — does it slow things down?", a: "It takes an extra two minutes at the start of a grant session to provide your program data and the external statistics for your needs statement. What you get in return is a proposal draft where every impact claim has a source — which is the draft you would have had to produce anyway after reviewing generic AI output. The data-first rule doesn't slow you down; it removes a revision cycle." },
 ];
 
@@ -699,7 +699,7 @@ const NonprofitCoworkSections = () => (
             <h3 className="text-sm font-semibold uppercase tracking-wider text-[#7a3a1f]">The folder structure</h3>
             {[
               { name: "ABOUT ME/", body: "Six identity files Claude reads every session without exception. Your org profile, four-register voice system, dignity-first writing rules, tool map, specialist routing, and session memory. This is what makes Claude sound like your org rather than a sector template." },
-              { name: "WORK AREAS/", body: "Six organised areas covering every type of nonprofit work: Grants-Funding (the flagship), Donor-Relations, Communications, Programs, Operations, and Admin. Every grant, campaign, and initiative gets its own brief, memory log, and outputs folder." },
+              { name: "WORK AREAS/", body: "Six organized areas covering every type of nonprofit work: Grants-Funding (the flagship), Donor-Relations, Communications, Programs, Operations, and Admin. Every grant, campaign, and initiative gets its own brief, memory log, and outputs folder." },
               { name: "RESOURCES/", body: "Templates, HTML guides, plugins, and skills. Everything you need to work immediately." },
               { name: "CLAUDE.md", body: "The operating brain. Governs every session, enforces the data-first rule, applies register awareness automatically, and flags anything that could compromise impact integrity or donor confidentiality." },
             ].map((f) => (

@@ -48,7 +48,7 @@ export const websitesAndApps: ServicePageContent = {
     bullets: [
       "Giving flows, including recurring giving",
       "Volunteer signup and scheduling",
-      "Programme applications and eligibility checking",
+      "Program applications and eligibility checking",
       "Event registration and attendee communication",
     ],
   },

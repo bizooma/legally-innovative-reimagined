@@ -44,11 +44,11 @@ export const seoAeo: ServicePageContent = {
   },
   nonprofits: {
     title: "For nonprofits",
-    paragraph: "Nonprofits are usually competing for attention rather than for a transaction, and often have genuine authority they have never made legible — programme data, outcomes, and expertise that nobody has written down in a citable form.",
+    paragraph: "Nonprofits are usually competing for attention rather than for a transaction, and often have genuine authority they have never made legible — program data, outcomes, and expertise that nobody has written down in a citable form.",
     bullets: [
-      "Programme and service questions people search before they call",
+      "Program and service questions people search before they call",
       "Local and cause-based visibility",
-      "Making programme expertise citable rather than buried in a PDF",
+      "Making program expertise citable rather than buried in a PDF",
       "Grant and funder discoverability",
     ],
   },

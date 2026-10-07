@@ -49,7 +49,7 @@ export const aiMarketing: ServicePageContent = {
       "Donor cultivation and acknowledgement sequences",
       "Volunteer recruitment, scheduling and reminders",
       "Grant research, deadline tracking and reporting prompts",
-      "Answering the same programme questions without a person doing it each time",
+      "Answering the same program questions without a person doing it each time",
     ],
   },
   framework: {

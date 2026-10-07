@@ -77,7 +77,7 @@ export const NewsletterCalendar = () => {
                     </Badge>
                   ) : isCancelled ? (
                     <Badge className="bg-destructive text-destructive-foreground hover:bg-destructive/90 shrink-0">
-                      Cancelled
+                      Canceled
                     </Badge>
                         ) : (
                           <Badge className="bg-yellow-500 text-yellow-950 hover:bg-yellow-600 shrink-0">
