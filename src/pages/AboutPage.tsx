@@ -1,3 +1,4 @@
+import HeroTexture from "@/components/HeroTexture";
 import { MapPin } from "lucide-react";
 import MeetJoe from "@/components/MeetJoe";
 import ChamberMemberships from "@/components/ChamberMemberships";
@@ -7,7 +8,7 @@ import { about as c } from "@/content/about";
 export default function AboutPage() {
   return (
     <EditorialShell title={c.seoTitle} description={c.description} path="/about">
-      <section className="product-inverted product-hero"><div className="product-inner">
+      <section className="product-inverted product-hero hero-textured"><HeroTexture /><div className="product-inner">
         <p className="product-eyebrow">{c.hero.eyebrow}</p><h1>{c.hero.title}</h1><p className="product-lede">{c.hero.lede}</p>
       </div></section>
       {c.sections.map((s, i) => (

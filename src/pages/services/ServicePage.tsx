@@ -1,3 +1,4 @@
+import HeroTexture from "@/components/HeroTexture";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight } from "lucide-react";
@@ -13,7 +14,8 @@ export const eyebrow = "font-raleway text-xs font-semibold uppercase tracking-[0
 
 export function ServiceHero({ hero }: { hero: { eyebrow: string; title: string; lede: string; sub: string } }) {
   return (
-    <section className="bg-[#020817] text-[#f5f1ea] pt-36 pb-20 lg:pt-44 lg:pb-28">
+    <section className="hero-textured bg-[#020817] text-[#f5f1ea] pt-36 pb-20 lg:pt-44 lg:pb-28">
+      <HeroTexture />
       <div className={inner}>
         <p className={`${eyebrow} ${CRIMSON}`}>{hero.eyebrow}</p>
         <h1 className="font-playfair text-5xl sm:text-6xl lg:text-7xl leading-[1.05] mb-8">{hero.title}</h1>

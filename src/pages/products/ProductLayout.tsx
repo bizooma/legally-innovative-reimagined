@@ -1,3 +1,4 @@
+import HeroTexture from "@/components/HeroTexture";
 import type { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Check } from 'lucide-react';
@@ -11,7 +12,7 @@ export function EditorialShell({ title, description, path, children }: { title: 
   return <div className="product-editorial min-h-screen"><Helmet><title>{title}</title><meta name="description" content={description} /><link rel="canonical" href={`https://bizooma.com${path}`} /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary_large_image" /></Helmet><Navbar /><main>{children}</main><Footer /><MobileFooterNav /></div>;
 }
 export function EditorialHeroSection({ hero }: { hero: EditorialHero }) {
-  return <section className="product-inverted product-hero"><div className="product-inner"><p className="product-eyebrow">{hero.eyebrow}</p><h1>{hero.title}</h1><p className="product-lede">{hero.lede}</p><p className="product-sub">{hero.sub}</p></div></section>;
+  return <section className="product-inverted product-hero hero-textured"><HeroTexture /><div className="product-inner"><p className="product-eyebrow">{hero.eyebrow}</p><h1>{hero.title}</h1><p className="product-lede">{hero.lede}</p><p className="product-sub">{hero.sub}</p></div></section>;
 }
 export function TextBand({ band, inverted = false }: { band: EditorialBand; inverted?: boolean }) {
   return <section className={`product-band ${inverted ? 'product-inverted' : ''}`}><div className="product-inner"><h2 className="product-heading">{band.title}</h2><div className="product-prose">{band.paragraphs.map(p => <p key={p}>{p}</p>)}</div></div></section>;

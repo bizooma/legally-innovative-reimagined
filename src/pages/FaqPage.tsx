@@ -1,3 +1,4 @@
+import HeroTexture from "@/components/HeroTexture";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -30,7 +31,7 @@ export default function FaqPage() {
   return (
     <EditorialShell title={c.seoTitle} description={c.description} path="/faq">
       <Helmet><script type="application/ld+json">{JSON.stringify(schema)}</script></Helmet>
-      <section className="product-inverted product-hero"><div className="product-inner">
+      <section className="product-inverted product-hero hero-textured"><HeroTexture /><div className="product-inner">
         <p className="product-eyebrow">{c.eyebrow}</p><h1>{c.title}</h1><p className="product-lede">{c.lede}</p>
       </div></section>
       <section className="product-band"><div className="product-inner max-w-[820px] ml-0">
