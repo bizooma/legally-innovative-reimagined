@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Download, ArrowLeft } from "lucide-react";
-import { useFileDownload } from "@/hooks/useFileDownload";
+import { usePaidDownload, UNVERIFIED_PURCHASE_MESSAGE } from "@/hooks/usePaidDownload";
 
 export default function ClaudeCoworkSuccess() {
   const [params] = useSearchParams();
@@ -11,7 +11,8 @@ export default function ClaudeCoworkSuccess() {
   const productName = isLaw ? "Law Firm CoWork OS" : "Nonprofit CoWork OS";
   const fileName = isLaw ? "law-firm-cowork-os.zip" : "nonprofit-cowork-os.zip";
   const displayName = isLaw ? "Law-Firm-CoWork-OS.zip" : "Nonprofit-CoWork-OS.zip";
-  const { isDownloading, downloadFile } = useFileDownload();
+  const sessionId = params.get("session_id")?.trim() ?? "";
+  const { isDownloading, downloadFile } = usePaidDownload(sessionId);
 
   return (
     <div className="min-h-screen bg-[#fbf8f3] flex items-center justify-center px-4 py-16">
@@ -23,6 +24,8 @@ export default function ClaudeCoworkSuccess() {
         <div className="h-14 w-14 rounded-full bg-[#d97757]/15 text-[#d97757] inline-flex items-center justify-center mb-5">
           <CheckCircle2 className="h-8 w-8" />
         </div>
+        {sessionId ? (
+          <>
         <h1 className="text-3xl font-bold text-legal-dark mb-3">Payment received</h1>
         <p className="text-muted-foreground mb-8">
           Thank you for purchasing <span className="font-semibold text-legal-dark">{productName}</span>. Download your CoWork OS folder below and follow the setup guide inside.
@@ -31,13 +34,17 @@ export default function ClaudeCoworkSuccess() {
           size="lg"
           disabled={isDownloading}
           className="w-full bg-[#d97757] hover:bg-[#b85d3f] text-white mb-3"
-          onClick={() => downloadFile("downloads", fileName, displayName)}
+          onClick={() => downloadFile(fileName, displayName)}
         >
           {isDownloading ? "Downloading…" : <>Download {productName} <Download className="h-4 w-4 ml-2" /></>}
         </Button>
         <p className="text-xs text-muted-foreground mb-6">
           A copy of your receipt has been sent to the email used at checkout. You can re-download from this page anytime.
         </p>
+          </>
+        ) : (
+          <p className="text-muted-foreground mb-8">{UNVERIFIED_PURCHASE_MESSAGE}</p>
+        )}
         <Link to="/claude-cowork" className="text-sm text-[#d97757] hover:underline inline-flex items-center gap-1">
           <ArrowLeft className="h-3 w-3" /> Back to Claude Cowork
         </Link>

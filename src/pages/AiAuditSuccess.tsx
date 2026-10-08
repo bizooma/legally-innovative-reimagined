@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   CheckCircle2,
@@ -10,7 +10,7 @@ import {
   Loader2,
   RefreshCw,
 } from "lucide-react";
-import { useFileDownload } from "@/hooks/useFileDownload";
+import { usePaidDownload, UNVERIFIED_PURCHASE_MESSAGE } from "@/hooks/usePaidDownload";
 
 type FileState = "idle" | "loading" | "success" | "error";
 
@@ -33,13 +33,13 @@ const FILES: FileDef[] = [
   },
 ];
 
-function DownloadButton({ file }: { file: FileDef }) {
-  const { downloadFile } = useFileDownload();
+function DownloadButton({ file, sessionId }: { file: FileDef; sessionId: string }) {
+  const { downloadFile } = usePaidDownload(sessionId);
   const [state, setState] = useState<FileState>("idle");
 
   const handleClick = useCallback(async () => {
     setState("loading");
-    const ok = await downloadFile("downloads", file.fileName, file.displayName);
+    const ok = await downloadFile(file.fileName, file.displayName);
     setState(ok ? "success" : "error");
     if (ok) {
       setTimeout(() => setState("idle"), 3000);
@@ -77,6 +77,8 @@ function DownloadButton({ file }: { file: FileDef }) {
 }
 
 export default function AiAuditSuccess() {
+  const [params] = useSearchParams();
+  const sessionId = params.get("session_id")?.trim() ?? "";
   return (
     <div className="min-h-screen bg-[#fbf8f3] flex items-center justify-center px-4 py-16">
       <Helmet>
@@ -87,23 +89,29 @@ export default function AiAuditSuccess() {
         <div className="h-14 w-14 rounded-full bg-[#d97757]/15 text-[#d97757] inline-flex items-center justify-center mb-5">
           <CheckCircle2 className="h-8 w-8" />
         </div>
-        <h1 className="text-3xl font-bold text-legal-dark mb-3">
-          Payment received
-        </h1>
-        <p className="text-muted-foreground mb-8">
-          Thank you for your purchase. Download both spreadsheets below — you
-          can return to this page anytime to grab them again.
-        </p>
+        {sessionId ? (
+          <>
+            <h1 className="text-3xl font-bold text-legal-dark mb-3">
+              Payment received
+            </h1>
+            <p className="text-muted-foreground mb-8">
+              Thank you for your purchase. Download both spreadsheets below.
+              Your receipt email has a link back to this page.
+            </p>
 
-        <div className="space-y-3 mb-6">
-          {FILES.map((f) => (
-            <DownloadButton key={f.fileName} file={f} />
-          ))}
-        </div>
+            <div className="space-y-3 mb-6">
+              {FILES.map((f) => (
+                <DownloadButton key={f.fileName} file={f} sessionId={sessionId} />
+              ))}
+            </div>
 
-        <p className="text-xs text-muted-foreground mb-6">
-          A copy of your receipt has been sent to the email used at checkout.
-        </p>
+            <p className="text-xs text-muted-foreground mb-6">
+              A copy of your receipt has been sent to the email used at checkout.
+            </p>
+          </>
+        ) : (
+          <p className="text-muted-foreground mb-8">{UNVERIFIED_PURCHASE_MESSAGE}</p>
+        )}
         <Link
           to="/ai-audit"
           className="text-sm text-[#d97757] hover:underline inline-flex items-center gap-1"
