@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useMarketingKPIs } from "@/hooks/useMarketingKPIs";
 import { useMarketingPlan } from "@/hooks/useMarketingPlan";
-import { useAdminStatus } from "@/hooks/staff/useAdminStatus";
 import { MarketingAIChat } from "./MarketingAIChat";
 import { BudgetBreakdownEditor, BudgetLineItem } from "./BudgetBreakdownEditor";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -46,7 +45,7 @@ const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
   });
 
   // Check admin status for editing capabilities
-  const { isAdmin } = useAdminStatus();
+  const isAdmin = role === 'admin';
 
   // Show loading state
   if (planLoading || kpisLoading) {

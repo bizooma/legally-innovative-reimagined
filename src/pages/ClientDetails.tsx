@@ -7,12 +7,16 @@ import { useClientDetails } from '@/hooks/useClientDetails';
 import ClientDetailsHeader from '@/components/client-workspace/ClientDetailsHeader';
 import ClientDetailsTabs from '@/components/client-workspace/ClientDetailsTabs';
 import ClientDetailsLoading from '@/components/client-workspace/ClientDetailsLoading';
+import { useAdminStatus } from '@/hooks/staff/useAdminStatus';
 import ClientDetailsNotFound from '@/components/client-workspace/ClientDetailsNotFound';
 
 const ClientDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { client, isLoading } = useClientDetails(id);
+  // Role comes from the signed-in user's is_admin; false until loaded, so it fails closed to 'client'.
+  const { isAdmin } = useAdminStatus();
+  const role = isAdmin ? 'admin' : 'client';
   const [activeTab, setActiveTab] = useState('overview');
 
   const handleBack = () => {
@@ -40,6 +44,7 @@ const ClientDetails = () => {
               
               <ClientDetailsTabs 
                 client={client} 
+                role={role}
                 activeTab={activeTab}
                 onTabChange={setActiveTab}
               />

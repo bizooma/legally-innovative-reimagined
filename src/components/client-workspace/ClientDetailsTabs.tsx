@@ -9,13 +9,17 @@ import ClientCampaigns from "./ClientCampaigns";
 import ClientMarketingPlan from "./ClientMarketingPlan";
 import { Client } from "@/types/database";
 
+export type WorkspaceRole = 'admin' | 'client';
+
 interface ClientDetailsTabsProps {
   client: Client;
+  /** Decides what renders only. Access is enforced by RLS. Defaults to 'client' (fail closed). */
+  role?: WorkspaceRole;
   activeTab?: string;
   onTabChange?: (value: string) => void;
 }
 
-const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: ClientDetailsTabsProps) => {
+const ClientDetailsTabs = ({ client, role = "client", activeTab = "overview", onTabChange }: ClientDetailsTabsProps) => {
   const navigate = useNavigate();
 
   const handleValueChange = (value: string) => {
@@ -78,19 +82,19 @@ const ClientDetailsTabs = ({ client, activeTab = "overview", onTabChange }: Clie
         </TabsList>
       </div>
       <TabsContent value="overview" className="py-6">
-        <ClientOverview client={client} />
+        <ClientOverview client={client} role={role} />
       </TabsContent>
       <TabsContent value="projects" className="py-6">
-        <ClientProjects clientId={client.id} />
+        <ClientProjects clientId={client.id} role={role} />
       </TabsContent>
       <TabsContent value="campaigns" className="py-6">
-        <ClientCampaigns clientId={client.id} />
+        <ClientCampaigns clientId={client.id} role={role} />
       </TabsContent>
       <TabsContent value="documents" className="py-6">
-        <ClientDocuments clientId={client.id} />
+        <ClientDocuments clientId={client.id} role={role} />
       </TabsContent>
       <TabsContent value="marketing-plan" className="py-6">
-        <ClientMarketingPlan client={client} />
+        <ClientMarketingPlan client={client} role={role} />
       </TabsContent>
     </Tabs>
   );
