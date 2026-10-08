@@ -13,9 +13,10 @@ import {
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { sendPortalResetEmail } from '@/lib/portalPasswordReset';
+import { InviteClientUserDialog } from './InviteClientUserDialog';
 
 interface UserRow { id: string; email: string; full_name: string | null; is_admin: boolean; created_at: string; client_id: string | null }
-interface ClientOpt { id: string; company_name: string }
+interface ClientOpt { id: string; company_name: string; contact_email: string | null }
 
 const UNLINK = '__unlink__';
 const isPortalUser = (u: UserRow) => u.is_admin || !!u.client_id;
@@ -31,12 +32,15 @@ export const UsersView = () => {
   const [showAll, setShowAll] = useState(false);
   const [busy, setBusy] = useState<string | null>(null);
   const [confirmAdmin, setConfirmAdmin] = useState<UserRow | null>(null);
+  const [inviteOpen, setInviteOpen] = useState(false);
+  const [invitePrefill, setInvitePrefill] = useState<{ email: string; clientId: string } | undefined>();
+  const openInvite = (prefill?: { email: string; clientId: string }) => { setInvitePrefill(prefill); setInviteOpen(true); };
 
   const load = useCallback(async () => {
     setLoading(true);
     const [u, c] = await Promise.all([
       supabase.from('users').select('id, email, full_name, is_admin, created_at, client_id').order('created_at', { ascending: false }),
-      supabase.from('clients').select('id, company_name').order('company_name'),
+      supabase.from('clients').select('id, company_name, contact_email').order('company_name'),
     ]);
     if (u.error || c.error) setLoadError(errText(u.error || c.error));
     else {
@@ -90,6 +94,7 @@ export const UsersView = () => {
           <Button size="sm" variant={showAll ? 'default' : 'outline'} onClick={() => setShowAll(true)} aria-pressed={showAll}>
             All users ({users.length})
           </Button>
+          <Button size="sm" variant="secondary" className="ml-auto" onClick={() => openInvite()}>Invite client user</Button>
         </div>
 
         <Card className="overflow-x-auto">
@@ -157,10 +162,23 @@ export const UsersView = () => {
         </Card>
 
         {unlinkedClients.length > 0 && (
-          <p className="text-sm text-muted-foreground">
-            Clients with no linked user yet (that's normal — link one when they need portal access): {unlinkedClients.map((c) => c.company_name).join(', ')}.
-          </p>
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">
+              Clients with no linked user yet — that's normal. Invite one when they need portal access, or link an existing account above.
+            </p>
+            <Card className="divide-y">
+              {unlinkedClients.map((c) => (
+                <div key={c.id} className="flex flex-wrap items-center gap-3 px-3 py-2 text-sm">
+                  <span className="font-medium flex-1 min-w-0 truncate">{c.company_name}</span>
+                  <span className="text-muted-foreground truncate">{c.contact_email || 'No contact email'}</span>
+                  <Button size="sm" variant="outline" onClick={() => openInvite({ email: c.contact_email ?? '', clientId: c.id })}>Invite</Button>
+                </div>
+              ))}
+            </Card>
+          </div>
         )}
+
+        <InviteClientUserDialog open={inviteOpen} onOpenChange={setInviteOpen} clients={clients} initial={invitePrefill} onInvited={load} />
 
         <AlertDialog open={!!confirmAdmin} onOpenChange={(o) => !o && setConfirmAdmin(null)}>
           <AlertDialogContent>

@@ -149,3 +149,6 @@ verify_jwt = false
 
 [functions.issue-download]
 verify_jwt = false
+
+[functions.invite-client-user]
+verify_jwt = true
