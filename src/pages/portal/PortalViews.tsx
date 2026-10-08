@@ -13,7 +13,6 @@ import { BudgetTrackingSection } from '@/components/budget/BudgetTrackingSection
 import { ProviderStatusManager } from '@/components/admin/ProviderStatusManager';
 import { IncidentManager } from '@/components/admin/IncidentManager';
 import { AuditCodeManager } from '@/components/admin/AuditCodeManager';
-import AdminPasswordReset from '@/components/auth/AdminPasswordReset';
 import { ChatbotConversations } from '@/components/dashboard/ChatbotConversations';
 import { ChatbotTrainingManager } from '@/components/dashboard/ChatbotTrainingManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -94,4 +93,4 @@ export const ChatbotView = () => (
   </Tabs>
 );
 
-export const UsersView = () => <AdminPasswordReset />;
+export { UsersView } from './UsersView';
