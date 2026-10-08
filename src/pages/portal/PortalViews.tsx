@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Client } from '@/types/database';
@@ -43,11 +42,6 @@ function useClients() {
   }, [user, clientsVersion, toast]);
   return { clients, setClients, isLoading };
 }
-
-export const PortalHome = () => {
-  const { isAdmin } = usePortal();
-  return <Navigate to={isAdmin ? '/portal/today' : '/portal/clients'} replace />;
-};
 
 export const TodayView = () => <TodaySection hideHeading />;
 

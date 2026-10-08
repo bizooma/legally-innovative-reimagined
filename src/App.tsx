@@ -202,7 +202,6 @@ const App = () => (
               <Route path="/portal" element={<Portal />} />
               <Route path="/portal/admin-dashboard" element={<Navigate to="/portal/today" replace />} />
               <Route element={<PortalLayout />}>
-                <Route path="/portal/home" element={<PV.PortalHome />} />
                 <Route path="/portal/today" element={<PV.TodayView />} />
                 <Route path="/portal/clients" element={<PV.ClientsView />} />
                 <Route path="/portal/projects" element={<PV.ProjectsView />} />
