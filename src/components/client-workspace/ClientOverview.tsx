@@ -10,6 +10,11 @@ import { GanttProject } from './gantt/types';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
 
 import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Pencil } from 'lucide-react';
+import { useAdminStatus } from '@/hooks/staff/useAdminStatus';
+import { EditContactDialog } from './EditContactDialog';
+import { PreviousContacts } from './PreviousContacts';
 import { toast } from '@/hooks/use-toast';
 
 interface ClientOverviewProps {
@@ -22,6 +27,9 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
   const { projects, isLoading: isLoadingProjects } = useClientProjectsWithDates(client.id);
   const { updateProject, deleteProject } = useClientProjects(client.id);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const { isAdmin } = useAdminStatus();
+  const [editOpen, setEditOpen] = useState(false);
+  const [historyKey, setHistoryKey] = useState(0);
 
   // Handler for when a Google Drive folder is connected or disconnected
   const handleFolderConnected = (folderId: string) => {
@@ -95,8 +103,14 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
 
       <div className="grid md:grid-cols-2 gap-6">
         <Card>
-          <CardHeader>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <CardTitle>Contact Information</CardTitle>
+            {isAdmin && (
+              <Button size="sm" variant="outline" onClick={() => setEditOpen(true)}>
+                <Pencil className="mr-2 h-4 w-4" />
+                Edit contact
+              </Button>
+            )}
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -106,7 +120,7 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
               </div>
               <div>
                 <p className="font-medium text-gray-700">Email</p>
-                <p>{client.contact_email}</p>
+                <p className="break-words">{client.contact_email}</p>
               </div>
               {client.contact_phone && (
                 <div>
@@ -114,9 +128,19 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
                   <p>{client.contact_phone}</p>
                 </div>
               )}
+              {isAdmin && <PreviousContacts clientId={client.id} refreshKey={historyKey} />}
             </div>
           </CardContent>
         </Card>
+        {isAdmin && (
+          <EditContactDialog
+            open={editOpen}
+            onOpenChange={setEditOpen}
+            clientId={client.id}
+            current={{ contact_name: client.contact_name, contact_email: client.contact_email, contact_phone: client.contact_phone ?? null }}
+            onSaved={(v) => { setClient({ ...client, ...v }); setHistoryKey((k) => k + 1); }}
+          />
+        )}
 
         <Card>
           <CardHeader>
