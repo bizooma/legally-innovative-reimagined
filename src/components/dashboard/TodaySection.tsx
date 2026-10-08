@@ -17,6 +17,7 @@ interface TodayTask {
   due_date: string | null;
   project_id: string;
   order_index: number;
+  created_at: string;
 }
 interface ProjectOption { id: string; name: string; client_id: string; client_name: string }
 
@@ -46,7 +47,7 @@ export function TodaySection() {
   const load = useCallback(async () => {
     const [{ data: p }, { data: t }] = await Promise.all([
       supabase.from('projects').select('id, name, client_id, clients(company_name)').order('name'),
-      supabase.from('project_tasks').select('id, title, status, due_date, project_id, order_index').neq('status', TASK_DONE_STATUS),
+      supabase.from('project_tasks').select('id, title, status, due_date, project_id, order_index, created_at').neq('status', TASK_DONE_STATUS),
     ]);
     const opts = (p || []).map((x: any) => ({ id: x.id, name: x.name, client_id: x.client_id, client_name: x.clients?.company_name ?? '' }));
     setProjects(opts);
@@ -71,7 +72,10 @@ export function TodaySection() {
     const overdue = take(tasks.filter((t) => t.due_date && localDay(t.due_date) < today).sort(byDue));
     const dueToday = take(tasks.filter((t) => !used.has(t.id) && t.due_date && localDay(t.due_date) === today));
     const active = take(tasks.filter((t) => !used.has(t.id) && ACTIVE_STATUSES.includes(t.status)).sort(byDue));
-    const next = tasks.filter((t) => !used.has(t.id) && t.due_date).sort(byDue).slice(0, 5);
+    const rest = tasks.filter((t) => !used.has(t.id));
+    const dated = rest.filter((t) => t.due_date).sort(byDue);
+    const undated = rest.filter((t) => !t.due_date).sort((a, b) => (b.created_at ?? '').localeCompare(a.created_at ?? ''));
+    const next = [...dated, ...undated].slice(0, 5);
     return [
       { label: 'Overdue', items: overdue },
       { label: 'Due today', items: dueToday },
@@ -116,11 +120,12 @@ export function TodaySection() {
           due_date: dueDate ? new Date(`${dueDate}T00:00:00`).toISOString() : null,
           created_by: user.id,
         })
-        .select('id, title, status, due_date, project_id, order_index')
+        .select('id, title, status, due_date, project_id, order_index, created_at')
         .single();
       if (error) throw error;
       setTasks((prev) => [...prev, data as TodayTask]);
       writeLastProject(projectId);
+      toast({ title: 'Task added' });
       setTitle('');
       setDueDate('');
     } catch (err: any) {
@@ -153,6 +158,7 @@ export function TodaySection() {
           </SelectContent>
         </Select>
         <Input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} aria-label="Due date (optional)" className="w-40" />
+        <Button type="submit" disabled={!title.trim() || !projectId || saving}>Add</Button>
       </form>
 
       {loaded && groups.length === 0 ? (
