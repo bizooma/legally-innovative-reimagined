@@ -30,9 +30,11 @@ export function useTimeEntries({ clients, autoRefresh = false }: UseTimeEntriesO
       });
 
       // Enrich with client names
-      const enriched = data.map((entry) => ({
+      const enriched = data.map(({ projects, project_tasks, ...entry }: any) => ({
         ...entry,
         client_name: clients.find((c) => c.id === entry.client_id)?.company_name,
+        project_name: projects?.name ?? undefined,
+        task_name: project_tasks?.title ?? undefined,
       }));
 
       setEntries(enriched);

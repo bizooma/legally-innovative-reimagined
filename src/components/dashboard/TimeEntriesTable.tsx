@@ -108,6 +108,11 @@ export const TimeEntriesTable: React.FC<TimeEntriesTableProps> = ({
                 </TableCell>
                 <TableCell className="font-medium">
                   {entry.client_name || 'Unknown Client'}
+                  {(entry.project_name || entry.task_name) && (
+                    <div className="text-xs font-normal text-muted-foreground">
+                      {[entry.project_name, entry.task_name].filter(Boolean).join(' · ')}
+                    </div>
+                  )}
                 </TableCell>
                 <TableCell>
                   {format(new Date(entry.start_time), 'hh:mm a')}
