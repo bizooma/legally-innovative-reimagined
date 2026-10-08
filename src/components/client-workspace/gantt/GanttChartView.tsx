@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GanttProject, GanttRow } from './types';
 import { GanttTable } from './GanttTable';
 import { GanttBar } from './GanttBar';
+import { useProjectProgress } from '@/hooks/useProjectProgress';
 import { TimelineGrid, TimelineHeader } from './TimelineGrid';
 import { DateRangeFilter } from './DateRangeFilter';
 import { useGanttCalculations, ZoomLevel } from './useGanttCalculations';
@@ -103,6 +104,7 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
   }, [projects, dateRange]);
 
   const visibleProjectIds = useMemo(() => visibleProjects.map(p => p.id), [visibleProjects]);
+  const progressById = useProjectProgress(visibleProjectIds);
   const { taskCounts } = useProjectTaskCounts(visibleProjectIds);
 
   const expandedProjectIds = useMemo(() => 
@@ -341,6 +343,7 @@ export function GanttChartView({ projects, isLoading, onProjectClick }: GanttCha
                               rowHeight={rowHeight}
                               onClick={handleProjectClick}
                               isTask={false}
+                              derivedProgress={progressById[row.project.id] ?? null}
                               onResizeStart={(edge, clientX) => {
                                 startResize(
                                   row.project!.id,
