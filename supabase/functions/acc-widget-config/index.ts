@@ -37,7 +37,7 @@ Deno.serve(async (req) => {
     );
     const { data: org } = await supabase
       .from("acc_organizations")
-      .select("id, brand_color, logo_url, subscription_status")
+      .select("id, brand_color, logo_url, subscription_status, trial_ends_at")
       .eq("slug", slug)
       .maybeSingle();
     if (!org) return new Response(JSON.stringify(DEFAULTS), { headers });
@@ -63,11 +63,17 @@ Deno.serve(async (req) => {
         return requestHost === norm || requestHost.endsWith("." + norm);
       });
 
-    // Subscription gate (null status = trial/free, allow). Block only on negative states.
+    // Access requires a subscription in good standing OR an unexpired trial.
     const subStatus = (org as any).subscription_status as string | null;
-    const subBlocked = subStatus
-      ? !["active", "trialing", "past_due"].includes(subStatus)
-      : false;
+    const paid = subStatus ? ["active", "trialing", "past_due"].includes(subStatus) : false;
+    const trialEnds = (org as any).trial_ends_at as string | null;
+    const inTrial = !paid && !!trialEnds && new Date(trialEnds).getTime() > Date.now();
+    const subBlocked = !paid && !inTrial;
+    const blockReason = subStatus
+      ? "subscription_inactive"
+      : trialEnds
+      ? "trial_expired"
+      : "no_subscription";
 
     let settings: any = null;
     if (site?.id) {
@@ -85,7 +91,7 @@ Deno.serve(async (req) => {
         domainOk &&
         !subBlocked,
       blocked_reason: subBlocked
-        ? "subscription_inactive"
+        ? blockReason
         : !domainOk
         ? "domain_not_allowed"
         : null,

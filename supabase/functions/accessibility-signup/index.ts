@@ -52,7 +52,13 @@ Deno.serve(async (req) => {
 
     const { data: org, error: orgErr } = await admin
       .from("acc_organizations")
-      .insert({ name: orgName, slug, created_by: userId, plan: "starter" })
+      .insert({
+        name: orgName,
+        slug,
+        created_by: userId,
+        plan: "starter",
+        trial_ends_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+      })
       .select("id, slug, name")
       .single();
     if (orgErr || !org) {
