@@ -954,6 +954,44 @@ export type Database = {
           },
         ]
       }
+      client_contact_history: {
+        Row: {
+          client_id: string
+          contact_email: string
+          contact_name: string
+          contact_phone: string | null
+          id: string
+          replaced_at: string
+          replaced_by: string | null
+        }
+        Insert: {
+          client_id: string
+          contact_email: string
+          contact_name: string
+          contact_phone?: string | null
+          id?: string
+          replaced_at?: string
+          replaced_by?: string | null
+        }
+        Update: {
+          client_id?: string
+          contact_email?: string
+          contact_name?: string
+          contact_phone?: string | null
+          id?: string
+          replaced_at?: string
+          replaced_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_contact_history_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_diagram_nodes: {
         Row: {
           client_id: string
