@@ -41,7 +41,7 @@ export default function PortalResetPassword() {
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
-      toast({ title: "Password updated", description: "You're signed in." });
+      toast({ title: "Password saved", description: "You're signed in." });
       navigate("/portal/today");
     } catch (err: any) {
       toast({ title: "Update failed", description: err.message ?? String(err), variant: "destructive" });
@@ -52,7 +52,7 @@ export default function PortalResetPassword() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-16">
       <Helmet>
-        <title>Reset Password – Bizooma Portal</title>
+        <title>Set Your Password – Bizooma Portal</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <Card className="w-full max-w-md">
@@ -62,9 +62,9 @@ export default function PortalResetPassword() {
               <KeyRound className="h-6 w-6" />
             </div>
             <p className="text-xs uppercase tracking-wider text-muted-foreground">Bizooma Portal</p>
-            <h1 className="text-2xl font-playfair font-bold">Set a new password</h1>
+            <h1 className="text-2xl font-playfair font-bold">Set your password</h1>
             <p className="text-sm text-muted-foreground">
-              {ready ? "Choose a new password for your account." : "Verifying reset link…"}
+              {ready ? "Choose a password for your account. If you're resetting, this replaces your old one." : "Verifying reset link…"}
             </p>
           </div>
           <form onSubmit={submit} className="space-y-4">
