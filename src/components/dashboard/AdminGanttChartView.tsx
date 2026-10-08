@@ -8,6 +8,7 @@ import { TimelineGrid, TimelineHeader } from '@/components/client-workspace/gant
 import { DateRangeFilter } from '@/components/client-workspace/gantt/DateRangeFilter';
 import { useGanttCalculations } from '@/components/client-workspace/gantt/useGanttCalculations';
 import { useProjectTaskCounts } from '@/hooks/useProjectTaskCounts';
+import { useProjectProgress } from '@/hooks/useProjectProgress';
 import { DateRange, GanttRow } from '@/components/client-workspace/gantt/types';
 import { ProjectWithClient } from '@/hooks/useAllProjectsWithClients';
 import { addDays, subDays } from 'date-fns';
@@ -79,6 +80,7 @@ export function AdminGanttChartView({ projects, isLoading }: AdminGanttChartView
 
   const visibleProjectIds = useMemo(() => visibleProjects.map(p => p.id), [visibleProjects]);
   const { taskCounts } = useProjectTaskCounts(visibleProjectIds);
+  const progressById = useProjectProgress(visibleProjectIds);
 
   // Convert projects to rows for the new GanttRow structure
   const ganttRows = useMemo((): GanttRow[] => {
@@ -215,6 +217,7 @@ export function AdminGanttChartView({ projects, isLoading }: AdminGanttChartView
                               rowHeight={ROW_HEIGHT}
                               onClick={handleProjectClick}
                               isTask={false}
+                              derivedProgress={progressById[row.project.id] ?? null}
                             />
                           </div>
                         );
