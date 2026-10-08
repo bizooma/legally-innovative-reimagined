@@ -1,4 +1,5 @@
 import HeroTexture from "@/components/HeroTexture";
+import LabsProcessDiagram from "@/components/labs/LabsProcessDiagram";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -69,10 +70,11 @@ const LabsPage = () => (
       </section>
 
       <section className="py-16 lg:py-24 border-b border-[#1a1a1a]/10">
-        <div className={inner}>
-          <div className="max-w-[34rem] space-y-5 font-raleway text-lg leading-relaxed text-[#1a1a1a]/85">
+        <div className={`${inner} grid gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start`}>
+          <div className="min-w-0 max-w-[34rem] space-y-5 font-raleway text-lg leading-relaxed text-[#1a1a1a]/85">
             {intro.paragraphs.map((p, i) => <p key={i}>{withFrameworkLink(p)}</p>)}
           </div>
+          <div className="labs-diagram min-w-0 lg:justify-self-end"><LabsProcessDiagram /></div>
         </div>
       </section>
 

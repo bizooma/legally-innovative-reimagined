@@ -35,6 +35,12 @@ export const intro = {
   frameworkLink: "/order-of-operations",
 };
 
+export const processDiagram = {
+  ariaLabel: "How a Labs project runs: a problem we keep hitting leads to kill criteria written first, then the thinnest version that works, then we run it on ourselves, and it ends either kept or retired.",
+  steps: ["A problem we keep hitting", "Kill criteria, written first", "The thinnest version that works", "We run it on ourselves"],
+  outcomes: { kept: "Kept", retired: "Retired" },
+};
+
 export const items: LabItem[] = [
   { name: "Claude Cowork", status: "Live", description: "A curated library of Claude skills and tutorials built for law firms and nonprofits — intake triage, drafting, grant writing, donor cultivation.", link: "/claude-cowork" },
   { name: "Causeio", status: "Live", description: "An all-in-one marketing and engagement platform for nonprofits: donor management, volunteer coordination, campaigns and grant tracking.", link: "https://causeio.com" },
