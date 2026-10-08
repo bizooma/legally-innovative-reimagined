@@ -36,14 +36,21 @@ export const intro = {
 };
 
 export const processDiagram = {
-  ariaLabel: "How a Labs project runs: a problem we keep hitting leads to kill criteria written first, then an MVP — the thinnest version that works, then we run it on ourselves, and it ends either kept or retired.",
+  ariaLabel: "How a Labs project runs: a problem we keep hitting leads to kill criteria written first, then an MVP — the thinnest version that works — which we run on ourselves, test against real use, pilot with a partner organization and put on the roadmap; a project can be retired at any of the later stages, and the path ends either as an internal tool that stays ours or as a product.",
   steps: [
     { label: "A problem we keep hitting" },
     { label: "Kill criteria, written first" },
     { label: "MVP", sub: "The thinnest version that works" },
     { label: "We run it on ourselves" },
+    { label: "Tested against real use" },
+    { label: "Piloted with a partner organization" },
+    { label: "On the roadmap" },
   ] as { label: string; sub?: string }[],
-  outcomes: { kept: "Kept", retired: "Retired" },
+  retired: "Retired",
+  /** Spine stages (0-based) with a side exit into Retired. */
+  retireFrom: [3, 4, 5, 6],
+  retiredNote: "Retired — possible at any stage",
+  outcomes: { internal: "Internal tool — stays ours", product: "Becomes a product", productLink: "/products" },
 };
 
 export const items: LabItem[] = [

@@ -333,3 +333,7 @@
 
 /* /labs keeps a light paper ground in every theme, so its diagram keeps the light editorial values under .dark. */
 .dark .labs-diagram { --editorial-ink: #1a1a1a; --editorial-rule: #dedede; --editorial-faint: #9a9a9a; --editorial-dim: #555555; }
+.labs-product-link { outline: none; }
+.labs-product-link:focus-visible rect { stroke-width: 3; }
+.labs-product-link:focus-visible { outline: 2px solid var(--editorial-oxblood); outline-offset: 3px; }
+.labs-product-link:hover text { text-decoration: underline; }
