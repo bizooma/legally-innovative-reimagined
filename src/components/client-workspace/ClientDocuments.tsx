@@ -8,13 +8,16 @@ import DocumentsContent from './document-components/DocumentsContent';
 import { DocumentUploadDialog } from './DocumentUploadDialog';
 import { useClientDocuments } from '@/hooks/useClientDocuments';
 import { handleView, handleDownload } from '@/utils/documentActions';
-import { useAdminStatus } from '@/hooks/staff/useAdminStatus';
+import { setDocumentClientVisibility } from '@/services/documents/updateDocumentDescription';
+import { Document } from '@/types/document';
+import { toast } from 'sonner';
 
 interface ClientDocumentsProps {
   clientId: string;
+  role?: 'admin' | 'client';
 }
 
-const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
+const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId, role = 'client' }) => {
   const {
     documents,
     isLoading,
@@ -29,7 +32,29 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
     handleSaveDescription
   } = useClientDocuments(clientId);
 
-  const { isAdmin } = useAdminStatus();
+  const isAdmin = role === 'admin';
+  const [visibility, setVisibility] = useState<Record<string, boolean>>({});
+  const [togglingId, setTogglingId] = useState<string | null>(null);
+
+  const shownDocuments = documents.map((d) =>
+    d.id in visibility ? { ...d, isClientVisible: visibility[d.id] } : d
+  );
+
+  const handleToggleVisibility = async (doc: Document) => {
+    if (!isAdmin || togglingId) return;
+    const next = !doc.isClientVisible;
+    setTogglingId(doc.id);
+    setVisibility((v) => ({ ...v, [doc.id]: next }));
+    try {
+      await setDocumentClientVisibility(doc.id, next);
+      toast.success(next ? `"${doc.name}" is now shared with the client` : `"${doc.name}" is now internal`);
+    } catch (e: any) {
+      setVisibility((v) => ({ ...v, [doc.id]: !next }));
+      toast.error(`Could not change sharing: ${e?.message ?? e}`);
+    } finally {
+      setTogglingId(null);
+    }
+  };
   const [showDebug, setShowDebug] = useState(false);
   const isLiveEnvironment = window.location.hostname !== 'localhost' && !window.location.hostname.includes('lovable.app');
 
@@ -73,12 +98,11 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
             <RefreshCw className="h-4 w-4 mr-1" />
             Force Refresh
           </Button>
-          {isAdmin && (
-            <DocumentUploadDialog 
-              clientId={clientId} 
-              onDocumentUploaded={handleDocumentUploaded}
-            />
-          )}
+          <DocumentUploadDialog 
+            clientId={clientId} 
+            onDocumentUploaded={handleDocumentUploaded}
+            role={role}
+          />
         </div>
       </CardHeader>
       <CardContent>
@@ -116,7 +140,7 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
         )}
         
         <DocumentsContent
-          documents={documents}
+          documents={shownDocuments}
           isLoading={isLoading}
           clientId={clientId}
           onDocumentUploaded={handleDocumentUploaded}
@@ -124,6 +148,9 @@ const ClientDocuments: React.FC<ClientDocumentsProps> = ({ clientId }) => {
           onView={handleView}
           onDownload={handleDownload}
           onDelete={isAdmin ? handleDelete : undefined}
+          role={role}
+          onToggleVisibility={handleToggleVisibility}
+          togglingId={togglingId}
         />
       </CardContent>
 

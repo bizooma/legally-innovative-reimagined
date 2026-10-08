@@ -7,11 +7,13 @@ import { Plus } from 'lucide-react';
 interface EmptyDocumentStateProps {
   clientId: string;
   onDocumentUploaded: (success: boolean) => Promise<void>;
+  role?: 'admin' | 'client';
 }
 
 const EmptyDocumentState: React.FC<EmptyDocumentStateProps> = ({ 
   clientId, 
-  onDocumentUploaded 
+  onDocumentUploaded,
+  role = 'client'
 }) => {
   return (
     <div className="text-center py-10">
@@ -19,6 +21,7 @@ const EmptyDocumentState: React.FC<EmptyDocumentStateProps> = ({
       <DocumentUploadDialog
         clientId={clientId}
         onDocumentUploaded={onDocumentUploaded}
+        role={role}
         variant="outline"
         className="mt-4"
       >
