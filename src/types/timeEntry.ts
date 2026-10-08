@@ -6,12 +6,16 @@ export interface TimeEntry {
   end_time: string | null;
   duration_seconds: number | null;
   description: string | null;
+  project_id?: string | null;
+  task_id?: string | null;
   created_at: string;
   updated_at: string;
 }
 
 export interface TimeEntryWithClient extends TimeEntry {
   client_name?: string;
+  project_name?: string;
+  task_name?: string;
 }
 
 export interface ClientTimeTotal {
@@ -27,4 +31,6 @@ export interface TimerState {
   clientId: string | null;
   startTime: string | null;
   description: string;
+  projectId?: string | null;
+  taskId?: string | null;
 }

@@ -12,6 +12,8 @@ import { ProjectStatusBadge } from './ProjectStatusBadge';
 import { ProjectStatusSelect } from './ProjectStatusSelect';
 import { Project } from '@/types/database';
 import { useToast } from '@/hooks/use-toast';
+import { useProjectProgress } from '@/hooks/useProjectProgress';
+import { formatProgress } from '@/lib/projectProgress';
 
 interface ClientProjectsProps {
   clientId: string;
@@ -22,6 +24,7 @@ const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId }) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const { toast } = useToast();
+  const progressById = useProjectProgress(projects.map((p) => p.id), selectedProject);
 
   const handleAddProject = async (projectData: any) => {
     // We include the client_id here instead of in the AddProjectDialog
@@ -167,10 +170,10 @@ const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId }) => {
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
                       <div 
                         className="bg-primary h-2.5 rounded-full" 
-                        style={{ width: `${project.progress}%` }}
+                        style={{ width: `${progressById[project.id] ?? 0}%` }}
                       />
                     </div>
-                    <span className="text-xs text-gray-500 mt-1">{project.progress}%</span>
+                    <span className="text-xs text-gray-500 mt-1">{formatProgress(progressById[project.id])}</span>
                   </TableCell>
                   <TableCell className="text-right">
                     <Button 

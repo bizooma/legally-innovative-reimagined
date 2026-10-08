@@ -25,6 +25,8 @@ import { format, formatDistanceToNow } from 'date-fns';
 import { KanbanSquare, Calendar, Pencil } from 'lucide-react';
 import { KanbanBoard } from './kanban/KanbanBoard';
 import EditProjectDialog from './EditProjectDialog';
+import { useProjectProgress } from '@/hooks/useProjectProgress';
+import { formatProgress } from '@/lib/projectProgress';
 
 interface ProjectDetailsDialogProps {
   project: Project;
@@ -43,6 +45,7 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
 }) => {
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const derived = useProjectProgress([project.id])[project.id] ?? null;
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const handleDelete = async () => {
@@ -126,10 +129,10 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
                     <div className="w-full bg-secondary rounded-full h-2.5">
                       <div 
                         className="bg-primary h-2.5 rounded-full transition-all" 
-                        style={{ width: `${project.progress}%` }}
+                        style={{ width: `${derived ?? 0}%` }}
                       />
                     </div>
-                    <span className="text-xs text-muted-foreground mt-1">{project.progress}%</span>
+                    <span className="text-xs text-muted-foreground mt-1">{formatProgress(derived)}</span>
                   </div>
                   
                   {project.description && (

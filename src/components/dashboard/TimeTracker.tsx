@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { Play, Square, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,12 +22,31 @@ export const TimeTracker: React.FC<TimeTrackerProps> = ({ clients }) => {
   const { timerState, elapsedSeconds, startTimer, stopTimer, cancelTimer, isRunning } = useTimeTracker();
   const [selectedClientId, setSelectedClientId] = useState<string>('');
   const [description, setDescription] = useState('');
+  const [projectId, setProjectId] = useState('');
+  const [taskId, setTaskId] = useState('');
+  const [projects, setProjects] = useState<{ id: string; name: string }[]>([]);
+  const [tasks, setTasks] = useState<{ id: string; title: string }[]>([]);
+
+  // Optional project/task pickers, loaded for the chosen client.
+  useEffect(() => {
+    setProjectId(''); setTaskId(''); setProjects([]);
+    if (!selectedClientId) return;
+    supabase.from('projects').select('id, name').eq('client_id', selectedClientId).order('name')
+      .then(({ data }) => setProjects(data || []));
+  }, [selectedClientId]);
+
+  useEffect(() => {
+    setTaskId(''); setTasks([]);
+    if (!projectId) return;
+    supabase.from('project_tasks').select('id, title').eq('project_id', projectId).neq('status', 'completed').order('order_index')
+      .then(({ data }) => setTasks(data || []));
+  }, [projectId]);
 
   const activeClients = clients.filter((c) => c.status === 'active');
 
   const handleStart = () => {
     if (!selectedClientId) return;
-    startTimer(selectedClientId, description);
+    startTimer(selectedClientId, description, projectId || null, taskId || null);
     setDescription('');
   };
 
@@ -72,7 +92,7 @@ export const TimeTracker: React.FC<TimeTrackerProps> = ({ clients }) => {
 
   return (
     <Card className="p-4">
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <Select value={selectedClientId} onValueChange={setSelectedClientId}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Select client" />
@@ -85,6 +105,24 @@ export const TimeTracker: React.FC<TimeTrackerProps> = ({ clients }) => {
             ))}
           </SelectContent>
         </Select>
+        {projects.length > 0 && (
+          <Select value={projectId || 'none'} onValueChange={(v) => setProjectId(v === 'none' ? '' : v)}>
+            <SelectTrigger className="w-44"><SelectValue placeholder="Project (optional)" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">No project</SelectItem>
+              {projects.map((p) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        )}
+        {projectId && tasks.length > 0 && (
+          <Select value={taskId || 'none'} onValueChange={(v) => setTaskId(v === 'none' ? '' : v)}>
+            <SelectTrigger className="w-44"><SelectValue placeholder="Task (optional)" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">No task</SelectItem>
+              {tasks.map((t) => <SelectItem key={t.id} value={t.id}>{t.title}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        )}
         <Input
           placeholder="Description (optional)"
           value={description}

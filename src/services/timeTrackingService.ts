@@ -8,6 +8,8 @@ export const timeTrackingService = {
     end_time: string | null;
     duration_seconds: number | null;
     description: string | null;
+    project_id?: string | null;
+    task_id?: string | null;
   }): Promise<TimeEntry> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
@@ -57,7 +59,7 @@ export const timeTrackingService = {
   }): Promise<TimeEntry[]> {
     let query = supabase
       .from('time_entries')
-      .select('*')
+      .select('*, projects(name), project_tasks(title)')
       .order('start_time', { ascending: false });
 
     if (filters?.clientId) {
@@ -79,6 +81,6 @@ export const timeTrackingService = {
     const { data, error } = await query;
 
     if (error) throw error;
-    return data || [];
+    return (data || []) as TimeEntry[];
   },
 };

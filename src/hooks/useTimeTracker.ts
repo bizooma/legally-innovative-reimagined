@@ -4,40 +4,45 @@ import { timeTrackingService } from '@/services/timeTrackingService';
 import { useToast } from '@/hooks/use-toast';
 
 const STORAGE_KEY = 'active_timer';
+const SYNC_EVENT = 'active-timer-change';
+const IDLE: TimerState = { isRunning: false, clientId: null, startTime: null, description: '', projectId: null, taskId: null };
+
+function readSaved(): TimerState | null {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return null;
+    const state = JSON.parse(saved) as TimerState;
+    return state.isRunning && state.startTime ? state : null;
+  } catch {
+    return null;
+  }
+}
 
 export function useTimeTracker() {
   const { toast } = useToast();
-  const [timerState, setTimerState] = useState<TimerState>({
-    isRunning: false,
-    clientId: null,
-    startTime: null,
-    description: '',
-  });
+  const [timerState, setTimerState] = useState<TimerState>(IDLE);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
-  // Load timer state from localStorage on mount
+  // Load timer state from localStorage on mount, and follow changes made by other tracker instances on the page.
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const state = JSON.parse(saved) as TimerState;
-      if (state.isRunning && state.startTime) {
-        setTimerState(state);
-        const elapsed = Math.floor(
-          (Date.now() - new Date(state.startTime).getTime()) / 1000
-        );
-        setElapsedSeconds(elapsed);
-      }
-    }
+    const sync = () => {
+      const state = readSaved() ?? IDLE;
+      setTimerState((prev) => (JSON.stringify(prev) === JSON.stringify(state) ? prev : state));
+      setElapsedSeconds(state.startTime ? Math.floor((Date.now() - new Date(state.startTime).getTime()) / 1000) : 0);
+    };
+    if (readSaved()) sync();
+    window.addEventListener(SYNC_EVENT, sync);
+    return () => window.removeEventListener(SYNC_EVENT, sync);
   }, []);
 
-  // Save timer state to localStorage
-  useEffect(() => {
-    if (timerState.isRunning) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(timerState));
-    } else {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  }, [timerState]);
+  const persist = useCallback((state: TimerState) => {
+    try {
+      if (state.isRunning) localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      else localStorage.removeItem(STORAGE_KEY);
+    } catch { /* storage unavailable: timer still runs in this view */ }
+    setTimerState(state);
+    window.dispatchEvent(new Event(SYNC_EVENT));
+  }, []);
 
   // Update elapsed time every second
   useEffect(() => {
@@ -55,16 +60,10 @@ export function useTimeTracker() {
     return () => clearInterval(interval);
   }, [timerState.isRunning, timerState.startTime]);
 
-  const startTimer = useCallback((clientId: string, description: string = '') => {
-    const startTime = new Date().toISOString();
-    setTimerState({
-      isRunning: true,
-      clientId,
-      startTime,
-      description,
-    });
+  const startTimer = useCallback((clientId: string, description: string = '', projectId: string | null = null, taskId: string | null = null) => {
+    persist({ isRunning: true, clientId, startTime: new Date().toISOString(), description, projectId, taskId });
     setElapsedSeconds(0);
-  }, []);
+  }, [persist]);
 
   const stopTimer = useCallback(async () => {
     if (!timerState.clientId || !timerState.startTime) return;
@@ -81,6 +80,8 @@ export function useTimeTracker() {
         end_time: endTime,
         duration_seconds: durationSeconds,
         description: timerState.description || null,
+        project_id: timerState.projectId ?? null,
+        task_id: timerState.taskId ?? null,
       });
 
       toast({
@@ -88,12 +89,7 @@ export function useTimeTracker() {
         description: `Tracked ${formatDuration(durationSeconds)}`,
       });
 
-      setTimerState({
-        isRunning: false,
-        clientId: null,
-        startTime: null,
-        description: '',
-      });
+      persist(IDLE);
       setElapsedSeconds(0);
     } catch (error) {
       console.error('Error saving time entry:', error);
@@ -103,17 +99,12 @@ export function useTimeTracker() {
         variant: 'destructive',
       });
     }
-  }, [timerState, toast]);
+  }, [timerState, toast, persist]);
 
   const cancelTimer = useCallback(() => {
-    setTimerState({
-      isRunning: false,
-      clientId: null,
-      startTime: null,
-      description: '',
-    });
+    persist(IDLE);
     setElapsedSeconds(0);
-  }, []);
+  }, [persist]);
 
   return {
     timerState,

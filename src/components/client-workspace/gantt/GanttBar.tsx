@@ -1,3 +1,4 @@
+import { formatProgress } from '@/lib/projectProgress';
 import { useMemo, useState, useEffect, useRef } from 'react';
 import { GanttProject } from './types';
 import { BarPosition } from './types';
@@ -28,6 +29,8 @@ interface GanttBarProps {
   resizeOffset?: number;
   isResizing?: boolean;
   resizingEdge?: 'start' | 'end';
+  /** Task-derived progress; null means the project has no tasks (shows —). Omit to fall back to project.progress. */
+  derivedProgress?: number | null;
 }
 
 const PRIORITY_COLORS = {
@@ -55,6 +58,7 @@ export function GanttBar({
   resizeOffset = 0,
   isResizing = false,
   resizingEdge,
+  derivedProgress,
 }: GanttBarProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -149,7 +153,8 @@ export function GanttBar({
 
   if (!position.isVisible) return null;
 
-  const progress = project.progress || 0;
+  const progressValue = derivedProgress !== undefined ? derivedProgress : (project.progress ?? 0);
+  const progress = progressValue ?? 0;
   const barHeightPx = isTask ? Math.floor(rowHeight * 0.5) : Math.floor(rowHeight * 0.6);
   const marginTop = Math.floor((rowHeight - barHeightPx) / 2);
 
@@ -195,7 +200,7 @@ export function GanttBar({
       {!isTask && (
         <div className="flex items-center gap-2 text-muted-foreground">
           <span>Progress:</span>
-          <span className="font-medium text-foreground">{progress}%</span>
+          <span className="font-medium text-foreground">{formatProgress(progressValue)}</span>
         </div>
       )}
       <div className="flex items-center gap-2 text-muted-foreground">

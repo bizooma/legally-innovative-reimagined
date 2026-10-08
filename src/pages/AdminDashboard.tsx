@@ -24,6 +24,7 @@ import AdminPasswordReset from '@/components/auth/AdminPasswordReset';
 import { ChatbotConversations } from '@/components/dashboard/ChatbotConversations';
 import { ChatbotTrainingManager } from '@/components/dashboard/ChatbotTrainingManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { TodaySection } from '@/components/dashboard/TodaySection';
 
 const AdminDashboard = () => {
   const { clients, isLoading, stats, user, handleAddClient, handleLogout, isAdmin } = useDashboard();
@@ -33,6 +34,7 @@ const AdminDashboard = () => {
   const [isBudgetOpen, setIsBudgetOpen] = useState(true);
   const [isGanttOpen, setIsGanttOpen] = useState(true);
   const [isClientDirectoryOpen, setIsClientDirectoryOpen] = useState(true);
+  const [isSystemOpen, setIsSystemOpen] = useState(false);
 
   if (isLoading && !user) {
     return (
@@ -48,6 +50,9 @@ const AdminDashboard = () => {
       <div className="min-h-screen bg-gray-50 pt-20">
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-7xl mx-auto">
+            {/* Today — always open, first on the page */}
+            {isAdmin && <TodaySection />}
+
             {/* Admin Header */}
             <AdminHeader 
               onClientAdded={handleAddClient}
@@ -134,6 +139,43 @@ const AdminDashboard = () => {
               </Collapsible>
             )}
 
+            {/* Client Directory */}
+            <Collapsible 
+              open={isClientDirectoryOpen} 
+              onOpenChange={setIsClientDirectoryOpen}
+              className="mb-8"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-playfair font-bold">Client Directory</h2>
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="sm" className="gap-2">
+                    {isClientDirectoryOpen ? 'Collapse' : 'Expand'}
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isClientDirectoryOpen ? 'rotate-180' : ''}`} />
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
+              <CollapsibleContent>
+                <ClientDirectory 
+                  clients={clients} 
+                  isLoading={isLoading}
+                  onClientAdded={handleAddClient}
+                  isAdmin={isAdmin}
+                />
+              </CollapsibleContent>
+            </Collapsible>
+            {/* System — infrastructure, collapsed by default */}
+            {isAdmin && (
+              <Collapsible open={isSystemOpen} onOpenChange={setIsSystemOpen} className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-playfair font-bold">System</h2>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      {isSystemOpen ? 'Collapse' : 'Expand'}
+                      <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isSystemOpen ? 'rotate-180' : ''}`} />
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent>
             {/* Provider Status Management - Only show for admins */}
             {isAdmin && (
               <div className="mb-8 space-y-6">
@@ -185,30 +227,9 @@ const AdminDashboard = () => {
               </Collapsible>
             )}
 
-            {/* Client Directory */}
-            <Collapsible 
-              open={isClientDirectoryOpen} 
-              onOpenChange={setIsClientDirectoryOpen}
-              className="mb-8"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-playfair font-bold">Client Directory</h2>
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" size="sm" className="gap-2">
-                    {isClientDirectoryOpen ? 'Collapse' : 'Expand'}
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isClientDirectoryOpen ? 'rotate-180' : ''}`} />
-                  </Button>
-                </CollapsibleTrigger>
-              </div>
-              <CollapsibleContent>
-                <ClientDirectory 
-                  clients={clients} 
-                  isLoading={isLoading}
-                  onClientAdded={handleAddClient}
-                  isAdmin={isAdmin}
-                />
-              </CollapsibleContent>
-            </Collapsible>
+                </CollapsibleContent>
+              </Collapsible>
+            )}
           </div>
         </div>
       </div>
