@@ -32,7 +32,7 @@ interface ProjectDetailsDialogProps {
   project: Project;
   isOpen: boolean;
   onClose: () => void;
-  onDelete: (id: string) => Promise<void>;
+  onDelete?: (id: string) => Promise<void>;
   onUpdate?: (id: string, updates: Partial<Project>) => Promise<void | Project>;
 }
 
@@ -51,6 +51,7 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
+      if (!onDelete) return;
       await onDelete(project.id);
       onClose();
     } catch (error) {
@@ -189,12 +190,14 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({
                   <Button variant="outline" onClick={onClose}>
                     Close
                   </Button>
-                  <Button 
-                    variant="destructive" 
-                    onClick={() => setConfirmDeleteOpen(true)}
-                  >
-                    Delete Project
-                  </Button>
+                  {onDelete && (
+                    <Button 
+                      variant="destructive" 
+                      onClick={() => setConfirmDeleteOpen(true)}
+                    >
+                      Delete Project
+                    </Button>
+                  )}
                 </DialogFooter>
               </div>
             </TabsContent>

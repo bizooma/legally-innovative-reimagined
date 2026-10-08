@@ -1,15 +1,20 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
 import { Document } from '@/types/document';
 import { Download, ExternalLink, Pencil, Trash2, FileText, RefreshCw } from 'lucide-react';
 
 interface DocumentItemProps {
   doc: Document;
-  onEdit: (doc: Document) => void;
+  onEdit?: (doc: Document) => void;
   onView: (url: string) => void;
   onDownload: (url: string, filename: string) => void;
-  onDelete: (path: string, name: string) => void;
+  onDelete?: (path: string, name: string) => void;
+  /** Admin only. When absent, no visibility badge or toggle is drawn. */
+  onToggleVisibility?: (doc: Document) => void;
+  toggling?: boolean;
 }
 
 const DocumentItem: React.FC<DocumentItemProps> = ({
@@ -17,7 +22,9 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
   onEdit,
   onView,
   onDownload,
-  onDelete
+  onDelete,
+  onToggleVisibility,
+  toggling
 }) => {
   // Function to render the appropriate icon based on document type
   const renderDocIcon = (type: string) => {
@@ -45,7 +52,14 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
           {renderDocIcon(doc.type) || <span className="text-xs font-bold">{doc.type}</span>}
         </div>
         <div className="flex-1">
-          <h3 className="font-medium">{doc.name}</h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="font-medium">{doc.name}</h3>
+            {onToggleVisibility && (
+              <Badge variant={doc.isClientVisible ? 'default' : 'secondary'}>
+                {doc.isClientVisible ? 'Shared with client' : 'Internal'}
+              </Badge>
+            )}
+          </div>
           <p className="text-sm text-gray-500 mb-1">{doc.size} • Updated {doc.lastUpdated}</p>
           {isLiveEnvironment && (
             <p className="text-xs text-blue-600 mb-1">
@@ -65,10 +79,23 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
         </div>
       </div>
       <div className="flex gap-2 mt-3 md:mt-0">
-        <Button variant="outline" size="sm" onClick={() => onEdit(doc)}>
-          <Pencil className="h-4 w-4 mr-1" />
-          Edit
-        </Button>
+        {onToggleVisibility && (
+          <label className="flex items-center gap-2 text-sm mr-1">
+            <Switch
+              checked={!!doc.isClientVisible}
+              disabled={toggling}
+              onCheckedChange={() => onToggleVisibility(doc)}
+              aria-label={`Share ${doc.name} with client`}
+            />
+            Share
+          </label>
+        )}
+        {onEdit && (
+          <Button variant="outline" size="sm" onClick={() => onEdit(doc)}>
+            <Pencil className="h-4 w-4 mr-1" />
+            Edit
+          </Button>
+        )}
         <Button variant="outline" size="sm" onClick={() => onView(doc.url)}>
           <ExternalLink className="h-4 w-4 mr-1" />
           View
@@ -77,6 +104,7 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
           <Download className="h-4 w-4 mr-1" />
           Download
         </Button>
+        {onDelete && (
         <Button 
           variant="outline" 
           size="sm" 
@@ -87,6 +115,7 @@ const DocumentItem: React.FC<DocumentItemProps> = ({
         >
           <Trash2 className="h-4 w-4" />
         </Button>
+        )}
       </div>
     </div>
   );

@@ -12,22 +12,22 @@ import ProjectDetailsDialog from './ProjectDetailsDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
-import { useAdminStatus } from '@/hooks/staff/useAdminStatus';
 import { EditContactDialog } from './EditContactDialog';
 import { PreviousContacts } from './PreviousContacts';
 import { toast } from '@/hooks/use-toast';
 
 interface ClientOverviewProps {
   client: Client;
+  role?: 'admin' | 'client';
 }
 
-const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }) => {
+const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient, role = 'client' }) => {
   const [client, setClient] = useState(initialClient);
   const { documentCount, isLoading: isLoadingDocuments } = useClientDocumentCount(client.id);
   const { projects, isLoading: isLoadingProjects } = useClientProjectsWithDates(client.id);
   const { updateProject, deleteProject } = useClientProjects(client.id);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const { isAdmin } = useAdminStatus();
+  const isAdmin = role === 'admin';
   const [editOpen, setEditOpen] = useState(false);
   const [historyKey, setHistoryKey] = useState(0);
 
@@ -172,8 +172,8 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ client: initialClient }
           project={selectedProject}
           isOpen={Boolean(selectedProject)}
           onClose={() => setSelectedProject(null)}
-          onDelete={handleDelete}
-          onUpdate={updateProject}
+          onDelete={isAdmin ? handleDelete : undefined}
+          onUpdate={isAdmin ? updateProject : undefined}
         />
       )}
     </div>

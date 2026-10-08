@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, Upload } from 'lucide-react';
 import { toast } from 'sonner';
@@ -22,6 +23,8 @@ interface DocumentUploadDialogProps {
   size?: "default" | "sm" | "lg" | "icon" | null;
   children?: React.ReactNode;
   className?: string;
+  /** 'client' uploads are always shared; admins choose, default internal. */
+  role?: 'admin' | 'client';
 }
 
 export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({ 
@@ -30,8 +33,10 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
   variant = "default",
   size = "default",
   children,
-  className
+  className,
+  role = 'client'
 }) => {
+  const [shareWithClient, setShareWithClient] = useState(false);
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [description, setDescription] = useState('');
@@ -67,16 +72,15 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
     setIsUploading(true);
     
     try {
-      const result = await uploadDocument(clientId, file, description);
+      const result = await uploadDocument(clientId, file, description, role === 'admin' ? shareWithClient : true);
       
       if (result) {
         toast.success("Document uploaded successfully");
         setOpen(false);
         setFile(null);
         setDescription('');
+        setShareWithClient(false);
         onDocumentUploaded(true);
-      } else {
-        toast.error("Failed to upload document");
       }
     } catch (error: any) {
       toast.error(`Upload failed: ${error.message}`);
@@ -89,6 +93,7 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
   const handleClose = () => {
     setFile(null);
     setDescription('');
+    setShareWithClient(false);
     setOpen(false);
   };
 
@@ -141,6 +146,13 @@ export const DocumentUploadDialog: React.FC<DocumentUploadDialogProps> = ({
             />
           </div>
           
+          {role === 'admin' && (
+            <label className="flex items-center gap-2 text-sm">
+              <Checkbox checked={shareWithClient} onCheckedChange={(c) => setShareWithClient(!!c)} />
+              Share with client
+              <span className="text-muted-foreground">(otherwise internal)</span>
+            </label>
+          )}
           <div className="space-y-2">
             <label htmlFor="description" className="text-sm font-medium">
               Description (optional)

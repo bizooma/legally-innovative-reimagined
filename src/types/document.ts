@@ -11,5 +11,6 @@ export interface Document {
   lastUpdated: string;
   path: string;
   url: string;
-  description?: string; // Make description optional to handle cases where it's not set
+  description?: string;
+  isClientVisible?: boolean; // Make description optional to handle cases where it's not set
 }

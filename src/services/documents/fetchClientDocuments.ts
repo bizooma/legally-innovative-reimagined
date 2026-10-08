@@ -105,7 +105,8 @@ export async function fetchClientDocuments(clientId: string): Promise<Document[]
         lastUpdated: new Date(record.updated_at).toISOString().split('T')[0],
         path: record.file_path,
         url: urlData.publicUrl,
-        description: record.description || ''
+        description: record.description || '',
+        isClientVisible: (record as any).is_client_visible ?? false
       };
       
       console.log('Mapped document:', mappedDoc);

@@ -9,10 +9,13 @@ interface DocumentsContentProps {
   isLoading: boolean;
   clientId: string;
   onDocumentUploaded: (success: boolean) => Promise<void>;
-  onEdit: (doc: Document) => void;
+  onEdit?: (doc: Document) => void;
   onView: (url: string) => void;
   onDownload: (url: string, filename: string) => void;
-  onDelete: (path: string, name: string) => Promise<void>;
+  onDelete?: (path: string, name: string) => Promise<void>;
+  role?: 'admin' | 'client';
+  onToggleVisibility?: (doc: Document) => void;
+  togglingId?: string | null;
 }
 
 const DocumentsContent: React.FC<DocumentsContentProps> = ({
@@ -23,7 +26,10 @@ const DocumentsContent: React.FC<DocumentsContentProps> = ({
   onEdit,
   onView,
   onDownload,
-  onDelete
+  onDelete,
+  role = 'client',
+  onToggleVisibility,
+  togglingId
 }) => {
   if (isLoading) {
     return (
@@ -38,6 +44,7 @@ const DocumentsContent: React.FC<DocumentsContentProps> = ({
       <EmptyDocumentState 
         clientId={clientId}
         onDocumentUploaded={onDocumentUploaded}
+        role={role}
       />
     );
   }
@@ -52,6 +59,8 @@ const DocumentsContent: React.FC<DocumentsContentProps> = ({
           onView={onView}
           onDownload={onDownload}
           onDelete={onDelete}
+          onToggleVisibility={role === 'admin' ? onToggleVisibility : undefined}
+          toggling={togglingId === doc.id}
         />
       ))}
     </div>
