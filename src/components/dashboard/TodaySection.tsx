@@ -32,7 +32,7 @@ function writeLastProject(id: string) {
   try { localStorage.setItem(LAST_PROJECT_KEY, id); } catch { /* ignore */ }
 }
 
-export function TodaySection() {
+export function TodaySection({ hideHeading = false }: { hideHeading?: boolean } = {}) {
   const { toast } = useToast();
   const { startTimer, isRunning } = useTimeTracker();
   const [tasks, setTasks] = useState<TodayTask[]>([]);
@@ -163,7 +163,7 @@ export function TodaySection() {
 
   return (
     <section className="mb-8">
-      <h2 className="text-2xl font-playfair font-bold mb-4">Today</h2>
+      {!hideHeading && <h2 className="text-2xl font-playfair font-bold mb-4">Today</h2>}
       <form onSubmit={addTask} className="flex flex-wrap items-center gap-2 mb-4">
         <Input
           ref={inputRef}

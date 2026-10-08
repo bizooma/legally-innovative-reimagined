@@ -12,7 +12,8 @@ import AppleMapsMarketingPage from "./pages/AppleMapsMarketingPage";
 import OpenAiWebBrowserPage from "./pages/OpenAiWebBrowserPage";
 import VoiceSeoAeoStatsPage from "./pages/VoiceSeoAeoStatsPage";
 import Portal from "./pages/Portal";
-import AdminDashboard from "./pages/AdminDashboard";
+import PortalLayout from "./components/portal-shell/PortalLayout";
+import * as PV from "./pages/portal/PortalViews";
 import ClientDashboard from "./pages/ClientDashboard";
 import ClientDetails from "./pages/ClientDetails";
 import ProjectTimeline from "./pages/ProjectTimeline";
@@ -199,7 +200,20 @@ const App = () => (
               <Route path="/voice-seo-aeo-stats" element={<VoiceSeoAeoStatsPage />} />
               <Route path="/install" element={<InstallPWA />} />
               <Route path="/portal" element={<Portal />} />
-              <Route path="/portal/admin-dashboard" element={<AdminDashboard />} />
+              <Route path="/portal/admin-dashboard" element={<Navigate to="/portal/today" replace />} />
+              <Route element={<PortalLayout />}>
+                <Route path="/portal/home" element={<PV.PortalHome />} />
+                <Route path="/portal/today" element={<PV.TodayView />} />
+                <Route path="/portal/clients" element={<PV.ClientsView />} />
+                <Route path="/portal/projects" element={<PV.ProjectsView />} />
+                <Route path="/portal/time" element={<PV.TimeView />} />
+                <Route path="/portal/pipeline" element={<PV.PipelineView />} />
+                <Route path="/portal/budget" element={<PV.BudgetView />} />
+                <Route path="/portal/system/status" element={<PV.StatusView />} />
+                <Route path="/portal/system/audit-codes" element={<PV.AuditCodesView />} />
+                <Route path="/portal/system/chatbot" element={<PV.ChatbotView />} />
+                <Route path="/portal/system/users" element={<PV.UsersView />} />
+              </Route>
               <Route path="/portal/client-dashboard" element={<ClientDashboard />} />
               <Route path="/portal/project-timeline" element={<ProjectTimeline />} />
               <Route path="/portal/clients/:id" element={<ClientDetails />} />
