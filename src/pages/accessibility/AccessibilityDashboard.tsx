@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import type { useAccessibilityOrg } from "@/hooks/useAccessibilityOrg";
 import AdminSubscribersPanel from "@/components/accessibility/AdminSubscribersPanel";
+import TrialBanner from "@/components/accessibility/TrialBanner";
 
 type Ctx = ReturnType<typeof useAccessibilityOrg>;
 type Site = { id: string; name: string; url: string; current_score: number | null; last_scan_at: string | null };
@@ -143,6 +144,7 @@ export default function AccessibilityDashboard() {
 
   return (
     <div className="space-y-6">
+      {ctx.org && <TrialBanner orgId={ctx.org.id} />}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold">Dashboard</h1>
