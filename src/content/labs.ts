@@ -38,14 +38,14 @@ export const intro = {
 export const items: LabItem[] = [
   { name: "Claude Cowork", status: "Live", description: "A curated library of Claude skills and tutorials built for law firms and nonprofits — intake triage, drafting, grant writing, donor cultivation.", link: "/claude-cowork" },
   { name: "Causeio", status: "Live", description: "An all-in-one marketing and engagement platform for nonprofits: donor management, volunteer coordination, campaigns and grant tracking.", link: "https://causeio.com" },
-  { name: "Quickie QR", status: "Live", description: "Dynamic QR codes whose destination and content can be changed after printing, with scan analytics." },
+  { name: "Quickie QR", status: "In development", description: "Dynamic QR codes whose destination and content can be changed after printing, with scan analytics." },
   { name: "Signature Pop", status: "Live", description: "Turns company email signatures into a managed marketing channel with campaign targeting." },
   { name: "Branded Books", status: "Live", description: "Branded activity and coloring books firms give to clients and families — a physical marketing object in a mostly digital category." },
   { name: "WordPress Plugins", status: "Live", description: "Custom plugins including Roadmap Flow, built for client sites where an off-the-shelf plugin did not exist.", link: "/wordpress-plugins" },
   { name: "CatchJar", status: "In development", description: "A chatbot builder for customer support and lead capture. Previously Support Bots; being rebuilt and renamed." },
-  { name: "NPO Bots", status: "In development", description: "Conversational intake and engagement for nonprofits, now being folded into the Causeio platform." },
-  { name: "Lead Scraper CRM", status: "In development", description: "Lead sourcing and verification with a lightweight pipeline attached." },
-  { name: "MVP Soft Launch", status: "In development", description: "A structured launch checklist and platform directory for getting a new product in front of its first audience." },
+  { name: "NPO Bots", status: "Retired", description: "Conversational intake and engagement for nonprofits. The useful parts went into Causeio, so the standalone tool was retired rather than maintained twice." },
+  { name: "Lead Scraper CRM", status: "Retired", description: "Lead sourcing and verification with a lightweight pipeline attached." },
+  { name: "MVP Soft Launch", status: "Live", description: "A structured launch checklist and platform directory for getting a new product in front of its first audience." },
   { name: "AEO Analyzer", status: "Retired", description: "Checked how a site appeared in AI-generated answers. The useful parts were absorbed into Amicus Edge, so the standalone tool was retired rather than maintained twice." },
 ];
 
