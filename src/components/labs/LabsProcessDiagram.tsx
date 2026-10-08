@@ -11,7 +11,7 @@ export default function LabsProcessDiagram() {
   const forkY = tops[last] + hs[last] + 18, outY = forkY + 28;
   // Retired side box, roughly level with stages 5–6.
   const RX = 320, RW = 110, RY = (tops[4] + tops[5] + hs[5]) / 2 - H / 2;
-  const outs = { internal: { x: 10, w: 150 }, product: { x: 180, w: 190 } };
+  const outs = { internal: { x: 10, w: 172 }, product: { x: 196, w: 180 } };
   const faint = { stroke: "var(--editorial-faint)" };
   const font = "Raleway, sans-serif";
   const ink = { fill: "var(--editorial-ink)" };
