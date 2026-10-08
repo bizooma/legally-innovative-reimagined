@@ -16,6 +16,16 @@ import ArgumentDiagram from "@/components/home/ArgumentDiagram";
 const CardGrid = ({ items }: { items: HomeCard[] }) => (
   <div className="product-grid product-grid-shelf">
     {items.map((item) => (
+      <Link key={item.name} to={item.href} className="product-shelf-item">
+        <h3>{item.name}</h3><p>{item.description}</p><ArrowUpRight aria-hidden className="h-5 w-5" />
+      </Link>
+    ))}
+  </div>
+);
+
+const ProductGrid = ({ items }: { items: HomeProductCard[] }) => (
+  <div className="home-product-grid">
+    {items.map((item) => (
       <div key={item.name} className={`home-product-card${item.featured ? ' is-featured' : ''}`}>
         {item.phonePanel ? (
           <a href={item.phonePanel.href} className="home-product-media home-product-phone" aria-label={`Call Ava at ${item.phonePanel.label}`}>
