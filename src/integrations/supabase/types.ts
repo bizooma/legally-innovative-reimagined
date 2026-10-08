@@ -1123,9 +1123,11 @@ export type Database = {
           file_size: string | null
           file_type: string | null
           id: string
+          is_client_visible: boolean
           name: string
           storage_object_id: string | null
           updated_at: string
+          uploaded_by: string | null
         }
         Insert: {
           client_id: string
@@ -1135,9 +1137,11 @@ export type Database = {
           file_size?: string | null
           file_type?: string | null
           id?: string
+          is_client_visible?: boolean
           name: string
           storage_object_id?: string | null
           updated_at?: string
+          uploaded_by?: string | null
         }
         Update: {
           client_id?: string
@@ -1147,9 +1151,11 @@ export type Database = {
           file_size?: string | null
           file_type?: string | null
           id?: string
+          is_client_visible?: boolean
           name?: string
           storage_object_id?: string | null
           updated_at?: string
+          uploaded_by?: string | null
         }
         Relationships: [
           {
