@@ -36,7 +36,7 @@ export const intro = {
 };
 
 export const processDiagram = {
-  ariaLabel: "How a Labs project runs: a problem we keep hitting leads to kill criteria written first, then the thinnest version that works, then we run it on ourselves, and it ends either kept or retired.",
+  ariaLabel: "How a Labs project runs: a problem we keep hitting leads to kill criteria written first, then an MVP — the thinnest version that works, then we run it on ourselves, and it ends either kept or retired.",
   steps: [
     { label: "A problem we keep hitting" },
     { label: "Kill criteria, written first" },
