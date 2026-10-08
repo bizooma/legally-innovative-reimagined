@@ -316,7 +316,7 @@
 .home-product-media { height: 180px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 16px 16px 0; border: 1px dashed var(--editorial-card-rule); border-radius: 3px; background: var(--editorial-inverted); }
 .home-product-card.is-featured .home-product-media { height: 300px; }
 .home-product-media:has(img) { border-style: solid; }
-.home-product-phone { flex-direction: column; gap: 8px; color: var(--editorial-on-inverted); text-decoration: none; }
+.home-product-phone { border-style: solid; flex-direction: column; gap: 8px; color: var(--editorial-on-inverted); text-decoration: none; }
 .home-product-phone:hover { border-color: var(--editorial-crimson-bright); }
 .home-product-phone-number { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3vw, 36px); line-height: 1.1; }
 .home-product-phone-caption { color: var(--editorial-crimson-bright); font-size: 11px; font-weight: 700; letter-spacing: .14em; }
