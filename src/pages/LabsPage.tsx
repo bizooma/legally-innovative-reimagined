@@ -74,7 +74,7 @@ const LabsPage = () => (
           <div className="min-w-0 max-w-[34rem] space-y-5 font-raleway text-lg leading-relaxed text-[#1a1a1a]/85">
             {intro.paragraphs.map((p, i) => <p key={i}>{withFrameworkLink(p)}</p>)}
           </div>
-          <div className="min-w-0 lg:justify-self-end"><LabsProcessDiagram /></div>
+          <div className="labs-diagram min-w-0 lg:justify-self-end"><LabsProcessDiagram /></div>
         </div>
       </section>
 
