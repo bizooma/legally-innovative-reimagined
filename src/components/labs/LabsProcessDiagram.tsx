@@ -19,7 +19,7 @@ export default function LabsProcessDiagram() {
   const vbH = outY + H + 8;
   return (
     <>
-      <svg viewBox={`0 0 440 ${vbH}`} className="hidden min-[800px]:block w-full h-auto max-w-[340px]" role="img" aria-label={d.ariaLabel}>
+      <svg viewBox={`0 0 440 ${vbH}`} className="hidden min-[800px]:block w-full h-auto max-w-[343px]" role="img" aria-label={d.ariaLabel}>
         <defs>
           <marker id="labs-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
             <path d="M0,0 L10,5 L0,10 z" style={{ fill: "var(--editorial-faint)" }} />
