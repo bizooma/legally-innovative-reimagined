@@ -21,9 +21,10 @@ import { toast } from "sonner";
 
 interface ClientMarketingPlanProps {
   client: any;
+  role?: 'admin' | 'client';
 }
 
-const ClientMarketingPlan = ({ client }: ClientMarketingPlanProps) => {
+const ClientMarketingPlan = ({ client, role = 'client' }: ClientMarketingPlanProps) => {
   const [activeSection, setActiveSection] = useState<string>("executive-summary");
   const [isPresentationMode, setIsPresentationMode] = useState(false);
   

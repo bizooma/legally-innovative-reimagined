@@ -7,10 +7,20 @@ import { NewCampaignDialog } from '@/components/campaigns/NewCampaignDialog';
 
 interface ClientCampaignsProps {
   clientId: string;
+  role?: 'admin' | 'client';
 }
 
-const ClientCampaigns = ({ clientId }: ClientCampaignsProps) => {
+const ClientCampaigns = ({ clientId, role = 'client' }: ClientCampaignsProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  if (role !== 'admin') {
+    return (
+      <div className="space-y-6">
+        <h2 className="text-2xl font-semibold">Marketing Campaigns</h2>
+        <p className="text-muted-foreground">No campaigns to show yet.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

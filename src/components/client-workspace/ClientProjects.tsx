@@ -16,10 +16,12 @@ import { useProjectProgress } from '@/hooks/useProjectProgress';
 import { formatProgress } from '@/lib/projectProgress';
 
 interface ClientProjectsProps {
+  role?: 'admin' | 'client';
   clientId: string;
 }
 
-const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId }) => {
+const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId, role = 'client' }) => {
+  const isAdmin = role === 'admin';
   const { projects, isLoading, addProject, updateProject, deleteProject } = useClientProjects(clientId);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -94,10 +96,12 @@ const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId }) => {
             <CardTitle>Client Projects</CardTitle>
             <CardDescription>Manage client projects and track progress</CardDescription>
           </div>
-          <AddProjectDialog 
-            clientId={clientId} 
-            onAddProject={handleAddProject} 
-          />
+          {isAdmin && (
+            <AddProjectDialog 
+              clientId={clientId} 
+              onAddProject={handleAddProject} 
+            />
+          )}
         </div>
         
         {/* Project Summary Stats */}
@@ -202,7 +206,7 @@ const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId }) => {
                 View all projects
               </Button>
             )}
-            {projects.length === 0 && (
+            {isAdmin && projects.length === 0 && (
               <AddProjectDialog 
                 clientId={clientId} 
                 onAddProject={handleAddProject} 
@@ -223,8 +227,8 @@ const ClientProjects: React.FC<ClientProjectsProps> = ({ clientId }) => {
           project={selectedProject}
           isOpen={Boolean(selectedProject)}
           onClose={() => setSelectedProject(null)}
-          onDelete={handleDelete}
-          onUpdate={updateProject}
+          onDelete={isAdmin ? handleDelete : undefined}
+          onUpdate={isAdmin ? updateProject : undefined}
         />
       )}
     </Card>
