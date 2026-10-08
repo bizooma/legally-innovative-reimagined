@@ -42,6 +42,7 @@ export function TodaySection() {
   const [projectId, setProjectId] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [saving, setSaving] = useState(false);
+  const [doneIds, setDoneIds] = useState<Set<string>>(new Set());
   const inputRef = useRef<HTMLInputElement>(null);
 
   const load = useCallback(async () => {
@@ -84,20 +85,44 @@ export function TodaySection() {
     ].filter((g) => g.items.length > 0);
   }, [tasks]);
 
+  const errMessage = (err: unknown) =>
+    (err && typeof err === 'object' && 'message' in err && (err as any).message) ? String((err as any).message) : String(err);
+
   const markDone = async (task: TodayTask) => {
-    setTasks((prev) => prev.filter((t) => t.id !== task.id));
-    const { error } = await supabase.from('project_tasks').update({ status: TASK_DONE_STATUS }).eq('id', task.id);
-    if (error) {
-      setTasks((prev) => [...prev, task]);
-      toast({ title: 'Error', description: 'Could not mark the task done', variant: 'destructive' });
+    if (!task?.id) {
+      toast({ title: 'Error', description: 'This task has no id, so it cannot be updated.', variant: 'destructive' });
+      return;
+    }
+    setDoneIds((prev) => new Set(prev).add(task.id));
+    try {
+      const { data, error } = await supabase
+        .from('project_tasks')
+        .update({ status: TASK_DONE_STATUS })
+        .eq('id', task.id)
+        .select('id');
+      if (error) throw error;
+      if (!data || data.length === 0) throw new Error('No task was updated — you may not have permission to change this task.');
+      setTasks((prev) => prev.filter((t) => t.id !== task.id));
+      load();
+    } catch (err) {
+      console.error('[Today] mark done failed', err);
+      toast({ title: 'Error', description: errMessage(err), variant: 'destructive' });
+    } finally {
+      setDoneIds((prev) => { const n = new Set(prev); n.delete(task.id); return n; });
     }
   };
 
   const start = (task: TodayTask) => {
-    const project = byProject[task.project_id];
-    if (!project) return;
-    startTimer(project.client_id, task.title, project.id, task.id);
-    toast({ title: 'Timer started', description: task.title });
+    try {
+      const project = byProject[task.project_id];
+      if (!project) throw new Error('This task\'s project could not be found.');
+      if (!project.client_id) throw new Error('This task\'s project has no client, so the timer cannot start.');
+      startTimer(project.client_id, task.title, project.id, task.id);
+      toast({ title: 'Timer started', description: task.title });
+    } catch (err) {
+      console.error('[Today] start timer failed', err);
+      toast({ title: 'Error', description: errMessage(err), variant: 'destructive' });
+    }
   };
 
   const addTask = async (e: React.FormEvent) => {
@@ -129,7 +154,7 @@ export function TodaySection() {
       setTitle('');
       setDueDate('');
     } catch (err: any) {
-      toast({ title: 'Error', description: err?.message || 'Could not add the task', variant: 'destructive' });
+      toast({ title: 'Error', description: errMessage(err), variant: 'destructive' });
     } finally {
       setSaving(false);
       inputRef.current?.focus();
@@ -180,7 +205,7 @@ export function TodaySection() {
                       <span className={`shrink-0 text-xs ${g.label === 'Overdue' ? 'text-destructive' : 'text-muted-foreground'}`}>
                         {t.due_date ? format(new Date(t.due_date), 'MMM d') : ''}
                       </span>
-                      <Button size="sm" variant="ghost" className="h-7 px-2" onClick={() => markDone(t)}>
+                      <Button size="sm" variant="ghost" className="h-7 px-2" onClick={() => markDone(t)} disabled={doneIds.has(t.id)}>
                         <Check className="w-4 h-4 mr-1" />Done
                       </Button>
                       <Button size="sm" variant="ghost" className="h-7 px-2" onClick={() => start(t)} disabled={isRunning || !p}>
