@@ -37,7 +37,12 @@ export const intro = {
 
 export const processDiagram = {
   ariaLabel: "How a Labs project runs: a problem we keep hitting leads to kill criteria written first, then the thinnest version that works, then we run it on ourselves, and it ends either kept or retired.",
-  steps: ["A problem we keep hitting", "Kill criteria, written first", "The thinnest version that works", "We run it on ourselves"],
+  steps: [
+    { label: "A problem we keep hitting" },
+    { label: "Kill criteria, written first" },
+    { label: "MVP", sub: "The thinnest version that works" },
+    { label: "We run it on ourselves" },
+  ] as { label: string; sub?: string }[],
   outcomes: { kept: "Kept", retired: "Retired" },
 };
 
