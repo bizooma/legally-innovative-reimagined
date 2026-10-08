@@ -6,7 +6,6 @@ import Footer from '@/components/Footer';
 import PortalHero from '@/components/portal/PortalHero';
 import PortalFeatures from '@/components/portal/PortalFeatures';
 import LoginForm from '@/components/portal/LoginForm';
-import AdminPasswordReset from '@/components/auth/AdminPasswordReset';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
