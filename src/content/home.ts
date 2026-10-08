@@ -1,5 +1,9 @@
+import drosImg from '@/assets/datarightsos-consent-log.webp.asset.json';
+import lexguildImg from '@/assets/lexguild-dashboard.webp.asset.json';
+import amicusImg from '@/assets/amicus-edge-dashboard.webp.asset.json';
+import accessibilityImg from '@/assets/accessibility-layer-widget.webp.asset.json';
 export interface HomeCard { name: string; description: string; href: string }
-export interface HomeProductCard extends HomeCard { qualifier: string; extra?: string; featured?: boolean; image: string | null; imageAlt: string }
+export interface HomeProductCard extends HomeCard { qualifier: string; extra?: string; featured?: boolean; image: string | null; imageAlt: string; phonePanel?: { label: string; href: string; caption: string } }
 export const home = {
   hero: {
     eyebrow: 'WHERE MARKETING MEETS CODE + AI',
@@ -49,11 +53,11 @@ export const home = {
     placeholder: 'Product screenshot',
     cardLink: 'Learn more',
     items: [
-      { name: 'DataRightsOS', qualifier: 'RUNNING ON THIS SITE', description: 'Privacy, consent and data-rights compliance from one embed.', extra: 'The privacy center you can see in the corner of this page is the product.', featured: true, href: '/products/datarightsos', image: null, imageAlt: 'DataRightsOS screenshot' },
-      { name: 'LexGuild', qualifier: 'FOR BAR ASSOCIATIONS', description: 'One member platform for bar associations.', href: '/products/lexguild', image: null, imageAlt: 'LexGuild screenshot' },
-      { name: 'Amicus Edge', qualifier: 'SELF-SERVE, NO RETAINER', description: 'Self-serve marketing tools for firms that run their own.', href: '/products/amicus-edge', image: null, imageAlt: 'Amicus Edge screenshot' },
-      { name: 'Ava', qualifier: 'ANSWERS OUR PHONE LINE', description: 'An AI receptionist that answers the calls you miss.', href: '/ai-receptionist', image: null, imageAlt: 'Ava screenshot' },
-      { name: 'Accessibility Layer', qualifier: 'FROM $25/MO', description: 'ADA and WCAG monitoring with a visitor-facing widget.', href: '/accessibility-layer', image: null, imageAlt: 'Accessibility Layer screenshot' },
+      { name: 'DataRightsOS', qualifier: 'RUNNING ON THIS SITE', description: 'Privacy, consent and data-rights compliance from one embed.', extra: 'The privacy center you can see in the corner of this page is the product.', featured: true, href: '/products/datarightsos', image: drosImg.url, imageAlt: 'DataRightsOS consent log showing visitor consent records and GPC detection' },
+      { name: 'LexGuild', qualifier: 'FOR BAR ASSOCIATIONS', description: 'One member platform for bar associations.', href: '/products/lexguild', image: lexguildImg.url, imageAlt: 'LexGuild bar association dashboard showing member, mentorship and forum activity' },
+      { name: 'Amicus Edge', qualifier: 'SELF-SERVE, NO RETAINER', description: 'Self-serve marketing tools for firms that run their own.', href: '/products/amicus-edge', image: amicusImg.url, imageAlt: 'Amicus Edge dashboard overview showing tool counts and quick actions' },
+      { name: 'Ava', qualifier: 'ANSWERS OUR PHONE LINE', description: 'An AI receptionist that answers the calls you miss.', href: '/ai-receptionist', image: null, imageAlt: '', phonePanel: { label: '904-331-8130', href: 'tel:+19043318130', caption: 'CALL IT' } },
+      { name: 'Accessibility Layer', qualifier: 'FROM $25/MO', description: 'ADA and WCAG monitoring with a visitor-facing widget.', href: '/accessibility-layer', image: accessibilityImg.url, imageAlt: 'Accessibility Layer widget settings showing appearance options and feature toggles' },
     ] as HomeProductCard[],
     footnote: { label: "Everything else we've built, including what we retired.", href: '/labs' },
   },
