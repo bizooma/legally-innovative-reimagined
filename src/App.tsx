@@ -12,6 +12,7 @@ import AppleMapsMarketingPage from "./pages/AppleMapsMarketingPage";
 import OpenAiWebBrowserPage from "./pages/OpenAiWebBrowserPage";
 import VoiceSeoAeoStatsPage from "./pages/VoiceSeoAeoStatsPage";
 import Portal from "./pages/Portal";
+import PortalResetPassword from "./pages/PortalResetPassword";
 import PortalLayout from "./components/portal-shell/PortalLayout";
 import * as PV from "./pages/portal/PortalViews";
 import ClientDashboard from "./pages/ClientDashboard";
@@ -200,6 +201,7 @@ const App = () => (
               <Route path="/voice-seo-aeo-stats" element={<VoiceSeoAeoStatsPage />} />
               <Route path="/install" element={<InstallPWA />} />
               <Route path="/portal" element={<Portal />} />
+              <Route path="/portal/reset-password" element={<PortalResetPassword />} />
               <Route path="/portal/admin-dashboard" element={<Navigate to="/portal/today" replace />} />
               <Route element={<PortalLayout />}>
                 <Route path="/portal/today" element={<PV.TodayView />} />
