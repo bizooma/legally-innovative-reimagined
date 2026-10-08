@@ -1803,7 +1803,9 @@ export type Database = {
           duration_seconds: number | null
           end_time: string | null
           id: string
+          project_id: string | null
           start_time: string
+          task_id: string | null
           updated_at: string
           user_id: string
         }
@@ -1814,7 +1816,9 @@ export type Database = {
           duration_seconds?: number | null
           end_time?: string | null
           id?: string
+          project_id?: string | null
           start_time: string
+          task_id?: string | null
           updated_at?: string
           user_id: string
         }
@@ -1825,7 +1829,9 @@ export type Database = {
           duration_seconds?: number | null
           end_time?: string | null
           id?: string
+          project_id?: string | null
           start_time?: string
+          task_id?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -1835,6 +1841,20 @@ export type Database = {
             columns: ["client_id"]
             isOneToOne: false
             referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_entries_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "project_tasks"
             referencedColumns: ["id"]
           },
         ]
