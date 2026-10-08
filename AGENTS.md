@@ -6,3 +6,4 @@
 - About affiliations render from typed About content, and newsletter signup promises share typed Home content across the homepage and newsletter page, so editorial changes stay consistent without changing presentation.
 - Both framework pages render through one FrameworkPage layout from per-audience typed content (src/content/orderOfOperations*.ts), so audience versions stay visually identical.
 - Project progress shown in the admin UI is derived from tasks (completed ÷ total, "—" when none) via useProjectProgress; the projects.progress column is never written by derived views, so it stays free for a future manual override.
+- Admin portal views render inside one PortalLayout (sidebar, top bar, single auth/admin guard) with one route per section, each loading only its own data, so heavy sections never load on unrelated views.
