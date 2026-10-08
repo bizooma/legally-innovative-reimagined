@@ -16,27 +16,24 @@ import ArgumentDiagram from "@/components/home/ArgumentDiagram";
 const CardGrid = ({ items }: { items: HomeCard[] }) => (
   <div className="product-grid product-grid-shelf">
     {items.map((item) => (
-      <Link key={item.name} to={item.href} className="product-shelf-item">
-        <h3>{item.name}</h3><p>{item.description}</p><ArrowUpRight aria-hidden className="h-5 w-5" />
-      </Link>
-    ))}
-  </div>
-);
-
-const ProductGrid = ({ items }: { items: HomeProductCard[] }) => (
-  <div className="home-product-grid">
-    {items.map((item) => (
-      <Link key={item.name} to={item.href} className={`home-product-card${item.featured ? ' is-featured' : ''}`}>
-        <div className="home-product-media">
-          {item.image ? <img src={item.image} alt={item.imageAlt} loading="lazy" /> : <span className="home-product-placeholder">{home.products.placeholder}</span>}
-        </div>
-        <div className="home-product-body">
+      <div key={item.name} className={`home-product-card${item.featured ? ' is-featured' : ''}`}>
+        {item.phonePanel ? (
+          <a href={item.phonePanel.href} className="home-product-media home-product-phone" aria-label={`Call Ava at ${item.phonePanel.label}`}>
+            <span className="home-product-phone-number">{item.phonePanel.label}</span>
+            <span className="home-product-phone-caption">{item.phonePanel.caption}</span>
+          </a>
+        ) : (
+          <Link to={item.href} className="home-product-media" tabIndex={-1} aria-hidden={!item.image}>
+            {item.image ? <img src={item.image} alt={item.imageAlt} loading="lazy" /> : <span className="home-product-placeholder">{home.products.placeholder}</span>}
+          </Link>
+        )}
+        <Link to={item.href} className="home-product-body">
           <p className="home-product-qualifier">{item.qualifier}</p>
           <h3>{item.name}</h3>
           <p>{item.description}{item.extra ? ` ${item.extra}` : ''}</p>
           <span className="home-product-more">{home.products.cardLink} <span aria-hidden>→</span></span>
-        </div>
-      </Link>
+        </Link>
+      </div>
     ))}
   </div>
 );
