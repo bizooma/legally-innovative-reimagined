@@ -11,7 +11,8 @@ import { BUCKET_NAME } from '@/config/documentConfig';
 export async function uploadDocument(
   clientId: string,
   file: File,
-  description: string = ''
+  description: string = '',
+  isClientVisible: boolean = false
 ): Promise<Document | null> {
   try {
     console.log('Starting upload for file:', file.name, 'with description:', description);
@@ -25,6 +26,8 @@ export async function uploadDocument(
     
     // Use client ID as folder path with unique filename
     const filePath = `${clientId}/${uniqueFileName}`;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('You must be signed in to upload');
     
     console.log('Upload path:', filePath);
     console.log('Original filename:', file.name);
@@ -85,6 +88,8 @@ export async function uploadDocument(
         file_size: fileSize,
         file_type: fileType,
         storage_object_id: filePath,
+        is_client_visible: isClientVisible,
+        uploaded_by: user.id,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       })
@@ -116,7 +121,8 @@ export async function uploadDocument(
       lastUpdated: new Date(dbRecord.updated_at).toISOString().split('T')[0],
       path: dbRecord.file_path,
       url: urlData.publicUrl,
-      description: dbRecord.description || ''
+      description: dbRecord.description || '',
+      isClientVisible: dbRecord.is_client_visible
     };
     
     console.log('Upload completed successfully:', document);

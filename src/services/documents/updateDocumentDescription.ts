@@ -44,3 +44,14 @@ export async function updateDocumentDescription(documentId: string, description:
     return false;
   }
 }
+
+/** Flips whether the client can see a document. Throws the real database error on failure. */
+export async function setDocumentClientVisibility(docId: string, visible: boolean): Promise<void> {
+  const { data, error } = await supabase
+    .from('documents')
+    .update({ is_client_visible: visible })
+    .eq('id', docId)
+    .select('id');
+  if (error) throw new Error(error.message);
+  if (!data || data.length === 0) throw new Error('No document was updated — you may not have permission to change it.');
+}
