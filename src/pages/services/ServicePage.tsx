@@ -1,11 +1,11 @@
 import HeroTexture from "@/components/HeroTexture";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileFooterNav from "@/components/MobileFooterNav";
-import type { ServicePageContent, AudienceBand } from "@/content/services/types";
+import type { ServicePageContent, AudienceBand, SelectedWorkEntry } from "@/content/services/types";
 
 export const OX = "text-[#7A0A0A]";
 export const CRIMSON = "text-[#E0313A]";
@@ -40,6 +40,43 @@ function Audience({ band }: { band: AudienceBand }) {
         ))}
       </ul>
     </div>
+  );
+}
+
+function SelectedWork({ title, entries }: { title: string; entries: SelectedWorkEntry[] }) {
+  const categories = [...new Set(entries.map((e) => e.category))];
+  return (
+    <section id="work" className="scroll-mt-24 py-16 lg:py-24">
+      <div className={inner}>
+        <h2 className="font-playfair text-3xl lg:text-4xl text-[#1a1a1a] mb-10">{title}</h2>
+        <div className="space-y-12">
+          {categories.map((cat) => (
+            <div key={cat}>
+              <p className={`${eyebrow} ${OX}`}>{cat}</p>
+              <ul className="border-t border-[#1a1a1a]/15">
+                {entries.filter((e) => e.category === cat).map((e) => (
+                  <li key={e.url} className="border-b border-[#1a1a1a]/15">
+                    <a
+                      href={e.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group grid gap-1 py-6 md:grid-cols-[1fr_auto] md:items-center md:gap-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A0A0A]"
+                    >
+                      <span className="min-w-0">
+                        <span className="block font-playfair text-2xl lg:text-4xl leading-tight text-[#1a1a1a] break-words transition-colors group-hover:text-[#7A0A0A]">{e.name}</span>
+                        <span className="mt-1 block font-raleway text-[15px] lg:text-base text-[#1a1a1a]/65">{e.descriptor}</span>
+                      </span>
+                      <ArrowUpRight aria-hidden className={`hidden md:block h-6 w-6 ${OX} transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5`} />
+                      <span className="sr-only">(opens in a new tab)</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -81,6 +118,8 @@ const ServicePage = ({ content: c }: { content: ServicePageContent }) => {
             </ol>
           </div>
         </section>
+
+        {c.selectedWork && <SelectedWork title={c.selectedWork.title} entries={c.selectedWork.entries} />}
 
         <section className="py-16 lg:py-24">
           <div className={`${inner} grid gap-12 md:grid-cols-2 md:gap-16`}>
