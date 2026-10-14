@@ -32,6 +32,16 @@ export const websitesAndApps: ServicePageContent = {
       "Performance, Core Web Vitals, and the technical foundations SEO depends on",
     ],
   },
+  selectedWork: {
+    title: "Selected work",
+    entries: [
+      { category: "Law Firms", name: "BridgeTRUST, PLLC", descriptor: "Trust and estate administration and litigation · Jacksonville, FL", url: "https://flbridgetrust.com" },
+      { category: "Law Firms", name: "True North Immigration Law", descriptor: "Immigration · Phoenix, AZ", url: "https://truenorthimmigrationlaw.com" },
+      { category: "Law Firms", name: "Forge Family Law", descriptor: "Family law · Arizona", url: "https://forgefamilylaw.com" },
+      { category: "Nonprofits", name: "The PLACE", descriptor: "Resource and support hub · Amarillo, TX", url: "https://wefindonline.org" },
+      { category: "Nonprofits", name: "Causeio", descriptor: "Marketing platform for nonprofits", url: "https://causeio.com" },
+    ],
+  },
   lawFirms: {
     title: "For law firms",
     paragraph: "The two things most firm sites fail at are the same two things that decide whether an enquiry becomes a matter — making it easy to start, and making it clear what happens next.",
