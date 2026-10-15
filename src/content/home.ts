@@ -8,7 +8,7 @@ export const home = {
   hero: {
     eyebrow: 'WHERE MARKETING MEETS CODE + AI',
     title: 'Innovative marketing software for law firms and nonprofits',
-    lede: 'Search, websites, intake and automation — plus whatever we have to build when nothing off the shelf fits.',
+    lede: 'Attract more clients. Inspire more support. Simplify your marketing with AI-powered tools built to help your organization grow.',
     primary: { label: 'See what we do', href: '/services' },
     secondary: { label: 'Read our framework', href: '/order-of-operations' },
     phone: { label: '904-331-8130', href: 'tel:+19043318130' },
