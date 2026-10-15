@@ -42,6 +42,7 @@ const Hero = () => {
           </ul>
           <p className="mt-4 pt-4 border-t border-current/20 text-sm opacity-90">{h.proof.footnote}</p>
         </aside>
+        <p className="text-xs md:text-sm font-semibold tracking-[0.2em] opacity-90 text-primary-foreground lg:col-start-2">{h.eyebrow}</p>
       </div>
     </section>
   );
