@@ -17,7 +17,6 @@ const Hero = () => {
       </div>
       <div className="container mx-auto relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_40%] lg:gap-16 lg:items-center">
         <div className="max-w-3xl animate-fade-in text-primary-foreground min-w-0">
-          <p className="text-xs md:text-sm font-semibold tracking-[0.2em] mb-5 opacity-90">{h.eyebrow}</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight [text-wrap:balance]">{h.title}</h1>
           <p className="text-lg md:text-xl mb-8 text-legal-light max-w-2xl">{h.lede}</p>
           <div className="flex flex-wrap items-center gap-6 mb-8">
@@ -43,6 +42,7 @@ const Hero = () => {
           </ul>
           <p className="mt-4 pt-4 border-t border-current/20 text-sm opacity-90">{h.proof.footnote}</p>
         </aside>
+        <p className="text-xs md:text-sm font-semibold tracking-[0.2em] opacity-90 text-primary-foreground lg:col-start-2">{h.eyebrow}</p>
       </div>
     </section>
   );
