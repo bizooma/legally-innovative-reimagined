@@ -33,16 +33,18 @@ const Hero = () => {
             <p className="opacity-90">{h.office}</p>
           </div>
         </div>
-        <aside aria-labelledby="hero-proof-heading" className="hero-proof min-w-0 rounded-md border p-6 text-primary-foreground backdrop-blur-sm">
-          <h2 id="hero-proof-heading" className="font-raleway text-xs font-semibold uppercase tracking-[0.2em] mb-4">{h.proof.heading}</h2>
-          <ul className="space-y-3 text-base leading-relaxed">
-            {h.proof.items.map((it) => (
-              <li key={it.label}>{it.before}{it.href ? <Link to={it.href} className="font-semibold underline underline-offset-4 hover:opacity-80">{it.label}</Link> : <span className="font-semibold">{it.label}</span>}{it.after}</li>
-            ))}
-          </ul>
-          <p className="mt-4 pt-4 border-t border-current/20 text-sm opacity-90">{h.proof.footnote}</p>
-        </aside>
-        <p className="text-xs md:text-sm font-semibold tracking-[0.2em] opacity-90 text-primary-foreground lg:col-start-2">{h.eyebrow}</p>
+        <div className="min-w-0">
+          <aside aria-labelledby="hero-proof-heading" className="hero-proof min-w-0 rounded-md border p-6 text-primary-foreground backdrop-blur-sm">
+            <h2 id="hero-proof-heading" className="font-raleway text-xs font-semibold uppercase tracking-[0.2em] mb-4">{h.proof.heading}</h2>
+            <ul className="space-y-3 text-base leading-relaxed">
+              {h.proof.items.map((it) => (
+                <li key={it.label}>{it.before}{it.href ? <Link to={it.href} className="font-semibold underline underline-offset-4 hover:opacity-80">{it.label}</Link> : <span className="font-semibold">{it.label}</span>}{it.after}</li>
+              ))}
+            </ul>
+            <p className="mt-4 pt-4 border-t border-current/20 text-sm opacity-90">{h.proof.footnote}</p>
+          </aside>
+          <p className="mt-3 text-xs md:text-sm font-semibold tracking-[0.2em] opacity-90 text-primary-foreground">{h.eyebrow}</p>
+        </div>
       </div>
     </section>
   );
