@@ -16,7 +16,7 @@ export const home = {
     proof: {
       heading: 'Running on our own software',
       items: [
-        { before: '', label: 'Ava', href: '/ai-receptionist', after: " answers the phone number above. Call it — you'll be talking to our AI receptionist, not a menu." },
+        { before: '', label: 'Ava', href: '/ai-receptionist', after: " answers our main line. Call 904-331-8130, you'll be talking to our AI receptionist, not a menu." },
         { before: '', label: 'DataRightsOS', href: '/products/datarightsos', after: ' powers the privacy center in the lower-left corner of this page.' },
         { before: '', label: 'Biz', href: '', after: ', the assistant in the bottom-right corner, runs on an engine we built, trained, and maintain.' },
       ],
